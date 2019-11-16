@@ -1,0 +1,45 @@
+﻿<Window x:Class="SpectatorFootball.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SpectatorFootball"
+        mc:Ignorable="d"
+        Background="DarkGreen"
+        WindowState="Maximized" 
+        ResizeMode="CanResize" 
+        WindowStyle="SingleBorderWindow"
+        Title="Spectator Football"
+        Closing="MainWindow_Closing">
+    <DockPanel>
+        <Menu Name="Main_menu_top" DockPanel.Dock="Top">
+            <MenuItem Header="File">
+                <MenuItem Header="New" Click = "Show_NewLeague" />
+                <MenuItem Header="Open" />
+                <Separator />
+                <MenuItem Header="Exit" Click = "mmTopExit_Click" />
+            </MenuItem>
+            <MenuItem Header="League">
+                <MenuItem Header="Standings" />
+                <MenuItem Header="Playoffs" />
+                <MenuItem Header="Schedule" />
+                <MenuItem Header="Team Stats" />
+                <MenuItem Header="Player Stats" />
+                <MenuItem Header="Champions" />
+                <MenuItem Header="Records" />
+                <MenuItem Header="League Info" />
+            </MenuItem>
+            <MenuItem Header="Help">
+                <MenuItem Header="Education" />
+                <MenuItem Header="Changes" />
+                <MenuItem Header="About" />
+            </MenuItem>
+            <MenuItem Header="Admin">
+                <MenuItem Header="Add Player Name" Click="Show_PlayerNames" />
+                <MenuItem Header="Manage Stock Teams" Click="Show_StockTeams" />
+            </MenuItem>
+        </Menu>
+
+        <StackPanel Name="sp_uc" Orientation="Vertical" VerticalAlignment="Top"></StackPanel>
+    </DockPanel>
+</Window>
