@@ -35,7 +35,7 @@ namespace SpectatorFootball
 
                 for (int i = 1; i <= Teams; i++)
                 {
-                    int total_games =  default(int); ;                    
+                    int total_games = default(int); ;
                     int div_games = default(int); ;
                     int home_games = default(int);
                     int away_games = default(int);
@@ -54,8 +54,6 @@ namespace SpectatorFootball
 
                         if (sWeek.StartsWith("Week"))
                             continue;
-
-
 
                         if (ht == i.ToString() || at == i.ToString())
                         {
@@ -82,18 +80,18 @@ namespace SpectatorFootball
                         throw new Exception("Schedule Error: Invalid number of games for team " + i.ToString());
 
                     if (div_games < (TeamsperDiv - 1) * 2)
-                        throw new Exception("Schedule Error: Invalid number of divisional games for team " + i.ToString());
+                        throw new Exception("Schedule Error: Invalid number of divisional games for team " + i.ToString() + " ");
 
-                    if (home_div_games / (double)(TeamsperDiv * 2) != 2.0)
+                    if (home_div_games / (double)(TeamsperDiv - 1) != 1.0)
                         throw new Exception("Schedule Error: Team " + i.ToString() + " does not have " + Convert.ToString(TeamsperDiv * 2) + "home divisional games schedule");
 
-                    if (away_div_games / (double)(TeamsperDiv * 2) != 2.0)
+                    if (away_div_games / (double)(TeamsperDiv - 1) != 1.0)
                         throw new Exception("Schedule Error: Team " + i.ToString() + " does not have " + Convert.ToString(TeamsperDiv * 2) + "away divisional games schedule");
 
-                    if (home_games / (double)2 != Weeks / (double)2)
+                    if ((home_games * 2.0) != (double)Weeks)
                         throw new Exception("Schedule Error: Team " + i.ToString() + " does not have " + Convert.ToString(Weeks / 2) + "home games schedule");
 
-                    if (away_games / (double)2 != Weeks / (double)2)
+                    if ((away_games * 2.0) != (double)Weeks)
                         throw new Exception("Schedule Error: Team " + i.ToString() + " does not have " + Convert.ToString(Weeks / 2) + "away games schedule");
 
                     for (int w = 1; w <= Weeks + byes; w++)

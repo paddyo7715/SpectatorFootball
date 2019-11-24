@@ -37,41 +37,7 @@ namespace SpectatorFootball
                 return (Team - 1) / (Teams / Conferences) + 1;
         }
 
-        private int[] game_type_fianl_sched(List<string> v, int T)
-        {
-            int home_games = 0;
-            int away_games = 0;
-            int nondiv_conf_games = 0;
-            int nonconf_games = 0;
-
-            foreach (string lv in v)
-            {
-                string g = lv;
-                string[] m = g.Split(',');
-                if (m[1] == T.ToString())
-                {
-                    home_games = home_games + 1;
-                    if (getConference(int.Parse(m[1].ToString())) == getConference(int.Parse(m[2].ToString())) && getDivision(int.Parse(m[1].ToString())) != getDivision(int.Parse(m[2].ToString())))
-                        nondiv_conf_games = nondiv_conf_games + 1;
-
-                    if (getConference(int.Parse(m[1].ToString())) != getConference(int.Parse(m[2].ToString())))
-                        nonconf_games = nonconf_games + 1;
-                }
-
-                if (m[2] == T.ToString())
-                {
-                    away_games = away_games + 1;
-                    if (getConference(int.Parse(m[2])) == getConference(int.Parse(m[1])) && getDivision(int.Parse(m[2])) != getDivision(int.Parse(m[1])))
-                        nondiv_conf_games = nondiv_conf_games + 1;
-
-                    if (getConference(int.Parse(m[2])) != getConference(int.Parse(m[1])))
-                        nonconf_games = nonconf_games + 1;
-                }
-            }
-
-            return new int[] { home_games, away_games, nondiv_conf_games, nonconf_games };
-        }
-
+        //Home, away, nondiv conference and non conference game totals for a team (number) from the sched list
         private int[] game_types(int T)
         {
             int home_games = 0;
@@ -107,25 +73,6 @@ namespace SpectatorFootball
             return new int[] { home_games, away_games, nondiv_conf_games, nonconf_games };
         }
 
-        public bool DupeGame(int Home, int Away)
-        {
-            bool r = false;
-
-            foreach (string lv in sched)
-            {
-                string g = lv;
-                string[] m = g.Split(',');
-
-                if ((m[0] == Home.ToString() || m[0] == Away.ToString()) &&
-                    (m[1] == Home.ToString() || m[1] == Away.ToString()))
-                {
-                    r = true;
-                    break;
-                }
-            }
-
-            return r;
-        }
 
         public List<string> Generate_Regular_Schedule()
         {
@@ -158,8 +105,8 @@ namespace SpectatorFootball
                     x += 1;
                     if (i == x)
                         continue;
-
-                    if (DupeGame(i, x))
+                    //Use lambda expression to determine that these teams have not already played.
+                    if (sched.Exists(s => (s == i.ToString() + "," + x.ToString()) || (s == x.ToString() + "," + i.ToString())))
                         continue;
 
                     sched.Add(i.ToString() + "," + x.ToString());
@@ -169,10 +116,9 @@ namespace SpectatorFootball
                 i += 1;
             }
 
-            // file.WriteLine("Finished scheduling div games")
+            // Finished creating all divisional games
 
             // Create all other games        
-            // 
             double num_of_weeks = (Teams / (double)2 * Weeks - Teams * (TeamsperDiv - 1)) / (Teams / (double)2);
             int wg_count = 0;
             while (wg_count < num_of_weeks)
@@ -180,17 +126,11 @@ namespace SpectatorFootball
                 int t;
                 int ii;
                 int wgcount = Teams / 2;
-                string[] wgames = new string[wgcount - 1 + 1];
+
+                string[] wgames = new string[wgcount];
                 int wg_now = 0;
-                // clear the weekly games    
-                int wg_ind = 0;
-                foreach (string s in wgames) {
-                    wgames[wg_ind] = null;
-                    wg_ind++;
-                }
 
                 tries = 0;
-                // Dim rha As Random = New Random()
                 while (true)
                 {
                     int home = 0;
@@ -202,7 +142,8 @@ namespace SpectatorFootball
 
                     if (tries == 2000)
                     {
-                        wgames = new string[wgcount - 1 + 1];
+                        // clear the weekly games  
+                        wgames = new string[wgcount];
                         wg_now = 0;
                         tries = 0;
                     }
@@ -368,7 +309,7 @@ namespace SpectatorFootball
                 // file.WriteLine(("Week " + w.ToString))
                 int games = Teams / 2;
                 int wi = 0;
-                string[] week_arr = new string[games - 1];
+                string[] week_arr = new string[games];
                 string pg = null;
                 tries = 0;
 
@@ -387,6 +328,7 @@ namespace SpectatorFootball
                     gg -= 1;
 
                     pg = sched[gg];
+
 
                     if (!dupe_weekly_game(week_arr, pg))
                     {
@@ -613,5 +555,6 @@ namespace SpectatorFootball
 
             return r;
         }
+
     }
 }
