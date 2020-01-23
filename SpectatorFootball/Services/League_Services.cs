@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.IO;
 using log4net;
 using System.Linq;
+using SpectatorFootball.League_Info;
+using SpectatorFootball.Models;
 
 namespace SpectatorFootball
 {
@@ -11,7 +13,7 @@ namespace SpectatorFootball
     {
         private static ILog logger = LogManager.GetLogger("RollingFile");
 
-        public void CreateNewLeague(Leaguemdl nl, BackgroundWorker bw)
+        public void CreateNewLeague(Mem_League nl, BackgroundWorker bw)
         {
             logger.Info("CreateNewLeague Started");
 
@@ -19,10 +21,10 @@ namespace SpectatorFootball
 
             // Create the league folder
             string DIRPath = System.IO.Path.Combine(Environment.SpecialFolder.MyDocuments.ToString(), App_Constants.GAME_DOC_FOLDER);
-            string DIRPath_League = Environment.SpecialFolder.MyDocuments + Path.DirectorySeparatorChar + App_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + nl.Short_Name;
-            string New_League_File = nl.Short_Name + "." + App_Constants.DB_FILE_EXT;
-            string League_con_string = Environment.SpecialFolder.MyDocuments + Path.DirectorySeparatorChar + App_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + nl.Short_Name + Path.DirectorySeparatorChar + nl.Short_Name + Path.DirectorySeparatorChar + App_Constants.DB_FILE_EXT;
-            var LeagueDAO = new LeagueDAO(nl);
+            string DIRPath_League = Environment.SpecialFolder.MyDocuments + Path.DirectorySeparatorChar + App_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + nl.Leagues.Short_Name;
+            string New_League_File = nl.Leagues.Short_Name + "." + App_Constants.DB_FILE_EXT;
+            string League_con_string = Environment.SpecialFolder.MyDocuments + Path.DirectorySeparatorChar + App_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + nl.Leagues.Short_Name + Path.DirectorySeparatorChar + nl.Leagues.Short_Name + Path.DirectorySeparatorChar + App_Constants.DB_FILE_EXT;
+            var LeagueDAO = new LeagueDAO();
             string process_state = "Processing...";
             string state_struct = null;
             int i = default(int);
@@ -37,19 +39,19 @@ namespace SpectatorFootball
 
                 // Create the League Folder
                 logger.Info("Creating league folder");
-                Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + App_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + nl.Short_Name);
+                Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + App_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + nl.Leagues.Short_Name);
 
                 // Create Backup Folder
                 logger.Info("Creating league backup folder");
-                Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + App_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + nl.Short_Name + Path.DirectorySeparatorChar + App_Constants.BACKUP_FOLDER);
+                Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + App_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + nl.Leagues.Short_Name + Path.DirectorySeparatorChar + App_Constants.BACKUP_FOLDER);
 
                 // Create the helmet image League Folder
                 logger.Info("Creating league helmet folder");
-                Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + App_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + nl.Short_Name + Path.DirectorySeparatorChar + App_Constants.LEAGUE_HELMETS_SUBFOLDER);
+                Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + App_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + nl.Leagues.Short_Name + Path.DirectorySeparatorChar + App_Constants.LEAGUE_HELMETS_SUBFOLDER);
 
                 // Create the stadium image League folder
                 logger.Info("Creating league image folder");
-                Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + App_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + nl.Short_Name + Path.DirectorySeparatorChar + App_Constants.LEAGUE_STADIUM_SUBFOLDER);
+                Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + App_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + nl.Leagues.Short_Name + Path.DirectorySeparatorChar + App_Constants.LEAGUE_STADIUM_SUBFOLDER);
 
                 // Copy and Create the league database file
                 logger.Info("Starting league database creation and copy");
@@ -61,8 +63,8 @@ namespace SpectatorFootball
                 {
                     logger.Debug("Copying " + t.Helmet_img_path);
                     File.Copy(t.Helmet_img_path, DIRPath_League + Path.DirectorySeparatorChar + App_Constants.LEAGUE_HELMETS_SUBFOLDER + Path.DirectorySeparatorChar + Path.GetFileName(t.Helmet_img_path));
-                    logger.Debug("Copying " + t.Stadium.Stadium_Img_Path);
-                    File.Copy(t.Stadium.Stadium_Img_Path, DIRPath_League + Path.DirectorySeparatorChar + App_Constants.LEAGUE_STADIUM_SUBFOLDER + Path.DirectorySeparatorChar + Path.GetFileName(t.Stadium.Stadium_Img_Path));
+                    logger.Debug("Copying " + t.Stadium_Img_Path);
+                    File.Copy(t.Stadium_Img_Path, DIRPath_League + Path.DirectorySeparatorChar + App_Constants.LEAGUE_STADIUM_SUBFOLDER + Path.DirectorySeparatorChar + Path.GetFileName(t.Stadium_Img_Path));
                 }
 
                 // Update the progress bar
@@ -76,9 +78,8 @@ namespace SpectatorFootball
                 foreach (var t in nl.Teams)
                 {
                     logger.Debug("Creating players for team " + t.Nickname);
-                    List<PlayerMdl> Roster = ts.Roll_Players("");
-                    Roster = Roster.OrderBy(x => x.Pos).ThenByDescending(x => x.Ratings.OverAll).ToList();
-                    t.setPlayers(Roster);
+                    List<Player> Roster = ts.Roll_Players();
+                    nl.Players.AddRange(Roster);
                 }
 
                 // Update the progress bar
@@ -89,7 +90,28 @@ namespace SpectatorFootball
 
                 // Creating schedule
                 logger.Info("Creating schedule");
-                nl.setSchedule(create_schedule(nl.Short_Name, nl.Num_Teams, nl.Divisions.Count, nl.Conferences.Count, nl.Number_of_Games, nl.Number_of_weeks));
+                List<string> sched = create_schedule(nl.Leagues.Short_Name, (int) nl.Leagues.Num_Teams, nl.Leagues.Divisions.Count, nl.Leagues.Conferences.Count, (int) nl.Leagues.Number_of_Games, (int) nl.Leagues.Number_of_weeks);
+
+                foreach (string line in sched)
+                {
+                    string[] m = line.Split(',');
+                    string sWeek = m[0];
+                    string ht = m[1];
+                    string at = m[2];
+
+                    if (sWeek.StartsWith("Week"))
+                        continue;
+
+                    Game g = new Game()
+                    {
+                        Year = nl.Leagues.Starting_Year,
+                        Week = long.Parse(sWeek),
+                        Home_Team_ID = long.Parse(ht),
+                        Away_Team_ID = long.Parse(at),
+                        League_ID = 1
+                    };
+
+                }
 
                 // Update the progress bar
                 i = 75;
@@ -99,7 +121,7 @@ namespace SpectatorFootball
 
                 // Write the league records to the database
                 logger.Info("Saving new league to database");
-                LeagueDAO.Create_New_League(League_con_string);
+                LeagueDAO.Create_New_League(nl);
 
                 // Update the progress bar
                 i = 100;

@@ -1,0 +1,316 @@
+﻿<UserControl x:Class="SpectatorFootball.New_Team_DetailUC"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local1="clr-namespace:SpectatorFootball.BindingConverters"
+             Loaded="New_Team_detail_Loaded"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <local1:ColorConverter x:Key="ColorConverter" />
+        <local1:StockHelmetConverter x:Key="StockHelmetConverter" />
+        <local1:ImageConverter x:Key="ImageConverter" />
+        <local1:StadiumImageConverter x:Key="StadiumImageConverter" />
+        <local1:TextConverter x:Key="TextConverter" />
+    </UserControl.Resources>
+    <DockPanel Height="730">
+        <Grid DockPanel.Dock="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="2*" />
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="1" Name="lblTitle" Style="{DynamicResource MedLabelstyle}" />
+            <Button Grid.Column="2" Name="help_btn" Focusable="false" Style="{StaticResource appHelpBTN}" Click="help_btn_Click">Help ?</Button>
+        </Grid>
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+            <Button Name="newt1Cancel" Style="{StaticResource appSubmitStyle}" Click="newt1Cancel_Click">Cancel</Button>
+            <Button Name="newt1Add" Style="{StaticResource appSubmitStyle}" Click="newt1Add_Click">Add</Button>
+        </StackPanel>
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="TOP" Margin="10">
+            <TabControl  Background="DarkGreen" Foreground="White">
+                <TabItem Header="General">
+                    <StackPanel Orientation="Vertical" Width="1000">
+                        <GroupBox Margin="2,2,2,2" Width="525" FontSize="18" FontWeight="Bold"  Foreground="White">
+
+                            <GroupBox.Header>
+                                General Info:
+                            </GroupBox.Header>
+
+                            <StackPanel Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Width="95" Style="{StaticResource Normallbltyle}">City Abbr:</Label>
+                                    <TextBox Name="newtCityAbb" Text="{Binding City_Abr, FallbackValue='', Converter={StaticResource TextConverter}}" FontSize="12" Width="40" Height="20" Foreground="Black" Background="white" MaxLength="6" />
+                                    <Label Width="50" Style="{StaticResource Normallbltyle}">City:</Label>
+                                    <TextBox Name="newtCity" Text="{Binding City, FallbackValue='', Converter={StaticResource TextConverter}}" FontSize="12" Width="110" Height="20" Foreground="Black" Background="white" MaxLength="100" />
+                                    <Label Width="95" Style="{StaticResource Normallbltyle}">Nickname:</Label>
+                                    <TextBox Name="newtNickname" Text="{Binding Nickname, FallbackValue='', Converter={StaticResource TextConverter}}" FontSize="12" Width="120" Height="20" Foreground="Black" Background="white" MaxLength="100" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Width="80" Style="{StaticResource Normallbltyle}">Stadium:</Label>
+                                    <TextBox Name="newtStadium" Text="{Binding Stadium_Name, FallbackValue='', Converter={StaticResource TextConverter}}" FontSize="12" Width="130" Height="20" Foreground="Black" Background="white" />
+                                    <Label Width="85" Style="{StaticResource Normallbltyle}">Location:</Label>
+                                    <TextBox Name="newtStadiumLocation" Text="{Binding Stadium_Location,FallbackValue='', Converter={StaticResource TextConverter}}" FontSize="12" Width="170" Height="20" Foreground="Black" Background="white" MaxLength="100" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Width="105" Style="{StaticResource Normallbltyle}">Field Type:</Label>
+                                    <ComboBox Name="newl1FieldType" SelectedIndex="{Binding Stadium_Field_Type}" FontSize="12" Width="100" Height="20" Foreground="Black" Background="white" IsEditable="False">
+                                        <ComboBoxItem IsSelected="True">Grass</ComboBoxItem>
+                                        <ComboBoxItem>Artificial</ComboBoxItem>
+                                    </ComboBox>
+                                    <Label Width="100" Style="{StaticResource Normallbltyle}">Field Color:</Label>
+                                    <xctk:ColorPicker Name="newl1FieldColor" SelectedColor="{Binding Stadium_Field_Color, Converter={StaticResource ColorConverter}}" DropDownBackground="White" Height="20"  Width="40"  />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Width="150" FontSize="14" Foreground="White">Stadium Capacity:</Label>
+                                    <TextBox Name="newtStadiumCapacity" Text="{Binding Stadium_Capacity, FallbackValue='', Converter={StaticResource TextConverter}}" FontSize="12" Width="100" Height="20" Foreground="Black" Background="white"  />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Width="150" Style="{StaticResource Normallbltyle}">Stadium Image:</Label>
+                                    <TextBox Name="newtStadiumPath" IsReadOnly="True" Text="{Binding Stadium_Img_Path, Converter={StaticResource StadiumImageConverter}, FallbackValue=''}" FontSize="12" Width="265" Height="20" Foreground="Black" Background="white"  />
+                                    <Button Name="newtbtnStadiumPath" FontSize="12" Width="90" Height="20" Click="newtbtnStadiumPath_Click">Image File</Button>
+                                </StackPanel>
+                            </StackPanel>
+                        </GroupBox>
+                        <GroupBox Margin="2,2,2,2" FontSize="18" Width="525" FontWeight="Bold"  Foreground="White">
+
+                            <GroupBox.Header>
+                                Stadium Image:
+                            </GroupBox.Header>
+                            <Image Name="Stadium_image" Source="{Binding ElementName=newtStadiumPath, Path=Text, Converter={StaticResource ImageConverter}}" Width="350" Height="300"></Image>
+                        </GroupBox>
+
+                    </StackPanel>
+                </TabItem>
+
+                <TabItem Header="Uniform">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Width="1000">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment ="Center">
+                            <GroupBox Margin="2,2,2,2" FontSize="18" FontWeight="Bold" Foreground="White">
+                                <GroupBox.Header>
+                                    Helmet Colors:
+                                </GroupBox.Header>
+                                <StackPanel Orientation="Vertical">
+                                    <StackPanel Orientation="Horizontal" >
+                                        <Label Width="70" Style="{StaticResource Normsmllbltyle}">Helmet:</Label>
+                                        <xctk:ColorPicker Name="newtHelmentColor" SelectedColor="{Binding Helmet_Color, Converter={StaticResource ColorConverter}}" DropDownBackground="White" MaxDropDownWidth="400" RecentColorsHeader="Team Colors"  ShowRecentColors="true" SelectedColorChanged="newtHelmentColor_SelectedColorChanged"  Height="20"  Width="40" />
+                                        <Label Width="50" Style="{StaticResource Normsmllbltyle}">Logo:</Label>
+                                        <xctk:ColorPicker Name="newtHelmentLogoColor" SelectedColor="{Binding Helmet_Logo_Color, Converter={StaticResource ColorConverter}}" DropDownBackground="White" MaxDropDownWidth="400" RecentColorsHeader="Team Colors"  ShowRecentColors="true" SelectedColorChanged="newtHelmentLogoColor_SelectedColorChanged"  Height="20"  Width="40" />
+                                        <Label Width="82" Style="{StaticResource Normsmllbltyle}">Facemask:</Label>
+                                        <xctk:ColorPicker Name="newtFacemaskColor"  SelectedColor="{Binding Helmet_Facemask_Color, Converter={StaticResource ColorConverter}}" DropDownBackground="White" MaxDropDownWidth="400" RecentColorsHeader="Team Colors"  ShowRecentColors="true" SelectedColorChanged="newtFacemaskColor_SelectedColorChanged"  Height="20"  Width="40" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label Width="100" Style="{StaticResource Normsmllbltyle}">Helmet Image:</Label>
+                                        <TextBox Name="newtHelmetImgPath" IsReadOnly="True" Text="{Binding Helmet_img_path, Converter={StaticResource StockHelmetConverter}, FallbackValue=''}" FontSize="12" Width="170" Height="20" Foreground="Black" Background="white"  />
+                                        <Button Name="newtbtnHelmetImgPath" FontSize="12" Width="80" Height="20" Click="newtbtnHelmetImgPath_Click">Select File</Button>
+                                    </StackPanel>
+                                </StackPanel>
+                            </GroupBox>
+                            <GroupBox Margin="2,2,2,2" FontSize="18" FontWeight="Bold" Foreground="White">
+                                <GroupBox.Header>
+                                    Helmet Image:
+                                </GroupBox.Header>
+                                <StackPanel Width="130" Orientation="horizontal">
+                                    <Image Name="Helmet_image" Source="{Binding ElementName=newtHelmetImgPath, Path=Text, Converter={StaticResource ImageConverter}}"  Width="120" Height="120"></Image>
+                                </StackPanel>
+                            </GroupBox>
+                            <GroupBox Margin="2,2,2,2" FontSize="18" FontWeight="Bold" Foreground="White">
+                                <GroupBox.Header>
+                                    Footwear:
+                                </GroupBox.Header>
+                                <StackPanel Orientation="Vertical" Width="300">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label Width="100" Style="{StaticResource Normsmllbltyle}">Socks Color:</Label>
+                                        <xctk:ColorPicker Name="newtSockColor"  SelectedColor="{Binding Socks_Color, Converter={StaticResource ColorConverter}}" DropDownBackground="White" MaxDropDownWidth="400" RecentColorsHeader="Team Colors"  ShowRecentColors="true" SelectedColorChanged="newtSockColor_SelectedColorChanged"  Height="20"  Width="40" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label Width="100" Style="{StaticResource Normsmllbltyle}">Cleats Color:</Label>
+                                        <xctk:ColorPicker Name="newtCleatsColor"  SelectedColor="{Binding Cleats_Color, Converter={StaticResource ColorConverter}}" DropDownBackground="White" MaxDropDownWidth="400" RecentColorsHeader="Team Colors"  ShowRecentColors="true" SelectedColorChanged="newtCleatsColor_SelectedColorChanged"  Height="20"  Width="40" />
+                                    </StackPanel>
+                                </StackPanel>
+                            </GroupBox>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <StackPanel Orientation="Vertical">
+                                <GroupBox Margin="2,2,2,2" FontSize="18" FontWeight="Bold" Foreground="White">
+                                    <GroupBox.Header>
+                                        Home Jersey Colors:
+                                    </GroupBox.Header>
+                                    <StackPanel Orientation="Vertical">
+                                        <StackPanel Orientation="Horizontal" >
+                                            <Label Width="60" Style="{StaticResource Normsmllbltyle}">Jersey:</Label>
+                                            <xctk:ColorPicker Name="newtHomeJerseyColor"  SelectedColor="{Binding Home_jersey_Color, Converter={StaticResource ColorConverter}}" DropDownBackground="White" MaxDropDownWidth="400" RecentColorsHeader="Team Colors"  ShowRecentColors="true" SelectedColorChanged="newtHomeJerseyColor_SelectedColorChanged"  Height="20"  Width="40" />
+                                            <Label Width="60" Style="{StaticResource Normsmllbltyle}">Sleeve:</Label>
+                                            <xctk:ColorPicker Name="newtHomeSleeveColor"  SelectedColor="{Binding Home_Sleeve_Color, Converter={StaticResource ColorConverter}}" DropDownBackground="White" MaxDropDownWidth="400" RecentColorsHeader="Team Colors"  ShowRecentColors="true" SelectedColorChanged="newtHomeSleeveColor_SelectedColorChanged"  Height="20"  Width="40" />
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" >
+                                            <Label Width="70" Style="{StaticResource Normsmllbltyle}">Number:</Label>
+                                            <xctk:ColorPicker Name="newtHomeJerseyNumberColor"  SelectedColor="{Binding Home_Jersey_Number_Color, Converter={StaticResource ColorConverter}}" DropDownBackground="White" MaxDropDownWidth="400" RecentColorsHeader="Team Colors"  ShowRecentColors="true" SelectedColorChanged="newtHomeJerseyNumberColor_SelectedColorChanged"  Height="20"  Width="40" />
+                                            <Label Width="120" Style="{StaticResource Normsmllbltyle}">Number Outline:</Label>
+                                            <xctk:ColorPicker Name="newtHomeNumberOutlineColor"  SelectedColor="{Binding Home_Jersey_Number_Outline_Color, Converter={StaticResource ColorConverter}}" DropDownBackground="White" MaxDropDownWidth="400" RecentColorsHeader="Team Colors"  ShowRecentColors="true" SelectedColorChanged="newtHomeNumberOutlineColor_SelectedColorChanged"  Height="20"  Width="40" />
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" >
+                                            <Label Width="110" Style="{StaticResource Normsmllbltyle}">Shoulder Loop:</Label>
+                                            <xctk:ColorPicker Name="newtHomeShoulderStripeColor"  SelectedColor="{Binding Home_Jersey_Shoulder_Stripe, Converter={StaticResource ColorConverter}}" DropDownBackground="White" MaxDropDownWidth="400" RecentColorsHeader="Team Colors"  ShowRecentColors="true"  SelectedColorChanged="newtHomeShoulderStripeColor_SelectedColorChanged"  Height="20"  Width="40" />
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" >
+                                            <Label Width="150" Style="{StaticResource Normsmllbltyle}">Sleeve Stripe Colors:</Label>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" >
+                                            <Label Width="25" Style="{StaticResource Normsmllbltyle}">1:</Label>
+                                            <xctk:ColorPicker Name="newtHomeJerseySleeve1Color"  SelectedColor="{Binding Home_Jersey_Sleeve_Stripe_Color_1, Converter={StaticResource ColorConverter}}" DropDownBackground="White" MaxDropDownWidth="400" RecentColorsHeader="Team Colors"  ShowRecentColors="true" SelectedColorChanged="newtHomeJerseySleeve1Color_SelectedColorChanged"  Height="20"  Width="40" />
+                                            <Label Width="25" Style="{StaticResource Normsmllbltyle}">2:</Label>
+                                            <xctk:ColorPicker Name="newtHomeJerseySleeve2Color"  SelectedColor="{Binding Home_Jersey_Sleeve_Stripe_Color_2, Converter={StaticResource ColorConverter}}" DropDownBackground="White" MaxDropDownWidth="400" RecentColorsHeader="Team Colors"  ShowRecentColors="true" SelectedColorChanged="newtHomeJerseySleeve2Color_SelectedColorChanged"  Height="20"  Width="40" />
+                                            <Label Width="25" Style="{StaticResource Normsmllbltyle}">3:</Label>
+                                            <xctk:ColorPicker Name="newtHomeJerseySleeve3Color"  SelectedColor="{Binding Home_Jersey_Sleeve_Stripe_Color_3, Converter={StaticResource ColorConverter}}" DropDownBackground="White" MaxDropDownWidth="400" RecentColorsHeader="Team Colors"  ShowRecentColors="true"  SelectedColorChanged="newtHomeJerseySleeve3Color_SelectedColorChanged"  Height="20"  Width="40" />
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label Width="25" Style="{StaticResource Normsmllbltyle}">4:</Label>
+                                            <xctk:ColorPicker Name="newtHomeJerseySleeve4Color"  SelectedColor="{Binding Home_Jersey_Sleeve_Stripe_Color_4, Converter={StaticResource ColorConverter}}" DropDownBackground="White" MaxDropDownWidth="400" RecentColorsHeader="Team Colors"  ShowRecentColors="true"  SelectedColorChanged="newtHomeJerseySleeve4Color_SelectedColorChanged"  Height="20"  Width="40" />
+                                            <Label Width="25" Style="{StaticResource Normsmllbltyle}">5:</Label>
+                                            <xctk:ColorPicker Name="newtHomeJerseySleeve5Color"  SelectedColor="{Binding Home_Jersey_Sleeve_Stripe_Color_5, Converter={StaticResource ColorConverter}}" DropDownBackground="White" MaxDropDownWidth="400" RecentColorsHeader="Team Colors"  ShowRecentColors="true"  SelectedColorChanged="newtHomeJerseySleeve5Color_SelectedColorChanged"  Height="20"  Width="40" />
+                                            <Label Width="25" Style="{StaticResource Normsmllbltyle}">6:</Label>
+                                            <xctk:ColorPicker Name="newtHomeJerseySleeve6Color"  SelectedColor="{Binding Home_Jersey_Sleeve_Stripe_Color_6, Converter={StaticResource ColorConverter}}" DropDownBackground="White" MaxDropDownWidth="400" RecentColorsHeader="Team Colors"  ShowRecentColors="true"  SelectedColorChanged="newtHomeJerseySleeve6Color_SelectedColorChanged"  Height="20"  Width="40" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </GroupBox>
+
+                                <GroupBox Margin="2,2,2,2" FontSize="18" FontWeight="Bold" Foreground="White">
+                                    <GroupBox.Header>
+                                        Home Pants Colors:
+                                    </GroupBox.Header>
+                                    <StackPanel Orientation="Vertical">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label Width="70" Style="{StaticResource Normsmllbltyle}">Pants:</Label>
+                                            <xctk:ColorPicker Name="newtHomePantsColor"  SelectedColor="{Binding Home_Pants_Color, Converter={StaticResource ColorConverter}}" DropDownBackground="White" MaxDropDownWidth="400" RecentColorsHeader="Team Colors"  ShowRecentColors="true"  SelectedColorChanged="newtHomePantsColor_SelectedColorChanged" Height="20" Width="40" />
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" >
+                                            <Label Width="70" Style="{StaticResource Normsmllbltyle}">Stripe 1:</Label>
+                                            <xctk:ColorPicker Name="newtHomePantsStripe1Color"  SelectedColor="{Binding Home_Pants_Stripe_Color_1, Converter={StaticResource ColorConverter}}" DropDownBackground="White" MaxDropDownWidth="400" RecentColorsHeader="Team Colors"  ShowRecentColors="true"  SelectedColorChanged="newtHomePantsStripe1Color_SelectedColorChanged"  Height="20"  Width="40" />
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" >
+                                            <Label Width="70" Style="{StaticResource Normsmllbltyle}">Stripe 2:</Label>
+                                            <xctk:ColorPicker Name="newtHomePantsStripe2Color"  SelectedColor="{Binding Home_Pants_Stripe_Color_2, Converter={StaticResource ColorConverter}}" DropDownBackground="White" MaxDropDownWidth="400" RecentColorsHeader="Team Colors"  ShowRecentColors="true"  SelectedColorChanged="newtHomePantsStripe2Color_SelectedColorChanged"  Height="20"  Width="40" />
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" >
+                                            <Label Width="70" Style="{StaticResource Normsmllbltyle}">Stripe 3:</Label>
+                                            <xctk:ColorPicker Name="newtHomePantsStripe3Color"  SelectedColor="{Binding Home_Pants_Stripe_Color_3, Converter={StaticResource ColorConverter}}" DropDownBackground="White" MaxDropDownWidth="400" RecentColorsHeader="Team Colors"  ShowRecentColors="true"  SelectedColorChanged="newtHomePantsStripe3Color_SelectedColorChanged"  Height="20"  Width="40" />
+                                        </StackPanel>
+
+                                    </StackPanel>
+                                </GroupBox>
+                            </StackPanel>
+
+                            <StackPanel Orientation="vertical">
+                                <GroupBox Margin="2,2,2,2" FontSize="18" FontWeight="Bold" Foreground="White">
+
+                                    <GroupBox.Header>
+                                        Home Uniform:
+                                    </GroupBox.Header>
+                                    <StackPanel Width="180" Height="360" Orientation="horizontal" HorizontalAlignment="Center">
+                                        <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                            <Image Name="newtHomeUniform" Width="165" Height="358" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </GroupBox>
+                            </StackPanel>
+
+                            <StackPanel Orientation="vertical">
+                                <GroupBox Margin="2,2,2,2" FontSize="18" FontWeight="Bold" Foreground="White">
+
+                                    <GroupBox.Header>
+                                        Away Uniform:
+                                    </GroupBox.Header>
+                                    <StackPanel Width="180" Height="360" Orientation="horizontal" HorizontalAlignment="Center">
+                                        <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                            <Image Name="newtAwayUniform" Width="165" Height="358" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </GroupBox>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Vertical">
+                                <GroupBox Margin="2,2,2,2" FontSize="18" FontWeight="Bold" Foreground="White">
+                                    <GroupBox.Header>
+                                        Away Jersey Colors:
+                                    </GroupBox.Header>
+                                    <StackPanel Orientation="Vertical">
+                                        <StackPanel Orientation="Horizontal" >
+                                            <Label Width="60" Style="{StaticResource Normsmllbltyle}">Jersey:</Label>
+                                            <xctk:ColorPicker Name="newtAwayJerseyColor"  SelectedColor="{Binding Away_jersey_Color, Converter={StaticResource ColorConverter}}" DropDownBackground="White" MaxDropDownWidth="400" RecentColorsHeader="Team Colors"  ShowRecentColors="true" SelectedColorChanged="newtAwayJerseyColor_SelectedColorChanged"  Height="20"  Width="40" />
+                                            <Label Width="60" Style="{StaticResource Normsmllbltyle}">Sleeve:</Label>
+                                            <xctk:ColorPicker Name="newtAwaySleeveColor"  SelectedColor="{Binding Away_Sleeve_Color, Converter={StaticResource ColorConverter}}" DropDownBackground="White" MaxDropDownWidth="400" RecentColorsHeader="Team Colors"  ShowRecentColors="true" SelectedColorChanged="newtAwaySleeveColor_SelectedColorChanged"  Height="20"  Width="40" />
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" >
+                                            <Label Width="70" Style="{StaticResource Normsmllbltyle}">Number:</Label>
+                                            <xctk:ColorPicker Name="newtAwayJerseyNumberColor"  SelectedColor="{Binding Away_Jersey_Number_Color, Converter={StaticResource ColorConverter}}" DropDownBackground="White" MaxDropDownWidth="400" RecentColorsHeader="Team Colors"  ShowRecentColors="true"  SelectedColorChanged="newtAwayJerseyNumberColor_SelectedColorChanged"  Height="20"  Width="40" />
+                                            <Label Width="120" Style="{StaticResource Normsmllbltyle}">Number Outline:</Label>
+                                            <xctk:ColorPicker Name="newtAwayNumberOutlineColor"  SelectedColor="{Binding Away_Jersey_Number_Outline_Color, Converter={StaticResource ColorConverter}}" DropDownBackground="White" MaxDropDownWidth="400" RecentColorsHeader="Team Colors"  ShowRecentColors="true"  SelectedColorChanged="newtAwayNumberOutlineColor_SelectedColorChanged"  Height="20"  Width="40" />
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" >
+                                            <Label Width="110" Style="{StaticResource Normsmllbltyle}">Shoulder Loop:</Label>
+                                            <xctk:ColorPicker Name="newtAwayShoulderStripeColor"  SelectedColor="{Binding Away_Jersey_Shoulder_Stripe, Converter={StaticResource ColorConverter}}" DropDownBackground="White" MaxDropDownWidth="400" RecentColorsHeader="Team Colors"  ShowRecentColors="true"  SelectedColorChanged="newtAwayShoulderStripeColor_SelectedColorChanged"  Height="20"  Width="40" />
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" >
+                                            <Label Width="150" Style="{StaticResource Normsmllbltyle}">Sleeve Stripe Colors:</Label>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" >
+                                            <Label Width="25" Style="{StaticResource Normsmllbltyle}">1:</Label>
+                                            <xctk:ColorPicker Name="newtAwayJerseySleeve1Color"  SelectedColor="{Binding Away_Jersey_Sleeve_Stripe_Color_1, Converter={StaticResource ColorConverter}}" DropDownBackground="White" MaxDropDownWidth="400" RecentColorsHeader="Team Colors"  ShowRecentColors="true"  SelectedColorChanged="newtAwayJerseySleeve1Color_SelectedColorChanged"  Height="20"  Width="40" />
+                                            <Label Width="25" Style="{StaticResource Normsmllbltyle}">2:</Label>
+                                            <xctk:ColorPicker Name="newtAwayJerseySleeve2Color"  SelectedColor="{Binding Away_Jersey_Sleeve_Stripe_Color_2, Converter={StaticResource ColorConverter}}" DropDownBackground="White" MaxDropDownWidth="400" RecentColorsHeader="Team Colors"  ShowRecentColors="true"  SelectedColorChanged="newtAwayJerseySleeve2Color_SelectedColorChanged"  Height="20"  Width="40" />
+                                            <Label Width="25" Style="{StaticResource Normsmllbltyle}">3:</Label>
+                                            <xctk:ColorPicker Name="newtAwayJerseySleeve3Color"  SelectedColor="{Binding Away_Jersey_Sleeve_Stripe_Color_3, Converter={StaticResource ColorConverter}}" DropDownBackground="White" MaxDropDownWidth="400" RecentColorsHeader="Team Colors"  ShowRecentColors="true"  SelectedColorChanged="newtAwayJerseySleeve3Color_SelectedColorChanged"  Height="20"  Width="40" />
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label Width="25" Style="{StaticResource Normsmllbltyle}">4:</Label>
+                                            <xctk:ColorPicker Name="newtAwayJerseySleeve4Color"  SelectedColor="{Binding Away_Jersey_Sleeve_Stripe_Color_4, Converter={StaticResource ColorConverter}}" DropDownBackground="White" MaxDropDownWidth="400" RecentColorsHeader="Team Colors"  ShowRecentColors="true"  SelectedColorChanged="newtAwayJerseySleeve4Color_SelectedColorChanged"  Height="20"  Width="40" />
+                                            <Label Width="25" Style="{StaticResource Normsmllbltyle}">5:</Label>
+                                            <xctk:ColorPicker Name="newtAwayJerseySleeve5Color"  SelectedColor="{Binding Away_Jersey_Sleeve_Stripe_Color_5, Converter={StaticResource ColorConverter}}" DropDownBackground="White" MaxDropDownWidth="400" RecentColorsHeader="Team Colors"  ShowRecentColors="true"  SelectedColorChanged="newtAwayJerseySleeve5Color_SelectedColorChanged"  Height="20"  Width="40" />
+                                            <Label Width="25" Style="{StaticResource Normsmllbltyle}">6:</Label>
+                                            <xctk:ColorPicker Name="newtAwayJerseySleeve6Color"  SelectedColor="{Binding Away_Jersey_Sleeve_Stripe_Color_6, Converter={StaticResource ColorConverter}}" DropDownBackground="White" MaxDropDownWidth="400" RecentColorsHeader="Team Colors"  ShowRecentColors="true"  SelectedColorChanged="newtAwayJerseySleeve6Color_SelectedColorChanged"  Height="20"  Width="40" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </GroupBox>
+
+                                <GroupBox Margin="2,2,2,2" FontSize="18" FontWeight="Bold" Foreground="White">
+                                    <GroupBox.Header>
+                                        Away Pants Colors:
+                                    </GroupBox.Header>
+                                    <StackPanel Orientation="Vertical">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label Width="70" Style="{StaticResource Normsmllbltyle}">Pants:</Label>
+                                            <xctk:ColorPicker Name="newtAwayPantsColor"  SelectedColor="{Binding Away_Pants_Color, Converter={StaticResource ColorConverter}}" DropDownBackground="White" MaxDropDownWidth="400" RecentColorsHeader="Team Colors"  ShowRecentColors="true"  SelectedColorChanged="newtAwayPantsColor_SelectedColorChanged" Height="20" Width="40" />
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" >
+                                            <Label Width="70" Style="{StaticResource Normsmllbltyle}">Stripe 1:</Label>
+                                            <xctk:ColorPicker Name="newtAwayPantsStripe1Color"  SelectedColor="{Binding Away_Pants_Stripe_Color_1, Converter={StaticResource ColorConverter}}" DropDownBackground="White" MaxDropDownWidth="400" RecentColorsHeader="Team Colors" ShowRecentColors="true" SelectedColorChanged="newtAwayPantsStripe1Color_SelectedColorChanged"  Height="20"  Width="40" />
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" >
+                                            <Label Width="70" Style="{StaticResource Normsmllbltyle}">Stripe 2:</Label>
+                                            <xctk:ColorPicker Name="newtAwayPantsStripe2Color"  SelectedColor="{Binding Away_Pants_Stripe_Color_2, Converter={StaticResource ColorConverter}}" DropDownBackground="White" MaxDropDownWidth="400" RecentColorsHeader="Team Colors"  ShowRecentColors="true"  SelectedColorChanged="newtAwayPantsStripe2Color_SelectedColorChanged"  Height="20"  Width="40" />
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" >
+                                            <Label Width="70" Style="{StaticResource Normsmllbltyle}">Stripe 3:</Label>
+                                            <xctk:ColorPicker Name="newtAwayPantsStripe3Color"  SelectedColor="{Binding Away_Pants_Stripe_Color_3, Converter={StaticResource ColorConverter}}" DropDownBackground="White" MaxDropDownWidth="400" RecentColorsHeader="Team Colors"  ShowRecentColors="true"  SelectedColorChanged="newtAwayPantsStripe3Color_SelectedColorChanged"  Height="20"  Width="40" />
+                                        </StackPanel>
+
+                                    </StackPanel>
+                                </GroupBox>
+                            </StackPanel>
+
+                        </StackPanel>
+                    </StackPanel>
+                </TabItem>
+
+            </TabControl>
+        </StackPanel>
+
+    </DockPanel>
+
+
+
+</UserControl>

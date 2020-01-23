@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using log4net;
+using SpectatorFootball.Models;
 
 namespace SpectatorFootball
 {
@@ -7,14 +8,14 @@ namespace SpectatorFootball
     {
         private static ILog logger = LogManager.GetLogger("RollingFile");
 
-        public List<TeamMdl> getAllStockTeams()
+        public List<Stock_Teams> getAllStockTeams()
         {
-            var r = new List<TeamMdl>();
+            var r = new List<Stock_Teams>();
             var StockTeamDAO = new Stock_TeamsDAO();
             r = StockTeamDAO.getAllStockTeams();
             return r;
         }
-        public void AddStockTeam(TeamMdl Team)
+        public void AddStockTeam(Stock_Teams Team)
         {
             logger.Info("Adding new stock team " + Team.Nickname);
             var StockTeamDAO = new Stock_TeamsDAO();
@@ -26,15 +27,11 @@ namespace SpectatorFootball
             var StockTeamDAO = new Stock_TeamsDAO();
             StockTeamDAO.DeleteStockTeam(t_id);
         }
-        public void UpdateStockTeam(TeamMdl Team)
+        public void UpdateStockTeam(Stock_Teams Team)
         {
             logger.Info("Updating stock team " + Team.Nickname);
             var StockTeamDAO = new Stock_TeamsDAO();
             StockTeamDAO.UpdateStockTeam(Team);
-        }
-        public bool DoesTeamAlreadyExist_ID(string City, string Nickname, string original_City, string original_Nickname)
-        {
-            return new Stock_TeamsDAO().DoesTeamAlreadyExist_ID(City, Nickname, original_City, original_Nickname);
         }
         public bool DoesTeamAlreadyExist(string City, string Nickname)
         {

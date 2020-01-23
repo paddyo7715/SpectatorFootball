@@ -1,7 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Text.RegularExpressions;
-
+using System.Configuration;
+using System.Data.Entity.Core.EntityClient;
 
 namespace SpectatorFootball
 {
