@@ -231,8 +231,8 @@ namespace SpectatorFootball
             pw.Mem_League.Leagues.Number_of_Divisions = num_divs;
             pw.Mem_League.Leagues.Number_of_Conferences = num_confs;
 
-
-
+            pw.Mem_League.Teams = new List<Team>();
+                
             for (int i = 1; i <= num_teams; i++)
               pw.Mem_League.Teams.Add(new Team() { ID = i, League_ID = 1, City = App_Constants.EMPTY_TEAM_SLOT });
 

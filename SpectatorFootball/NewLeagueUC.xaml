@@ -43,7 +43,7 @@
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
                                 <Label Width="350" Style="{StaticResource Largelbltyle}">Starting Year:</Label>
-                                <ComboBox Name="newl1StartingYear" SelectedValue="{Binding Starting_Year, FallbackValue=''}"  Style="{StaticResource ComboBoxstyle}" Text="Is not open" />
+                                <ComboBox Name="newl1StartingYear" SelectedValue="{Binding Starting_Year, FallbackValue='1983'}"  Style="{StaticResource ComboBoxstyle}" Text="Is not open" />
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
                                 <Label Width="350" Style="{StaticResource Largelbltyle}">Championship Game:</Label>
