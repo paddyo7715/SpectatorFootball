@@ -56,7 +56,7 @@ namespace SpectatorFootball
 
             var all_uniform_colors = new List<string>();
 
-            if (orig_this_team == null)
+            if (orig_this_team.City == App_Constants.EMPTY_TEAM_SLOT)
                 bnew_team = true;
             else
                 bnew_team = false;
@@ -757,9 +757,6 @@ namespace SpectatorFootball
 
             if (bNewLeague)
                 backtoNewLeague?.Invoke(this, new TeamUpdatedEventArgs(false));
-//if this is when the league is loaded we will probably want to update the standings and close this form.
-//            else
-//                backtoStockTeams?.Invoke(this, new EventArgs());
 
         }
 
@@ -1222,16 +1219,19 @@ namespace SpectatorFootball
             if (!CommonUtils.isAlpha(binding_team.City, true))
                 throw new Exception("Invalid character in City!");
 
+            if (binding_team.City == App_Constants.EMPTY_TEAM_SLOT)
+                throw new Exception("City can not have a value of " + App_Constants.EMPTY_TEAM_SLOT);
+
             if (CommonUtils.isBlank(binding_team.Nickname))
                 throw new Exception("Nickname must have a value");
 
-            if (!CommonUtils.isAlpha(binding_team.Nickname, true))
+            if (!CommonUtils.isAlphaNumeric(binding_team.Nickname, true))
                 throw new Exception("Invalid character in Nickname!");
 
             if (CommonUtils.isBlank(binding_team.Stadium_Name))
                 throw new Exception("Stadium Name must have a value");
 
-            if (!CommonUtils.isAlpha(binding_team.Stadium_Name, true))
+            if (!CommonUtils.isAlphaNumeric(binding_team.Stadium_Name, true))
                 throw new Exception("Invalid character in Stadium!");
 
             if (CommonUtils.isBlank(binding_team.Stadium_Location))

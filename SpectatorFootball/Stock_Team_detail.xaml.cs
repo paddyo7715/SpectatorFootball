@@ -1216,16 +1216,19 @@ namespace SpectatorFootball
                 if (!CommonUtils.isAlpha(binding_stock_team.City, true))
                     throw new Exception("Invalid character in City!");
 
+                if (binding_stock_team.City == App_Constants.EMPTY_TEAM_SLOT)
+                    throw new Exception("City can not have a value of " + App_Constants.EMPTY_TEAM_SLOT);
+
                 if (CommonUtils.isBlank(binding_stock_team.Nickname))
                     throw new Exception("Nickname must have a value");
 
-                if (!CommonUtils.isAlpha(binding_stock_team.Nickname, true))
+                if (!CommonUtils.isAlphaNumeric(binding_stock_team.Nickname, true))
                     throw new Exception("Invalid character in Nickname!");
 
                 if (CommonUtils.isBlank(binding_stock_team.Stadium_Name))
                     throw new Exception("Stadium Name must have a value");
 
-                if (!CommonUtils.isAlpha(binding_stock_team.Stadium_Name, true))
+                if (!CommonUtils.isAlphaNumeric(binding_stock_team.Stadium_Name, true))
                     throw new Exception("Invalid character in Stadium!");
 
                 if (CommonUtils.isBlank(binding_stock_team.Stadium_Location))

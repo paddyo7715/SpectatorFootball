@@ -183,5 +183,21 @@ namespace SpectatorFootball
 
             return r;
         }
+        public static bool isAlphaNumeric(string s, bool bAllowSpace)
+        {
+            bool r = true;
+            string pattern = null;
+
+            if (bAllowSpace)
+                pattern = "^[a-zA-Z0-9 ]*$";
+            else
+                pattern = "^[a-zA-Z0-9]*$";
+
+            Regex Regexm = new Regex(pattern);
+            if (!Regexm.IsMatch(s))
+                r = false;
+
+            return r;
+        }
     }
 }

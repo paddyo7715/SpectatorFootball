@@ -120,17 +120,17 @@ namespace SpectatorFootball
 
             if (CommonUtils.isBlank(newl1shortname.Text))
                 throw new Exception("League Short Name must be supplied!");
-            if (!CommonUtils.isAlpha(newl1shortname.Text, false))
+            if (!CommonUtils.isAlphaNumeric(newl1shortname.Text, false))
                 throw new Exception("Invalid character in League Short Name!");
 
             if (CommonUtils.isBlank(newl1longname.Text))
                 throw new Exception("League Long Name must be supplied!");
-            if (!CommonUtils.isAlpha(newl1longname.Text, true))
+            if (!CommonUtils.isAlphaNumeric(newl1longname.Text, true))
                 throw new Exception("Invalid character in League Long Name!");
 
             if (CommonUtils.isBlank(newl1championshipgame.Text))
                 throw new Exception("Championship Game must be supplied!");
-            if (!CommonUtils.isAlpha(newl1championshipgame.Text, true))
+            if (!CommonUtils.isAlphaNumeric(newl1championshipgame.Text, true))
                 throw new Exception("Invalid character in Championship Game!");
 
             if (CommonUtils.isBlank(newlnumweeks.Text) || !int.TryParse(newlnumweeks.Text, out dummy_int))
