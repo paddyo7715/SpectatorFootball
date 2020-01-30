@@ -30,7 +30,7 @@ namespace SpectatorFootball
         public event EventHandler<teamEventArgs> Show_NewTeam;
 
         public BackgroundWorker bw = null;
-        public Progress_Dialog pop = new Progress_Dialog();
+        public Progress_Dialog pop = null; 
 
         public NewLeagueUC(MainWindow pw, List<Stock_Teams> st_list)
         {
@@ -221,6 +221,7 @@ namespace SpectatorFootball
             newlnumteams.Text = num_teams.ToString();
             newlnumconferences.Text = num_confs.ToString();
             newlnumplayoffteams.Text = num_playoff_teams.ToString();
+
 
             logger.Debug("Set all teams blank");
 
@@ -732,6 +733,10 @@ namespace SpectatorFootball
                 logger.Info("league validated!");
 
                 pw.Mem_League.Leagues.ID = 1;
+                pw.Mem_League.Leagues.Short_Name = newl1shortname.Text;
+                pw.Mem_League.Leagues.Long_Name = newl1longname.Text;
+                pw.Mem_League.Leagues.Championship_Game_Name = newl1championshipgame.Text;
+                pw.Mem_League.Leagues.Starting_Year = Convert.ToInt32(newl1StartingYear.Text);
 
                 if (Convert.ToInt32(newlnumconferences.Text) == 2)
                 {
@@ -742,8 +747,6 @@ namespace SpectatorFootball
                 for (int i = 1; i <= Convert.ToInt32(newlnumdivisions.Text); i++)
                     Divisions_list.Add(((TextBox)this.FindName("newldiv" + i.ToString())).Text.Trim());
 
-                var lyears = new List<int>(new int[] { Convert.ToInt32(newl1StartingYear.Text) });
-
                 foreach (string c in Conferences_list)
                     pw.Mem_League.Conferences.Add(new Conference() { Conf_Name = c });
 
@@ -752,7 +755,7 @@ namespace SpectatorFootball
 
 
                 // Background Worker code for popup
-                pop.btnclose.Visibility = Visibility.Hidden;
+                pop = new Progress_Dialog();
 
                 bw = new BackgroundWorker();
 

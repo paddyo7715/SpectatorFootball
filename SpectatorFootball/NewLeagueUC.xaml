@@ -35,19 +35,19 @@
                         <StackPanel Width="900" Orientation="Vertical" >
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
                                 <Label Width="350" Style="{StaticResource Largelbltyle}">Short Names:</Label>
-                                <TextBox Name="newl1shortname" Text="{Binding Short_Name, FallbackValue='', Converter={StaticResource TextConverter}}" Width="50"  Style="{StaticResource Largetxttyle}" MaxLength="6" />
+                                <TextBox Name="newl1shortname"  Width="50"  Style="{StaticResource Largetxttyle}" MaxLength="6" />
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
                                 <Label Width="350" Style="{StaticResource Largelbltyle}">Long Names:</Label>
-                                <TextBox Name="newl1longname" Text="{Binding Long_Name, FallbackValue='', Converter={StaticResource TextConverter}}" Width="300" Style="{StaticResource Largetxttyle}"  MaxLength="100" />
+                                <TextBox Name="newl1longname" Width="300" Style="{StaticResource Largetxttyle}"  MaxLength="100" />
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
                                 <Label Width="350" Style="{StaticResource Largelbltyle}">Starting Year:</Label>
-                                <ComboBox Name="newl1StartingYear" SelectedValue="{Binding Starting_Year, FallbackValue='1983'}"  Style="{StaticResource ComboBoxstyle}" Text="Is not open" />
+                                <ComboBox Name="newl1StartingYear"  Style="{StaticResource ComboBoxstyle}" Text="Is not open" />
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
                                 <Label Width="350" Style="{StaticResource Largelbltyle}">Championship Game:</Label>
-                                <TextBox Name="newl1championshipgame" Text="{Binding Championship_Game_Name, FallbackValue='', Converter={StaticResource TextConverter}}" Width="300" Style="{StaticResource Largetxttyle}" MaxLength="100" />
+                                <TextBox Name="newl1championshipgame"  Width="300" Style="{StaticResource Largetxttyle}" MaxLength="100" />
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
                                 <Label  Width="350" Style="{StaticResource Largelbltyle}">Structure:</Label>
@@ -71,21 +71,21 @@
                                 <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                                         <Label  Width="180" Style="{StaticResource LargeShortlbltyle}">Teams:</Label>
-                                        <TextBox  Name="newlnumteams" Text="{Binding Num_Teams, FallbackValue='', Converter={StaticResource TextConverter}}" Style="{StaticResource LargeReadOnlytxttyle}" MaxLength="100" />
+                                        <TextBox  Name="newlnumteams"  Style="{StaticResource LargeReadOnlytxttyle}" MaxLength="100" />
                                         <Label  Width="180" Style="{StaticResource LargeShortlbltyle}">Weeks in Season:</Label>
-                                        <TextBox  Name="newlnumweeks" Text="{Binding Number_of_weeks, FallbackValue='', Converter={StaticResource TextConverter}}" Style="{StaticResource LargeReadOnlytxttyle}" MaxLength="100" />
+                                        <TextBox  Name="newlnumweeks"  Style="{StaticResource LargeReadOnlytxttyle}" MaxLength="100" />
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                                         <Label  Width="180" Style="{StaticResource LargeShortlbltyle}">Games in Season:</Label>
-                                        <TextBox  Name="newlnumgames" Text="{Binding Number_of_Games, FallbackValue='', Converter={StaticResource TextConverter}}" Style="{StaticResource LargeReadOnlytxttyle}"  MaxLength="100" />
+                                        <TextBox  Name="newlnumgames" Style="{StaticResource LargeReadOnlytxttyle}"  MaxLength="100" />
                                         <Label  Width="180" Style="{StaticResource LargeShortlbltyle}">Division:</Label>
-                                        <TextBox  Name="newlnumdivisions" Text="{Binding Number_of_Divisions, FallbackValue='', Converter={StaticResource TextConverter}}" Style="{StaticResource LargeReadOnlytxttyle}" MaxLength="100" />
+                                        <TextBox  Name="newlnumdivisions" Style="{StaticResource LargeReadOnlytxttyle}" MaxLength="100" />
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                                         <Label  Width="180" Style="{StaticResource LargeShortlbltyle}">Conferences:</Label>
-                                        <TextBox  Name="newlnumconferences" Text="{Binding Number_of_Conferences, FallbackValue='', Converter={StaticResource TextConverter}}" Style="{StaticResource LargeReadOnlytxttyle}" MaxLength="100" />
+                                        <TextBox  Name="newlnumconferences" Style="{StaticResource LargeReadOnlytxttyle}" MaxLength="100" />
                                         <Label  Width="180" Style="{StaticResource LargeShortlbltyle}">Playoff Teams:</Label>
-                                        <TextBox  Name="newlnumplayoffteams" Text="{Binding Num_Playoff_Teams, FallbackValue='', Converter={StaticResource TextConverter}}" Style="{StaticResource LargeReadOnlytxttyle}" MaxLength="100" />
+                                        <TextBox  Name="newlnumplayoffteams" Style="{StaticResource LargeReadOnlytxttyle}" MaxLength="100" />
                                     </StackPanel>
                                 </StackPanel>
                             </StackPanel>

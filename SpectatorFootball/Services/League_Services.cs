@@ -32,7 +32,7 @@ namespace SpectatorFootball
             try
             {
                 // Update the progress bar
-                i = 2;
+                i = 10;
                 process_state = "Creating League Folder Strucuture 1 of 4";
                 state_struct = "Processing..." + "|" + process_state + "|" + "";
                 bw.ReportProgress(i, state_struct);

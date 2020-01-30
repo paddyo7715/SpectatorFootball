@@ -11,7 +11,7 @@
             <StackPanel Height="80" Width="340" Orientation="Vertical" Background="Transparent" HorizontalAlignment="Center" VerticalAlignment="top">
                 <StackPanel Orientation="Horizontal">
                     <Label Name="prglbl" Style="{StaticResource appProgressSmallLBL}" Width="280" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="top" />
-                    <Button Name="btnclose" Visibility="Visible" Style="{StaticResource appProgressBTN}" Width="50" VerticalAlignment="top" Click="btnclose_Click">Close</Button>
+                    <Button Name="btnclose" Visibility="Hidden" Style="{StaticResource appProgressBTN}" Width="50" VerticalAlignment="top" Click="btnclose_Click">Close</Button>
                 </StackPanel>
                 <ProgressBar Name="prgTest" Width="290" Height="30" Minimum="1" Maximum="100" HorizontalAlignment="Center" VerticalAlignment="top" />
                 <Label Name="statuslbl" Content=" " Style="{StaticResource appProgressLBL}" Width="290" HorizontalAlignment="Center" VerticalAlignment="top" />
