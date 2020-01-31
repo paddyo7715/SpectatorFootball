@@ -7,6 +7,10 @@ namespace SpectatorFootball
 {
     public class App_Constants
     {
+        // Max Settings
+        public const int MAX_DIVISIONS = 20;
+        public const int MAX_TEAMS = 200;
+
         // Folders / Files
         public const int MIN_FREE_DISK_SPACE = 50;
         public const string GAME_DOC_FOLDER = "Spect_Football_Data";

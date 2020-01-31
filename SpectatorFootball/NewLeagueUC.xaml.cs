@@ -168,7 +168,7 @@ namespace SpectatorFootball
                     throw new Exception("Invalid character in Division Name " + divtxtbox.Text + "!");
             }
 
-            for (int i = 1; i <= Convert.ToInt32(newlnumdivisions.Text); i++)
+            for (int i = 1; i <= Convert.ToInt32(newlnumteams.Text); i++)
             {
                 string teamlabel = "newllblTeam" + i.ToString();
                 Label tlabel = (Label) this.FindName(teamlabel);
@@ -222,7 +222,6 @@ namespace SpectatorFootball
             newlnumconferences.Text = num_confs.ToString();
             newlnumplayoffteams.Text = num_playoff_teams.ToString();
 
-
             logger.Debug("Set all teams blank");
 
             pw.Mem_League.Leagues.Number_of_weeks = num_weeks;
@@ -238,22 +237,45 @@ namespace SpectatorFootball
               pw.Mem_League.Teams.Add(new Team() { ID = i, League_ID = 1, City = App_Constants.EMPTY_TEAM_SLOT });
 
 
-                // Clear previous division selections
-                logger.Debug("Clear previous division selections");
+            // Clear previous division selections
+            logger.Debug("Clear previous division selections");
             spDivisions.Children.Clear();
             sp1.Children.Clear();
-            unregisterControl("newlConf1");
-            unregisterControl("newlConf2");
-            unregisterControl("newllblConf1");
-            unregisterControl("newllblConf2");
+
+            if (this.FindName("newllblConf1") != null)
+            {
+                unregisterControl("newlConf1");
+                unregisterControl("newllblConf1");
+            }
+
+            if (this.FindName("newllblConf2") != null)
+            {
+                unregisterControl("newlConf2");
+                unregisterControl("newllblConf2");
+            }
+
+            logger.Debug("Unregister all div controls");
+            for (int I = 1; I <= Convert.ToInt32(App_Constants.MAX_DIVISIONS); I++)
+            {
+                if (this.FindName("newldiv" + I.ToString()) != null)
+                {
+                    unregisterControl("newldiv" + I.ToString());
+                    unregisterControl("newldiv_team" + I.ToString());
+                }
+                else
+                    break;
+           }
 
             logger.Debug("Unregister all team controls");
-            for (int I = 1; I <= Convert.ToInt32(num_teams); I++)
+            for (int I = 1; I <= Convert.ToInt32(App_Constants.MAX_TEAMS); I++)
             {
-                unregisterControl("newldiv" + I.ToString());
-                unregisterControl("newldiv_team" + I.ToString());
-                unregisterControl("newlimgTeam" + I.ToString());
-                unregisterControl("newllblTeam" + I.ToString());
+                if (this.FindName("newllblTeam" + I.ToString()) != null)
+                {
+                    unregisterControl("newlimgTeam" + I.ToString());
+                    unregisterControl("newllblTeam" + I.ToString());
+                }
+                else
+                    break;
             }
 
             if (num_confs == 2)

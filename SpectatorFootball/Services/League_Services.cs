@@ -39,7 +39,8 @@ namespace SpectatorFootball
 
                 // Create the League Folder
                 logger.Info("Creating league folder");
-                Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + App_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + nl.Leagues.Short_Name);
+                string p = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + App_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + nl.Leagues.Short_Name;
+                Directory.CreateDirectory(p);
 
                 // Create Backup Folder
                 logger.Info("Creating league backup folder");
