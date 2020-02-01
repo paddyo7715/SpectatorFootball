@@ -20,9 +20,8 @@ namespace SpectatorFootball
             var ts = new Team_Services();
 
             // Create the league folder
-            string DIRPath = System.IO.Path.Combine(Environment.SpecialFolder.MyDocuments.ToString(), App_Constants.GAME_DOC_FOLDER);
-            string DIRPath_League = Environment.SpecialFolder.MyDocuments + Path.DirectorySeparatorChar + App_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + nl.Leagues.Short_Name;
-            string New_League_File = nl.Leagues.Short_Name + "." + App_Constants.DB_FILE_EXT;
+            string DIRPath_League = null;
+            string New_League_File = nl.Leagues.Short_Name.ToUpper() + "." + App_Constants.DB_FILE_EXT;
             string League_con_string = Environment.SpecialFolder.MyDocuments + Path.DirectorySeparatorChar + App_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + nl.Leagues.Short_Name + Path.DirectorySeparatorChar + nl.Leagues.Short_Name + Path.DirectorySeparatorChar + App_Constants.DB_FILE_EXT;
             var LeagueDAO = new LeagueDAO();
             string process_state = "Processing...";
@@ -39,24 +38,26 @@ namespace SpectatorFootball
 
                 // Create the League Folder
                 logger.Info("Creating league folder");
-                string p = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + App_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + nl.Leagues.Short_Name;
-                Directory.CreateDirectory(p);
+                DIRPath_League = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + App_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + nl.Leagues.Short_Name.ToUpper();
+                Directory.CreateDirectory(DIRPath_League);
 
                 // Create Backup Folder
                 logger.Info("Creating league backup folder");
-                Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + App_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + nl.Leagues.Short_Name + Path.DirectorySeparatorChar + App_Constants.BACKUP_FOLDER);
+                Directory.CreateDirectory(DIRPath_League + Path.DirectorySeparatorChar + App_Constants.BACKUP_FOLDER);
 
                 // Create the helmet image League Folder
                 logger.Info("Creating league helmet folder");
-                Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + App_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + nl.Leagues.Short_Name + Path.DirectorySeparatorChar + App_Constants.LEAGUE_HELMETS_SUBFOLDER);
+                Directory.CreateDirectory(DIRPath_League + Path.DirectorySeparatorChar + App_Constants.LEAGUE_HELMETS_SUBFOLDER);
 
                 // Create the stadium image League folder
                 logger.Info("Creating league image folder");
-                Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + App_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + nl.Leagues.Short_Name + Path.DirectorySeparatorChar + App_Constants.LEAGUE_STADIUM_SUBFOLDER);
+                Directory.CreateDirectory(DIRPath_League + Path.DirectorySeparatorChar + App_Constants.LEAGUE_STADIUM_SUBFOLDER);
 
                 // Copy and Create the league database file
                 logger.Info("Starting league database creation and copy");
-                File.Copy(CommonUtils.getAppPath() + Path.DirectorySeparatorChar + App_Constants.BLANK_DB_FOLDER + Path.DirectorySeparatorChar + App_Constants.BLANK_DB, DIRPath_League + Path.DirectorySeparatorChar + New_League_File);
+                string sf = CommonUtils.getAppPath() + Path.DirectorySeparatorChar + App_Constants.BLANK_DB_FOLDER + Path.DirectorySeparatorChar + App_Constants.BLANK_DB;
+                string df = DIRPath_League + Path.DirectorySeparatorChar + New_League_File;
+                File.Copy(sf, df);
 
                 // Copy team image files to league folder
                 logger.Info("Helmet and stadium files copy starting");
@@ -135,7 +136,7 @@ namespace SpectatorFootball
                 state_struct = "Error" + "|" + process_state + "|" + "Failed to Create New League";
                 bw.ReportProgress(i, state_struct);
 
-                Directory.Delete(DIRPath_League);
+                Directory.Delete(DIRPath_League,true);
 
                 logger.Error("Create league service failed");
                 logger.Error(ex);
