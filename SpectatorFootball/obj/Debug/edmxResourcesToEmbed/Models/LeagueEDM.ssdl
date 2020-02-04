@@ -22,7 +22,6 @@
     </Key>
     <Property Name="ID" Type="integer" Nullable="false" />
     <Property Name="League_ID" Type="integer" Nullable="false" />
-    <Property Name="Conference_ID" Type="integer" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
   </EntityType>
   <EntityType Name="Game">
@@ -457,18 +456,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Division_1_0">
-    <End Role="Conference" Type="Self.Conference" Multiplicity="1" />
-    <End Role="Division" Type="Self.Division" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Conference">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Division">
-        <PropertyRef Name="Conference_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_Game_0_0">
     <End Role="Teams" Type="Self.Teams" Multiplicity="1" />
     <End Role="Game" Type="Self.Game" Multiplicity="*" />
@@ -858,10 +845,6 @@
     </AssociationSet>
     <AssociationSet Name="FK_Division_0_0" Association="Self.FK_Division_0_0">
       <End Role="League" EntitySet="League" />
-      <End Role="Division" EntitySet="Division" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Division_1_0" Association="Self.FK_Division_1_0">
-      <End Role="Conference" EntitySet="Conference" />
       <End Role="Division" EntitySet="Division" />
     </AssociationSet>
     <AssociationSet Name="FK_Game_0_0" Association="Self.FK_Game_0_0">

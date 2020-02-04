@@ -21,7 +21,7 @@ namespace SpectatorFootball.Models
         }
 
         public mainEntities(string connString)
-            : base(connString)
+: base(connString)
         {
         }
 

@@ -16,10 +16,8 @@ namespace SpectatorFootball.Models
     {
         public long ID { get; set; }
         public long League_ID { get; set; }
-        public long Conference_ID { get; set; }
         public string Name { get; set; }
     
-        public virtual Conference Conference { get; set; }
         public virtual League League { get; set; }
     }
 }

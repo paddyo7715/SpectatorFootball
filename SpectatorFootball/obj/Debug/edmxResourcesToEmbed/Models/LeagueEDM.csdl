@@ -16,7 +16,6 @@
     <Property Name="League_ID" Type="Int64" Nullable="false" />
     <Property Name="Conf_Name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
     <NavigationProperty Name="League" Relationship="Self.FK_Conference_0_0" FromRole="Conference" ToRole="League" />
-    <NavigationProperty Name="Divisions" Relationship="Self.FK_Division_1_0" FromRole="Conference" ToRole="Division" />
   </EntityType>
   <EntityType Name="Division">
     <Key>
@@ -24,9 +23,7 @@
     </Key>
     <Property Name="ID" Type="Int64" Nullable="false" />
     <Property Name="League_ID" Type="Int64" Nullable="false" />
-    <Property Name="Conference_ID" Type="Int64" Nullable="false" />
     <Property Name="Name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
-    <NavigationProperty Name="Conference" Relationship="Self.FK_Division_1_0" FromRole="Division" ToRole="Conference" />
     <NavigationProperty Name="League" Relationship="Self.FK_Division_0_0" FromRole="Division" ToRole="League" />
   </EntityType>
   <EntityType Name="Game">
@@ -511,18 +508,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Division_1_0">
-    <End Role="Conference" Type="Self.Conference" Multiplicity="1" />
-    <End Role="Division" Type="Self.Division" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Conference">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Division">
-        <PropertyRef Name="Conference_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_Division_0_0">
     <End Role="League" Type="Self.League" Multiplicity="1" />
     <End Role="Division" Type="Self.Division" Multiplicity="*" />
@@ -921,10 +906,6 @@
     <AssociationSet Name="FK_Conference_0_0" Association="Self.FK_Conference_0_0">
       <End Role="League" EntitySet="Leagues" />
       <End Role="Conference" EntitySet="Conferences" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Division_1_0" Association="Self.FK_Division_1_0">
-      <End Role="Conference" EntitySet="Conferences" />
-      <End Role="Division" EntitySet="Divisions" />
     </AssociationSet>
     <AssociationSet Name="FK_Division_0_0" Association="Self.FK_Division_0_0">
       <End Role="League" EntitySet="Leagues" />

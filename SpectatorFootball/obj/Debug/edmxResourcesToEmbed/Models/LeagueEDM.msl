@@ -24,7 +24,6 @@
         <MappingFragment StoreEntitySet="Division">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="League_ID" ColumnName="League_ID" />
-          <ScalarProperty Name="Conference_ID" ColumnName="Conference_ID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
         </MappingFragment>
       </EntityTypeMapping>

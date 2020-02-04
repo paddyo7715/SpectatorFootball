@@ -14,18 +14,10 @@ namespace SpectatorFootball.Models
     
     public partial class Conference
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Conference()
-        {
-            this.Divisions = new HashSet<Division>();
-        }
-    
         public long ID { get; set; }
         public long League_ID { get; set; }
         public string Conf_Name { get; set; }
     
         public virtual League League { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Division> Divisions { get; set; }
     }
 }

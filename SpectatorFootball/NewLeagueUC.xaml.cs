@@ -770,10 +770,10 @@ namespace SpectatorFootball
                     Divisions_list.Add(((TextBox)this.FindName("newldiv" + i.ToString())).Text.Trim());
 
                 foreach (string c in Conferences_list)
-                    pw.Mem_League.Conferences.Add(new Conference() { Conf_Name = c });
+                    pw.Mem_League.Conferences.Add(new Conference() { Conf_Name = c, League_ID = 1 });
 
                 foreach (string d in Divisions_list)
-                    pw.Mem_League.Divisions.Add(new Division() {  Name = d });
+                    pw.Mem_League.Divisions.Add(new Division() {  Name = d, League_ID = 1 });
 
 
                 // Background Worker code for popup
