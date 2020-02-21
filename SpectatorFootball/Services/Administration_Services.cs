@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using log4net;
+using SpectatorFootball.Models;
 
 namespace SpectatorFootball
 {
@@ -12,6 +14,10 @@ namespace SpectatorFootball
         // new potential names for new players.
         public int AddPlayerNames(string FirstName, string LastName, string sFile)
         {
+            var FirstNames = new List<Potential_First_Names>();
+            var LastNames = new List<Potential_Last_Names>();
+
+
             int i = 0;
             var pnDAO = new Player_NamesDAO();
             System.IO.StreamReader srFileReader = null;
@@ -21,34 +27,41 @@ namespace SpectatorFootball
             logger.Info("Adding Player Names.");
 
             if (!CommonUtils.isBlank(FirstName) && FirstName.Trim().Length > 1)
-                i += pnDAO.AddFirstName(CommonUtils.CapitalizeFirstLetter(FirstName.Trim()));
+                FirstNames.Add(new Potential_First_Names { FirstName = CommonUtils.CapitalizeFirstLetter(FirstName.Trim()) });
             if (!CommonUtils.isBlank(LastName) && LastName.Trim().Length > 1)
-                i += pnDAO.AddLastName(CommonUtils.CapitalizeFirstLetter(LastName.Trim()));
+                LastNames.Add(new Potential_Last_Names { LastName = CommonUtils.CapitalizeFirstLetter(LastName.Trim()) });
 
             if (!CommonUtils.isBlank(sFile))
             {
                 srFileReader = System.IO.File.OpenText(sFile);
-                sInputLine = srFileReader.ReadLine();
-                if (sInputLine == "{FirstNames}")
-                    FirstLastName = "F";
-                else if (sInputLine == "{LastNames}")
-                    FirstLastName = "L";
-                while (sInputLine != null)
-                {
+
+                do {
                     sInputLine = srFileReader.ReadLine();
+
+                    if (sInputLine == "{FirstNames}")
+                    {
+                        FirstLastName = "F";
+                        continue;
+                    }
+                    else if (sInputLine == "{LastNames}")
+                    {
+                        FirstLastName = "L";
+                        continue;
+                    }
+
                     if (CommonUtils.isBlank(sInputLine) || sInputLine.Trim().Length == 0)
                         continue;
                     switch (FirstLastName)
                     {
                         case "F":
                             {
-                                i += pnDAO.AddFirstName(CommonUtils.CapitalizeFirstLetter(sInputLine.Trim()));
+                                FirstNames.Add(new Potential_First_Names { FirstName = CommonUtils.CapitalizeFirstLetter(sInputLine.Trim()) });
                                 break;
                             }
 
                         case "L":
                             {
-                                i += pnDAO.AddLastName(CommonUtils.CapitalizeFirstLetter(sInputLine.Trim()));
+                                LastNames.Add(new Potential_Last_Names { LastName = CommonUtils.CapitalizeFirstLetter(sInputLine.Trim()) });
                                 break;
                             }
 
@@ -57,15 +70,17 @@ namespace SpectatorFootball
                                 throw new Exception("No First or Last Name header in player names file.");
                             }
                     }
-                }
+                } while (sInputLine != null);
             }
 
+            if (FirstNames.Count > 0) i += pnDAO.AddFirstName(FirstNames);
+            if (LastNames.Count > 0) i += pnDAO.AddLastName(LastNames);
             return i;
         }
         // This service is called to get the total number of potential first and last names for new players.
         public long[] getPlayerNameTotals()
         {
-            var r = new long[3];
+            var r = new long[2];
             var pnDAO = new Player_NamesDAO();
 
             r[0] = pnDAO.getTotalFirstNames();

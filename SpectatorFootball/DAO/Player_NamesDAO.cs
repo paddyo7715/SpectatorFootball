@@ -1,76 +1,45 @@
 ﻿using System;
 using System.Data.SQLite;
 using System.Data;
+using System.Collections.Generic;
+using SpectatorFootball.Models;
+using System.Linq;
+using System.Data.Entity;
 
 namespace SpectatorFootball
 {
     public class Player_NamesDAO
     {
-        public SQLiteConnection SettingsConnection { get; set; } = new SQLiteConnection();
 
-        public Player_NamesDAO()
+        public int AddFirstName(List<Potential_First_Names> FirstNames)
         {
-            string constr = "";
-            constr = CommonUtils.getSettingsDBConnectionString();
-            SettingsConnection.ConnectionString = constr;
-        }
-        public int AddFirstName(string FirstName)
-        {
+
             int r = 0;
-            SQLiteCommand cmd = null;
-            try
-            {
-                SettingsConnection.Open();
-                string sSQL = "INSERT INTO POTENTIAL_FIRST_NAMES VALUES(@FirstName)";
 
-                cmd = SettingsConnection.CreateCommand();
-                cmd.CommandText = sSQL;
-                cmd.Parameters.Add("@FirstName", DbType.String).Value = FirstName;
-                r = cmd.ExecuteNonQuery();
-            }
-            catch (Exception ex)
+            string con = Common.SettingsConnection.Connect();
+            using (var context = new settingsContext(con))
             {
-                //do nothing
-                String s = ex.Message;
-            }
-            finally
-            {
-            if (cmd != null)
-                    cmd.Dispose();
-                if ((int)SettingsConnection.State == (int)ConnectionState.Open)
-                    SettingsConnection.Close();
-            }
+               context.Potential_First_Names.AddRange(FirstNames);
+               var added = context.ChangeTracker.Entries().Where(x => x.State == EntityState.Added).Count();
+//                context.Database.Log = Console.Write;
+                context.SaveChanges();
+               r = FirstNames.Count;
+             }
 
             return r;
         }
 
-        public int AddLastName(string LastName)
+        public int AddLastName(List<Potential_Last_Names> LastNames)
         {
+
             int r = 0;
-            SQLiteCommand cmd = null;
-            try
-            {
-                SettingsConnection.Open();
-                string sSQL = "INSERT INTO POTENTIAL_LAST_NAMES VALUES(@LastName)";
 
-                cmd = SettingsConnection.CreateCommand();
-                cmd.CommandText = sSQL;
-                cmd.Parameters.Add("@LastName", DbType.String).Value = LastName;
-                r = cmd.ExecuteNonQuery();
-            }
-            catch (Exception ex)
+            string con = Common.SettingsConnection.Connect();
+            using (var context = new settingsContext(con))
             {
-                //do nothing
-                String s = ex.Message;
-            }
-            // Do nothing
-            finally
-            {
-                if (cmd != null)
-                    cmd.Dispose();
-
-                if ((int)SettingsConnection.State == (int)ConnectionState.Open)
-                    SettingsConnection.Close();
+               context.Potential_Last_Names.AddRange(LastNames);
+               context.SaveChanges();
+               r = LastNames.Count;
             }
 
             return r;
@@ -78,81 +47,39 @@ namespace SpectatorFootball
         public long getTotalFirstNames()
         {
             long r = 0;
-            SQLiteCommand cmd = null;
-            try
-            {
-                SettingsConnection.Open();
-                string sSQL = "SELECT COUNT(*) FROM POTENTIAL_FIRST_NAMES";
-                cmd = SettingsConnection.CreateCommand();
-                cmd.CommandText = sSQL;
-                r = Convert.ToInt64(cmd.ExecuteScalar());
-            }
-            finally
-            {
-                if (cmd != null)
-                    cmd.Dispose();
 
-                if ((int)SettingsConnection.State == (int)ConnectionState.Open)
-                    SettingsConnection.Close();
+            string con = Common.SettingsConnection.Connect();
+            using (var context = new settingsContext(con))
+            {
+ //               context.Database.Log = Console.Write;
+                r = context.Potential_First_Names.Count();
             }
-
+ 
             return r;
         }
 
         public long getTotalLastNames()
         {
             long r = 0;
-            SQLiteCommand cmd = null;
-            try
-            {
-                SettingsConnection.Open();
-                string sSQL = "SELECT COUNT(*) FROM POTENTIAL_LAST_NAMES";
-                cmd = SettingsConnection.CreateCommand();
-                cmd.CommandText = sSQL;
-                r = Convert.ToInt64(cmd.ExecuteScalar());
-            }
-            finally
-            {
-                if (cmd != null)
-                    cmd.Dispose();
 
-                if ((int)SettingsConnection.State == (int)ConnectionState.Open)
-                    SettingsConnection.Close();
+            string con = Common.SettingsConnection.Connect();
+            using (var context = new settingsContext(con))
+            {
+                r = context.Potential_Last_Names.Count();
             }
 
             return r;
         }
         public string[] CreatePlayerName()
         {
-            string sFirstName;
-            string sLastName;
-            string sSQL;
-            SQLiteCommand cmd = null;
-            try
-            {
-                SettingsConnection.Open();
+            string sFirstName = null;
+            string sLastName = null;
 
-                sSQL = "SELECT FirstName FROM POTENTIAL_FIRST_NAMES ORDER BY RANDOM() LIMIT 1;";
-                cmd = SettingsConnection.CreateCommand();
-                cmd.CommandText = sSQL;
-                sFirstName = (String) cmd.ExecuteScalar();
-
-                sSQL = "SELECT LastName FROM POTENTIAL_LAST_NAMES ORDER BY RANDOM() LIMIT 1;";
-                cmd = SettingsConnection.CreateCommand();
-                cmd.CommandText = sSQL;
-                sLastName = (String) cmd.ExecuteScalar();
-            }
-            catch (Exception ex)
+            string con = Common.SettingsConnection.Connect();
+            using (var context = new settingsContext(con))
             {
-                throw ex;
-            }
-            finally
-            {
-                if (cmd != null)
-                    cmd.Dispose();
-
-                if ((int)SettingsConnection.State == (int)ConnectionState.Open)
-                    SettingsConnection.Close();
+                 sFirstName = context.Database.SqlQuery<string>("SELECT FirstName FROM POTENTIAL_FIRST_NAMES ORDER BY RANDOM() LIMIT 1;").FirstOrDefault();
+                 sLastName = context.Database.SqlQuery<string>("SELECT LastName FROM POTENTIAL_LAST_NAMES ORDER BY RANDOM() LIMIT 1;").FirstOrDefault();
             }
 
             return new string[] { sFirstName, sLastName };

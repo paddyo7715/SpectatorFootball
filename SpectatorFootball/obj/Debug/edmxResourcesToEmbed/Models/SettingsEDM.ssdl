@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="settingsModel.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="data source=C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\Database\Settings.db" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Potential_First_Names">
+    <Key>
+      <PropertyRef Name="FirstName" />
+    </Key>
+    <Property Name="FirstName" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Potential_Last_Names">
+    <Key>
+      <PropertyRef Name="LastName" />
+    </Key>
+    <Property Name="LastName" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Stock_Teams">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="City_Abr" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+    <Property Name="City" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+    <Property Name="Nickname" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+    <Property Name="Stadium_Name" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+    <Property Name="Stadium_Location" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+    <Property Name="Stadium_Capacity" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+    <Property Name="Stadium_Img_Path" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+    <Property Name="Helmet_img_path" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+    <Property Name="Helmet_Color" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+    <Property Name="Helmet_Logo_Color" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+    <Property Name="Helmet_Facemask_Color" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+    <Property Name="Socks_Color" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+    <Property Name="Cleats_Color" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+    <Property Name="Home_jersey_Color" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+    <Property Name="Home_Sleeve_Color" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+    <Property Name="Home_Jersey_Number_Color" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+    <Property Name="Home_Jersey_Number_Outline_Color" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+    <Property Name="Home_Jersey_Shoulder_Stripe" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+    <Property Name="Home_Jersey_Sleeve_Stripe_Color_1" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+    <Property Name="Home_Jersey_Sleeve_Stripe_Color_2" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+    <Property Name="Home_Jersey_Sleeve_Stripe_Color_3" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+    <Property Name="Home_Jersey_Sleeve_Stripe_Color_4" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+    <Property Name="Home_Jersey_Sleeve_Stripe_Color_5" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+    <Property Name="Home_Jersey_Sleeve_Stripe_Color_6" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+    <Property Name="Home_Pants_Color" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+    <Property Name="Home_Pants_Stripe_Color_1" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+    <Property Name="Home_Pants_Stripe_Color_2" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+    <Property Name="Home_Pants_Stripe_Color_3" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+    <Property Name="Away_jersey_Color" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+    <Property Name="Away_Sleeve_Color" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+    <Property Name="Away_Jersey_Number_Color" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+    <Property Name="Away_Jersey_Number_Outline_Color" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+    <Property Name="Away_Jersey_Shoulder_Stripe" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+    <Property Name="Away_Jersey_Sleeve_Stripe_Color_1" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+    <Property Name="Away_Jersey_Sleeve_Stripe_Color_2" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+    <Property Name="Away_Jersey_Sleeve_Stripe_Color_3" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+    <Property Name="Away_Jersey_Sleeve_Stripe_Color_4" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+    <Property Name="Away_Jersey_Sleeve_Stripe_Color_5" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+    <Property Name="Away_Jersey_Sleeve_Stripe_Color_6" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+    <Property Name="Away_Pants_Color" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+    <Property Name="Away_Pants_Stripe_Color_1" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+    <Property Name="Away_Pants_Stripe_Color_2" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+    <Property Name="Away_Pants_Stripe_Color_3" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+    <Property Name="Stadium_Field_Type" Type="integer" Nullable="false" />
+    <Property Name="Stadium_Field_Color" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="settingsModelStoreContainer">
+    <EntitySet Name="Potential_First_Names" EntityType="Self.Potential_First_Names" store:Type="Tables" />
+    <EntitySet Name="Potential_Last_Names" EntityType="Self.Potential_Last_Names" store:Type="Tables" />
+    <EntitySet Name="Stock_Teams" EntityType="Self.Stock_Teams" store:Type="Tables" />
+  </EntityContainer>
+</Schema>

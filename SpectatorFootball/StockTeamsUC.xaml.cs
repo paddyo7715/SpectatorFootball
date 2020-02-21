@@ -8,6 +8,7 @@ using System;
 using System.Data;
 using System.IO;
 using log4net;
+using SpectatorFootball.Models;
 
 namespace SpectatorFootball
 {
@@ -15,13 +16,13 @@ namespace SpectatorFootball
     {
         private static ILog logger = LogManager.GetLogger("RollingFile");
 
-        private List<TeamMdl> st_list = null;
+        private List<Stock_Teams> st_list = null;
 
         public event EventHandler Show_MainMenu;
         public event EventHandler Show_NewStockTeam;
         public event EventHandler<StockteamEventArgs> Show_UpdateStockTeam;
 
-        public StockTeamsUC(List<TeamMdl> st_list)
+        public StockTeamsUC(List<Stock_Teams> st_list)
         {
 
             // This call is required by the designer.
@@ -47,7 +48,11 @@ namespace SpectatorFootball
                 helmet_img.Source = BitmapImage;
 
                 List<Uniform_Color_percents> Color_Percents_List = null;
-                Color_Percents_List = Uniform.getColorList(st.Uniform);
+                Color_Percents_List = Uniform.getColorList(st.Home_Jersey_Number_Color,st.Home_jersey_Color, st.Helmet_Color,
+                    st.Home_Pants_Color,st.Home_Sleeve_Color,st.Home_Jersey_Shoulder_Stripe,st.Home_Jersey_Sleeve_Stripe_Color_1,
+                    st.Home_Jersey_Sleeve_Stripe_Color_2, st.Home_Jersey_Sleeve_Stripe_Color_3, st.Home_Jersey_Sleeve_Stripe_Color_4,
+                    st.Home_Jersey_Sleeve_Stripe_Color_5, st.Home_Jersey_Sleeve_Stripe_Color_6,st.Home_Pants_Stripe_Color_1,
+                    st.Home_Pants_Stripe_Color_2, st.Home_Pants_Stripe_Color_3);
 
                 var team_label = new Label();
                 team_label.Foreground = new SolidColorBrush(CommonUtils.getColorfromHex(Color_Percents_List[0].color_string));
@@ -79,7 +84,7 @@ namespace SpectatorFootball
                 team_label.FontSize = 24;
 
 
-                var BitmapImageST = new BitmapImage(new Uri(CommonUtils.getAppPath() + Path.DirectorySeparatorChar + "Images" + Path.DirectorySeparatorChar + "Stadiums" + Path.DirectorySeparatorChar + st.Stadium.Stadium_Img_Path));
+                var BitmapImageST = new BitmapImage(new Uri(CommonUtils.getAppPath() + Path.DirectorySeparatorChar + "Images" + Path.DirectorySeparatorChar + "Stadiums" + Path.DirectorySeparatorChar + st.Stadium_Img_Path));
                 var std_img = new Image();
                 std_img.Width = 80;
                 std_img.Height = 50;
@@ -101,7 +106,11 @@ namespace SpectatorFootball
         private void EditstockT_Click(object sender, RoutedEventArgs e)
         {
             int i = StockTeamsGrid.SelectedIndex;
-            Show_UpdateStockTeam?.Invoke(this, new StockteamEventArgs(i));
+
+            if (i == -1)
+                MessageBox.Show("Please Select a Team to Edit!", "Error", MessageBoxButton.OK, MessageBoxImage.Information);
+            else
+                Show_UpdateStockTeam?.Invoke(this, new StockteamEventArgs(i));
         }
         private void AddstockT_Click(object sender, RoutedEventArgs e)
         {
@@ -113,7 +122,7 @@ namespace SpectatorFootball
             StockTeams_Services sts = null;
             int num_selected = StockTeamsGrid.SelectedIndex;
 
-            int id = st_list[num_selected].id;
+            int id = (int) st_list[num_selected].ID;
 
             if (id != -1)
             {

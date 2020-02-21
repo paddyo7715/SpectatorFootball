@@ -8,18 +8,22 @@ using System;
 using System.ComponentModel;
 using log4net;
 using System.Windows.Media;
+using SpectatorFootball.Models;
+using SpectatorFootball.League_Info;
 
 namespace SpectatorFootball
 {
     public partial class MainWindow
     {
-        public Leaguemdl League = null;
-        public List<TeamMdl> st_list = null;
+        public Mem_League Mem_League = null;
+        public List<Stock_Teams> st_list = null;
 
         private MainMenuUC MainMenuUC = null;
 
+        private Stock_Team_detail Stock_Team_detailUC = null;
+        private New_Team_DetailUC New_Team_DetailUC = null;
+
         private NewLeagueUC NewLeagueUC = null;
-        private NewTeamUC NewTeamUC = null;
         private PlayerNamesUC PlayerNamesUC = null;
         private StockTeamsUC Stock_teamsUC = null;
 
@@ -47,6 +51,7 @@ namespace SpectatorFootball
             MainMenuUC.Show_NewLeague += Show_NewLeague;
 
             logger.Info("Main form created");
+
         }
 
         private void MainWindow_Closing(object sender, CancelEventArgs e)
@@ -75,14 +80,20 @@ namespace SpectatorFootball
             sp_uc.Children.Clear();
             sp_uc.Children.Add(MainMenuUC);
             NewLeagueUC = null;
-            NewTeamUC = null;
-        }
+            New_Team_DetailUC = null;
+            Stock_Team_detailUC = null;
+            New_Team_DetailUC = null;
+            PlayerNamesUC = null;
+            Stock_teamsUC = null;
+    }
         private void Show_NewLeague(object sender, EventArgs e)
         {
             try
             {
                 Mouse.OverrideCursor = Cursors.Wait;
+
                 logger.Info("Entering Create new league");
+                Mem_League = new Mem_League();
                 StockTeams_Services sts = new StockTeams_Services();
                 st_list = sts.getAllStockTeams();
                 logger.Debug("Stock Teams Loaded");
@@ -119,13 +130,12 @@ namespace SpectatorFootball
             logger.Info("Show new team detail");
 
             int team_ind = e.team_num - 1;
-            NewTeamUC = new NewTeamUC(League.Teams[team_ind], "New_League");
-            NewTeamUC.setBaseUniform();
-            NewTeamUC.setfields();
-            NewTeamUC.backtoNewLeague += Back_NewLeague;
+
+            New_Team_DetailUC = new New_Team_DetailUC(Mem_League.Teams[team_ind], true);
+            New_Team_DetailUC.backtoNewLeague += Back_NewLeague;
 
             sp_uc.Children.Clear();
-            sp_uc.Children.Add(NewTeamUC);
+            sp_uc.Children.Add(New_Team_DetailUC);
 
             Mouse.OverrideCursor = null;
         }
@@ -146,7 +156,7 @@ namespace SpectatorFootball
             {
                 Mouse.OverrideCursor = Cursors.Wait;
                 logger.Info("Show stock teams");
-                League = null;
+                Mem_League = new Mem_League();
                 var sts = new StockTeams_Services();
                 st_list = sts.getAllStockTeams();
 
@@ -170,15 +180,24 @@ namespace SpectatorFootball
         }
         private void Show_NewStockTeam(object sender, EventArgs e)
         {
-            logger.Info("Show new Stock Team Form");
-            var stock_team = new TeamMdl(0, "");
-            NewTeamUC = new NewTeamUC(stock_team, "New_Stock_Team");
-            NewTeamUC.setBaseUniform();
-            NewTeamUC.setfields();
-            NewTeamUC.backtoStockTeams += Show_StockTeams;
+            try
+            {
+                Mouse.OverrideCursor = Cursors.Wait;
+                logger.Info("Show new Stock Team Form");
+                Stock_Team_detailUC = new Stock_Team_detail(null);
+                Stock_Team_detailUC.backtoStockTeams += Show_StockTeams;
 
-            sp_uc.Children.Clear();
-            sp_uc.Children.Add(NewTeamUC);
+                sp_uc.Children.Clear();
+                sp_uc.Children.Add(Stock_Team_detailUC);
+//                Mouse.OverrideCursor = null;
+            }
+            catch (Exception ex)
+            {
+                Mouse.OverrideCursor = null;
+                logger.Error("Error Showing New Stock Team Detail Form");
+                logger.Error(ex);
+                MessageBox.Show(CommonUtils.substr(ex.Message, 0, 100), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
         private void Show_UpdateStockTeam(object sender, StockteamEventArgs e)
         {
@@ -188,14 +207,12 @@ namespace SpectatorFootball
                 logger.Info("Show Update Stock Team form");
 
                 int team_ind = e.team_ind;
-                NewTeamUC = new NewTeamUC(st_list[team_ind], "Update_Stock_Team");
-                NewTeamUC.setBaseUniform();
-                NewTeamUC.setfields();
-                NewTeamUC.backtoStockTeams += Show_StockTeams;
+                Stock_Team_detailUC = new Stock_Team_detail(st_list[team_ind]);
+                Stock_Team_detailUC.backtoStockTeams += Show_StockTeams;
 
                 sp_uc.Children.Clear();
-                sp_uc.Children.Add(NewTeamUC);
-                Mouse.OverrideCursor = null;
+                sp_uc.Children.Add(Stock_Team_detailUC);
+ 
             }
             catch (Exception ex)
             {

@@ -137,7 +137,7 @@
         </Style>
         <!-- Large Label -->
         <Style TargetType="Label" x:Key="Largelbltyle">
-            <Setter Property="Height" Value="25"/>
+            <Setter Property="Height" Value="28"/>
             <Setter Property="FontFamily" Value="Verdana"/>
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="HorizontalAlignment" Value="Left"/>
@@ -227,6 +227,22 @@
         <Style TargetType="StackPanel" x:Key="DragEnt_NewTeamSP">
             <Setter Property="Background" Value="Green"/>
         </Style>
+
+        <!-- Normal Label -->
+        <Style TargetType="Label" x:Key="Normallbltyle">
+            <Setter Property="FontFamily" Value="Verdana"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="white"/>
+        </Style>
+
+        <!-- Normal Smaller Label -->
+        <Style TargetType="Label" x:Key="Normsmllbltyle">
+            <Setter Property="FontFamily" Value="Verdana"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="white"/>
+        </Style>
+
+
 
     </Application.Resources>
 </Application>

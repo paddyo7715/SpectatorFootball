@@ -29,7 +29,7 @@ Note that blank helmets are available in <LineBreak/>C:\Users\Brenden\source\rep
 
 
             </TextBlock>
-            <Button Name="hlp_nl_close" Style="{StaticResource appSubmitStyle}" >Close</Button>
+            <Button Name="hlp_nl_close" Style="{StaticResource appSubmitStyle}" Click="hlp_nl_close_Click_1" >Close</Button>
         </StackPanel>
     </Border>
 

@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="mainModelStoreContainer" CdmEntityContainer="mainEntities">
+    <EntitySetMapping Name="Potential_First_Names">
+      <EntityTypeMapping TypeName="mainModel.Potential_First_Names">
+        <MappingFragment StoreEntitySet="Potential_First_Names">
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Potential_Last_Names">
+      <EntityTypeMapping TypeName="mainModel.Potential_Last_Names">
+        <MappingFragment StoreEntitySet="Potential_Last_Names">
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Stock_Teams">
+      <EntityTypeMapping TypeName="mainModel.Stock_Teams">
+        <MappingFragment StoreEntitySet="Stock_Teams">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="City_Abr" ColumnName="City_Abr" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Nickname" ColumnName="Nickname" />
+          <ScalarProperty Name="Stadium_Name" ColumnName="Stadium_Name" />
+          <ScalarProperty Name="Stadium_Location" ColumnName="Stadium_Location" />
+          <ScalarProperty Name="Stadium_Capacity" ColumnName="Stadium_Capacity" />
+          <ScalarProperty Name="Stadium_Img_Path" ColumnName="Stadium_Img_Path" />
+          <ScalarProperty Name="Helmet_img_path" ColumnName="Helmet_img_path" />
+          <ScalarProperty Name="Helmet_Color" ColumnName="Helmet_Color" />
+          <ScalarProperty Name="Helmet_Logo_Color" ColumnName="Helmet_Logo_Color" />
+          <ScalarProperty Name="Helmet_Facemask_Color" ColumnName="Helmet_Facemask_Color" />
+          <ScalarProperty Name="Socks_Color" ColumnName="Socks_Color" />
+          <ScalarProperty Name="Cleats_Color" ColumnName="Cleats_Color" />
+          <ScalarProperty Name="Home_jersey_Color" ColumnName="Home_jersey_Color" />
+          <ScalarProperty Name="Home_Sleeve_Color" ColumnName="Home_Sleeve_Color" />
+          <ScalarProperty Name="Home_Jersey_Number_Color" ColumnName="Home_Jersey_Number_Color" />
+          <ScalarProperty Name="Home_Jersey_Number_Outline_Color" ColumnName="Home_Jersey_Number_Outline_Color" />
+          <ScalarProperty Name="Home_Jersey_Shoulder_Stripe" ColumnName="Home_Jersey_Shoulder_Stripe" />
+          <ScalarProperty Name="Home_Jersey_Sleeve_Stripe_Color_1" ColumnName="Home_Jersey_Sleeve_Stripe_Color_1" />
+          <ScalarProperty Name="Home_Jersey_Sleeve_Stripe_Color_2" ColumnName="Home_Jersey_Sleeve_Stripe_Color_2" />
+          <ScalarProperty Name="Home_Jersey_Sleeve_Stripe_Color_3" ColumnName="Home_Jersey_Sleeve_Stripe_Color_3" />
+          <ScalarProperty Name="Home_Jersey_Sleeve_Stripe_Color_4" ColumnName="Home_Jersey_Sleeve_Stripe_Color_4" />
+          <ScalarProperty Name="Home_Jersey_Sleeve_Stripe_Color_5" ColumnName="Home_Jersey_Sleeve_Stripe_Color_5" />
+          <ScalarProperty Name="Home_Jersey_Sleeve_Stripe_Color_6" ColumnName="Home_Jersey_Sleeve_Stripe_Color_6" />
+          <ScalarProperty Name="Home_Pants_Color" ColumnName="Home_Pants_Color" />
+          <ScalarProperty Name="Home_Pants_Stripe_Color_1" ColumnName="Home_Pants_Stripe_Color_1" />
+          <ScalarProperty Name="Home_Pants_Stripe_Color_2" ColumnName="Home_Pants_Stripe_Color_2" />
+          <ScalarProperty Name="Home_Pants_Stripe_Color_3" ColumnName="Home_Pants_Stripe_Color_3" />
+          <ScalarProperty Name="Away_jersey_Color" ColumnName="Away_jersey_Color" />
+          <ScalarProperty Name="Away_Sleeve_Color" ColumnName="Away_Sleeve_Color" />
+          <ScalarProperty Name="Away_Jersey_Number_Color" ColumnName="Away_Jersey_Number_Color" />
+          <ScalarProperty Name="Away_Jersey_Number_Outline_Color" ColumnName="Away_Jersey_Number_Outline_Color" />
+          <ScalarProperty Name="Away_Jersey_Shoulder_Stripe" ColumnName="Away_Jersey_Shoulder_Stripe" />
+          <ScalarProperty Name="Away_Jersey_Sleeve_Stripe_Color_1" ColumnName="Away_Jersey_Sleeve_Stripe_Color_1" />
+          <ScalarProperty Name="Away_Jersey_Sleeve_Stripe_Color_2" ColumnName="Away_Jersey_Sleeve_Stripe_Color_2" />
+          <ScalarProperty Name="Away_Jersey_Sleeve_Stripe_Color_3" ColumnName="Away_Jersey_Sleeve_Stripe_Color_3" />
+          <ScalarProperty Name="Away_Jersey_Sleeve_Stripe_Color_4" ColumnName="Away_Jersey_Sleeve_Stripe_Color_4" />
+          <ScalarProperty Name="Away_Jersey_Sleeve_Stripe_Color_5" ColumnName="Away_Jersey_Sleeve_Stripe_Color_5" />
+          <ScalarProperty Name="Away_Jersey_Sleeve_Stripe_Color_6" ColumnName="Away_Jersey_Sleeve_Stripe_Color_6" />
+          <ScalarProperty Name="Away_Pants_Color" ColumnName="Away_Pants_Color" />
+          <ScalarProperty Name="Away_Pants_Stripe_Color_1" ColumnName="Away_Pants_Stripe_Color_1" />
+          <ScalarProperty Name="Away_Pants_Stripe_Color_2" ColumnName="Away_Pants_Stripe_Color_2" />
+          <ScalarProperty Name="Away_Pants_Stripe_Color_3" ColumnName="Away_Pants_Stripe_Color_3" />
+          <ScalarProperty Name="Stadium_Field_Type" ColumnName="Stadium_Field_Type" />
+          <ScalarProperty Name="Stadium_Field_Color" ColumnName="Stadium_Field_Color" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

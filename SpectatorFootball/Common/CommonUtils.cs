@@ -1,7 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Text.RegularExpressions;
-
+using System.Configuration;
+using System.Data.Entity.Core.EntityClient;
 
 namespace SpectatorFootball
 {
@@ -11,6 +12,11 @@ namespace SpectatorFootball
         public static String getSettingsDBConnectionString()
         {
           return "Data Source=" + getAppPath() + Path.DirectorySeparatorChar + "Database" + Path.DirectorySeparatorChar + "Settings.db;";
+        }
+
+        public static String getLeagueDBConnectionString(string newLeague_path)
+        {
+            return "Data Source=" + newLeague_path + ";";
         }
 
         public static string getAppPath()
@@ -175,6 +181,22 @@ namespace SpectatorFootball
                 pattern = "^[a-zA-Z ]*$";
             else
                 pattern = "^[a-zA-Z]*$";
+
+            Regex Regexm = new Regex(pattern);
+            if (!Regexm.IsMatch(s))
+                r = false;
+
+            return r;
+        }
+        public static bool isAlphaNumeric(string s, bool bAllowSpace)
+        {
+            bool r = true;
+            string pattern = null;
+
+            if (bAllowSpace)
+                pattern = "^[a-zA-Z0-9 ]*$";
+            else
+                pattern = "^[a-zA-Z0-9]*$";
 
             Regex Regexm = new Regex(pattern);
             if (!Regexm.IsMatch(s))

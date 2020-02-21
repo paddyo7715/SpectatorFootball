@@ -3,6 +3,7 @@ using System.Windows;
 using System.Diagnostics;
 using System.IO;
 using log4net;
+using SpectatorFootball.Versioning;
 
 namespace SpectatorFootball
 {
@@ -53,6 +54,7 @@ namespace SpectatorFootball
             log4net.Config.XmlConfigurator.Configure(new FileInfo("Log4Net.Config.xml"));
 
             logger.Info("=================== Start Program ========================");
+            logger.Info("Application Version: " + App_Version.APP_VERSION);
             logger.Info("Hostname: " + Environment.MachineName);
             logger.Info("Operating System: " + Environment.OSVersion);
             logger.Info(".NET version: " + Environment.Version.ToString());

@@ -5,16 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SpectatorFootball"
         mc:Ignorable="d"
-        Title="Popup" Height="100" Width="350" WindowStartupLocation="CenterOwner" WindowStyle="none" ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True">
+        Title="Popup" Height="120" Width="350" WindowStartupLocation="CenterOwner" WindowStyle="none" ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True">
     <Border Style="{StaticResource HelpBD}" BorderThickness="1">
-        <StackPanel Style="{StaticResource ProgressSP}" Height="90" Width="340" Orientation="Vertical" >
-            <StackPanel Height="80" Width="340" Orientation="Vertical" Background="Transparent" HorizontalAlignment="Center" VerticalAlignment="top">
-                <StackPanel Orientation="Horizontal">
-                    <Label Name="prglbl" Style="{StaticResource appProgressSmallLBL}" Width="280" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="top" />
-                    <Button Name="btnclose" Visibility="Visible" Style="{StaticResource appProgressBTN}" Width="50" VerticalAlignment="top" Click="btnclose_Click">Close</Button>
-                </StackPanel>
+        <StackPanel Style="{StaticResource ProgressSP}" Height="110" Width="340" Orientation="Vertical" >
+            <StackPanel Height="150" Width="340" Orientation="Vertical" Background="Transparent" HorizontalAlignment="Center" VerticalAlignment="top">
+                <Label Name="prglbl" Style="{StaticResource appProgressSmallLBL}" Height="25"  Width="280" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="top" />
                 <ProgressBar Name="prgTest" Width="290" Height="30" Minimum="1" Maximum="100" HorizontalAlignment="Center" VerticalAlignment="top" />
                 <Label Name="statuslbl" Content=" " Style="{StaticResource appProgressLBL}" Width="290" HorizontalAlignment="Center" VerticalAlignment="top" />
+                <Button Name="btnclose" IsEnabled="False" Style="{StaticResource appProgressBTN}" Width="50" VerticalAlignment="top" Click="btnclose_Click">Close</Button>
             </StackPanel>
         </StackPanel>
     </Border>

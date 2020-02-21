@@ -17,55 +17,61 @@ namespace SpectatorFootball
 
     public class Uniform
     {
-        public static List<Uniform_Color_percents> getColorList(UniformMdl u)
+        public static List<Uniform_Color_percents> getColorList(string Home_Jersey_Number_Color,string Home_Jersey_Jersey_Color,
+            string Helmet_Color,string Home_Pants_Color,string Home_Jersey_Sleeve_Color,
+            string Home_Jersey_Shoulder_Stripe_Color, string Home_Jersey_Sleeve_Stripe1,
+            string Home_Jersey_Sleeve_Stripe2, string Home_Jersey_Sleeve_Stripe3,
+            string Home_Jersey_Sleeve_Stripe4, string Home_Jersey_Sleeve_Stripe5,
+            string Home_Jersey_Sleeve_Stripe6, string Home_Pants_Stripe_Color_1,
+            string Home_Pants_Stripe_Color_2, string Home_Pants_Stripe_Color_3)
         {
             List<Uniform_Color_percents> r = new List<Uniform_Color_percents>();
 
-            string letter_color = u.Home_Jersey.Number_Color;
+            string letter_color = Home_Jersey_Number_Color;
 
             Uniform_Color_percents letter_uni_percent = new Uniform_Color_percents(letter_color, Convert.ToSingle(0.0));
             r.Add(letter_uni_percent);
 
-            r.Add(new Uniform_Color_percents(u.Home_Jersey.Jersey_Color, Convert.ToSingle(40.0)));
+            r.Add(new Uniform_Color_percents(Home_Jersey_Jersey_Color, Convert.ToSingle(40.0)));
 
-            if (u.Helmet.Helmet_Color != letter_color)
-                addUpdate_Uniform(r, new Uniform_Color_percents(u.Helmet.Helmet_Color, Convert.ToSingle(25.0)));
+            if (Helmet_Color != letter_color)
+                addUpdate_Uniform(r, new Uniform_Color_percents(Helmet_Color, Convert.ToSingle(25.0)));
 
-            if (u.Home_Pants.Pants_Color != letter_color)
-                addUpdate_Uniform(r, new Uniform_Color_percents(u.Home_Pants.Pants_Color, Convert.ToSingle(50.0)));
+            if (Home_Pants_Color != letter_color)
+                addUpdate_Uniform(r, new Uniform_Color_percents(Home_Pants_Color, Convert.ToSingle(50.0)));
 
-            if (u.Home_Jersey.Sleeve_Color != letter_color)
-                addUpdate_Uniform(r, new Uniform_Color_percents(u.Home_Jersey.Sleeve_Color, Convert.ToSingle(10.0)));
+            if (Home_Jersey_Sleeve_Color != letter_color)
+                addUpdate_Uniform(r, new Uniform_Color_percents(Home_Jersey_Sleeve_Color, Convert.ToSingle(10.0)));
 
-            if (u.Home_Jersey.Shoulder_Stripe_Color != letter_color)
-                addUpdate_Uniform(r, new Uniform_Color_percents(u.Home_Jersey.Shoulder_Stripe_Color, Convert.ToSingle(2.0)));
+            if (Home_Jersey_Shoulder_Stripe_Color != letter_color)
+                addUpdate_Uniform(r, new Uniform_Color_percents(Home_Jersey_Shoulder_Stripe_Color, Convert.ToSingle(2.0)));
 
-            if (u.Home_Jersey.Sleeve_Stripe1 != letter_color)
-                addUpdate_Uniform(r, new Uniform_Color_percents(u.Home_Jersey.Sleeve_Stripe1, Convert.ToSingle(1.0)));
+            if (Home_Jersey_Sleeve_Stripe1 != letter_color)
+                addUpdate_Uniform(r, new Uniform_Color_percents(Home_Jersey_Sleeve_Stripe1, Convert.ToSingle(1.0)));
 
-            if (u.Home_Jersey.Sleeve_Stripe2 != letter_color)
-                addUpdate_Uniform(r, new Uniform_Color_percents(u.Home_Jersey.Sleeve_Stripe2, Convert.ToSingle(1.0)));
+            if (Home_Jersey_Sleeve_Stripe2 != letter_color)
+                addUpdate_Uniform(r, new Uniform_Color_percents(Home_Jersey_Sleeve_Stripe2, Convert.ToSingle(1.0)));
 
-            if (u.Home_Jersey.Sleeve_Stripe3 != letter_color)
-                addUpdate_Uniform(r, new Uniform_Color_percents(u.Home_Jersey.Sleeve_Stripe3, Convert.ToSingle(1.0)));
+            if (Home_Jersey_Sleeve_Stripe3 != letter_color)
+                addUpdate_Uniform(r, new Uniform_Color_percents(Home_Jersey_Sleeve_Stripe3, Convert.ToSingle(1.0)));
 
-            if (u.Home_Jersey.Sleeve_Stripe4 !=letter_color)
-                addUpdate_Uniform(r, new Uniform_Color_percents(u.Home_Jersey.Sleeve_Stripe4, Convert.ToSingle(1.0)));
+            if (Home_Jersey_Sleeve_Stripe4 != letter_color)
+                addUpdate_Uniform(r, new Uniform_Color_percents(Home_Jersey_Sleeve_Stripe4, Convert.ToSingle(1.0)));
 
-            if (u.Home_Jersey.Sleeve_Stripe5 != letter_color)
-                addUpdate_Uniform(r, new Uniform_Color_percents(u.Home_Jersey.Sleeve_Stripe5, Convert.ToSingle(1.0)));
+            if (Home_Jersey_Sleeve_Stripe5 != letter_color)
+                addUpdate_Uniform(r, new Uniform_Color_percents(Home_Jersey_Sleeve_Stripe5, Convert.ToSingle(1.0)));
 
-            if (u.Home_Jersey.Sleeve_Stripe6 != letter_color)
-                addUpdate_Uniform(r, new Uniform_Color_percents(u.Home_Jersey.Sleeve_Stripe6, Convert.ToSingle(1.0)));
+            if (Home_Jersey_Sleeve_Stripe6 != letter_color)
+                addUpdate_Uniform(r, new Uniform_Color_percents(Home_Jersey_Sleeve_Stripe6, Convert.ToSingle(1.0)));
 
-            if (u.Home_Pants.Stripe_Color_1 != letter_color)
-                addUpdate_Uniform(r, new Uniform_Color_percents(u.Home_Pants.Stripe_Color_1, Convert.ToSingle(1.0)));
+            if (Home_Pants_Stripe_Color_1 != letter_color)
+                addUpdate_Uniform(r, new Uniform_Color_percents(Home_Pants_Stripe_Color_1, Convert.ToSingle(1.0)));
 
-            if (u.Home_Pants.Stripe_Color_2 != letter_color)
-                addUpdate_Uniform(r, new Uniform_Color_percents(u.Home_Pants.Stripe_Color_2, Convert.ToSingle(1.0)));
+            if (Home_Pants_Stripe_Color_2 != letter_color)
+                addUpdate_Uniform(r, new Uniform_Color_percents(Home_Pants_Stripe_Color_2, Convert.ToSingle(1.0)));
 
-            if (u.Home_Pants.Stripe_Color_3 != letter_color)
-                addUpdate_Uniform(r, new Uniform_Color_percents(u.Home_Pants.Stripe_Color_3, Convert.ToSingle(1.0)));
+            if (Home_Pants_Stripe_Color_3 != letter_color)
+                addUpdate_Uniform(r, new Uniform_Color_percents(Home_Pants_Stripe_Color_3, Convert.ToSingle(1.0)));
 
             float tot_values = default(float);
             foreach (Uniform_Color_percents w in r)
@@ -88,152 +94,186 @@ namespace SpectatorFootball
             return r;
         }
 
-        public static List<string> getAllColorList(UniformMdl u)
+       public static List<string> getAllColorList(
+                    string Helmet_Color,
+        string Helmet_Logo_Color,
+        string Helmet_Facemask_Color,
+        string Socks_Color,
+        string Cleats_Color,
+        string Home_jersey_Color,
+        string Home_Sleeve_Color,
+        string Home_Jersey_Number_Color,
+        string Home_Jersey_Number_Outline_Color,
+        string Home_Jersey_Shoulder_Stripe,
+        string Home_Jersey_Sleeve_Stripe_Color_1,
+        string Home_Jersey_Sleeve_Stripe_Color_2,
+        string Home_Jersey_Sleeve_Stripe_Color_3,
+        string Home_Jersey_Sleeve_Stripe_Color_4,
+        string Home_Jersey_Sleeve_Stripe_Color_5,
+        string Home_Jersey_Sleeve_Stripe_Color_6,
+        string Home_Pants_Color,
+        string Home_Pants_Stripe_Color_1,
+        string Home_Pants_Stripe_Color_2,
+        string Home_Pants_Stripe_Color_3,
+        string Away_jersey_Color,
+        string Away_Sleeve_Color,
+        string Away_Jersey_Number_Color,
+        string Away_Jersey_Number_Outline_Color,
+        string Away_Jersey_Shoulder_Stripe,
+        string Away_Jersey_Sleeve_Stripe_Color_1,
+        string Away_Jersey_Sleeve_Stripe_Color_2,
+        string Away_Jersey_Sleeve_Stripe_Color_3,
+        string Away_Jersey_Sleeve_Stripe_Color_4,
+        string Away_Jersey_Sleeve_Stripe_Color_5,
+        string Away_Jersey_Sleeve_Stripe_Color_6,
+        string Away_Pants_Color,
+        string Away_Pants_Stripe_Color_1,
+        string Away_Pants_Stripe_Color_2,
+        string Away_Pants_Stripe_Color_3)
         {
             List<string> r = new List<string>();
 
-            string helmet_color = u.Helmet.Helmet_Color;
+            string helmet_color = Helmet_Color;
             r.Add(helmet_color);
 
-            string helmet_logo_color = u.Helmet.Helmet_Logo_Color;
+            string helmet_logo_color = Helmet_Logo_Color;
             if (!r.Contains(helmet_logo_color))
                 r.Add(helmet_logo_color);
 
-            string helmet_facemask_color = u.Helmet.Helmet_Facemask_Color;
+            string helmet_facemask_color = Helmet_Facemask_Color;
             if (!r.Contains(helmet_facemask_color))
                 r.Add(helmet_facemask_color);
 
-            string home_jersey_color = u.Home_Jersey.Jersey_Color;
+            string home_jersey_color = Home_jersey_Color;
             if (!r.Contains(home_jersey_color))
                 r.Add(home_jersey_color);
 
-            string home_Sleeve_Color = u.Home_Jersey.Sleeve_Color;
+            string home_Sleeve_Color = Home_Sleeve_Color;
             if (!r.Contains(home_Sleeve_Color))
                 r.Add(home_Sleeve_Color);
 
-            string home_Shoulder_Stripe_Color = u.Home_Jersey.Shoulder_Stripe_Color;
+            string home_Shoulder_Stripe_Color = Home_Jersey_Shoulder_Stripe;
             if (!r.Contains(home_Shoulder_Stripe_Color))
                 r.Add(home_Shoulder_Stripe_Color);
 
-            string home_Number_Color = u.Home_Jersey.Number_Color;
+            string home_Number_Color = Home_Jersey_Number_Color;
             if (!r.Contains(home_Number_Color))
                 r.Add(home_Number_Color);
 
-            string home_Number_Outline_Color = u.Home_Jersey.Number_Outline_Color;
+            string home_Number_Outline_Color = Home_Jersey_Number_Outline_Color;
             if (!r.Contains(home_Number_Outline_Color))
                 r.Add(home_Number_Outline_Color);
 
-            string home_Sleeve_Stripe1 = u.Home_Jersey.Sleeve_Stripe1;
+            string home_Sleeve_Stripe1 = Home_Jersey_Sleeve_Stripe_Color_1;
             if (!r.Contains(home_Sleeve_Stripe1))
                 r.Add(home_Sleeve_Stripe1);
 
-            string home_Sleeve_Stripe2 = u.Home_Jersey.Sleeve_Stripe2;
+            string home_Sleeve_Stripe2 = Home_Jersey_Sleeve_Stripe_Color_2;
             if (!r.Contains(home_Sleeve_Stripe2))
                 r.Add(home_Sleeve_Stripe2);
 
-            string home_Sleeve_Stripe3 = u.Home_Jersey.Sleeve_Stripe3;
+            string home_Sleeve_Stripe3 = Home_Jersey_Sleeve_Stripe_Color_3;
             if (!r.Contains(home_Sleeve_Stripe3))
                 r.Add(home_Sleeve_Stripe3);
 
-            string home_Sleeve_Stripe4 = u.Home_Jersey.Sleeve_Stripe4;
+            string home_Sleeve_Stripe4 = Home_Jersey_Sleeve_Stripe_Color_4;
             if (!r.Contains(home_Sleeve_Stripe4))
                 r.Add(home_Sleeve_Stripe4);
 
-            string home_Sleeve_Stripe5 = u.Home_Jersey.Sleeve_Stripe5;
+            string home_Sleeve_Stripe5 = Home_Jersey_Sleeve_Stripe_Color_5;
             if (!r.Contains(home_Sleeve_Stripe5))
                 r.Add(home_Sleeve_Stripe5);
 
-            string home_Sleeve_Stripe6 = u.Home_Jersey.Sleeve_Stripe6;
+            string home_Sleeve_Stripe6 = Home_Jersey_Sleeve_Stripe_Color_6;
             if (!r.Contains(home_Sleeve_Stripe6))
                 r.Add(home_Sleeve_Stripe6);
 
-            string home_Pantshome_Color = u.Home_Pants.Pants_Color;
+            string home_Pantshome_Color = Home_Pants_Color;
             if (!r.Contains(home_Pantshome_Color))
                 r.Add(home_Pantshome_Color);
 
-            string home_Stripe_Color_1 = u.Home_Pants.Stripe_Color_1;
+            string home_Stripe_Color_1 = Home_Pants_Stripe_Color_1;
             if (!r.Contains(home_Stripe_Color_1))
                 r.Add(home_Stripe_Color_1);
 
-            string home_Stripe_Color_2 = u.Home_Pants.Stripe_Color_2;
+            string home_Stripe_Color_2 = Home_Pants_Stripe_Color_2;
             if (!r.Contains(home_Stripe_Color_2))
                 r.Add(home_Stripe_Color_2);
 
-            string home_Stripe_Color_3 = u.Home_Pants.Stripe_Color_3;
+            string home_Stripe_Color_3 = Home_Pants_Stripe_Color_3;
             if (!r.Contains(home_Stripe_Color_3))
                 r.Add(home_Stripe_Color_3);
 
-            string away_jersey_color = u.Away_Jersey.Jersey_Color;
+            string away_jersey_color = Away_jersey_Color;
             if (!r.Contains(away_jersey_color))
                 r.Add(away_jersey_color);
 
-            string away_Sleeve_Color = u.Away_Jersey.Sleeve_Color;
+            string away_Sleeve_Color = Away_Sleeve_Color;
             if (!r.Contains(away_Sleeve_Color))
                 r.Add(away_Sleeve_Color);
 
-            string away_Shoulder_Stripe_Color = u.Away_Jersey.Shoulder_Stripe_Color;
+            string away_Shoulder_Stripe_Color = Away_Jersey_Shoulder_Stripe;
             if (!r.Contains(away_Shoulder_Stripe_Color))
                 r.Add(away_Shoulder_Stripe_Color);
 
-            string away_Number_Color = u.Away_Jersey.Number_Color;
+            string away_Number_Color = Away_Jersey_Number_Color;
             if (!r.Contains(away_Number_Color))
                 r.Add(away_Number_Color);
 
-            string away_Number_Outline_Color = u.Away_Jersey.Number_Outline_Color;
+            string away_Number_Outline_Color = Away_Jersey_Number_Outline_Color;
             if (!r.Contains(away_Number_Outline_Color))
                 r.Add(away_Number_Outline_Color);
 
-            string away_Sleeve_Stripe1 = u.Away_Jersey.Sleeve_Stripe1;
+            string away_Sleeve_Stripe1 = Away_Jersey_Sleeve_Stripe_Color_1;
             if (!r.Contains(away_Sleeve_Stripe1))
                 r.Add(away_Sleeve_Stripe1);
 
-            string away_Sleeve_Stripe2 = u.Away_Jersey.Sleeve_Stripe2;
+            string away_Sleeve_Stripe2 = Away_Jersey_Sleeve_Stripe_Color_2;
             if (!r.Contains(away_Sleeve_Stripe2))
                 r.Add(away_Sleeve_Stripe2);
 
-            string away_Sleeve_Stripe3 = u.Away_Jersey.Sleeve_Stripe3;
+            string away_Sleeve_Stripe3 = Away_Jersey_Sleeve_Stripe_Color_3;
             if (!r.Contains(away_Sleeve_Stripe3))
                 r.Add(away_Sleeve_Stripe3);
 
-            string away_Sleeve_Stripe4 = u.Away_Jersey.Sleeve_Stripe4;
+            string away_Sleeve_Stripe4 = Away_Jersey_Sleeve_Stripe_Color_4;
             if (!r.Contains(away_Sleeve_Stripe4))
                 r.Add(away_Sleeve_Stripe4);
 
-            string away_Sleeve_Stripe5 = u.Away_Jersey.Sleeve_Stripe5;
+            string away_Sleeve_Stripe5 = Away_Jersey_Sleeve_Stripe_Color_5;
             if (!r.Contains(away_Sleeve_Stripe5))
                 r.Add(away_Sleeve_Stripe5);
 
-            string away_Sleeve_Stripe6 = u.Away_Jersey.Sleeve_Stripe6;
+            string away_Sleeve_Stripe6 = Away_Jersey_Sleeve_Stripe_Color_6;
             if (!r.Contains(away_Sleeve_Stripe6))
                 r.Add(away_Sleeve_Stripe6);
 
-            string away_Pants_Color = u.Away_Pants.Pants_Color;
+            string away_Pants_Color = Away_Pants_Color;
             if (!r.Contains(away_Pants_Color))
                 r.Add(away_Pants_Color);
 
-            string away_Stripe_Color_1 = u.Away_Pants.Stripe_Color_1;
+            string away_Stripe_Color_1 = Away_Pants_Stripe_Color_1;
             if (!r.Contains(away_Stripe_Color_1))
                 r.Add(away_Stripe_Color_1);
 
-            string away_Stripe_Color_2 = u.Away_Pants.Stripe_Color_2;
+            string away_Stripe_Color_2 = Away_Pants_Stripe_Color_2;
             if (!r.Contains(away_Stripe_Color_2))
                 r.Add(away_Stripe_Color_2);
 
-            string away_Stripe_Color_3 = u.Away_Pants.Stripe_Color_3;
+            string away_Stripe_Color_3 = Away_Pants_Stripe_Color_3;
             if (!r.Contains(away_Stripe_Color_3))
                 r.Add(away_Stripe_Color_3);
 
-            string sock_color = u.Footwear.Socks_Color;
+            string sock_color = Socks_Color;
             if (!r.Contains(sock_color))
                 r.Add(sock_color);
 
-            string cleat_color = u.Footwear.Cleats_Color;
+            string cleat_color = Cleats_Color;
             if (!r.Contains(cleat_color))
                 r.Add(cleat_color);
 
             return r;
         }
-
 
 
         public static void addUpdate_Uniform(List<Uniform_Color_percents> lup_l, Uniform_Color_percents lup)
