@@ -1,22 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="SettingsModelStoreContainer" CdmEntityContainer="settingsContext">
+  <EntityContainerMapping StorageEntityContainer="settingsModelStoreContainer" CdmEntityContainer="SettingsEntities">
     <EntitySetMapping Name="Potential_First_Names">
-      <EntityTypeMapping TypeName="SettingsModel.Potential_First_Names">
+      <EntityTypeMapping TypeName="settingsModel.Potential_First_Names">
         <MappingFragment StoreEntitySet="Potential_First_Names">
           <ScalarProperty Name="FirstName" ColumnName="FirstName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Potential_Last_Names">
-      <EntityTypeMapping TypeName="SettingsModel.Potential_Last_Names">
+      <EntityTypeMapping TypeName="settingsModel.Potential_Last_Names">
         <MappingFragment StoreEntitySet="Potential_Last_Names">
           <ScalarProperty Name="LastName" ColumnName="LastName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Stock_Teams">
-      <EntityTypeMapping TypeName="SettingsModel.Stock_Teams">
+      <EntityTypeMapping TypeName="settingsModel.Stock_Teams">
         <MappingFragment StoreEntitySet="Stock_Teams">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="City_Abr" ColumnName="City_Abr" />

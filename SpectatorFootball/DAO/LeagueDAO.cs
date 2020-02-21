@@ -14,19 +14,17 @@ namespace SpectatorFootball
         private static ILog logger = LogManager.GetLogger("RollingFile");
 
 
-        public void Create_New_League(Mem_League Mem_League)
+        public void Create_New_League(Mem_League Mem_League, string newleague_filepath)
         {
 
              string strStage = null;
 
-            try
-            {
-                strStage = "Getting connection";
-                logger.Debug(strStage);
+             strStage = "Getting connection";
+             logger.Debug(strStage);
 
-                string con = Common.LeageConnection.Connect();
-                using (var context = new mainEntities(con))
-                {
+             string con = Common.LeageConnection.Connect(newleague_filepath);
+             using (var context = new leagueContext(con))
+             {
                     context.Leagues.Add(Mem_League.Leagues);
                     foreach (Conference c in Mem_League.Conferences)
                         context.Conferences.Add(c);
@@ -43,21 +41,17 @@ namespace SpectatorFootball
                     foreach (Player p in Mem_League.Players)
                         context.Players.Add(p);
 
+                context.DBVersions.Add(Mem_League.DBVersion[0]);
+
+
                     context.SaveChanges();
 
-                }
+              }
 
-
-
-                logger.Info("League successfuly saved to database.");
-            }
-            catch (Exception ex) 
-            { 
-                logger.Error("Error inserting league into db");
-                logger.Error(ex);
-                throw new Exception("Error at stage " + strStage + " writing records to database:" + ex.Message);
+              logger.Info("League successfuly saved to database.");
             }
 
         }
     }
-}
+
+

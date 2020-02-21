@@ -26,6 +26,7 @@ namespace SpectatorFootball
 
         public const string DB_FILE_EXT = "db";
         public const string BLANK_DB = "BlankDB.db";
+        public const string SETTINGS_DB = "BlankDB.db";
 
         // Players
         public const int QB_PER_TEAM = 3;

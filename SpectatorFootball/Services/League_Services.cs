@@ -6,6 +6,7 @@ using log4net;
 using System.Linq;
 using SpectatorFootball.League_Info;
 using SpectatorFootball.Models;
+using System.Data.Entity.Validation;
 
 namespace SpectatorFootball
 {
@@ -80,7 +81,7 @@ namespace SpectatorFootball
                 foreach (var t in nl.Teams)
                 {
                     logger.Debug("Creating players for team " + t.Nickname);
-                    List<Player> Roster = ts.Roll_Players();
+                    List<Player> Roster = ts.Roll_Players((int)t.ID);
                     nl.Players.AddRange(Roster);
                 }
 
@@ -92,7 +93,7 @@ namespace SpectatorFootball
 
                 // Creating schedule
                 logger.Info("Creating schedule");
-                List<string> sched = create_schedule(nl.Leagues.Short_Name, (int) nl.Leagues.Num_Teams, nl.Leagues.Divisions.Count, nl.Leagues.Conferences.Count, (int) nl.Leagues.Number_of_Games, (int) nl.Leagues.Number_of_weeks);
+                List<string> sched = create_schedule(nl.Leagues.Short_Name, (int) nl.Leagues.Num_Teams, nl.Divisions.Count, nl.Conferences.Count, (int) nl.Leagues.Number_of_Games, (int) nl.Leagues.Number_of_weeks);
 
                 foreach (string line in sched)
                 {
@@ -113,6 +114,8 @@ namespace SpectatorFootball
                         League_ID = 1
                     };
 
+                    nl.Games.Add(g);
+
                 }
 
                 // Update the progress bar
@@ -123,7 +126,7 @@ namespace SpectatorFootball
 
                 // Write the league records to the database
                 logger.Info("Saving new league to database");
-                LeagueDAO.Create_New_League(nl);
+                LeagueDAO.Create_New_League(nl,df);
 
                 // Update the progress bar
                 i = 100;
@@ -131,38 +134,60 @@ namespace SpectatorFootball
                 state_struct = "Complete" + "|" + process_state + "|" + "League Completed Successfully!";
                 bw.ReportProgress(i, state_struct);
             }
-            catch (Exception ex)
+            catch (DbEntityValidationException e)
             {
                 state_struct = "Error" + "|" + process_state + "|" + "Failed to Create New League";
                 bw.ReportProgress(i, state_struct);
 
+                Directory.Delete(DIRPath_League, true);
+
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    logger.Error("Entity of type \"{0}\" in state \"{1}\" has the following validation errors: entry: " +
+                        eve.Entry.Entity.GetType().Name + " stat: " + eve.Entry.State);
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        logger.Error("- Property: \"{0}\", Error: \"{1}\" property name: " + 
+                            ve.PropertyName + "Error message: " + ve.ErrorMessage);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                state_struct = "Error" + "|" + process_state + "|" + "Failed to Create New League";
+                bw.ReportProgress(i, state_struct);
+                
                 Directory.Delete(DIRPath_League,true);
 
                 logger.Error("Create league service failed");
+                logger.Error("Inner Exception: " + ex.InnerException.ToString());
                 logger.Error(ex);
             }
         }
         public List<string> create_schedule(string Short_Name, int Num_Teams, int Num_Divisions, int Num_Conferences, int Number_of_Games, int Number_of_weeks)
         {
+            int Number_of_Tries = 100;
             var ls = new Schedule(Short_Name, Num_Teams, Num_Teams / Num_Divisions, Num_Conferences, Number_of_Games, Number_of_weeks - Number_of_Games);
+            string r = "Before attempting schedule";
 
             List<string> s = null;
 
-            // allow up to 5 tries if the schedule validation fails.
-            for (int i = 0; i <= 6; i++)
+            // allow up to 10 tries if the schedule validation fails.
+            for (int i = 0; i <= Number_of_Tries; i++)
             {
                 s = ls.Generate_Regular_Schedule();
                 logger.Debug("Possible League Schedule Created");
                 var val_sched = new Validate_Sched(Short_Name, Num_Teams, Num_Teams / Num_Divisions, Num_Conferences, Number_of_Games, Number_of_weeks - Number_of_Games);
-                string r = val_sched.Validate(s);
-                if (r != null)
+                r = val_sched.Validate(s);
+                if (r == null)
                 {
                     logger.Debug("Schedule validated");
                     break;
                 }
-                if (i >= 5)
-                    throw new Exception("More than 6 tries to validate schedule failed.");
             }
+
+            if (r != null)
+                throw new Exception("Error creating schedule. Error: " + r);
 
             return s;
         }

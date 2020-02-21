@@ -10,7 +10,7 @@ namespace SpectatorFootball
             InitializeComponent();
         }
 
-        private void hlp_nl_close_Click(object sender, RoutedEventArgs e)
+        private void hlp_nl_close_Click_1(object sender, RoutedEventArgs e)
         {
             this.Close();
         }

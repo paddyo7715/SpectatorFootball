@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="mainModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+<Schema Namespace="LeagueModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
   <EntityType Name="Award">
     <Key>
       <PropertyRef Name="ID" />
@@ -16,6 +16,15 @@
     <Property Name="League_ID" Type="Int64" Nullable="false" />
     <Property Name="Conf_Name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
     <NavigationProperty Name="League" Relationship="Self.FK_Conference_0_0" FromRole="Conference" ToRole="League" />
+  </EntityType>
+  <EntityType Name="DBVersion">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Date_Created" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+    <Property Name="Version" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Action" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
   </EntityType>
   <EntityType Name="Division">
     <Key>
@@ -880,9 +889,10 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="mainEntities" annotation:LazyLoadingEnabled="true">
+  <EntityContainer Name="leagueContext" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Awards" EntityType="Self.Award" />
     <EntitySet Name="Conferences" EntityType="Self.Conference" />
+    <EntitySet Name="DBVersions" EntityType="Self.DBVersion" />
     <EntitySet Name="Divisions" EntityType="Self.Division" />
     <EntitySet Name="Games" EntityType="Self.Game" />
     <EntitySet Name="Game_Player_Kick_Returner_Stats" EntityType="Self.Game_Player_Kick_Returner_Stats" />

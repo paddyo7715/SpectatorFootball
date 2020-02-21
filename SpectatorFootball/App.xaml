@@ -137,7 +137,7 @@
         </Style>
         <!-- Large Label -->
         <Style TargetType="Label" x:Key="Largelbltyle">
-            <Setter Property="Height" Value="25"/>
+            <Setter Property="Height" Value="28"/>
             <Setter Property="FontFamily" Value="Verdana"/>
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="HorizontalAlignment" Value="Left"/>

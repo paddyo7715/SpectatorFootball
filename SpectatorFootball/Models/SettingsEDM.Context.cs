@@ -16,11 +16,12 @@ namespace SpectatorFootball.Models
     public partial class settingsContext : DbContext
     {
         public settingsContext()
-            : base("name=settingsContext")
+            : base("name=SettingsEntities")
         {
         }
+
         public settingsContext(string connString)
-    : base(connString)
+            : base(connString)
         {
         }
 

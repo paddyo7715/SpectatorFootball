@@ -42,34 +42,34 @@
                             <StackPanel Orientation="Vertical">
                                 <StackPanel Orientation="Horizontal">
                                     <Label Width="95" Style="{StaticResource Normallbltyle}">City Abbr:</Label>
-                                    <TextBox Name="newtCityAbb" Text="{Binding City_Abr, FallbackValue='', Converter={StaticResource TextConverter}}" FontSize="12" Width="40" Height="20" Foreground="Black" Background="white" MaxLength="6" />
+                                    <TextBox Name="newtCityAbb" Text="{Binding City_Abr, FallbackValue='', Converter={StaticResource TextConverter}}" FontSize="12" Width="40" Height="22" Foreground="Black" Background="white" MaxLength="6" />
                                     <Label Width="50" Style="{StaticResource Normallbltyle}">City:</Label>
-                                    <TextBox Name="newtCity" Text="{Binding City, FallbackValue='', Converter={StaticResource TextConverter}}" FontSize="12" Width="110" Height="20" Foreground="Black" Background="white" MaxLength="100" />
+                                    <TextBox Name="newtCity" Text="{Binding City, FallbackValue='', Converter={StaticResource TextConverter}}" FontSize="12" Width="110" Height="22" Foreground="Black" Background="white" MaxLength="100" />
                                     <Label Width="95" Style="{StaticResource Normallbltyle}">Nickname:</Label>
-                                    <TextBox Name="newtNickname" Text="{Binding Nickname, FallbackValue='', Converter={StaticResource TextConverter}}" FontSize="12" Width="120" Height="20" Foreground="Black" Background="white" MaxLength="100" />
+                                    <TextBox Name="newtNickname" Text="{Binding Nickname, FallbackValue='', Converter={StaticResource TextConverter}}" FontSize="12" Width="120" Height="22" Foreground="Black" Background="white" MaxLength="100" />
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <Label Width="80" Style="{StaticResource Normallbltyle}">Stadium:</Label>
-                                    <TextBox Name="newtStadium" Text="{Binding Stadium_Name, FallbackValue='', Converter={StaticResource TextConverter}}" FontSize="12" Width="130" Height="20" Foreground="Black" Background="white" />
+                                    <TextBox Name="newtStadium" Text="{Binding Stadium_Name, FallbackValue='', Converter={StaticResource TextConverter}}" FontSize="12" Width="130" Height="22" Foreground="Black" Background="white" />
                                     <Label Width="85" Style="{StaticResource Normallbltyle}">Location:</Label>
-                                    <TextBox Name="newtStadiumLocation" Text="{Binding Stadium_Location,FallbackValue='', Converter={StaticResource TextConverter}}" FontSize="12" Width="170" Height="20" Foreground="Black" Background="white" MaxLength="100" />
+                                    <TextBox Name="newtStadiumLocation" Text="{Binding Stadium_Location,FallbackValue='', Converter={StaticResource TextConverter}}" FontSize="12" Width="170" Height="22" Foreground="Black" Background="white" MaxLength="100" />
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <Label Width="105" Style="{StaticResource Normallbltyle}">Field Type:</Label>
-                                    <ComboBox Name="newl1FieldType" SelectedIndex="{Binding Stadium_Field_Type}" FontSize="12" Width="100" Height="20" Foreground="Black" Background="white" IsEditable="False">
+                                    <ComboBox Name="newl1FieldType" SelectedIndex="{Binding Stadium_Field_Type}" FontSize="12" Width="100" Height="22" Foreground="Black" Background="white" IsEditable="False">
                                         <ComboBoxItem IsSelected="True">Grass</ComboBoxItem>
                                         <ComboBoxItem>Artificial</ComboBoxItem>
                                     </ComboBox>
                                     <Label Width="100" Style="{StaticResource Normallbltyle}">Field Color:</Label>
-                                    <xctk:ColorPicker Name="newl1FieldColor" SelectedColor="{Binding Stadium_Field_Color, Converter={StaticResource ColorConverter}}" DropDownBackground="White" Height="20"  Width="40"  />
+                                    <xctk:ColorPicker Name="newl1FieldColor" SelectedColor="{Binding Stadium_Field_Color, Converter={StaticResource ColorConverter}}" DropDownBackground="White" Height="22"  Width="40"  />
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <Label Width="150" FontSize="14" Foreground="White">Stadium Capacity:</Label>
-                                    <TextBox Name="newtStadiumCapacity" Text="{Binding Stadium_Capacity, FallbackValue='', Converter={StaticResource TextConverter}}" FontSize="12" Width="100" Height="20" Foreground="Black" Background="white"  />
+                                    <TextBox Name="newtStadiumCapacity" Text="{Binding Stadium_Capacity, FallbackValue='', Converter={StaticResource TextConverter}}" FontSize="12" Width="100" Height="22" Foreground="Black" Background="white"  />
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <Label Width="150" Style="{StaticResource Normallbltyle}">Stadium Image:</Label>
-                                    <TextBox Name="newtStadiumPath" IsReadOnly="True" Text="{Binding Stadium_Img_Path, Converter={StaticResource StadiumImageConverter}, FallbackValue=''}" FontSize="12" Width="265" Height="20" Foreground="Black" Background="white"  />
+                                    <TextBox Name="newtStadiumPath" IsReadOnly="True" Text="{Binding Stadium_Img_Path, Converter={StaticResource StadiumImageConverter}, FallbackValue=''}" FontSize="12" Width="265" Height="22" Foreground="Black" Background="white"  />
                                     <Button Name="newtbtnStadiumPath" FontSize="12" Width="90" Height="20" Click="newtbtnStadiumPath_Click">Image File</Button>
                                 </StackPanel>
                             </StackPanel>

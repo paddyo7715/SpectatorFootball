@@ -11,31 +11,15 @@ namespace SpectatorFootball.Common
     class LeageConnection
     {
         private LeageConnection() { }
-        private static LeageConnection _ConsString = null;
-        private String _String = null;
 
-        public static string ConString
-        {
-            get
-            {
-                if (_ConsString == null)
-                {
-                    _ConsString = new LeageConnection { _String = LeageConnection.Connect() };
-                    return _ConsString._String;
-                }
-                else
-                    return _ConsString._String;
-            }
-        }
-
-        public static string Connect()
+        public static string Connect(string leaguepath)
         {
 
             string r = "";
 
             string Provider = null;
             string metadata = null;
-            string connectionString = ConfigurationManager.ConnectionStrings["mainEntities"].ConnectionString;
+            string connectionString = ConfigurationManager.ConnectionStrings["leagueContext"].ConnectionString;
 
             string[] m = null;
             m = connectionString.Split(';');
@@ -55,7 +39,7 @@ namespace SpectatorFootball.Common
             {
                 Provider = Provider,
                 Metadata = metadata,
-                ProviderConnectionString = CommonUtils.getSettingsDBConnectionString(),
+                ProviderConnectionString = CommonUtils.getLeagueDBConnectionString(leaguepath),
             };
 
             r = entityString.ToString();

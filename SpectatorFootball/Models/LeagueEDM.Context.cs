@@ -13,15 +13,16 @@ namespace SpectatorFootball.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class mainEntities : DbContext
+    public partial class leagueContext : DbContext
     {
-        public mainEntities()
-            : base("name=mainEntities")
+        public leagueContext()
+            : base("name=leagueContext")
         {
         }
 
-        public mainEntities(string connString)
-: base(connString)
+
+        public leagueContext(string connString)
+    : base(connString)
         {
         }
 
@@ -32,6 +33,7 @@ namespace SpectatorFootball.Models
     
         public virtual DbSet<Award> Awards { get; set; }
         public virtual DbSet<Conference> Conferences { get; set; }
+        public virtual DbSet<DBVersion> DBVersions { get; set; }
         public virtual DbSet<Division> Divisions { get; set; }
         public virtual DbSet<Game> Games { get; set; }
         public virtual DbSet<Game_Player_Kick_Returner_Stats> Game_Player_Kick_Returner_Stats { get; set; }

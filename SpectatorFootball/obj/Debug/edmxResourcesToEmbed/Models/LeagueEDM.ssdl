@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="mainModel.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="data source=C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\Database\BlankDB.db" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+<Schema Namespace="LeagueModel.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="data source=C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\Database\BlankDB.db" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="Award">
     <Key>
       <PropertyRef Name="ID" />
@@ -15,6 +15,15 @@
     <Property Name="ID" Type="integer" Nullable="false" />
     <Property Name="League_ID" Type="integer" Nullable="false" />
     <Property Name="Conf_Name" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DBVersion">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Date_Created" Type="nvarchar" MaxLength="2147483647" />
+    <Property Name="Version" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+    <Property Name="Action" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
   </EntityType>
   <EntityType Name="Division">
     <Key>
@@ -816,9 +825,10 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="mainModelStoreContainer">
+  <EntityContainer Name="LeagueModelStoreContainer">
     <EntitySet Name="Award" EntityType="Self.Award" store:Type="Tables" />
     <EntitySet Name="Conference" EntityType="Self.Conference" store:Type="Tables" />
+    <EntitySet Name="DBVersion" EntityType="Self.DBVersion" store:Type="Tables" />
     <EntitySet Name="Division" EntityType="Self.Division" store:Type="Tables" />
     <EntitySet Name="Game" EntityType="Self.Game" store:Type="Tables" />
     <EntitySet Name="Game_Player_Kick_Returner_Stats" EntityType="Self.Game_Player_Kick_Returner_Stats" store:Type="Tables" />

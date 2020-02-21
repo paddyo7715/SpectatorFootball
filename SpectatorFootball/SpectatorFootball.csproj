@@ -118,6 +118,9 @@
     <Compile Include="Models\Conference.cs">
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DBVersion.cs">
+      <DependentUpon>LeagueEDM.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Division.cs">
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
@@ -244,6 +247,7 @@
     <Compile Include="Team\Team_Helper.cs" />
     <Compile Include="Team\Uniform.cs" />
     <Compile Include="Team\Uniform_Image.cs" />
+    <Compile Include="Versioning\App_Version.cs" />
     <Page Include="Help_Forms\Help_NewLeague.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -374,6 +378,7 @@
       <DependentUpon>SettingsEDM.edmx</DependentUpon>
       <LastGenOutput>SettingsEDM.cs</LastGenOutput>
     </Content>
+    <Resource Include="Versioning\History.txt" />
     <Resource Include="Images\Helmets\st_Thunder.png" />
     <Resource Include="Images\Stadiums\st_Portland.jpg" />
     <Content Include="Log4Net.Config.xml">

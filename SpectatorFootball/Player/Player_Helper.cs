@@ -64,6 +64,8 @@ namespace SpectatorFootball
             r.Kicker_Leg_Power = ratings.Leg_Strength;
             r.Kicker_Leg_Accuracy = ratings.Kicking_Accuracy;
 
+            r.Team_ID = team_ind;
+
             return r;
         }
         public int getPlayerNumber(string pos)

@@ -58,7 +58,7 @@ namespace SpectatorFootball.Models
         public string Away_Pants_Stripe_Color_1 { get; set; }
         public string Away_Pants_Stripe_Color_2 { get; set; }
         public string Away_Pants_Stripe_Color_3 { get; set; }
-        public int Stadium_Field_Type { get; set; }
+        public long Stadium_Field_Type { get; set; }
         public string Stadium_Field_Color { get; set; }
     }
 }

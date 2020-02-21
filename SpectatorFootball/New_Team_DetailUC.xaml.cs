@@ -773,7 +773,7 @@ namespace SpectatorFootball
             if (OpenFileDialog.ShowDialog() == true)
             {
                 string filepath = OpenFileDialog.FileName;
-                binding_team.Helmet_img_path = Path.GetFileName(filepath);
+                binding_team.Helmet_img_path = filepath;
                 newtHelmetImgPath.Text = filepath;
             }
         }
@@ -790,7 +790,7 @@ namespace SpectatorFootball
             if (OpenFileDialog.ShowDialog() == true)
             {
                 string filepath = OpenFileDialog.FileName;
-                binding_team.Stadium_Img_Path = Path.GetFileName(filepath);
+                binding_team.Stadium_Img_Path = filepath;
                 newtStadiumPath.Text = filepath;
 
             }
@@ -807,7 +807,7 @@ namespace SpectatorFootball
 
                 if (bNewLeague)
                 {
-                    orig_this_team = binding_team;
+                    Team_Helper.CopyTeamValues(binding_team, this.orig_this_team);
                     backtoNewLeague?.Invoke(this, new TeamUpdatedEventArgs(true));
                 }
                 else

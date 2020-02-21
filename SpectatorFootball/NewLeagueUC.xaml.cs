@@ -10,6 +10,7 @@ using System.IO;
 using log4net;
 using SpectatorFootball.Models;
 using SpectatorFootball.League_Info;
+using SpectatorFootball.Versioning;
 
 namespace SpectatorFootball
 {
@@ -119,30 +120,30 @@ namespace SpectatorFootball
             DIRPath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), App_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + newl1shortname.Text);
 
             if (CommonUtils.isBlank(newl1shortname.Text))
-                throw new Exception("League Short Name must be supplied!");
+                throw new Exception("On the Settings Tab, League Short Name must be supplied!");
             if (!CommonUtils.isAlphaNumeric(newl1shortname.Text, false))
-                throw new Exception("Invalid character in League Short Name!");
+                throw new Exception("On the Settings Tab, Invalid character in League Short Name!");
 
             if (CommonUtils.isBlank(newl1longname.Text))
-                throw new Exception("League Long Name must be supplied!");
+                throw new Exception("On the Settings Tab, League Long Name must be supplied!");
             if (!CommonUtils.isAlphaNumeric(newl1longname.Text, true))
-                throw new Exception("Invalid character in League Long Name!");
+                throw new Exception("On the Settings Tab, Invalid character in League Long Name!");
 
             if (CommonUtils.isBlank(newl1championshipgame.Text))
-                throw new Exception("Championship Game must be supplied!");
+                throw new Exception("On the Settings Tab, Championship Game must be supplied!");
             if (!CommonUtils.isAlphaNumeric(newl1championshipgame.Text, true))
-                throw new Exception("Invalid character in Championship Game!");
+                throw new Exception("On the Settings Tab, Invalid character in Championship Game!");
 
             if (CommonUtils.isBlank(newlnumweeks.Text) || !int.TryParse(newlnumweeks.Text, out dummy_int))
-                throw new Exception("Invalid Value for Number of Weeks!");
+                throw new Exception("On the Settings Tab, Invalid Value for Number of Weeks!");
             if (CommonUtils.isBlank(newlnumgames.Text) || !int.TryParse(newlnumgames.Text, out dummy_int))
-                throw new Exception("Invalid Value for Number of Games!");
+                throw new Exception("On the Settings Tab, Invalid Value for Number of Games!");
             if (CommonUtils.isBlank(newlnumdivisions.Text) || !int.TryParse(newlnumdivisions.Text, out dummy_int))
-                throw new Exception("Invalid Value for Number of Divisions!");
+                throw new Exception("On the Settings Tab, Invalid Value for Number of Divisions!");
             if (CommonUtils.isBlank(newlnumteams.Text) || !int.TryParse(newlnumteams.Text, out dummy_int))
-                throw new Exception("Invalid Value for Number of Teams!");
+                throw new Exception("On the Settings Tab, Invalid Value for Number of Teams!");
             if (CommonUtils.isBlank(newlnumplayoffteams.Text) || !int.TryParse(newlnumplayoffteams.Text, out dummy_int))
-                throw new Exception("Invalid Value for Number of Playoff Teams");
+                throw new Exception("On the Settings Tab, Invalid Value for Number of Playoff Teams");
 
             for (int i = 1; i <= Convert.ToInt32(newlnumconferences.Text); i++)
             {
@@ -150,10 +151,10 @@ namespace SpectatorFootball
                 TextBox conftxtbox = (TextBox) this.FindName(conftxtname);
 
                 if (conftxtname == null || conftxtbox.Text == "")
-                    throw new Exception("Conference name " + i.ToString() + " must be supplied!");
+                    throw new Exception("On the Settings Tab, Conference name " + i.ToString() + " must be supplied!");
 
                 if (!CommonUtils.isAlpha(conftxtbox.Text, true))
-                    throw new Exception("Invalid character in Conference Name " + conftxtbox.Text + "!");
+                    throw new Exception("On the Settings Tab, Invalid character in Conference Name " + conftxtbox.Text + "!");
             }
 
             for (int i = 1; i <= Convert.ToInt32(newlnumdivisions.Text); i++)
@@ -162,10 +163,10 @@ namespace SpectatorFootball
                 TextBox divtxtbox = (TextBox) this.FindName(divtxtname);
 
                 if (divtxtbox == null || divtxtbox.Text.Trim().Length == 0)
-                    throw new Exception("A name for division " + i.ToString() + " must be supplied!");
+                    throw new Exception("On the Settings Tab, A name for division " + i.ToString() + " must be supplied!");
 
                 if (!CommonUtils.isAlpha(divtxtbox.Text, true))
-                    throw new Exception("Invalid character in Division Name " + divtxtbox.Text + "!");
+                    throw new Exception("On the Settings Tab, Invalid character in Division Name " + divtxtbox.Text + "!");
             }
 
             for (int i = 1; i <= Convert.ToInt32(newlnumteams.Text); i++)
@@ -173,13 +174,13 @@ namespace SpectatorFootball
                 string teamlabel = "newllblTeam" + i.ToString();
                 Label tlabel = (Label) this.FindName(teamlabel);
                 if (tlabel.Content.ToString() == App_Constants.EMPTY_TEAM_SLOT)
-                    throw new Exception("All Empty Team Slots must be filled with a team!");
+                    throw new Exception("On the Teams Tab, All Empty Team Slots must be filled with a team!");
             }
 
             var ts = new Team_Services();
             string first_dup_team = ts.FirstDuplicateTeam(pw.Mem_League.Teams);
             if (first_dup_team != null)
-                throw new Exception("Duplicate team " + first_dup_team + " found in league!  Leagues can not have duplicate teams!");
+                throw new Exception("On the Settings Tab, Duplicate team " + first_dup_team + " found in league!  Leagues can not have duplicate teams!");
 
             if (Directory.Exists(DIRPath))
                 throw new Exception("League " + newl1shortname.Text + " already exists!");
@@ -234,7 +235,7 @@ namespace SpectatorFootball
             pw.Mem_League.Teams = new List<Team>();
                 
             for (int i = 1; i <= num_teams; i++)
-              pw.Mem_League.Teams.Add(new Team() { ID = i, League_ID = 1, City = App_Constants.EMPTY_TEAM_SLOT });
+              pw.Mem_League.Teams.Add(new Team() { ID = i, City = App_Constants.EMPTY_TEAM_SLOT });
 
 
             // Clear previous division selections
@@ -555,7 +556,6 @@ namespace SpectatorFootball
                         team_label.Width = 250;
                         team_label.Style = Teamlbltyle;
 
-
                         sp_team.Children.Add(helmet_img);
                         sp_team.Children.Add(team_label);
                         sp_team.AllowDrop = true;
@@ -745,8 +745,14 @@ namespace SpectatorFootball
         }
         private void newl1Next_Click(object sender, RoutedEventArgs e)
         {
+
             var Conferences_list = new List<string>();
             var Divisions_list = new List<string>();
+
+            pw.Mem_League.Conferences = new List<Conference>();
+            pw.Mem_League.Divisions = new List<Division>();
+            pw.Mem_League.Games = new List<Game>();
+            pw.Mem_League.Players = new List<Player>();
 
             try
             {
@@ -754,11 +760,21 @@ namespace SpectatorFootball
                 validate();
                 logger.Info("league validated!");
 
+                Mouse.OverrideCursor = Cursors.Wait;
+
+                App_Version app_ver = new App_Version();
+
                 pw.Mem_League.Leagues.ID = 1;
                 pw.Mem_League.Leagues.Short_Name = newl1shortname.Text;
                 pw.Mem_League.Leagues.Long_Name = newl1longname.Text;
                 pw.Mem_League.Leagues.Championship_Game_Name = newl1championshipgame.Text;
                 pw.Mem_League.Leagues.Starting_Year = Convert.ToInt32(newl1StartingYear.Text);
+                pw.Mem_League.Leagues.Number_of_Conferences = Convert.ToInt32(newlnumconferences.Text);
+                pw.Mem_League.Leagues.Number_of_Divisions = Convert.ToInt32(newlnumdivisions.Text);
+                pw.Mem_League.Leagues.Number_of_Games = Convert.ToInt32(newlnumgames.Text);
+                pw.Mem_League.Leagues.Number_of_weeks = Convert.ToInt32(newlnumweeks.Text);
+                pw.Mem_League.Leagues.Num_Playoff_Teams = Convert.ToInt32(newlnumplayoffteams.Text);
+                pw.Mem_League.Leagues.Num_Teams = Convert.ToInt32(newlnumteams.Text);
 
                 if (Convert.ToInt32(newlnumconferences.Text) == 2)
                 {
@@ -769,16 +785,27 @@ namespace SpectatorFootball
                 for (int i = 1; i <= Convert.ToInt32(newlnumdivisions.Text); i++)
                     Divisions_list.Add(((TextBox)this.FindName("newldiv" + i.ToString())).Text.Trim());
 
+                int c_int = 1;
                 foreach (string c in Conferences_list)
-                    pw.Mem_League.Conferences.Add(new Conference() { Conf_Name = c, League_ID = 1 });
+                    pw.Mem_League.Conferences.Add(new Conference() { Conf_Name = c, League_ID = pw.Mem_League.Leagues.ID, ID = c_int++ });
 
+                int d_int = 1;
                 foreach (string d in Divisions_list)
-                    pw.Mem_League.Divisions.Add(new Division() {  Name = d, League_ID = 1 });
+                    pw.Mem_League.Divisions.Add(new Division() {  Name = d, League_ID = pw.Mem_League.Leagues.ID, ID = d_int++ });
 
+                pw.Mem_League.DBVersion.Add(new DBVersion() { Date_Created= DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss"), Version = App_Version.APP_VERSION, Action = "Created New" });
+
+                //set the owner of all teams to C for computer for now.
+                for (int t_int = 0; t_int < pw.Mem_League.Teams.Count; t_int++)
+                {
+                    pw.Mem_League.Teams[t_int].League_ID = pw.Mem_League.Leagues.ID;
+                    pw.Mem_League.Teams[t_int].ID = t_int + 1;
+                    pw.Mem_League.Teams[t_int].Owner = "C";
+                }
 
                 // Background Worker code for popup
                 pop = new Progress_Dialog();
-
+                pop.leagueCreated += leagueCreated;
                 bw = new BackgroundWorker();
 
                 // Add any initialization after the InitializeComponent() call.
@@ -809,7 +836,7 @@ namespace SpectatorFootball
         private void bw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             Style lableError = (Style)System.Windows.Application.Current.FindResource("LabelError");
-            pop.btnclose.Visibility = Visibility.Visible;
+            pop.btnclose.IsEnabled = true;
 
             // Progress Bar Window close
             if (pop.prgTest.Foreground == Brushes.Red)
@@ -819,7 +846,11 @@ namespace SpectatorFootball
             }
             else
                 pop.statuslbl.Content = "League Created Successfully!";
+
+            Mouse.OverrideCursor = null;
         }
+
+
         private void bw_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             string user_state_Struct = e.UserState.ToString();
@@ -925,7 +956,7 @@ namespace SpectatorFootball
 
                 dragSource.Items.Remove(drag_data);
                 Team cloned_team = Team_Helper.Clonse_Team_from_Stock(new_team);
-                cloned_team.ID = new_index;
+                cloned_team.ID = new_index + 1;
                 // Set prefix the helmet image path and stadium image path with the app folders for this
                 // computer, because these stock teams were created on the developer's computer and
                 // would not be correct.
@@ -955,7 +986,7 @@ namespace SpectatorFootball
 
                 // Set new team in league to the old team and change the id to the new slot
                 pw.Mem_League.Teams[new_index] = pw.Mem_League.Teams[old_index];
-                pw.Mem_League.Teams[new_index].ID = new_index;
+                pw.Mem_League.Teams[new_index].ID = new_index + 1;
 
                 // Set old slot to a new blank team
                 var blank_team = new Team() {ID = old_index ,City = App_Constants.EMPTY_TEAM_SLOT };
@@ -1051,6 +1082,13 @@ namespace SpectatorFootball
             hlp_form.Top = (SystemParameters.PrimaryScreenHeight - hlp_form.Height) / 2;
             hlp_form.Left = (SystemParameters.PrimaryScreenWidth - hlp_form.Width) / 2;
             hlp_form.ShowDialog();
+        }
+        //This event handler is fired from the popup that shows the dialog box that shows the 
+        //progress in creating the league if the league creation is successful and the user
+        //then clicks on the OK button on the dialog.
+        private void leagueCreated(object sender, EventArgs e)
+        {
+            Show_MainMenu?.Invoke(this, new EventArgs());
         }
     }
 }

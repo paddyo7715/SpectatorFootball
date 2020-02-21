@@ -22,6 +22,7 @@ namespace SpectatorFootball.League_Info
             Years = new List<int>();
             Awards = new List<Award>();
             Conferences = new List<Conference>();
+            DBVersion = new List<DBVersion>();
             Divisions = new List<Division>();
             Games = new List<Game>();
             Game_Player_Kick_Returner_Stats = new List<Game_Player_Kick_Returner_Stats>();
@@ -49,9 +50,9 @@ namespace SpectatorFootball.League_Info
         public int currentYear { get; set; }
         public List<int> Years { get; set; }
         public League_State State { get; set; } = default(League_State);
-
         public List<Award> Awards { get; set; }
         public List<Conference> Conferences { get; set; }
+        public List<DBVersion> DBVersion { get; set; }
         public List<Division> Divisions { get; set; }
         public List<Game> Games { get; set; }
         public List<Game_Player_Kick_Returner_Stats> Game_Player_Kick_Returner_Stats { get; set; }

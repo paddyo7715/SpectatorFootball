@@ -14,6 +14,11 @@ namespace SpectatorFootball
           return "Data Source=" + getAppPath() + Path.DirectorySeparatorChar + "Database" + Path.DirectorySeparatorChar + "Settings.db;";
         }
 
+        public static String getLeagueDBConnectionString(string newLeague_path)
+        {
+            return "Data Source=" + newLeague_path + ";";
+        }
+
         public static string getAppPath()
         {
             string c = Environment.CurrentDirectory;
