@@ -26,6 +26,7 @@ namespace SpectatorFootball.Models
         public long ID { get; set; }
         public string Short_Name { get; set; }
         public string Long_Name { get; set; }
+        public string League_Logo_Filepath { get; set; }
         public long Starting_Year { get; set; }
         public long Number_of_weeks { get; set; }
         public long Number_of_Games { get; set; }

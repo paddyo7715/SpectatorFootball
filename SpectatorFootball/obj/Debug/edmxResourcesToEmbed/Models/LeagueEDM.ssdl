@@ -21,7 +21,7 @@
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Date_Created" Type="nvarchar" MaxLength="2147483647" />
+    <Property Name="Date_Created" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
     <Property Name="Version" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
     <Property Name="Action" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
   </EntityType>
@@ -332,6 +332,7 @@
     <Property Name="ID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Short_Name" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
     <Property Name="Long_Name" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+    <Property Name="League_Logo_Filepath" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
     <Property Name="Starting_Year" Type="integer" Nullable="false" />
     <Property Name="Number_of_weeks" Type="integer" Nullable="false" />
     <Property Name="Number_of_Games" Type="integer" Nullable="false" />

@@ -8,6 +8,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <local1:TextConverter x:Key="TextConverter" />
+        <local1:ImageConverter x:Key="ImageConverter" />
     </UserControl.Resources>
     <DockPanel Height="730">
         <Grid DockPanel.Dock="Top">
@@ -17,7 +18,7 @@
                 <ColumnDefinition Width="2*" />
             </Grid.ColumnDefinitions>
 
-            <Label Grid.Column="1" Style="{StaticResource MedLabelstyle}" >New League</Label>
+            <Image Grid.Column="1" Name="League_image" Source="{Binding ElementName=newLogoPath, Path=Text, Converter={StaticResource ImageConverter}}" Width="120" Height="60"></Image>
             <Button Grid.Column="2" Name="help_btn" Focusable="false" Style="{StaticResource appHelpBTN}" Click="help_btn_Click">Help ?</Button>
         </Grid>
         <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
@@ -40,6 +41,11 @@
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
                                 <Label Width="350" Style="{StaticResource Largelbltyle}">Long Names:</Label>
                                 <TextBox Name="newl1longname" Width="500" Style="{StaticResource Largetxttyle}"  MaxLength="100" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Width="350" Style="{StaticResource Largelbltyle}">League Logo Image:</Label>
+                                <TextBox Name="newLogoPath" IsReadOnly="True" Style="{StaticResource Largetxttyle}" Width="265" />
+                                <Button Name="newl1longnameLeagueLogoPath" FontSize="12" Width="90" Height="20" Click="newl1longnameLeagueLogoPath_Click">Select File</Button>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
                                 <Label Width="350" Style="{StaticResource Largelbltyle}">Starting Year:</Label>

@@ -38,7 +38,7 @@ namespace SpectatorFootball.League_Info
             Game_Player_Special_Teams_Has_Ball_Stats = new List<Game_Player_Special_Teams_Has_Ball_Stats>();
             Game_Scoring_Summary = new List<Game_Scoring_Summary>();
             Hall_of_Fame = new List<Hall_of_Fame>();
-            Leagues = new League();
+            Leagues = new SpectatorFootball.Models.League();
             Player_Awards = new List<Player_Awards>();
             Players = new List<Player>();
             Playoff_Teams = new List<Playoff_Teams>();
@@ -68,7 +68,7 @@ namespace SpectatorFootball.League_Info
         public List<Game_Player_Special_Teams_Has_Ball_Stats> Game_Player_Special_Teams_Has_Ball_Stats { get; set; }
         public List<Game_Scoring_Summary> Game_Scoring_Summary { get; set; }
         public List<Hall_of_Fame> Hall_of_Fame { get; set; }
-        public League Leagues { get; set; }
+        public SpectatorFootball.Models.League Leagues { get; set; }
         public List<Player_Awards> Player_Awards { get; set; }
         public List<Player> Players { get; set; }
         public List<Playoff_Teams> Playoff_Teams { get; set; }

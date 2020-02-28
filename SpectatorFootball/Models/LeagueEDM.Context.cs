@@ -19,10 +19,8 @@ namespace SpectatorFootball.Models
             : base("name=leagueContext")
         {
         }
-
-
         public leagueContext(string connString)
-    : base(connString)
+            : base(connString)
         {
         }
 

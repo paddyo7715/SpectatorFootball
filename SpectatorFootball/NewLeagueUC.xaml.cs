@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System;
 using System.ComponentModel;
 using System.IO;
+using Microsoft.Win32;
 using log4net;
 using SpectatorFootball.Models;
 using SpectatorFootball.League_Info;
@@ -128,6 +129,9 @@ namespace SpectatorFootball
                 throw new Exception("On the Settings Tab, League Long Name must be supplied!");
             if (!CommonUtils.isAlphaNumeric(newl1longname.Text, true))
                 throw new Exception("On the Settings Tab, Invalid character in League Long Name!");
+
+            if (CommonUtils.isBlank(newLogoPath.Text))
+                throw new Exception("On the Settings Tab, League Logo Must be Selected!");
 
             if (CommonUtils.isBlank(newl1championshipgame.Text))
                 throw new Exception("On the Settings Tab, Championship Game must be supplied!");
@@ -767,6 +771,7 @@ namespace SpectatorFootball
                 pw.Mem_League.Leagues.ID = 1;
                 pw.Mem_League.Leagues.Short_Name = newl1shortname.Text;
                 pw.Mem_League.Leagues.Long_Name = newl1longname.Text;
+                pw.Mem_League.Leagues.League_Logo_Filepath = newLogoPath.Text;
                 pw.Mem_League.Leagues.Championship_Game_Name = newl1championshipgame.Text;
                 pw.Mem_League.Leagues.Starting_Year = Convert.ToInt32(newl1StartingYear.Text);
                 pw.Mem_League.Leagues.Number_of_Conferences = Convert.ToInt32(newlnumconferences.Text);
@@ -1074,6 +1079,23 @@ namespace SpectatorFootball
             }
 
             return null;
+        }
+
+        private void newl1longnameLeagueLogoPath_Click(object sender, RoutedEventArgs e)
+        {
+            var OpenFileDialog = new OpenFileDialog();
+            string init_folder = CommonUtils.getAppPath();
+            init_folder += Path.DirectorySeparatorChar + "Images" + Path.DirectorySeparatorChar + "Logos";
+
+            OpenFileDialog.InitialDirectory = init_folder;
+            OpenFileDialog.Multiselect = false;
+            OpenFileDialog.Filter = "Image Files|*.jpg;*.gif;*.png;*.bmp";
+
+            if (OpenFileDialog.ShowDialog() == true)
+            {
+                string filepath = OpenFileDialog.FileName;
+                newLogoPath.Text = filepath;
+             }
         }
 
         private void help_btn_Click(object sender, RoutedEventArgs e)

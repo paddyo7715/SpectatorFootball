@@ -54,11 +54,25 @@ namespace SpectatorFootball
                 logger.Info("Creating league image folder");
                 Directory.CreateDirectory(DIRPath_League + Path.DirectorySeparatorChar + App_Constants.LEAGUE_STADIUM_SUBFOLDER);
 
+
+                // Copy the League Logo file
+                logger.Info("Starting league Logo Copy and Rename");
+                string sf = nl.Leagues.League_Logo_Filepath;
+                string df = DIRPath_League + Path.DirectorySeparatorChar + Path.GetFileName(sf);
+                File.Copy(sf, df);
+
+                //Create League Profile file
+                using (StreamWriter sw = new StreamWriter(DIRPath_League + Path.DirectorySeparatorChar + "Profile.txt"))
+                {
+                    sw.WriteLine("LongName: " + nl.Leagues.Long_Name);
+                    sw.WriteLine("LogoFileName: " + Path.GetFileName(nl.Leagues.League_Logo_Filepath));
+                }
+
                 // Copy and Create the league database file
                 logger.Info("Starting league database creation and copy");
-                string sf = CommonUtils.getAppPath() + Path.DirectorySeparatorChar + App_Constants.BLANK_DB_FOLDER + Path.DirectorySeparatorChar + App_Constants.BLANK_DB;
-                string df = DIRPath_League + Path.DirectorySeparatorChar + New_League_File;
-                File.Copy(sf, df);
+                string ssf = CommonUtils.getAppPath() + Path.DirectorySeparatorChar + App_Constants.BLANK_DB_FOLDER + Path.DirectorySeparatorChar + App_Constants.BLANK_DB;
+                string ddf = DIRPath_League + Path.DirectorySeparatorChar + New_League_File;
+                File.Copy(ssf, ddf);
 
                 // Copy team image files to league folder
                 logger.Info("Helmet and stadium files copy starting");
@@ -126,7 +140,7 @@ namespace SpectatorFootball
 
                 // Write the league records to the database
                 logger.Info("Saving new league to database");
-                LeagueDAO.Create_New_League(nl,df);
+                LeagueDAO.Create_New_League(nl,ddf);
 
                 // Update the progress bar
                 i = 100;

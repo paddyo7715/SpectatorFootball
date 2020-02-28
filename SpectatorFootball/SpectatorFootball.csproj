@@ -105,6 +105,7 @@
     <Compile Include="Common\LeageConnection.cs" />
     <Compile Include="Common\SettingsConnection.cs" />
     <Compile Include="Common\Validator.cs" />
+    <Compile Include="League\League_Helper.cs" />
     <Compile Include="League\Mem_League.cs" />
     <Compile Include="MainMenuUC.xaml.cs">
       <DependentUpon>MainMenuUC.xaml</DependentUpon>
@@ -358,6 +359,16 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\Logos\APFL.png" />
+    <Resource Include="Images\Logos\blank_Horizontal.png" />
+    <Resource Include="Images\Logos\Blank_Sheild.png" />
+    <Resource Include="Images\Logos\UFL.png" />
+    <Resource Include="Images\Logos\ProFL.png" />
+    <Resource Include="Images\Logos\MFL.png" />
+    <Resource Include="Images\Logos\FFL.jpg" />
+    <Resource Include="Images\Logos\GFL.png" />
+    <Resource Include="Images\Logos\AFL.png" />
+    <Resource Include="Images\Logos\CFL.png" />
     <Content Include="Models\LeagueEDM.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>LeagueEDM.edmx</DependentUpon>

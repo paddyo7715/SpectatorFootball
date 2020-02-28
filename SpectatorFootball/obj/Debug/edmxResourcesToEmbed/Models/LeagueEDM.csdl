@@ -22,7 +22,7 @@
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Date_Created" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+    <Property Name="Date_Created" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Version" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Action" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
   </EntityType>
@@ -372,6 +372,7 @@
     <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Short_Name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Long_Name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="League_Logo_Filepath" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Starting_Year" Type="Int64" Nullable="false" />
     <Property Name="Number_of_weeks" Type="Int64" Nullable="false" />
     <Property Name="Number_of_Games" Type="Int64" Nullable="false" />
@@ -889,7 +890,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="leagueContext" annotation:LazyLoadingEnabled="true">
+  <EntityContainer Name="mainEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Awards" EntityType="Self.Award" />
     <EntitySet Name="Conferences" EntityType="Self.Conference" />
     <EntitySet Name="DBVersions" EntityType="Self.DBVersion" />

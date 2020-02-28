@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="2a71db90bd264185963139b205cf9bc2" Name="Diagram1">
+      <Diagram DiagramId="70ffeba6fa164b15bf33c212b6535d1b" Name="Diagram1">
         <EntityTypeShape EntityType="LeagueModel.Award" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="LeagueModel.Conference" Width="1.5" PointX="3" PointY="33.25" IsExpanded="true" />
         <EntityTypeShape EntityType="LeagueModel.DBVersion" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
@@ -12,8 +12,8 @@
         <EntityTypeShape EntityType="LeagueModel.Game" Width="1.5" PointX="8.25" PointY="43.75" IsExpanded="true" />
         <EntityTypeShape EntityType="LeagueModel.Game_Player_Kick_Returner_Stats" Width="1.5" PointX="10.5" PointY="50.75" IsExpanded="true" />
         <EntityTypeShape EntityType="LeagueModel.Game_Player_Kicker_Stats" Width="1.5" PointX="13.5" PointY="50.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="LeagueModel.Game_Player_Offensive_Linemen_Stats" Width="1.5" PointX="10.5" PointY="56.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="LeagueModel.Game_Player_Pass_Defense_Stats" Width="1.5" PointX="10.5" PointY="44.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="LeagueModel.Game_Player_Offensive_Linemen_Stats" Width="1.5" PointX="10.5" PointY="56.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="LeagueModel.Game_Player_Pass_Defense_Stats" Width="1.5" PointX="10.5" PointY="44.75" IsExpanded="true" />
         <EntityTypeShape EntityType="LeagueModel.Game_Player_Pass_Rushers_Stats" Width="1.5" PointX="13.5" PointY="56.25" IsExpanded="true" />
         <EntityTypeShape EntityType="LeagueModel.Game_Player_Passing_Stats" Width="1.5" PointX="16.5" PointY="55.875" IsExpanded="true" />
         <EntityTypeShape EntityType="LeagueModel.Game_Player_Punter_Stats" Width="1.5" PointX="13.5" PointY="46.5" IsExpanded="true" />
@@ -21,9 +21,9 @@
         <EntityTypeShape EntityType="LeagueModel.Game_Player_Rushing_Stats" Width="1.5" PointX="16.5" PointY="47.5" IsExpanded="true" />
         <EntityTypeShape EntityType="LeagueModel.Game_Player_Special_Team_Receive_Stats" Width="1.5" PointX="10.5" PointY="60.125" IsExpanded="true" />
         <EntityTypeShape EntityType="LeagueModel.Game_Player_Special_Teams_Has_Ball_Stats" Width="1.5" PointX="19.5" PointY="51" IsExpanded="true" />
-        <EntityTypeShape EntityType="LeagueModel.Game_Scoring_Summary" Width="1.5" PointX="10.5" PointY="103.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="LeagueModel.Game_Scoring_Summary" Width="1.5" PointX="10.5" PointY="103.75" IsExpanded="true" />
         <EntityTypeShape EntityType="LeagueModel.Hall_of_Fame" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="LeagueModel.League" Width="1.5" PointX="0.75" PointY="39.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="LeagueModel.League" Width="1.5" PointX="0.75" PointY="39.25" IsExpanded="true" />
         <EntityTypeShape EntityType="LeagueModel.Player_Awards" Width="1.5" PointX="7.5" PointY="57.125" IsExpanded="true" />
         <EntityTypeShape EntityType="LeagueModel.Player" Width="1.5" PointX="5.25" PointY="54.25" IsExpanded="true" />
         <EntityTypeShape EntityType="LeagueModel.Playoff_Teams" Width="1.5" PointX="5.25" PointY="51.5" IsExpanded="true" />

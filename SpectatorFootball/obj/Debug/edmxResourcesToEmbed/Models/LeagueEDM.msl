@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="LeagueModelStoreContainer" CdmEntityContainer="leagueContext">
+  <EntityContainerMapping StorageEntityContainer="LeagueModelStoreContainer" CdmEntityContainer="mainEntities">
     <EntitySetMapping Name="Awards">
       <EntityTypeMapping TypeName="LeagueModel.Award">
         <MappingFragment StoreEntitySet="Award">
@@ -339,6 +339,7 @@
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Short_Name" ColumnName="Short_Name" />
           <ScalarProperty Name="Long_Name" ColumnName="Long_Name" />
+          <ScalarProperty Name="League_Logo_Filepath" ColumnName="League_Logo_Filepath" />
           <ScalarProperty Name="Starting_Year" ColumnName="Starting_Year" />
           <ScalarProperty Name="Number_of_weeks" ColumnName="Number_of_weeks" />
           <ScalarProperty Name="Number_of_Games" ColumnName="Number_of_Games" />
