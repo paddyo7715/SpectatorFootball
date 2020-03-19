@@ -1,0 +1,22 @@
+﻿<Window x:Class="SpectatorFootball.LoadLeague"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SpectatorFootball"
+        mc:Ignorable="d"
+        Height="330" Width="500" WindowStyle="none" ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True">
+    <Border Style="{StaticResource popupBD}" BorderThickness="1">
+        <StackPanel Style="{StaticResource popupSP}" Height="320" Width="490"  Orientation="Vertical" >
+            <Label Style="{StaticResource popupTT}" HorizontalAlignment="Center">Load League</Label>
+
+            <ListView Margin="4" Padding="0" Name="LoadLeagueGrid" HorizontalContentAlignment="left"  Background="LightGray" Width="400" Height="200">
+            </ListView>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Name="LoadLeage_cancel" Style="{StaticResource appSubmitStyle}" Click="LoadLeage_cancel_Click">Cancel</Button>
+                <Button Name="LoadLeage_load" Style="{StaticResource appSubmitStyle}" Click="LoadLeage_load_Click">Load</Button>
+            </StackPanel>
+        </StackPanel>
+    </Border>
+</Window>
