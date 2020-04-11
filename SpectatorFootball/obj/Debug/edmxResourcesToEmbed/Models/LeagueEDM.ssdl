@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="LeagueModel.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="data source=C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\Database\BlankDB.db" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+<Schema Namespace="mainModel.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="data source=C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\Database\BlankDB.db" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="Award">
     <Key>
       <PropertyRef Name="ID" />
@@ -12,7 +12,8 @@
     <Key>
       <PropertyRef Name="ID" />
     </Key>
-    <Property Name="ID" Type="integer" Nullable="false" />
+    <Property Name="ID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Ordinal" Type="integer" Nullable="false" />
     <Property Name="League_ID" Type="integer" Nullable="false" />
     <Property Name="Conf_Name" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
   </EntityType>
@@ -29,7 +30,8 @@
     <Key>
       <PropertyRef Name="ID" />
     </Key>
-    <Property Name="ID" Type="integer" Nullable="false" />
+    <Property Name="ID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Ordinal" Type="integer" Nullable="false" />
     <Property Name="League_ID" Type="integer" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
   </EntityType>
@@ -38,9 +40,8 @@
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Year" Type="integer" Nullable="false" />
-    <Property Name="Week" Type="integer" Nullable="false" />
     <Property Name="League_ID" Type="integer" Nullable="false" />
+    <Property Name="Week" Type="integer" Nullable="false" />
     <Property Name="Home_Team_ID" Type="integer" Nullable="false" />
     <Property Name="Away_Team_ID" Type="integer" Nullable="false" />
     <Property Name="Home_FirstDowns" Type="integer" />
@@ -333,7 +334,8 @@
     <Property Name="Short_Name" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
     <Property Name="Long_Name" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
     <Property Name="League_Logo_Filepath" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
-    <Property Name="Starting_Year" Type="integer" Nullable="false" />
+    <Property Name="League_Logo_File" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+    <Property Name="Year" Type="integer" Nullable="false" />
     <Property Name="Number_of_weeks" Type="integer" Nullable="false" />
     <Property Name="Number_of_Games" Type="integer" Nullable="false" />
     <Property Name="Championship_Game_Name" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
@@ -347,7 +349,6 @@
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Year" Type="integer" Nullable="false" />
     <Property Name="Player_ID" Type="integer" Nullable="false" />
     <Property Name="Award" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
   </EntityType>
@@ -356,6 +357,7 @@
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Player_ID" Type="integer" Nullable="false" />
     <Property Name="Team_ID" Type="integer" Nullable="false" />
     <Property Name="Age" Type="integer" Nullable="false" />
     <Property Name="Jersey_Number" Type="integer" Nullable="false" />
@@ -381,11 +383,11 @@
   </EntityType>
   <EntityType Name="Playoff_Teams">
     <Key>
-      <PropertyRef Name="Year" />
       <PropertyRef Name="Team_ID" />
+      <PropertyRef Name="League_ID" />
     </Key>
-    <Property Name="Year" Type="integer" Nullable="false" />
     <Property Name="Team_ID" Type="integer" Nullable="false" />
+    <Property Name="League_ID" Type="integer" Nullable="false" />
     <Property Name="Rank" Type="integer" Nullable="false" />
     <Property Name="Eliminated" Type="integer" Nullable="false" />
   </EntityType>
@@ -394,6 +396,8 @@
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="integer" Nullable="false" />
+    <Property Name="Team_id" Type="integer" Nullable="false" />
+    <Property Name="Team_Slot" Type="integer" Nullable="false" />
     <Property Name="League_ID" Type="integer" Nullable="false" />
     <Property Name="Owner" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
     <Property Name="City_Abr" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
@@ -403,7 +407,9 @@
     <Property Name="Stadium_Location" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
     <Property Name="Stadium_Capacity" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
     <Property Name="Stadium_Img_Path" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+    <Property Name="Stadium_Image_File" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
     <Property Name="Helmet_img_path" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+    <Property Name="Helmet_Image_File" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
     <Property Name="Helmet_Color" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
     <Property Name="Helmet_Logo_Color" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
     <Property Name="Helmet_Facemask_Color" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
@@ -467,14 +473,14 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Game_0_0">
-    <End Role="Teams" Type="Self.Teams" Multiplicity="1" />
+    <End Role="League" Type="Self.League" Multiplicity="1" />
     <End Role="Game" Type="Self.Game" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Teams">
+      <Principal Role="League">
         <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="Game">
-        <PropertyRef Name="Away_Team_ID" />
+        <PropertyRef Name="League_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -491,14 +497,14 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Game_2_0">
-    <End Role="League" Type="Self.League" Multiplicity="1" />
+    <End Role="Teams" Type="Self.Teams" Multiplicity="1" />
     <End Role="Game" Type="Self.Game" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="League">
+      <Principal Role="Teams">
         <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="Game">
-        <PropertyRef Name="League_ID" />
+        <PropertyRef Name="Away_Team_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -778,6 +784,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Hall_of_Fame_0_0">
+    <End Role="Players" Type="Self.Players" Multiplicity="1" />
+    <End Role="Hall_of_Fame" Type="Self.Hall_of_Fame" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Players">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Hall_of_Fame">
+        <PropertyRef Name="Player_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Player_Awards_0_0">
     <End Role="Players" Type="Self.Players" Multiplicity="1" />
     <End Role="Player_Awards" Type="Self.Player_Awards" Multiplicity="*" />
@@ -826,7 +844,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="LeagueModelStoreContainer">
+  <EntityContainer Name="mainModelStoreContainer">
     <EntitySet Name="Award" EntityType="Self.Award" store:Type="Tables" />
     <EntitySet Name="Conference" EntityType="Self.Conference" store:Type="Tables" />
     <EntitySet Name="DBVersion" EntityType="Self.DBVersion" store:Type="Tables" />
@@ -859,7 +877,7 @@
       <End Role="Division" EntitySet="Division" />
     </AssociationSet>
     <AssociationSet Name="FK_Game_0_0" Association="Self.FK_Game_0_0">
-      <End Role="Teams" EntitySet="Teams" />
+      <End Role="League" EntitySet="League" />
       <End Role="Game" EntitySet="Game" />
     </AssociationSet>
     <AssociationSet Name="FK_Game_1_0" Association="Self.FK_Game_1_0">
@@ -867,7 +885,7 @@
       <End Role="Game" EntitySet="Game" />
     </AssociationSet>
     <AssociationSet Name="FK_Game_2_0" Association="Self.FK_Game_2_0">
-      <End Role="League" EntitySet="League" />
+      <End Role="Teams" EntitySet="Teams" />
       <End Role="Game" EntitySet="Game" />
     </AssociationSet>
     <AssociationSet Name="FK_Game_Player_Kick_Returner_Stats_0_0" Association="Self.FK_Game_Player_Kick_Returner_Stats_0_0">
@@ -961,6 +979,10 @@
     <AssociationSet Name="FK_Game_Scoring_Summary_0_0" Association="Self.FK_Game_Scoring_Summary_0_0">
       <End Role="Game" EntitySet="Game" />
       <End Role="Game_Scoring_Summary" EntitySet="Game_Scoring_Summary" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Hall_of_Fame_0_0" Association="Self.FK_Hall_of_Fame_0_0">
+      <End Role="Players" EntitySet="Players" />
+      <End Role="Hall_of_Fame" EntitySet="Hall_of_Fame" />
     </AssociationSet>
     <AssociationSet Name="FK_Player_Awards_0_0" Association="Self.FK_Player_Awards_0_0">
       <End Role="Players" EntitySet="Players" />

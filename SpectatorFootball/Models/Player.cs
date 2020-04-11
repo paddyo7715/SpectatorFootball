@@ -28,10 +28,12 @@ namespace SpectatorFootball.Models
             this.Game_Player_Rushing_Stats = new HashSet<Game_Player_Rushing_Stats>();
             this.Game_Player_Special_Team_Receive_Stats = new HashSet<Game_Player_Special_Team_Receive_Stats>();
             this.Game_Player_Special_Teams_Has_Ball_Stats = new HashSet<Game_Player_Special_Teams_Has_Ball_Stats>();
+            this.Hall_of_Fame = new HashSet<Hall_of_Fame>();
             this.Player_Awards = new HashSet<Player_Awards>();
         }
     
         public long ID { get; set; }
+        public long Player_ID { get; set; }
         public long Team_ID { get; set; }
         public long Age { get; set; }
         public long Jersey_Number { get; set; }
@@ -77,6 +79,8 @@ namespace SpectatorFootball.Models
         public virtual ICollection<Game_Player_Special_Team_Receive_Stats> Game_Player_Special_Team_Receive_Stats { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Game_Player_Special_Teams_Has_Ball_Stats> Game_Player_Special_Teams_Has_Ball_Stats { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Hall_of_Fame> Hall_of_Fame { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Player_Awards> Player_Awards { get; set; }
         public virtual Team Team { get; set; }

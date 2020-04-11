@@ -8,6 +8,7 @@ namespace SpectatorFootball
     public partial class MainMenuUC : UserControl
     {
         public event EventHandler Show_NewLeague;
+        public event EventHandler Show_LoadLeague;
 
         public MainMenuUC()
         {
@@ -25,6 +26,11 @@ namespace SpectatorFootball
         }
         private void mmAdmin_Click(object sender, RoutedEventArgs e)
         {
+        }
+
+        private void mmLoad_Click(object sender, RoutedEventArgs e)
+        {
+            Show_LoadLeague?.Invoke(this, new EventArgs());
         }
     }
 }

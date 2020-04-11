@@ -4,7 +4,6 @@ using System.Data;
 using System.Data.SQLite;
 using System.IO;
 using log4net;
-using SpectatorFootball.League_Info;
 using SpectatorFootball.Models;
 using SpectatorFootball.League;
 
@@ -15,7 +14,7 @@ namespace SpectatorFootball
         private static ILog logger = LogManager.GetLogger("RollingFile");
 
 
-        public void Create_New_League(Mem_League Mem_League, string newleague_filepath)
+        public void Create_New_League(New_League_Structure Mem_League, string newleague_filepath)
         {
 
             //Note that filepath will be converted to just the filename because these files have 
@@ -28,40 +27,24 @@ namespace SpectatorFootball
              string con = Common.LeageConnection.Connect(newleague_filepath);
              using (var context = new leagueContext(con))
              {
-                    SpectatorFootball.Models.League Leg = League_Helper.Clone_League(Mem_League.Leagues);
-                    Leg.League_Logo_Filepath = Path.GetFileName(Leg.League_Logo_Filepath);
-                    context.Leagues.Add(Leg);
-
-                    foreach (Conference c in Mem_League.Conferences)
-                        context.Conferences.Add(c);
-
-                    foreach (Division d in Mem_League.Divisions)
-                        context.Divisions.Add(d);
-
-                    foreach (Game g in Mem_League.Games)
-                        context.Games.Add(g);
-
-                    foreach (Team t in Mem_League.Teams)
-                    {
-                        Team temp_team = Team_Helper.Clone_Team(t);
-                        temp_team.Helmet_img_path = Path.GetFileName(temp_team.Helmet_img_path);
-                        temp_team.Stadium_Img_Path = Path.GetFileName(temp_team.Stadium_Img_Path);
-                        context.Teams.Add(temp_team);
-                    }
-
-                    foreach (Player p in Mem_League.Players)
-                        context.Players.Add(p);
-
-                    context.DBVersions.Add(Mem_League.DBVersion[0]);
+                    context.Leagues.Add(Mem_League.League);
+                    context.DBVersions.Add(Mem_League.DBVersion);
 
                     context.SaveChanges();
-
-              }
-
-              logger.Info("League successfuly saved to database.");
             }
 
+              logger.Info("League successfuly saved to database.");
         }
+        public Loaded_League_Structure Load_League(string year)
+        {
+            Loaded_League_Structure r = null;
+
+
+
+            return r;
+        }
+
     }
+}
 
 

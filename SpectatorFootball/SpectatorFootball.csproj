@@ -103,10 +103,17 @@
     <Compile Include="BindingConverters\StockHelmetConverter.cs" />
     <Compile Include="BindingConverters\TextConverter.cs" />
     <Compile Include="Common\LeageConnection.cs" />
+    <Compile Include="Common\LoadLeagueEventArgs.cs" />
     <Compile Include="Common\SettingsConnection.cs" />
     <Compile Include="Common\Validator.cs" />
+    <Compile Include="Enum\League_State.cs" />
+    <Compile Include="Enum\Player_Pos.cs" />
     <Compile Include="League\League_Helper.cs" />
-    <Compile Include="League\Mem_League.cs" />
+    <Compile Include="League\Loaded_League_Structure.cs" />
+    <Compile Include="League\New_League_Structure.cs" />
+    <Compile Include="LoadLeague.xaml.cs">
+      <DependentUpon>LoadLeague.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainMenuUC.xaml.cs">
       <DependentUpon>MainMenuUC.xaml</DependentUpon>
     </Compile>
@@ -256,6 +263,10 @@
     <Page Include="Help_Forms\Help_NewTeam.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="LoadLeague.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainMenuUC.xaml">
       <Generator>MSBuild:Compile</Generator>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SpectatorFootball.Common;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -20,6 +21,9 @@ namespace SpectatorFootball
     /// </summary>
     public partial class LoadLeague : Window
     {
+
+        public event EventHandler<LoadLeagueEventArgs> Load_League;
+
         public LoadLeague()
         {
             InitializeComponent();
@@ -79,11 +83,13 @@ namespace SpectatorFootball
                 LoadLeagueGrid.Items.Add("No Leagues to Load.");
                 LoadLeagueGrid.Focusable = false;
                 LoadLeagueGrid.IsEnabled = false;
+                LoadLeage_load.IsEnabled = false;
             }
             else
             {
                 LoadLeagueGrid.Focusable = true;
                 LoadLeagueGrid.IsEnabled = true;
+                LoadLeage_load.IsEnabled = true;
             }
 
         }
@@ -116,7 +122,35 @@ namespace SpectatorFootball
 
         private void LoadLeage_load_Click(object sender, RoutedEventArgs e)
         {
+            if (LoadLeagueGrid.SelectedIndex == -1)
+                MessageBox.Show("Please Select a League to Load.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            else
+            {
+                StackPanel league_row = (StackPanel)LoadLeagueGrid.SelectedItem;
+                string League_Short_Name = null;
+                string league_string_content = null;
+                Label League_Name_Lable = null;
 
+                if (league_row.Children.Count == 2)
+                    League_Name_Lable = (Label)league_row.Children[1];
+                else
+                    League_Name_Lable = (Label)league_row.Children[0];
+
+                league_string_content = (string)League_Name_Lable.Content;
+
+                int s_pos = league_string_content.ToString().IndexOf("(");
+                int e_pos = league_string_content.ToString().IndexOf(")");
+
+                if ((s_pos == 01) || (e_pos == -1) || (s_pos >= e_pos))
+                    MessageBox.Show("Error in Format of League Row.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                else
+                {
+                    League_Short_Name = league_string_content.ToString().Substring(s_pos+1, e_pos - s_pos - 1);
+                    Load_League?.Invoke(this, new LoadLeagueEventArgs(League_Short_Name));
+                    this.Close();
+                }
+
+            }
         }
     }
 }

@@ -6,9 +6,9 @@
         xmlns:local="clr-namespace:SpectatorFootball"
         mc:Ignorable="d"
         Height="340" Width="400" WindowStyle="none" ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True">
-    <Border Style="{StaticResource HelpBD}" BorderThickness="1">
-        <StackPanel Style="{StaticResource HelpSP}" Height="330" Width="390" Orientation="Vertical" >
-            <Label Style="{StaticResource HelpTT}" HorizontalAlignment="Center">Create New League Form</Label>
+    <Border Style="{StaticResource popupBD}" BorderThickness="1">
+        <StackPanel Style="{StaticResource popupSP}" Height="330" Width="390" Orientation="Vertical" >
+            <Label Style="{StaticResource popupTT}" HorizontalAlignment="Center">Create New League Form</Label>
             <TextBlock Style="{StaticResource HelpTB}" Width="370" Height="250" Margin="5,5,5,0" >
 The New League form allows you to define a new league and contains<LineBreak/> two tabs: <Bold>Settings</Bold> and <Bold>Teams.</Bold><LineBreak/><LineBreak/>
 

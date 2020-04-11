@@ -14,8 +14,8 @@ namespace SpectatorFootball.Models
     
     public partial class Playoff_Teams
     {
-        public long Year { get; set; }
         public long Team_ID { get; set; }
+        public long League_ID { get; set; }
         public long Rank { get; set; }
         public long Eliminated { get; set; }
     

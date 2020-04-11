@@ -6,9 +6,9 @@
         xmlns:local="clr-namespace:SpectatorFootball"
         mc:Ignorable="d"
         Height="400" Width="400" WindowStyle="none" ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True">
-    <Border Style="{StaticResource HelpBD}" BorderThickness="1">
-        <StackPanel Style="{StaticResource HelpSP}" Height="390" Width="390" Orientation="Vertical" >
-            <Label Style="{StaticResource HelpTT}" HorizontalAlignment="Center">Create New Team Form</Label>
+    <Border Style="{StaticResource popupBD}" BorderThickness="1">
+        <StackPanel Style="{StaticResource popupSP}" Height="390" Width="390" Orientation="Vertical" >
+            <Label Style="{StaticResource popupTT}" HorizontalAlignment="Center">Create New Team Form</Label>
             <TextBlock Style="{StaticResource HelpTB}" Width="370" Height="310" Margin="5,5,5,0" >
 
 The New Team Form is used to create or edit a new team and has two <LineBreak/>tabs: <Bold>General</Bold> and <Bold>Uniform.</Bold>

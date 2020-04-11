@@ -17,9 +17,9 @@ namespace SpectatorFootball
 
         public void Application_Startup(object sender, StartupEventArgs e)
         {
-            string DIRPath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), App_Constants.GAME_DOC_FOLDER);
+            string DIRPath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), app_Constants.GAME_DOC_FOLDER);
 
-            string Log_folder = App_Constants.LOG_FOLDER;
+            string Log_folder = app_Constants.LOG_FOLDER;
             string Drive_letter = DIRPath.Split(':')[0];
 
             if (AlreadyRunning())
@@ -32,7 +32,7 @@ namespace SpectatorFootball
             // Check that the disk drive that holds the team databases and loggs has enough disk space\
             DriveInfo drive = new DriveInfo(Drive_letter);
             long free_disk_space = (drive.AvailableFreeSpace / 1024) / 1024;
-            if (free_disk_space < App_Constants.MIN_FREE_DISK_SPACE)
+            if (free_disk_space < app_Constants.MIN_FREE_DISK_SPACE)
             {
                 logger.Error("Only " + free_disk_space.ToString() + " free disk space available.  Ending program");
                 MessageBox.Show("Insufficient free space available.  Only " + free_disk_space.ToString() + " free disk space available.  Ending program");

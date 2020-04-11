@@ -32,9 +32,8 @@ namespace SpectatorFootball.Models
         }
     
         public long ID { get; set; }
-        public long Year { get; set; }
-        public long Week { get; set; }
         public long League_ID { get; set; }
+        public long Week { get; set; }
         public long Home_Team_ID { get; set; }
         public long Away_Team_ID { get; set; }
         public Nullable<long> Home_FirstDowns { get; set; }
@@ -75,9 +74,9 @@ namespace SpectatorFootball.Models
         public Nullable<long> Championship_Game { get; set; }
         public Nullable<long> Game_Done { get; set; }
     
+        public virtual League League { get; set; }
         public virtual Team Team { get; set; }
         public virtual Team Team1 { get; set; }
-        public virtual League League { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Game_Player_Kick_Returner_Stats> Game_Player_Kick_Returner_Stats { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

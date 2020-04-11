@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="LeagueModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+<Schema Namespace="mainModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
   <EntityType Name="Award">
     <Key>
       <PropertyRef Name="ID" />
@@ -12,7 +12,8 @@
     <Key>
       <PropertyRef Name="ID" />
     </Key>
-    <Property Name="ID" Type="Int64" Nullable="false" />
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Ordinal" Type="Int64" Nullable="false" />
     <Property Name="League_ID" Type="Int64" Nullable="false" />
     <Property Name="Conf_Name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
     <NavigationProperty Name="League" Relationship="Self.FK_Conference_0_0" FromRole="Conference" ToRole="League" />
@@ -30,7 +31,8 @@
     <Key>
       <PropertyRef Name="ID" />
     </Key>
-    <Property Name="ID" Type="Int64" Nullable="false" />
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Ordinal" Type="Int64" Nullable="false" />
     <Property Name="League_ID" Type="Int64" Nullable="false" />
     <Property Name="Name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
     <NavigationProperty Name="League" Relationship="Self.FK_Division_0_0" FromRole="Division" ToRole="League" />
@@ -40,9 +42,8 @@
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Year" Type="Int64" Nullable="false" />
-    <Property Name="Week" Type="Int64" Nullable="false" />
     <Property Name="League_ID" Type="Int64" Nullable="false" />
+    <Property Name="Week" Type="Int64" Nullable="false" />
     <Property Name="Home_Team_ID" Type="Int64" Nullable="false" />
     <Property Name="Away_Team_ID" Type="Int64" Nullable="false" />
     <Property Name="Home_FirstDowns" Type="Int64" />
@@ -82,9 +83,9 @@
     <Property Name="Playoff_Game" Type="Int64" />
     <Property Name="Championship_Game" Type="Int64" />
     <Property Name="Game_Done" Type="Int64" />
-    <NavigationProperty Name="Team" Relationship="Self.FK_Game_0_0" FromRole="Game" ToRole="Teams" />
-    <NavigationProperty Name="Team1" Relationship="Self.FK_Game_1_0" FromRole="Game" ToRole="Teams" />
-    <NavigationProperty Name="League" Relationship="Self.FK_Game_2_0" FromRole="Game" ToRole="League" />
+    <NavigationProperty Name="League" Relationship="Self.FK_Game_0_0" FromRole="Game" ToRole="League" />
+    <NavigationProperty Name="Team" Relationship="Self.FK_Game_1_0" FromRole="Game" ToRole="Teams" />
+    <NavigationProperty Name="Team1" Relationship="Self.FK_Game_2_0" FromRole="Game" ToRole="Teams" />
     <NavigationProperty Name="Game_Player_Kick_Returner_Stats" Relationship="Self.FK_Game_Player_Kick_Returner_Stats_1_0" FromRole="Game" ToRole="Game_Player_Kick_Returner_Stats" />
     <NavigationProperty Name="Game_Player_Kicker_Stats" Relationship="Self.FK_Game_Player_Kicker_Stats_0_0" FromRole="Game" ToRole="Game_Player_Kicker_Stats" />
     <NavigationProperty Name="Game_Player_Offensive_Linemen_Stats" Relationship="Self.FK_Game_Player_Offensive_Linemen_Stats_0_0" FromRole="Game" ToRole="Game_Player_Offensive_Linemen_Stats" />
@@ -364,6 +365,7 @@
     <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Player_ID" Type="Int64" Nullable="false" />
     <Property Name="Year_Added" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="Player" Relationship="Self.FK_Hall_of_Fame_0_0" FromRole="Hall_of_Fame" ToRole="Players" />
   </EntityType>
   <EntityType Name="League">
     <Key>
@@ -373,7 +375,8 @@
     <Property Name="Short_Name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Long_Name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="League_Logo_Filepath" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="Starting_Year" Type="Int64" Nullable="false" />
+    <Property Name="League_Logo_File" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Year" Type="Int64" Nullable="false" />
     <Property Name="Number_of_weeks" Type="Int64" Nullable="false" />
     <Property Name="Number_of_Games" Type="Int64" Nullable="false" />
     <Property Name="Championship_Game_Name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
@@ -383,7 +386,7 @@
     <Property Name="Number_of_Divisions" Type="Int64" Nullable="false" />
     <NavigationProperty Name="Conferences" Relationship="Self.FK_Conference_0_0" FromRole="League" ToRole="Conference" />
     <NavigationProperty Name="Divisions" Relationship="Self.FK_Division_0_0" FromRole="League" ToRole="Division" />
-    <NavigationProperty Name="Games" Relationship="Self.FK_Game_2_0" FromRole="League" ToRole="Game" />
+    <NavigationProperty Name="Games" Relationship="Self.FK_Game_0_0" FromRole="League" ToRole="Game" />
     <NavigationProperty Name="Teams" Relationship="Self.FK_Teams_0_0" FromRole="League" ToRole="Teams" />
   </EntityType>
   <EntityType Name="Player_Awards">
@@ -391,7 +394,6 @@
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Year" Type="Int64" Nullable="false" />
     <Property Name="Player_ID" Type="Int64" Nullable="false" />
     <Property Name="Award" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
     <NavigationProperty Name="Player" Relationship="Self.FK_Player_Awards_0_0" FromRole="Player_Awards" ToRole="Players" />
@@ -401,6 +403,7 @@
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Player_ID" Type="Int64" Nullable="false" />
     <Property Name="Team_ID" Type="Int64" Nullable="false" />
     <Property Name="Age" Type="Int64" Nullable="false" />
     <Property Name="Jersey_Number" Type="Int64" Nullable="false" />
@@ -434,16 +437,17 @@
     <NavigationProperty Name="Game_Player_Rushing_Stats" Relationship="Self.FK_Game_Player_Rushing_Stats_1_0" FromRole="Players" ToRole="Game_Player_Rushing_Stats" />
     <NavigationProperty Name="Game_Player_Special_Team_Receive_Stats" Relationship="Self.FK_Game_Player_Special_Team_Receive_Stats_0_0" FromRole="Players" ToRole="Game_Player_Special_Team_Receive_Stats" />
     <NavigationProperty Name="Game_Player_Special_Teams_Has_Ball_Stats" Relationship="Self.FK_Game_Player_Special_Teams_Has_Ball_Stats_1_0" FromRole="Players" ToRole="Game_Player_Special_Teams_Has_Ball_Stats" />
+    <NavigationProperty Name="Hall_of_Fame" Relationship="Self.FK_Hall_of_Fame_0_0" FromRole="Players" ToRole="Hall_of_Fame" />
     <NavigationProperty Name="Player_Awards" Relationship="Self.FK_Player_Awards_0_0" FromRole="Players" ToRole="Player_Awards" />
     <NavigationProperty Name="Team" Relationship="Self.FK_Players_0_0" FromRole="Players" ToRole="Teams" />
   </EntityType>
   <EntityType Name="Playoff_Teams">
     <Key>
-      <PropertyRef Name="Year" />
       <PropertyRef Name="Team_ID" />
+      <PropertyRef Name="League_ID" />
     </Key>
-    <Property Name="Year" Type="Int64" Nullable="false" />
     <Property Name="Team_ID" Type="Int64" Nullable="false" />
+    <Property Name="League_ID" Type="Int64" Nullable="false" />
     <Property Name="Rank" Type="Int64" Nullable="false" />
     <Property Name="Eliminated" Type="Int64" Nullable="false" />
     <NavigationProperty Name="Team" Relationship="Self.FK_Playoff_Teams_0_0" FromRole="Playoff_Teams" ToRole="Teams" />
@@ -453,6 +457,8 @@
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="Int64" Nullable="false" />
+    <Property Name="Team_id" Type="Int64" Nullable="false" />
+    <Property Name="Team_Slot" Type="Int64" Nullable="false" />
     <Property Name="League_ID" Type="Int64" Nullable="false" />
     <Property Name="Owner" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="City_Abr" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
@@ -462,7 +468,9 @@
     <Property Name="Stadium_Location" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Stadium_Capacity" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Stadium_Img_Path" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Stadium_Image_File" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Helmet_img_path" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Helmet_Image_File" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Helmet_Color" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Helmet_Logo_Color" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Helmet_Facemask_Color" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
@@ -500,8 +508,8 @@
     <Property Name="Away_Pants_Stripe_Color_3" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Stadium_Field_Type" Type="Int64" Nullable="false" />
     <Property Name="Stadium_Field_Color" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
-    <NavigationProperty Name="Games" Relationship="Self.FK_Game_0_0" FromRole="Teams" ToRole="Game" />
-    <NavigationProperty Name="Games1" Relationship="Self.FK_Game_1_0" FromRole="Teams" ToRole="Game" />
+    <NavigationProperty Name="Games" Relationship="Self.FK_Game_1_0" FromRole="Teams" ToRole="Game" />
+    <NavigationProperty Name="Games1" Relationship="Self.FK_Game_2_0" FromRole="Teams" ToRole="Game" />
     <NavigationProperty Name="League" Relationship="Self.FK_Teams_0_0" FromRole="Teams" ToRole="League" />
     <NavigationProperty Name="Players" Relationship="Self.FK_Players_0_0" FromRole="Teams" ToRole="Players" />
     <NavigationProperty Name="Playoff_Teams" Relationship="Self.FK_Playoff_Teams_0_0" FromRole="Teams" ToRole="Playoff_Teams" />
@@ -531,14 +539,14 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Game_0_0">
-    <End Role="Teams" Type="Self.Team" Multiplicity="1" />
+    <End Role="League" Type="Self.League" Multiplicity="1" />
     <End Role="Game" Type="Self.Game" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Teams">
+      <Principal Role="League">
         <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="Game">
-        <PropertyRef Name="Away_Team_ID" />
+        <PropertyRef Name="League_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -555,14 +563,14 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Game_2_0">
-    <End Role="League" Type="Self.League" Multiplicity="1" />
+    <End Role="Teams" Type="Self.Team" Multiplicity="1" />
     <End Role="Game" Type="Self.Game" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="League">
+      <Principal Role="Teams">
         <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="Game">
-        <PropertyRef Name="League_ID" />
+        <PropertyRef Name="Away_Team_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -842,6 +850,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Hall_of_Fame_0_0">
+    <End Role="Players" Type="Self.Player" Multiplicity="1" />
+    <End Role="Hall_of_Fame" Type="Self.Hall_of_Fame" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Players">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Hall_of_Fame">
+        <PropertyRef Name="Player_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Teams_0_0">
     <End Role="League" Type="Self.League" Multiplicity="1" />
     <End Role="Teams" Type="Self.Team" Multiplicity="*" />
@@ -923,7 +943,7 @@
       <End Role="Division" EntitySet="Divisions" />
     </AssociationSet>
     <AssociationSet Name="FK_Game_0_0" Association="Self.FK_Game_0_0">
-      <End Role="Teams" EntitySet="Teams" />
+      <End Role="League" EntitySet="Leagues" />
       <End Role="Game" EntitySet="Games" />
     </AssociationSet>
     <AssociationSet Name="FK_Game_1_0" Association="Self.FK_Game_1_0">
@@ -931,7 +951,7 @@
       <End Role="Game" EntitySet="Games" />
     </AssociationSet>
     <AssociationSet Name="FK_Game_2_0" Association="Self.FK_Game_2_0">
-      <End Role="League" EntitySet="Leagues" />
+      <End Role="Teams" EntitySet="Teams" />
       <End Role="Game" EntitySet="Games" />
     </AssociationSet>
     <AssociationSet Name="FK_Game_Player_Kick_Returner_Stats_1_0" Association="Self.FK_Game_Player_Kick_Returner_Stats_1_0">
@@ -1025,6 +1045,10 @@
     <AssociationSet Name="FK_Game_Player_Special_Teams_Has_Ball_Stats_1_0" Association="Self.FK_Game_Player_Special_Teams_Has_Ball_Stats_1_0">
       <End Role="Players" EntitySet="Players" />
       <End Role="Game_Player_Special_Teams_Has_Ball_Stats" EntitySet="Game_Player_Special_Teams_Has_Ball_Stats" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Hall_of_Fame_0_0" Association="Self.FK_Hall_of_Fame_0_0">
+      <End Role="Players" EntitySet="Players" />
+      <End Role="Hall_of_Fame" EntitySet="Hall_of_Fame" />
     </AssociationSet>
     <AssociationSet Name="FK_Teams_0_0" Association="Self.FK_Teams_0_0">
       <End Role="League" EntitySet="Leagues" />

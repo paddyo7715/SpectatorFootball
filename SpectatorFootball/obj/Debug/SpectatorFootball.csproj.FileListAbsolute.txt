@@ -61,3 +61,5 @@ C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\Stoc
 C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\GeneratedInternalTypeHelper.g.cs
 C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\New_Team_DetailUC.g.cs
 C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\New_Team_DetailUC.baml
+C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\LoadLeague.g.cs
+C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\LoadLeague.baml

@@ -9,13 +9,19 @@ using System.ComponentModel;
 using log4net;
 using System.Windows.Media;
 using SpectatorFootball.Models;
-using SpectatorFootball.League_Info;
+using SpectatorFootball.League;
+using SpectatorFootball.Common;
 
 namespace SpectatorFootball
 {
     public partial class MainWindow
     {
-        public Mem_League Mem_League = null;
+        //Mem_League is used only when creating a new league.
+        public SpectatorFootball.Models.League Mem_League = null;
+
+        //Loaded League Structure
+        public Loaded_League_Structure Loaded_League = null;
+
         public List<Stock_Teams> st_list = null;
 
         private MainMenuUC MainMenuUC = null;
@@ -49,6 +55,7 @@ namespace SpectatorFootball
             } 
 
             MainMenuUC.Show_NewLeague += Show_NewLeague;
+            MainMenuUC.Show_LoadLeague += Show_LoadLeague;
 
             logger.Info("Main form created");
 
@@ -85,7 +92,7 @@ namespace SpectatorFootball
             New_Team_DetailUC = null;
             PlayerNamesUC = null;
             Stock_teamsUC = null;
-    }
+        }
         private void Show_NewLeague(object sender, EventArgs e)
         {
             try
@@ -93,7 +100,7 @@ namespace SpectatorFootball
                 Mouse.OverrideCursor = Cursors.Wait;
 
                 logger.Info("Entering Create new league");
-                Mem_League = new Mem_League();
+                Mem_League = new SpectatorFootball.Models.League();
                 StockTeams_Services sts = new StockTeams_Services();
                 st_list = sts.getAllStockTeams();
                 logger.Debug("Stock Teams Loaded");
@@ -156,7 +163,7 @@ namespace SpectatorFootball
             {
                 Mouse.OverrideCursor = Cursors.Wait;
                 logger.Info("Show stock teams");
-                Mem_League = new Mem_League();
+                Mem_League = new SpectatorFootball.Models.League();
                 var sts = new StockTeams_Services();
                 st_list = sts.getAllStockTeams();
 
@@ -199,6 +206,44 @@ namespace SpectatorFootball
                 MessageBox.Show(CommonUtils.substr(ex.Message, 0, 100), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+//This event handler is in response to the user clicking the load league button from the main menu
+//and displays the load league dialog box.
+        private void Show_LoadLeague(object sender, EventArgs e)
+        {
+
+            Loaded_League = null;
+            var LL_form = new LoadLeague();
+            LL_form.Load_League += Load_League;
+            LL_form.Top = (SystemParameters.PrimaryScreenHeight - LL_form.Height) / 2;
+            LL_form.Left = (SystemParameters.PrimaryScreenWidth - LL_form.Width) / 2;
+            LL_form.ShowDialog();
+
+        }
+
+
+
+        private void Load_League(object sender, LoadLeagueEventArgs e)
+        {
+            try
+            {
+                Mouse.OverrideCursor = Cursors.Wait;
+                logger.Info("Attempting to Load League " + e.League_Short_Name);
+
+
+                Mouse.OverrideCursor = null;
+            }
+            catch (Exception ex)
+            {
+                Mouse.OverrideCursor = null;
+                logger.Error("Error Loading League " + e.League_Short_Name);
+                logger.Error(ex);
+                MessageBox.Show(CommonUtils.substr(ex.Message, 0, 100), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+
+
         private void Show_UpdateStockTeam(object sender, StockteamEventArgs e)
         {
             try

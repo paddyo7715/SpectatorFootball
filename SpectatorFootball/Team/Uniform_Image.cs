@@ -78,64 +78,64 @@ namespace SpectatorFootball
 
                     System.Drawing.Color the_color = Color.FromArgb(red, green, blue);
 
-                    if (the_color.ToArgb() == App_Constants.STOCK_HELMET_COLOR.ToArgb())
+                    if (the_color.ToArgb() == app_Constants.STOCK_HELMET_COLOR.ToArgb())
                         img.SetPixel(x, y, helmet_color);
 
-                    if (the_color.ToArgb() == App_Constants.STOCK_FACEMASK.ToArgb())
+                    if (the_color.ToArgb() == app_Constants.STOCK_FACEMASK.ToArgb())
                         img.SetPixel(x, y, fasemask_color);
 
-                    if (the_color.ToArgb() == App_Constants.STOCK_HEL_LOGO_COLOR.ToArgb())
+                    if (the_color.ToArgb() == app_Constants.STOCK_HEL_LOGO_COLOR.ToArgb())
                         img.SetPixel(x, y, hel_logo_color);
 
-                    if (the_color.ToArgb() == App_Constants.STOCK_JERSEY_COLOR.ToArgb())
+                    if (the_color.ToArgb() == app_Constants.STOCK_JERSEY_COLOR.ToArgb())
                         img.SetPixel(x, y, jersey_color);
 
-                    if (the_color.ToArgb() == App_Constants.STOCK_NUMBER_COLOR.ToArgb())
+                    if (the_color.ToArgb() == app_Constants.STOCK_NUMBER_COLOR.ToArgb())
                         img.SetPixel(x, y, number_color);
 
-                    if (the_color.ToArgb() == App_Constants.STOCK_NUM_OUTLINE_COLOR.ToArgb())
+                    if (the_color.ToArgb() == app_Constants.STOCK_NUM_OUTLINE_COLOR.ToArgb())
                         img.SetPixel(x, y, num_outline_color);
 
-                    if (the_color.ToArgb() == App_Constants.STOCK_SLEEVE_COLOR.ToArgb())
+                    if (the_color.ToArgb() == app_Constants.STOCK_SLEEVE_COLOR.ToArgb())
                         img.SetPixel(x, y, sleeve_color);
 
-                    if (the_color.ToArgb() == App_Constants.STOCK_SHOULDER_STRIPE_COLOR.ToArgb())
+                    if (the_color.ToArgb() == app_Constants.STOCK_SHOULDER_STRIPE_COLOR.ToArgb())
                         img.SetPixel(x, y, shoulder_stripe_color);
 
-                    if (the_color.ToArgb() == App_Constants.STOCK_SLEEVE_STRIPE_1_COLOR.ToArgb())
+                    if (the_color.ToArgb() == app_Constants.STOCK_SLEEVE_STRIPE_1_COLOR.ToArgb())
                         img.SetPixel(x, y, sleeve_stripe_1_color);
 
-                    if (the_color.ToArgb() == App_Constants.STOCK_SLEEVE_STRIPE_2_COLOR.ToArgb())
+                    if (the_color.ToArgb() == app_Constants.STOCK_SLEEVE_STRIPE_2_COLOR.ToArgb())
                         img.SetPixel(x, y, sleeve_stripe_2_color);
 
-                    if (the_color.ToArgb() == App_Constants.STOCK_SLEEVE_STRIPE_3_COLOR.ToArgb())
+                    if (the_color.ToArgb() == app_Constants.STOCK_SLEEVE_STRIPE_3_COLOR.ToArgb())
                         img.SetPixel(x, y, sleeve_stripe_3_color);
 
-                    if (the_color.ToArgb() == App_Constants.STOCK_SLEEVE_STRIPE_4_COLOR.ToArgb())
+                    if (the_color.ToArgb() == app_Constants.STOCK_SLEEVE_STRIPE_4_COLOR.ToArgb())
                         img.SetPixel(x, y, sleeve_stripe_4_color);
 
-                    if (the_color.ToArgb() == App_Constants.STOCK_SLEEVE_STRIPE_5_COLOR.ToArgb())
+                    if (the_color.ToArgb() == app_Constants.STOCK_SLEEVE_STRIPE_5_COLOR.ToArgb())
                         img.SetPixel(x, y, sleeve_stripe_5_color);
 
-                    if (the_color.ToArgb() == App_Constants.STOCK_SLEEVE_STRIPE_6_COLOR.ToArgb())
+                    if (the_color.ToArgb() == app_Constants.STOCK_SLEEVE_STRIPE_6_COLOR.ToArgb())
                         img.SetPixel(x, y, sleeve_stripe_6_color);
 
-                    if (the_color.ToArgb() == App_Constants.STOCK_PANTS_COLOR.ToArgb())
+                    if (the_color.ToArgb() == app_Constants.STOCK_PANTS_COLOR.ToArgb())
                         img.SetPixel(x, y, pants_color);
 
-                    if (the_color.ToArgb() == App_Constants.STOCK_PANTS_STRIPE_1_COLOR.ToArgb())
+                    if (the_color.ToArgb() == app_Constants.STOCK_PANTS_STRIPE_1_COLOR.ToArgb())
                         img.SetPixel(x, y, pants_stripe_1_color);
 
-                    if (the_color.ToArgb() == App_Constants.STOCK_PANTS_STRIPE_2_COLOR.ToArgb())
+                    if (the_color.ToArgb() == app_Constants.STOCK_PANTS_STRIPE_2_COLOR.ToArgb())
                         img.SetPixel(x, y, pants_stripe_2_color);
 
-                    if (the_color.ToArgb() == App_Constants.STOCK_PANTS_STRIPE_3_COLOR.ToArgb())
+                    if (the_color.ToArgb() == app_Constants.STOCK_PANTS_STRIPE_3_COLOR.ToArgb())
                         img.SetPixel(x, y, pants_stripe_3_color);
 
-                    if (the_color.ToArgb() == App_Constants.STOCK_SOCKS_COLOR.ToArgb())
+                    if (the_color.ToArgb() == app_Constants.STOCK_SOCKS_COLOR.ToArgb())
                         img.SetPixel(x, y, socks_color);
 
-                    if (the_color.ToArgb() == App_Constants.STOCK_CLEATES_COLOR.ToArgb())
+                    if (the_color.ToArgb() == app_Constants.STOCK_CLEATES_COLOR.ToArgb())
                         img.SetPixel(x, y, cleats_color);
                 }
             }

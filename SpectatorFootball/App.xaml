@@ -42,18 +42,18 @@
             <Setter Property="Foreground" Value="Black"/>
         </Style>
         <!-- Help Title -->
-        <Style TargetType="Label" x:Key="HelpTT">
+        <Style TargetType="Label" x:Key="popupTT">
             <Setter Property="FontFamily" Value="Verdana"/>
             <Setter Property="FontSize" Value="12"/>
             <Setter Property="FontWeight" Value="Normal"/>
             <Setter Property="Foreground" Value="DarkBlue"/>
         </Style>
-        <!-- help form -->
-        <Style TargetType="StackPanel" x:Key="HelpSP">
+        <!-- popup form -->
+        <Style TargetType="StackPanel" x:Key="popupSP">
             <Setter Property="Background" Value="LightSlateGray"/>
         </Style>
         <!-- help border -->
-        <Style TargetType="Border" x:Key="HelpBD">
+        <Style TargetType="Border" x:Key="popupBD">
             <Setter Property="Background" Value="black"/>
             <Setter Property="BorderBrush" Value="black"/>
         </Style>

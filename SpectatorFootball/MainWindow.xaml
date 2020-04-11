@@ -15,7 +15,7 @@
         <Menu Name="Main_menu_top" DockPanel.Dock="Top">
             <MenuItem Header="File">
                 <MenuItem Header="New" Click = "Show_NewLeague" />
-                <MenuItem Header="Open" />
+                <MenuItem Header="Load" Click = "Show_LoadLeague" />
                 <Separator />
                 <MenuItem Header="Exit" Click = "mmTopExit_Click" />
             </MenuItem>

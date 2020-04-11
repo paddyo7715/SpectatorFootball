@@ -17,7 +17,7 @@ namespace SpectatorFootball.BindingConverters
 
             if (value == null )
             {
-                r = App_Constants.STOCK_GREY_COLOR;
+                r = app_Constants.STOCK_GREY_COLOR;
             }
 
             return r;

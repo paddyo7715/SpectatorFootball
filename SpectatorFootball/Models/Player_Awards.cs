@@ -15,7 +15,6 @@ namespace SpectatorFootball.Models
     public partial class Player_Awards
     {
         public long ID { get; set; }
-        public long Year { get; set; }
         public long Player_ID { get; set; }
         public string Award { get; set; }
     

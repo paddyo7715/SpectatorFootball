@@ -56,7 +56,7 @@ namespace SpectatorFootball
 
             var all_uniform_colors = new List<string>();
 
-            if (orig_this_team.City == App_Constants.EMPTY_TEAM_SLOT)
+            if (orig_this_team.City == app_Constants.EMPTY_TEAM_SLOT)
                 bnew_team = true;
             else
                 bnew_team = false;
@@ -241,8 +241,8 @@ namespace SpectatorFootball
             // If you are editing a team then there is no need to set the images to grey
             if (bnew_team)
             {
-                Uniform_Img.Flip_All_Colors(true, App_Constants.STOCK_GREY_COLOR, App_Constants.STOCK_GREY_COLOR, App_Constants.STOCK_GREY_COLOR, App_Constants.STOCK_GREY_COLOR, App_Constants.STOCK_GREY_COLOR, App_Constants.STOCK_GREY_COLOR, App_Constants.STOCK_GREY_COLOR, App_Constants.STOCK_GREY_COLOR, App_Constants.STOCK_GREY_COLOR, App_Constants.STOCK_GREY_COLOR, App_Constants.STOCK_GREY_COLOR, App_Constants.STOCK_GREY_COLOR, App_Constants.STOCK_GREY_COLOR, App_Constants.STOCK_GREY_COLOR, App_Constants.STOCK_GREY_COLOR, App_Constants.STOCK_GREY_COLOR, App_Constants.STOCK_GREY_COLOR, App_Constants.STOCK_GREY_COLOR, App_Constants.STOCK_GREY_COLOR, App_Constants.STOCK_GREY_COLOR);
-                Uniform_Img.Flip_All_Colors(false, App_Constants.STOCK_GREY_COLOR, App_Constants.STOCK_GREY_COLOR, App_Constants.STOCK_GREY_COLOR, App_Constants.STOCK_GREY_COLOR, App_Constants.STOCK_GREY_COLOR, App_Constants.STOCK_GREY_COLOR, App_Constants.STOCK_GREY_COLOR, App_Constants.STOCK_GREY_COLOR, App_Constants.STOCK_GREY_COLOR, App_Constants.STOCK_GREY_COLOR, App_Constants.STOCK_GREY_COLOR, App_Constants.STOCK_GREY_COLOR, App_Constants.STOCK_GREY_COLOR, App_Constants.STOCK_GREY_COLOR, App_Constants.STOCK_GREY_COLOR, App_Constants.STOCK_GREY_COLOR, App_Constants.STOCK_GREY_COLOR, App_Constants.STOCK_GREY_COLOR, App_Constants.STOCK_GREY_COLOR, App_Constants.STOCK_GREY_COLOR);
+                Uniform_Img.Flip_All_Colors(true, app_Constants.STOCK_GREY_COLOR, app_Constants.STOCK_GREY_COLOR, app_Constants.STOCK_GREY_COLOR, app_Constants.STOCK_GREY_COLOR, app_Constants.STOCK_GREY_COLOR, app_Constants.STOCK_GREY_COLOR, app_Constants.STOCK_GREY_COLOR, app_Constants.STOCK_GREY_COLOR, app_Constants.STOCK_GREY_COLOR, app_Constants.STOCK_GREY_COLOR, app_Constants.STOCK_GREY_COLOR, app_Constants.STOCK_GREY_COLOR, app_Constants.STOCK_GREY_COLOR, app_Constants.STOCK_GREY_COLOR, app_Constants.STOCK_GREY_COLOR, app_Constants.STOCK_GREY_COLOR, app_Constants.STOCK_GREY_COLOR, app_Constants.STOCK_GREY_COLOR, app_Constants.STOCK_GREY_COLOR, app_Constants.STOCK_GREY_COLOR);
+                Uniform_Img.Flip_All_Colors(false, app_Constants.STOCK_GREY_COLOR, app_Constants.STOCK_GREY_COLOR, app_Constants.STOCK_GREY_COLOR, app_Constants.STOCK_GREY_COLOR, app_Constants.STOCK_GREY_COLOR, app_Constants.STOCK_GREY_COLOR, app_Constants.STOCK_GREY_COLOR, app_Constants.STOCK_GREY_COLOR, app_Constants.STOCK_GREY_COLOR, app_Constants.STOCK_GREY_COLOR, app_Constants.STOCK_GREY_COLOR, app_Constants.STOCK_GREY_COLOR, app_Constants.STOCK_GREY_COLOR, app_Constants.STOCK_GREY_COLOR, app_Constants.STOCK_GREY_COLOR, app_Constants.STOCK_GREY_COLOR, app_Constants.STOCK_GREY_COLOR, app_Constants.STOCK_GREY_COLOR, app_Constants.STOCK_GREY_COLOR, app_Constants.STOCK_GREY_COLOR);
             }
             else
             {
@@ -791,8 +791,7 @@ namespace SpectatorFootball
             {
                 string filepath = OpenFileDialog.FileName;
                 binding_team.Stadium_Img_Path = filepath;
-                newtStadiumPath.Text = filepath;
-
+                      newtStadiumPath.Text = filepath;
             }
         }
         
@@ -855,7 +854,7 @@ namespace SpectatorFootball
                 helmetColor = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
             }
             else
-                helmetColor = App_Constants.STOCK_GREY_COLOR;
+                helmetColor = app_Constants.STOCK_GREY_COLOR;
 
             if (newtHelmentLogoColor.SelectedColor != null)
             {
@@ -863,7 +862,7 @@ namespace SpectatorFootball
                 helmetLogoColor = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
             }
             else
-                helmetLogoColor = App_Constants.STOCK_GREY_COLOR;
+                helmetLogoColor = app_Constants.STOCK_GREY_COLOR;
 
             if (newtFacemaskColor.SelectedColor != null)
             {
@@ -871,7 +870,7 @@ namespace SpectatorFootball
                 helmetFacemaskColor = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
             }
             else
-                helmetFacemaskColor = App_Constants.STOCK_GREY_COLOR;
+                helmetFacemaskColor = app_Constants.STOCK_GREY_COLOR;
 
             if (newtSockColor.SelectedColor != null)
             {
@@ -879,7 +878,7 @@ namespace SpectatorFootball
                 SocksColor = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
             }
             else
-                SocksColor = App_Constants.STOCK_GREY_COLOR;
+                SocksColor = app_Constants.STOCK_GREY_COLOR;
 
             if (newtCleatsColor.SelectedColor != null)
             {
@@ -887,7 +886,7 @@ namespace SpectatorFootball
                 CleatsColor = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
             }
             else
-                CleatsColor = App_Constants.STOCK_GREY_COLOR;
+                CleatsColor = app_Constants.STOCK_GREY_COLOR;
 
             if (newtHomeJerseyColor.SelectedColor != null)
             {
@@ -895,7 +894,7 @@ namespace SpectatorFootball
                 HomeJerseyColor = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
             }
             else
-                HomeJerseyColor = App_Constants.STOCK_GREY_COLOR;
+                HomeJerseyColor = app_Constants.STOCK_GREY_COLOR;
 
             if (newtHomeSleeveColor.SelectedColor != null)
             {
@@ -903,7 +902,7 @@ namespace SpectatorFootball
                 HomeJerseySleeveColor = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
             }
             else
-                HomeJerseySleeveColor = App_Constants.STOCK_GREY_COLOR;
+                HomeJerseySleeveColor = app_Constants.STOCK_GREY_COLOR;
 
             if (newtHomeShoulderStripeColor.SelectedColor != null)
             {
@@ -911,7 +910,7 @@ namespace SpectatorFootball
                 HomeJerseyShoulderLoopColor = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
             }
             else
-                HomeJerseyShoulderLoopColor = App_Constants.STOCK_GREY_COLOR;
+                HomeJerseyShoulderLoopColor = app_Constants.STOCK_GREY_COLOR;
 
             if (newtHomeJerseyNumberColor.SelectedColor != null)
             {
@@ -919,7 +918,7 @@ namespace SpectatorFootball
                 HomeJerseyNumberColor = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
             }
             else
-                HomeJerseyNumberColor = App_Constants.STOCK_GREY_COLOR;
+                HomeJerseyNumberColor = app_Constants.STOCK_GREY_COLOR;
 
             if (newtHomeNumberOutlineColor.SelectedColor != null)
             {
@@ -927,7 +926,7 @@ namespace SpectatorFootball
                 HomeJerseyNumberOutlineColor = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
             }
             else
-                HomeJerseyNumberOutlineColor = App_Constants.STOCK_GREY_COLOR;
+                HomeJerseyNumberOutlineColor = app_Constants.STOCK_GREY_COLOR;
 
             if (newtHomeJerseySleeve1Color.SelectedColor != null)
             {
@@ -935,7 +934,7 @@ namespace SpectatorFootball
                 HomeJerseyStripe_1 = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
             }
             else
-                HomeJerseyStripe_1 = App_Constants.STOCK_GREY_COLOR;
+                HomeJerseyStripe_1 = app_Constants.STOCK_GREY_COLOR;
 
             if (newtHomeJerseySleeve2Color.SelectedColor != null)
             {
@@ -943,7 +942,7 @@ namespace SpectatorFootball
                 HomeJerseyStripe_2 = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
             }
             else
-                HomeJerseyStripe_2 = App_Constants.STOCK_GREY_COLOR;
+                HomeJerseyStripe_2 = app_Constants.STOCK_GREY_COLOR;
 
             if (newtHomeJerseySleeve3Color.SelectedColor != null)
             {
@@ -951,7 +950,7 @@ namespace SpectatorFootball
                 HomeJerseyStripe_3 = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
             }
             else
-                HomeJerseyStripe_3 = App_Constants.STOCK_GREY_COLOR;
+                HomeJerseyStripe_3 = app_Constants.STOCK_GREY_COLOR;
 
             if (newtHomeJerseySleeve4Color.SelectedColor != null)
             {
@@ -959,7 +958,7 @@ namespace SpectatorFootball
                 HomeJerseyStripe_4 = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
             }
             else
-                HomeJerseyStripe_4 = App_Constants.STOCK_GREY_COLOR;
+                HomeJerseyStripe_4 = app_Constants.STOCK_GREY_COLOR;
 
             if (newtHomeJerseySleeve5Color.SelectedColor != null)
             {
@@ -967,7 +966,7 @@ namespace SpectatorFootball
                 HomeJerseyStripe_5 = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
             }
             else
-                HomeJerseyStripe_5 = App_Constants.STOCK_GREY_COLOR;
+                HomeJerseyStripe_5 = app_Constants.STOCK_GREY_COLOR;
 
             if (newtHomeJerseySleeve6Color.SelectedColor != null)
             {
@@ -975,7 +974,7 @@ namespace SpectatorFootball
                 HomeJerseyStripe_6 = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
             }
             else
-                HomeJerseyStripe_6 = App_Constants.STOCK_GREY_COLOR;
+                HomeJerseyStripe_6 = app_Constants.STOCK_GREY_COLOR;
 
             if (newtHomePantsColor.SelectedColor != null)
             {
@@ -983,7 +982,7 @@ namespace SpectatorFootball
                 HomePantsColor = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
             }
             else
-                HomePantsColor = App_Constants.STOCK_GREY_COLOR;
+                HomePantsColor = app_Constants.STOCK_GREY_COLOR;
 
             if (newtHomePantsStripe1Color.SelectedColor != null)
             {
@@ -991,7 +990,7 @@ namespace SpectatorFootball
                 HomePants_Stripe_1 = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
             }
             else
-                HomePants_Stripe_1 = App_Constants.STOCK_GREY_COLOR;
+                HomePants_Stripe_1 = app_Constants.STOCK_GREY_COLOR;
 
             if (newtHomePantsStripe2Color.SelectedColor != null)
             {
@@ -999,7 +998,7 @@ namespace SpectatorFootball
                 HomePants_Stripe_2 = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
             }
             else
-                HomePants_Stripe_2 = App_Constants.STOCK_GREY_COLOR;
+                HomePants_Stripe_2 = app_Constants.STOCK_GREY_COLOR;
 
             if (newtHomePantsStripe3Color.SelectedColor != null)
             {
@@ -1007,7 +1006,7 @@ namespace SpectatorFootball
                 HomePants_Stripe_3 = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
             }
             else
-                HomePants_Stripe_3 = App_Constants.STOCK_GREY_COLOR;
+                HomePants_Stripe_3 = app_Constants.STOCK_GREY_COLOR;
 
             Uniform_Img.Flip_All_Colors(true, helmetColor, helmetFacemaskColor, helmetLogoColor, HomeJerseyColor, HomeJerseyNumberColor, HomeJerseyNumberOutlineColor, HomeJerseySleeveColor, HomeJerseyShoulderLoopColor, HomeJerseyStripe_1, HomeJerseyStripe_2, HomeJerseyStripe_3, HomeJerseyStripe_4, HomeJerseyStripe_5, HomeJerseyStripe_6, HomePantsColor, HomePants_Stripe_1, HomePants_Stripe_2, HomePants_Stripe_3, SocksColor, CleatsColor);
 
@@ -1045,7 +1044,7 @@ namespace SpectatorFootball
                 helmetColor = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
             }
             else
-                helmetColor = App_Constants.STOCK_GREY_COLOR;
+                helmetColor = app_Constants.STOCK_GREY_COLOR;
 
             if (newtHelmentLogoColor.SelectedColor != null)
             {
@@ -1053,7 +1052,7 @@ namespace SpectatorFootball
                 helmetLogoColor = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
             }
             else
-                helmetLogoColor = App_Constants.STOCK_GREY_COLOR;
+                helmetLogoColor = app_Constants.STOCK_GREY_COLOR;
 
             if (newtFacemaskColor.SelectedColor != null)
             {
@@ -1061,7 +1060,7 @@ namespace SpectatorFootball
                 helmetFacemaskColor = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
             }
             else
-                helmetFacemaskColor = App_Constants.STOCK_GREY_COLOR;
+                helmetFacemaskColor = app_Constants.STOCK_GREY_COLOR;
 
             if (newtSockColor.SelectedColor != null)
             {
@@ -1069,7 +1068,7 @@ namespace SpectatorFootball
                 SocksColor = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
             }
             else
-                SocksColor = App_Constants.STOCK_GREY_COLOR;
+                SocksColor = app_Constants.STOCK_GREY_COLOR;
 
             if (newtCleatsColor.SelectedColor != null)
             {
@@ -1077,7 +1076,7 @@ namespace SpectatorFootball
                 CleatsColor = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
             }
             else
-                CleatsColor = App_Constants.STOCK_GREY_COLOR;
+                CleatsColor = app_Constants.STOCK_GREY_COLOR;
 
             if (newtAwayJerseyColor.SelectedColor != null)
             {
@@ -1085,7 +1084,7 @@ namespace SpectatorFootball
                 AwayJerseyColor = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
             }
             else
-                AwayJerseyColor = App_Constants.STOCK_GREY_COLOR;
+                AwayJerseyColor = app_Constants.STOCK_GREY_COLOR;
 
             if (newtAwaySleeveColor.SelectedColor != null)
             {
@@ -1093,7 +1092,7 @@ namespace SpectatorFootball
                 AwayJerseySleeveColor = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
             }
             else
-                AwayJerseySleeveColor = App_Constants.STOCK_GREY_COLOR;
+                AwayJerseySleeveColor = app_Constants.STOCK_GREY_COLOR;
 
             if (newtAwayShoulderStripeColor.SelectedColor != null)
             {
@@ -1101,7 +1100,7 @@ namespace SpectatorFootball
                 AwayJerseyShoulderLoopColor = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
             }
             else
-                AwayJerseyShoulderLoopColor = App_Constants.STOCK_GREY_COLOR;
+                AwayJerseyShoulderLoopColor = app_Constants.STOCK_GREY_COLOR;
 
             if (newtAwayJerseyNumberColor.SelectedColor != null)
             {
@@ -1109,7 +1108,7 @@ namespace SpectatorFootball
                 AwayJerseyNumberColor = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
             }
             else
-                AwayJerseyNumberColor = App_Constants.STOCK_GREY_COLOR;
+                AwayJerseyNumberColor = app_Constants.STOCK_GREY_COLOR;
 
             if (newtAwayNumberOutlineColor.SelectedColor != null)
             {
@@ -1117,7 +1116,7 @@ namespace SpectatorFootball
                 AwayJerseyNumberOutlineColor = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
             }
             else
-                AwayJerseyNumberOutlineColor = App_Constants.STOCK_GREY_COLOR;
+                AwayJerseyNumberOutlineColor = app_Constants.STOCK_GREY_COLOR;
 
             if (newtAwayJerseySleeve1Color.SelectedColor != null)
             {
@@ -1125,7 +1124,7 @@ namespace SpectatorFootball
                 AwayJerseyStripe_1 = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
             }
             else
-                AwayJerseyStripe_1 = App_Constants.STOCK_GREY_COLOR;
+                AwayJerseyStripe_1 = app_Constants.STOCK_GREY_COLOR;
 
             if (newtAwayJerseySleeve2Color.SelectedColor != null)
             {
@@ -1133,7 +1132,7 @@ namespace SpectatorFootball
                 AwayJerseyStripe_2 = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
             }
             else
-                AwayJerseyStripe_2 = App_Constants.STOCK_GREY_COLOR;
+                AwayJerseyStripe_2 = app_Constants.STOCK_GREY_COLOR;
 
             if (newtAwayJerseySleeve3Color.SelectedColor != null)
             {
@@ -1141,7 +1140,7 @@ namespace SpectatorFootball
                 AwayJerseyStripe_3 = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
             }
             else
-                AwayJerseyStripe_3 = App_Constants.STOCK_GREY_COLOR;
+                AwayJerseyStripe_3 = app_Constants.STOCK_GREY_COLOR;
 
             if (newtAwayJerseySleeve4Color.SelectedColor != null)
             {
@@ -1149,7 +1148,7 @@ namespace SpectatorFootball
                 AwayJerseyStripe_4 = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
             }
             else
-                AwayJerseyStripe_4 = App_Constants.STOCK_GREY_COLOR;
+                AwayJerseyStripe_4 = app_Constants.STOCK_GREY_COLOR;
 
             if (newtAwayJerseySleeve5Color.SelectedColor != null)
             {
@@ -1157,7 +1156,7 @@ namespace SpectatorFootball
                 AwayJerseyStripe_5 = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
             }
             else
-                AwayJerseyStripe_5 = App_Constants.STOCK_GREY_COLOR;
+                AwayJerseyStripe_5 = app_Constants.STOCK_GREY_COLOR;
 
             if (newtAwayJerseySleeve6Color.SelectedColor != null)
             {
@@ -1165,7 +1164,7 @@ namespace SpectatorFootball
                 AwayJerseyStripe_6 = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
             }
             else
-                AwayJerseyStripe_6 = App_Constants.STOCK_GREY_COLOR;
+                AwayJerseyStripe_6 = app_Constants.STOCK_GREY_COLOR;
 
             if (newtAwayPantsColor.SelectedColor != null)
             {
@@ -1173,7 +1172,7 @@ namespace SpectatorFootball
                 AwayPantsColor = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
             }
             else
-                AwayPantsColor = App_Constants.STOCK_GREY_COLOR;
+                AwayPantsColor = app_Constants.STOCK_GREY_COLOR;
 
             if (newtAwayPantsStripe1Color.SelectedColor != null)
             {
@@ -1181,7 +1180,7 @@ namespace SpectatorFootball
                 AwayPants_Stripe_1 = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
             }
             else
-                AwayPants_Stripe_1 = App_Constants.STOCK_GREY_COLOR;
+                AwayPants_Stripe_1 = app_Constants.STOCK_GREY_COLOR;
 
             if (newtAwayPantsStripe2Color.SelectedColor != null)
             {
@@ -1189,7 +1188,7 @@ namespace SpectatorFootball
                 AwayPants_Stripe_2 = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
             }
             else
-                AwayPants_Stripe_2 = App_Constants.STOCK_GREY_COLOR;
+                AwayPants_Stripe_2 = app_Constants.STOCK_GREY_COLOR;
 
             if (newtAwayPantsStripe3Color.SelectedColor != null)
             {
@@ -1197,7 +1196,7 @@ namespace SpectatorFootball
                 AwayPants_Stripe_3 = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
             }
             else
-                AwayPants_Stripe_3 = App_Constants.STOCK_GREY_COLOR;
+                AwayPants_Stripe_3 = app_Constants.STOCK_GREY_COLOR;
 
             Uniform_Img.Flip_All_Colors(false, helmetColor, helmetFacemaskColor, helmetLogoColor, AwayJerseyColor, AwayJerseyNumberColor, AwayJerseyNumberOutlineColor, AwayJerseySleeveColor, AwayJerseyShoulderLoopColor, AwayJerseyStripe_1, AwayJerseyStripe_2, AwayJerseyStripe_3, AwayJerseyStripe_4, AwayJerseyStripe_5, AwayJerseyStripe_6, AwayPantsColor, AwayPants_Stripe_1, AwayPants_Stripe_2, AwayPants_Stripe_3, SocksColor, CleatsColor);
 
@@ -1219,8 +1218,8 @@ namespace SpectatorFootball
             if (!CommonUtils.isAlpha(binding_team.City, true))
                 throw new Exception("Invalid character in City!");
 
-            if (binding_team.City == App_Constants.EMPTY_TEAM_SLOT)
-                throw new Exception("City can not have a value of " + App_Constants.EMPTY_TEAM_SLOT);
+            if (binding_team.City == app_Constants.EMPTY_TEAM_SLOT)
+                throw new Exception("City can not have a value of " + app_Constants.EMPTY_TEAM_SLOT);
 
             if (CommonUtils.isBlank(binding_team.Nickname))
                 throw new Exception("Nickname must have a value");

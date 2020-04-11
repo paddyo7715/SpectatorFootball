@@ -24,6 +24,8 @@ namespace SpectatorFootball.Models
         }
     
         public long ID { get; set; }
+        public long Team_id { get; set; }
+        public long Team_Slot { get; set; }
         public long League_ID { get; set; }
         public string Owner { get; set; }
         public string City_Abr { get; set; }
@@ -33,7 +35,9 @@ namespace SpectatorFootball.Models
         public string Stadium_Location { get; set; }
         public string Stadium_Capacity { get; set; }
         public string Stadium_Img_Path { get; set; }
+        public string Stadium_Image_File { get; set; }
         public string Helmet_img_path { get; set; }
+        public string Helmet_Image_File { get; set; }
         public string Helmet_Color { get; set; }
         public string Helmet_Logo_Color { get; set; }
         public string Helmet_Facemask_Color { get; set; }

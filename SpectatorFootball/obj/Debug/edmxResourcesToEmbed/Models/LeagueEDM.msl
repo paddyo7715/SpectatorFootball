@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="LeagueModelStoreContainer" CdmEntityContainer="mainEntities">
+  <EntityContainerMapping StorageEntityContainer="mainModelStoreContainer" CdmEntityContainer="mainEntities">
     <EntitySetMapping Name="Awards">
-      <EntityTypeMapping TypeName="LeagueModel.Award">
+      <EntityTypeMapping TypeName="mainModel.Award">
         <MappingFragment StoreEntitySet="Award">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
@@ -11,16 +11,17 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Conferences">
-      <EntityTypeMapping TypeName="LeagueModel.Conference">
+      <EntityTypeMapping TypeName="mainModel.Conference">
         <MappingFragment StoreEntitySet="Conference">
           <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Ordinal" ColumnName="Ordinal" />
           <ScalarProperty Name="League_ID" ColumnName="League_ID" />
           <ScalarProperty Name="Conf_Name" ColumnName="Conf_Name" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="DBVersions">
-      <EntityTypeMapping TypeName="LeagueModel.DBVersion">
+      <EntityTypeMapping TypeName="mainModel.DBVersion">
         <MappingFragment StoreEntitySet="DBVersion">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Date_Created" ColumnName="Date_Created" />
@@ -30,21 +31,21 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Divisions">
-      <EntityTypeMapping TypeName="LeagueModel.Division">
+      <EntityTypeMapping TypeName="mainModel.Division">
         <MappingFragment StoreEntitySet="Division">
           <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Ordinal" ColumnName="Ordinal" />
           <ScalarProperty Name="League_ID" ColumnName="League_ID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Games">
-      <EntityTypeMapping TypeName="LeagueModel.Game">
+      <EntityTypeMapping TypeName="mainModel.Game">
         <MappingFragment StoreEntitySet="Game">
           <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="Year" ColumnName="Year" />
-          <ScalarProperty Name="Week" ColumnName="Week" />
           <ScalarProperty Name="League_ID" ColumnName="League_ID" />
+          <ScalarProperty Name="Week" ColumnName="Week" />
           <ScalarProperty Name="Home_Team_ID" ColumnName="Home_Team_ID" />
           <ScalarProperty Name="Away_Team_ID" ColumnName="Away_Team_ID" />
           <ScalarProperty Name="Home_FirstDowns" ColumnName="Home_FirstDowns" />
@@ -88,7 +89,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Game_Player_Kick_Returner_Stats">
-      <EntityTypeMapping TypeName="LeagueModel.Game_Player_Kick_Returner_Stats">
+      <EntityTypeMapping TypeName="mainModel.Game_Player_Kick_Returner_Stats">
         <MappingFragment StoreEntitySet="Game_Player_Kick_Returner_Stats">
           <ScalarProperty Name="Game_ID" ColumnName="Game_ID" />
           <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
@@ -110,7 +111,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Game_Player_Kicker_Stats">
-      <EntityTypeMapping TypeName="LeagueModel.Game_Player_Kicker_Stats">
+      <EntityTypeMapping TypeName="mainModel.Game_Player_Kicker_Stats">
         <MappingFragment StoreEntitySet="Game_Player_Kicker_Stats">
           <ScalarProperty Name="Game_ID" ColumnName="Game_ID" />
           <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
@@ -133,7 +134,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Game_Player_Offensive_Linemen_Stats">
-      <EntityTypeMapping TypeName="LeagueModel.Game_Player_Offensive_Linemen_Stats">
+      <EntityTypeMapping TypeName="mainModel.Game_Player_Offensive_Linemen_Stats">
         <MappingFragment StoreEntitySet="Game_Player_Offensive_Linemen_Stats">
           <ScalarProperty Name="Game_ID" ColumnName="Game_ID" />
           <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
@@ -145,7 +146,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Game_Player_Pass_Defense_Stats">
-      <EntityTypeMapping TypeName="LeagueModel.Game_Player_Pass_Defense_Stats">
+      <EntityTypeMapping TypeName="mainModel.Game_Player_Pass_Defense_Stats">
         <MappingFragment StoreEntitySet="Game_Player_Pass_Defense_Stats">
           <ScalarProperty Name="Game_ID" ColumnName="Game_ID" />
           <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
@@ -166,7 +167,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Game_Player_Pass_Rushers_Stats">
-      <EntityTypeMapping TypeName="LeagueModel.Game_Player_Pass_Rushers_Stats">
+      <EntityTypeMapping TypeName="mainModel.Game_Player_Pass_Rushers_Stats">
         <MappingFragment StoreEntitySet="Game_Player_Pass_Rushers_Stats">
           <ScalarProperty Name="Game_ID" ColumnName="Game_ID" />
           <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
@@ -183,7 +184,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Game_Player_Passing_Stats">
-      <EntityTypeMapping TypeName="LeagueModel.Game_Player_Passing_Stats">
+      <EntityTypeMapping TypeName="mainModel.Game_Player_Passing_Stats">
         <MappingFragment StoreEntitySet="Game_Player_Passing_Stats">
           <ScalarProperty Name="Game_ID" ColumnName="Game_ID" />
           <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
@@ -235,7 +236,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Game_Player_Punter_Stats">
-      <EntityTypeMapping TypeName="LeagueModel.Game_Player_Punter_Stats">
+      <EntityTypeMapping TypeName="mainModel.Game_Player_Punter_Stats">
         <MappingFragment StoreEntitySet="Game_Player_Punter_Stats">
           <ScalarProperty Name="Game_ID" ColumnName="Game_ID" />
           <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
@@ -249,7 +250,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Game_Player_Receiving_Stats">
-      <EntityTypeMapping TypeName="LeagueModel.Game_Player_Receiving_Stats">
+      <EntityTypeMapping TypeName="mainModel.Game_Player_Receiving_Stats">
         <MappingFragment StoreEntitySet="Game_Player_Receiving_Stats">
           <ScalarProperty Name="Game_ID" ColumnName="Game_ID" />
           <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
@@ -265,7 +266,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Game_Player_Rushing_Stats">
-      <EntityTypeMapping TypeName="LeagueModel.Game_Player_Rushing_Stats">
+      <EntityTypeMapping TypeName="mainModel.Game_Player_Rushing_Stats">
         <MappingFragment StoreEntitySet="Game_Player_Rushing_Stats">
           <ScalarProperty Name="Game_ID" ColumnName="Game_ID" />
           <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
@@ -279,7 +280,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Game_Player_Special_Team_Receive_Stats">
-      <EntityTypeMapping TypeName="LeagueModel.Game_Player_Special_Team_Receive_Stats">
+      <EntityTypeMapping TypeName="mainModel.Game_Player_Special_Team_Receive_Stats">
         <MappingFragment StoreEntitySet="Game_Player_Special_Team_Receive_Stats">
           <ScalarProperty Name="Game_ID" ColumnName="Game_ID" />
           <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
@@ -297,7 +298,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Game_Player_Special_Teams_Has_Ball_Stats">
-      <EntityTypeMapping TypeName="LeagueModel.Game_Player_Special_Teams_Has_Ball_Stats">
+      <EntityTypeMapping TypeName="mainModel.Game_Player_Special_Teams_Has_Ball_Stats">
         <MappingFragment StoreEntitySet="Game_Player_Special_Teams_Has_Ball_Stats">
           <ScalarProperty Name="Game_ID" ColumnName="Game_ID" />
           <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
@@ -316,7 +317,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Game_Scoring_Summary">
-      <EntityTypeMapping TypeName="LeagueModel.Game_Scoring_Summary">
+      <EntityTypeMapping TypeName="mainModel.Game_Scoring_Summary">
         <MappingFragment StoreEntitySet="Game_Scoring_Summary">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Game_ID" ColumnName="Game_ID" />
@@ -325,7 +326,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Hall_of_Fame">
-      <EntityTypeMapping TypeName="LeagueModel.Hall_of_Fame">
+      <EntityTypeMapping TypeName="mainModel.Hall_of_Fame">
         <MappingFragment StoreEntitySet="Hall_of_Fame">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
@@ -334,13 +335,14 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Leagues">
-      <EntityTypeMapping TypeName="LeagueModel.League">
+      <EntityTypeMapping TypeName="mainModel.League">
         <MappingFragment StoreEntitySet="League">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Short_Name" ColumnName="Short_Name" />
           <ScalarProperty Name="Long_Name" ColumnName="Long_Name" />
           <ScalarProperty Name="League_Logo_Filepath" ColumnName="League_Logo_Filepath" />
-          <ScalarProperty Name="Starting_Year" ColumnName="Starting_Year" />
+          <ScalarProperty Name="League_Logo_File" ColumnName="League_Logo_File" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
           <ScalarProperty Name="Number_of_weeks" ColumnName="Number_of_weeks" />
           <ScalarProperty Name="Number_of_Games" ColumnName="Number_of_Games" />
           <ScalarProperty Name="Championship_Game_Name" ColumnName="Championship_Game_Name" />
@@ -352,19 +354,19 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Player_Awards">
-      <EntityTypeMapping TypeName="LeagueModel.Player_Awards">
+      <EntityTypeMapping TypeName="mainModel.Player_Awards">
         <MappingFragment StoreEntitySet="Player_Awards">
           <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="Year" ColumnName="Year" />
           <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
           <ScalarProperty Name="Award" ColumnName="Award" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Players">
-      <EntityTypeMapping TypeName="LeagueModel.Player">
+      <EntityTypeMapping TypeName="mainModel.Player">
         <MappingFragment StoreEntitySet="Players">
           <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
           <ScalarProperty Name="Team_ID" ColumnName="Team_ID" />
           <ScalarProperty Name="Age" ColumnName="Age" />
           <ScalarProperty Name="Jersey_Number" ColumnName="Jersey_Number" />
@@ -391,19 +393,21 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Playoff_Teams">
-      <EntityTypeMapping TypeName="LeagueModel.Playoff_Teams">
+      <EntityTypeMapping TypeName="mainModel.Playoff_Teams">
         <MappingFragment StoreEntitySet="Playoff_Teams">
-          <ScalarProperty Name="Year" ColumnName="Year" />
           <ScalarProperty Name="Team_ID" ColumnName="Team_ID" />
+          <ScalarProperty Name="League_ID" ColumnName="League_ID" />
           <ScalarProperty Name="Rank" ColumnName="Rank" />
           <ScalarProperty Name="Eliminated" ColumnName="Eliminated" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Teams">
-      <EntityTypeMapping TypeName="LeagueModel.Team">
+      <EntityTypeMapping TypeName="mainModel.Team">
         <MappingFragment StoreEntitySet="Teams">
           <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Team_id" ColumnName="Team_id" />
+          <ScalarProperty Name="Team_Slot" ColumnName="Team_Slot" />
           <ScalarProperty Name="League_ID" ColumnName="League_ID" />
           <ScalarProperty Name="Owner" ColumnName="Owner" />
           <ScalarProperty Name="City_Abr" ColumnName="City_Abr" />
@@ -413,7 +417,9 @@
           <ScalarProperty Name="Stadium_Location" ColumnName="Stadium_Location" />
           <ScalarProperty Name="Stadium_Capacity" ColumnName="Stadium_Capacity" />
           <ScalarProperty Name="Stadium_Img_Path" ColumnName="Stadium_Img_Path" />
+          <ScalarProperty Name="Stadium_Image_File" ColumnName="Stadium_Image_File" />
           <ScalarProperty Name="Helmet_img_path" ColumnName="Helmet_img_path" />
+          <ScalarProperty Name="Helmet_Image_File" ColumnName="Helmet_Image_File" />
           <ScalarProperty Name="Helmet_Color" ColumnName="Helmet_Color" />
           <ScalarProperty Name="Helmet_Logo_Color" ColumnName="Helmet_Logo_Color" />
           <ScalarProperty Name="Helmet_Facemask_Color" ColumnName="Helmet_Facemask_Color" />

@@ -5,7 +5,7 @@ using System.Drawing;
 
 namespace SpectatorFootball
 {
-    public class App_Constants
+    public class app_Constants
     {
         // Max Settings
         public const int MAX_DIVISIONS = 20;
@@ -18,6 +18,7 @@ namespace SpectatorFootball
         public const string BACKUP_FOLDER = "Backup";
         public const string LEAGUE_HELMETS_SUBFOLDER = "Helmet_Images";
         public const string LEAGUE_STADIUM_SUBFOLDER = "Stadium_Images";
+        public const string LEAGUE_PROFILE_FILE = "Profile.txt";
 
         // The following three were intended to be constants, but when I added the file seperator variable, they could no longer be Consts
         public static string APP_HELMET_FOLDER = Path.DirectorySeparatorChar + "Images" + Path.DirectorySeparatorChar + "Helmets" + Path.DirectorySeparatorChar;

@@ -20,14 +20,15 @@ namespace SpectatorFootball.Models
             this.Conferences = new HashSet<Conference>();
             this.Divisions = new HashSet<Division>();
             this.Games = new HashSet<Game>();
-            this.Teams = new HashSet<Team>();
+            this.Teams = new List<Team>();
         }
     
         public long ID { get; set; }
         public string Short_Name { get; set; }
         public string Long_Name { get; set; }
         public string League_Logo_Filepath { get; set; }
-        public long Starting_Year { get; set; }
+        public string League_Logo_File { get; set; }
+        public long Year { get; set; }
         public long Number_of_weeks { get; set; }
         public long Number_of_Games { get; set; }
         public string Championship_Game_Name { get; set; }
@@ -43,6 +44,6 @@ namespace SpectatorFootball.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Game> Games { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Team> Teams { get; set; }
+        public virtual List<Team> Teams { get; set; }
     }
 }

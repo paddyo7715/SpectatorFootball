@@ -4,9 +4,9 @@ using System.ComponentModel;
 using System.IO;
 using log4net;
 using System.Linq;
-using SpectatorFootball.League_Info;
 using SpectatorFootball.Models;
 using System.Data.Entity.Validation;
+using SpectatorFootball.League;
 
 namespace SpectatorFootball
 {
@@ -14,7 +14,7 @@ namespace SpectatorFootball
     {
         private static ILog logger = LogManager.GetLogger("RollingFile");
 
-        public void CreateNewLeague(Mem_League nl, BackgroundWorker bw)
+        public void CreateNewLeague(New_League_Structure nls, BackgroundWorker bw)
         {
             logger.Info("CreateNewLeague Started");
 
@@ -22,8 +22,8 @@ namespace SpectatorFootball
 
             // Create the league folder
             string DIRPath_League = null;
-            string New_League_File = nl.Leagues.Short_Name.ToUpper() + "." + App_Constants.DB_FILE_EXT;
-            string League_con_string = Environment.SpecialFolder.MyDocuments + Path.DirectorySeparatorChar + App_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + nl.Leagues.Short_Name + Path.DirectorySeparatorChar + nl.Leagues.Short_Name + Path.DirectorySeparatorChar + App_Constants.DB_FILE_EXT;
+            string New_League_File = nls.League.Short_Name.ToUpper() + "." + app_Constants.DB_FILE_EXT;
+            string League_con_string = Environment.SpecialFolder.MyDocuments + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + nls.League.Short_Name + Path.DirectorySeparatorChar + nls.League.Short_Name + Path.DirectorySeparatorChar + app_Constants.DB_FILE_EXT;
             var LeagueDAO = new LeagueDAO();
             string process_state = "Processing...";
             string state_struct = null;
@@ -39,49 +39,48 @@ namespace SpectatorFootball
 
                 // Create the League Folder
                 logger.Info("Creating league folder");
-                DIRPath_League = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + App_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + nl.Leagues.Short_Name.ToUpper();
+                DIRPath_League = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + nls.League.Short_Name.ToUpper();
                 Directory.CreateDirectory(DIRPath_League);
 
                 // Create Backup Folder
                 logger.Info("Creating league backup folder");
-                Directory.CreateDirectory(DIRPath_League + Path.DirectorySeparatorChar + App_Constants.BACKUP_FOLDER);
+                Directory.CreateDirectory(DIRPath_League + Path.DirectorySeparatorChar + app_Constants.BACKUP_FOLDER);
 
                 // Create the helmet image League Folder
                 logger.Info("Creating league helmet folder");
-                Directory.CreateDirectory(DIRPath_League + Path.DirectorySeparatorChar + App_Constants.LEAGUE_HELMETS_SUBFOLDER);
+                Directory.CreateDirectory(DIRPath_League + Path.DirectorySeparatorChar + app_Constants.LEAGUE_HELMETS_SUBFOLDER);
 
                 // Create the stadium image League folder
                 logger.Info("Creating league image folder");
-                Directory.CreateDirectory(DIRPath_League + Path.DirectorySeparatorChar + App_Constants.LEAGUE_STADIUM_SUBFOLDER);
-
+                Directory.CreateDirectory(DIRPath_League + Path.DirectorySeparatorChar + app_Constants.LEAGUE_STADIUM_SUBFOLDER);
 
                 // Copy the League Logo file
                 logger.Info("Starting league Logo Copy and Rename");
-                string sf = nl.Leagues.League_Logo_Filepath;
+                string sf = nls.League.League_Logo_Filepath;
                 string df = DIRPath_League + Path.DirectorySeparatorChar + Path.GetFileName(sf);
                 File.Copy(sf, df);
 
                 //Create League Profile file
-                using (StreamWriter sw = new StreamWriter(DIRPath_League + Path.DirectorySeparatorChar + "Profile.txt"))
+                using (StreamWriter sw = new StreamWriter(DIRPath_League + Path.DirectorySeparatorChar + app_Constants.LEAGUE_PROFILE_FILE))
                 {
-                    sw.WriteLine("LongName: " + nl.Leagues.Long_Name);
-                    sw.WriteLine("LogoFileName: " + Path.GetFileName(nl.Leagues.League_Logo_Filepath));
+                    sw.WriteLine("LongName: " + nls.League.Long_Name);
+                    sw.WriteLine("LogoFileName: " + Path.GetFileName(nls.League.League_Logo_Filepath));
                 }
 
                 // Copy and Create the league database file
                 logger.Info("Starting league database creation and copy");
-                string ssf = CommonUtils.getAppPath() + Path.DirectorySeparatorChar + App_Constants.BLANK_DB_FOLDER + Path.DirectorySeparatorChar + App_Constants.BLANK_DB;
+                string ssf = CommonUtils.getAppPath() + Path.DirectorySeparatorChar + app_Constants.BLANK_DB_FOLDER + Path.DirectorySeparatorChar + app_Constants.BLANK_DB;
                 string ddf = DIRPath_League + Path.DirectorySeparatorChar + New_League_File;
                 File.Copy(ssf, ddf);
 
                 // Copy team image files to league folder
                 logger.Info("Helmet and stadium files copy starting");
-                foreach (var t in nl.Teams)
+                foreach (var t in nls.League.Teams)
                 {
                     logger.Debug("Copying " + t.Helmet_img_path);
-                    File.Copy(t.Helmet_img_path, DIRPath_League + Path.DirectorySeparatorChar + App_Constants.LEAGUE_HELMETS_SUBFOLDER + Path.DirectorySeparatorChar + Path.GetFileName(t.Helmet_img_path));
+                    File.Copy(t.Helmet_img_path, DIRPath_League + Path.DirectorySeparatorChar + app_Constants.LEAGUE_HELMETS_SUBFOLDER + Path.DirectorySeparatorChar + Path.GetFileName(t.Helmet_img_path));
                     logger.Debug("Copying " + t.Stadium_Img_Path);
-                    File.Copy(t.Stadium_Img_Path, DIRPath_League + Path.DirectorySeparatorChar + App_Constants.LEAGUE_STADIUM_SUBFOLDER + Path.DirectorySeparatorChar + Path.GetFileName(t.Stadium_Img_Path));
+                    File.Copy(t.Stadium_Img_Path, DIRPath_League + Path.DirectorySeparatorChar + app_Constants.LEAGUE_STADIUM_SUBFOLDER + Path.DirectorySeparatorChar + Path.GetFileName(t.Stadium_Img_Path));
                 }
 
                 // Update the progress bar
@@ -92,11 +91,18 @@ namespace SpectatorFootball
 
                 // Create players for each team
                 logger.Info("Creating players for new league.");
-                foreach (var t in nl.Teams)
+                int p_id = 0;
+                foreach (var t in nls.League.Teams)
                 {
                     logger.Debug("Creating players for team " + t.Nickname);
-                    List<Player> Roster = ts.Roll_Players((int)t.ID);
-                    nl.Players.AddRange(Roster);
+                    t.Players = new List<Player>();
+                    List<Player> Roster = ts.Roll_Players((int)t.ID,ref p_id);
+
+                    foreach (Player p in Roster)
+                    {
+                        t.Players.Add(p);
+                    }
+
                 }
 
                 // Update the progress bar
@@ -107,7 +113,7 @@ namespace SpectatorFootball
 
                 // Creating schedule
                 logger.Info("Creating schedule");
-                List<string> sched = create_schedule(nl.Leagues.Short_Name, (int) nl.Leagues.Num_Teams, nl.Divisions.Count, nl.Conferences.Count, (int) nl.Leagues.Number_of_Games, (int) nl.Leagues.Number_of_weeks);
+                List<string> sched = create_schedule(nls.League.Short_Name, (int) nls.League.Num_Teams, nls.League.Divisions.Count, nls.League.Conferences.Count, (int) nls.League.Number_of_Games, (int) nls.League.Number_of_weeks);
 
                 foreach (string line in sched)
                 {
@@ -121,14 +127,12 @@ namespace SpectatorFootball
 
                     Game g = new Game()
                     {
-                        Year = nl.Leagues.Starting_Year,
                         Week = long.Parse(sWeek),
-                        Home_Team_ID = long.Parse(ht),
-                        Away_Team_ID = long.Parse(at),
-                        League_ID = 1
+                        Home_Team_ID = nls.League.Teams.Where(x => x.Team_Slot == long.Parse(ht)).First().ID,
+                        Away_Team_ID = nls.League.Teams.Where(x => x.Team_Slot == long.Parse(at)).First().ID
                     };
 
-                    nl.Games.Add(g);
+                    nls.League.Games.Add(g);
 
                 }
 
@@ -140,7 +144,7 @@ namespace SpectatorFootball
 
                 // Write the league records to the database
                 logger.Info("Saving new league to database");
-                LeagueDAO.Create_New_League(nl,ddf);
+                LeagueDAO.Create_New_League(nls,ddf);
 
                 // Update the progress bar
                 i = 100;

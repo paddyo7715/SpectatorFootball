@@ -17,5 +17,7 @@ namespace SpectatorFootball.Models
         public long ID { get; set; }
         public long Player_ID { get; set; }
         public long Year_Added { get; set; }
+    
+        public virtual Player Player { get; set; }
     }
 }

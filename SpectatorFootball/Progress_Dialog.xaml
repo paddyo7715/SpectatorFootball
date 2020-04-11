@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:SpectatorFootball"
         mc:Ignorable="d"
         Title="Popup" Height="120" Width="350" WindowStartupLocation="CenterOwner" WindowStyle="none" ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True">
-    <Border Style="{StaticResource HelpBD}" BorderThickness="1">
+    <Border Style="{StaticResource popupBD}" BorderThickness="1">
         <StackPanel Style="{StaticResource ProgressSP}" Height="110" Width="340" Orientation="Vertical" >
             <StackPanel Height="150" Width="340" Orientation="Vertical" Background="Transparent" HorizontalAlignment="Center" VerticalAlignment="top">
                 <Label Name="prglbl" Style="{StaticResource appProgressSmallLBL}" Height="25"  Width="280" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="top" />
