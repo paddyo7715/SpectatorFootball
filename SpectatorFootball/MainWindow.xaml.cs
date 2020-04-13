@@ -221,8 +221,6 @@ namespace SpectatorFootball
 
         }
 
-
-
         private void Load_League(object sender, LoadLeagueEventArgs e)
         {
             try
@@ -230,6 +228,10 @@ namespace SpectatorFootball
                 Mouse.OverrideCursor = Cursors.Wait;
                 logger.Info("Attempting to Load League " + e.League_Short_Name);
 
+                League_Services ls = new League_Services();
+                Loaded_League = ls.LoadExistingLeague((string)e.League_Short_Name);
+
+                //if league has been loaded then show the league standings window.
 
                 Mouse.OverrideCursor = null;
             }

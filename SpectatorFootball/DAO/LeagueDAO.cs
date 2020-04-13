@@ -19,11 +19,6 @@ namespace SpectatorFootball
 
             //Note that filepath will be converted to just the filename because these files have 
             //already been copied to the appropriate location under the league folder.
-             string strStage = null;
-
-             strStage = "Getting connection";
-             logger.Debug(strStage);
-
              string con = Common.LeageConnection.Connect(newleague_filepath);
              using (var context = new leagueContext(con))
              {

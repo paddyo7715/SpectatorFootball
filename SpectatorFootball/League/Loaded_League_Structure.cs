@@ -12,6 +12,5 @@ namespace SpectatorFootball.League
         public DBVersion DBVersion { get; set; }
         public SpectatorFootball.Models.League League { get; set; }
 
-
     }
 }

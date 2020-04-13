@@ -7,6 +7,7 @@ using System.Linq;
 using SpectatorFootball.Models;
 using System.Data.Entity.Validation;
 using SpectatorFootball.League;
+using SpectatorFootball.DAO;
 
 namespace SpectatorFootball
 {
@@ -208,6 +209,18 @@ namespace SpectatorFootball
                 throw new Exception("Error creating schedule. Error: " + r);
 
             return s;
+        }
+
+        public Loaded_League_Structure LoadExistingLeague(string League_Shortname)
+        {
+            Loaded_League_Structure r = new Loaded_League_Structure();
+
+            string League_con_string = Environment.SpecialFolder.MyDocuments + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + League_Shortname + Path.DirectorySeparatorChar + League_Shortname + Path.DirectorySeparatorChar + app_Constants.DB_FILE_EXT;
+
+            DBVersionDAO dbverdbo = new DBVersionDAO();
+            r.DBVersion = dbverdbo.getLatestDBVersion(League_con_string);
+
+            return r;
         }
     }
 }
