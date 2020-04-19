@@ -21,9 +21,13 @@ namespace SpectatorFootball
             {
                context.Potential_First_Names.AddRange(FirstNames);
                var added = context.ChangeTracker.Entries().Where(x => x.State == EntityState.Added).Count();
-//                context.Database.Log = Console.Write;
-                context.SaveChanges();
-               r = FirstNames.Count;
+                //                context.Database.Log = Console.Write;
+                try
+                {
+                    context.SaveChanges();
+                    r = FirstNames.Count;
+                }
+                catch { }
              }
 
             return r;
@@ -34,13 +38,19 @@ namespace SpectatorFootball
 
             int r = 0;
 
+
             string con = Common.SettingsConnection.Connect();
             using (var context = new settingsContext(con))
             {
-               context.Potential_Last_Names.AddRange(LastNames);
-               context.SaveChanges();
-               r = LastNames.Count;
-            }
+                context.Potential_Last_Names.AddRange(LastNames);
+                try
+                {
+                    context.SaveChanges();
+                    r = LastNames.Count;
+                }
+                catch { }
+             }
+
 
             return r;
         }
