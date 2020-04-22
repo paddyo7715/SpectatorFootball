@@ -12,20 +12,26 @@ namespace SpectatorFootball.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Division
+    public partial class Penalty
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Division()
+        public Penalty()
         {
-            this.Teams_by_Season = new HashSet<Teams_by_Season>();
+            this.Game_Player_Penalties_Stats = new HashSet<Game_Player_Penalties_Stats>();
         }
     
         public long ID { get; set; }
-        public long Ordinal { get; set; }
-        public long Season_ID { get; set; }
-        public string Name { get; set; }
+        public string Penalty_Type { get; set; }
+        public long Declinable { get; set; }
+        public long Loss_of_Down { get; set; }
+        public string Code { get; set; }
+        public Nullable<long> Yards { get; set; }
+        public long Auto_First_Down { get; set; }
+        public long Ass_After_Play { get; set; }
+        public string Specific_Play_Type { get; set; }
+        public string Description { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Teams_by_Season> Teams_by_Season { get; set; }
+        public virtual ICollection<Game_Player_Penalties_Stats> Game_Player_Penalties_Stats { get; set; }
     }
 }

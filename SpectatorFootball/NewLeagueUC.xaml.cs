@@ -113,7 +113,6 @@ namespace SpectatorFootball
             }
         }
 
-
         private void validate()
         {
             int dummy_int;
@@ -159,10 +158,13 @@ namespace SpectatorFootball
                 TextBox conftxtbox = (TextBox) this.FindName(conftxtname);
 
                 if (conftxtname == null || conftxtbox.Text == "")
-                    throw new Exception("On the Settings Tab, Conference name " + i.ToString() + " must be supplied!");
+                    throw new Exception("On the Team Tab, Conference name " + i.ToString() + " must be supplied!");
+
+                if (conftxtbox.Text.StartsWith("Conference "))
+                    throw new Exception("On the Team Tab, Conference name " + i.ToString() + " is Invalid!");
 
                 if (!CommonUtils.isAlpha(conftxtbox.Text, true))
-                    throw new Exception("On the Settings Tab, Invalid character in Conference Name " + conftxtbox.Text + "!");
+                    throw new Exception("On the Team Tab, Invalid character in Conference Name " + conftxtbox.Text + "!");
             }
 
             for (int i = 1; i <= Convert.ToInt32(newlnumdivisions.Text); i++)
@@ -171,11 +173,14 @@ namespace SpectatorFootball
                 TextBox divtxtbox = (TextBox) this.FindName(divtxtname);
 
                 if (divtxtbox == null || divtxtbox.Text.Trim().Length == 0)
-                    throw new Exception("On the Settings Tab, A name for division " + i.ToString() + " must be supplied!");
+                    throw new Exception("On the Team Tab, A name for division " + i.ToString() + " must be supplied!");
+
+                if (divtxtbox.Text.StartsWith("Division "))
+                    throw new Exception("On the Team Tab, A name for division " + i.ToString() + " is Invalid!");
 
                 if (!CommonUtils.isAlpha(divtxtbox.Text, true))
-                    throw new Exception("On the Settings Tab, Invalid character in Division Name " + divtxtbox.Text + "!");
-            }
+                    throw new Exception("On the Team Tab, Invalid character in Division Name " + divtxtbox.Text + "!");
+
 
             for (int i = 1; i <= Convert.ToInt32(newlnumteams.Text); i++)
             {
@@ -248,29 +253,19 @@ namespace SpectatorFootball
 
             // Clear previous division selections
             logger.Debug("Clear previous division selections");
-            spDivisions.Children.Clear();
             sp1.Children.Clear();
 
             if (this.FindName("newllblConf1") != null)
-            {
                 unregisterControl("newlConf1");
-                unregisterControl("newllblConf1");
-            }
 
             if (this.FindName("newllblConf2") != null)
-            {
                 unregisterControl("newlConf2");
-                unregisterControl("newllblConf2");
-            }
 
             logger.Debug("Unregister all div controls");
             for (int I = 1; I <= Convert.ToInt32(app_Constants.MAX_DIVISIONS); I++)
             {
                 if (this.FindName("newldiv" + I.ToString()) != null)
-                {
                     unregisterControl("newldiv" + I.ToString());
-                    unregisterControl("newldiv_team" + I.ToString());
-                }
                 else
                     break;
            }
@@ -287,218 +282,8 @@ namespace SpectatorFootball
                     break;
             }
 
-            if (num_confs == 2)
-            {
-                logger.Debug("Num conferences = 2");
-                var v_sp1 = new StackPanel();
-                v_sp1.Orientation = Orientation.Vertical;
-                v_sp1.VerticalAlignment = VerticalAlignment.Top;
-                v_sp1.HorizontalAlignment = HorizontalAlignment.Center;
-
-                var conf_panel_1_sq = new StackPanel();
-                conf_panel_1_sq.Name = "conference_panel_1";
-                conf_panel_1_sq.Orientation = Orientation.Horizontal;
-
-                var conf_1_label = new Label();
-                conf_1_label.Content = "Conference 1:";
-                conf_1_label.Style = Largelblstyle;
-
-                var txtConf1 = new TextBox();
-                txtConf1.Name = "newlConf1";
-                txtConf1.Width = 150;
-                txtConf1.Style = Largetxttyle;
-                txtConf1.MaxLength = 60;
-                txtConf1.AddHandler(UIElement.LostFocusEvent, new RoutedEventHandler(confTextbox_LostFocus));
-
-                conf_panel_1_sq.Children.Add(conf_1_label);
-                conf_panel_1_sq.Children.Add(txtConf1);
-
-                v_sp1.Children.Add(conf_panel_1_sq);
-
-                var gb_conf1 = new GroupBox();
-                gb_conf1.Name = "gb_conf1";
-                gb_conf1.Margin = new Thickness(10, 10, 10, 10);
-                gb_conf1.FontSize = 18;
-                gb_conf1.Header = "Divisions:";
-                gb_conf1.Style = GroupBoxstyle;
-
-                v_sp1.Children.Add(gb_conf1);
-
-                // register the dynamically added control so that it can be looked up later.
-                this.RegisterName(txtConf1.Name, txtConf1);
-
-                logger.Debug("Conference 1 controls created.");
-
-                var v_sp2 = new StackPanel();
-                v_sp2.Orientation = Orientation.Vertical;
-                v_sp2.VerticalAlignment = VerticalAlignment.Top;
-                v_sp2.HorizontalAlignment = HorizontalAlignment.Center;
-
-                var conf_panel_2_sq = new StackPanel();
-                conf_panel_2_sq.Name = "conference_panel_2";
-                conf_panel_2_sq.Orientation = Orientation.Horizontal;
-
-                var conf_2_label = new Label();
-                conf_2_label.Content = "Conference 2:";
-                conf_2_label.Style = Largelblstyle;
-
-                var txtConf2 = new TextBox();
-                txtConf2.Name = "newlConf2";
-                txtConf2.Width = 150;
-                txtConf2.Style = Largetxttyle;
-                txtConf2.MaxLength = 60;
-                txtConf2.AddHandler(UIElement.LostFocusEvent, new RoutedEventHandler(confTextbox_LostFocus));
-
-                conf_panel_2_sq.Children.Add(conf_2_label);
-                conf_panel_2_sq.Children.Add(txtConf2);
-
-                v_sp2.Children.Add(conf_panel_2_sq);
-
-                var gb_conf2 = new GroupBox();
-                gb_conf2.Name = "gb_conf2";
-                gb_conf2.Margin = new Thickness(10, 10, 10, 10);
-                gb_conf2.FontSize = 18;
-                gb_conf2.Header = "Divisions:";
-                gb_conf2.Style = GroupBoxstyle;
-
-                v_sp2.Children.Add(gb_conf2);
-
-                // register the dynamically added control so that it can be looked up later.
-                this.RegisterName(txtConf2.Name, txtConf2);
-
-                logger.Debug("Conference 2 controls created.");
-
-                var st_v_gb1 = new StackPanel();
-                st_v_gb1.Orientation = Orientation.Vertical;
-                st_v_gb1.HorizontalAlignment = HorizontalAlignment.Center;
-                st_v_gb1.Margin = new Thickness(5, 5, 10, 10);
-
-                var st_v_gb2 = new StackPanel();
-                st_v_gb2.Orientation = Orientation.Vertical;
-                st_v_gb2.HorizontalAlignment = HorizontalAlignment.Center;
-                st_v_gb2.Margin = new Thickness(5, 5, 10, 10);
-
-                last_div_first_group = num_divs / 2;
-
-                logger.Debug("last_div_first_group " + Convert.ToInt32(last_div_first_group));
-
-                // set the labels font text colors ext.
-                for (int i = 1; i <= last_div_first_group; i++)
-                {
-                    j = i + last_div_first_group;
-                    var sp1 = new StackPanel();
-                    sp1.Orientation = Orientation.Horizontal;
-                    sp1.Margin = new Thickness(0, 0, 0, 2);
-                    sp1.Name = "div1_staack";
-
-                    var div_1_label = new Label();
-                    div_1_label.Content = "Division " + i.ToString();
-                    div_1_label.Style = Largelblstyle;
-
-                    var txtDivision1 = new TextBox();
-                    txtDivision1.Name = "newldiv" + i.ToString();
-                    txtDivision1.Width = 150;
-                    txtDivision1.Style = Largetxttyle;
-                    txtDivision1.AddHandler(UIElement.LostFocusEvent, new RoutedEventHandler(divTextbox_LostFocus));
-
-                    // register the dynamically added control so that it can be looked up later.
-                    this.RegisterName(txtDivision1.Name, txtDivision1);
-
-                    sp1.Children.Add(div_1_label);
-                    sp1.Children.Add(txtDivision1);
-
-                    st_v_gb1.Children.Add(sp1);
-
-                    logger.Debug("Division " + i.ToString() + " created");
-
-                    var sp2 = new StackPanel();
-                    sp2.Orientation = Orientation.Horizontal;
-                    sp2.Margin = new Thickness(0, 0, 0, 2);
-                    sp1.Name = "div2_staack";
-
-                    var div_2_label = new Label();
-                    div_2_label.Content = "Division " + j.ToString();
-                    div_2_label.Style = Largelblstyle;
-
-                    var txtDivision2 = new TextBox();
-                    txtDivision2.Name = "newldiv" + j.ToString();
-                    txtDivision2.Width = 150;
-                    txtDivision2.Style = Largetxttyle;
-                    txtDivision2.AddHandler(UIElement.LostFocusEvent, new RoutedEventHandler(divTextbox_LostFocus));
-
-                    sp2.Children.Add(div_2_label);
-                    sp2.Children.Add(txtDivision2);
-
-                    st_v_gb2.Children.Add(sp2);
-
-                    // register the dynamically added control so that it can be looked up later.
-                    this.RegisterName(txtDivision2.Name, txtDivision2);
-
-                    logger.Debug("Division " + j.ToString() + " created");
-                }
-                gb_conf1.Content = st_v_gb1;
-                gb_conf2.Content = st_v_gb2;
-
-                spDivisions.Children.Add(v_sp1);
-                spDivisions.Children.Add(v_sp2);
-            }
-            else
-            {
-                logger.Debug("0 Conferences");
-                var v_sp = new StackPanel();
-                v_sp.Orientation = Orientation.Vertical;
-                v_sp.VerticalAlignment = VerticalAlignment.Top;
-                v_sp.HorizontalAlignment = HorizontalAlignment.Center;
-
-                var gb_conf1 = new GroupBox();
-                gb_conf1.Name = "gb_conf1";
-                gb_conf1.Margin = new Thickness(10, 10, 10, 10);
-                gb_conf1.FontSize = 18;
-                gb_conf1.Header = "Divisions:";
-                gb_conf1.Style = GroupBoxstyle;
-
-                v_sp.Children.Add(gb_conf1);
-                var st_v_gb = new StackPanel();
-                st_v_gb.Orientation = Orientation.Vertical;
-                st_v_gb.HorizontalAlignment = HorizontalAlignment.Center;
-                st_v_gb.Margin = new Thickness(5, 5, 10, 10);
-
-                // set the labels font text colors ext.
-                for (int i = 1; i <= num_divs; i++)
-                {
-                    var sp1 = new StackPanel();
-                    sp1.Orientation = Orientation.Horizontal;
-                    sp1.Margin = new Thickness(0, 0, 0, 2);
-                    sp1.Name = "div1_staack";
-
-                    var div_1_label = new Label();
-                    div_1_label.Content = "Division " + i.ToString();
-                    div_1_label.Style = Largelblstyle;
-
-                    var txtDivision1 = new TextBox();
-                    txtDivision1.Name = "newldiv" + i.ToString();
-                    txtDivision1.Width = 150;
-                    txtDivision1.Style = Largetxttyle;
-                    txtDivision1.AddHandler(UIElement.LostFocusEvent, new RoutedEventHandler(divTextbox_LostFocus));
-
-                    sp1.Children.Add(div_1_label);
-                    sp1.Children.Add(txtDivision1);
-
-                    st_v_gb.Children.Add(sp1);
-                    gb_conf1.Content = st_v_gb;
-
-                    // register the dynamically added control so that it can be looked up later.
-                    this.RegisterName(txtDivision1.Name, txtDivision1);
-
-                    logger.Debug("Division " + i.ToString() + " created");
-                }
-
-                spDivisions.Children.Add(v_sp);
-            }
-
             // setting division from new_teams on teams tab
             Style Teamlbltyle = (Style)System.Windows.Application.Current.FindResource("Teamlbltyle");
-            // Dim Conflbltyle As Style = Application.Current.FindResource("Conflbltyle")
 
             int t_id = 1;
             int num_divs_per_conf;
@@ -518,26 +303,30 @@ namespace SpectatorFootball
                 conf1_sp.Orientation = Orientation.Horizontal;
                 conf1_sp.HorizontalAlignment = HorizontalAlignment.Center;
 
-                var conf1_label = new Label();
-                conf1_label.Name = "newllblConf1";
-                conf1_label.Width = 150;
-                conf1_label.Style = Conflbltyle;
+                var txtConf1 = new TextBox();
+                txtConf1.Name = "newlConf1";
+                txtConf1.Width = 150;
+                txtConf1.Style = Largetxttyle;
+                txtConf1.MaxLength = 60;
+                txtConf1.Text = "Conference 1";
 
-                conf1_sp.Children.Add(conf1_label);
+                conf1_sp.Children.Add(txtConf1);
                 v_sp1.Children.Add(conf1_sp);
 
-                this.RegisterName(conf1_label.Name, conf1_label);
+                this.RegisterName(txtConf1.Name, txtConf1);
 
                 for (int i = 1; i <= num_divs_per_conf; i++)
                 {
-                    var gb_hdr_label = new Label();
-                    gb_hdr_label.Name = "newldiv_team" + i.ToString();
-                    gb_hdr_label.Foreground = Brushes.White;
+                    var txtDivision1 = new TextBox();
+                    txtDivision1.Name = "newldiv" + i.ToString();
+                    txtDivision1.Width = 150;
+                    txtDivision1.Style = Largetxttyle;
+                    txtDivision1.Text = "Division " + i.ToString();
 
                     var gb_div = new GroupBox();
                     gb_div.Margin = new Thickness(1, 1, 1, 1);
                     gb_div.FontSize = 14;
-                    gb_div.Header = gb_hdr_label;
+                    gb_div.Header = txtDivision1;
 
                     var v_sp_in_groupbox = new StackPanel();
                     v_sp_in_groupbox.Orientation = Orientation.Vertical;
@@ -545,7 +334,7 @@ namespace SpectatorFootball
 
                     gb_div.Content = v_sp_in_groupbox;
 
-                    this.RegisterName(gb_hdr_label.Name, gb_hdr_label);
+                    this.RegisterName(txtDivision1.Name, txtDivision1);
 
                     for (int z = 1; z <= teams_per_division; z++)
                     {
@@ -597,26 +386,30 @@ namespace SpectatorFootball
                 conf2_sp.Orientation = Orientation.Horizontal;
                 conf2_sp.HorizontalAlignment = HorizontalAlignment.Center;
 
-                var conf2_label = new Label();
-                conf2_label.Name = "newllblConf2";
-                conf2_label.Width = 150;
-                conf2_label.Style = Conflbltyle;
+                var txtConf2 = new TextBox();
+                txtConf2.Name = "newlConf2";
+                txtConf2.Width = 150;
+                txtConf2.Style = Largetxttyle;
+                txtConf2.MaxLength = 60;
+                txtConf2.Text = "Conference 2";
 
-                conf2_sp.Children.Add(conf2_label);
+                conf2_sp.Children.Add(txtConf2);
                 v_sp2.Children.Add(conf2_sp);
 
-                this.RegisterName(conf2_label.Name, conf2_label);
+                this.RegisterName(txtConf2.Name, txtConf2);
 
                 for (int i = num_divs_per_conf + 1; i <= num_divs; i++)
                 {
-                    var gb_hdr_label = new Label();
-                    gb_hdr_label.Name = "newldiv_team" + i.ToString();
-                    gb_hdr_label.Foreground = Brushes.White;
+                    var txtDivision2 = new TextBox();
+                    txtDivision2.Name = "newldiv" + j.ToString();
+                    txtDivision2.Width = 150;
+                    txtDivision2.Style = Largetxttyle;
+                    txtDivision2.Text = "Division " + i.ToString();
 
                     var gb_div = new GroupBox();
                     gb_div.Margin = new Thickness(1, 1, 1, 1);
                     gb_div.FontSize = 14;
-                    gb_div.Header = gb_hdr_label;
+                    gb_div.Header = txtDivision2;
 
                     var v_sp_in_groupbox = new StackPanel();
                     v_sp_in_groupbox.Orientation = Orientation.Vertical;
@@ -624,7 +417,7 @@ namespace SpectatorFootball
 
                     gb_div.Content = v_sp_in_groupbox;
 
-                    this.RegisterName(gb_hdr_label.Name, gb_hdr_label);
+                    this.RegisterName(txtDivision2.Name, txtDivision2);
 
                     for (int z = 1; z <= teams_per_division; z++)
                     {
@@ -675,21 +468,23 @@ namespace SpectatorFootball
 
                 for (int i = 1; i <= num_divs; i++)
                 {
-                    var gb_hdr_label = new Label();
-                    gb_hdr_label.Name = "newldiv_team" + i.ToString();
-                    gb_hdr_label.Foreground = Brushes.White;
+                    var txtDivision1 = new TextBox();
+                    txtDivision1.Name = "newldiv" + i.ToString();
+                    txtDivision1.Width = 150;
+                    txtDivision1.Style = Largetxttyle;
+                    txtDivision1.Text = "Division " + i.ToString();
 
                     var gb_div = new GroupBox();
                     gb_div.Margin = new Thickness(1, 1, 1, 1);
                     gb_div.FontSize = 14;
-                    gb_div.Header = gb_hdr_label;
+                    gb_div.Header = txtDivision1;
 
                     var v_sp_in_groupbox = new StackPanel();
                     v_sp_in_groupbox.Orientation = Orientation.Vertical;
                     v_sp_in_groupbox.Width = 350;
 
                     gb_div.Content = v_sp_in_groupbox;
-                    this.RegisterName(gb_hdr_label.Name, gb_hdr_label);
+                    this.RegisterName(txtDivision1.Name, txtDivision1);
 
                     for (int z = 1; z <= teams_per_division; z++)
                     {
@@ -879,28 +674,7 @@ namespace SpectatorFootball
                 pop.prgTest.Foreground = Brushes.Red;
         }
 
-        // This event handler is called when the division name textbox loses focus, so that
-        // the division names can be set on the tab of new teams
-        private void divTextbox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            TextBox l = (TextBox) e.Source;
-            int n = CommonUtils.ExtractDivNumber(l.Name);
-            Label divLabel = (Label) this.FindName("newldiv_team" + n.ToString());
-            divLabel.Content = l.Text;
-        }
-        // This method is fired when either conference textbox loses focus so that either conference
-        // label can be set on the teams tab
-        private void confTextbox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            TextBox l = (TextBox) e.Source;
-            Label confLabel = null;
-            if (l.Name.EndsWith("1"))
-                confLabel = (Label) this.FindName("newllblConf1");
-            else
-                confLabel = (Label) this.FindName("newllblConf2");
-            confLabel.Content = l.Text;
-        }
-        public void setTeamsLabels()
+       public void setTeamsLabels()
         {
             Style Teamlbltyle = (Style) System.Windows.Application.Current.FindResource("Teamlbltyle");
 

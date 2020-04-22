@@ -12,21 +12,13 @@ namespace SpectatorFootball.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Team
+    public partial class Teams_by_Season
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Team()
-        {
-            this.Games = new HashSet<Game>();
-            this.Games1 = new HashSet<Game>();
-            this.Players = new HashSet<Player>();
-            this.Playoff_Teams = new HashSet<Playoff_Teams>();
-        }
-    
         public long ID { get; set; }
-        public long Team_id { get; set; }
+        public long Franchise_ID { get; set; }
+        public long Division_ID { get; set; }
         public long Team_Slot { get; set; }
-        public long League_ID { get; set; }
+        public long Season_ID { get; set; }
         public string Owner { get; set; }
         public string City_Abr { get; set; }
         public string City { get; set; }
@@ -76,14 +68,8 @@ namespace SpectatorFootball.Models
         public long Stadium_Field_Type { get; set; }
         public string Stadium_Field_Color { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Game> Games { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Game> Games1 { get; set; }
-        public virtual League League { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Player> Players { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Playoff_Teams> Playoff_Teams { get; set; }
+        public virtual Division Division { get; set; }
+        public virtual Franchise Franchise { get; set; }
+        public virtual Season Season { get; set; }
     }
 }

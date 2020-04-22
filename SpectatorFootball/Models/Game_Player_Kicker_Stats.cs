@@ -16,22 +16,32 @@ namespace SpectatorFootball.Models
     {
         public long Game_ID { get; set; }
         public long Player_ID { get; set; }
+        public long Franchise_ID { get; set; }
+        public long Started { get; set; }
         public long XP_Att { get; set; }
         public long XP_Made { get; set; }
         public long FG_Att_1to19 { get; set; }
         public long FG_Made_1to19 { get; set; }
+        public long FG_Blocked_1to19 { get; set; }
         public long FG_Att_20to29 { get; set; }
         public long FG_Made_20to29 { get; set; }
-        public long FG_Att_30to39 { get; set; }
+        public string FG_Blocked_20to29 { get; set; }
+        public string FG_Att_30to39 { get; set; }
         public long FG_Made_30to39 { get; set; }
+        public long FG_Blocked_30to39 { get; set; }
         public long FG_Att_40to49 { get; set; }
         public long FG_Made_40to49 { get; set; }
+        public long FG_Blocked_40to49 { get; set; }
         public long FG_Att_50andOver { get; set; }
         public long FG_Made_50andOver { get; set; }
+        public long FG_Blocked_50andOver { get; set; }
         public long Kickoffs { get; set; }
         public long Kickoff_Out_of_Bounds { get; set; }
         public long Kickoff_Touchback { get; set; }
+        public long Add_a_column_for_onside_attempt { get; set; }
+        public long add_a_column_for_onside_successful { get; set; }
     
+        public virtual Franchise Franchise { get; set; }
         public virtual Game Game { get; set; }
         public virtual Player Player { get; set; }
     }

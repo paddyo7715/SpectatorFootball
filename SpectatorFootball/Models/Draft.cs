@@ -12,21 +12,15 @@ namespace SpectatorFootball.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Game_Player_Rushing_Stats
+    public partial class Draft
     {
-        public long Game_ID { get; set; }
-        public long Player_ID { get; set; }
+        public long ID { get; set; }
+        public long Season_ID { get; set; }
+        public long Round { get; set; }
         public long Franchise_ID { get; set; }
-        public long Started { get; set; }
-        public long Fumbles { get; set; }
-        public long Fumbles_Lost { get; set; }
-        public long Rush_Att { get; set; }
-        public long Rush_Yards { get; set; }
-        public long Rush_TDs { get; set; }
-        public long Long { get; set; }
+        public long Player_ID { get; set; }
     
         public virtual Franchise Franchise { get; set; }
-        public virtual Game Game { get; set; }
         public virtual Player Player { get; set; }
     }
 }

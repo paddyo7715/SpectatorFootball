@@ -11,7 +11,7 @@ namespace SpectatorFootball.League
 {
     public class New_League_Structure
     {
-        public SpectatorFootball.Models.League League { get; set; }
+        public Season Season { get; set; }
         public DBVersion DBVersion { get; set; }
 
 

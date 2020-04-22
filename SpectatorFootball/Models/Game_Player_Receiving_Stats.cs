@@ -16,6 +16,7 @@ namespace SpectatorFootball.Models
     {
         public long Game_ID { get; set; }
         public long Player_ID { get; set; }
+        public long Franchise_ID { get; set; }
         public long Started { get; set; }
         public long Fumbles { get; set; }
         public long Fumbles_Lost { get; set; }
@@ -25,6 +26,7 @@ namespace SpectatorFootball.Models
         public long Rec_TDs { get; set; }
         public long Long { get; set; }
     
+        public virtual Franchise Franchise { get; set; }
         public virtual Game Game { get; set; }
         public virtual Player Player { get; set; }
     }

@@ -16,6 +16,8 @@ namespace SpectatorFootball.Models
     {
         public long Game_ID { get; set; }
         public long Player_ID { get; set; }
+        public long Franchise_ID { get; set; }
+        public long Started { get; set; }
         public long Def_Sacks { get; set; }
         public long Def_Rushing_Loss { get; set; }
         public long Def_Tackles { get; set; }
@@ -25,7 +27,10 @@ namespace SpectatorFootball.Models
         public long Forced_Fumbles { get; set; }
         public long Recovered_Fumbles { get; set; }
         public long Fumbles_Return_Yards { get; set; }
+        public long QB_Pressures { get; set; }
+        public long Pass_Rushes { get; set; }
     
+        public virtual Franchise Franchise { get; set; }
         public virtual Game Game { get; set; }
         public virtual Player Player { get; set; }
     }

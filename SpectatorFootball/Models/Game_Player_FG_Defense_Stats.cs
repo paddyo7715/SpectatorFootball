@@ -12,18 +12,16 @@ namespace SpectatorFootball.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Game_Player_Rushing_Stats
+    public partial class Game_Player_FG_Defense_Stats
     {
         public long Game_ID { get; set; }
         public long Player_ID { get; set; }
         public long Franchise_ID { get; set; }
-        public long Started { get; set; }
-        public long Fumbles { get; set; }
-        public long Fumbles_Lost { get; set; }
-        public long Rush_Att { get; set; }
-        public long Rush_Yards { get; set; }
-        public long Rush_TDs { get; set; }
-        public long Long { get; set; }
+        public long FG_Block { get; set; }
+        public long FG_Block_Recovery { get; set; }
+        public long FG_Block_Recovery_Yards { get; set; }
+        public long FG_Block_Recovery_TDs { get; set; }
+        public long XP_Block { get; set; }
     
         public virtual Franchise Franchise { get; set; }
         public virtual Game Game { get; set; }

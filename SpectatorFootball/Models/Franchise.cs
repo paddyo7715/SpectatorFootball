@@ -12,11 +12,12 @@ namespace SpectatorFootball.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Game
+    public partial class Franchise
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Game()
+        public Franchise()
         {
+            this.Drafts = new HashSet<Draft>();
             this.Game_Player_FG_Defense_Stats = new HashSet<Game_Player_FG_Defense_Stats>();
             this.Game_Player_Kick_Returner_Stats = new HashSet<Game_Player_Kick_Returner_Stats>();
             this.Game_Player_Kicker_Stats = new HashSet<Game_Player_Kicker_Stats>();
@@ -34,53 +35,16 @@ namespace SpectatorFootball.Models
             this.Game_Player_Punter_Stats = new HashSet<Game_Player_Punter_Stats>();
             this.Game_Player_Receiving_Stats = new HashSet<Game_Player_Receiving_Stats>();
             this.Game_Player_Rushing_Stats = new HashSet<Game_Player_Rushing_Stats>();
-            this.Game_Scoring_Summary = new HashSet<Game_Scoring_Summary>();
+            this.Players = new HashSet<Player>();
+            this.Playoff_Teams_by_Season = new HashSet<Playoff_Teams_by_Season>();
+            this.Teams_by_Season = new HashSet<Teams_by_Season>();
         }
     
         public long ID { get; set; }
-        public long Season_ID { get; set; }
-        public long Week { get; set; }
-        public long Home_Team_Slot_ID { get; set; }
-        public long Away_Team_Slot_ID { get; set; }
-        public Nullable<long> Home_FirstDowns { get; set; }
-        public Nullable<long> Home_ThirdDown_Conversions { get; set; }
-        public Nullable<long> Home_ThirdDowns { get; set; }
-        public Nullable<long> Home_FourthDown_Conversions { get; set; }
-        public Nullable<long> Home_FourthDowns { get; set; }
-        public Nullable<long> Home_TOP { get; set; }
-        public Nullable<long> Away_FirstDowns { get; set; }
-        public Nullable<long> Away_ThirdDown_Conversions { get; set; }
-        public Nullable<long> Away_ThirdDowns { get; set; }
-        public Nullable<long> Away_FourthDown_Conversions { get; set; }
-        public Nullable<long> Away_FourthDowns { get; set; }
-        public Nullable<long> Away_TOP { get; set; }
-        public Nullable<long> Away_Score_Q1 { get; set; }
-        public Nullable<long> Home_Score_Q1 { get; set; }
-        public Nullable<long> Home_Score_Q2 { get; set; }
-        public Nullable<long> Away_Score_Q2 { get; set; }
-        public Nullable<long> Home_Score_Q3 { get; set; }
-        public Nullable<long> Away_Score_Q3 { get; set; }
-        public Nullable<long> Home_Score_Q4 { get; set; }
-        public Nullable<long> Away_Score_Q4 { get; set; }
-        public Nullable<long> Home_Score_Q5 { get; set; }
-        public Nullable<long> Away_Score_Q5 { get; set; }
-        public Nullable<long> Home_Score_Q6 { get; set; }
-        public Nullable<long> Away_Score_Q6 { get; set; }
-        public Nullable<long> Home_Score_Q7 { get; set; }
-        public Nullable<long> Away_Score_Q7 { get; set; }
-        public Nullable<long> Home_Score_Q8 { get; set; }
-        public Nullable<long> Away_Score_Q8 { get; set; }
-        public Nullable<long> Home_Score_Q9 { get; set; }
-        public Nullable<long> Away_Score_Q9 { get; set; }
-        public Nullable<long> Home_Score_Q10 { get; set; }
-        public Nullable<long> Away_Score_Q10 { get; set; }
-        public Nullable<long> Quarter { get; set; }
-        public Nullable<long> Time { get; set; }
-        public Nullable<long> Playoff_Game { get; set; }
-        public Nullable<long> Championship_Game { get; set; }
-        public Nullable<long> Game_Done { get; set; }
+        public string Name { get; set; }
     
-        public virtual Season Season { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Draft> Drafts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Game_Player_FG_Defense_Stats> Game_Player_FG_Defense_Stats { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -116,6 +80,10 @@ namespace SpectatorFootball.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Game_Player_Rushing_Stats> Game_Player_Rushing_Stats { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Game_Scoring_Summary> Game_Scoring_Summary { get; set; }
+        public virtual ICollection<Player> Players { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Playoff_Teams_by_Season> Playoff_Teams_by_Season { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Teams_by_Season> Teams_by_Season { get; set; }
     }
 }

@@ -16,13 +16,17 @@ namespace SpectatorFootball.Models
     {
         public long Game_ID { get; set; }
         public long Player_ID { get; set; }
+        public long Franchise_ID { get; set; }
         public long Started { get; set; }
         public long Fumbles { get; set; }
+        public long Fumbles_Lost { get; set; }
         public long num_punts { get; set; }
         public long Punt_yards { get; set; }
         public long Punt_Killed_att { get; set; }
         public long Punt_killed_num { get; set; }
+        public long Blocked_Punts { get; set; }
     
+        public virtual Franchise Franchise { get; set; }
         public virtual Game Game { get; set; }
         public virtual Player Player { get; set; }
     }

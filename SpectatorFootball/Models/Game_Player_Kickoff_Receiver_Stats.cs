@@ -12,21 +12,14 @@ namespace SpectatorFootball.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Game_Player_Special_Team_Receive_Stats
+    public partial class Game_Player_Kickoff_Receiver_Stats
     {
         public long Game_ID { get; set; }
         public long Player_ID { get; set; }
+        public long Franchise_ID { get; set; }
         public long Onside_Kickoff_Recovery { get; set; }
-        public long Punt_Block { get; set; }
-        public long Punt_Block_Recovery { get; set; }
-        public long Punt_Block_Recovery_Yards { get; set; }
-        public long Punt_Block_Recovery_TDs { get; set; }
-        public long FG_Block { get; set; }
-        public long FG_Block_Recovery { get; set; }
-        public long FG_Block_Recovery_Yards { get; set; }
-        public long FG_Block_Recovery_TDs { get; set; }
-        public long XP_Block { get; set; }
     
+        public virtual Franchise Franchise { get; set; }
         public virtual Game Game { get; set; }
         public virtual Player Player { get; set; }
     }

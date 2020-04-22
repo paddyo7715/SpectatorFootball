@@ -12,23 +12,16 @@ namespace SpectatorFootball.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Game_Player_Special_Teams_Has_Ball_Stats
+    public partial class Game_Player_Penalties_Stats
     {
         public long Game_ID { get; set; }
         public long Player_ID { get; set; }
-        public long Forced_Fumbles_Kickoffs { get; set; }
-        public long Fumbles_Kickoffs_Recovered { get; set; }
-        public long Fumbles_Kickoffs_Recovered_TDs { get; set; }
-        public long Fumbles_Kickoffs_Recovered_Yards { get; set; }
-        public long Kickoff_Tackles { get; set; }
-        public long Forced_Fumbles_Punt { get; set; }
-        public long Fumbles_Punt_Recovered { get; set; }
-        public long Fumbles_Punt_Recovered_TDs { get; set; }
-        public long Fumbles_Punt_Recovered_Yards { get; set; }
-        public long Punt_Tackles { get; set; }
-        public long KickOff_Onside_Kick_Recoveries { get; set; }
+        public long Franchise_ID { get; set; }
+        public long Penalty_ID { get; set; }
     
+        public virtual Franchise Franchise { get; set; }
         public virtual Game Game { get; set; }
         public virtual Player Player { get; set; }
+        public virtual Penalty Penalty { get; set; }
     }
 }
