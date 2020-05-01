@@ -42,9 +42,9 @@ namespace SpectatorFootball
 
             return r;
         }
-        public static SpectatorFootball.Models.Team Clone_Team(SpectatorFootball.Models.Team t)
+        public static Teams_by_Season Clone_Team(Teams_by_Season t)
         {
-            SpectatorFootball.Models.Team r = new SpectatorFootball.Models.Team();
+            Teams_by_Season r = new Teams_by_Season();
 
             var sourceProperties = t.GetType().GetProperties();
             var destProperties = r.GetType().GetProperties();
@@ -63,10 +63,10 @@ namespace SpectatorFootball
 
             return r;
         }
-        public static SpectatorFootball.Models.Team Clonse_Team_from_Stock(Stock_Teams st)
+        public static Teams_by_Season Clonse_Team_from_Stock(Stock_Teams st)
         {
 
-            SpectatorFootball.Models.Team r = new SpectatorFootball.Models.Team();
+            Teams_by_Season r = new SpectatorFootball.Models.Team();
 
             var sourceProperties = st.GetType().GetProperties();
             var destProperties = r.GetType().GetProperties();
@@ -88,7 +88,7 @@ namespace SpectatorFootball
          }
 
 
-        public static void CopyTeamValues(SpectatorFootball.Models.Team s, SpectatorFootball.Models.Team t)
+        public static void CopyTeamValues(Teams_by_Season s, Teams_by_Season t)
         {
 
             var sourceProperties = s.GetType().GetProperties();
@@ -106,64 +106,16 @@ namespace SpectatorFootball
                 }
             }
 
-            /*            t.ID = s.ID;
-                        t.Owner = s.Owner;
-                        t.City_Abr = s.City_Abr;
-                        t.City = s.City;
-                        t.Nickname = s.Nickname;
-                        t.Stadium_Name = s.Stadium_Name;
-                        t.Stadium_Location = s.Stadium_Location;
-                        t.Stadium_Capacity = s.Stadium_Capacity;
-                        t.Stadium_Img_Path = s.Stadium_Img_Path;
-                        t.Stadium_Field_Type = s.Stadium_Field_Type;
-                        t.Stadium_Field_Color = s.Stadium_Field_Color;
-                        t.Helmet_img_path = s.Helmet_img_path;
-                        t.Helmet_Color = s.Helmet_Color;
-                        t.Helmet_Logo_Color = s.Helmet_Logo_Color;
-                        t.Helmet_Facemask_Color = s.Helmet_Facemask_Color;
-                        t.Socks_Color = s.Socks_Color;
-                        t.Cleats_Color = s.Cleats_Color;
-                        t.Home_jersey_Color = s.Home_jersey_Color;
-                        t.Home_Sleeve_Color = s.Home_Sleeve_Color;
-                        t.Home_Jersey_Number_Color = s.Home_Jersey_Number_Color;
-                        t.Home_Jersey_Number_Outline_Color = s.Home_Jersey_Number_Outline_Color;
-                        t.Home_Jersey_Shoulder_Stripe = s.Home_Jersey_Shoulder_Stripe;
-                        t.Home_Jersey_Sleeve_Stripe_Color_1 = s.Home_Jersey_Sleeve_Stripe_Color_1;
-                        t.Home_Jersey_Sleeve_Stripe_Color_2 = s.Home_Jersey_Sleeve_Stripe_Color_2;
-                        t.Home_Jersey_Sleeve_Stripe_Color_3 = s.Home_Jersey_Sleeve_Stripe_Color_3;
-                        t.Home_Jersey_Sleeve_Stripe_Color_4 = s.Home_Jersey_Sleeve_Stripe_Color_4;
-                        t.Home_Jersey_Sleeve_Stripe_Color_5 = s.Home_Jersey_Sleeve_Stripe_Color_5;
-                        t.Home_Jersey_Sleeve_Stripe_Color_6 = s.Home_Jersey_Sleeve_Stripe_Color_6;
-                        t.Home_Pants_Color = s.Home_Pants_Color;
-                        t.Home_Pants_Stripe_Color_1 = s.Home_Pants_Stripe_Color_1;
-                        t.Home_Pants_Stripe_Color_2 = s.Home_Pants_Stripe_Color_2;
-                        t.Home_Pants_Stripe_Color_3 = s.Home_Pants_Stripe_Color_3;
-                        t.Away_jersey_Color = s.Away_jersey_Color;
-                        t.Away_Sleeve_Color = s.Away_Sleeve_Color;
-                        t.Away_Jersey_Number_Color = s.Away_Jersey_Number_Color;
-                        t.Away_Jersey_Number_Outline_Color = s.Away_Jersey_Number_Outline_Color;
-                        t.Away_Jersey_Shoulder_Stripe = s.Away_Jersey_Shoulder_Stripe;
-                        t.Away_Jersey_Sleeve_Stripe_Color_1 = s.Away_Jersey_Sleeve_Stripe_Color_1;
-                        t.Away_Jersey_Sleeve_Stripe_Color_2 = s.Away_Jersey_Sleeve_Stripe_Color_2;
-                        t.Away_Jersey_Sleeve_Stripe_Color_3 = s.Away_Jersey_Sleeve_Stripe_Color_3;
-                        t.Away_Jersey_Sleeve_Stripe_Color_4 = s.Away_Jersey_Sleeve_Stripe_Color_4;
-                        t.Away_Jersey_Sleeve_Stripe_Color_5 = s.Away_Jersey_Sleeve_Stripe_Color_5;
-                        t.Away_Jersey_Sleeve_Stripe_Color_6 = s.Away_Jersey_Sleeve_Stripe_Color_6;
-                        t.Away_Pants_Color = s.Away_Pants_Color;
-                        t.Away_Pants_Stripe_Color_1 = s.Away_Pants_Stripe_Color_1;
-                        t.Away_Pants_Stripe_Color_2 = s.Away_Pants_Stripe_Color_2;
-                        t.Away_Pants_Stripe_Color_3 = s.Away_Pants_Stripe_Color_3;
-            */
         }
 
 
 
-        public static bool isUniqueTeam(List<Team> lt, int orig_ind, Team new_team)
+        public static bool isUniqueTeam(List<Teams_by_Season> lt, int orig_ind, Teams_by_Season new_team)
         {
             bool r = false;
             int i = 0;
 
-            foreach (Team t in lt)
+            foreach (Teams_by_Season t in lt)
             {
                 if (i == orig_ind)
                     continue;

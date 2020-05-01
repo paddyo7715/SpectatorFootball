@@ -107,6 +107,7 @@
     <Compile Include="Common\SettingsConnection.cs" />
     <Compile Include="Common\Validator.cs" />
     <Compile Include="DAO\DBVersionDAO.cs" />
+    <Compile Include="Draft.cs" />
     <Compile Include="Enum\League_State.cs" />
     <Compile Include="Enum\Player_Pos.cs" />
     <Compile Include="League\League_Helper.cs" />

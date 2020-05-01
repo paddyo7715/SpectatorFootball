@@ -144,6 +144,15 @@
             <Setter Property="FontWeight" Value="Normal"/>
             <Setter Property="Foreground" Value="white"/>
         </Style>
+        <!-- Large Radio Button -->
+        <Style TargetType="RadioButton" x:Key="LargeGroupButton">
+            <Setter Property="Height" Value="28"/>
+            <Setter Property="FontFamily" Value="Verdana"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="FontWeight" Value="Normal"/>
+            <Setter Property="Foreground" Value="white"/>
+        </Style>
         <!-- Large short Label -->
         <Style TargetType="Label" x:Key="LargeShortlbltyle">
             <Setter Property="Height" Value="25"/>
@@ -173,6 +182,17 @@
         <!-- Large readonly textbox -->
         <Style TargetType="TextBox" x:Key="LargeReadOnlytxttyle">
             <Setter Property="IsReadOnly" Value="true"/>
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="Width" Value="40"/>
+            <Setter Property="FontFamily" Value="Verdana"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="FontWeight" Value="Normal"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Background" Value="LightGray"/>
+        </Style>
+        <!-- Large readonly textblock -->
+        <Style TargetType="TextBlock" x:Key="LargeReadOnlytxtbstyle">
             <Setter Property="Height" Value="20"/>
             <Setter Property="Width" Value="40"/>
             <Setter Property="FontFamily" Value="Verdana"/>

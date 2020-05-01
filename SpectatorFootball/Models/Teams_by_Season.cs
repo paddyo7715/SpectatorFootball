@@ -16,7 +16,6 @@ namespace SpectatorFootball.Models
     {
         public long ID { get; set; }
         public long Franchise_ID { get; set; }
-        public long Division_ID { get; set; }
         public long Team_Slot { get; set; }
         public long Season_ID { get; set; }
         public string Owner { get; set; }
@@ -68,7 +67,6 @@ namespace SpectatorFootball.Models
         public long Stadium_Field_Type { get; set; }
         public string Stadium_Field_Color { get; set; }
     
-        public virtual Division Division { get; set; }
         public virtual Franchise Franchise { get; set; }
         public virtual Season Season { get; set; }
     }

@@ -36,6 +36,7 @@ namespace SpectatorFootball.Models
         public long Toughness_Ratings { get; set; }
         public Nullable<long> Sportsmanship_Ratings { get; set; }
     
+        public virtual Player Player { get; set; }
         public virtual Season Season { get; set; }
     }
 }

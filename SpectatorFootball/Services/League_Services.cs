@@ -23,7 +23,7 @@ namespace SpectatorFootball
 
             // Create the league folder
             string DIRPath_League = null;
-            string New_League_File = nls.League.Short_Name.ToUpper() + "." + app_Constants.DB_FILE_EXT;
+            string New_League_File = nls.Season.League_Structure_by_Season[0].Short_Name.ToUpper() + "." + app_Constants.DB_FILE_EXT;
             string League_con_string = Environment.SpecialFolder.MyDocuments + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + nls.League.Short_Name + Path.DirectorySeparatorChar + nls.League.Short_Name + Path.DirectorySeparatorChar + app_Constants.DB_FILE_EXT;
             var LeagueDAO = new LeagueDAO();
             string process_state = "Processing...";
@@ -57,15 +57,15 @@ namespace SpectatorFootball
 
                 // Copy the League Logo file
                 logger.Info("Starting league Logo Copy and Rename");
-                string sf = nls.League.League_Logo_Filepath;
+                string sf = nls.Season.League_Structure_by_Season[0].League_Logo_Filepath;
                 string df = DIRPath_League + Path.DirectorySeparatorChar + Path.GetFileName(sf);
                 File.Copy(sf, df);
 
                 //Create League Profile file
                 using (StreamWriter sw = new StreamWriter(DIRPath_League + Path.DirectorySeparatorChar + app_Constants.LEAGUE_PROFILE_FILE))
                 {
-                    sw.WriteLine("LongName: " + nls.League.Long_Name);
-                    sw.WriteLine("LogoFileName: " + Path.GetFileName(nls.League.League_Logo_Filepath));
+                    sw.WriteLine("LongName: " + nls.Season.League_Structure_by_Season[0].Long_Name);
+                    sw.WriteLine("LogoFileName: " + Path.GetFileName(nls.Season.League_Structure_by_Season[0].League_Logo_Filepath));
                 }
 
                 // Copy and Create the league database file
@@ -76,7 +76,7 @@ namespace SpectatorFootball
 
                 // Copy team image files to league folder
                 logger.Info("Helmet and stadium files copy starting");
-                foreach (var t in nls.League.Teams)
+                foreach (var t in nls.Season.Teams_by_Season)
                 {
                     logger.Debug("Copying " + t.Helmet_img_path);
                     File.Copy(t.Helmet_img_path, DIRPath_League + Path.DirectorySeparatorChar + app_Constants.LEAGUE_HELMETS_SUBFOLDER + Path.DirectorySeparatorChar + Path.GetFileName(t.Helmet_img_path));
@@ -86,25 +86,14 @@ namespace SpectatorFootball
 
                 // Update the progress bar
                 i = 25;
-                process_state = "Create Players 2 of 4";
+                process_state = "Create Players for Draft 2 of 4";
                 state_struct = "Processing..." + "|" + process_state + "|" + "";
                 bw.ReportProgress(i, state_struct);
 
-                // Create players for each team
-                logger.Info("Creating players for new league.");
-                int p_id = 0;
-                foreach (var t in nls.League.Teams)
-                {
-                    logger.Debug("Creating players for team " + t.Nickname);
-                    t.Players = new List<Player>();
-                    List<Player> Roster = ts.Roll_Players((int)t.ID,ref p_id);
-
-                    foreach (Player p in Roster)
-                    {
-                        t.Players.Add(p);
-                    }
-
-                }
+                //Create players for draft
+                int num_players = (int)((app_Constants.QB_PER_TEAM + app_Constants.RB_PER_TEAM + app_Constants.WR_PER_TEAM + app_Constants.TE_PER_TEAM + app_Constants.OL_PER_TEAM + app_Constants.DL_PER_TEAM + app_Constants.LB_PER_TEAM + app_Constants.DB_PER_TEAM + app_Constants.K_PER_TEAM + app_Constants.P_PER_TEAM) * app_Constants.DRAFT_MULTIPLIER);
+                //builid method to create players return should be a list of players player ratings 
+                //will be put in the players_ratings list of the player object.
 
                 // Update the progress bar
                 i = 50;

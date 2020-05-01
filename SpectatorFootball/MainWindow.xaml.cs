@@ -17,7 +17,7 @@ namespace SpectatorFootball
     public partial class MainWindow
     {
         //Mem_League is used only when creating a new league.
-        public SpectatorFootball.Models.League Mem_League = null;
+        public New_League_Structure New_Mem_Season = null;
 
         //Loaded League Structure
         public Loaded_League_Structure Loaded_League = null;
@@ -100,7 +100,9 @@ namespace SpectatorFootball
                 Mouse.OverrideCursor = Cursors.Wait;
 
                 logger.Info("Entering Create new league");
-                Mem_League = new SpectatorFootball.Models.League();
+                New_Mem_Season = new New_League_Structure();
+                New_Mem_Season.Season = new Season();
+
                 StockTeams_Services sts = new StockTeams_Services();
                 st_list = sts.getAllStockTeams();
                 logger.Debug("Stock Teams Loaded");
@@ -138,7 +140,7 @@ namespace SpectatorFootball
 
             int team_ind = e.team_num - 1;
 
-            New_Team_DetailUC = new New_Team_DetailUC(Mem_League.Teams[team_ind], true);
+            New_Team_DetailUC = new New_Team_DetailUC(New_Mem_Season.Season.Teams_by_Season[team_ind], true);
             New_Team_DetailUC.backtoNewLeague += Back_NewLeague;
 
             sp_uc.Children.Clear();
@@ -163,7 +165,6 @@ namespace SpectatorFootball
             {
                 Mouse.OverrideCursor = Cursors.Wait;
                 logger.Info("Show stock teams");
-                Mem_League = new SpectatorFootball.Models.League();
                 var sts = new StockTeams_Services();
                 st_list = sts.getAllStockTeams();
 

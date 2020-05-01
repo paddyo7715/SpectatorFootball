@@ -18,5 +18,7 @@ namespace SpectatorFootball.Models
         public long Ordinal { get; set; }
         public long Season_ID { get; set; }
         public string Conf_Name { get; set; }
+    
+        public virtual Season Season { get; set; }
     }
 }

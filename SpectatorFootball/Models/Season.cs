@@ -17,10 +17,13 @@ namespace SpectatorFootball.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Season()
         {
+            this.Conferences = new HashSet<Conference>();
+            this.Divisions = new HashSet<Division>();
+            this.Drafts = new HashSet<Draft>();
             this.Games = new HashSet<Game>();
             this.Hall_of_Fame = new HashSet<Hall_of_Fame>();
             this.Injuries = new HashSet<Injury>();
-            this.League_Structure_by_Season = new HashSet<League_Structure_by_Season>();
+            this.League_Structure_by_Season = new List<League_Structure_by_Season>();
             this.Player_Awards = new HashSet<Player_Awards>();
             this.Player_Ratings = new HashSet<Player_Ratings>();
             this.Playoff_Teams_by_Season = new HashSet<Playoff_Teams_by_Season>();
@@ -31,13 +34,19 @@ namespace SpectatorFootball.Models
         public long Year { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Conference> Conferences { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Division> Divisions { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Draft> Drafts { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Game> Games { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Hall_of_Fame> Hall_of_Fame { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Injury> Injuries { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<League_Structure_by_Season> League_Structure_by_Season { get; set; }
+        public virtual List<League_Structure_by_Season> League_Structure_by_Season { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Player_Awards> Player_Awards { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

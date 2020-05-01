@@ -10,7 +10,7 @@ namespace SpectatorFootball.League
     public class Loaded_League_Structure
     {
         public DBVersion DBVersion { get; set; }
-        public SpectatorFootball.Models.League League { get; set; }
+        public Season Season { get; set; }
 
     }
 }

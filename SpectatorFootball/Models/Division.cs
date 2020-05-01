@@ -14,18 +14,11 @@ namespace SpectatorFootball.Models
     
     public partial class Division
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Division()
-        {
-            this.Teams_by_Season = new HashSet<Teams_by_Season>();
-        }
-    
         public long ID { get; set; }
         public long Ordinal { get; set; }
         public long Season_ID { get; set; }
         public string Name { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Teams_by_Season> Teams_by_Season { get; set; }
+        public virtual Season Season { get; set; }
     }
 }

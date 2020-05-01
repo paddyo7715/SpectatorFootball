@@ -38,6 +38,7 @@ namespace SpectatorFootball.Models
             this.Hall_of_Fame = new HashSet<Hall_of_Fame>();
             this.Injuries = new HashSet<Injury>();
             this.Player_Awards = new HashSet<Player_Awards>();
+            this.Player_Ratings = new HashSet<Player_Ratings>();
         }
     
         public long ID { get; set; }
@@ -95,5 +96,7 @@ namespace SpectatorFootball.Models
         public virtual ICollection<Injury> Injuries { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Player_Awards> Player_Awards { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Player_Ratings> Player_Ratings { get; set; }
     }
 }

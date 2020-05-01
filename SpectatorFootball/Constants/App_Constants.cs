@@ -29,6 +29,10 @@ namespace SpectatorFootball
         public const string BLANK_DB = "BlankDB.db";
         public const string SETTINGS_DB = "BlankDB.db";
 
+        // Draft
+        public const float DRAFT_MULTIPLIER = 2.0f;  //Multiplied by number of rounds to determine num of players to create for draft.
+
+
         // Players
         public const int QB_PER_TEAM = 3;
         public const int RB_PER_TEAM = 4;

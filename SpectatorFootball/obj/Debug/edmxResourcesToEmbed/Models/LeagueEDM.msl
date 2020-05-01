@@ -15,7 +15,7 @@
         <MappingFragment StoreEntitySet="Conference">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Ordinal" ColumnName="Ordinal" />
-          <ScalarProperty Name="League_ID" ColumnName="League_ID" />
+          <ScalarProperty Name="Season_ID" ColumnName="Season_ID" />
           <ScalarProperty Name="Conf_Name" ColumnName="Conf_Name" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -35,7 +35,26 @@
         <MappingFragment StoreEntitySet="Division">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Ordinal" ColumnName="Ordinal" />
-          <ScalarProperty Name="League_ID" ColumnName="League_ID" />
+          <ScalarProperty Name="Season_ID" ColumnName="Season_ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Drafts">
+      <EntityTypeMapping TypeName="mainModel.Draft">
+        <MappingFragment StoreEntitySet="Draft">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Season_ID" ColumnName="Season_ID" />
+          <ScalarProperty Name="Round" ColumnName="Round" />
+          <ScalarProperty Name="Franchise_ID" ColumnName="Franchise_ID" />
+          <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Franchises">
+      <EntityTypeMapping TypeName="mainModel.Franchise">
+        <MappingFragment StoreEntitySet="Franchise">
+          <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -44,21 +63,25 @@
       <EntityTypeMapping TypeName="mainModel.Game">
         <MappingFragment StoreEntitySet="Game">
           <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="League_ID" ColumnName="League_ID" />
+          <ScalarProperty Name="Season_ID" ColumnName="Season_ID" />
           <ScalarProperty Name="Week" ColumnName="Week" />
-          <ScalarProperty Name="Home_Team_ID" ColumnName="Home_Team_ID" />
-          <ScalarProperty Name="Away_Team_ID" ColumnName="Away_Team_ID" />
+          <ScalarProperty Name="Home_Team_Slot_ID" ColumnName="Home_Team_Slot_ID" />
+          <ScalarProperty Name="Away_Team_Slot_ID" ColumnName="Away_Team_Slot_ID" />
           <ScalarProperty Name="Home_FirstDowns" ColumnName="Home_FirstDowns" />
           <ScalarProperty Name="Home_ThirdDown_Conversions" ColumnName="Home_ThirdDown_Conversions" />
           <ScalarProperty Name="Home_ThirdDowns" ColumnName="Home_ThirdDowns" />
           <ScalarProperty Name="Home_FourthDown_Conversions" ColumnName="Home_FourthDown_Conversions" />
           <ScalarProperty Name="Home_FourthDowns" ColumnName="Home_FourthDowns" />
+          <ScalarProperty Name="Home_2Point_Conv_Att" ColumnName="Home_2Point_Conv_Att" />
+          <ScalarProperty Name="Home_2Point_Conv_Made" ColumnName="Home_2Point_Conv_Made" />
           <ScalarProperty Name="Home_TOP" ColumnName="Home_TOP" />
           <ScalarProperty Name="Away_FirstDowns" ColumnName="Away_FirstDowns" />
           <ScalarProperty Name="Away_ThirdDown_Conversions" ColumnName="Away_ThirdDown_Conversions" />
           <ScalarProperty Name="Away_ThirdDowns" ColumnName="Away_ThirdDowns" />
           <ScalarProperty Name="Away_FourthDown_Conversions" ColumnName="Away_FourthDown_Conversions" />
           <ScalarProperty Name="Away_FourthDowns" ColumnName="Away_FourthDowns" />
+          <ScalarProperty Name="Away_2Point_Conv_Att" ColumnName="Away_2Point_Conv_Att" />
+          <ScalarProperty Name="Away_2Point_Conv_Made" ColumnName="Away_2Point_Conv_Made" />
           <ScalarProperty Name="Away_TOP" ColumnName="Away_TOP" />
           <ScalarProperty Name="Away_Score_Q1" ColumnName="Away_Score_Q1" />
           <ScalarProperty Name="Home_Score_Q1" ColumnName="Home_Score_Q1" />
@@ -88,18 +111,26 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Game_Player_FG_Defense_Stats">
+      <EntityTypeMapping TypeName="mainModel.Game_Player_FG_Defense_Stats">
+        <MappingFragment StoreEntitySet="Game_Player_FG_Defense_Stats">
+          <ScalarProperty Name="Game_ID" ColumnName="Game_ID" />
+          <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
+          <ScalarProperty Name="Franchise_ID" ColumnName="Franchise_ID" />
+          <ScalarProperty Name="FG_Block" ColumnName="FG_Block" />
+          <ScalarProperty Name="FG_Block_Recovery" ColumnName="FG_Block_Recovery" />
+          <ScalarProperty Name="FG_Block_Recovery_Yards" ColumnName="FG_Block_Recovery_Yards" />
+          <ScalarProperty Name="FG_Block_Recovery_TDs" ColumnName="FG_Block_Recovery_TDs" />
+          <ScalarProperty Name="XP_Block" ColumnName="XP_Block" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Game_Player_Kick_Returner_Stats">
       <EntityTypeMapping TypeName="mainModel.Game_Player_Kick_Returner_Stats">
         <MappingFragment StoreEntitySet="Game_Player_Kick_Returner_Stats">
           <ScalarProperty Name="Game_ID" ColumnName="Game_ID" />
           <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
-          <ScalarProperty Name="Punts_Returned" ColumnName="Punts_Returned" />
-          <ScalarProperty Name="Punts_Returned_Yards" ColumnName="Punts_Returned_Yards" />
-          <ScalarProperty Name="Punts_Returned_TDs" ColumnName="Punts_Returned_TDs" />
-          <ScalarProperty Name="Punts_Returned_Fumbles" ColumnName="Punts_Returned_Fumbles" />
-          <ScalarProperty Name="Punts_Returned_Fumbles_Lost" ColumnName="Punts_Returned_Fumbles_Lost" />
-          <ScalarProperty Name="Punts_Muffed" ColumnName="Punts_Muffed" />
-          <ScalarProperty Name="Punts_Muffed_Lost" ColumnName="Punts_Muffed_Lost" />
+          <ScalarProperty Name="Franchise_ID" ColumnName="Franchise_ID" />
           <ScalarProperty Name="Kickoffs_Returned" ColumnName="Kickoffs_Returned" />
           <ScalarProperty Name="Kickoffs_Returned_Yards" ColumnName="Kickoffs_Returned_Yards" />
           <ScalarProperty Name="Kickoffs_Returned_TDs" ColumnName="Kickoffs_Returned_TDs" />
@@ -115,21 +146,55 @@
         <MappingFragment StoreEntitySet="Game_Player_Kicker_Stats">
           <ScalarProperty Name="Game_ID" ColumnName="Game_ID" />
           <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
+          <ScalarProperty Name="Franchise_ID" ColumnName="Franchise_ID" />
+          <ScalarProperty Name="Started" ColumnName="Started" />
           <ScalarProperty Name="XP_Att" ColumnName="XP_Att" />
           <ScalarProperty Name="XP_Made" ColumnName="XP_Made" />
           <ScalarProperty Name="FG_Att_1to19" ColumnName="FG_Att_1to19" />
           <ScalarProperty Name="FG_Made_1to19" ColumnName="FG_Made_1to19" />
+          <ScalarProperty Name="FG_Blocked_1to19" ColumnName="FG_Blocked_1to19" />
           <ScalarProperty Name="FG_Att_20to29" ColumnName="FG_Att_20to29" />
           <ScalarProperty Name="FG_Made_20to29" ColumnName="FG_Made_20to29" />
+          <ScalarProperty Name="FG_Blocked_20to29" ColumnName="FG_Blocked_20to29" />
           <ScalarProperty Name="FG_Att_30to39" ColumnName="FG_Att_30to39" />
           <ScalarProperty Name="FG_Made_30to39" ColumnName="FG_Made_30to39" />
+          <ScalarProperty Name="FG_Blocked_30to39" ColumnName="FG_Blocked_30to39" />
           <ScalarProperty Name="FG_Att_40to49" ColumnName="FG_Att_40to49" />
           <ScalarProperty Name="FG_Made_40to49" ColumnName="FG_Made_40to49" />
+          <ScalarProperty Name="FG_Blocked_40to49" ColumnName="FG_Blocked_40to49" />
           <ScalarProperty Name="FG_Att_50andOver" ColumnName="FG_Att_50andOver" />
           <ScalarProperty Name="FG_Made_50andOver" ColumnName="FG_Made_50andOver" />
+          <ScalarProperty Name="FG_Blocked_50andOver" ColumnName="FG_Blocked_50andOver" />
           <ScalarProperty Name="Kickoffs" ColumnName="Kickoffs" />
           <ScalarProperty Name="Kickoff_Out_of_Bounds" ColumnName="Kickoff_Out_of_Bounds" />
           <ScalarProperty Name="Kickoff_Touchback" ColumnName="Kickoff_Touchback" />
+          <ScalarProperty Name="Add_a_column_for_onside_attempt" ColumnName="Add a column for onside_attempt" />
+          <ScalarProperty Name="add_a_column_for_onside_successful" ColumnName="add a column for onside_successful" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Game_Player_Kickoff_Defenders">
+      <EntityTypeMapping TypeName="mainModel.Game_Player_Kickoff_Defenders">
+        <MappingFragment StoreEntitySet="Game_Player_Kickoff_Defenders">
+          <ScalarProperty Name="Game_ID" ColumnName="Game_ID" />
+          <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
+          <ScalarProperty Name="Franchise_ID" ColumnName="Franchise_ID" />
+          <ScalarProperty Name="Forced_Fumbles_Kickoffs" ColumnName="Forced_Fumbles_Kickoffs" />
+          <ScalarProperty Name="Fumbles_Kickoffs_Recovered" ColumnName="Fumbles_Kickoffs_Recovered" />
+          <ScalarProperty Name="Fumbles_Kickoffs_Recovered_TDs" ColumnName="Fumbles_Kickoffs_Recovered_TDs" />
+          <ScalarProperty Name="Fumbles_Kickoffs_Recovered_Yards" ColumnName="Fumbles_Kickoffs_Recovered_Yards" />
+          <ScalarProperty Name="Kickoff_Tackles" ColumnName="Kickoff_Tackles" />
+          <ScalarProperty Name="KickOff_Onside_Kick_Recoveries" ColumnName="KickOff_Onside_Kick_Recoveries" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Game_Player_Kickoff_Receiver_Stats">
+      <EntityTypeMapping TypeName="mainModel.Game_Player_Kickoff_Receiver_Stats">
+        <MappingFragment StoreEntitySet="Game_Player_Kickoff_Receiver_Stats">
+          <ScalarProperty Name="Game_ID" ColumnName="Game_ID" />
+          <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
+          <ScalarProperty Name="Franchise_ID" ColumnName="Franchise_ID" />
+          <ScalarProperty Name="Onside_Kickoff_Recovery" ColumnName="Onside_Kickoff_Recovery" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -138,10 +203,14 @@
         <MappingFragment StoreEntitySet="Game_Player_Offensive_Linemen_Stats">
           <ScalarProperty Name="Game_ID" ColumnName="Game_ID" />
           <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
+          <ScalarProperty Name="Franchise_ID" ColumnName="Franchise_ID" />
+          <ScalarProperty Name="Started" ColumnName="Started" />
+          <ScalarProperty Name="Oline_Plays" ColumnName="Oline_Plays" />
           <ScalarProperty Name="OLine_Sacks_Allowed" ColumnName="OLine_Sacks_Allowed" />
           <ScalarProperty Name="OLine_Rushing_Loss_Allowed" ColumnName="OLine_Rushing_Loss_Allowed" />
           <ScalarProperty Name="OLine_Missed_Block" ColumnName="OLine_Missed_Block" />
           <ScalarProperty Name="OLine_Pancakes" ColumnName="OLine_Pancakes" />
+          <ScalarProperty Name="QB_Pressures_Allowed" ColumnName="QB_Pressures_Allowed" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -150,6 +219,8 @@
         <MappingFragment StoreEntitySet="Game_Player_Pass_Defense_Stats">
           <ScalarProperty Name="Game_ID" ColumnName="Game_ID" />
           <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
+          <ScalarProperty Name="Franchise_ID" ColumnName="Franchise_ID" />
+          <ScalarProperty Name="Started" ColumnName="Started" />
           <ScalarProperty Name="Ints" ColumnName="Ints" />
           <ScalarProperty Name="Def_Int_Yards" ColumnName="Def_Int_Yards" />
           <ScalarProperty Name="Def_Safety" ColumnName="Def_Safety" />
@@ -171,6 +242,8 @@
         <MappingFragment StoreEntitySet="Game_Player_Pass_Rushers_Stats">
           <ScalarProperty Name="Game_ID" ColumnName="Game_ID" />
           <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
+          <ScalarProperty Name="Franchise_ID" ColumnName="Franchise_ID" />
+          <ScalarProperty Name="Started" ColumnName="Started" />
           <ScalarProperty Name="Def_Sacks" ColumnName="Def_Sacks" />
           <ScalarProperty Name="Def_Rushing_Loss" ColumnName="Def_Rushing_Loss" />
           <ScalarProperty Name="Def_Tackles" ColumnName="Def_Tackles" />
@@ -180,6 +253,8 @@
           <ScalarProperty Name="Forced_Fumbles" ColumnName="Forced_Fumbles" />
           <ScalarProperty Name="Recovered_Fumbles" ColumnName="Recovered_Fumbles" />
           <ScalarProperty Name="Fumbles_Return_Yards" ColumnName="Fumbles_Return_Yards" />
+          <ScalarProperty Name="QB_Pressures" ColumnName="QB_Pressures" />
+          <ScalarProperty Name="Pass_Rushes" ColumnName="Pass_Rushes" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -188,9 +263,11 @@
         <MappingFragment StoreEntitySet="Game_Player_Passing_Stats">
           <ScalarProperty Name="Game_ID" ColumnName="Game_ID" />
           <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
+          <ScalarProperty Name="Franchise_ID" ColumnName="Franchise_ID" />
+          <ScalarProperty Name="Started" ColumnName="Started" />
           <ScalarProperty Name="Fumbles" ColumnName="Fumbles" />
           <ScalarProperty Name="Fumbles_Lost" ColumnName="Fumbles_Lost" />
-          <ScalarProperty Name="Pass_Sacks" ColumnName="Pass_Sacks" />
+          <ScalarProperty Name="Sacked" ColumnName="Sacked" />
           <ScalarProperty Name="Pass_Comp_1to5" ColumnName="Pass_Comp_1to5" />
           <ScalarProperty Name="Pass_Att_1to5" ColumnName="Pass_Att_1to5" />
           <ScalarProperty Name="Pass_Yards_1to5" ColumnName="Pass_Yards_1to5" />
@@ -235,17 +312,84 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Game_Player_Penalties_Stats">
+      <EntityTypeMapping TypeName="mainModel.Game_Player_Penalties_Stats">
+        <MappingFragment StoreEntitySet="Game_Player_Penalties_Stats">
+          <ScalarProperty Name="Game_ID" ColumnName="Game_ID" />
+          <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
+          <ScalarProperty Name="Franchise_ID" ColumnName="Franchise_ID" />
+          <ScalarProperty Name="Penalty_ID" ColumnName="Penalty_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Game_Player_Penalty_Stats">
+      <EntityTypeMapping TypeName="mainModel.Game_Player_Penalty_Stats">
+        <MappingFragment StoreEntitySet="Game_Player_Penalty_Stats">
+          <ScalarProperty Name="Game_ID" ColumnName="Game_ID" />
+          <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
+          <ScalarProperty Name="Franchise_ID" ColumnName="Franchise_ID" />
+          <ScalarProperty Name="Penalties" ColumnName="Penalties" />
+          <ScalarProperty Name="Penalty_Yards" ColumnName="Penalty_Yards" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Game_Player_Punt_Defenders">
+      <EntityTypeMapping TypeName="mainModel.Game_Player_Punt_Defenders">
+        <MappingFragment StoreEntitySet="Game_Player_Punt_Defenders">
+          <ScalarProperty Name="Game_ID" ColumnName="Game_ID" />
+          <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
+          <ScalarProperty Name="Franchise_ID" ColumnName="Franchise_ID" />
+          <ScalarProperty Name="Forced_Fumbles_Punt" ColumnName="Forced_Fumbles_Punt" />
+          <ScalarProperty Name="Fumbles_Punt_Recovered" ColumnName="Fumbles_Punt_Recovered" />
+          <ScalarProperty Name="Fumbles_Punt_Recovered_TDs" ColumnName="Fumbles_Punt_Recovered_TDs" />
+          <ScalarProperty Name="Fumbles_Punt_Recovered_Yards" ColumnName="Fumbles_Punt_Recovered_Yards" />
+          <ScalarProperty Name="Punt_Tackles" ColumnName="Punt_Tackles" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Game_Player_Punt_Receiver_Stats">
+      <EntityTypeMapping TypeName="mainModel.Game_Player_Punt_Receiver_Stats">
+        <MappingFragment StoreEntitySet="Game_Player_Punt_Receiver_Stats">
+          <ScalarProperty Name="Game_ID" ColumnName="Game_ID" />
+          <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
+          <ScalarProperty Name="Franchise_ID" ColumnName="Franchise_ID" />
+          <ScalarProperty Name="Punt_Block" ColumnName="Punt_Block" />
+          <ScalarProperty Name="Punt_Block_Recovery" ColumnName="Punt_Block_Recovery" />
+          <ScalarProperty Name="Punt_Block_Recovery_Yards" ColumnName="Punt_Block_Recovery_Yards" />
+          <ScalarProperty Name="Punt_Block_Recovery_TDs" ColumnName="Punt_Block_Recovery_TDs" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Game_Player_Punt_Returner_Stats">
+      <EntityTypeMapping TypeName="mainModel.Game_Player_Punt_Returner_Stats">
+        <MappingFragment StoreEntitySet="Game_Player_Punt_Returner_Stats">
+          <ScalarProperty Name="Game_ID" ColumnName="Game_ID" />
+          <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
+          <ScalarProperty Name="Franchise_ID" ColumnName="Franchise_ID" />
+          <ScalarProperty Name="Punts_Returned" ColumnName="Punts_Returned" />
+          <ScalarProperty Name="Punts_Returned_Yards" ColumnName="Punts_Returned_Yards" />
+          <ScalarProperty Name="Punts_Returned_TDs" ColumnName="Punts_Returned_TDs" />
+          <ScalarProperty Name="Punts_Returned_Fumbles" ColumnName="Punts_Returned_Fumbles" />
+          <ScalarProperty Name="Punts_Returned_Fumbles_Lost" ColumnName="Punts_Returned_Fumbles_Lost" />
+          <ScalarProperty Name="Punts_Muffed" ColumnName="Punts_Muffed" />
+          <ScalarProperty Name="Punts_Muffed_Lost" ColumnName="Punts_Muffed_Lost" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Game_Player_Punter_Stats">
       <EntityTypeMapping TypeName="mainModel.Game_Player_Punter_Stats">
         <MappingFragment StoreEntitySet="Game_Player_Punter_Stats">
           <ScalarProperty Name="Game_ID" ColumnName="Game_ID" />
           <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
+          <ScalarProperty Name="Franchise_ID" ColumnName="Franchise_ID" />
           <ScalarProperty Name="Started" ColumnName="Started" />
           <ScalarProperty Name="Fumbles" ColumnName="Fumbles" />
+          <ScalarProperty Name="Fumbles_Lost" ColumnName="Fumbles_Lost" />
           <ScalarProperty Name="num_punts" ColumnName="num_punts" />
           <ScalarProperty Name="Punt_yards" ColumnName="Punt_yards" />
           <ScalarProperty Name="Punt_Killed_att" ColumnName="Punt_Killed_att" />
           <ScalarProperty Name="Punt_killed_num" ColumnName="Punt_killed_num" />
+          <ScalarProperty Name="Blocked_Punts" ColumnName="Blocked_Punts" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -254,6 +398,7 @@
         <MappingFragment StoreEntitySet="Game_Player_Receiving_Stats">
           <ScalarProperty Name="Game_ID" ColumnName="Game_ID" />
           <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
+          <ScalarProperty Name="Franchise_ID" ColumnName="Franchise_ID" />
           <ScalarProperty Name="Started" ColumnName="Started" />
           <ScalarProperty Name="Fumbles" ColumnName="Fumbles" />
           <ScalarProperty Name="Fumbles_Lost" ColumnName="Fumbles_Lost" />
@@ -270,49 +415,14 @@
         <MappingFragment StoreEntitySet="Game_Player_Rushing_Stats">
           <ScalarProperty Name="Game_ID" ColumnName="Game_ID" />
           <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
+          <ScalarProperty Name="Franchise_ID" ColumnName="Franchise_ID" />
+          <ScalarProperty Name="Started" ColumnName="Started" />
           <ScalarProperty Name="Fumbles" ColumnName="Fumbles" />
           <ScalarProperty Name="Fumbles_Lost" ColumnName="Fumbles_Lost" />
           <ScalarProperty Name="Rush_Att" ColumnName="Rush_Att" />
           <ScalarProperty Name="Rush_Yards" ColumnName="Rush_Yards" />
           <ScalarProperty Name="Rush_TDs" ColumnName="Rush_TDs" />
           <ScalarProperty Name="Long" ColumnName="Long" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Game_Player_Special_Team_Receive_Stats">
-      <EntityTypeMapping TypeName="mainModel.Game_Player_Special_Team_Receive_Stats">
-        <MappingFragment StoreEntitySet="Game_Player_Special_Team_Receive_Stats">
-          <ScalarProperty Name="Game_ID" ColumnName="Game_ID" />
-          <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
-          <ScalarProperty Name="Onside_Kickoff_Recovery" ColumnName="Onside_Kickoff_Recovery" />
-          <ScalarProperty Name="Punt_Block" ColumnName="Punt_Block" />
-          <ScalarProperty Name="Punt_Block_Recovery" ColumnName="Punt_Block_Recovery" />
-          <ScalarProperty Name="Punt_Block_Recovery_Yards" ColumnName="Punt_Block_Recovery_Yards" />
-          <ScalarProperty Name="Punt_Block_Recovery_TDs" ColumnName="Punt_Block_Recovery_TDs" />
-          <ScalarProperty Name="FG_Block" ColumnName="FG_Block" />
-          <ScalarProperty Name="FG_Block_Recovery" ColumnName="FG_Block_Recovery" />
-          <ScalarProperty Name="FG_Block_Recovery_Yards" ColumnName="FG_Block_Recovery_Yards" />
-          <ScalarProperty Name="FG_Block_Recovery_TDs" ColumnName="FG_Block_Recovery_TDs" />
-          <ScalarProperty Name="XP_Block" ColumnName="XP_Block" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Game_Player_Special_Teams_Has_Ball_Stats">
-      <EntityTypeMapping TypeName="mainModel.Game_Player_Special_Teams_Has_Ball_Stats">
-        <MappingFragment StoreEntitySet="Game_Player_Special_Teams_Has_Ball_Stats">
-          <ScalarProperty Name="Game_ID" ColumnName="Game_ID" />
-          <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
-          <ScalarProperty Name="Forced_Fumbles_Kickoffs" ColumnName="Forced_Fumbles_Kickoffs" />
-          <ScalarProperty Name="Fumbles_Kickoffs_Recovered" ColumnName="Fumbles_Kickoffs_Recovered" />
-          <ScalarProperty Name="Fumbles_Kickoffs_Recovered_TDs" ColumnName="Fumbles_Kickoffs_Recovered_TDs" />
-          <ScalarProperty Name="Fumbles_Kickoffs_Recovered_Yards" ColumnName="Fumbles_Kickoffs_Recovered_Yards" />
-          <ScalarProperty Name="Kickoff_Tackles" ColumnName="Kickoff_Tackles" />
-          <ScalarProperty Name="Forced_Fumbles_Punt" ColumnName="Forced_Fumbles_Punt" />
-          <ScalarProperty Name="Fumbles_Punt_Recovered" ColumnName="Fumbles_Punt_Recovered" />
-          <ScalarProperty Name="Fumbles_Punt_Recovered_TDs" ColumnName="Fumbles_Punt_Recovered_TDs" />
-          <ScalarProperty Name="Fumbles_Punt_Recovered_Yards" ColumnName="Fumbles_Punt_Recovered_Yards" />
-          <ScalarProperty Name="Punt_Tackles" ColumnName="Punt_Tackles" />
-          <ScalarProperty Name="KickOff_Onside_Kick_Recoveries" ColumnName="KickOff_Onside_Kick_Recoveries" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -329,20 +439,31 @@
       <EntityTypeMapping TypeName="mainModel.Hall_of_Fame">
         <MappingFragment StoreEntitySet="Hall_of_Fame">
           <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Season_ID" ColumnName="Season_ID" />
           <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
-          <ScalarProperty Name="Year_Added" ColumnName="Year_Added" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Leagues">
-      <EntityTypeMapping TypeName="mainModel.League">
-        <MappingFragment StoreEntitySet="League">
+    <EntitySetMapping Name="Injuries">
+      <EntityTypeMapping TypeName="mainModel.Injury">
+        <MappingFragment StoreEntitySet="Injuries">
+          <ScalarProperty Name="Season_ID" ColumnName="Season_ID" />
+          <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
+          <ScalarProperty Name="Week" ColumnName="Week" />
+          <ScalarProperty Name="Num_of_Weeks" ColumnName="Num_of_Weeks" />
+          <ScalarProperty Name="Career_Ending" ColumnName="Career_Ending" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="League_Structure_by_Season">
+      <EntityTypeMapping TypeName="mainModel.League_Structure_by_Season">
+        <MappingFragment StoreEntitySet="League_Structure_by_Season">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Short_Name" ColumnName="Short_Name" />
           <ScalarProperty Name="Long_Name" ColumnName="Long_Name" />
           <ScalarProperty Name="League_Logo_Filepath" ColumnName="League_Logo_Filepath" />
           <ScalarProperty Name="League_Logo_File" ColumnName="League_Logo_File" />
-          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="Season_ID" ColumnName="Season_ID" />
           <ScalarProperty Name="Number_of_weeks" ColumnName="Number_of_weeks" />
           <ScalarProperty Name="Number_of_Games" ColumnName="Number_of_Games" />
           <ScalarProperty Name="Championship_Game_Name" ColumnName="Championship_Game_Name" />
@@ -350,6 +471,25 @@
           <ScalarProperty Name="Num_Playoff_Teams" ColumnName="Num_Playoff_Teams" />
           <ScalarProperty Name="Number_of_Conferences" ColumnName="Number_of_Conferences" />
           <ScalarProperty Name="Number_of_Divisions" ColumnName="Number_of_Divisions" />
+          <ScalarProperty Name="Draft_Type_Code" ColumnName="Draft_Type_Code" />
+          <ScalarProperty Name="Injuries" ColumnName="Injuries" />
+          <ScalarProperty Name="Penalties" ColumnName="Penalties" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Penalties">
+      <EntityTypeMapping TypeName="mainModel.Penalty">
+        <MappingFragment StoreEntitySet="Penalties">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Penalty_Type" ColumnName="Penalty_Type" />
+          <ScalarProperty Name="Declinable" ColumnName="Declinable" />
+          <ScalarProperty Name="Loss_of_Down" ColumnName="Loss_of_Down" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="Yards" ColumnName="Yards" />
+          <ScalarProperty Name="Auto_First_Down" ColumnName="Auto_First_Down" />
+          <ScalarProperty Name="Ass_After_Play" ColumnName="Ass_After_Play" />
+          <ScalarProperty Name="Specific_Play_Type" ColumnName="Specific_Play_Type" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -357,23 +497,19 @@
       <EntityTypeMapping TypeName="mainModel.Player_Awards">
         <MappingFragment StoreEntitySet="Player_Awards">
           <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Season_ID" ColumnName="Season_ID" />
           <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
           <ScalarProperty Name="Award" ColumnName="Award" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Players">
-      <EntityTypeMapping TypeName="mainModel.Player">
-        <MappingFragment StoreEntitySet="Players">
+    <EntitySetMapping Name="Player_Ratings">
+      <EntityTypeMapping TypeName="mainModel.Player_Ratings">
+        <MappingFragment StoreEntitySet="Player_Ratings">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
-          <ScalarProperty Name="Team_ID" ColumnName="Team_ID" />
-          <ScalarProperty Name="Age" ColumnName="Age" />
-          <ScalarProperty Name="Jersey_Number" ColumnName="Jersey_Number" />
-          <ScalarProperty Name="First_Name" ColumnName="First_Name" />
-          <ScalarProperty Name="Last_Name" ColumnName="Last_Name" />
-          <ScalarProperty Name="Pos" ColumnName="Pos" />
-          <ScalarProperty Name="Fumble_Rating" ColumnName="Fumble_Rating" />
+          <ScalarProperty Name="Season_ID" ColumnName="Season_ID" />
+          <ScalarProperty Name="Ball_Safety_Rating" ColumnName="Ball_Safety_Rating" />
           <ScalarProperty Name="Accuracy_Rating" ColumnName="Accuracy_Rating" />
           <ScalarProperty Name="Decision_Making" ColumnName="Decision_Making" />
           <ScalarProperty Name="Arm_Strength_Rating" ColumnName="Arm_Strength_Rating" />
@@ -388,27 +524,55 @@
           <ScalarProperty Name="Tackle_Rating" ColumnName="Tackle_Rating" />
           <ScalarProperty Name="Kicker_Leg_Power" ColumnName="Kicker_Leg_Power" />
           <ScalarProperty Name="Kicker_Leg_Accuracy" ColumnName="Kicker_Leg_Accuracy" />
-          <ScalarProperty Name="Year_Retired" ColumnName="Year_Retired" />
+          <ScalarProperty Name="Work_Ethic_Ratings" ColumnName="Work_Ethic_Ratings" />
+          <ScalarProperty Name="Toughness_Ratings" ColumnName="Toughness_Ratings" />
+          <ScalarProperty Name="Sportsmanship_Ratings" ColumnName="Sportsmanship_Ratings" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Playoff_Teams">
-      <EntityTypeMapping TypeName="mainModel.Playoff_Teams">
-        <MappingFragment StoreEntitySet="Playoff_Teams">
-          <ScalarProperty Name="Team_ID" ColumnName="Team_ID" />
-          <ScalarProperty Name="League_ID" ColumnName="League_ID" />
+    <EntitySetMapping Name="Players">
+      <EntityTypeMapping TypeName="mainModel.Player">
+        <MappingFragment StoreEntitySet="Players">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Franchise_ID" ColumnName="Franchise_ID" />
+          <ScalarProperty Name="First_Name" ColumnName="First_Name" />
+          <ScalarProperty Name="Last_Name" ColumnName="Last_Name" />
+          <ScalarProperty Name="Age" ColumnName="Age" />
+          <ScalarProperty Name="Pos" ColumnName="Pos" />
+          <ScalarProperty Name="Jersey_Number" ColumnName="Jersey_Number" />
+          <ScalarProperty Name="Retired" ColumnName="Retired" />
+          <ScalarProperty Name="Eligible_for_Draft" ColumnName="Eligible_for_Draft" />
+          <ScalarProperty Name="Draft_Profile" ColumnName="Draft_Profile" />
+          <ScalarProperty Name="Draft_Grade" ColumnName="Draft_Grade" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Playoff_Teams_by_Season">
+      <EntityTypeMapping TypeName="mainModel.Playoff_Teams_by_Season">
+        <MappingFragment StoreEntitySet="Playoff_Teams_by_Season">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Franchise_ID" ColumnName="Franchise_ID" />
+          <ScalarProperty Name="Season_ID" ColumnName="Season_ID" />
           <ScalarProperty Name="Rank" ColumnName="Rank" />
           <ScalarProperty Name="Eliminated" ColumnName="Eliminated" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Teams">
-      <EntityTypeMapping TypeName="mainModel.Team">
-        <MappingFragment StoreEntitySet="Teams">
+    <EntitySetMapping Name="Seasons">
+      <EntityTypeMapping TypeName="mainModel.Season">
+        <MappingFragment StoreEntitySet="Season">
           <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="Team_id" ColumnName="Team_id" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Teams_by_Season">
+      <EntityTypeMapping TypeName="mainModel.Teams_by_Season">
+        <MappingFragment StoreEntitySet="Teams_by_Season">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Franchise_ID" ColumnName="Franchise_ID" />
           <ScalarProperty Name="Team_Slot" ColumnName="Team_Slot" />
-          <ScalarProperty Name="League_ID" ColumnName="League_ID" />
+          <ScalarProperty Name="Season_ID" ColumnName="Season_ID" />
           <ScalarProperty Name="Owner" ColumnName="Owner" />
           <ScalarProperty Name="City_Abr" ColumnName="City_Abr" />
           <ScalarProperty Name="City" ColumnName="City" />

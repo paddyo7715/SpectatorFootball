@@ -15,8 +15,10 @@ The New League form allows you to define a new league and contains<LineBreak/> t
 <Bold>Settins:</Bold><LineBreak/>
 On this tab you specify such information as the league and<LineBreak/> champoinship game name, starting year and structure of your league.<LineBreak/>  
 The structure of your league will specify the number of teams, division,<LineBreak/> conferences, games in a season and number of playoff teams for your<LineBreak/> leage.  
-Once you chose a league structure, you can then specify names for the conferences and divisions corresponding to your choice.<LineBreak/>
-<Span Foreground="Red"><Bold>Caution:</Bold></Span> Changing the league structure selection will wipe out <LineBreak/>conference\division names and any teams you create\select on the teams tab, so be sure to decide your league structure early.
+<LineBreak/>
+<Span Foreground="Red"><Bold>Caution:</Bold></Span> Changing the league structure selection will wipe out <LineBreak/>conference\division names and any teams you create\select on the teams tab, so be sure to decide your league structure early.<LineBreak/>
+You also specify if your league will have penalties or not and if your league will have injuries or not.<LineBreak/>
+And finally on the Settings tab, you can specify the type of draft for your league.  Note that whatever draft select, there will be a mega draft the first year to populate your teams and a 6 round draft in subsequent years.  Also note that if you chose a draft type that ranks teams to determine draft order that in the first year the draft order will be random, since there is no way to rank teams that haven't yet played any games.                 
 <LineBreak/>
 <LineBreak/>                
 <Bold>Teams:</Bold><LineBreak/>

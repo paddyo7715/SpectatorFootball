@@ -76,9 +76,9 @@
                                 </StackPanel>
                                 <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                                        <Label  Width="180" Style="{StaticResource LargeShortlbltyle}">Teams:</Label>
+                                        <Label  Width="180" VerticalAlignment="top" Style="{StaticResource LargeShortlbltyle}">Teams:</Label>
                                         <TextBox  Name="newlnumteams"  Style="{StaticResource LargeReadOnlytxttyle}" MaxLength="100" />
-                                        <Label  Width="180" Style="{StaticResource LargeShortlbltyle}">Weeks in Season:</Label>
+                                        <Label  Width="180"  VerticalAlignment="top" Style="{StaticResource LargeShortlbltyle}">Weeks in Season:</Label>
                                         <TextBox  Name="newlnumweeks"  Style="{StaticResource LargeReadOnlytxttyle}" MaxLength="100" />
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
@@ -95,10 +95,72 @@
                                     </StackPanel>
                                 </StackPanel>
                             </StackPanel>
+                            <StackPanel Orientation="Horizontal" >
+                                <Label  Width="350" VerticalContentAlignment="Top" Padding="5,0,0,0"  Style="{StaticResource Largelbltyle}">Penalties:</Label>
+                                <RadioButton Width="60" Name="newlPenYes" GroupName="penaltiesYesNo" IsChecked="True" Style="{StaticResource LargeGroupButton}">Yes</RadioButton>
+                                <RadioButton Width="60" Name="newlPenNo" GroupName="penaltiesYesNo" Style="{StaticResource LargeGroupButton}">No</RadioButton>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label  Width="350" VerticalContentAlignment="Top" Padding="5,0,0,0" Style="{StaticResource Largelbltyle}">Injuries:</Label>
+                                <RadioButton Width="60" Name="newlInjYes" GroupName="injuriesYesNo" IsChecked="True" Style="{StaticResource LargeGroupButton}">Yes</RadioButton>
+                                <RadioButton Width="60" Name="newlInjNo" GroupName="injuriesYesNo" Style="{StaticResource LargeGroupButton}">No</RadioButton>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Style="{StaticResource Largelbltyle}">Draft:</Label>
+                                <StackPanel Orientation="Vertical">
+                                    <RadioButton Name="newlDraft_FD" GroupName="draftChoice" IsChecked="True" Style="{StaticResource LargeGroupButton}">Standard Draft</RadioButton>
+                                    <TextBlock TextWrapping="WrapWithOverflow"  Style="{StaticResource LargeReadOnlytxtbstyle}" FontStyle="Italic">
+			  Standard Pro Draft: Teams are ranked worst to best by how they performed the previous year, and that draft order is used for every round in the draft.
+                                    </TextBlock>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Style="{StaticResource Largelbltyle}">Draft:</Label>
+                                <StackPanel Orientation="Vertical">
+                                    <RadioButton Name="newlDraft_SD" GroupName="draftChoice" IsChecked="True" Style="{StaticResource LargeGroupButton}">Serpentine Draft</RadioButton>
+                                    <TextBlock TextWrapping="WrapWithOverflow"  Style="{StaticResource LargeReadOnlytxtbstyle}" FontStyle="Italic">
+			  Serpentine Draft: Teams are ranked worst to best by how they performed the previous year.  That order is used in the first round and then inverted during the second round and that flipping continues till the end of the draft.
+                                    </TextBlock>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Style="{StaticResource Largelbltyle}">Draft:</Label>
+                                <StackPanel Orientation="Vertical">
+                                    <RadioButton Name="newlDraft_DL" GroupName="draftChoice" IsChecked="True" Style="{StaticResource LargeGroupButton}">Serpentine Draft</RadioButton>
+                                    <TextBlock TextWrapping="WrapWithOverflow"  Style="{StaticResource LargeReadOnlytxtbstyle}" FontStyle="Italic">
+			  Non-Playoff Draft Lottery: All non-playoff teams go into a draft lottery that determines the draft order.  Playoff teams pick last.
+                                    </TextBlock>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Style="{StaticResource Largelbltyle}">Draft:</Label>
+                                <StackPanel Orientation="Vertical">
+                                    <RadioButton Name="newlDraft_FL" GroupName="draftChoice" IsChecked="True" Style="{StaticResource LargeGroupButton}">Serpentine Draft</RadioButton>
+                                    <TextBlock TextWrapping="WrapWithOverflow"  Style="{StaticResource LargeReadOnlytxtbstyle}" FontStyle="Italic">
+			  Full Team Draft Lottery: Same as standard draft, but draft order for all teams is random.
+                                    </TextBlock>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Style="{StaticResource Largelbltyle}">Draft:</Label>
+                                <StackPanel Orientation="Vertical">
+                                    <RadioButton Name="newlDraft_FR" GroupName="draftChoice" IsChecked="True" Style="{StaticResource LargeGroupButton}">Serpentine Draft</RadioButton>
+                                    <TextBlock TextWrapping="WrapWithOverflow"  Style="{StaticResource LargeReadOnlytxtbstyle}" FontStyle="Italic">
+			  Random Pick Draft: Each team gets the same number of picks, but each pick can happen at any time during the draft.
+                                    </TextBlock>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Style="{StaticResource Largelbltyle}">Draft:</Label>
+                                <StackPanel Orientation="Vertical">
+                                    <RadioButton Name="newlDraft_CR" GroupName="draftChoice" IsChecked="True" Style="{StaticResource LargeGroupButton}">Serpentine Draft</RadioButton>
+                                    <TextBlock TextWrapping="WrapWithOverflow"  Style="{StaticResource LargeReadOnlytxtbstyle}" FontStyle="Italic">
+			  Crazy all Random Draft: Every Pick in the Draft is Completely Random:  Teams can have multiple picks per round with no maximum or minimum pick totals.
+                                    </TextBlock>
+                                </StackPanel>
+                            </StackPanel>
                         </StackPanel>
                     </GroupBox>
-                    <StackPanel Name="spDivisions" HorizontalAlignment="Center" Orientation="Horizontal">
-                    </StackPanel>
                 </StackPanel>
             </TabItem>
             <TabItem Header="Teams">

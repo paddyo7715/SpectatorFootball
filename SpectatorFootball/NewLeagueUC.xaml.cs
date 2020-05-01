@@ -130,6 +130,7 @@ namespace SpectatorFootball
 
             if (CommonUtils.isBlank(newl1longname.Text))
                 throw new Exception("On the Settings Tab, League Long Name must be supplied!");
+
             if (!CommonUtils.isAlphaNumeric(newl1longname.Text, true))
                 throw new Exception("On the Settings Tab, Invalid character in League Long Name!");
 
@@ -170,7 +171,7 @@ namespace SpectatorFootball
             for (int i = 1; i <= Convert.ToInt32(newlnumdivisions.Text); i++)
             {
                 string divtxtname = "newldiv" + i.ToString();
-                TextBox divtxtbox = (TextBox) this.FindName(divtxtname);
+                TextBox divtxtbox = (TextBox)this.FindName(divtxtname);
 
                 if (divtxtbox == null || divtxtbox.Text.Trim().Length == 0)
                     throw new Exception("On the Team Tab, A name for division " + i.ToString() + " must be supplied!");
@@ -181,7 +182,7 @@ namespace SpectatorFootball
                 if (!CommonUtils.isAlpha(divtxtbox.Text, true))
                     throw new Exception("On the Team Tab, Invalid character in Division Name " + divtxtbox.Text + "!");
 
-
+            }
             for (int i = 1; i <= Convert.ToInt32(newlnumteams.Text); i++)
             {
                 string teamlabel = "newllblTeam" + i.ToString();
@@ -191,7 +192,7 @@ namespace SpectatorFootball
             }
 
             var ts = new Team_Services();
-            string first_dup_team = ts.FirstDuplicateTeam(pw.Mem_League.Teams);
+            string first_dup_team = ts.FirstDuplicateTeam(pw.New_Mem_Season.Season.Teams_by_Season);
             if (first_dup_team != null)
                 throw new Exception("On the Settings Tab, Duplicate team " + first_dup_team + " found in league!  Leagues can not have duplicate teams!");
 
@@ -238,17 +239,17 @@ namespace SpectatorFootball
 
             logger.Debug("Set all teams blank");
 
-            pw.Mem_League.Number_of_weeks = num_weeks;
-            pw.Mem_League.Number_of_Games = num_games;
-            pw.Mem_League.Num_Teams = num_teams;
-            pw.Mem_League.Num_Playoff_Teams = num_playoff_teams;
-            pw.Mem_League.Number_of_Divisions = num_divs;
-            pw.Mem_League.Number_of_Conferences = num_confs;
+            pw.New_Mem_Season.Season.League_Structure_by_Season[0].Number_of_weeks = num_weeks;
+            pw.New_Mem_Season.Season.League_Structure_by_Season[0].Number_of_Games = num_games;
+            pw.New_Mem_Season.Season.League_Structure_by_Season[0].Num_Teams = num_teams;
+            pw.New_Mem_Season.Season.League_Structure_by_Season[0].Num_Playoff_Teams = num_playoff_teams;
+            pw.New_Mem_Season.Season.League_Structure_by_Season[0].Number_of_Divisions = num_divs;
+            pw.New_Mem_Season.Season.League_Structure_by_Season[0].Number_of_Conferences = num_confs;
 
-            pw.Mem_League.Teams = new List<Team>();
+//            pw.New_Mem_Season.Season.Teams = new List<Team>();
                 
             for (int i = 1; i <= num_teams; i++)
-              pw.Mem_League.Teams.Add(new Team() { ID = i, Team_Slot = i , City = app_Constants.EMPTY_TEAM_SLOT });
+                pw.New_Mem_Season.Season.Teams_by_Season.Add(new Teams_by_Season() { ID = i, Team_Slot = i , City = app_Constants.EMPTY_TEAM_SLOT });
 
 
             // Clear previous division selections
@@ -268,7 +269,7 @@ namespace SpectatorFootball
                     unregisterControl("newldiv" + I.ToString());
                 else
                     break;
-           }
+            }
 
             logger.Debug("Unregister all team controls");
             for (int I = 1; I <= Convert.ToInt32(app_Constants.MAX_TEAMS); I++)
@@ -401,7 +402,7 @@ namespace SpectatorFootball
                 for (int i = num_divs_per_conf + 1; i <= num_divs; i++)
                 {
                     var txtDivision2 = new TextBox();
-                    txtDivision2.Name = "newldiv" + j.ToString();
+                    txtDivision2.Name = "newldiv" + i.ToString();
                     txtDivision2.Width = 150;
                     txtDivision2.Style = Largetxttyle;
                     txtDivision2.Text = "Division " + i.ToString();
@@ -527,7 +528,6 @@ namespace SpectatorFootball
                 sp1.Children.Add(v2_sp);
             }
 
-
             setTeamsLabels();
         }
         private void newl1Cancel_Click(object sender, RoutedEventArgs e)
@@ -549,9 +549,10 @@ namespace SpectatorFootball
         private void newl1Next_Click(object sender, RoutedEventArgs e)
         {
 
-            pw.Mem_League.Conferences = new List<Conference>();
-            pw.Mem_League.Divisions = new List<Division>();
-            pw.Mem_League.Games = new List<Game>();
+           
+            int ipenalties;
+            int iinjuries;
+            String DraftType = null;
 
             try
             {
@@ -561,20 +562,48 @@ namespace SpectatorFootball
 
                 Mouse.OverrideCursor = Cursors.Wait;
 
+                //Do this since it is easier to just work with s than that long string.
+                Season s = pw.New_Mem_Season.Season;
+                List<Franchise> Franchises = new List<Franchise>();
+                s.Year = Convert.ToInt32(newl1StartingYear.Text);
+
                 App_Version app_ver = new App_Version();
 
-                pw.Mem_League.Short_Name = newl1shortname.Text;
-                pw.Mem_League.Long_Name = newl1longname.Text;
-                pw.Mem_League.League_Logo_Filepath = newLogoPath.Text;
-                pw.Mem_League.League_Logo_File = Path.GetFileName(newLogoPath.Text);
-                pw.Mem_League.Championship_Game_Name = newl1championshipgame.Text;
-                pw.Mem_League.Year = Convert.ToInt32(newl1StartingYear.Text);
-                pw.Mem_League.Number_of_Conferences = Convert.ToInt32(newlnumconferences.Text);
-                pw.Mem_League.Number_of_Divisions = Convert.ToInt32(newlnumdivisions.Text);
-                pw.Mem_League.Number_of_Games = Convert.ToInt32(newlnumgames.Text);
-                pw.Mem_League.Number_of_weeks = Convert.ToInt32(newlnumweeks.Text);
-                pw.Mem_League.Num_Playoff_Teams = Convert.ToInt32(newlnumplayoffteams.Text);
-                pw.Mem_League.Num_Teams = Convert.ToInt32(newlnumteams.Text);
+                League_Structure_by_Season ls = new League_Structure_by_Season();
+
+                if (newlPenYes.IsChecked == true)
+                    ipenalties = 1;
+                else
+                    ipenalties = 0;
+
+                if (newlInjYes.IsChecked == true)
+                    iinjuries = 1;
+                else
+                    iinjuries = 0;
+
+                if (newlDraft_FD.IsChecked == true) DraftType = "FD";
+                else if (newlDraft_SD.IsChecked == true) DraftType = "SD";
+                else if (newlDraft_DL.IsChecked == true) DraftType = "DL";
+                else if (newlDraft_FL.IsChecked == true) DraftType = "FL";
+                else if (newlDraft_FR.IsChecked == true) DraftType = "FR";
+                else if (newlDraft_CR.IsChecked == true) DraftType = "CR";
+
+                ls.Short_Name = newl1shortname.Text;
+                ls.Long_Name = newl1longname.Text;
+                ls.League_Logo_Filepath = newLogoPath.Text;
+                ls.League_Logo_File = Path.GetFileName(newLogoPath.Text);
+                ls.Championship_Game_Name = newl1championshipgame.Text;
+                ls.Number_of_Conferences = Convert.ToInt32(newlnumconferences.Text);
+                ls.Number_of_Divisions = Convert.ToInt32(newlnumdivisions.Text);
+                ls.Number_of_Games = Convert.ToInt32(newlnumgames.Text);
+                ls.Number_of_weeks = Convert.ToInt32(newlnumweeks.Text);
+                ls.Num_Playoff_Teams = Convert.ToInt32(newlnumplayoffteams.Text);
+                ls.Num_Teams = Convert.ToInt32(newlnumteams.Text);
+                ls.Penalties = ipenalties;
+                ls.Injuries = iinjuries;
+                ls.Draft_Type_Code = DraftType;
+
+                s.League_Structure_by_Season.Add(ls);
 
                 if (Convert.ToInt32(newlnumconferences.Text) == 2)
                 {
@@ -584,27 +613,29 @@ namespace SpectatorFootball
                     Conference c1 = new Conference() { Ordinal = 1, Conf_Name = conf1_name };
                     Conference c2 = new Conference() { Ordinal = 2, Conf_Name = conf2_name };
 
-                    pw.Mem_League.Conferences.Add(c1);
-                    pw.Mem_League.Conferences.Add(c2);
+                    s.Conferences.Add(c1);
+                    s.Conferences.Add(c2);
                 }
 
                 for (int i = 1; i <= Convert.ToInt32(newlnumdivisions.Text); i++)
                 {
                     string d_name = ((TextBox)this.FindName("newldiv" + i.ToString())).Text.Trim();
                     Division d = new Division() { Ordinal = i, Name = d_name };
-                    pw.Mem_League.Divisions.Add(d);
+                    s.Divisions.Add(d);
                 }
 
                 //set the owner of all teams to C for computer for now.
-                for (int t_int = 0; t_int < (int) pw.Mem_League.Num_Teams; t_int++)
+                for (int t_int = 0; t_int < (int) ls.Num_Teams; t_int++)
                 {
-                    pw.Mem_League.Teams[t_int].ID = t_int + 1;
-                    pw.Mem_League.Teams[t_int].Team_id = t_int + 1;
-                    pw.Mem_League.Teams[t_int].Team_Slot = t_int + 1;
-                    pw.Mem_League.Teams[t_int].Owner = "C";
-                    pw.Mem_League.Teams[t_int].Helmet_Image_File = Path.GetFileName(pw.Mem_League.Teams[t_int].Helmet_img_path);
-                    pw.Mem_League.Teams[t_int].Stadium_Image_File = Path.GetFileName(pw.Mem_League.Teams[t_int].Stadium_Img_Path);
-                    //                 pw.Mem_League.Teams.Add(pw.Mem_League.Teams[t_int]);
+                    s.Teams_by_Season[t_int].Team_Slot = t_int + 1;
+                    s.Teams_by_Season[t_int].Owner = "C";
+                    s.Teams_by_Season[t_int].Helmet_Image_File = Path.GetFileName(s.Teams_by_Season[t_int].Helmet_img_path);
+                    s.Teams_by_Season[t_int].Stadium_Image_File = Path.GetFileName(s.Teams_by_Season[t_int].Stadium_Img_Path);
+
+                    Franchise f = new Franchise() { Name = s.Teams_by_Season[t_int].City + " " + s.Teams_by_Season[t_int].Nickname + " Founded " + s.Year.ToString() };
+                    f.Teams_by_Season.Add(s.Teams_by_Season[t_int]);
+                    Franchises.Add(f);
+                
                 }
 
                 // Background Worker code for popup
@@ -617,14 +648,10 @@ namespace SpectatorFootball
                 bw.ProgressChanged += bw_ProgressChanged;
                 bw.RunWorkerCompleted += bw_RunWorkerCompleted;
 
-                New_League_Structure nls = new New_League_Structure()
-                {
-                    League = pw.Mem_League,
-                    DBVersion = new DBVersion() { Date_Created = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss"), Version = App_Version.APP_VERSION, Action = "Created New" }
-                };
+                pw.New_Mem_Season.DBVersion = new DBVersion() { Date_Created = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss"), Version = App_Version.APP_VERSION, Action = "Created New" };
 
                 bw.WorkerReportsProgress = true;
-                bw.RunWorkerAsync(nls);
+                bw.RunWorkerAsync(pw.New_Mem_Season);
 
                 // Progress Bar Window
                 pop.ShowDialog();
@@ -692,7 +719,7 @@ namespace SpectatorFootball
 
                 teamLbl.Style = Teamlbltyle;
 
-                Team st = pw.Mem_League.Teams[i - 1];
+                Teams_by_Season st = pw.New_Mem_Season.Season.Teams_by_Season[i - 1];
                 if (st.City != app_Constants.EMPTY_TEAM_SLOT)
                 {
                     logger.Debug("Setting label for " + st.City);
@@ -703,7 +730,7 @@ namespace SpectatorFootball
                 else
                     teamLbl.Content = app_Constants.EMPTY_TEAM_SLOT;
 
-                string img_path = pw.Mem_League.Teams[i - 1].Helmet_img_path;
+                string img_path = pw.New_Mem_Season.Season.Teams_by_Season[i - 1].Helmet_img_path;
 
                 logger.Debug("Helmet img_path: " + img_path);
 
@@ -744,7 +771,7 @@ namespace SpectatorFootball
                 new_label.Content = ((Label)drag_data.Children[1]).Content;
 
                 dragSource.Items.Remove(drag_data);
-                Team cloned_team = Team_Helper.Clonse_Team_from_Stock(new_team);
+                Teams_by_Season cloned_team = Team_Helper.Clonse_Team_from_Stock(new_team);
                 cloned_team.ID = new_index + 1;
                 // Set prefix the helmet image path and stadium image path with the app folders for this
                 // computer, because these stock teams were created on the developer's computer and
@@ -753,7 +780,7 @@ namespace SpectatorFootball
                 cloned_team.Stadium_Img_Path = CommonUtils.getAppPath() + app_Constants.APP_STADIUM_FOLDER + new_team.Stadium_Img_Path;
 
 
-                pw.Mem_League.Teams[new_index] = cloned_team;
+                pw.New_Mem_Season.Season.Teams_by_Season[new_index] = cloned_team;
             }
             else if (drag_from == "league")
             {
@@ -774,12 +801,12 @@ namespace SpectatorFootball
                 drag_data_label.Content = app_Constants.EMPTY_TEAM_SLOT;
 
                 // Set new team in league to the old team and change the id to the new slot
-                pw.Mem_League.Teams[new_index] = pw.Mem_League.Teams[old_index];
-                pw.Mem_League.Teams[new_index].ID = new_index + 1;
+                pw.New_Mem_Season.Season.Teams_by_Season[new_index] = pw.New_Mem_Season.Season.Teams_by_Season[old_index];
+//                pw.Mem_League.Teams[new_index].ID = new_index + 1;
 
                 // Set old slot to a new blank team
-                var blank_team = new Team() {ID = old_index ,City = app_Constants.EMPTY_TEAM_SLOT };
-                pw.Mem_League.Teams[old_index] = blank_team;
+                var blank_team = new Teams_by_Season() {ID = old_index ,City = app_Constants.EMPTY_TEAM_SLOT };
+                pw.New_Mem_Season.Season.Teams_by_Season[old_index] = blank_team;
             }
         }
         private void sp_team_MouseMove(object sender, MouseEventArgs e)

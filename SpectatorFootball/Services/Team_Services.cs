@@ -49,7 +49,7 @@ namespace SpectatorFootball
             return r;
         }
 
-        public string FirstDuplicateTeam(List<Team> Team_List)
+        public string FirstDuplicateTeam(List<Teams_by_Season> Team_List)
         {
             string r = null;
             var hs = new HashSet<string>();

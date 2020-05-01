@@ -16,7 +16,7 @@ namespace SpectatorFootball.Models
     public partial class leagueContext : DbContext
     {
         public leagueContext()
-            : base("name=mainEntities")
+            : base("name=leagueContext")
         {
         }
 
@@ -24,6 +24,7 @@ namespace SpectatorFootball.Models
             : base(connString)
         {
         }
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

@@ -8,7 +8,7 @@ namespace SpectatorFootball
 
     public class Player_Helper
     {
-        public Player CreatePlayer(Player_Pos pos, List<Player> Players, int team_ind, ref int p_id, Boolean bNewLeage)
+        public static Player CreatePlayer(Player_Pos pos, List<Player> Players, int team_ind, ref int p_id, Boolean bNewLeage)
         {
             Player r = new Player();
 
@@ -165,7 +165,7 @@ namespace SpectatorFootball
 
             return r;
         }
-        public int generate_Player_Age(bool newleage)
+        public static int generate_Player_Age(bool newleage)
         {
             int r = app_Constants.STARTING_ROOKIE_AGE;
 
@@ -175,7 +175,7 @@ namespace SpectatorFootball
             return r;
         }
 
-        public Player_Abilities Create_Player_Abilities(Player_Pos pos)
+        public static Player_Abilities Create_Player_Abilities(Player_Pos pos)
         {
             Player_Abilities r = new Player_Abilities();
 

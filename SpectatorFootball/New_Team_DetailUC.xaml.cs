@@ -20,8 +20,8 @@ namespace SpectatorFootball
     /// </summary>
     public partial class New_Team_DetailUC : UserControl
     {
-        private Team binding_team = new Team();
-        private Team orig_this_team = null;
+        private Teams_by_Season binding_team = new Teams_by_Season();
+        private Teams_by_Season orig_this_team = null;
         private Boolean bNewLeague;
 
         private Boolean bnew_team;
@@ -42,7 +42,7 @@ namespace SpectatorFootball
         public bool Event_from_Code { get; set; } = false;
         private static ILog logger = LogManager.GetLogger("RollingFile");
 
-        public New_Team_DetailUC(Team this_team,Boolean bNewLeague)
+        public New_Team_DetailUC(Teams_by_Season this_team,Boolean bNewLeague)
         {
             // This call is required by the designer.
             InitializeComponent();
