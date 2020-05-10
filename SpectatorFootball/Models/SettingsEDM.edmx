@@ -5,6 +5,14 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
       <Schema Namespace="settingsModel.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="data source=C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\Database\Settings.db" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="HomeTowns">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="City" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="State" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+        </EntityType>
         <EntityType Name="Potential_First_Names">
           <Key>
             <PropertyRef Name="FirstName" />
@@ -69,6 +77,7 @@
           <Property Name="Stadium_Field_Color" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
         </EntityType>
         <EntityContainer Name="settingsModelStoreContainer">
+          <EntitySet Name="HomeTowns" EntityType="Self.HomeTowns" store:Type="Tables" />
           <EntitySet Name="Potential_First_Names" EntityType="Self.Potential_First_Names" store:Type="Tables" />
           <EntitySet Name="Potential_Last_Names" EntityType="Self.Potential_Last_Names" store:Type="Tables" />
           <EntitySet Name="Stock_Teams" EntityType="Self.Stock_Teams" store:Type="Tables" />
@@ -78,6 +87,14 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="settingsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="HomeTown">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="City" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="State" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
         <EntityType Name="Potential_First_Names">
           <Key>
             <PropertyRef Name="FirstName" />
@@ -141,7 +158,8 @@
           <Property Name="Stadium_Field_Type" Type="Int64" Nullable="false" />
           <Property Name="Stadium_Field_Color" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
-        <EntityContainer Name="SettingsEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="settingsContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="HomeTowns" EntityType="Self.HomeTown" />
           <EntitySet Name="Potential_First_Names" EntityType="Self.Potential_First_Names" />
           <EntitySet Name="Potential_Last_Names" EntityType="Self.Potential_Last_Names" />
           <EntitySet Name="Stock_Teams" EntityType="Self.Stock_Teams" />
@@ -151,7 +169,16 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="settingsModelStoreContainer" CdmEntityContainer="SettingsEntities">
+        <EntityContainerMapping StorageEntityContainer="settingsModelStoreContainer" CdmEntityContainer="settingsContext">
+          <EntitySetMapping Name="HomeTowns">
+            <EntityTypeMapping TypeName="settingsModel.HomeTown">
+              <MappingFragment StoreEntitySet="HomeTowns">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="State" ColumnName="State" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Potential_First_Names">
             <EntityTypeMapping TypeName="settingsModel.Potential_First_Names">
               <MappingFragment StoreEntitySet="Potential_First_Names">

@@ -62,6 +62,7 @@ namespace SpectatorFootball.Models
         public long Pass_TDs_60andOver { get; set; }
         public long Pass_Ints_60andOver { get; set; }
         public long Long { get; set; }
+        public long Pass_Blocks { get; set; }
     
         public virtual Franchise Franchise { get; set; }
         public virtual Game Game { get; set; }

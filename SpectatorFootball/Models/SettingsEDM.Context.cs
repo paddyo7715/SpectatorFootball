@@ -16,12 +16,12 @@ namespace SpectatorFootball.Models
     public partial class settingsContext : DbContext
     {
         public settingsContext()
-            : base("name=SettingsEntities")
+            : base("name=settingsContext")
         {
         }
 
         public settingsContext(string connString)
-            : base(connString)
+    : base(connString)
         {
         }
 
@@ -30,6 +30,7 @@ namespace SpectatorFootball.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<HomeTown> HomeTowns { get; set; }
         public virtual DbSet<Potential_First_Names> Potential_First_Names { get; set; }
         public virtual DbSet<Potential_Last_Names> Potential_Last_Names { get; set; }
         public virtual DbSet<Stock_Teams> Stock_Teams { get; set; }

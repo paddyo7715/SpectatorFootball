@@ -44,7 +44,8 @@ namespace SpectatorFootball.League
                 int int_pos_num = CommonUtils.getRandomNum(0,iTotal_Player_Positions-1);
                 Player_Pos Pos = (Player_Pos)int_pos_num;
 
-                Player p = Player_Helper.CreatePlayer()
+                Player p = Player_Helper.CreatePlayer(Pos, true);
+                
 
 
             }

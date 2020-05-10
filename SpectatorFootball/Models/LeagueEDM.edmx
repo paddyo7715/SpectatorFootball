@@ -254,6 +254,7 @@
           <Property Name="Fumbles_Return_Yards" Type="integer" Nullable="false" />
           <Property Name="QB_Pressures" Type="integer" Nullable="false" />
           <Property Name="Pass_Rushes" Type="integer" Nullable="false" />
+          <Property Name="Pass_Blocks" Type="integer" Nullable="false" />
         </EntityType>
         <EntityType Name="Game_Player_Passing_Stats">
           <Key>
@@ -308,6 +309,7 @@
           <Property Name="Pass_TDs_60andOver" Type="integer" Nullable="false" />
           <Property Name="Pass_Ints_60andOver" Type="integer" Nullable="false" />
           <Property Name="Long" Type="integer" Nullable="false" />
+          <Property Name="Pass_Blocks" Type="integer" Nullable="false" />
         </EntityType>
         <EntityType Name="Game_Player_Penalties_Stats">
           <Key>
@@ -531,6 +533,10 @@
           <Property Name="First_Name" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
           <Property Name="Last_Name" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
           <Property Name="Age" Type="integer" Nullable="false" />
+          <Property Name="Height" Type="integer" Nullable="false" />
+          <Property Name="Weight" Type="integer" Nullable="false" />
+          <Property Name="Handedness" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="HomeTown" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
           <Property Name="Pos" Type="integer" Nullable="false" />
           <Property Name="Jersey_Number" Type="integer" />
           <Property Name="Retired" Type="integer" Nullable="false" />
@@ -955,18 +961,6 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Game_Player_Pass_Rushers_Stats_1_0">
-          <End Role="Franchise" Type="Self.Franchise" Multiplicity="1" />
-          <End Role="Game_Player_Pass_Rushers_Stats" Type="Self.Game_Player_Pass_Rushers_Stats" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Franchise">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Game_Player_Pass_Rushers_Stats">
-              <PropertyRef Name="Franchise_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Game_Player_Pass_Rushers_Stats_2_0">
           <End Role="Players" Type="Self.Players" Multiplicity="1" />
           <End Role="Game_Player_Pass_Rushers_Stats" Type="Self.Game_Player_Pass_Rushers_Stats" Multiplicity="*" />
           <ReferentialConstraint>
@@ -978,19 +972,19 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Game_Player_Passing_Stats_0_0">
-          <End Role="Game" Type="Self.Game" Multiplicity="1" />
-          <End Role="Game_Player_Passing_Stats" Type="Self.Game_Player_Passing_Stats" Multiplicity="*" />
+        <Association Name="FK_Game_Player_Pass_Rushers_Stats_2_0">
+          <End Role="Franchise" Type="Self.Franchise" Multiplicity="1" />
+          <End Role="Game_Player_Pass_Rushers_Stats" Type="Self.Game_Player_Pass_Rushers_Stats" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Game">
+            <Principal Role="Franchise">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="Game_Player_Passing_Stats">
-              <PropertyRef Name="Game_ID" />
+            <Dependent Role="Game_Player_Pass_Rushers_Stats">
+              <PropertyRef Name="Franchise_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Game_Player_Passing_Stats_1_0">
+        <Association Name="FK_Game_Player_Passing_Stats_0_0">
           <End Role="Franchise" Type="Self.Franchise" Multiplicity="1" />
           <End Role="Game_Player_Passing_Stats" Type="Self.Game_Player_Passing_Stats" Multiplicity="*" />
           <ReferentialConstraint>
@@ -999,6 +993,18 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
             </Principal>
             <Dependent Role="Game_Player_Passing_Stats">
               <PropertyRef Name="Franchise_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Game_Player_Passing_Stats_1_0">
+          <End Role="Game" Type="Self.Game" Multiplicity="1" />
+          <End Role="Game_Player_Passing_Stats" Type="Self.Game_Player_Passing_Stats" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Game">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Game_Player_Passing_Stats">
+              <PropertyRef Name="Game_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1643,19 +1649,19 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
             <End Role="Game_Player_Pass_Rushers_Stats" EntitySet="Game_Player_Pass_Rushers_Stats" />
           </AssociationSet>
           <AssociationSet Name="FK_Game_Player_Pass_Rushers_Stats_1_0" Association="Self.FK_Game_Player_Pass_Rushers_Stats_1_0">
-            <End Role="Franchise" EntitySet="Franchise" />
-            <End Role="Game_Player_Pass_Rushers_Stats" EntitySet="Game_Player_Pass_Rushers_Stats" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Game_Player_Pass_Rushers_Stats_2_0" Association="Self.FK_Game_Player_Pass_Rushers_Stats_2_0">
             <End Role="Players" EntitySet="Players" />
             <End Role="Game_Player_Pass_Rushers_Stats" EntitySet="Game_Player_Pass_Rushers_Stats" />
           </AssociationSet>
+          <AssociationSet Name="FK_Game_Player_Pass_Rushers_Stats_2_0" Association="Self.FK_Game_Player_Pass_Rushers_Stats_2_0">
+            <End Role="Franchise" EntitySet="Franchise" />
+            <End Role="Game_Player_Pass_Rushers_Stats" EntitySet="Game_Player_Pass_Rushers_Stats" />
+          </AssociationSet>
           <AssociationSet Name="FK_Game_Player_Passing_Stats_0_0" Association="Self.FK_Game_Player_Passing_Stats_0_0">
-            <End Role="Game" EntitySet="Game" />
+            <End Role="Franchise" EntitySet="Franchise" />
             <End Role="Game_Player_Passing_Stats" EntitySet="Game_Player_Passing_Stats" />
           </AssociationSet>
           <AssociationSet Name="FK_Game_Player_Passing_Stats_1_0" Association="Self.FK_Game_Player_Passing_Stats_1_0">
-            <End Role="Franchise" EntitySet="Franchise" />
+            <End Role="Game" EntitySet="Game" />
             <End Role="Game_Player_Passing_Stats" EntitySet="Game_Player_Passing_Stats" />
           </AssociationSet>
           <AssociationSet Name="FK_Game_Player_Passing_Stats_2_0" Association="Self.FK_Game_Player_Passing_Stats_2_0">
@@ -1892,8 +1898,8 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
           <NavigationProperty Name="Game_Player_Kickoff_Receiver_Stats" Relationship="Self.FK_Game_Player_Kickoff_Receiver_Stats_0_0" FromRole="Franchise" ToRole="Game_Player_Kickoff_Receiver_Stats" />
           <NavigationProperty Name="Game_Player_Offensive_Linemen_Stats" Relationship="Self.FK_Game_Player_Offensive_Linemen_Stats_1_0" FromRole="Franchise" ToRole="Game_Player_Offensive_Linemen_Stats" />
           <NavigationProperty Name="Game_Player_Pass_Defense_Stats" Relationship="Self.FK_Game_Player_Pass_Defense_Stats_0_0" FromRole="Franchise" ToRole="Game_Player_Pass_Defense_Stats" />
-          <NavigationProperty Name="Game_Player_Pass_Rushers_Stats" Relationship="Self.FK_Game_Player_Pass_Rushers_Stats_1_0" FromRole="Franchise" ToRole="Game_Player_Pass_Rushers_Stats" />
-          <NavigationProperty Name="Game_Player_Passing_Stats" Relationship="Self.FK_Game_Player_Passing_Stats_1_0" FromRole="Franchise" ToRole="Game_Player_Passing_Stats" />
+          <NavigationProperty Name="Game_Player_Pass_Rushers_Stats" Relationship="Self.FK_Game_Player_Pass_Rushers_Stats_2_0" FromRole="Franchise" ToRole="Game_Player_Pass_Rushers_Stats" />
+          <NavigationProperty Name="Game_Player_Passing_Stats" Relationship="Self.FK_Game_Player_Passing_Stats_0_0" FromRole="Franchise" ToRole="Game_Player_Passing_Stats" />
           <NavigationProperty Name="Game_Player_Penalties_Stats" Relationship="Self.FK_Game_Player_Penalties_Stats_2_0" FromRole="Franchise" ToRole="Game_Player_Penalties_Stats" />
           <NavigationProperty Name="Game_Player_Penalty_Stats" Relationship="Self.FK_Game_Player_Penalty_Stats_2_0" FromRole="Franchise" ToRole="Game_Player_Penalty_Stats" />
           <NavigationProperty Name="Game_Player_Punt_Defenders" Relationship="Self.FK_Game_Player_Punt_Defenders_0_0" FromRole="Franchise" ToRole="Game_Player_Punt_Defenders" />
@@ -1965,7 +1971,7 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
           <NavigationProperty Name="Game_Player_Offensive_Linemen_Stats" Relationship="Self.FK_Game_Player_Offensive_Linemen_Stats_2_0" FromRole="Game" ToRole="Game_Player_Offensive_Linemen_Stats" />
           <NavigationProperty Name="Game_Player_Pass_Defense_Stats" Relationship="Self.FK_Game_Player_Pass_Defense_Stats_2_0" FromRole="Game" ToRole="Game_Player_Pass_Defense_Stats" />
           <NavigationProperty Name="Game_Player_Pass_Rushers_Stats" Relationship="Self.FK_Game_Player_Pass_Rushers_Stats_0_0" FromRole="Game" ToRole="Game_Player_Pass_Rushers_Stats" />
-          <NavigationProperty Name="Game_Player_Passing_Stats" Relationship="Self.FK_Game_Player_Passing_Stats_0_0" FromRole="Game" ToRole="Game_Player_Passing_Stats" />
+          <NavigationProperty Name="Game_Player_Passing_Stats" Relationship="Self.FK_Game_Player_Passing_Stats_1_0" FromRole="Game" ToRole="Game_Player_Passing_Stats" />
           <NavigationProperty Name="Game_Player_Penalties_Stats" Relationship="Self.FK_Game_Player_Penalties_Stats_1_0" FromRole="Game" ToRole="Game_Player_Penalties_Stats" />
           <NavigationProperty Name="Game_Player_Penalty_Stats" Relationship="Self.FK_Game_Player_Penalty_Stats_1_0" FromRole="Game" ToRole="Game_Player_Penalty_Stats" />
           <NavigationProperty Name="Game_Player_Punt_Defenders" Relationship="Self.FK_Game_Player_Punt_Defenders_1_0" FromRole="Game" ToRole="Game_Player_Punt_Defenders" />
@@ -2143,9 +2149,10 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
           <Property Name="Fumbles_Return_Yards" Type="Int64" Nullable="false" />
           <Property Name="QB_Pressures" Type="Int64" Nullable="false" />
           <Property Name="Pass_Rushes" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="Franchise" Relationship="Self.FK_Game_Player_Pass_Rushers_Stats_1_0" FromRole="Game_Player_Pass_Rushers_Stats" ToRole="Franchise" />
+          <Property Name="Pass_Blocks" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Franchise" Relationship="Self.FK_Game_Player_Pass_Rushers_Stats_2_0" FromRole="Game_Player_Pass_Rushers_Stats" ToRole="Franchise" />
           <NavigationProperty Name="Game" Relationship="Self.FK_Game_Player_Pass_Rushers_Stats_0_0" FromRole="Game_Player_Pass_Rushers_Stats" ToRole="Game" />
-          <NavigationProperty Name="Player" Relationship="Self.FK_Game_Player_Pass_Rushers_Stats_2_0" FromRole="Game_Player_Pass_Rushers_Stats" ToRole="Players" />
+          <NavigationProperty Name="Player" Relationship="Self.FK_Game_Player_Pass_Rushers_Stats_1_0" FromRole="Game_Player_Pass_Rushers_Stats" ToRole="Players" />
         </EntityType>
         <EntityType Name="Game_Player_Passing_Stats">
           <Key>
@@ -2200,8 +2207,9 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
           <Property Name="Pass_TDs_60andOver" Type="Int64" Nullable="false" />
           <Property Name="Pass_Ints_60andOver" Type="Int64" Nullable="false" />
           <Property Name="Long" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="Franchise" Relationship="Self.FK_Game_Player_Passing_Stats_1_0" FromRole="Game_Player_Passing_Stats" ToRole="Franchise" />
-          <NavigationProperty Name="Game" Relationship="Self.FK_Game_Player_Passing_Stats_0_0" FromRole="Game_Player_Passing_Stats" ToRole="Game" />
+          <Property Name="Pass_Blocks" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Franchise" Relationship="Self.FK_Game_Player_Passing_Stats_0_0" FromRole="Game_Player_Passing_Stats" ToRole="Franchise" />
+          <NavigationProperty Name="Game" Relationship="Self.FK_Game_Player_Passing_Stats_1_0" FromRole="Game_Player_Passing_Stats" ToRole="Game" />
           <NavigationProperty Name="Player" Relationship="Self.FK_Game_Player_Passing_Stats_2_0" FromRole="Game_Player_Passing_Stats" ToRole="Players" />
         </EntityType>
         <EntityType Name="Game_Player_Penalties_Stats">
@@ -2462,6 +2470,10 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
           <Property Name="First_Name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Last_Name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Age" Type="Int64" Nullable="false" />
+          <Property Name="Height" Type="Int64" Nullable="false" />
+          <Property Name="Weight" Type="Int64" Nullable="false" />
+          <Property Name="Handedness" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="HomeTown" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Pos" Type="Int64" Nullable="false" />
           <Property Name="Jersey_Number" Type="Int64" />
           <Property Name="Retired" Type="Int64" Nullable="false" />
@@ -2477,7 +2489,7 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
           <NavigationProperty Name="Game_Player_Kickoff_Receiver_Stats" Relationship="Self.FK_Game_Player_Kickoff_Receiver_Stats_1_0" FromRole="Players" ToRole="Game_Player_Kickoff_Receiver_Stats" />
           <NavigationProperty Name="Game_Player_Offensive_Linemen_Stats" Relationship="Self.FK_Game_Player_Offensive_Linemen_Stats_0_0" FromRole="Players" ToRole="Game_Player_Offensive_Linemen_Stats" />
           <NavigationProperty Name="Game_Player_Pass_Defense_Stats" Relationship="Self.FK_Game_Player_Pass_Defense_Stats_1_0" FromRole="Players" ToRole="Game_Player_Pass_Defense_Stats" />
-          <NavigationProperty Name="Game_Player_Pass_Rushers_Stats" Relationship="Self.FK_Game_Player_Pass_Rushers_Stats_2_0" FromRole="Players" ToRole="Game_Player_Pass_Rushers_Stats" />
+          <NavigationProperty Name="Game_Player_Pass_Rushers_Stats" Relationship="Self.FK_Game_Player_Pass_Rushers_Stats_1_0" FromRole="Players" ToRole="Game_Player_Pass_Rushers_Stats" />
           <NavigationProperty Name="Game_Player_Passing_Stats" Relationship="Self.FK_Game_Player_Passing_Stats_2_0" FromRole="Players" ToRole="Game_Player_Passing_Stats" />
           <NavigationProperty Name="Game_Player_Penalties_Stats" Relationship="Self.FK_Game_Player_Penalties_Stats_0_0" FromRole="Players" ToRole="Game_Player_Penalties_Stats" />
           <NavigationProperty Name="Game_Player_Penalty_Stats" Relationship="Self.FK_Game_Player_Penalty_Stats_0_0" FromRole="Players" ToRole="Game_Player_Penalty_Stats" />
@@ -2725,7 +2737,7 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Game_Player_Pass_Rushers_Stats_1_0">
+        <Association Name="FK_Game_Player_Pass_Rushers_Stats_2_0">
           <End Role="Franchise" Type="Self.Franchise" Multiplicity="1" />
           <End Role="Game_Player_Pass_Rushers_Stats" Type="Self.Game_Player_Pass_Rushers_Stats" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2737,7 +2749,7 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Game_Player_Passing_Stats_1_0">
+        <Association Name="FK_Game_Player_Passing_Stats_0_0">
           <End Role="Franchise" Type="Self.Franchise" Multiplicity="1" />
           <End Role="Game_Player_Passing_Stats" Type="Self.Game_Player_Passing_Stats" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2989,7 +3001,7 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Game_Player_Passing_Stats_0_0">
+        <Association Name="FK_Game_Player_Passing_Stats_1_0">
           <End Role="Game" Type="Self.Game" Multiplicity="1" />
           <End Role="Game_Player_Passing_Stats" Type="Self.Game_Player_Passing_Stats" Multiplicity="*" />
           <ReferentialConstraint>
@@ -3193,7 +3205,7 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Game_Player_Pass_Rushers_Stats_2_0">
+        <Association Name="FK_Game_Player_Pass_Rushers_Stats_1_0">
           <End Role="Players" Type="Self.Player" Multiplicity="1" />
           <End Role="Game_Player_Pass_Rushers_Stats" Type="Self.Game_Player_Pass_Rushers_Stats" Multiplicity="*" />
           <ReferentialConstraint>
@@ -3541,11 +3553,11 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
             <End Role="Franchise" EntitySet="Franchises" />
             <End Role="Game_Player_Pass_Defense_Stats" EntitySet="Game_Player_Pass_Defense_Stats" />
           </AssociationSet>
-          <AssociationSet Name="FK_Game_Player_Pass_Rushers_Stats_1_0" Association="Self.FK_Game_Player_Pass_Rushers_Stats_1_0">
+          <AssociationSet Name="FK_Game_Player_Pass_Rushers_Stats_2_0" Association="Self.FK_Game_Player_Pass_Rushers_Stats_2_0">
             <End Role="Franchise" EntitySet="Franchises" />
             <End Role="Game_Player_Pass_Rushers_Stats" EntitySet="Game_Player_Pass_Rushers_Stats" />
           </AssociationSet>
-          <AssociationSet Name="FK_Game_Player_Passing_Stats_1_0" Association="Self.FK_Game_Player_Passing_Stats_1_0">
+          <AssociationSet Name="FK_Game_Player_Passing_Stats_0_0" Association="Self.FK_Game_Player_Passing_Stats_0_0">
             <End Role="Franchise" EntitySet="Franchises" />
             <End Role="Game_Player_Passing_Stats" EntitySet="Game_Player_Passing_Stats" />
           </AssociationSet>
@@ -3629,7 +3641,7 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
             <End Role="Game" EntitySet="Games" />
             <End Role="Game_Player_Pass_Rushers_Stats" EntitySet="Game_Player_Pass_Rushers_Stats" />
           </AssociationSet>
-          <AssociationSet Name="FK_Game_Player_Passing_Stats_0_0" Association="Self.FK_Game_Player_Passing_Stats_0_0">
+          <AssociationSet Name="FK_Game_Player_Passing_Stats_1_0" Association="Self.FK_Game_Player_Passing_Stats_1_0">
             <End Role="Game" EntitySet="Games" />
             <End Role="Game_Player_Passing_Stats" EntitySet="Game_Player_Passing_Stats" />
           </AssociationSet>
@@ -3697,7 +3709,7 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
             <End Role="Players" EntitySet="Players" />
             <End Role="Game_Player_Pass_Defense_Stats" EntitySet="Game_Player_Pass_Defense_Stats" />
           </AssociationSet>
-          <AssociationSet Name="FK_Game_Player_Pass_Rushers_Stats_2_0" Association="Self.FK_Game_Player_Pass_Rushers_Stats_2_0">
+          <AssociationSet Name="FK_Game_Player_Pass_Rushers_Stats_1_0" Association="Self.FK_Game_Player_Pass_Rushers_Stats_1_0">
             <End Role="Players" EntitySet="Players" />
             <End Role="Game_Player_Pass_Rushers_Stats" EntitySet="Game_Player_Pass_Rushers_Stats" />
           </AssociationSet>
@@ -4046,6 +4058,7 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
                 <ScalarProperty Name="Fumbles_Return_Yards" ColumnName="Fumbles_Return_Yards" />
                 <ScalarProperty Name="QB_Pressures" ColumnName="QB_Pressures" />
                 <ScalarProperty Name="Pass_Rushes" ColumnName="Pass_Rushes" />
+                <ScalarProperty Name="Pass_Blocks" ColumnName="Pass_Blocks" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -4100,6 +4113,7 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
                 <ScalarProperty Name="Pass_TDs_60andOver" ColumnName="Pass_TDs_60andOver" />
                 <ScalarProperty Name="Pass_Ints_60andOver" ColumnName="Pass_Ints_60andOver" />
                 <ScalarProperty Name="Long" ColumnName="Long" />
+                <ScalarProperty Name="Pass_Blocks" ColumnName="Pass_Blocks" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -4329,6 +4343,10 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
                 <ScalarProperty Name="First_Name" ColumnName="First_Name" />
                 <ScalarProperty Name="Last_Name" ColumnName="Last_Name" />
                 <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="Height" ColumnName="Height" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="Handedness" ColumnName="Handedness" />
+                <ScalarProperty Name="HomeTown" ColumnName="HomeTown" />
                 <ScalarProperty Name="Pos" ColumnName="Pos" />
                 <ScalarProperty Name="Jersey_Number" ColumnName="Jersey_Number" />
                 <ScalarProperty Name="Retired" ColumnName="Retired" />

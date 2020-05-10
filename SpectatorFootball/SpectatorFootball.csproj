@@ -107,7 +107,6 @@
     <Compile Include="Common\SettingsConnection.cs" />
     <Compile Include="Common\Validator.cs" />
     <Compile Include="DAO\DBVersionDAO.cs" />
-    <Compile Include="Draft.cs" />
     <Compile Include="Enum\League_State.cs" />
     <Compile Include="Enum\Player_Pos.cs" />
     <Compile Include="League\League_Helper.cs" />
@@ -199,6 +198,9 @@
     </Compile>
     <Compile Include="Models\Hall_of_Fame.cs">
       <DependentUpon>LeagueEDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HomeTown.cs">
+      <DependentUpon>SettingsEDM.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Injury.cs">
       <DependentUpon>LeagueEDM.tt</DependentUpon>
@@ -360,7 +362,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Player\Player_Helper.cs" />
-    <Compile Include="Player\Player_Abilities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -382,10 +383,6 @@
     <None Include="Database\BlankDB.db" />
     <None Include="Database\Settings.db" />
     <None Include="ImageSource\blankUniform.xcf" />
-    <EntityDeploy Include="Models\SettingsEDM.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>SettingsEDM.Designer.cs</LastGenOutput>
-    </EntityDeploy>
     <EntityDeploy Include="Models\LeagueEDM.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>LeagueEDM.Designer.cs</LastGenOutput>
@@ -393,6 +390,10 @@
     <None Include="Models\LeagueEDM.edmx.diagram">
       <DependentUpon>LeagueEDM.edmx</DependentUpon>
     </None>
+    <EntityDeploy Include="Models\SettingsEDM.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>SettingsEDM.Designer.cs</LastGenOutput>
+    </EntityDeploy>
     <None Include="Models\SettingsEDM.edmx.diagram">
       <DependentUpon>SettingsEDM.edmx</DependentUpon>
     </None>
@@ -408,6 +409,16 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Models\SettingsEDM.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SettingsEDM.edmx</DependentUpon>
+      <LastGenOutput>SettingsEDM.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\SettingsEDM.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SettingsEDM.edmx</DependentUpon>
+      <LastGenOutput>SettingsEDM.cs</LastGenOutput>
+    </Content>
     <Resource Include="Images\Logos\APFL.png" />
     <Resource Include="Images\Logos\blank_Horizontal.png" />
     <Resource Include="Images\Logos\Blank_Sheild.png" />
@@ -427,16 +438,6 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>LeagueEDM.edmx</DependentUpon>
       <LastGenOutput>LeagueEDM.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\SettingsEDM.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>SettingsEDM.edmx</DependentUpon>
-      <LastGenOutput>SettingsEDM.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\SettingsEDM.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>SettingsEDM.edmx</DependentUpon>
-      <LastGenOutput>SettingsEDM.cs</LastGenOutput>
     </Content>
     <Resource Include="Versioning\History.txt" />
     <Resource Include="Images\Helmets\st_Thunder.png" />

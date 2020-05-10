@@ -47,6 +47,62 @@ namespace SpectatorFootball
         public const int K_PER_TEAM = 1;
         public const int P_PER_TEAM = 1;
 
+
+        //Player Height and Weight Ranges.
+        //Height is in inches
+        public const int PLAYER_WEIGHT_VARIANT_PERCENT = 20;
+
+        public const int QB_LOW_HEIGHT = 71;
+        public const int QB_HIGH_HEIGHT = 80;
+        public const int QB_LOW_WEIGHT = 190;
+        public const int QB_HIGH_WEIGHT = 230;
+
+        public const int RB_LOW_HEIGHT = 66;
+        public const int RB_HIGH_HEIGHT = 73;
+        public const int RB_LOW_WEIGHT = 170;
+        public const int RB_HIGH_WEIGHT = 240;
+
+        public const int WR_LOW_HEIGHT = 68;
+        public const int WR_HIGH_HEIGHT = 77;
+        public const int WR_LOW_WEIGHT = 170;
+        public const int WR_HIGH_WEIGHT = 210;
+
+        public const int TE_LOW_HEIGHT = 73;
+        public const int TE_HIGH_HEIGHT = 79;
+        public const int TE_LOW_WEIGHT = 240;
+        public const int TE_HIGH_WEIGHT = 270;
+
+        public const int OL_LOW_HEIGHT = 74;
+        public const int OL_HIGH_HEIGHT = 80;
+        public const int OL_LOW_WEIGHT = 285;
+        public const int OL_HIGH_WEIGHT = 340;
+
+        public const int DL_LOW_HEIGHT = 73;
+        public const int DL_HIGH_HEIGHT = 79;
+        public const int DL_LOW_WEIGHT = 260;
+        public const int DL_HIGH_WEIGHT = 300;
+
+        public const int LB_LOW_HEIGHT = 71;
+        public const int LB_HIGH_HEIGHT = 77;
+        public const int LB_LOW_WEIGHT = 225;
+        public const int LB_HIGH_WEIGHT = 245;
+
+        public const int DB_LOW_HEIGHT = 68;
+        public const int DB_HIGH_HEIGHT = 75;
+        public const int DB_LOW_WEIGHT = 170;
+        public const int DB_HIGH_WEIGHT = 210;
+
+        public const int K_LOW_HEIGHT = 70;
+        public const int K_HIGH_HEIGHT = 74;
+        public const int K_LOW_WEIGHT = 180;
+        public const int K_HIGH_WEIGHT = 220;
+
+        public const int P_LOW_HEIGHT = 71;
+        public const int P_HIGH_HEIGHT = 75;
+        public const int P_LOW_WEIGHT = 185;
+        public const int P_HIGH_WEIGHT = 230;
+
+
         // Numbering
         public const int QBLOWNUM = 7;
         public const int QBHIGHNUM = 18;
@@ -75,7 +131,7 @@ namespace SpectatorFootball
         public const int KLOWNUM = 1;
         public const int KHIGHNUM = 6;
 
-        // Player Ratings Percentages
+        // Player Ratings Percentages for overall rating
         public const double QB_FUMBLE_PERCENT = 0.03;
         public const double QB_ARMSTRENGTH_PERCENT = 0.15;
         public const double QB_ACCURACY_RATING = 0.45;
@@ -156,7 +212,7 @@ namespace SpectatorFootball
         // age
         public const int STARTING_ROOKIE_AGE = 20;
         public const int NEWLEAGE_LOW_AGE = 20;
-        public const int NEWLEAGE_HIGH_AGE = 31;
+        public const int NEWLEAGE_HIGH_AGE = 35;
 
         // Abilities
         public const int OL_RUN_PASS_BLOCK_DELTA = 5;
@@ -175,6 +231,9 @@ namespace SpectatorFootball
 
         public const int TERTIARY_ABILITY_LOW_RATING = 1;
         public const int TERTIARY_ABILITY_HIGH_RATING = 10;
+
+        public const int NON_ATHLETIC_ABILITY_LOW = 1;
+        public const int NON_ATHLETIC_ABILITY_HIGH = 100;
 
         // Teams
         public const string EMPTY_TEAM_SLOT = "Empty Team Slot";

@@ -29,6 +29,7 @@ namespace SpectatorFootball.Models
         public long Fumbles_Return_Yards { get; set; }
         public long QB_Pressures { get; set; }
         public long Pass_Rushes { get; set; }
+        public long Pass_Blocks { get; set; }
     
         public virtual Franchise Franchise { get; set; }
         public virtual Game Game { get; set; }

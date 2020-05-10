@@ -91,7 +91,11 @@ namespace SpectatorFootball
                 bw.ReportProgress(i, state_struct);
 
                 //Create players for draft
-                int num_players = (int)((app_Constants.QB_PER_TEAM + app_Constants.RB_PER_TEAM + app_Constants.WR_PER_TEAM + app_Constants.TE_PER_TEAM + app_Constants.OL_PER_TEAM + app_Constants.DL_PER_TEAM + app_Constants.LB_PER_TEAM + app_Constants.DB_PER_TEAM + app_Constants.K_PER_TEAM + app_Constants.P_PER_TEAM) * app_Constants.DRAFT_MULTIPLIER);
+                int num_players = (int)(((app_Constants.QB_PER_TEAM + app_Constants.RB_PER_TEAM + app_Constants.WR_PER_TEAM + app_Constants.TE_PER_TEAM + app_Constants.OL_PER_TEAM + app_Constants.DL_PER_TEAM + app_Constants.LB_PER_TEAM + app_Constants.DB_PER_TEAM + app_Constants.K_PER_TEAM + app_Constants.P_PER_TEAM) * nls.Season.League_Structure_by_Season[0].Num_Teams ) * app_Constants.DRAFT_MULTIPLIER);
+                 
+                when i get the players back don't forget to add each player ratings
+                    to the season.player_ratings in a while loop.'
+
                 //builid method to create players return should be a list of players player ratings 
                 //will be put in the players_ratings list of the player object.
 

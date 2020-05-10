@@ -46,6 +46,10 @@ namespace SpectatorFootball.Models
         public string First_Name { get; set; }
         public string Last_Name { get; set; }
         public long Age { get; set; }
+        public long Height { get; set; }
+        public long Weight { get; set; }
+        public string Handedness { get; set; }
+        public string HomeTown { get; set; }
         public long Pos { get; set; }
         public Nullable<long> Jersey_Number { get; set; }
         public long Retired { get; set; }

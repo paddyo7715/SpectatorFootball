@@ -255,6 +255,7 @@
           <ScalarProperty Name="Fumbles_Return_Yards" ColumnName="Fumbles_Return_Yards" />
           <ScalarProperty Name="QB_Pressures" ColumnName="QB_Pressures" />
           <ScalarProperty Name="Pass_Rushes" ColumnName="Pass_Rushes" />
+          <ScalarProperty Name="Pass_Blocks" ColumnName="Pass_Blocks" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -309,6 +310,7 @@
           <ScalarProperty Name="Pass_TDs_60andOver" ColumnName="Pass_TDs_60andOver" />
           <ScalarProperty Name="Pass_Ints_60andOver" ColumnName="Pass_Ints_60andOver" />
           <ScalarProperty Name="Long" ColumnName="Long" />
+          <ScalarProperty Name="Pass_Blocks" ColumnName="Pass_Blocks" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -538,6 +540,10 @@
           <ScalarProperty Name="First_Name" ColumnName="First_Name" />
           <ScalarProperty Name="Last_Name" ColumnName="Last_Name" />
           <ScalarProperty Name="Age" ColumnName="Age" />
+          <ScalarProperty Name="Height" ColumnName="Height" />
+          <ScalarProperty Name="Weight" ColumnName="Weight" />
+          <ScalarProperty Name="Handedness" ColumnName="Handedness" />
+          <ScalarProperty Name="HomeTown" ColumnName="HomeTown" />
           <ScalarProperty Name="Pos" ColumnName="Pos" />
           <ScalarProperty Name="Jersey_Number" ColumnName="Jersey_Number" />
           <ScalarProperty Name="Retired" ColumnName="Retired" />

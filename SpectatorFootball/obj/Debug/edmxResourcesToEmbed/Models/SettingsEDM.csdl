@@ -1,5 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="settingsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="HomeTown">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="City" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="State" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
   <EntityType Name="Potential_First_Names">
     <Key>
       <PropertyRef Name="FirstName" />
@@ -63,7 +71,8 @@
     <Property Name="Stadium_Field_Type" Type="Int64" Nullable="false" />
     <Property Name="Stadium_Field_Color" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
   </EntityType>
-  <EntityContainer Name="SettingsEntities" annotation:LazyLoadingEnabled="true">
+  <EntityContainer Name="settingsContext" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="HomeTowns" EntityType="Self.HomeTown" />
     <EntitySet Name="Potential_First_Names" EntityType="Self.Potential_First_Names" />
     <EntitySet Name="Potential_Last_Names" EntityType="Self.Potential_Last_Names" />
     <EntitySet Name="Stock_Teams" EntityType="Self.Stock_Teams" />
