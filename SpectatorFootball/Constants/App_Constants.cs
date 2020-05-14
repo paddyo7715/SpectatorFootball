@@ -51,6 +51,8 @@ namespace SpectatorFootball
         //Player Height and Weight Ranges.
         //Height is in inches
         public const int PLAYER_WEIGHT_VARIANT_PERCENT = 20;
+        public const int WEIGHT_ADJUSTMENT_MULTIPLYER = 2;
+        public const int WEIGHT_ADJUSTMENT_HALF_RANGE = 10;
 
         public const int QB_LOW_HEIGHT = 71;
         public const int QB_HIGH_HEIGHT = 80;

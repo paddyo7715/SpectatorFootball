@@ -32,6 +32,10 @@ namespace SpectatorFootball
 
             Player_Ratings ratings = Create_Player_Ratings(pos);
 
+            int[] m = CreateHeightWeight(pos, ratings);
+            r.Height = m[0];
+            r.Weight = m[1];
+
             r.First_Name = PlayerName[0];
             r.Last_Name = PlayerName[1];
 
@@ -39,13 +43,18 @@ namespace SpectatorFootball
             r.Pos = (int)pos;
             r.Jersey_Number = null;
 
+            Administration_Services adms = new Administration_Services();
+            string HomeTown = adms.getRandomHomeTown();
+
+            r.HomeTown = HomeTown;
+
             r.Player_Ratings.Add(ratings);
 
             r.Franchise_ID = null;
 
             return r;
         }
-        private int[] CreateHeightWeight(Player_Pos pos, Player_Ratings pr)
+        private static int[] CreateHeightWeight(Player_Pos pos, Player_Ratings pr)
         {
             int height=0;
             int weight=0;
@@ -62,53 +71,106 @@ namespace SpectatorFootball
 
                 case Player_Pos.RB:
                     {
+                        height = CommonUtils.getRandomNum(app_Constants.RB_LOW_HEIGHT, app_Constants.RB_HIGH_HEIGHT);
+                        weight = getPlayerWeight(app_Constants.RB_LOW_WEIGHT, app_Constants.RB_HIGH_WEIGHT,
+                                    app_Constants.RB_LOW_HEIGHT, app_Constants.RB_HIGH_HEIGHT, height);
+                        weight = weight + weightAdjust(app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING,(int)pr.Speed_Rating, true);
+                        weight = weight + weightAdjust(app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, (int)pr.Running_Power_Rating, false);
                         break;
+   
                     }
 
                 case Player_Pos.WR:
                     {
+                        height = CommonUtils.getRandomNum(app_Constants.WR_LOW_HEIGHT, app_Constants.WR_HIGH_HEIGHT);
+                        weight = getPlayerWeight(app_Constants.WR_LOW_WEIGHT, app_Constants.WR_HIGH_WEIGHT,
+                                    app_Constants.WR_LOW_HEIGHT, app_Constants.WR_HIGH_HEIGHT, height);
+                        weight = weight + weightAdjust(app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, (int)pr.Speed_Rating, true);
                         break;
                     }
 
                 case Player_Pos.TE:
                     {
+                        height = CommonUtils.getRandomNum(app_Constants.TE_LOW_HEIGHT, app_Constants.TE_HIGH_HEIGHT);
+                        weight = getPlayerWeight(app_Constants.TE_LOW_WEIGHT, app_Constants.TE_HIGH_WEIGHT,
+                                    app_Constants.TE_LOW_HEIGHT, app_Constants.TE_HIGH_HEIGHT, height);
+                        weight = weight + weightAdjust(app_Constants.SECONDARY_1_ABILITY_LOW_RATING, app_Constants.SECONDARY_1_ABILITY_HIGH_RATING, (int)pr.Speed_Rating, true);
+                        weight = weight + weightAdjust(app_Constants.SECONDARY_1_ABILITY_LOW_RATING, app_Constants.SECONDARY_1_ABILITY_LOW_RATING, (int)pr.Pass_Block_Rating, false);
                         break;
                     }
 
                 case Player_Pos.OL:
                     {
+                        height = CommonUtils.getRandomNum(app_Constants.OL_LOW_HEIGHT, app_Constants.OL_HIGH_HEIGHT);
+                        weight = getPlayerWeight(app_Constants.OL_LOW_WEIGHT, app_Constants.OL_HIGH_WEIGHT,
+                                    app_Constants.OL_LOW_HEIGHT, app_Constants.OL_HIGH_HEIGHT, height);
+                        weight = weight + weightAdjust(app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, (int)pr.Pass_Block_Rating, false);
                         break;
                     }
 
                 case Player_Pos.DL:
                     {
+                        height = CommonUtils.getRandomNum(app_Constants.DL_LOW_HEIGHT, app_Constants.DL_HIGH_HEIGHT);
+                        weight = getPlayerWeight(app_Constants.DL_LOW_WEIGHT, app_Constants.DL_HIGH_WEIGHT,
+                                    app_Constants.DL_LOW_HEIGHT, app_Constants.DL_HIGH_HEIGHT, height);
+                        weight = weight + weightAdjust(app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, (int)pr.Pass_Attack, false);
                         break;
                     }
 
                 case Player_Pos.LB:
                     {
+                        height = CommonUtils.getRandomNum(app_Constants.LB_LOW_HEIGHT, app_Constants.LB_HIGH_HEIGHT);
+                        weight = getPlayerWeight(app_Constants.LB_LOW_WEIGHT, app_Constants.LB_HIGH_WEIGHT,
+                                    app_Constants.LB_LOW_HEIGHT, app_Constants.LB_HIGH_HEIGHT, height);
                         break;
                     }
 
                 case Player_Pos.DB:
                     {
+                        height = CommonUtils.getRandomNum(app_Constants.DB_LOW_HEIGHT, app_Constants.DB_HIGH_HEIGHT);
+                        weight = getPlayerWeight(app_Constants.DB_LOW_WEIGHT, app_Constants.DB_HIGH_WEIGHT,
+                                    app_Constants.DB_LOW_HEIGHT, app_Constants.DB_HIGH_HEIGHT, height);
+                        weight = weight + weightAdjust(app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, (int)pr.Speed_Rating, true);
                         break;
                     }
 
                 case Player_Pos.K:
                     {
+                        height = CommonUtils.getRandomNum(app_Constants.K_LOW_HEIGHT, app_Constants.K_HIGH_HEIGHT);
+                        weight = getPlayerWeight(app_Constants.K_LOW_WEIGHT, app_Constants.K_HIGH_WEIGHT,
+                                     app_Constants.K_LOW_HEIGHT, app_Constants.K_HIGH_HEIGHT, height);
                         break;
                     }
 
                 case Player_Pos.P:
                     {
+                        height = CommonUtils.getRandomNum(app_Constants.P_LOW_HEIGHT, app_Constants.P_HIGH_HEIGHT);
+                        weight = getPlayerWeight(app_Constants.P_LOW_WEIGHT, app_Constants.P_HIGH_WEIGHT,
+                        app_Constants.P_LOW_HEIGHT, app_Constants.P_HIGH_HEIGHT, height);
+
                         break;
                     }
             }
 
             return new int[] { height, weight};
         }
-        public int getPlayerWeight(int low_weight, int high_weight,
+        private static int weightAdjust(int rating_low, int rating_hight, int value, Boolean flip)
+        {
+            int r;
+            int range = rating_hight - rating_hight;
+            value = value - rating_hight;
+            double percent = rating_hight / value;
+
+            r = (int)((percent * 100) / 10);
+            r = (r * app_Constants.WEIGHT_ADJUSTMENT_MULTIPLYER) - app_Constants.WEIGHT_ADJUSTMENT_HALF_RANGE;
+
+            if (flip)
+                r = r * -1;
+
+            return r;
+        }
+
+        private static int getPlayerWeight(int low_weight, int high_weight,
                                     int low_height, int high_height,
                                     int height)
         {
