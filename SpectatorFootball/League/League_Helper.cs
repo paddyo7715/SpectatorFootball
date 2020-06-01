@@ -45,9 +45,7 @@ namespace SpectatorFootball.League
                 Player_Pos Pos = (Player_Pos)int_pos_num;
 
                 Player p = Player_Helper.CreatePlayer(Pos, true);
-                
-
-
+                r.Add(p);
             }
 
             return r;

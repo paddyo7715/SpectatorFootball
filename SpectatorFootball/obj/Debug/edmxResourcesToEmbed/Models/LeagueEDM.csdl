@@ -44,17 +44,18 @@
     <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Season_ID" Type="Int64" Nullable="false" />
     <Property Name="Round" Type="Int64" Nullable="false" />
+    <Property Name="Pick_Number" Type="Int64" Nullable="false" />
     <Property Name="Franchise_ID" Type="Int64" Nullable="false" />
-    <Property Name="Player_ID" Type="Int64" Nullable="false" />
-    <NavigationProperty Name="Player" Relationship="Self.FK_Draft_0_0" FromRole="Draft" ToRole="Players" />
+    <Property Name="Player_ID" Type="Int64" />
+    <NavigationProperty Name="Season" Relationship="Self.FK_Draft_0_0" FromRole="Draft" ToRole="Season" />
     <NavigationProperty Name="Franchise" Relationship="Self.FK_Draft_1_0" FromRole="Draft" ToRole="Franchise" />
-    <NavigationProperty Name="Season" Relationship="Self.FK_Draft_2_0" FromRole="Draft" ToRole="Season" />
+    <NavigationProperty Name="Player" Relationship="Self.FK_Draft_2_0" FromRole="Draft" ToRole="Players" />
   </EntityType>
   <EntityType Name="Franchise">
     <Key>
       <PropertyRef Name="ID" />
     </Key>
-    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID" Type="Int64" Nullable="false" />
     <Property Name="Name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
     <NavigationProperty Name="Drafts" Relationship="Self.FK_Draft_1_0" FromRole="Franchise" ToRole="Draft" />
     <NavigationProperty Name="Game_Player_FG_Defense_Stats" Relationship="Self.FK_Game_Player_FG_Defense_Stats_0_0" FromRole="Franchise" ToRole="Game_Player_FG_Defense_Stats" />
@@ -85,8 +86,10 @@
     <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Season_ID" Type="Int64" Nullable="false" />
     <Property Name="Week" Type="Int64" Nullable="false" />
-    <Property Name="Home_Team_Slot_ID" Type="Int64" Nullable="false" />
-    <Property Name="Away_Team_Slot_ID" Type="Int64" Nullable="false" />
+    <Property Name="Home_Team_Franchise_ID" Type="Int64" Nullable="false" />
+    <Property Name="Away_Team_Franchise_ID" Type="Int64" Nullable="false" />
+    <Property Name="Home_Score" Type="Int64" />
+    <Property Name="Away_Score" Type="Int64" />
     <Property Name="Home_FirstDowns" Type="Int64" />
     <Property Name="Home_ThirdDown_Conversions" Type="Int64" />
     <Property Name="Home_ThirdDowns" Type="Int64" />
@@ -111,18 +114,8 @@
     <Property Name="Away_Score_Q3" Type="Int64" />
     <Property Name="Home_Score_Q4" Type="Int64" />
     <Property Name="Away_Score_Q4" Type="Int64" />
-    <Property Name="Home_Score_Q5" Type="Int64" />
-    <Property Name="Away_Score_Q5" Type="Int64" />
-    <Property Name="Home_Score_Q6" Type="Int64" />
-    <Property Name="Away_Score_Q6" Type="Int64" />
-    <Property Name="Home_Score_Q7" Type="Int64" />
-    <Property Name="Away_Score_Q7" Type="Int64" />
-    <Property Name="Home_Score_Q8" Type="Int64" />
-    <Property Name="Away_Score_Q8" Type="Int64" />
-    <Property Name="Home_Score_Q9" Type="Int64" />
-    <Property Name="Away_Score_Q9" Type="Int64" />
-    <Property Name="Home_Score_Q10" Type="Int64" />
-    <Property Name="Away_Score_Q10" Type="Int64" />
+    <Property Name="Home_Score_OT" Type="Int64" />
+    <Property Name="Away_Score_OT" Type="Int64" />
     <Property Name="Quarter" Type="Int64" />
     <Property Name="Time" Type="Int64" />
     <Property Name="Playoff_Game" Type="Int64" />
@@ -646,7 +639,7 @@
     <Property Name="Eligible_for_Draft" Type="Int64" Nullable="false" />
     <Property Name="Draft_Profile" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Draft_Grade" Type="Int64" Nullable="false" />
-    <NavigationProperty Name="Drafts" Relationship="Self.FK_Draft_0_0" FromRole="Players" ToRole="Draft" />
+    <NavigationProperty Name="Drafts" Relationship="Self.FK_Draft_2_0" FromRole="Players" ToRole="Draft" />
     <NavigationProperty Name="Franchise" Relationship="Self.FK_Players_0_0" FromRole="Players" ToRole="Franchise" />
     <NavigationProperty Name="Game_Player_FG_Defense_Stats" Relationship="Self.FK_Game_Player_FG_Defense_Stats_1_0" FromRole="Players" ToRole="Game_Player_FG_Defense_Stats" />
     <NavigationProperty Name="Game_Player_Kick_Returner_Stats" Relationship="Self.FK_Game_Player_Kick_Returner_Stats_0_0" FromRole="Players" ToRole="Game_Player_Kick_Returner_Stats" />
@@ -690,7 +683,7 @@
     <Property Name="Year" Type="Int64" Nullable="false" />
     <NavigationProperty Name="Conferences" Relationship="Self.FK_Conference_0_0" FromRole="Season" ToRole="Conference" />
     <NavigationProperty Name="Divisions" Relationship="Self.FK_Division_0_0" FromRole="Season" ToRole="Division" />
-    <NavigationProperty Name="Drafts" Relationship="Self.FK_Draft_2_0" FromRole="Season" ToRole="Draft" />
+    <NavigationProperty Name="Drafts" Relationship="Self.FK_Draft_0_0" FromRole="Season" ToRole="Draft" />
     <NavigationProperty Name="Games" Relationship="Self.FK_Game_0_0" FromRole="Season" ToRole="Game" />
     <NavigationProperty Name="Hall_of_Fame" Relationship="Self.FK_Hall_of_Fame_0_0" FromRole="Season" ToRole="Hall_of_Fame" />
     <NavigationProperty Name="Injuries" Relationship="Self.FK_Injuries_1_0" FromRole="Season" ToRole="Injuries" />
@@ -784,14 +777,14 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Draft_0_0">
-    <End Role="Players" Type="Self.Player" Multiplicity="1" />
+    <End Role="Season" Type="Self.Season" Multiplicity="1" />
     <End Role="Draft" Type="Self.Draft" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Players">
+      <Principal Role="Season">
         <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="Draft">
-        <PropertyRef Name="Player_ID" />
+        <PropertyRef Name="Season_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -808,14 +801,14 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Draft_2_0">
-    <End Role="Season" Type="Self.Season" Multiplicity="1" />
+    <End Role="Players" Type="Self.Player" Multiplicity="0..1" />
     <End Role="Draft" Type="Self.Draft" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Season">
+      <Principal Role="Players">
         <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="Draft">
-        <PropertyRef Name="Season_ID" />
+        <PropertyRef Name="Player_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1680,7 +1673,7 @@
       <End Role="Division" EntitySet="Divisions" />
     </AssociationSet>
     <AssociationSet Name="FK_Draft_0_0" Association="Self.FK_Draft_0_0">
-      <End Role="Players" EntitySet="Players" />
+      <End Role="Season" EntitySet="Seasons" />
       <End Role="Draft" EntitySet="Drafts" />
     </AssociationSet>
     <AssociationSet Name="FK_Draft_1_0" Association="Self.FK_Draft_1_0">
@@ -1688,7 +1681,7 @@
       <End Role="Draft" EntitySet="Drafts" />
     </AssociationSet>
     <AssociationSet Name="FK_Draft_2_0" Association="Self.FK_Draft_2_0">
-      <End Role="Season" EntitySet="Seasons" />
+      <End Role="Players" EntitySet="Players" />
       <End Role="Draft" EntitySet="Drafts" />
     </AssociationSet>
     <AssociationSet Name="FK_Game_Player_FG_Defense_Stats_0_0" Association="Self.FK_Game_Player_FG_Defense_Stats_0_0">

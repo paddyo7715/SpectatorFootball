@@ -3,6 +3,8 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Configuration;
 using System.Data.Entity.Core.EntityClient;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SpectatorFootball
 {
@@ -204,5 +206,18 @@ namespace SpectatorFootball
 
             return r;
         }
+
+        public static List<T> ShufleList<T>(List<T> Source)
+        {
+            List<T> r = null;
+            Random rnd = new Random();
+
+            r = Source.Select(x => new { value = x, order = rnd.Next() })
+            .OrderBy(x => x.order).Select(x => x.value).ToList();
+
+            return r;
+        }
     }
+
+
 }

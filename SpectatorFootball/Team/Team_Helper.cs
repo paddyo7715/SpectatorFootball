@@ -66,7 +66,7 @@ namespace SpectatorFootball
         public static Teams_by_Season Clonse_Team_from_Stock(Stock_Teams st)
         {
 
-            Teams_by_Season r = new SpectatorFootball.Models.Team();
+            Teams_by_Season r = new Teams_by_Season();
 
             var sourceProperties = st.GetType().GetProperties();
             var destProperties = r.GetType().GetProperties();

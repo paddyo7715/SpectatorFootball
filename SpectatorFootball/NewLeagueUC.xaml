@@ -126,7 +126,7 @@
                             <StackPanel Orientation="Horizontal">
                                 <Label Style="{StaticResource Largelbltyle}">Draft:</Label>
                                 <StackPanel Orientation="Vertical">
-                                    <RadioButton Name="newlDraft_DL" GroupName="draftChoice" IsChecked="True" Style="{StaticResource LargeGroupButton}">Serpentine Draft</RadioButton>
+                                    <RadioButton Name="newlDraft_DL" GroupName="draftChoice" IsChecked="True" Style="{StaticResource LargeGroupButton}">Non-Playoff Draft Lottery</RadioButton>
                                     <TextBlock TextWrapping="WrapWithOverflow"  Style="{StaticResource LargeReadOnlytxtbstyle}" FontStyle="Italic">
 			  Non-Playoff Draft Lottery: All non-playoff teams go into a draft lottery that determines the draft order.  Playoff teams pick last.
                                     </TextBlock>
@@ -135,7 +135,7 @@
                             <StackPanel Orientation="Horizontal">
                                 <Label Style="{StaticResource Largelbltyle}">Draft:</Label>
                                 <StackPanel Orientation="Vertical">
-                                    <RadioButton Name="newlDraft_FL" GroupName="draftChoice" IsChecked="True" Style="{StaticResource LargeGroupButton}">Serpentine Draft</RadioButton>
+                                    <RadioButton Name="newlDraft_FL" GroupName="draftChoice" IsChecked="True" Style="{StaticResource LargeGroupButton}">Full Team Draft Lottery</RadioButton>
                                     <TextBlock TextWrapping="WrapWithOverflow"  Style="{StaticResource LargeReadOnlytxtbstyle}" FontStyle="Italic">
 			  Full Team Draft Lottery: Same as standard draft, but draft order for all teams is random.
                                     </TextBlock>
@@ -144,7 +144,7 @@
                             <StackPanel Orientation="Horizontal">
                                 <Label Style="{StaticResource Largelbltyle}">Draft:</Label>
                                 <StackPanel Orientation="Vertical">
-                                    <RadioButton Name="newlDraft_FR" GroupName="draftChoice" IsChecked="True" Style="{StaticResource LargeGroupButton}">Serpentine Draft</RadioButton>
+                                    <RadioButton Name="newlDraft_FR" GroupName="draftChoice" IsChecked="True" Style="{StaticResource LargeGroupButton}">Random Draft</RadioButton>
                                     <TextBlock TextWrapping="WrapWithOverflow"  Style="{StaticResource LargeReadOnlytxtbstyle}" FontStyle="Italic">
 			  Random Pick Draft: Each team gets the same number of picks, but each pick can happen at any time during the draft.
                                     </TextBlock>
@@ -153,7 +153,7 @@
                             <StackPanel Orientation="Horizontal">
                                 <Label Style="{StaticResource Largelbltyle}">Draft:</Label>
                                 <StackPanel Orientation="Vertical">
-                                    <RadioButton Name="newlDraft_CR" GroupName="draftChoice" IsChecked="True" Style="{StaticResource LargeGroupButton}">Serpentine Draft</RadioButton>
+                                    <RadioButton Name="newlDraft_CR" GroupName="draftChoice" IsChecked="True" Style="{StaticResource LargeGroupButton}">Crazy All Random Draft</RadioButton>
                                     <TextBlock TextWrapping="WrapWithOverflow"  Style="{StaticResource LargeReadOnlytxtbstyle}" FontStyle="Italic">
 			  Crazy all Random Draft: Every Pick in the Draft is Completely Random:  Teams can have multiple picks per round with no maximum or minimum pick totals.
                                     </TextBlock>

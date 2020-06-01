@@ -47,14 +47,15 @@
           <Property Name="ID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Season_ID" Type="integer" Nullable="false" />
           <Property Name="Round" Type="integer" Nullable="false" />
+          <Property Name="Pick_Number" Type="integer" Nullable="false" />
           <Property Name="Franchise_ID" Type="integer" Nullable="false" />
-          <Property Name="Player_ID" Type="integer" Nullable="false" />
+          <Property Name="Player_ID" Type="integer" />
         </EntityType>
         <EntityType Name="Franchise">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID" Type="integer" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
         </EntityType>
         <EntityType Name="Game">
@@ -64,8 +65,10 @@
           <Property Name="ID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Season_ID" Type="integer" Nullable="false" />
           <Property Name="Week" Type="integer" Nullable="false" />
-          <Property Name="Home_Team_Slot_ID" Type="integer" Nullable="false" />
-          <Property Name="Away_Team_Slot_ID" Type="integer" Nullable="false" />
+          <Property Name="Home_Team_Franchise_ID" Type="integer" Nullable="false" />
+          <Property Name="Away_Team_Franchise_ID" Type="integer" Nullable="false" />
+          <Property Name="Home_Score" Type="integer" />
+          <Property Name="Away_Score" Type="integer" />
           <Property Name="Home_FirstDowns" Type="integer" />
           <Property Name="Home_ThirdDown_Conversions" Type="integer" />
           <Property Name="Home_ThirdDowns" Type="integer" />
@@ -90,18 +93,8 @@
           <Property Name="Away_Score_Q3" Type="integer" />
           <Property Name="Home_Score_Q4" Type="integer" />
           <Property Name="Away_Score_Q4" Type="integer" />
-          <Property Name="Home_Score_Q5" Type="integer" />
-          <Property Name="Away_Score_Q5" Type="integer" />
-          <Property Name="Home_Score_Q6" Type="integer" />
-          <Property Name="Away_Score_Q6" Type="integer" />
-          <Property Name="Home_Score_Q7" Type="integer" />
-          <Property Name="Away_Score_Q7" Type="integer" />
-          <Property Name="Home_Score_Q8" Type="integer" />
-          <Property Name="Away_Score_Q8" Type="integer" />
-          <Property Name="Home_Score_Q9" Type="integer" />
-          <Property Name="Away_Score_Q9" Type="integer" />
-          <Property Name="Home_Score_Q10" Type="integer" />
-          <Property Name="Away_Score_Q10" Type="integer" />
+          <Property Name="Home_Score_OT" Type="integer" />
+          <Property Name="Away_Score_OT" Type="integer" />
           <Property Name="Quarter" Type="integer" />
           <Property Name="Time" Type="integer" />
           <Property Name="Playoff_Game" Type="integer" />
@@ -643,14 +636,14 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Draft_0_0">
-          <End Role="Players" Type="Self.Players" Multiplicity="1" />
+          <End Role="Season" Type="Self.Season" Multiplicity="1" />
           <End Role="Draft" Type="Self.Draft" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Players">
+            <Principal Role="Season">
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Draft">
-              <PropertyRef Name="Player_ID" />
+              <PropertyRef Name="Season_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -667,14 +660,14 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Draft_2_0">
-          <End Role="Season" Type="Self.Season" Multiplicity="1" />
+          <End Role="Players" Type="Self.Players" Multiplicity="0..1" />
           <End Role="Draft" Type="Self.Draft" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Season">
+            <Principal Role="Players">
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Draft">
-              <PropertyRef Name="Season_ID" />
+              <PropertyRef Name="Player_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1545,7 +1538,7 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
             <End Role="Division" EntitySet="Division" />
           </AssociationSet>
           <AssociationSet Name="FK_Draft_0_0" Association="Self.FK_Draft_0_0">
-            <End Role="Players" EntitySet="Players" />
+            <End Role="Season" EntitySet="Season" />
             <End Role="Draft" EntitySet="Draft" />
           </AssociationSet>
           <AssociationSet Name="FK_Draft_1_0" Association="Self.FK_Draft_1_0">
@@ -1553,7 +1546,7 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
             <End Role="Draft" EntitySet="Draft" />
           </AssociationSet>
           <AssociationSet Name="FK_Draft_2_0" Association="Self.FK_Draft_2_0">
-            <End Role="Season" EntitySet="Season" />
+            <End Role="Players" EntitySet="Players" />
             <End Role="Draft" EntitySet="Draft" />
           </AssociationSet>
           <AssociationSet Name="FK_Game_0_0" Association="Self.FK_Game_0_0">
@@ -1878,17 +1871,18 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
           <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Season_ID" Type="Int64" Nullable="false" />
           <Property Name="Round" Type="Int64" Nullable="false" />
+          <Property Name="Pick_Number" Type="Int64" Nullable="false" />
           <Property Name="Franchise_ID" Type="Int64" Nullable="false" />
-          <Property Name="Player_ID" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="Player" Relationship="Self.FK_Draft_0_0" FromRole="Draft" ToRole="Players" />
+          <Property Name="Player_ID" Type="Int64" />
+          <NavigationProperty Name="Season" Relationship="Self.FK_Draft_0_0" FromRole="Draft" ToRole="Season" />
           <NavigationProperty Name="Franchise" Relationship="Self.FK_Draft_1_0" FromRole="Draft" ToRole="Franchise" />
-          <NavigationProperty Name="Season" Relationship="Self.FK_Draft_2_0" FromRole="Draft" ToRole="Season" />
+          <NavigationProperty Name="Player" Relationship="Self.FK_Draft_2_0" FromRole="Draft" ToRole="Players" />
         </EntityType>
         <EntityType Name="Franchise">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="Int64" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Drafts" Relationship="Self.FK_Draft_1_0" FromRole="Franchise" ToRole="Draft" />
           <NavigationProperty Name="Game_Player_FG_Defense_Stats" Relationship="Self.FK_Game_Player_FG_Defense_Stats_0_0" FromRole="Franchise" ToRole="Game_Player_FG_Defense_Stats" />
@@ -1919,8 +1913,10 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
           <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Season_ID" Type="Int64" Nullable="false" />
           <Property Name="Week" Type="Int64" Nullable="false" />
-          <Property Name="Home_Team_Slot_ID" Type="Int64" Nullable="false" />
-          <Property Name="Away_Team_Slot_ID" Type="Int64" Nullable="false" />
+          <Property Name="Home_Team_Franchise_ID" Type="Int64" Nullable="false" />
+          <Property Name="Away_Team_Franchise_ID" Type="Int64" Nullable="false" />
+          <Property Name="Home_Score" Type="Int64" />
+          <Property Name="Away_Score" Type="Int64" />
           <Property Name="Home_FirstDowns" Type="Int64" />
           <Property Name="Home_ThirdDown_Conversions" Type="Int64" />
           <Property Name="Home_ThirdDowns" Type="Int64" />
@@ -1945,18 +1941,8 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
           <Property Name="Away_Score_Q3" Type="Int64" />
           <Property Name="Home_Score_Q4" Type="Int64" />
           <Property Name="Away_Score_Q4" Type="Int64" />
-          <Property Name="Home_Score_Q5" Type="Int64" />
-          <Property Name="Away_Score_Q5" Type="Int64" />
-          <Property Name="Home_Score_Q6" Type="Int64" />
-          <Property Name="Away_Score_Q6" Type="Int64" />
-          <Property Name="Home_Score_Q7" Type="Int64" />
-          <Property Name="Away_Score_Q7" Type="Int64" />
-          <Property Name="Home_Score_Q8" Type="Int64" />
-          <Property Name="Away_Score_Q8" Type="Int64" />
-          <Property Name="Home_Score_Q9" Type="Int64" />
-          <Property Name="Away_Score_Q9" Type="Int64" />
-          <Property Name="Home_Score_Q10" Type="Int64" />
-          <Property Name="Away_Score_Q10" Type="Int64" />
+          <Property Name="Home_Score_OT" Type="Int64" />
+          <Property Name="Away_Score_OT" Type="Int64" />
           <Property Name="Quarter" Type="Int64" />
           <Property Name="Time" Type="Int64" />
           <Property Name="Playoff_Game" Type="Int64" />
@@ -2480,7 +2466,7 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
           <Property Name="Eligible_for_Draft" Type="Int64" Nullable="false" />
           <Property Name="Draft_Profile" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Draft_Grade" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="Drafts" Relationship="Self.FK_Draft_0_0" FromRole="Players" ToRole="Draft" />
+          <NavigationProperty Name="Drafts" Relationship="Self.FK_Draft_2_0" FromRole="Players" ToRole="Draft" />
           <NavigationProperty Name="Franchise" Relationship="Self.FK_Players_0_0" FromRole="Players" ToRole="Franchise" />
           <NavigationProperty Name="Game_Player_FG_Defense_Stats" Relationship="Self.FK_Game_Player_FG_Defense_Stats_1_0" FromRole="Players" ToRole="Game_Player_FG_Defense_Stats" />
           <NavigationProperty Name="Game_Player_Kick_Returner_Stats" Relationship="Self.FK_Game_Player_Kick_Returner_Stats_0_0" FromRole="Players" ToRole="Game_Player_Kick_Returner_Stats" />
@@ -2524,7 +2510,7 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
           <Property Name="Year" Type="Int64" Nullable="false" />
           <NavigationProperty Name="Conferences" Relationship="Self.FK_Conference_0_0" FromRole="Season" ToRole="Conference" />
           <NavigationProperty Name="Divisions" Relationship="Self.FK_Division_0_0" FromRole="Season" ToRole="Division" />
-          <NavigationProperty Name="Drafts" Relationship="Self.FK_Draft_2_0" FromRole="Season" ToRole="Draft" />
+          <NavigationProperty Name="Drafts" Relationship="Self.FK_Draft_0_0" FromRole="Season" ToRole="Draft" />
           <NavigationProperty Name="Games" Relationship="Self.FK_Game_0_0" FromRole="Season" ToRole="Game" />
           <NavigationProperty Name="Hall_of_Fame" Relationship="Self.FK_Hall_of_Fame_0_0" FromRole="Season" ToRole="Hall_of_Fame" />
           <NavigationProperty Name="Injuries" Relationship="Self.FK_Injuries_1_0" FromRole="Season" ToRole="Injuries" />
@@ -2618,14 +2604,14 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Draft_0_0">
-          <End Role="Players" Type="Self.Player" Multiplicity="1" />
+          <End Role="Season" Type="Self.Season" Multiplicity="1" />
           <End Role="Draft" Type="Self.Draft" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Players">
+            <Principal Role="Season">
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Draft">
-              <PropertyRef Name="Player_ID" />
+              <PropertyRef Name="Season_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2642,14 +2628,14 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Draft_2_0">
-          <End Role="Season" Type="Self.Season" Multiplicity="1" />
+          <End Role="Players" Type="Self.Player" Multiplicity="0..1" />
           <End Role="Draft" Type="Self.Draft" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Season">
+            <Principal Role="Players">
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Draft">
-              <PropertyRef Name="Season_ID" />
+              <PropertyRef Name="Player_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3514,7 +3500,7 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
             <End Role="Division" EntitySet="Divisions" />
           </AssociationSet>
           <AssociationSet Name="FK_Draft_0_0" Association="Self.FK_Draft_0_0">
-            <End Role="Players" EntitySet="Players" />
+            <End Role="Season" EntitySet="Seasons" />
             <End Role="Draft" EntitySet="Drafts" />
           </AssociationSet>
           <AssociationSet Name="FK_Draft_1_0" Association="Self.FK_Draft_1_0">
@@ -3522,7 +3508,7 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
             <End Role="Draft" EntitySet="Drafts" />
           </AssociationSet>
           <AssociationSet Name="FK_Draft_2_0" Association="Self.FK_Draft_2_0">
-            <End Role="Season" EntitySet="Seasons" />
+            <End Role="Players" EntitySet="Players" />
             <End Role="Draft" EntitySet="Drafts" />
           </AssociationSet>
           <AssociationSet Name="FK_Game_Player_FG_Defense_Stats_0_0" Association="Self.FK_Game_Player_FG_Defense_Stats_0_0">
@@ -3849,6 +3835,7 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Season_ID" ColumnName="Season_ID" />
                 <ScalarProperty Name="Round" ColumnName="Round" />
+                <ScalarProperty Name="Pick_Number" ColumnName="Pick_Number" />
                 <ScalarProperty Name="Franchise_ID" ColumnName="Franchise_ID" />
                 <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
               </MappingFragment>
@@ -3868,8 +3855,10 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Season_ID" ColumnName="Season_ID" />
                 <ScalarProperty Name="Week" ColumnName="Week" />
-                <ScalarProperty Name="Home_Team_Slot_ID" ColumnName="Home_Team_Slot_ID" />
-                <ScalarProperty Name="Away_Team_Slot_ID" ColumnName="Away_Team_Slot_ID" />
+                <ScalarProperty Name="Home_Team_Franchise_ID" ColumnName="Home_Team_Franchise_ID" />
+                <ScalarProperty Name="Away_Team_Franchise_ID" ColumnName="Away_Team_Franchise_ID" />
+                <ScalarProperty Name="Home_Score" ColumnName="Home_Score" />
+                <ScalarProperty Name="Away_Score" ColumnName="Away_Score" />
                 <ScalarProperty Name="Home_FirstDowns" ColumnName="Home_FirstDowns" />
                 <ScalarProperty Name="Home_ThirdDown_Conversions" ColumnName="Home_ThirdDown_Conversions" />
                 <ScalarProperty Name="Home_ThirdDowns" ColumnName="Home_ThirdDowns" />
@@ -3894,18 +3883,8 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
                 <ScalarProperty Name="Away_Score_Q3" ColumnName="Away_Score_Q3" />
                 <ScalarProperty Name="Home_Score_Q4" ColumnName="Home_Score_Q4" />
                 <ScalarProperty Name="Away_Score_Q4" ColumnName="Away_Score_Q4" />
-                <ScalarProperty Name="Home_Score_Q5" ColumnName="Home_Score_Q5" />
-                <ScalarProperty Name="Away_Score_Q5" ColumnName="Away_Score_Q5" />
-                <ScalarProperty Name="Home_Score_Q6" ColumnName="Home_Score_Q6" />
-                <ScalarProperty Name="Away_Score_Q6" ColumnName="Away_Score_Q6" />
-                <ScalarProperty Name="Home_Score_Q7" ColumnName="Home_Score_Q7" />
-                <ScalarProperty Name="Away_Score_Q7" ColumnName="Away_Score_Q7" />
-                <ScalarProperty Name="Home_Score_Q8" ColumnName="Home_Score_Q8" />
-                <ScalarProperty Name="Away_Score_Q8" ColumnName="Away_Score_Q8" />
-                <ScalarProperty Name="Home_Score_Q9" ColumnName="Home_Score_Q9" />
-                <ScalarProperty Name="Away_Score_Q9" ColumnName="Away_Score_Q9" />
-                <ScalarProperty Name="Home_Score_Q10" ColumnName="Home_Score_Q10" />
-                <ScalarProperty Name="Away_Score_Q10" ColumnName="Away_Score_Q10" />
+                <ScalarProperty Name="Home_Score_OT" ColumnName="Home_Score_OT" />
+                <ScalarProperty Name="Away_Score_OT" ColumnName="Away_Score_OT" />
                 <ScalarProperty Name="Quarter" ColumnName="Quarter" />
                 <ScalarProperty Name="Time" ColumnName="Time" />
                 <ScalarProperty Name="Playoff_Game" ColumnName="Playoff_Game" />

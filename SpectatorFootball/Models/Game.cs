@@ -40,8 +40,10 @@ namespace SpectatorFootball.Models
         public long ID { get; set; }
         public long Season_ID { get; set; }
         public long Week { get; set; }
-        public long Home_Team_Slot_ID { get; set; }
-        public long Away_Team_Slot_ID { get; set; }
+        public long Home_Team_Franchise_ID { get; set; }
+        public long Away_Team_Franchise_ID { get; set; }
+        public Nullable<long> Home_Score { get; set; }
+        public Nullable<long> Away_Score { get; set; }
         public Nullable<long> Home_FirstDowns { get; set; }
         public Nullable<long> Home_ThirdDown_Conversions { get; set; }
         public Nullable<long> Home_ThirdDowns { get; set; }
@@ -66,18 +68,8 @@ namespace SpectatorFootball.Models
         public Nullable<long> Away_Score_Q3 { get; set; }
         public Nullable<long> Home_Score_Q4 { get; set; }
         public Nullable<long> Away_Score_Q4 { get; set; }
-        public Nullable<long> Home_Score_Q5 { get; set; }
-        public Nullable<long> Away_Score_Q5 { get; set; }
-        public Nullable<long> Home_Score_Q6 { get; set; }
-        public Nullable<long> Away_Score_Q6 { get; set; }
-        public Nullable<long> Home_Score_Q7 { get; set; }
-        public Nullable<long> Away_Score_Q7 { get; set; }
-        public Nullable<long> Home_Score_Q8 { get; set; }
-        public Nullable<long> Away_Score_Q8 { get; set; }
-        public Nullable<long> Home_Score_Q9 { get; set; }
-        public Nullable<long> Away_Score_Q9 { get; set; }
-        public Nullable<long> Home_Score_Q10 { get; set; }
-        public Nullable<long> Away_Score_Q10 { get; set; }
+        public Nullable<long> Home_Score_OT { get; set; }
+        public Nullable<long> Away_Score_OT { get; set; }
         public Nullable<long> Quarter { get; set; }
         public Nullable<long> Time { get; set; }
         public Nullable<long> Playoff_Game { get; set; }

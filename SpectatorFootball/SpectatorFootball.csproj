@@ -108,6 +108,7 @@
     <Compile Include="Common\Validator.cs" />
     <Compile Include="DAO\DBVersionDAO.cs" />
     <Compile Include="DAO\HomeTownsDAO.cs" />
+    <Compile Include="Draft\Draft_Helper.cs" />
     <Compile Include="Enum\League_State.cs" />
     <Compile Include="Enum\Player_Pos.cs" />
     <Compile Include="League\League_Helper.cs" />
@@ -384,6 +385,10 @@
     <None Include="Database\BlankDB.db" />
     <None Include="Database\Settings.db" />
     <None Include="ImageSource\blankUniform.xcf" />
+    <EntityDeploy Include="Models\SettingsEDM.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>SettingsEDM.Designer.cs</LastGenOutput>
+    </EntityDeploy>
     <EntityDeploy Include="Models\LeagueEDM.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>LeagueEDM.Designer.cs</LastGenOutput>
@@ -391,10 +396,6 @@
     <None Include="Models\LeagueEDM.edmx.diagram">
       <DependentUpon>LeagueEDM.edmx</DependentUpon>
     </None>
-    <EntityDeploy Include="Models\SettingsEDM.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>SettingsEDM.Designer.cs</LastGenOutput>
-    </EntityDeploy>
     <None Include="Models\SettingsEDM.edmx.diagram">
       <DependentUpon>SettingsEDM.edmx</DependentUpon>
     </None>
@@ -410,6 +411,16 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Models\LeagueEDM.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>LeagueEDM.edmx</DependentUpon>
+      <LastGenOutput>LeagueEDM.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\LeagueEDM.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>LeagueEDM.edmx</DependentUpon>
+      <LastGenOutput>LeagueEDM.cs</LastGenOutput>
+    </Content>
     <Content Include="Models\SettingsEDM.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>SettingsEDM.edmx</DependentUpon>
@@ -430,16 +441,6 @@
     <Resource Include="Images\Logos\GFL.png" />
     <Resource Include="Images\Logos\AFL.png" />
     <Resource Include="Images\Logos\CFL.png" />
-    <Content Include="Models\LeagueEDM.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>LeagueEDM.edmx</DependentUpon>
-      <LastGenOutput>LeagueEDM.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\LeagueEDM.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>LeagueEDM.edmx</DependentUpon>
-      <LastGenOutput>LeagueEDM.cs</LastGenOutput>
-    </Content>
     <Resource Include="Versioning\History.txt" />
     <Resource Include="Images\Helmets\st_Thunder.png" />
     <Resource Include="Images\Stadiums\st_Portland.jpg" />

@@ -548,7 +548,6 @@ namespace SpectatorFootball
         }
         private void newl1Next_Click(object sender, RoutedEventArgs e)
         {
-
            
             int ipenalties;
             int iinjuries;
@@ -632,7 +631,7 @@ namespace SpectatorFootball
                     s.Teams_by_Season[t_int].Helmet_Image_File = Path.GetFileName(s.Teams_by_Season[t_int].Helmet_img_path);
                     s.Teams_by_Season[t_int].Stadium_Image_File = Path.GetFileName(s.Teams_by_Season[t_int].Stadium_Img_Path);
 
-                    Franchise f = new Franchise() { Name = s.Teams_by_Season[t_int].City + " " + s.Teams_by_Season[t_int].Nickname + " Founded " + s.Year.ToString() };
+                    Franchise f = new Franchise() {ID = t_int + 1, Name = s.Teams_by_Season[t_int].City + " " + s.Teams_by_Season[t_int].Nickname + " Founded " + s.Year.ToString() };
                     f.Teams_by_Season.Add(s.Teams_by_Season[t_int]);
                     Franchises.Add(f);
                 

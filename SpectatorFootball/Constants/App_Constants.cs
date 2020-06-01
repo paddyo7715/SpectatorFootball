@@ -31,7 +31,7 @@ namespace SpectatorFootball
 
         // Draft
         public const float DRAFT_MULTIPLIER = 2.0f;  //Multiplied by number of rounds to determine num of players to create for draft.
-
+        public const int NORMAL_DRAFT_ROUNDS = 7;
 
         // Players
         public const int QB_PER_TEAM = 3;
@@ -239,5 +239,6 @@ namespace SpectatorFootball
 
         // Teams
         public const string EMPTY_TEAM_SLOT = "Empty Team Slot";
+
     }
 }

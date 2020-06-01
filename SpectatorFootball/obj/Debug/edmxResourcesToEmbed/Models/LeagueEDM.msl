@@ -46,6 +46,7 @@
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Season_ID" ColumnName="Season_ID" />
           <ScalarProperty Name="Round" ColumnName="Round" />
+          <ScalarProperty Name="Pick_Number" ColumnName="Pick_Number" />
           <ScalarProperty Name="Franchise_ID" ColumnName="Franchise_ID" />
           <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
         </MappingFragment>
@@ -65,8 +66,10 @@
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Season_ID" ColumnName="Season_ID" />
           <ScalarProperty Name="Week" ColumnName="Week" />
-          <ScalarProperty Name="Home_Team_Slot_ID" ColumnName="Home_Team_Slot_ID" />
-          <ScalarProperty Name="Away_Team_Slot_ID" ColumnName="Away_Team_Slot_ID" />
+          <ScalarProperty Name="Home_Team_Franchise_ID" ColumnName="Home_Team_Franchise_ID" />
+          <ScalarProperty Name="Away_Team_Franchise_ID" ColumnName="Away_Team_Franchise_ID" />
+          <ScalarProperty Name="Home_Score" ColumnName="Home_Score" />
+          <ScalarProperty Name="Away_Score" ColumnName="Away_Score" />
           <ScalarProperty Name="Home_FirstDowns" ColumnName="Home_FirstDowns" />
           <ScalarProperty Name="Home_ThirdDown_Conversions" ColumnName="Home_ThirdDown_Conversions" />
           <ScalarProperty Name="Home_ThirdDowns" ColumnName="Home_ThirdDowns" />
@@ -91,18 +94,8 @@
           <ScalarProperty Name="Away_Score_Q3" ColumnName="Away_Score_Q3" />
           <ScalarProperty Name="Home_Score_Q4" ColumnName="Home_Score_Q4" />
           <ScalarProperty Name="Away_Score_Q4" ColumnName="Away_Score_Q4" />
-          <ScalarProperty Name="Home_Score_Q5" ColumnName="Home_Score_Q5" />
-          <ScalarProperty Name="Away_Score_Q5" ColumnName="Away_Score_Q5" />
-          <ScalarProperty Name="Home_Score_Q6" ColumnName="Home_Score_Q6" />
-          <ScalarProperty Name="Away_Score_Q6" ColumnName="Away_Score_Q6" />
-          <ScalarProperty Name="Home_Score_Q7" ColumnName="Home_Score_Q7" />
-          <ScalarProperty Name="Away_Score_Q7" ColumnName="Away_Score_Q7" />
-          <ScalarProperty Name="Home_Score_Q8" ColumnName="Home_Score_Q8" />
-          <ScalarProperty Name="Away_Score_Q8" ColumnName="Away_Score_Q8" />
-          <ScalarProperty Name="Home_Score_Q9" ColumnName="Home_Score_Q9" />
-          <ScalarProperty Name="Away_Score_Q9" ColumnName="Away_Score_Q9" />
-          <ScalarProperty Name="Home_Score_Q10" ColumnName="Home_Score_Q10" />
-          <ScalarProperty Name="Away_Score_Q10" ColumnName="Away_Score_Q10" />
+          <ScalarProperty Name="Home_Score_OT" ColumnName="Home_Score_OT" />
+          <ScalarProperty Name="Away_Score_OT" ColumnName="Away_Score_OT" />
           <ScalarProperty Name="Quarter" ColumnName="Quarter" />
           <ScalarProperty Name="Time" ColumnName="Time" />
           <ScalarProperty Name="Playoff_Game" ColumnName="Playoff_Game" />

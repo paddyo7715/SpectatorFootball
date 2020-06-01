@@ -12,7 +12,6 @@ namespace SpectatorFootball.League
     public class New_League_Structure
     {
         public Season Season { get; set; }
-
         public List<Franchise> Franchises { get; set; }
         public DBVersion DBVersion { get; set; }
 

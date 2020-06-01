@@ -8,6 +8,7 @@ using SpectatorFootball.Models;
 using System.Data.Entity.Validation;
 using SpectatorFootball.League;
 using SpectatorFootball.DAO;
+using SpectatorFootball.Drafts;
 
 namespace SpectatorFootball
 {
@@ -24,12 +25,11 @@ namespace SpectatorFootball
             // Create the league folder
             string DIRPath_League = null;
             string New_League_File = nls.Season.League_Structure_by_Season[0].Short_Name.ToUpper() + "." + app_Constants.DB_FILE_EXT;
-            string League_con_string = Environment.SpecialFolder.MyDocuments + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + nls.League.Short_Name + Path.DirectorySeparatorChar + nls.League.Short_Name + Path.DirectorySeparatorChar + app_Constants.DB_FILE_EXT;
+            string League_con_string = Environment.SpecialFolder.MyDocuments + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + nls.Season.League_Structure_by_Season[0].Short_Name + Path.DirectorySeparatorChar + nls.Season.League_Structure_by_Season[0].Short_Name + Path.DirectorySeparatorChar + app_Constants.DB_FILE_EXT;
             var LeagueDAO = new LeagueDAO();
             string process_state = "Processing...";
             string state_struct = null;
             int i = default(int);
-
             try
             {
                 // Update the progress bar
@@ -40,7 +40,7 @@ namespace SpectatorFootball
 
                 // Create the League Folder
                 logger.Info("Creating league folder");
-                DIRPath_League = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + nls.League.Short_Name.ToUpper();
+                DIRPath_League = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + nls.Season.League_Structure_by_Season[0].Short_Name.ToUpper();
                 Directory.CreateDirectory(DIRPath_League);
 
                 // Create Backup Folder
@@ -92,12 +92,16 @@ namespace SpectatorFootball
 
                 //Create players for draft
                 int num_players = (int)(((app_Constants.QB_PER_TEAM + app_Constants.RB_PER_TEAM + app_Constants.WR_PER_TEAM + app_Constants.TE_PER_TEAM + app_Constants.OL_PER_TEAM + app_Constants.DL_PER_TEAM + app_Constants.LB_PER_TEAM + app_Constants.DB_PER_TEAM + app_Constants.K_PER_TEAM + app_Constants.P_PER_TEAM) * nls.Season.League_Structure_by_Season[0].Num_Teams ) * app_Constants.DRAFT_MULTIPLIER);
-                 
-                when i get the players back don't forget to add each player ratings
-                    to the season.player_ratings in a while loop.'
 
-                //builid method to create players return should be a list of players player ratings 
-                //will be put in the players_ratings list of the player object.
+                List<Player> new_player_list = League_Helper.Create_New_Players(num_players);
+
+                foreach (Player p in new_player_list)
+                    nls.Season.Player_Ratings.Add(p.Player_Ratings.First()); ;
+
+                //Create Draft
+                int draft_rounds = (int)(((app_Constants.QB_PER_TEAM + app_Constants.RB_PER_TEAM + app_Constants.WR_PER_TEAM + app_Constants.TE_PER_TEAM + app_Constants.OL_PER_TEAM + app_Constants.DL_PER_TEAM + app_Constants.LB_PER_TEAM + app_Constants.DB_PER_TEAM + app_Constants.K_PER_TEAM + app_Constants.P_PER_TEAM) * nls.Season.League_Structure_by_Season[0].Num_Teams));
+                Draft_Helper DH = new Draft_Helper();
+                List<Draft> Draft_List = DH.Create_Draft(nls.Season.Year-1,nls.Season.League_Structure_by_Season[0].Draft_Type_Code, draft_rounds, nls.Franchises ,ddf);
 
                 // Update the progress bar
                 i = 50;
@@ -107,7 +111,7 @@ namespace SpectatorFootball
 
                 // Creating schedule
                 logger.Info("Creating schedule");
-                List<string> sched = create_schedule(nls.League.Short_Name, (int) nls.League.Num_Teams, nls.League.Divisions.Count, nls.League.Conferences.Count, (int) nls.League.Number_of_Games, (int) nls.League.Number_of_weeks);
+                List<string> sched = create_schedule(nls.Season.League_Structure_by_Season[0].Short_Name, (int) nls.Season.League_Structure_by_Season[0].Num_Teams, nls.Season.Divisions.Count, nls.Season.Conferences.Count, (int) nls.Season.League_Structure_by_Season[0].Number_of_Games, (int) nls.Season.League_Structure_by_Season[0].Number_of_weeks);
 
                 foreach (string line in sched)
                 {
@@ -122,11 +126,11 @@ namespace SpectatorFootball
                     Game g = new Game()
                     {
                         Week = long.Parse(sWeek),
-                        Home_Team_ID = nls.League.Teams.Where(x => x.Team_Slot == long.Parse(ht)).First().ID,
-                        Away_Team_ID = nls.League.Teams.Where(x => x.Team_Slot == long.Parse(at)).First().ID
+                        Home_Team_Franchise_ID = nls.Season.Teams_by_Season.Where(x => x.Team_Slot == long.Parse(ht)).First().Franchise_ID,
+                        Away_Team_Franchise_ID = nls.Season.Teams_by_Season.Where(x => x.Team_Slot == long.Parse(at)).First().Franchise_ID
                     };
 
-                    nls.League.Games.Add(g);
+                    nls.Season.Games.Add(g);
 
                 }
 

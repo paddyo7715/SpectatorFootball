@@ -42,14 +42,15 @@
     <Property Name="ID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Season_ID" Type="integer" Nullable="false" />
     <Property Name="Round" Type="integer" Nullable="false" />
+    <Property Name="Pick_Number" Type="integer" Nullable="false" />
     <Property Name="Franchise_ID" Type="integer" Nullable="false" />
-    <Property Name="Player_ID" Type="integer" Nullable="false" />
+    <Property Name="Player_ID" Type="integer" />
   </EntityType>
   <EntityType Name="Franchise">
     <Key>
       <PropertyRef Name="ID" />
     </Key>
-    <Property Name="ID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID" Type="integer" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
   </EntityType>
   <EntityType Name="Game">
@@ -59,8 +60,10 @@
     <Property Name="ID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Season_ID" Type="integer" Nullable="false" />
     <Property Name="Week" Type="integer" Nullable="false" />
-    <Property Name="Home_Team_Slot_ID" Type="integer" Nullable="false" />
-    <Property Name="Away_Team_Slot_ID" Type="integer" Nullable="false" />
+    <Property Name="Home_Team_Franchise_ID" Type="integer" Nullable="false" />
+    <Property Name="Away_Team_Franchise_ID" Type="integer" Nullable="false" />
+    <Property Name="Home_Score" Type="integer" />
+    <Property Name="Away_Score" Type="integer" />
     <Property Name="Home_FirstDowns" Type="integer" />
     <Property Name="Home_ThirdDown_Conversions" Type="integer" />
     <Property Name="Home_ThirdDowns" Type="integer" />
@@ -85,18 +88,8 @@
     <Property Name="Away_Score_Q3" Type="integer" />
     <Property Name="Home_Score_Q4" Type="integer" />
     <Property Name="Away_Score_Q4" Type="integer" />
-    <Property Name="Home_Score_Q5" Type="integer" />
-    <Property Name="Away_Score_Q5" Type="integer" />
-    <Property Name="Home_Score_Q6" Type="integer" />
-    <Property Name="Away_Score_Q6" Type="integer" />
-    <Property Name="Home_Score_Q7" Type="integer" />
-    <Property Name="Away_Score_Q7" Type="integer" />
-    <Property Name="Home_Score_Q8" Type="integer" />
-    <Property Name="Away_Score_Q8" Type="integer" />
-    <Property Name="Home_Score_Q9" Type="integer" />
-    <Property Name="Away_Score_Q9" Type="integer" />
-    <Property Name="Home_Score_Q10" Type="integer" />
-    <Property Name="Away_Score_Q10" Type="integer" />
+    <Property Name="Home_Score_OT" Type="integer" />
+    <Property Name="Away_Score_OT" Type="integer" />
     <Property Name="Quarter" Type="integer" />
     <Property Name="Time" Type="integer" />
     <Property Name="Playoff_Game" Type="integer" />
@@ -638,14 +631,14 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Draft_0_0">
-    <End Role="Players" Type="Self.Players" Multiplicity="1" />
+    <End Role="Season" Type="Self.Season" Multiplicity="1" />
     <End Role="Draft" Type="Self.Draft" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Players">
+      <Principal Role="Season">
         <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="Draft">
-        <PropertyRef Name="Player_ID" />
+        <PropertyRef Name="Season_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -662,14 +655,14 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Draft_2_0">
-    <End Role="Season" Type="Self.Season" Multiplicity="1" />
+    <End Role="Players" Type="Self.Players" Multiplicity="0..1" />
     <End Role="Draft" Type="Self.Draft" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Season">
+      <Principal Role="Players">
         <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="Draft">
-        <PropertyRef Name="Season_ID" />
+        <PropertyRef Name="Player_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1540,7 +1533,7 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
       <End Role="Division" EntitySet="Division" />
     </AssociationSet>
     <AssociationSet Name="FK_Draft_0_0" Association="Self.FK_Draft_0_0">
-      <End Role="Players" EntitySet="Players" />
+      <End Role="Season" EntitySet="Season" />
       <End Role="Draft" EntitySet="Draft" />
     </AssociationSet>
     <AssociationSet Name="FK_Draft_1_0" Association="Self.FK_Draft_1_0">
@@ -1548,7 +1541,7 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
       <End Role="Draft" EntitySet="Draft" />
     </AssociationSet>
     <AssociationSet Name="FK_Draft_2_0" Association="Self.FK_Draft_2_0">
-      <End Role="Season" EntitySet="Season" />
+      <End Role="Players" EntitySet="Players" />
       <End Role="Draft" EntitySet="Draft" />
     </AssociationSet>
     <AssociationSet Name="FK_Game_0_0" Association="Self.FK_Game_0_0">
