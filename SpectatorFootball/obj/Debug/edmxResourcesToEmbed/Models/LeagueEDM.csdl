@@ -95,16 +95,24 @@
     <Property Name="Home_ThirdDowns" Type="Int64" />
     <Property Name="Home_FourthDown_Conversions" Type="Int64" />
     <Property Name="Home_FourthDowns" Type="Int64" />
+    <Property Name="Home_1Point_Conv_Att" Type="Int64" />
+    <Property Name="Home_1Point_Conv_Made" Type="Int64" />
     <Property Name="Home_2Point_Conv_Att" Type="Int64" />
     <Property Name="Home_2Point_Conv_Made" Type="Int64" />
+    <Property Name="Home_3Point_Conv_Att" Type="Int64" />
+    <Property Name="Home_3Point_Conv_Made" Type="Int64" />
     <Property Name="Home_TOP" Type="Int64" />
     <Property Name="Away_FirstDowns" Type="Int64" />
     <Property Name="Away_ThirdDown_Conversions" Type="Int64" />
     <Property Name="Away_ThirdDowns" Type="Int64" />
     <Property Name="Away_FourthDown_Conversions" Type="Int64" />
     <Property Name="Away_FourthDowns" Type="Int64" />
+    <Property Name="Away_1Point_Conv_Att" Type="Int64" />
+    <Property Name="Away_1Point_Conv_Made" Type="Int64" />
     <Property Name="Away_2Point_Conv_Att" Type="Int64" />
     <Property Name="Away_2Point_Conv_Made" Type="Int64" />
+    <Property Name="Away_3Point_Conv_Att" Type="Int64" />
+    <Property Name="Away_3Point_Conv_Made" Type="Int64" />
     <Property Name="Away_TOP" Type="Int64" />
     <Property Name="Away_Score_Q1" Type="Int64" />
     <Property Name="Home_Score_Q1" Type="Int64" />
@@ -563,6 +571,12 @@
     <Property Name="Draft_Type_Code" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Injuries" Type="Int64" Nullable="false" />
     <Property Name="Penalties" Type="Int64" Nullable="false" />
+    <Property Name="Kickoff_Type" Type="Int64" Nullable="false" />
+    <Property Name="Extra_Point" Type="Int64" Nullable="false" />
+    <Property Name="Two_Point_Conversion" Type="Int64" Nullable="false" />
+    <Property Name="Three_Point_Conversion" Type="Int64" Nullable="false" />
+    <Property Name="Onside_Kick" Type="Int64" Nullable="false" />
+    <Property Name="Home_Advantage" Type="Int64" Nullable="false" />
     <NavigationProperty Name="Season" Relationship="Self.FK_League_Structure_by_Season_0_0" FromRole="League_Structure_by_Season" ToRole="Season" />
   </EntityType>
   <EntityType Name="Penalty">

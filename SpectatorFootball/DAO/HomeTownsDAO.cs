@@ -30,7 +30,7 @@ namespace SpectatorFootball
             string con = Common.SettingsConnection.Connect();
             using (var context = new settingsContext(con))
             {
-                string HomeTown = context.HomeTowns.Where(z => z.ID == rec_num).Select(x => x.State + ", " + x.State).FirstOrDefault();
+                r = context.HomeTowns.Where(z => z.ID == rec_num).Select(x => x.City + ", " + x.State).FirstOrDefault();
             }
 
             return r;

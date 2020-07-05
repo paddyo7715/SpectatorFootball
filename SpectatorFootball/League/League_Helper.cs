@@ -5,12 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using SpectatorFootball.Models;
 using SpectatorFootball.Enum;
+using log4net;
 
 namespace SpectatorFootball.League
 {
     class League_Helper
     {
-
+        private static ILog logger = LogManager.GetLogger("RollingFile");
         public static League_Structure_by_Season Clone_League(League_Structure_by_Season l)
         {
             League_Structure_by_Season r = new League_Structure_by_Season();
@@ -41,10 +42,13 @@ namespace SpectatorFootball.League
 
             for (int i = 0; i < num_players; i++)
             {
-                int int_pos_num = CommonUtils.getRandomNum(0,iTotal_Player_Positions-1);
+                int int_pos_num = CommonUtils.getRandomNum(0, iTotal_Player_Positions - 1);
                 Player_Pos Pos = (Player_Pos)int_pos_num;
 
+                logger.Debug("i=" + i + " Pos=" + Pos.ToString());
+
                 Player p = Player_Helper.CreatePlayer(Pos, true);
+
                 r.Add(p);
             }
 
@@ -53,3 +57,4 @@ namespace SpectatorFootball.League
 
     }
 }
+

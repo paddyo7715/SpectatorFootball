@@ -13,7 +13,7 @@ namespace SpectatorFootball.Drafts
         {
             //if league_filepath is null then this is a new league.
 
-            List<Draft> r = null;
+            List<Draft> r = new List<Draft>();
             int p_num;
             List<Franchise> Round_order1 = null;
             List<Franchise> Round_order2 = null;

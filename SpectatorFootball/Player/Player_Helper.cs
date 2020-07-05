@@ -2,12 +2,14 @@
 using System;
 using SpectatorFootball.Models;
 using SpectatorFootball.Enum;
+using log4net;
 
 namespace SpectatorFootball
 {
 
     public class Player_Helper
     {
+        private static ILog logger = LogManager.GetLogger("RollingFile");
         public static Player CreatePlayer(Player_Pos pos, Boolean bNewLeage)
         {
             Player r = new Player();
@@ -32,9 +34,11 @@ namespace SpectatorFootball
 
             Player_Ratings ratings = Create_Player_Ratings(pos);
 
-            int[] m = CreateHeightWeight(pos, ratings);
+              int[] m = CreateHeightWeight(pos, ratings);
             r.Height = m[0];
             r.Weight = m[1];
+
+            logger.Debug("Player Height and Weight Created");
 
             r.First_Name = PlayerName[0];
             r.Last_Name = PlayerName[1];
@@ -43,6 +47,7 @@ namespace SpectatorFootball
             r.Pos = (int)pos;
             r.Jersey_Number = null;
 
+            
             Administration_Services adms = new Administration_Services();
             string HomeTown = adms.getRandomHomeTown();
 
@@ -52,6 +57,12 @@ namespace SpectatorFootball
 
             r.Franchise_ID = null;
 
+            //Create draft ratings that are used to create draft profile grade and scouting report.
+            Player_Ratings draft_ratings = Draft_Profile.setDraftRatings(ratings);
+            r.Draft_Grade = Draft_Profile.Create_Draft_Overall(pos, draft_ratings);
+            r.Draft_Profile = Draft_Profile.Create_Draft_Scoutingrpt(pos, draft_ratings);
+
+            logger.Debug("Finished");
             return r;
         }
         private static int[] CreateHeightWeight(Player_Pos pos, Player_Ratings pr)
@@ -95,7 +106,7 @@ namespace SpectatorFootball
                         weight = getPlayerWeight(app_Constants.TE_LOW_WEIGHT, app_Constants.TE_HIGH_WEIGHT,
                                     app_Constants.TE_LOW_HEIGHT, app_Constants.TE_HIGH_HEIGHT, height);
                         weight = weight + weightAdjust(app_Constants.SECONDARY_1_ABILITY_LOW_RATING, app_Constants.SECONDARY_1_ABILITY_HIGH_RATING, (int)pr.Speed_Rating, true);
-                        weight = weight + weightAdjust(app_Constants.SECONDARY_1_ABILITY_LOW_RATING, app_Constants.SECONDARY_1_ABILITY_LOW_RATING, (int)pr.Pass_Block_Rating, false);
+                        weight = weight + weightAdjust(app_Constants.SECONDARY_1_ABILITY_LOW_RATING, app_Constants.SECONDARY_1_ABILITY_HIGH_RATING, (int)pr.Pass_Block_Rating, false);
                         break;
                     }
 
@@ -157,9 +168,10 @@ namespace SpectatorFootball
         private static int weightAdjust(int rating_low, int rating_hight, int value, Boolean flip)
         {
             int r;
-            int range = rating_hight - rating_hight;
-            value = value - rating_hight;
-            double percent = rating_hight / value;
+            double range = rating_hight - rating_low;
+            value = value - rating_low;
+            logger.Debug("value = " + value);
+            double percent = value / range;
 
             r = (int)((percent * 100) / 10);
             r = (r * app_Constants.WEIGHT_ADJUSTMENT_MULTIPLYER) - app_Constants.WEIGHT_ADJUSTMENT_HALF_RANGE;
@@ -177,6 +189,7 @@ namespace SpectatorFootball
             int r;
             int height_range = high_height - low_height;
             int height_range_value = height - low_height;
+            logger.Debug("height_range = " + height_range);
             double height_range_percent = (float)height_range_value / height_range;
 
             int weight_range = high_weight - low_weight;

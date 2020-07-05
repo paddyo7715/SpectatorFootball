@@ -53,7 +53,6 @@ C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\NewL
 C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\PlayerNamesUC.baml
 C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\Progress_Dialog.baml
 C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\StockTeamsUC.baml
-C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\SpectatorFootball.csprojAssemblyReference.cache
 C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\bin\Debug\Log4Net.Config.xml
 C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\SpectatorFootball_Content.g.cs
 C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\Stock_Team_detail.baml
@@ -63,3 +62,4 @@ C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\New_
 C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\New_Team_DetailUC.baml
 C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\LoadLeague.g.cs
 C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\LoadLeague.baml
+C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\SpectatorFootball.csprojAssemblyReference.cache

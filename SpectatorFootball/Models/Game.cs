@@ -49,16 +49,24 @@ namespace SpectatorFootball.Models
         public Nullable<long> Home_ThirdDowns { get; set; }
         public Nullable<long> Home_FourthDown_Conversions { get; set; }
         public Nullable<long> Home_FourthDowns { get; set; }
+        public Nullable<long> Home_1Point_Conv_Att { get; set; }
+        public Nullable<long> Home_1Point_Conv_Made { get; set; }
         public Nullable<long> Home_2Point_Conv_Att { get; set; }
         public Nullable<long> Home_2Point_Conv_Made { get; set; }
+        public Nullable<long> Home_3Point_Conv_Att { get; set; }
+        public Nullable<long> Home_3Point_Conv_Made { get; set; }
         public Nullable<long> Home_TOP { get; set; }
         public Nullable<long> Away_FirstDowns { get; set; }
         public Nullable<long> Away_ThirdDown_Conversions { get; set; }
         public Nullable<long> Away_ThirdDowns { get; set; }
         public Nullable<long> Away_FourthDown_Conversions { get; set; }
         public Nullable<long> Away_FourthDowns { get; set; }
+        public Nullable<long> Away_1Point_Conv_Att { get; set; }
+        public Nullable<long> Away_1Point_Conv_Made { get; set; }
         public Nullable<long> Away_2Point_Conv_Att { get; set; }
         public Nullable<long> Away_2Point_Conv_Made { get; set; }
+        public Nullable<long> Away_3Point_Conv_Att { get; set; }
+        public Nullable<long> Away_3Point_Conv_Made { get; set; }
         public Nullable<long> Away_TOP { get; set; }
         public Nullable<long> Away_Score_Q1 { get; set; }
         public Nullable<long> Home_Score_Q1 { get; set; }

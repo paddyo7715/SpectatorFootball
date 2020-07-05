@@ -30,6 +30,12 @@ namespace SpectatorFootball.Models
         public string Draft_Type_Code { get; set; }
         public long Injuries { get; set; }
         public long Penalties { get; set; }
+        public long Kickoff_Type { get; set; }
+        public long Extra_Point { get; set; }
+        public long Two_Point_Conversion { get; set; }
+        public long Three_Point_Conversion { get; set; }
+        public long Onside_Kick { get; set; }
+        public long Home_Advantage { get; set; }
     
         public virtual Season Season { get; set; }
     }

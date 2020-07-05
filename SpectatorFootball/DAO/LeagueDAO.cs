@@ -24,9 +24,10 @@ namespace SpectatorFootball
              string con = Common.LeageConnection.Connect(newleague_filepath);
              using (var context = new leagueContext(con))
              {
-                    context.Seasons.Add(Mem_League.Season);
+                context.Seasons.Add(Mem_League.Season);
                 context.Franchises.AddRange(Mem_League.Franchises);
-                    context.DBVersions.Add(Mem_League.DBVersion);
+                context.DBVersions.Add(Mem_League.DBVersion);
+                context.Players.AddRange(Mem_League.Players);
 
                     context.SaveChanges();
             }

@@ -217,6 +217,17 @@ namespace SpectatorFootball
 
             return r;
         }
+
+        public static int PercentFromRange(int value, int lowerR, int upperR)
+        {
+            int r = 0;
+
+            float range = upperR = lowerR;
+            float true_value = value - lowerR;
+
+            r = (int)(true_value / range);
+            return r;
+        }
     }
 
 

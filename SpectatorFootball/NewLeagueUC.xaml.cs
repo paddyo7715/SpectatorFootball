@@ -12,6 +12,7 @@ using log4net;
 using SpectatorFootball.Models;
 using SpectatorFootball.Versioning;
 using SpectatorFootball.League;
+using SpectatorFootball.CustomControls;
 
 namespace SpectatorFootball
 {
@@ -210,12 +211,12 @@ namespace SpectatorFootball
             int num_teams;
             int num_confs;
             int num_playoff_teams;
-            int last_div_first_group;
             int teams_per_division;
             int j;
             Style Largelblstyle = (Style)System.Windows.Application.Current.FindResource("Largelbltyle");
             Style GroupBoxstyle = (Style)System.Windows.Application.Current.FindResource("GroupBoxstyle");
             Style Largetxttyle = (Style)System.Windows.Application.Current.FindResource("Largetxttyle");
+            Style MediumLargetxttyle = (Style)System.Windows.Application.Current.FindResource("MediumLargetxttyle");
             Style Conflbltyle = (Style)System.Windows.Application.Current.FindResource("Conflbltyle");
             Style UnselNewTeamSP = (Style)System.Windows.Application.Current.FindResource("UnselNewTeamSP");
             Style DragEnt_NewTeamSP = (Style)System.Windows.Application.Current.FindResource("DragEnt_NewTeamSP");
@@ -304,12 +305,12 @@ namespace SpectatorFootball
                 conf1_sp.Orientation = Orientation.Horizontal;
                 conf1_sp.HorizontalAlignment = HorizontalAlignment.Center;
 
-                var txtConf1 = new TextBox();
+                var txtConf1 = new CustomTextBox();
                 txtConf1.Name = "newlConf1";
                 txtConf1.Width = 150;
-                txtConf1.Style = Largetxttyle;
+                txtConf1.Style = MediumLargetxttyle;
                 txtConf1.MaxLength = 60;
-                txtConf1.Text = "Conference 1";
+                txtConf1.PlaceholderText = "Conference 1";
 
                 conf1_sp.Children.Add(txtConf1);
                 v_sp1.Children.Add(conf1_sp);
@@ -318,11 +319,11 @@ namespace SpectatorFootball
 
                 for (int i = 1; i <= num_divs_per_conf; i++)
                 {
-                    var txtDivision1 = new TextBox();
+                    var txtDivision1 = new CustomTextBox();
                     txtDivision1.Name = "newldiv" + i.ToString();
                     txtDivision1.Width = 150;
-                    txtDivision1.Style = Largetxttyle;
-                    txtDivision1.Text = "Division " + i.ToString();
+                    txtDivision1.Style = MediumLargetxttyle;
+                    txtDivision1.PlaceholderText = "Division " + i.ToString();
 
                     var gb_div = new GroupBox();
                     gb_div.Margin = new Thickness(1, 1, 1, 1);
@@ -387,12 +388,12 @@ namespace SpectatorFootball
                 conf2_sp.Orientation = Orientation.Horizontal;
                 conf2_sp.HorizontalAlignment = HorizontalAlignment.Center;
 
-                var txtConf2 = new TextBox();
+                var txtConf2 = new CustomTextBox();
                 txtConf2.Name = "newlConf2";
                 txtConf2.Width = 150;
-                txtConf2.Style = Largetxttyle;
+                txtConf2.Style = MediumLargetxttyle;
                 txtConf2.MaxLength = 60;
-                txtConf2.Text = "Conference 2";
+                txtConf2.PlaceholderText = "Conference 2";
 
                 conf2_sp.Children.Add(txtConf2);
                 v_sp2.Children.Add(conf2_sp);
@@ -401,11 +402,11 @@ namespace SpectatorFootball
 
                 for (int i = num_divs_per_conf + 1; i <= num_divs; i++)
                 {
-                    var txtDivision2 = new TextBox();
+                    var txtDivision2 = new CustomTextBox();
                     txtDivision2.Name = "newldiv" + i.ToString();
                     txtDivision2.Width = 150;
-                    txtDivision2.Style = Largetxttyle;
-                    txtDivision2.Text = "Division " + i.ToString();
+                    txtDivision2.Style = MediumLargetxttyle;
+                    txtDivision2.PlaceholderText = "Division " + i.ToString();
 
                     var gb_div = new GroupBox();
                     gb_div.Margin = new Thickness(1, 1, 1, 1);
@@ -469,11 +470,11 @@ namespace SpectatorFootball
 
                 for (int i = 1; i <= num_divs; i++)
                 {
-                    var txtDivision1 = new TextBox();
+                    var txtDivision1 = new CustomTextBox();
                     txtDivision1.Name = "newldiv" + i.ToString();
                     txtDivision1.Width = 150;
-                    txtDivision1.Style = Largetxttyle;
-                    txtDivision1.Text = "Division " + i.ToString();
+                    txtDivision1.Style = MediumLargetxttyle;
+                    txtDivision1.PlaceholderText = "Division " + i.ToString();
 
                     var gb_div = new GroupBox();
                     gb_div.Margin = new Thickness(1, 1, 1, 1);
@@ -501,7 +502,7 @@ namespace SpectatorFootball
                         team_label.Name = "newllblTeam" + t_id.ToString();
                         team_label.Padding = new Thickness(10, 0, 0, 0);
                         team_label.Width = 250;
-                        team_label.Style = Teamlbltyle;
+                        team_label.Style = Largelblstyle;
 
                         sp_team.Children.Add(helmet_img);
                         sp_team.Children.Add(team_label);
@@ -551,6 +552,13 @@ namespace SpectatorFootball
            
             int ipenalties;
             int iinjuries;
+            int Home_Field_Advantage;
+            int Kickoff;
+            int OnsideKick;
+            int One_Point_Conversion;
+            int Two_Point_Conversion;
+            int Three_Point_Conversion;
+
             String DraftType = null;
 
             try
@@ -564,11 +572,12 @@ namespace SpectatorFootball
                 //Do this since it is easier to just work with s than that long string.
                 Season s = pw.New_Mem_Season.Season;
                 List<Franchise> Franchises = new List<Franchise>();
+                pw.New_Mem_Season.Franchises = Franchises;
                 s.Year = Convert.ToInt32(newl1StartingYear.Text);
 
                 App_Version app_ver = new App_Version();
 
-                League_Structure_by_Season ls = new League_Structure_by_Season();
+                League_Structure_by_Season ls = s.League_Structure_by_Season[0];
 
                 if (newlPenYes.IsChecked == true)
                     ipenalties = 1;
@@ -579,6 +588,36 @@ namespace SpectatorFootball
                     iinjuries = 1;
                 else
                     iinjuries = 0;
+
+                if (newlHomeAdvYes.IsChecked == true)
+                    Home_Field_Advantage = 1;
+                else
+                    Home_Field_Advantage = 0;
+
+                if (newlKickoffYesYes.IsChecked == true)
+                    Kickoff = 1;
+                else
+                    Kickoff = 0;
+
+                if (newl1OnsideKick.IsChecked == true)
+                    OnsideKick = 1;
+                else
+                    OnsideKick = 2;
+
+                if (newl1PointConvKick.IsChecked == true)
+                    One_Point_Conversion = 1;
+                else
+                    One_Point_Conversion = 2;
+
+                if (newl2PointConvYes.IsChecked == true)
+                    Two_Point_Conversion = 1;
+                else
+                    Two_Point_Conversion = 0;
+
+                if (newl3PointConvYes.IsChecked == true)
+                    Three_Point_Conversion = 1;
+                else
+                    Three_Point_Conversion = 0;
 
                 if (newlDraft_FD.IsChecked == true) DraftType = "FD";
                 else if (newlDraft_SD.IsChecked == true) DraftType = "SD";
@@ -601,8 +640,12 @@ namespace SpectatorFootball
                 ls.Penalties = ipenalties;
                 ls.Injuries = iinjuries;
                 ls.Draft_Type_Code = DraftType;
-
-                s.League_Structure_by_Season.Add(ls);
+                ls.Home_Advantage = Home_Field_Advantage;
+                ls.Kickoff_Type = Kickoff;
+                ls.Onside_Kick = OnsideKick;
+                ls.Extra_Point = One_Point_Conversion;
+                ls.Two_Point_Conversion = Two_Point_Conversion;
+                ls.Three_Point_Conversion = Three_Point_Conversion;
 
                 if (Convert.ToInt32(newlnumconferences.Text) == 2)
                 {
@@ -630,8 +673,10 @@ namespace SpectatorFootball
                     s.Teams_by_Season[t_int].Owner = "C";
                     s.Teams_by_Season[t_int].Helmet_Image_File = Path.GetFileName(s.Teams_by_Season[t_int].Helmet_img_path);
                     s.Teams_by_Season[t_int].Stadium_Image_File = Path.GetFileName(s.Teams_by_Season[t_int].Stadium_Img_Path);
+                    int f_id = t_int + 1;
+                    s.Teams_by_Season[t_int].Franchise_ID = f_id;
 
-                    Franchise f = new Franchise() {ID = t_int + 1, Name = s.Teams_by_Season[t_int].City + " " + s.Teams_by_Season[t_int].Nickname + " Founded " + s.Year.ToString() };
+                    Franchise f = new Franchise() {ID = f_id, Name = s.Teams_by_Season[t_int].City + " " + s.Teams_by_Season[t_int].Nickname + " Founded " + s.Year.ToString() };
                     f.Teams_by_Season.Add(s.Teams_by_Season[t_int]);
                     Franchises.Add(f);
                 

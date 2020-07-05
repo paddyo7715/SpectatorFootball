@@ -106,6 +106,7 @@
     <Compile Include="Common\LoadLeagueEventArgs.cs" />
     <Compile Include="Common\SettingsConnection.cs" />
     <Compile Include="Common\Validator.cs" />
+    <Compile Include="CustomControls\CustomTextBox.cs" />
     <Compile Include="DAO\DBVersionDAO.cs" />
     <Compile Include="DAO\HomeTownsDAO.cs" />
     <Compile Include="Draft\Draft_Helper.cs" />
@@ -124,121 +125,121 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\Award.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
+      <DependentUpon>leagueContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Conference.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
+      <DependentUpon>leagueContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DBVersion.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
+      <DependentUpon>leagueContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Division.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
+      <DependentUpon>leagueContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Draft.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
+      <DependentUpon>leagueContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Franchise.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
+      <DependentUpon>leagueContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Game.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
+      <DependentUpon>leagueContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Game_Player_FG_Defense_Stats.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
+      <DependentUpon>leagueContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Game_Player_Kicker_Stats.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
+      <DependentUpon>leagueContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Game_Player_Kickoff_Defenders.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
+      <DependentUpon>leagueContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Game_Player_Kickoff_Receiver_Stats.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
+      <DependentUpon>leagueContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Game_Player_Kick_Returner_Stats.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
+      <DependentUpon>leagueContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Game_Player_Offensive_Linemen_Stats.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
+      <DependentUpon>leagueContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Game_Player_Passing_Stats.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
+      <DependentUpon>leagueContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Game_Player_Pass_Defense_Stats.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
+      <DependentUpon>leagueContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Game_Player_Pass_Rushers_Stats.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
+      <DependentUpon>leagueContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Game_Player_Penalties_Stats.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
+      <DependentUpon>leagueContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Game_Player_Penalty_Stats.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
+      <DependentUpon>leagueContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Game_Player_Punter_Stats.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
+      <DependentUpon>leagueContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Game_Player_Punt_Defenders.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
+      <DependentUpon>leagueContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Game_Player_Punt_Receiver_Stats.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
+      <DependentUpon>leagueContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Game_Player_Punt_Returner_Stats.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
+      <DependentUpon>leagueContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Game_Player_Receiving_Stats.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
+      <DependentUpon>leagueContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Game_Player_Rushing_Stats.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
+      <DependentUpon>leagueContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Game_Scoring_Summary.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
+      <DependentUpon>leagueContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Hall_of_Fame.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
+      <DependentUpon>leagueContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\HomeTown.cs">
       <DependentUpon>SettingsEDM.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Injury.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
+      <DependentUpon>leagueContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\LeagueEDM.Context.cs">
+    <Compile Include="Models\leagueContext.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>LeagueEDM.Context.tt</DependentUpon>
+      <DependentUpon>leagueContext.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\LeagueEDM.cs">
+    <Compile Include="Models\leagueContext.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
+      <DependentUpon>leagueContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\LeagueEDM.Designer.cs">
+    <Compile Include="Models\leagueContext.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>LeagueEDM.edmx</DependentUpon>
+      <DependentUpon>leagueContext.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\League_Structure_by_Season.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
+      <DependentUpon>leagueContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Penalty.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
+      <DependentUpon>leagueContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Player.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
+      <DependentUpon>leagueContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Player_Awards.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
+      <DependentUpon>leagueContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Player_Ratings.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
+      <DependentUpon>leagueContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Playoff_Teams_by_Season.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
+      <DependentUpon>leagueContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Potential_First_Names.cs">
       <DependentUpon>SettingsEDM.tt</DependentUpon>
@@ -247,7 +248,7 @@
       <DependentUpon>SettingsEDM.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Season.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
+      <DependentUpon>leagueContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SettingsEDM.Context.cs">
       <AutoGen>True</AutoGen>
@@ -268,8 +269,9 @@
       <DependentUpon>SettingsEDM.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Teams_by_Season.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
+      <DependentUpon>leagueContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="NarrationAndText\ScoutingReport.cs" />
     <Compile Include="NewLeagueUC.xaml.cs">
       <DependentUpon>NewLeagueUC.xaml</DependentUpon>
     </Compile>
@@ -279,6 +281,7 @@
     <Compile Include="PlayerNamesUC.xaml.cs">
       <DependentUpon>PlayerNamesUC.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Player\Draft_Profile.cs" />
     <Compile Include="Progress_Dialog.xaml.cs">
       <DependentUpon>Progress_Dialog.xaml</DependentUpon>
     </Compile>
@@ -389,12 +392,12 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>SettingsEDM.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <EntityDeploy Include="Models\LeagueEDM.edmx">
+    <EntityDeploy Include="Models\leagueContext.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>LeagueEDM.Designer.cs</LastGenOutput>
+      <LastGenOutput>leagueContext.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="Models\LeagueEDM.edmx.diagram">
-      <DependentUpon>LeagueEDM.edmx</DependentUpon>
+    <None Include="Models\leagueContext.edmx.diagram">
+      <DependentUpon>leagueContext.edmx</DependentUpon>
     </None>
     <None Include="Models\SettingsEDM.edmx.diagram">
       <DependentUpon>SettingsEDM.edmx</DependentUpon>
@@ -411,15 +414,15 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Models\LeagueEDM.Context.tt">
+    <Content Include="Models\leagueContext.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>LeagueEDM.edmx</DependentUpon>
-      <LastGenOutput>LeagueEDM.Context.cs</LastGenOutput>
+      <DependentUpon>leagueContext.edmx</DependentUpon>
+      <LastGenOutput>leagueContext.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\LeagueEDM.tt">
+    <Content Include="Models\leagueContext.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>LeagueEDM.edmx</DependentUpon>
-      <LastGenOutput>LeagueEDM.cs</LastGenOutput>
+      <DependentUpon>leagueContext.edmx</DependentUpon>
+      <LastGenOutput>leagueContext.cs</LastGenOutput>
     </Content>
     <Content Include="Models\SettingsEDM.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

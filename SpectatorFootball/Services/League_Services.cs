@@ -33,8 +33,8 @@ namespace SpectatorFootball
             try
             {
                 // Update the progress bar
-                i = 10;
-                process_state = "Creating League Folder Strucuture 1 of 4";
+                i = 5;
+                process_state = "Creating League Folder Strucuture 1 of 5";
                 state_struct = "Processing..." + "|" + process_state + "|" + "";
                 bw.ReportProgress(i, state_struct);
 
@@ -85,8 +85,8 @@ namespace SpectatorFootball
                 }
 
                 // Update the progress bar
-                i = 25;
-                process_state = "Create Players for Draft 2 of 4";
+                i = 20;
+                process_state = "Create Players for Draft 2 of 5";
                 state_struct = "Processing..." + "|" + process_state + "|" + "";
                 bw.ReportProgress(i, state_struct);
 
@@ -95,17 +95,30 @@ namespace SpectatorFootball
 
                 List<Player> new_player_list = League_Helper.Create_New_Players(num_players);
 
+                nls.Players = new List<Player>();
                 foreach (Player p in new_player_list)
-                    nls.Season.Player_Ratings.Add(p.Player_Ratings.First()); ;
+                {
+                    nls.Players.Add(p);
+//                    nls.Season.Player_Ratings.Add(p.Player_Ratings.First());
+                }
+
+                i = 50;
+                process_state = "Create Players for Draft 3 of 5";
+                state_struct = "Processing..." + "|" + process_state + "|" + "";
+                bw.ReportProgress(i, state_struct);
 
                 //Create Draft
-                int draft_rounds = (int)(((app_Constants.QB_PER_TEAM + app_Constants.RB_PER_TEAM + app_Constants.WR_PER_TEAM + app_Constants.TE_PER_TEAM + app_Constants.OL_PER_TEAM + app_Constants.DL_PER_TEAM + app_Constants.LB_PER_TEAM + app_Constants.DB_PER_TEAM + app_Constants.K_PER_TEAM + app_Constants.P_PER_TEAM) * nls.Season.League_Structure_by_Season[0].Num_Teams));
+                int draft_rounds = (app_Constants.QB_PER_TEAM + app_Constants.RB_PER_TEAM + app_Constants.WR_PER_TEAM + app_Constants.TE_PER_TEAM + app_Constants.OL_PER_TEAM + app_Constants.DL_PER_TEAM + app_Constants.LB_PER_TEAM + app_Constants.DB_PER_TEAM + app_Constants.K_PER_TEAM + app_Constants.P_PER_TEAM);
                 Draft_Helper DH = new Draft_Helper();
-                List<Draft> Draft_List = DH.Create_Draft(nls.Season.Year-1,nls.Season.League_Structure_by_Season[0].Draft_Type_Code, draft_rounds, nls.Franchises ,ddf);
+                List<Draft> Draft_List = DH.Create_Draft(nls.Season.Year-1,nls.Season.League_Structure_by_Season[0].Draft_Type_Code, draft_rounds, nls.Franchises ,null);
+                foreach (Draft d in Draft_List)
+                {
+                    nls.Season.Drafts.Add(d);
+                }
 
                 // Update the progress bar
-                i = 50;
-                process_state = "Creating Schedule 3 of 4";
+                i = 70;
+                process_state = "Creating Schedule 4 of 5";
                 state_struct = "Processing..." + "|" + process_state + "|" + "";
                 bw.ReportProgress(i, state_struct);
 
@@ -135,8 +148,8 @@ namespace SpectatorFootball
                 }
 
                 // Update the progress bar
-                i = 75;
-                process_state = "Saving League to Database 4 of 4";
+                i = 85;
+                process_state = "Saving League to Database 5 of 5";
                 state_struct = "Processing..." + "|" + process_state + "|" + "";
                 bw.ReportProgress(i, state_struct);
 
@@ -176,7 +189,8 @@ namespace SpectatorFootball
                 Directory.Delete(DIRPath_League,true);
 
                 logger.Error("Create league service failed");
-                logger.Error("Inner Exception: " + ex.InnerException.ToString());
+                if (ex.InnerException != null)
+                    logger.Error("Inner Exception: " + ex.InnerException.ToString());
                 logger.Error(ex);
             }
         }

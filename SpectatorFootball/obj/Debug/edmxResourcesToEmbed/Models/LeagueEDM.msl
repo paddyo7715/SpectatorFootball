@@ -75,16 +75,24 @@
           <ScalarProperty Name="Home_ThirdDowns" ColumnName="Home_ThirdDowns" />
           <ScalarProperty Name="Home_FourthDown_Conversions" ColumnName="Home_FourthDown_Conversions" />
           <ScalarProperty Name="Home_FourthDowns" ColumnName="Home_FourthDowns" />
+          <ScalarProperty Name="Home_1Point_Conv_Att" ColumnName="Home_1Point_Conv_Att" />
+          <ScalarProperty Name="Home_1Point_Conv_Made" ColumnName="Home_1Point_Conv_Made" />
           <ScalarProperty Name="Home_2Point_Conv_Att" ColumnName="Home_2Point_Conv_Att" />
           <ScalarProperty Name="Home_2Point_Conv_Made" ColumnName="Home_2Point_Conv_Made" />
+          <ScalarProperty Name="Home_3Point_Conv_Att" ColumnName="Home_3Point_Conv_Att" />
+          <ScalarProperty Name="Home_3Point_Conv_Made" ColumnName="Home_3Point_Conv_Made" />
           <ScalarProperty Name="Home_TOP" ColumnName="Home_TOP" />
           <ScalarProperty Name="Away_FirstDowns" ColumnName="Away_FirstDowns" />
           <ScalarProperty Name="Away_ThirdDown_Conversions" ColumnName="Away_ThirdDown_Conversions" />
           <ScalarProperty Name="Away_ThirdDowns" ColumnName="Away_ThirdDowns" />
           <ScalarProperty Name="Away_FourthDown_Conversions" ColumnName="Away_FourthDown_Conversions" />
           <ScalarProperty Name="Away_FourthDowns" ColumnName="Away_FourthDowns" />
+          <ScalarProperty Name="Away_1Point_Conv_Att" ColumnName="Away_1Point_Conv_Att" />
+          <ScalarProperty Name="Away_1Point_Conv_Made" ColumnName="Away_1Point_Conv_Made" />
           <ScalarProperty Name="Away_2Point_Conv_Att" ColumnName="Away_2Point_Conv_Att" />
           <ScalarProperty Name="Away_2Point_Conv_Made" ColumnName="Away_2Point_Conv_Made" />
+          <ScalarProperty Name="Away_3Point_Conv_Att" ColumnName="Away_3Point_Conv_Att" />
+          <ScalarProperty Name="Away_3Point_Conv_Made" ColumnName="Away_3Point_Conv_Made" />
           <ScalarProperty Name="Away_TOP" ColumnName="Away_TOP" />
           <ScalarProperty Name="Away_Score_Q1" ColumnName="Away_Score_Q1" />
           <ScalarProperty Name="Home_Score_Q1" ColumnName="Home_Score_Q1" />
@@ -469,6 +477,12 @@
           <ScalarProperty Name="Draft_Type_Code" ColumnName="Draft_Type_Code" />
           <ScalarProperty Name="Injuries" ColumnName="Injuries" />
           <ScalarProperty Name="Penalties" ColumnName="Penalties" />
+          <ScalarProperty Name="Kickoff_Type" ColumnName="Kickoff_Type" />
+          <ScalarProperty Name="Extra_Point" ColumnName="Extra_Point" />
+          <ScalarProperty Name="Two_Point_Conversion" ColumnName="Two_Point_Conversion" />
+          <ScalarProperty Name="Three_Point_Conversion" ColumnName="Three_Point_Conversion" />
+          <ScalarProperty Name="Onside_Kick" ColumnName="Onside_Kick" />
+          <ScalarProperty Name="Home_Advantage" ColumnName="Home_Advantage" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

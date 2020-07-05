@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local1="clr-namespace:SpectatorFootball.BindingConverters"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="730">
     <UserControl.Resources>
         <local1:TextConverter x:Key="TextConverter" />
         <local1:ImageConverter x:Key="ImageConverter" />
@@ -27,36 +27,36 @@
         </StackPanel>
         <TabControl  Background="DarkGreen" Foreground="White">
             <TabItem Header="Settings" Margin="-2,-2,2,-1">
-                <StackPanel Orientation="Vertical" Height="580" HorizontalAlignment="Center" VerticalAlignment="top" Margin="10">
+                <StackPanel Orientation="Vertical" Height="540" HorizontalAlignment="Center" VerticalAlignment="top" Margin="10">
                     <GroupBox FontSize="18" FontWeight="Bold" Style="{StaticResource GroupBoxstyle}" >
                         <GroupBox.Header>
-                            Settings:
+                            Basic Settings:
                         </GroupBox.Header>
 
-                        <StackPanel Width="900" Orientation="Vertical" >
+                        <StackPanel Width="1000" Orientation="Vertical" >
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
-                                <Label Width="350" Style="{StaticResource Largelbltyle}">Short Names:</Label>
+                                <Label Width="300" Style="{StaticResource Largelbltyle}">Short Names:</Label>
                                 <TextBox Name="newl1shortname"  Width="60"  Style="{StaticResource Largetxttyle}" MaxLength="6" />
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
-                                <Label Width="350" Style="{StaticResource Largelbltyle}">Long Names:</Label>
-                                <TextBox Name="newl1longname" Width="500" Style="{StaticResource Largetxttyle}"  MaxLength="100" />
+                                <Label Width="300" Style="{StaticResource Largelbltyle}">Long Names:</Label>
+                                <TextBox Name="newl1longname" Width="600" Style="{StaticResource Largetxttyle}"  MaxLength="100" />
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
-                                <Label Width="350" Style="{StaticResource Largelbltyle}">League Logo Image:</Label>
+                                <Label Width="300" Style="{StaticResource Largelbltyle}">League Logo Image:</Label>
                                 <TextBox Name="newLogoPath" IsReadOnly="True" Style="{StaticResource Largetxttyle}" Width="265" />
                                 <Button Name="newl1longnameLeagueLogoPath" FontSize="12" Width="90" Height="20" Click="newl1longnameLeagueLogoPath_Click">Select File</Button>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
-                                <Label Width="350" Style="{StaticResource Largelbltyle}">Starting Year:</Label>
+                                <Label Width="300" Style="{StaticResource Largelbltyle}">Starting Year:</Label>
                                 <ComboBox Name="newl1StartingYear"  Style="{StaticResource ComboBoxstyle}" Text="Is not open" />
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
-                                <Label Width="350" Style="{StaticResource Largelbltyle}">Championship Game:</Label>
+                                <Label Width="300" Style="{StaticResource Largelbltyle}">Championship Game:</Label>
                                 <TextBox Name="newl1championshipgame"  Width="400" Style="{StaticResource Largetxttyle}" MaxLength="100" />
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
-                                <Label  Width="350" Style="{StaticResource Largelbltyle}">Structure:</Label>
+                                <Label  Width="300" Style="{StaticResource Largelbltyle}">Structure:</Label>
                                 <ComboBox Name="newl1Structure" FontSize="14" Width="550" Style="{StaticResource ComboBoxstyle}" SelectionChanged="newl1Structure_SelectionChanged" IsEditable="False" >
                                     <ComboBoxItem Content="Teams 8 Games 10 Weeks 11 Conferences 0 Divisions 2 PlayoffTeams 4"></ComboBoxItem>
                                     <ComboBoxItem Content="Teams 10 Games 12 Weeks 13 Conferences 0 Divisions 2 PlayoffTeams 4"></ComboBoxItem>
@@ -71,7 +71,7 @@
                                 </ComboBox>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
-                                <StackPanel Orientation="vertical" Width="350" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                <StackPanel Orientation="vertical" Width="300" HorizontalAlignment="Left" VerticalAlignment="Center">
                                     <Image Name="newl1TrophyImage" Height="80" Width="80"  />
                                 </StackPanel>
                                 <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
@@ -95,72 +95,101 @@
                                     </StackPanel>
                                 </StackPanel>
                             </StackPanel>
-                            <StackPanel Orientation="Horizontal" >
-                                <Label  Width="350" VerticalContentAlignment="Top" Padding="5,0,0,0"  Style="{StaticResource Largelbltyle}">Penalties:</Label>
-                                <RadioButton Width="60" Name="newlPenYes" GroupName="penaltiesYesNo" IsChecked="True" Style="{StaticResource LargeGroupButton}">Yes</RadioButton>
-                                <RadioButton Width="60" Name="newlPenNo" GroupName="penaltiesYesNo" Style="{StaticResource LargeGroupButton}">No</RadioButton>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Label  Width="350" VerticalContentAlignment="Top" Padding="5,0,0,0" Style="{StaticResource Largelbltyle}">Injuries:</Label>
-                                <RadioButton Width="60" Name="newlInjYes" GroupName="injuriesYesNo" IsChecked="True" Style="{StaticResource LargeGroupButton}">Yes</RadioButton>
-                                <RadioButton Width="60" Name="newlInjNo" GroupName="injuriesYesNo" Style="{StaticResource LargeGroupButton}">No</RadioButton>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Label Style="{StaticResource Largelbltyle}">Draft:</Label>
-                                <StackPanel Orientation="Vertical">
-                                    <RadioButton Name="newlDraft_FD" GroupName="draftChoice" IsChecked="True" Style="{StaticResource LargeGroupButton}">Standard Draft</RadioButton>
-                                    <TextBlock TextWrapping="WrapWithOverflow"  Style="{StaticResource LargeReadOnlytxtbstyle}" FontStyle="Italic">
-			  Standard Pro Draft: Teams are ranked worst to best by how they performed the previous year, and that draft order is used for every round in the draft.
-                                    </TextBlock>
-                                </StackPanel>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Label Style="{StaticResource Largelbltyle}">Draft:</Label>
-                                <StackPanel Orientation="Vertical">
-                                    <RadioButton Name="newlDraft_SD" GroupName="draftChoice" IsChecked="True" Style="{StaticResource LargeGroupButton}">Serpentine Draft</RadioButton>
-                                    <TextBlock TextWrapping="WrapWithOverflow"  Style="{StaticResource LargeReadOnlytxtbstyle}" FontStyle="Italic">
-			  Serpentine Draft: Teams are ranked worst to best by how they performed the previous year.  That order is used in the first round and then inverted during the second round and that flipping continues till the end of the draft.
-                                    </TextBlock>
-                                </StackPanel>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Label Style="{StaticResource Largelbltyle}">Draft:</Label>
-                                <StackPanel Orientation="Vertical">
-                                    <RadioButton Name="newlDraft_DL" GroupName="draftChoice" IsChecked="True" Style="{StaticResource LargeGroupButton}">Non-Playoff Draft Lottery</RadioButton>
-                                    <TextBlock TextWrapping="WrapWithOverflow"  Style="{StaticResource LargeReadOnlytxtbstyle}" FontStyle="Italic">
-			  Non-Playoff Draft Lottery: All non-playoff teams go into a draft lottery that determines the draft order.  Playoff teams pick last.
-                                    </TextBlock>
-                                </StackPanel>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Label Style="{StaticResource Largelbltyle}">Draft:</Label>
-                                <StackPanel Orientation="Vertical">
-                                    <RadioButton Name="newlDraft_FL" GroupName="draftChoice" IsChecked="True" Style="{StaticResource LargeGroupButton}">Full Team Draft Lottery</RadioButton>
-                                    <TextBlock TextWrapping="WrapWithOverflow"  Style="{StaticResource LargeReadOnlytxtbstyle}" FontStyle="Italic">
-			  Full Team Draft Lottery: Same as standard draft, but draft order for all teams is random.
-                                    </TextBlock>
-                                </StackPanel>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Label Style="{StaticResource Largelbltyle}">Draft:</Label>
-                                <StackPanel Orientation="Vertical">
-                                    <RadioButton Name="newlDraft_FR" GroupName="draftChoice" IsChecked="True" Style="{StaticResource LargeGroupButton}">Random Draft</RadioButton>
-                                    <TextBlock TextWrapping="WrapWithOverflow"  Style="{StaticResource LargeReadOnlytxtbstyle}" FontStyle="Italic">
-			  Random Pick Draft: Each team gets the same number of picks, but each pick can happen at any time during the draft.
-                                    </TextBlock>
-                                </StackPanel>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Label Style="{StaticResource Largelbltyle}">Draft:</Label>
-                                <StackPanel Orientation="Vertical">
-                                    <RadioButton Name="newlDraft_CR" GroupName="draftChoice" IsChecked="True" Style="{StaticResource LargeGroupButton}">Crazy All Random Draft</RadioButton>
-                                    <TextBlock TextWrapping="WrapWithOverflow"  Style="{StaticResource LargeReadOnlytxtbstyle}" FontStyle="Italic">
-			  Crazy all Random Draft: Every Pick in the Draft is Completely Random:  Teams can have multiple picks per round with no maximum or minimum pick totals.
-                                    </TextBlock>
-                                </StackPanel>
-                            </StackPanel>
                         </StackPanel>
                     </GroupBox>
+                    <StackPanel Orientation="Horizontal" Width="1000">
+                        <GroupBox FontSize="18" FontWeight="Bold" Style="{StaticResource GroupBoxstyle}" >
+                            <GroupBox.Header>
+                                More Settings:
+                            </GroupBox.Header>
+                            <StackPanel Width="300" Orientation="Vertical" >
+                                <StackPanel Orientation="Horizontal" >
+                                    <Label  Width="200" VerticalContentAlignment="Top" Padding="5,0,0,0"  Style="{StaticResource Largelbltyle}">Penalties:</Label>
+                                    <RadioButton Width="60" Name="newlPenYes" GroupName="penaltiesYesNo" IsChecked="True" Style="{StaticResource LargeGroupButton}">Yes</RadioButton>
+                                    <RadioButton Width="60" Name="newlPenNo" GroupName="penaltiesYesNo" Style="{StaticResource LargeGroupButton}">No</RadioButton>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label  Width="200" VerticalContentAlignment="Top" Padding="5,0,0,0" Style="{StaticResource Largelbltyle}">Injuries:</Label>
+                                    <RadioButton Width="60" Name="newlInjYes" GroupName="injuriesYesNo" IsChecked="True" Style="{StaticResource LargeGroupButton}">Yes</RadioButton>
+                                    <RadioButton Width="60" Name="newlInjNo" GroupName="injuriesYesNo" Style="{StaticResource LargeGroupButton}">No</RadioButton>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label  Width="200" VerticalContentAlignment="Top" Padding="5,0,0,0" Style="{StaticResource Largelbltyle}">Home Field Advantage:</Label>
+                                    <RadioButton Width="60" Name="newlHomeAdvYes" GroupName="HomeAdvantage" IsChecked="True" Style="{StaticResource LargeGroupButton}">Yes</RadioButton>
+                                    <RadioButton Width="60" Name="newlHomeAdvNo" GroupName="HomeAdvantage" Style="{StaticResource LargeGroupButton}">No</RadioButton>
+                                </StackPanel>
+                            </StackPanel>
+                    </GroupBox>
+                    <GroupBox FontSize="18" FontWeight="Bold" Style="{StaticResource GroupBoxstyle}" >
+                        <GroupBox.Header>
+                            Draft Settings:
+                        </GroupBox.Header>
+                        <StackPanel Width="250" Orientation="Vertical" >
+                            <StackPanel Orientation="Horizontal">
+                                    <StackPanel Orientation="Vertical">
+                                        <RadioButton Name="newlDraft_FD" GroupName="draftChoice" IsChecked="True" Style="{StaticResource LargeGroupButton}" BorderBrush="#FF8E8F8F">Standard Draft</RadioButton>
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <StackPanel Orientation="Vertical">
+                                        <RadioButton Name="newlDraft_SD" GroupName="draftChoice" IsChecked="False" Style="{StaticResource LargeGroupButton}">Serpentine Draft</RadioButton>
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <StackPanel Orientation="Vertical">
+                                        <RadioButton Name="newlDraft_DL" GroupName="draftChoice" IsChecked="False" Style="{StaticResource LargeGroupButton}">Non-Playoff Draft Lottery</RadioButton>
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <StackPanel Orientation="Vertical">
+                                        <RadioButton Name="newlDraft_FL" GroupName="draftChoice" IsChecked="False" Style="{StaticResource LargeGroupButton}">Full Team Draft Lottery</RadioButton>
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <StackPanel Orientation="Vertical">
+                                        <RadioButton Name="newlDraft_FR" GroupName="draftChoice" IsChecked="False" Style="{StaticResource LargeGroupButton}">Random Draft</RadioButton>
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <StackPanel Orientation="Vertical">
+                                        <RadioButton Name="newlDraft_CR" GroupName="draftChoice" IsChecked="False" Style="{StaticResource LargeGroupButton}">Crazy All Random Draft</RadioButton>
+                                    </StackPanel>
+                                </StackPanel>
+                            </StackPanel>
+                        </GroupBox>
+                        <GroupBox FontSize="18" FontWeight="Bold" Style="{StaticResource GroupBoxstyle}" >
+                            <GroupBox.Header>
+                                Special Teams Settings:
+                            </GroupBox.Header>
+                            <StackPanel Width="350" Orientation="Vertical" >
+                                <StackPanel Orientation="Horizontal" >
+                                    <Label  Width="240" VerticalContentAlignment="Top" Padding="5,0,0,0"  Style="{StaticResource Largelbltyle}">Kickoff:</Label>
+                                    <RadioButton Width="60" Name="newlKickoffYesYes" GroupName="Kickoff" IsChecked="True" Style="{StaticResource LargeGroupButton}">Yes</RadioButton>
+                                    <RadioButton Width="60" Name="newlKickoffYesNo" GroupName="Kickoff" Style="{StaticResource LargeGroupButton}">No</RadioButton>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" >
+                                    <Label  Width="240" VerticalContentAlignment="Top" Padding="5,0,0,0"  Style="{StaticResource Largelbltyle}">Onside Kick:</Label>
+                                    <RadioButton Width="60" Name="newl1OnsideKick" GroupName="newl1Onside" IsChecked="True" Style="{StaticResource LargeGroupButton}">Kick</RadioButton>
+                                    <RadioButton Width="140" Name="newl1OnsidePlay" GroupName="newl1Onside" Style="{StaticResource LargeGroupButton}">Play</RadioButton>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" >
+                                    <Label  Width="240" VerticalContentAlignment="Top" Padding="5,0,0,0"  Style="{StaticResource Largelbltyle}">1 Point Conversion:</Label>
+                                    <RadioButton Width="60" Name="newl1PointConvKick" GroupName="OnePtConvYesNo" IsChecked="True" Style="{StaticResource LargeGroupButton}">Kick</RadioButton>
+                                    <RadioButton Width="140" Name="newl1PointConvPlay" GroupName="OnePtConvYesNo" Style="{StaticResource LargeGroupButton}">Play</RadioButton>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" >
+                                    <Label  Width="240" VerticalContentAlignment="Top" Padding="5,0,0,0"  Style="{StaticResource Largelbltyle}">2 Point Conversion:</Label>
+                                    <RadioButton Width="60" Name="newl2PointConvYes" GroupName="TwoPoint" Style="{StaticResource LargeGroupButton}">Yes</RadioButton>
+                                    <RadioButton Width="60" Name="newl2PointConvNo" GroupName="TwoPoint" IsChecked="true" Style="{StaticResource LargeGroupButton}">No</RadioButton>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" >
+                                    <Label  Width="240" VerticalContentAlignment="Top" Padding="5,0,0,0"  Style="{StaticResource Largelbltyle}">3 Point Conversion:</Label>
+                                    <RadioButton Width="60" Name="newl3PointConvYes" GroupName="ThreePoint" Style="{StaticResource LargeGroupButton}">Yes</RadioButton>
+                                    <RadioButton Width="60" Name="newl3PointConvNo" GroupName="ThreePoint" IsChecked="true" Style="{StaticResource LargeGroupButton}">No</RadioButton>
+                                </StackPanel>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
                 </StackPanel>
             </TabItem>
             <TabItem Header="Teams">
@@ -180,10 +209,10 @@
                         </GroupBox>
                     </StackPanel>
                     <StackPanel HorizontalAlignment="Center">
-                        <Label Style="{StaticResource quickhelplabelstyle}" Content="Quick Help&#10;
-* To Add teams you can either double-click on an empty team slot or drag and drop a stock team on an empty team slot.&#10;
-* To edit a filled in team slot by double clicking on it.&#10;
-* It is also possible to drag and drop a team into another team slot" />
+                        <Label Style="{StaticResource quickhelplabelstyle}" Content=
+"Quick Help&#9;* To Add teams you can either double-click on an empty team slot or drag and drop a stock team on an empty team slot.&#10;
+&#9;&#9;* To edit a filled in team slot by double clicking on it.&#10;
+&#9;&#9;* It is also possible to drag and drop a team into another team slot" />
                     </StackPanel>
                 </StackPanel>
             </TabItem>

@@ -102,6 +102,7 @@ namespace SpectatorFootball
                 logger.Info("Entering Create new league");
                 New_Mem_Season = new New_League_Structure();
                 New_Mem_Season.Season = new Season();
+                New_Mem_Season.Season.League_Structure_by_Season.Add(new League_Structure_by_Season());
 
                 StockTeams_Services sts = new StockTeams_Services();
                 st_list = sts.getAllStockTeams();

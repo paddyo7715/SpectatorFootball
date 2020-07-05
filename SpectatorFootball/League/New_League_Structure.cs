@@ -13,6 +13,7 @@ namespace SpectatorFootball.League
     {
         public Season Season { get; set; }
         public List<Franchise> Franchises { get; set; }
+        public List<Player> Players { get; set; }
         public DBVersion DBVersion { get; set; }
 
     }

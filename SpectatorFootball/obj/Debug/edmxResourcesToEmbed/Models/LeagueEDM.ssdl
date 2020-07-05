@@ -69,16 +69,24 @@
     <Property Name="Home_ThirdDowns" Type="integer" />
     <Property Name="Home_FourthDown_Conversions" Type="integer" />
     <Property Name="Home_FourthDowns" Type="integer" />
+    <Property Name="Home_1Point_Conv_Att" Type="integer" />
+    <Property Name="Home_1Point_Conv_Made" Type="integer" />
     <Property Name="Home_2Point_Conv_Att" Type="integer" />
     <Property Name="Home_2Point_Conv_Made" Type="integer" />
+    <Property Name="Home_3Point_Conv_Att" Type="integer" />
+    <Property Name="Home_3Point_Conv_Made" Type="integer" />
     <Property Name="Home_TOP" Type="integer" />
     <Property Name="Away_FirstDowns" Type="integer" />
     <Property Name="Away_ThirdDown_Conversions" Type="integer" />
     <Property Name="Away_ThirdDowns" Type="integer" />
     <Property Name="Away_FourthDown_Conversions" Type="integer" />
     <Property Name="Away_FourthDowns" Type="integer" />
+    <Property Name="Away_1Point_Conv_Att" Type="integer" />
+    <Property Name="Away_1Point_Conv_Made" Type="integer" />
     <Property Name="Away_2Point_Conv_Att" Type="integer" />
     <Property Name="Away_2Point_Conv_Made" Type="integer" />
+    <Property Name="Away_3Point_Conv_Att" Type="integer" />
+    <Property Name="Away_3Point_Conv_Made" Type="integer" />
     <Property Name="Away_TOP" Type="integer" />
     <Property Name="Away_Score_Q1" Type="integer" />
     <Property Name="Home_Score_Q1" Type="integer" />
@@ -461,6 +469,12 @@
     <Property Name="Draft_Type_Code" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
     <Property Name="Injuries" Type="integer" Nullable="false" />
     <Property Name="Penalties" Type="integer" Nullable="false" />
+    <Property Name="Kickoff_Type" Type="integer" Nullable="false" />
+    <Property Name="Extra_Point" Type="integer" Nullable="false" />
+    <Property Name="Two_Point_Conversion" Type="integer" Nullable="false" />
+    <Property Name="Three_Point_Conversion" Type="integer" Nullable="false" />
+    <Property Name="Onside_Kick" Type="integer" Nullable="false" />
+    <Property Name="Home_Advantage" Type="integer" Nullable="false" />
   </EntityType>
   <EntityType Name="Penalties">
     <Key>

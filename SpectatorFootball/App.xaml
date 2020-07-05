@@ -153,6 +153,15 @@
             <Setter Property="FontWeight" Value="Normal"/>
             <Setter Property="Foreground" Value="white"/>
         </Style>
+        <!-- Large Check Button -->
+        <Style TargetType="CheckBox" x:Key="LargeCheckBox">
+            <Setter Property="Height" Value="28"/>
+            <Setter Property="FontFamily" Value="Verdana"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="FontWeight" Value="Normal"/>
+            <Setter Property="Foreground" Value="white"/>
+        </Style>        
         <!-- Large short Label -->
         <Style TargetType="Label" x:Key="LargeShortlbltyle">
             <Setter Property="Height" Value="25"/>
@@ -174,6 +183,16 @@
             <Setter Property="Height" Value="25"/>
             <Setter Property="FontFamily" Value="Verdana"/>
             <Setter Property="FontSize" Value="14"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="FontWeight" Value="Normal"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Background" Value="White"/>
+        </Style>
+        <!-- Medium Large textbox -->
+        <Style TargetType="TextBox" x:Key="MediumLargetxttyle">
+            <Setter Property="Height" Value="18"/>
+            <Setter Property="FontFamily" Value="Verdana"/>
+            <Setter Property="FontSize" Value="11"/>
             <Setter Property="HorizontalAlignment" Value="Left"/>
             <Setter Property="FontWeight" Value="Normal"/>
             <Setter Property="Foreground" Value="Black"/>
@@ -261,8 +280,5 @@
             <Setter Property="FontSize" Value="12"/>
             <Setter Property="Foreground" Value="white"/>
         </Style>
-
-
-
     </Application.Resources>
 </Application>

@@ -55,7 +55,7 @@ namespace SpectatorFootball.Models
         public long Retired { get; set; }
         public long Eligible_for_Draft { get; set; }
         public string Draft_Profile { get; set; }
-        public long Draft_Grade { get; set; }
+        public double Draft_Grade { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Draft> Drafts { get; set; }
