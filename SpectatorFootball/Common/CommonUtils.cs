@@ -222,10 +222,10 @@ namespace SpectatorFootball
         {
             int r = 0;
 
-            float range = upperR = lowerR;
+            float range = upperR - lowerR;
             float true_value = value - lowerR;
 
-            r = (int)(true_value / range);
+            r = (int)(((true_value / range) * 100.0) + 0.5) ;
             return r;
         }
     }

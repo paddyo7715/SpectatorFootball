@@ -22,17 +22,16 @@ namespace SpectatorFootball
             foreach (var sourceProperty in sourceProperties)
             {
                 //skip properties that are not ratings
-                if (sourceProperty.Name == "ID" || sourceProperty.Name == "Player_ID" || sourceProperty.Name == "Season_ID")
+                if (sourceProperty.Name == "Season" || sourceProperty.Name == "Player" || sourceProperty.Name == "ID" || sourceProperty.Name == "Player_ID" || sourceProperty.Name == "Season_ID")
                     continue;
                 foreach (var destProperty in destProperties)
                 {
                     if (sourceProperty.Name == destProperty.Name && sourceProperty.PropertyType == destProperty.PropertyType)
                     {
-                        int new_value = (int) sourceProperty.GetValue(pr);
+                        long new_value = (long) sourceProperty.GetValue(pr);
                         if (new_value >= app_Constants.PRIMARY_ABILITY_LOW_RATING)
                         {
-                            new_value = alterValue(new_value);
-                            new_value = alterValue(new_value);
+                            new_value = alterValue(Convert.ToInt32(new_value));
                         }
 
                         destProperty.SetValue(r, new_value);
@@ -51,17 +50,17 @@ namespace SpectatorFootball
             int r;
 
             int rmd = CommonUtils.getRandomNum(1, 100);
-            if (rmd >= 80)
+            if (rmd >= 85)
             {
                 loweri = v - 25;
                 upperi = v + 25;
             }
-            if (rmd >= 60)
+            else if (rmd >= 65)
             {
                 loweri = v - 15;
                 upperi = v + 15;
             }
-            if (rmd >= 40)
+            else if (rmd >= 40)
             {
                 loweri = v - 5;
                 upperi = v + 5;
@@ -75,6 +74,7 @@ namespace SpectatorFootball
             //Make sure that the lower and upper are not beyond the range
             loweri = loweri < 1 ? 1 : loweri;
             upperi = upperi > 100 ? 100 : upperi;
+
             r = CommonUtils.getRandomNum(loweri,upperi);
 
             return r;
@@ -198,7 +198,7 @@ namespace SpectatorFootball
                                     sb.Append(ScoutingReport.ArmStrengthReport((int)pr.Arm_Strength_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
                                     break;
                             }
-
+                            i++;
                         }
 
 
@@ -232,19 +232,19 @@ namespace SpectatorFootball
                             switch (pa)
                             {
                                 case "Running_Power":
-                                    sb.Append(ScoutingReport.PowerRunningReport((int)pr.Accuracy_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
+                                    sb.Append(ScoutingReport.PowerRunningReport((int)pr.Running_Power_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
                                     break;
                                 case "Spped":
-                                    sb.Append(ScoutingReport.SpeedReport((int)pr.Decision_Making, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
+                                    sb.Append(ScoutingReport.SpeedReport((int)pr.Speed_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
                                     break;
                                 case "Agility":
-                                    sb.Append(ScoutingReport.AgilityReport((int)pr.Arm_Strength_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
+                                    sb.Append(ScoutingReport.AgilityReport((int)pr.Agilty_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
                                     break;
                                 case "Hands":
-                                    sb.Append(ScoutingReport.HandsReport((int)pr.Arm_Strength_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
+                                    sb.Append(ScoutingReport.HandsReport((int)pr.Hands_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
                                     break;
                             }
-
+                            i++;
                         }
 
 
@@ -278,16 +278,16 @@ namespace SpectatorFootball
                             switch (pa)
                             {
                                 case "Spped":
-                                    sb.Append(ScoutingReport.SpeedReport((int)pr.Decision_Making, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
+                                    sb.Append(ScoutingReport.SpeedReport((int)pr.Speed_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
                                     break;
                                 case "Agility":
-                                    sb.Append(ScoutingReport.AgilityReport((int)pr.Arm_Strength_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
+                                    sb.Append(ScoutingReport.AgilityReport((int)pr.Agilty_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
                                     break;
                                 case "Hands":
-                                    sb.Append(ScoutingReport.HandsReport((int)pr.Arm_Strength_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
+                                    sb.Append(ScoutingReport.HandsReport((int)pr.Hands_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
                                     break;
                             }
-
+                            i++;
                         }
 
 
@@ -323,22 +323,22 @@ namespace SpectatorFootball
                             switch (pa)
                             {
                                 case "Spped":
-                                    sb.Append(ScoutingReport.SpeedReport((int)pr.Decision_Making, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
+                                    sb.Append(ScoutingReport.SpeedReport((int)pr.Speed_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
                                     break;
                                 case "Agility":
-                                    sb.Append(ScoutingReport.AgilityReport((int)pr.Arm_Strength_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
+                                    sb.Append(ScoutingReport.AgilityReport((int)pr.Agilty_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
                                     break;
                                 case "Hands":
-                                    sb.Append(ScoutingReport.HandsReport((int)pr.Arm_Strength_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
+                                    sb.Append(ScoutingReport.HandsReport((int)pr.Hands_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
                                     break;
                                 case "PassBlocking":
-                                    sb.Append(ScoutingReport.PassBlockingReport((int)pr.Arm_Strength_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
+                                    sb.Append(ScoutingReport.PassBlockingReport((int)pr.Pass_Block_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
                                     break;
                                 case "RunBlocking":
-                                    sb.Append(ScoutingReport.RunBlockingReport((int)pr.Arm_Strength_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
+                                    sb.Append(ScoutingReport.RunBlockingReport((int)pr.Run_Block_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
                                     break;
                             }
-
+                            i++;
                         }
 
 
@@ -370,13 +370,13 @@ namespace SpectatorFootball
                             switch (pa)
                             {
                                 case "PassBlocking":
-                                    sb.Append(ScoutingReport.PassBlockingReport((int)pr.Arm_Strength_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
+                                    sb.Append(ScoutingReport.PassBlockingReport((int)pr.Pass_Block_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
                                     break;
                                 case "RunBlocking":
-                                    sb.Append(ScoutingReport.RunBlockingReport((int)pr.Arm_Strength_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
+                                    sb.Append(ScoutingReport.RunBlockingReport((int)pr.Run_Block_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
                                     break;
                             }
-
+                            i++;
                         }
 
 
@@ -408,13 +408,13 @@ namespace SpectatorFootball
                             switch (pa)
                             {
                                 case "PassRushing":
-                                    sb.Append(ScoutingReport.PassRushingReport((int)pr.Arm_Strength_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
+                                    sb.Append(ScoutingReport.PassRushingReport((int)pr.Pass_Attack, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
                                     break;
                                 case "RunStopping":
-                                    sb.Append(ScoutingReport.RunStoppingReport((int)pr.Arm_Strength_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
+                                    sb.Append(ScoutingReport.RunStoppingReport((int)pr.Run_Attack, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
                                     break;
                             }
-
+                            i++;
                         }
 
                         break;
@@ -447,19 +447,19 @@ namespace SpectatorFootball
                             switch (pa)
                             {
                                 case "Spped":
-                                    sb.Append(ScoutingReport.SpeedReport((int)pr.Decision_Making, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
+                                    sb.Append(ScoutingReport.SpeedReport((int)pr.Speed_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
                                     break;
                                 case "Agility":
-                                    sb.Append(ScoutingReport.AgilityReport((int)pr.Arm_Strength_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
+                                    sb.Append(ScoutingReport.AgilityReport((int)pr.Agilty_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
                                     break;
                                 case "Hands":
-                                    sb.Append(ScoutingReport.HandsReport((int)pr.Arm_Strength_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
+                                    sb.Append(ScoutingReport.HandsReport((int)pr.Hands_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
                                     break;
                                 case "tackling":
-                                    sb.Append(ScoutingReport.HandsReport((int)pr.Arm_Strength_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
+                                    sb.Append(ScoutingReport.TackleReport((int)pr.Tackle_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
                                     break;
                             }
-
+                            i++;
                         }
 
 
@@ -496,22 +496,22 @@ namespace SpectatorFootball
                             switch (pa)
                             {
                                 case "Spped":
-                                    sb.Append(ScoutingReport.SpeedReport((int)pr.Decision_Making, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
+                                    sb.Append(ScoutingReport.SpeedReport((int)pr.Speed_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
                                     break;
                                 case "Agility":
-                                    sb.Append(ScoutingReport.AgilityReport((int)pr.Arm_Strength_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
+                                    sb.Append(ScoutingReport.AgilityReport((int)pr.Agilty_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
                                     break;
                                 case "tackling":
-                                    sb.Append(ScoutingReport.HandsReport((int)pr.Arm_Strength_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
+                                    sb.Append(ScoutingReport.TackleReport((int)pr.Tackle_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
                                     break;
                                 case "PassRushing":
-                                    sb.Append(ScoutingReport.PassRushingReport((int)pr.Arm_Strength_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
+                                    sb.Append(ScoutingReport.PassRushingReport((int)pr.Pass_Attack, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
                                     break;
                                 case "RunStopping":
-                                    sb.Append(ScoutingReport.RunStoppingReport((int)pr.Arm_Strength_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
+                                    sb.Append(ScoutingReport.RunStoppingReport((int)pr.Run_Attack, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
                                     break;
                             }
-
+                            i++;
                         }
 
 
@@ -544,14 +544,14 @@ namespace SpectatorFootball
                             switch (pa)
                             {
                                 case "legstrength":
-                                    sb.Append(ScoutingReport.LegPowerReport((int)pr.Arm_Strength_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
+                                    sb.Append(ScoutingReport.LegPowerReport((int)pr.Kicker_Leg_Power, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
                                     break;
                                 case "kickeraccuracy":
-                                    sb.Append(ScoutingReport.LegAccuracyKReport((int)pr.Arm_Strength_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
+                                    sb.Append(ScoutingReport.LegAccuracyKReport((int)pr.Kicker_Leg_Accuracy, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
                                     break;
 
                             }
-
+                            i++;
                         }
 
 
@@ -583,14 +583,14 @@ namespace SpectatorFootball
                             switch (pa)
                             {
                                 case "legstrength":
-                                    sb.Append(ScoutingReport.LegPowerReport((int)pr.Arm_Strength_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
+                                    sb.Append(ScoutingReport.LegPowerReport((int)pr.Kicker_Leg_Power, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
                                     break;
                                 case "kickeraccuracy":
-                                    sb.Append(ScoutingReport.LegAccuracyPReport((int)pr.Arm_Strength_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
+                                    sb.Append(ScoutingReport.LegAccuracyPReport((int)pr.Kicker_Leg_Accuracy, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
                                     break;
 
                             }
-
+                            i++;
                         }
 
 
