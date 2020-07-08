@@ -174,6 +174,7 @@ namespace SpectatorFootball
                         int i = 0;
                         bool bFirst = false;
                         bool bLast = false;
+                        bool bNexttoLast = false;
                         foreach (string pa in Player_Attributes)
                         {
                             if (i == 0)
@@ -217,6 +218,7 @@ namespace SpectatorFootball
                         int i = 0;
                         bool bFirst = false;
                         bool bLast = false;
+                        bool bNexttoLast = false;
                         foreach (string pa in Player_Attributes)
                         {
                             if (i == 0)
@@ -263,6 +265,7 @@ namespace SpectatorFootball
                         int i = 0;
                         bool bFirst = false;
                         bool bLast = false;
+                        bool bNexttoLast = false;
                         foreach (string pa in Player_Attributes)
                         {
                             if (i == 0)
@@ -308,6 +311,7 @@ namespace SpectatorFootball
                         int i = 0;
                         bool bFirst = false;
                         bool bLast = false;
+                        bool bNexttoLast = false;
                         foreach (string pa in Player_Attributes)
                         {
                             if (i == 0)
@@ -355,6 +359,7 @@ namespace SpectatorFootball
                         int i = 0;
                         bool bFirst = false;
                         bool bLast = false;
+                        bool bNexttoLast = false;
                         foreach (string pa in Player_Attributes)
                         {
                             if (i == 0)
@@ -393,6 +398,7 @@ namespace SpectatorFootball
                         int i = 0;
                         bool bFirst = false;
                         bool bLast = false;
+                        bool bNexttoLast = false;
                         foreach (string pa in Player_Attributes)
                         {
                             if (i == 0)
@@ -400,7 +406,7 @@ namespace SpectatorFootball
                             else
                                 bFirst = false;
 
-                            if (i == Player_Attributes.Count() - 1)
+                           if (i == Player_Attributes.Count() - 1)
                                 bLast = true;
                             else
                                 bLast = false;
@@ -432,6 +438,7 @@ namespace SpectatorFootball
                         int i = 0;
                         bool bFirst = false;
                         bool bLast = false;
+                        bool bNexttoLast = false;
                         foreach (string pa in Player_Attributes)
                         {
                             if (i == 0)
@@ -481,6 +488,7 @@ namespace SpectatorFootball
                         int i = 0;
                         bool bFirst = false;
                         bool bLast = false;
+                        bool bNexttoLast = false;
                         foreach (string pa in Player_Attributes)
                         {
                             if (i == 0)
@@ -529,6 +537,7 @@ namespace SpectatorFootball
                         int i = 0;
                         bool bFirst = false;
                         bool bLast = false;
+                        bool bNexttoLast = false;
                         foreach (string pa in Player_Attributes)
                         {
                             if (i == 0)
@@ -568,6 +577,7 @@ namespace SpectatorFootball
                         int i = 0;
                         bool bFirst = false;
                         bool bLast = false;
+                        bool bNexttoLast = false;
                         foreach (string pa in Player_Attributes)
                         {
                             if (i == 0)
@@ -598,7 +608,8 @@ namespace SpectatorFootball
                     }
             }
 
-            return sb.ToString();
+// When returning the value for the players draft profile, remove the isse where it ends in , and
+            return sb.ToString().Replace(",  and ", " and ");
         }
 
     }

@@ -40,6 +40,8 @@ namespace SpectatorFootball
 
             logger.Debug("Player Height and Weight Created");
 
+            r.Handedness = getHandedness();
+
             r.First_Name = PlayerName[0];
             r.Last_Name = PlayerName[1];
 
@@ -278,6 +280,19 @@ namespace SpectatorFootball
                         break;
                     }
             }
+
+            return r;
+        }
+        private static string getHandedness()
+        {
+            string r = null;
+
+            int t = CommonUtils.getRandomNum(1, 100);
+
+            if (t > app_Constants.PERCENT_LEFTY)
+                r = "R";
+            else
+                r = "L";
 
             return r;
         }

@@ -12,11 +12,11 @@ namespace SpectatorFootball.NarrationAndText
         {
             string r = null;
 
-            List<string> adj_Excellent = new List<string>() {"rare arm strength", "exceptional arm strength", "excellent arm strength", "a conon for an arm", "a very strong arm", "an excellent arm", "a big arm", "an exceptional arm" };
-            List<string> adj_Good = new List<string>() {"good arm strength","better than average arm strength", "a better than average arm", "a strong arm", "a good arm" };
-            List<string> adj_Average = new List<string>() {"average arm strength", "an average arm", "an unremarkable arm", "an ordinary arm", "ordinary arm strenth"  };
-            List<string> adj_BelowAverage = new List<string>() {"poor arm strength", "below average arm strength", "a below average arm","subpar arm strength", "a subpar arm","substandard arm strength", "a substandard arm" };
-            List<string> adj_Weak = new List<string>() {"weak arm strength","very poor arm strength", "a weak arm", "a non professional arm" };
+            List<string> adj_Excellent = new List<string>() {"has rare arm strength", "has exceptional arm strength", "has excellent arm strength", "has a conon for an arm", "has a very strong arm", "has an excellent arm", "has a big arm", "has an exceptional arm" };
+            List<string> adj_Good = new List<string>() {"has good arm strength","has better than average arm strength", "has a better than average arm", "has a strong arm", "has a good arm" };
+            List<string> adj_Average = new List<string>() {"has average arm strength", "has an average arm", "has an unremarkable arm", "has an ordinary arm", "has ordinary arm strenth"  };
+            List<string> adj_BelowAverage = new List<string>() {"has poor arm strength", "has below average arm strength", "has a below average arm","has subpar arm strength", "has a subpar arm","has substandard arm strength", "has a substandard arm" };
+            List<string> adj_Weak = new List<string>() {"has weak arm strength","has very poor arm strength", "has a weak arm", "has a non professional arm" };
 
             int p = CommonUtils.PercentFromRange(value, lowerR, upperR);
 
@@ -32,10 +32,10 @@ namespace SpectatorFootball.NarrationAndText
                 r = adj_Weak[CommonUtils.getRandomNum(1, adj_Weak.Count()) - 1];
 
             if (bFirst)
-                r = "Has " + r + ", ";
+                r = r + ", ";
             else if (bLast)
                 r = " and " + r;
-            else
+            else 
                 r += ", ";
 
             return r;
@@ -47,10 +47,10 @@ namespace SpectatorFootball.NarrationAndText
             string r = null;
 
             List<string> adj_Excellent = new List<string>() { "Makes incredible decisions with the ball", "rare decision-making talent","works extremely well thru his progressions" };
-            List<string> adj_Good = new List<string>() { "pretty good decision-making", "above average decision-making", "decision-making is a strength" };
+            List<string> adj_Good = new List<string>() { "pretty good decision-making", "has above average decision-making", "decision-making is a strength" };
             List<string> adj_Average = new List<string>() { "average decision making with the ball", "decision-making is average" };
             List<string> adj_BelowAverage = new List<string>() { "needs work with his decision-making", "decision-making is inconsistent", "will have to work on his decision-making" };
-            List<string> adj_Weak = new List<string>() { "makes poor decisions with the ball", "doesn't have enought patience with the ball", "forces thwows" };
+            List<string> adj_Weak = new List<string>() { "makes poor decisions with the ball", "a lack of patience with the ball", "forces thwows" };
 
             int p = CommonUtils.PercentFromRange(value, lowerR, upperR);
 
@@ -69,7 +69,7 @@ namespace SpectatorFootball.NarrationAndText
                 r = r + ", ";
             else if (bLast)
                 r = " and " + r;
-            else
+            else 
                 r += ", ";
 
 
@@ -81,11 +81,11 @@ namespace SpectatorFootball.NarrationAndText
         {
             string r = null;
 
-            List<string> adj_Excellent = new List<string>() { "rare accuracy", "exceptional accuracy", "excellent accuracy", "laser accuracy", "can thread a needle", "superior accuracy"};
+            List<string> adj_Excellent = new List<string>() { "has rare accuracy", "has exceptional accuracy", "has excellent accuracy", "poses laser accuracy", "can thread a needle", "superior accuracy"};
             List<string> adj_Good = new List<string>() { "good accuracy", "better than average accuracy", "an accurate arm"};
-            List<string> adj_Average = new List<string>() { "average accuracy", "unremarkable accuracy", "ordinary accuracy", "decent accuracy" };
-            List<string> adj_BelowAverage = new List<string>() { "poor accuracy", "below average accuracy",  "subpar accuracy", "substandard accuracy", };
-            List<string> adj_Weak = new List<string>() { "weak accuracy", "extremely poor accuracy", "non professional accuracy" };
+            List<string> adj_Average = new List<string>() { "average accuracy", "has unremarkable accuracy", "has ordinary accuracy", "poses decent accuracy" };
+            List<string> adj_BelowAverage = new List<string>() { "poor accuracy", "has below average accuracy",  "subpar accuracy", "has substandard accuracy", };
+            List<string> adj_Weak = new List<string>() { "has weak accuracy", "extremely poor accuracy", "has non professional accuracy" };
 
             int p = CommonUtils.PercentFromRange(value, lowerR, upperR);
 
@@ -101,10 +101,10 @@ namespace SpectatorFootball.NarrationAndText
                 r = adj_Weak[CommonUtils.getRandomNum(1, adj_Weak.Count()) - 1];
 
             if (bFirst)
-                r = "Has " + r + ", ";
+                r = r + ", ";
             else if (bLast)
                 r = " and " + r;
-            else
+            else 
                 r += ", ";
 
             return r;
@@ -114,8 +114,8 @@ namespace SpectatorFootball.NarrationAndText
         {
             string r = null;
 
-            List<string> adj_Excellent = new List<string>() { "a rare powerful runner", "exceptional powerful runner", "a very powerful runner", "runs with rare power","runs with exceptional power","ability to run over defenders" };
-            List<string> adj_Good = new List<string>() { "good power runner", "better than average power runner", "a strong power runner", "known for power running" };
+            List<string> adj_Excellent = new List<string>() { "a rare powerful runner", "an exceptional powerful runner", "a very powerful runner", "runs with rare power","runs with exceptional power","has ability to run over defenders" };
+            List<string> adj_Good = new List<string>() { "a good power runner", "a better than average power runner", "a strong power runner", "known for power running" };
             List<string> adj_Average = new List<string>() { "not considered a power runner" };
             List<string> adj_BelowAverage = new List<string>() { "not considered a power runner" };
             List<string> adj_Weak = new List<string>() { "not considered a power runner" };
@@ -134,10 +134,10 @@ namespace SpectatorFootball.NarrationAndText
                 r = adj_Weak[CommonUtils.getRandomNum(1, adj_Weak.Count()) - 1];
 
             if (bFirst)
-                r = "Has " + r + ", ";
+                r = r + ", ";
             else if (bLast)
                 r = " and " + r;
-            else
+            else 
                 r += ", ";
 
             return r;
@@ -148,7 +148,7 @@ namespace SpectatorFootball.NarrationAndText
         {
             string r = null;
 
-            List<string> adj_Excellent = new List<string>() { "a speed demon", "exceptional speed", "has elite speed", "extrememly fast runner", "runs like the wind", "should be one of the fastest players on the field" };
+            List<string> adj_Excellent = new List<string>() { "a speed demon", "has exceptional speed", "has elite speed", "extrememly fast runner", "runs like the wind", "should be one of the fastest players on the field" };
             List<string> adj_Good = new List<string>() { "poses good speed", "better than average speed", "a fast runner", "known for speed" };
             List<string> adj_Average = new List<string>() { "has average speed", "poses average speed", "ordinary speed", "run of the mill speed" };
             List<string> adj_BelowAverage = new List<string>() { "does not poses good or even average speed", "below average speed", "not a speed demon", "slower than average for his position" };
@@ -168,10 +168,10 @@ namespace SpectatorFootball.NarrationAndText
                 r = adj_Weak[CommonUtils.getRandomNum(1, adj_Weak.Count()) - 1];
 
             if (bFirst)
-                r = "Has " + r + ", ";
+                r = r + ", ";
             else if (bLast)
                 r = " and " + r;
-            else
+            else 
                 r += ", ";
 
             return r;
@@ -182,7 +182,7 @@ namespace SpectatorFootball.NarrationAndText
         {
             string r = null;
 
-            List<string> adj_Excellent = new List<string>() { "poses great agility", "exceptional agility", "has elite agility", "extrememly agile runner", "poses elite agility" };
+            List<string> adj_Excellent = new List<string>() { "poses great agility", "has exceptional agility", "has elite agility", "extrememly agile runner", "poses elite agility" };
             List<string> adj_Good = new List<string>() { "poses good agility", "better than average agility", "an agile runner", "known for his agility" };
             List<string> adj_Average = new List<string>() { "has average agility", "poses average agility", "ordinary agility", "run of the mill agility" };
             List<string> adj_BelowAverage = new List<string>() { "does not poses good or even average agility", "below average agility", "not an agile runner", "less than average agility for his position" };
@@ -202,10 +202,10 @@ namespace SpectatorFootball.NarrationAndText
                 r = adj_Weak[CommonUtils.getRandomNum(1, adj_Weak.Count()) - 1];
 
             if (bFirst)
-                r = "Has " + r + ", ";
+                r = r + ", ";
             else if (bLast)
                 r = " and " + r;
-            else
+            else 
                 r += ", ";
 
             return r;
@@ -218,8 +218,8 @@ namespace SpectatorFootball.NarrationAndText
 
             List<string> adj_Excellent = new List<string>() { "poses great hands", "exceptional hands", "has elite catching ability", "extrememly good hands", "poses elite hands" };
             List<string> adj_Good = new List<string>() { "poses good hands", "better than average hands", "good at catching the ball", "known for his hands" };
-            List<string> adj_Average = new List<string>() { "has average hands", "poses average hands", "ordinary hands", "run of the mill hands" };
-            List<string> adj_BelowAverage = new List<string>() { "does not poses good or even average ball catching ability", "below average hands", "does not have even average hands", "less than average hands for his position" };
+            List<string> adj_Average = new List<string>() { "has average hands", "poses average hands", "has ordinary hands", "run of the mill hands" };
+            List<string> adj_BelowAverage = new List<string>() { "does not poses good or even average ball catching ability", "has below average hands", "does not have even average hands", "less than average hands for his position" };
             List<string> adj_Weak = new List<string>() { "very poor hands", "does not have good hands at all", "does not poses much ability to catch the ball" };
 
             int p = CommonUtils.PercentFromRange(value, lowerR, upperR);
@@ -236,10 +236,10 @@ namespace SpectatorFootball.NarrationAndText
                 r = adj_Weak[CommonUtils.getRandomNum(1, adj_Weak.Count()) - 1];
 
             if (bFirst)
-                r = "Has " + r + ", ";
+                r = r + ", ";
             else if (bLast)
                 r = " and " + r;
-            else
+            else 
                 r += ", ";
 
             return r;
@@ -250,10 +250,10 @@ namespace SpectatorFootball.NarrationAndText
         {
             string r = null;
 
-            List<string> adj_Excellent = new List<string>() { "poses great pass blocking skill", "exceptional pass blocker", "has elite pass blocking ability", "extrememly good pass blocker", "poses elite pass blocking ability" };
+            List<string> adj_Excellent = new List<string>() { "poses great pass blocking skill", "an exceptional pass blocker", "has elite pass blocking ability", "extrememly good pass blocker", "poses elite pass blocking ability" };
             List<string> adj_Good = new List<string>() { "poses good pass blocking skill", "better than average pass blocker", "good at blocking pass rushers"};
             List<string> adj_Average = new List<string>() { "is an average pass blocker", "poses average pass blocking ability", "ordinary pass blocker", "run of the mill pass blocker" };
-            List<string> adj_BelowAverage = new List<string>() { "does not poses good or even average ball pass blocking ability", "below average pass blocker", "does not have even average pass blocking ability", "less than average pass blocker" };
+            List<string> adj_BelowAverage = new List<string>() { "does not poses good or even average pass blocking ability", "below average pass blocker", "does not have even average pass blocking ability", "less than average pass blocker" };
             List<string> adj_Weak = new List<string>() { "very poor pass blocker", "does not have good pass blocking ability at all", "does not poses much ability to block pass rushers" };
 
             int p = CommonUtils.PercentFromRange(value, lowerR, upperR);
@@ -270,10 +270,10 @@ namespace SpectatorFootball.NarrationAndText
                 r = adj_Weak[CommonUtils.getRandomNum(1, adj_Weak.Count()) - 1];
 
             if (bFirst)
-                r = "Has " + r + ", ";
+                r = r + ", ";
             else if (bLast)
                 r = " and " + r;
-            else
+            else 
                 r += ", ";
 
             return r;
@@ -304,10 +304,10 @@ namespace SpectatorFootball.NarrationAndText
                 r = adj_Weak[CommonUtils.getRandomNum(1, adj_Weak.Count()) - 1];
 
             if (bFirst)
-                r = "Has " + r + ", ";
+                r = r + ", ";
             else if (bLast)
                 r = " and " + r;
-            else
+            else 
                 r += ", ";
 
             return r;
@@ -338,10 +338,10 @@ namespace SpectatorFootball.NarrationAndText
                 r = adj_Weak[CommonUtils.getRandomNum(1, adj_Weak.Count()) - 1];
 
             if (bFirst)
-                r = "Has " + r + ", ";
+                r = r + ", ";
             else if (bLast)
                 r = " and " + r;
-            else
+            else 
                 r += ", ";
 
             return r;
@@ -372,10 +372,10 @@ namespace SpectatorFootball.NarrationAndText
                 r = adj_Weak[CommonUtils.getRandomNum(1, adj_Weak.Count()) - 1];
 
             if (bFirst)
-                r = "Has " + r + ", ";
+                r = r + ", ";
             else if (bLast)
                 r = " and " + r;
-            else
+            else 
                 r += ", ";
 
             return r;
@@ -406,10 +406,10 @@ namespace SpectatorFootball.NarrationAndText
                 r = adj_Weak[CommonUtils.getRandomNum(1, adj_Weak.Count()) - 1];
 
             if (bFirst)
-                r = "Has " + r + ", ";
+                r = r + ", ";
             else if (bLast)
                 r = " and " + r;
-            else
+            else 
                 r += ", ";
 
             return r;
@@ -440,10 +440,10 @@ namespace SpectatorFootball.NarrationAndText
                 r = adj_Weak[CommonUtils.getRandomNum(1, adj_Weak.Count()) - 1];
 
             if (bFirst)
-                r = "Has " + r + ", ";
+                r = r + ", ";
             else if (bLast)
                 r = " and " + r;
-            else
+            else 
                 r += ", ";
 
             return r;
@@ -474,10 +474,10 @@ namespace SpectatorFootball.NarrationAndText
                 r = adj_Weak[CommonUtils.getRandomNum(1, adj_Weak.Count()) - 1];
 
             if (bFirst)
-                r = "Has " + r + ", ";
+                r = r + ", ";
             else if (bLast)
                 r = " and " + r;
-            else
+            else 
                 r += ", ";
 
             return r;
@@ -508,10 +508,10 @@ namespace SpectatorFootball.NarrationAndText
                 r = adj_Weak[CommonUtils.getRandomNum(1, adj_Weak.Count()) - 1];
 
             if (bFirst)
-                r = "Has " + r + ", ";
+                r = r + ", ";
             else if (bLast)
                 r = " and " + r;
-            else
+            else 
                 r += ", ";
 
             return r;

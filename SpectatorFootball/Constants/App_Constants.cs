@@ -104,6 +104,7 @@ namespace SpectatorFootball
         public const int P_LOW_WEIGHT = 185;
         public const int P_HIGH_WEIGHT = 230;
 
+        public const int PERCENT_LEFTY = 10;
 
         // Numbering
         public const int QBLOWNUM = 7;
