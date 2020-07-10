@@ -5,25 +5,34 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SpectatorFootball"
         mc:Ignorable="d"
-        Height="340" Width="400" WindowStyle="none" ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True">
+        Height="500" Width="530" WindowStyle="none" ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True">
     <Border Style="{StaticResource popupBD}" BorderThickness="1">
-        <StackPanel Style="{StaticResource popupSP}" Height="330" Width="390" Orientation="Vertical" >
+        <StackPanel Style="{StaticResource popupSP}" Height="490" Width="520" Orientation="Vertical" >
             <Label Style="{StaticResource popupTT}" HorizontalAlignment="Center">Create New League Form</Label>
-            <TextBlock Style="{StaticResource HelpTB}" Width="370" Height="250" Margin="5,5,5,0" >
-The New League form allows you to define a new league and contains<LineBreak/> two tabs: <Bold>Settings</Bold> and <Bold>Teams.</Bold><LineBreak/><LineBreak/>
+            <TextBlock Style="{StaticResource HelpTB}" Width="500" Height="410" Margin="5,5,5,0" >
+The New League form allows you to define a new league and contains two tabs: <Bold>Settings</Bold><LineBreak/> and <Bold>Teams.</Bold><LineBreak/><LineBreak/>
 
 <Bold>Settins:</Bold><LineBreak/>
-On this tab you specify such information as the league and<LineBreak/> champoinship game name, starting year and structure of your league.<LineBreak/>  
-The structure of your league will specify the number of teams, division,<LineBreak/> conferences, games in a season and number of playoff teams for your<LineBreak/> leage.  
-<LineBreak/>
-<Span Foreground="Red"><Bold>Caution:</Bold></Span> Changing the league structure selection will wipe out <LineBreak/>conference\division names and any teams you create\select on the teams tab, so be sure to decide your league structure early.<LineBreak/>
-You also specify if your league will have penalties or not and if your league will have injuries or not.<LineBreak/>
-And finally on the Settings tab, you can specify the type of draft for your league.  Note that whatever draft select, there will be a mega draft the first year to populate your teams and a 6 round draft in subsequent years.  Also note that if you chose a draft type that ranks teams to determine draft order that in the first year the draft order will be random, since there is no way to rank teams that haven't yet played any games.                 
-<LineBreak/>
-<LineBreak/>                
+On this tab you specify such information as the league and champoinship game name, <LineBreak/>starting year and structure of your league.  
+The structure of your league will specify the number of<LineBreak/> teams, division, conferences, games in a season and number of playoff teams for your leage.  
+<LineBreak/><LineBreak/>
+<Span Foreground="Red"><Bold>Caution:</Bold></Span> Changing the league structure selection will wipe out conference\division names and <LineBreak/>any teams you create\select on the teams tab, so be sure to decide your league structure early.
+<LineBreak/><LineBreak/>
+In the More Settings section, you can specify if your league games will have penalties or not, <LineBreak/>injuries or not and if the home team will have a slight advantage or not.                
+<LineBreak/><LineBreak/>
+In the Draft Section, you can specify how your league will conduction its draft each year.<LineBreak/>
+Standard Draft - Draft order is worst to best from previous year and repeated each round.<LineBreak/>
+Serpentine Draft - Draft order is worst to best from previous year and reverses every other round.<LineBreak/>               
+Non-Playoff Draft Lottery - Draft order by lottery for non-playoff teams followed by playoff teams.<LineBreak/>       
+Full Team Draft Lottery - All teams go into a draft lottery to determine draft order.<LineBreak/>
+Random Draft - Each draft slot is random team maximum picks equal to the number of rounds.<LineBreak/>
+Crazy All Random Draft - Each draft slot is random with no limits.                
+<LineBreak/><LineBreak/>
+In the Special Teams Settings section, you can specify if your league games will have a kickoff <LineBreak/>or just get the ball at the 20, a 1 point conversion that is a kick or play from the 2 yard line, <LineBreak/>or a 2 or 3 point conversion play from the 5 and 10 yeard line respectively.                
+<LineBreak/><LineBreak/>                
 <Bold>Teams:</Bold><LineBreak/>
-On this tab, you populate your league with teams.  <LineBreak/>There are two ways to populate your league with teams:  You can <LineBreak/>double-click an Empty Team Slot and manually create a team, or you <LineBreak/>can drag-and-drop a stock team to an Empty Team Slot.
-Note that once <LineBreak/>you poplate an Empty Team Slot with a team, you can update it by <LineBreak/>double-clicking, and it is also possible to move a team from one slot to <LineBreak/>another via drag-and-drop.
+On this tab, you populate your league with teams.  There are two ways to populate your league <LineBreak/>with teams:  You can double-click an Empty Team Slot and manually create a team, or you can <LineBreak/>drag-and-drop a stock team to an Empty Team Slot.
+Note that once you poplate an Empty Team <LineBreak/>Slot with a team, you can update it by double-clicking, and it is also possible to move a team <LineBreak/>from one slot to another via drag-and-drop.  Note that you must also supply names for any <LineBreak/>conferences and divisions.
 
             </TextBlock>
             <Button Name="hlp_nl_close" Style="{StaticResource appSubmitStyle}" Click="hlp_nl_close_Click">Close</Button>
