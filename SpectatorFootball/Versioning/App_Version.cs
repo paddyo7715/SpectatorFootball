@@ -12,17 +12,21 @@ namespace SpectatorFootball.Versioning
     {
         public static readonly string APP_VERSION = "1.0.0";
 
-        public  bool isCompatibleVersion(string dbVersion)
+        public  int isCompatibleVersion(string dbVersion)
         {
-            bool r = false;
+            int r = 0;
+
+            //r=0 then program and db are compatible
+            //r=1 they are not compatible, but the db can be upgraded.
+            //r=2 they are not compatible and the db can not be upgraded.
 
             switch (APP_VERSION)
             {
                 case "1.0.0":
                     if (dbVersion == "1.0.0")
-                        r = true;
+                        r = 0;
                     else
-                        r = false;
+                        r = 1;
                     break;
             }
 

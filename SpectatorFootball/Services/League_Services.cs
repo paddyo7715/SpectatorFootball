@@ -9,6 +9,7 @@ using System.Data.Entity.Validation;
 using SpectatorFootball.League;
 using SpectatorFootball.DAO;
 using SpectatorFootball.Drafts;
+using SpectatorFootball.Versioning;
 
 namespace SpectatorFootball
 {
@@ -222,16 +223,43 @@ namespace SpectatorFootball
             return s;
         }
 
-        public Loaded_League_Structure LoadExistingLeague(string League_Shortname)
+        public string[] CheckDBVersion(string League_Shortname)
         {
-            Loaded_League_Structure r = new Loaded_League_Structure();
-
+            int r;
             string League_con_string = Environment.SpecialFolder.MyDocuments + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + League_Shortname + Path.DirectorySeparatorChar + League_Shortname + Path.DirectorySeparatorChar + app_Constants.DB_FILE_EXT;
 
-            DBVersionDAO dbverdbo = new DBVersionDAO();
-            r.DBVersion = dbverdbo.getLatestDBVersion(League_con_string);
+            logger.Info("Loading: " + League_con_string);
 
-            return r;
+            DBVersionDAO dbverdbo = new DBVersionDAO();
+            DBVersion dbversion = dbverdbo.getLatestDBVersion(League_con_string);
+
+            logger.Info("db version of database file is " + dbversion.Version);
+            logger.Info("Version of program          is " + App_Version.APP_VERSION);
+
+            App_Version aver = new App_Version();
+
+            r = aver.isCompatibleVersion(dbversion.Version);
+
+            if (r == 0)
+                logger.Info("Program and Database versions are compatible");
+            else if (r == 2)
+                logger.Info("Program and Database versions are not compatible");
+            else
+            {
+                logger.Info("Program and Database versions are not compatible");
+                //backup database before upgrade
+                //put code here to upgrade the database
+            }
+
+            return new string[] {r.ToString(), dbversion.Version, App_Version.APP_VERSION };
+        }
+
+        public void UpgradeDB(string League_Shortname, string dbVersion, string ProgramVersion)
+        {
+            //First backup the database file with a special name that indicates the current
+            //version number
+            //then upgrade that database
+
         }
     }
 }

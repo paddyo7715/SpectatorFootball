@@ -115,6 +115,7 @@
     <Compile Include="League\League_Helper.cs" />
     <Compile Include="League\Loaded_League_Structure.cs" />
     <Compile Include="League\New_League_Structure.cs" />
+    <Compile Include="League\Standings_Row.cs" />
     <Compile Include="LoadLeague.xaml.cs">
       <DependentUpon>LoadLeague.xaml</DependentUpon>
     </Compile>

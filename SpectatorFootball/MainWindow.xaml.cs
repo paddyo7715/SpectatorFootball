@@ -231,7 +231,27 @@ namespace SpectatorFootball
                 logger.Info("Attempting to Load League " + e.League_Short_Name);
 
                 League_Services ls = new League_Services();
-                Loaded_League = ls.LoadExistingLeague((string)e.League_Short_Name);
+                string[] r = ls.CheckDBVersion((string)e.League_Short_Name);
+
+                int r_code = int.Parse(r[0]);
+                if (r_code == 2) //can not load league
+                    MessageBox.Show("Can not load league because the database and program versions are incompatible!","Error!",MessageBoxButton.OK,MessageBoxImage.Error);
+                else if (r_code == 1)
+                {
+                    var response = MessageBox.Show("This league and your program have different versions.  Do you wish to upgrade your league file to match the program?  Note tha your league file will be backed up before an update is attempted,  League database file vesion " + r[1] + " program vesion " + r[2], "Update??", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                    if (response == MessageBoxResult.Yes)
+                    {
+                        logger.Info("User decided to upgrade database.");
+                        ls.UpgradeDB((string)e.League_Short_Name, r[1], r[2]);
+                    }
+                    else
+                    {                        
+                        logger.Info("User decided not to upgrade database.");
+                    }
+                }
+
+
+ //               Loaded_League = ls.LoadExistingLeague((string)e.League_Short_Name);
 
                 //if league has been loaded then show the league standings window.
 
