@@ -78,6 +78,7 @@
     <NavigationProperty Name="Players" Relationship="Self.FK_Players_0_0" FromRole="Franchise" ToRole="Players" />
     <NavigationProperty Name="Playoff_Teams_by_Season" Relationship="Self.FK_Playoff_Teams_by_Season_0_0" FromRole="Franchise" ToRole="Playoff_Teams_by_Season" />
     <NavigationProperty Name="Teams_by_Season" Relationship="Self.FK_Teams_by_Season_0_0" FromRole="Franchise" ToRole="Teams_by_Season" />
+    <NavigationProperty Name="Training_Camp_by_Season" Relationship="Self.FK_Training_Camp_by_Season_0_0" FromRole="Franchise" ToRole="Training_Camp_by_Season" />
   </EntityType>
   <EntityType Name="Game">
     <Key>
@@ -143,7 +144,7 @@
     <NavigationProperty Name="Game_Player_Penalty_Stats" Relationship="Self.FK_Game_Player_Penalty_Stats_1_0" FromRole="Game" ToRole="Game_Player_Penalty_Stats" />
     <NavigationProperty Name="Game_Player_Punt_Defenders" Relationship="Self.FK_Game_Player_Punt_Defenders_1_0" FromRole="Game" ToRole="Game_Player_Punt_Defenders" />
     <NavigationProperty Name="Game_Player_Punt_Receiver_Stats" Relationship="Self.FK_Game_Player_Punt_Receiver_Stats_2_0" FromRole="Game" ToRole="Game_Player_Punt_Receiver_Stats" />
-    <NavigationProperty Name="Game_Player_Punt_Returner_Stats" Relationship="Self.FK_Game_Player_Punt_Returner_Stats_2_0" FromRole="Game" ToRole="Game_Player_Punt_Returner_Stats" />
+    <NavigationProperty Name="Game_Player_Punt_Returner_Stats" Relationship="Self.FK_Game_Player_Punt_Returner_Stats_0_0" FromRole="Game" ToRole="Game_Player_Punt_Returner_Stats" />
     <NavigationProperty Name="Game_Player_Punter_Stats" Relationship="Self.FK_Game_Player_Punter_Stats_0_0" FromRole="Game" ToRole="Game_Player_Punter_Stats" />
     <NavigationProperty Name="Game_Player_Receiving_Stats" Relationship="Self.FK_Game_Player_Receiving_Stats_2_0" FromRole="Game" ToRole="Game_Player_Receiving_Stats" />
     <NavigationProperty Name="Game_Player_Rushing_Stats" Relationship="Self.FK_Game_Player_Rushing_Stats_1_0" FromRole="Game" ToRole="Game_Player_Rushing_Stats" />
@@ -456,8 +457,8 @@
     <Property Name="Punts_Muffed" Type="Int64" Nullable="false" />
     <Property Name="Punts_Muffed_Lost" Type="Int64" Nullable="false" />
     <NavigationProperty Name="Franchise" Relationship="Self.FK_Game_Player_Punt_Returner_Stats_1_0" FromRole="Game_Player_Punt_Returner_Stats" ToRole="Franchise" />
-    <NavigationProperty Name="Game" Relationship="Self.FK_Game_Player_Punt_Returner_Stats_2_0" FromRole="Game_Player_Punt_Returner_Stats" ToRole="Game" />
-    <NavigationProperty Name="Player" Relationship="Self.FK_Game_Player_Punt_Returner_Stats_0_0" FromRole="Game_Player_Punt_Returner_Stats" ToRole="Players" />
+    <NavigationProperty Name="Game" Relationship="Self.FK_Game_Player_Punt_Returner_Stats_0_0" FromRole="Game_Player_Punt_Returner_Stats" ToRole="Game" />
+    <NavigationProperty Name="Player" Relationship="Self.FK_Game_Player_Punt_Returner_Stats_2_0" FromRole="Game_Player_Punt_Returner_Stats" ToRole="Players" />
   </EntityType>
   <EntityType Name="Game_Player_Punter_Stats">
     <Key>
@@ -652,7 +653,7 @@
     <Property Name="Retired" Type="Int64" Nullable="false" />
     <Property Name="Eligible_for_Draft" Type="Int64" Nullable="false" />
     <Property Name="Draft_Profile" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="Draft_Grade" Type="Int64" Nullable="false" />
+    <Property Name="Draft_Grade" Type="Double" Nullable="false" />
     <NavigationProperty Name="Drafts" Relationship="Self.FK_Draft_2_0" FromRole="Players" ToRole="Draft" />
     <NavigationProperty Name="Franchise" Relationship="Self.FK_Players_0_0" FromRole="Players" ToRole="Franchise" />
     <NavigationProperty Name="Game_Player_FG_Defense_Stats" Relationship="Self.FK_Game_Player_FG_Defense_Stats_1_0" FromRole="Players" ToRole="Game_Player_FG_Defense_Stats" />
@@ -668,7 +669,7 @@
     <NavigationProperty Name="Game_Player_Penalty_Stats" Relationship="Self.FK_Game_Player_Penalty_Stats_0_0" FromRole="Players" ToRole="Game_Player_Penalty_Stats" />
     <NavigationProperty Name="Game_Player_Punt_Defenders" Relationship="Self.FK_Game_Player_Punt_Defenders_2_0" FromRole="Players" ToRole="Game_Player_Punt_Defenders" />
     <NavigationProperty Name="Game_Player_Punt_Receiver_Stats" Relationship="Self.FK_Game_Player_Punt_Receiver_Stats_1_0" FromRole="Players" ToRole="Game_Player_Punt_Receiver_Stats" />
-    <NavigationProperty Name="Game_Player_Punt_Returner_Stats" Relationship="Self.FK_Game_Player_Punt_Returner_Stats_0_0" FromRole="Players" ToRole="Game_Player_Punt_Returner_Stats" />
+    <NavigationProperty Name="Game_Player_Punt_Returner_Stats" Relationship="Self.FK_Game_Player_Punt_Returner_Stats_2_0" FromRole="Players" ToRole="Game_Player_Punt_Returner_Stats" />
     <NavigationProperty Name="Game_Player_Punter_Stats" Relationship="Self.FK_Game_Player_Punter_Stats_1_0" FromRole="Players" ToRole="Game_Player_Punter_Stats" />
     <NavigationProperty Name="Game_Player_Receiving_Stats" Relationship="Self.FK_Game_Player_Receiving_Stats_0_0" FromRole="Players" ToRole="Game_Player_Receiving_Stats" />
     <NavigationProperty Name="Game_Player_Rushing_Stats" Relationship="Self.FK_Game_Player_Rushing_Stats_0_0" FromRole="Players" ToRole="Game_Player_Rushing_Stats" />
@@ -676,6 +677,7 @@
     <NavigationProperty Name="Injuries" Relationship="Self.FK_Injuries_0_0" FromRole="Players" ToRole="Injuries" />
     <NavigationProperty Name="Player_Awards" Relationship="Self.FK_Player_Awards_1_0" FromRole="Players" ToRole="Player_Awards" />
     <NavigationProperty Name="Player_Ratings" Relationship="Self.FK_Player_Ratings_0_0" FromRole="Players" ToRole="Player_Ratings" />
+    <NavigationProperty Name="Training_Camp_by_Season" Relationship="Self.FK_Training_Camp_by_Season_2_0" FromRole="Players" ToRole="Training_Camp_by_Season" />
   </EntityType>
   <EntityType Name="Playoff_Teams_by_Season">
     <Key>
@@ -706,6 +708,7 @@
     <NavigationProperty Name="Player_Ratings" Relationship="Self.FK_Player_Ratings_1_0" FromRole="Season" ToRole="Player_Ratings" />
     <NavigationProperty Name="Playoff_Teams_by_Season" Relationship="Self.FK_Playoff_Teams_by_Season_1_0" FromRole="Season" ToRole="Playoff_Teams_by_Season" />
     <NavigationProperty Name="Teams_by_Season" Relationship="Self.FK_Teams_by_Season_1_0" FromRole="Season" ToRole="Teams_by_Season" />
+    <NavigationProperty Name="Training_Camp_by_Season" Relationship="Self.FK_Training_Camp_by_Season_1_0" FromRole="Season" ToRole="Training_Camp_by_Season" />
   </EntityType>
   <EntityType Name="Teams_by_Season">
     <Key>
@@ -765,6 +768,20 @@
     <Property Name="Stadium_Field_Color" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
     <NavigationProperty Name="Franchise" Relationship="Self.FK_Teams_by_Season_0_0" FromRole="Teams_by_Season" ToRole="Franchise" />
     <NavigationProperty Name="Season" Relationship="Self.FK_Teams_by_Season_1_0" FromRole="Teams_by_Season" ToRole="Season" />
+  </EntityType>
+  <EntityType Name="Training_Camp_by_Season">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Player_ID" Type="Int64" Nullable="false" />
+    <Property Name="Season_ID" Type="Int64" Nullable="false" />
+    <Property Name="Franchise_ID" Type="Int64" Nullable="false" />
+    <Property Name="Grade" Type="Int64" Nullable="false" />
+    <Property Name="Made_Team" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="Franchise" Relationship="Self.FK_Training_Camp_by_Season_0_0" FromRole="Training_Camp_by_Season" ToRole="Franchise" />
+    <NavigationProperty Name="Player" Relationship="Self.FK_Training_Camp_by_Season_2_0" FromRole="Training_Camp_by_Season" ToRole="Players" />
+    <NavigationProperty Name="Season" Relationship="Self.FK_Training_Camp_by_Season_1_0" FromRole="Training_Camp_by_Season" ToRole="Season" />
   </EntityType>
   <Association Name="FK_Conference_0_0">
     <End Role="Season" Type="Self.Season" Multiplicity="1" />
@@ -1066,6 +1083,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Training_Camp_by_Season_0_0">
+    <End Role="Franchise" Type="Self.Franchise" Multiplicity="1" />
+    <End Role="Training_Camp_by_Season" Type="Self.Training_Camp_by_Season" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Franchise">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Training_Camp_by_Season">
+        <PropertyRef Name="Franchise_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Game_0_0">
     <End Role="Season" Type="Self.Season" Multiplicity="1" />
     <End Role="Game" Type="Self.Game" Multiplicity="*" />
@@ -1234,7 +1263,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Game_Player_Punt_Returner_Stats_2_0">
+  <Association Name="FK_Game_Player_Punt_Returner_Stats_0_0">
     <End Role="Game" Type="Self.Game" Multiplicity="1" />
     <End Role="Game_Player_Punt_Returner_Stats" Type="Self.Game_Player_Punt_Returner_Stats" Multiplicity="*" />
     <ReferentialConstraint>
@@ -1462,7 +1491,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Game_Player_Punt_Returner_Stats_0_0">
+  <Association Name="FK_Game_Player_Punt_Returner_Stats_2_0">
     <End Role="Players" Type="Self.Player" Multiplicity="1" />
     <End Role="Game_Player_Punt_Returner_Stats" Type="Self.Game_Player_Punt_Returner_Stats" Multiplicity="*" />
     <ReferentialConstraint>
@@ -1618,6 +1647,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Training_Camp_by_Season_2_0">
+    <End Role="Players" Type="Self.Player" Multiplicity="1" />
+    <End Role="Training_Camp_by_Season" Type="Self.Training_Camp_by_Season" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Players">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Training_Camp_by_Season">
+        <PropertyRef Name="Player_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Playoff_Teams_by_Season_1_0">
     <End Role="Season" Type="Self.Season" Multiplicity="1" />
     <End Role="Playoff_Teams_by_Season" Type="Self.Playoff_Teams_by_Season" Multiplicity="*" />
@@ -1642,7 +1683,19 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="mainEntities" annotation:LazyLoadingEnabled="true">
+  <Association Name="FK_Training_Camp_by_Season_1_0">
+    <End Role="Season" Type="Self.Season" Multiplicity="1" />
+    <End Role="Training_Camp_by_Season" Type="Self.Training_Camp_by_Season" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Season">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Training_Camp_by_Season">
+        <PropertyRef Name="Season_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="mainEntities3" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Awards" EntityType="Self.Award" />
     <EntitySet Name="Conferences" EntityType="Self.Conference" />
     <EntitySet Name="DBVersions" EntityType="Self.DBVersion" />
@@ -1678,6 +1731,7 @@
     <EntitySet Name="Playoff_Teams_by_Season" EntityType="Self.Playoff_Teams_by_Season" />
     <EntitySet Name="Seasons" EntityType="Self.Season" />
     <EntitySet Name="Teams_by_Season" EntityType="Self.Teams_by_Season" />
+    <EntitySet Name="Training_Camp_by_Season" EntityType="Self.Training_Camp_by_Season" />
     <AssociationSet Name="FK_Conference_0_0" Association="Self.FK_Conference_0_0">
       <End Role="Season" EntitySet="Seasons" />
       <End Role="Conference" EntitySet="Conferences" />
@@ -1778,6 +1832,10 @@
       <End Role="Franchise" EntitySet="Franchises" />
       <End Role="Teams_by_Season" EntitySet="Teams_by_Season" />
     </AssociationSet>
+    <AssociationSet Name="FK_Training_Camp_by_Season_0_0" Association="Self.FK_Training_Camp_by_Season_0_0">
+      <End Role="Franchise" EntitySet="Franchises" />
+      <End Role="Training_Camp_by_Season" EntitySet="Training_Camp_by_Season" />
+    </AssociationSet>
     <AssociationSet Name="FK_Game_0_0" Association="Self.FK_Game_0_0">
       <End Role="Season" EntitySet="Seasons" />
       <End Role="Game" EntitySet="Games" />
@@ -1834,7 +1892,7 @@
       <End Role="Game" EntitySet="Games" />
       <End Role="Game_Player_Punt_Receiver_Stats" EntitySet="Game_Player_Punt_Receiver_Stats" />
     </AssociationSet>
-    <AssociationSet Name="FK_Game_Player_Punt_Returner_Stats_2_0" Association="Self.FK_Game_Player_Punt_Returner_Stats_2_0">
+    <AssociationSet Name="FK_Game_Player_Punt_Returner_Stats_0_0" Association="Self.FK_Game_Player_Punt_Returner_Stats_0_0">
       <End Role="Game" EntitySet="Games" />
       <End Role="Game_Player_Punt_Returner_Stats" EntitySet="Game_Player_Punt_Returner_Stats" />
     </AssociationSet>
@@ -1910,7 +1968,7 @@
       <End Role="Players" EntitySet="Players" />
       <End Role="Game_Player_Punt_Receiver_Stats" EntitySet="Game_Player_Punt_Receiver_Stats" />
     </AssociationSet>
-    <AssociationSet Name="FK_Game_Player_Punt_Returner_Stats_0_0" Association="Self.FK_Game_Player_Punt_Returner_Stats_0_0">
+    <AssociationSet Name="FK_Game_Player_Punt_Returner_Stats_2_0" Association="Self.FK_Game_Player_Punt_Returner_Stats_2_0">
       <End Role="Players" EntitySet="Players" />
       <End Role="Game_Player_Punt_Returner_Stats" EntitySet="Game_Player_Punt_Returner_Stats" />
     </AssociationSet>
@@ -1962,6 +2020,10 @@
       <End Role="Season" EntitySet="Seasons" />
       <End Role="Player_Ratings" EntitySet="Player_Ratings" />
     </AssociationSet>
+    <AssociationSet Name="FK_Training_Camp_by_Season_2_0" Association="Self.FK_Training_Camp_by_Season_2_0">
+      <End Role="Players" EntitySet="Players" />
+      <End Role="Training_Camp_by_Season" EntitySet="Training_Camp_by_Season" />
+    </AssociationSet>
     <AssociationSet Name="FK_Playoff_Teams_by_Season_1_0" Association="Self.FK_Playoff_Teams_by_Season_1_0">
       <End Role="Season" EntitySet="Seasons" />
       <End Role="Playoff_Teams_by_Season" EntitySet="Playoff_Teams_by_Season" />
@@ -1969,6 +2031,10 @@
     <AssociationSet Name="FK_Teams_by_Season_1_0" Association="Self.FK_Teams_by_Season_1_0">
       <End Role="Season" EntitySet="Seasons" />
       <End Role="Teams_by_Season" EntitySet="Teams_by_Season" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Training_Camp_by_Season_1_0" Association="Self.FK_Training_Camp_by_Season_1_0">
+      <End Role="Season" EntitySet="Seasons" />
+      <End Role="Training_Camp_by_Season" EntitySet="Training_Camp_by_Season" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

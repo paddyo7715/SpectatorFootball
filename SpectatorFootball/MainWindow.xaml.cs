@@ -230,6 +230,8 @@ namespace SpectatorFootball
                 Mouse.OverrideCursor = Cursors.Wait;
                 logger.Info("Attempting to Load League " + e.League_Short_Name);
 
+                Loaded_League = new Loaded_League_Structure();
+
                 League_Services ls = new League_Services();
                 string[] r = ls.CheckDBVersion((string)e.League_Short_Name);
 
@@ -250,8 +252,15 @@ namespace SpectatorFootball
                     }
                 }
 
+                //Load the league season.  Null for year parameter mean load the latest year
+                Loaded_League.season = ls.LoadSeason(null, (string)e.League_Short_Name);
+                Loaded_League.Current_Year = Loaded_League.season.Year;
 
- //               Loaded_League = ls.LoadExistingLeague((string)e.League_Short_Name);
+                //Set league state
+                Loaded_League.LState = ls.getSeasonState("", Loaded_League.season.ID, (string)e.League_Short_Name);
+
+                //Load the league standings
+                Loaded_League.Standings = ls.getLeageStandings(Loaded_League.season.ID, (string)e.League_Short_Name);
 
                 //if league has been loaded then show the league standings window.
 

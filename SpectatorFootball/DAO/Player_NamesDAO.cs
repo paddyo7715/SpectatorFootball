@@ -61,7 +61,6 @@ namespace SpectatorFootball
             string con = Common.SettingsConnection.Connect();
             using (var context = new settingsContext(con))
             {
- //               context.Database.Log = Console.Write;
                 r = context.Potential_First_Names.Count();
             }
  

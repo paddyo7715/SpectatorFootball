@@ -10,6 +10,7 @@ using SpectatorFootball.League;
 using SpectatorFootball.DAO;
 using SpectatorFootball.Drafts;
 using SpectatorFootball.Versioning;
+using SpectatorFootball.Enum;
 
 namespace SpectatorFootball
 {
@@ -226,7 +227,7 @@ namespace SpectatorFootball
         public string[] CheckDBVersion(string League_Shortname)
         {
             int r;
-            string League_con_string = Environment.SpecialFolder.MyDocuments + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + League_Shortname + Path.DirectorySeparatorChar + League_Shortname + Path.DirectorySeparatorChar + app_Constants.DB_FILE_EXT;
+            string League_con_string = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + League_Shortname + Path.DirectorySeparatorChar + League_Shortname + "." + app_Constants.DB_FILE_EXT;
 
             logger.Info("Loading: " + League_con_string);
 
@@ -261,5 +262,81 @@ namespace SpectatorFootball
             //then upgrade that database
 
         }
+
+        public Season LoadSeason(string year,string League_Shortname)
+        {
+            Season r;
+            string League_con_string = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + League_Shortname + Path.DirectorySeparatorChar + League_Shortname + "." + app_Constants.DB_FILE_EXT;
+            LeagueDAO ld = new LeagueDAO();
+
+            r = ld.LoadSeason(year, League_con_string);
+
+            return r;
+        }
+
+        public League_State getSeasonState(string year, long Season_ID, string League_Shortname)
+        {
+            League_State r;
+            string League_con_string = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + League_Shortname + Path.DirectorySeparatorChar + League_Shortname + "." + app_Constants.DB_FILE_EXT;
+            LeagueDAO ld = new LeagueDAO();
+
+            r = League_State.Season_Started;
+
+            if (year == null)
+                r = League_State.Previous_Year;
+            else
+            {
+                int[] m = ld.getSeasonTableTotals(Season_ID, League_con_string);
+
+                int draft_count = m[0];
+                int draft_completed_count = m[1];
+                int training_camp_count = m[2];
+                int Unplayed_Regular_Season_Games_Count = m[3];
+                int playoff_teams_count = m[4];
+                int Unplayed_Playoff_Games_Count = m[5];
+                int player_awards_count = m[6];
+
+                if (draft_count == 0)
+                    r = League_State.Draft_Completed;
+                else if (draft_count > 0 && draft_completed_count > 0)
+                    r = League_State.Draft_Started;
+
+                if (training_camp_count > 0)
+                    r = League_State.Training_Camp_Ended;
+
+                if (Unplayed_Regular_Season_Games_Count > 0)
+                    r = League_State.Regular_Season_in_Progress;
+                else
+                    r = League_State.Regular_Season_Ended;
+
+                if (playoff_teams_count > 0)
+                {
+                    if (Unplayed_Playoff_Games_Count > 0)
+                        r = League_State.Playoffs_In_Progress;
+                    else
+                        r = League_State.Playoffs_Ended;
+                }
+
+                if (player_awards_count > 0)
+                    r = League_State.Season_Ended;
+            }
+
+                return r;
+
+            }
+
+        public List<Standings_Row> getLeageStandings(long Season_ID, string League_Shortname)
+        {
+            List<Standings_Row> r;
+            string League_con_string = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + League_Shortname + Path.DirectorySeparatorChar + League_Shortname + "." + app_Constants.DB_FILE_EXT;
+            LeagueDAO ld = new LeagueDAO();
+
+            r = ld.getStandings(Season_ID, League_con_string);
+
+            return r;
+        }
+
+
+
     }
 }

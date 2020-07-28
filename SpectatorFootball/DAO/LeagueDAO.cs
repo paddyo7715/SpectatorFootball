@@ -8,6 +8,7 @@ using SpectatorFootball.Models;
 using SpectatorFootball.League;
 using System.Linq;
 using System.Data.SqlClient;
+using System.Data.Entity;
 
 namespace SpectatorFootball
 {
@@ -120,7 +121,7 @@ namespace SpectatorFootball
             return r;
         }
 
-        public List<Standings_Row> getStandings(int season_id, string league_filepath)
+        public List<Standings_Row> getStandings(long season_id, string league_filepath)
         {
             List<Standings_Row> r = null;
 
@@ -204,14 +205,49 @@ namespace SpectatorFootball
             return r;
         }
 
-
-        public Loaded_League_Structure Load_League(string year)
+        public Season LoadSeason(string year, string newleague_filepath)
         {
-            Loaded_League_Structure r = null;
+            Season s = new Season();
 
+            //if year is null then that means to load the current year.
+            string con = Common.LeageConnection.Connect(newleague_filepath);
+            using (var context = new leagueContext(con))
+            {
+                if (year == null)
+                    s = context.Seasons.OrderByDescending(x => x.Year).Include(b => b.League_Structure_by_Season).FirstOrDefault();
+                else
+                    s = context.Seasons.Where(x => x.Year == long.Parse(year)).Include(b => b.League_Structure_by_Season).FirstOrDefault();
+            }
 
+            logger.Info("Season Successfully Loaded.");
 
-            return r;
+            return s;
+        }
+
+        public int[] getSeasonTableTotals(long season_id, string newleague_filepath)
+        {
+            int draft_count = 0;
+            int draft_completed_count = 0;
+            int training_camp_count = 0;
+            int Unplayed_Regular_Season_Games_Count = 0;
+            int Playoff_Teams = 0;
+            int Unplayed_Playoff_Games_Count = 0;
+            int player_awards_count = 0;
+
+            string con = Common.LeageConnection.Connect(newleague_filepath);
+            using (var context = new leagueContext(con))
+            {
+                draft_count = context.Drafts.Where(x => x.Season_ID == season_id && x.Player_ID ==  null).Count();
+                draft_completed_count = context.Drafts.Where(x => x.Season_ID == season_id && x.Player_ID != null).Count();
+                training_camp_count = context.Training_Camp_by_Season.Where(x => x.Season_ID == season_id).Count();
+                Unplayed_Regular_Season_Games_Count = context.Games.Where(x => x.Season_ID == season_id && x.Week < 1000 && x.Game_Done != 1).Count();
+                Playoff_Teams = context.Playoff_Teams_by_Season.Where(x => x.Season_ID == season_id).Count();
+                Unplayed_Playoff_Games_Count = context.Games.Where(x => x.Season_ID == season_id && x.Week >= 1000 && x.Game_Done != 1).Count();
+                player_awards_count = context.Player_Awards.Where(x => x.Season_ID == season_id).Count();
+            }
+
+            return new int[] { draft_count, draft_completed_count, training_camp_count, Unplayed_Regular_Season_Games_Count , Playoff_Teams, Unplayed_Playoff_Games_Count , player_awards_count };
+
         }
 
     }

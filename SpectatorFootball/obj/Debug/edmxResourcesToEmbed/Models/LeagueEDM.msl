@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="mainModelStoreContainer" CdmEntityContainer="mainEntities">
+  <EntityContainerMapping StorageEntityContainer="mainModelStoreContainer" CdmEntityContainer="mainEntities3">
     <EntitySetMapping Name="Awards">
       <EntityTypeMapping TypeName="mainModel.Award">
         <MappingFragment StoreEntitySet="Award">
@@ -634,6 +634,18 @@
           <ScalarProperty Name="Away_Pants_Stripe_Color_3" ColumnName="Away_Pants_Stripe_Color_3" />
           <ScalarProperty Name="Stadium_Field_Type" ColumnName="Stadium_Field_Type" />
           <ScalarProperty Name="Stadium_Field_Color" ColumnName="Stadium_Field_Color" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Training_Camp_by_Season">
+      <EntityTypeMapping TypeName="mainModel.Training_Camp_by_Season">
+        <MappingFragment StoreEntitySet="Training_Camp_by_Season">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
+          <ScalarProperty Name="Season_ID" ColumnName="Season_ID" />
+          <ScalarProperty Name="Franchise_ID" ColumnName="Franchise_ID" />
+          <ScalarProperty Name="Grade" ColumnName="Grade" />
+          <ScalarProperty Name="Made_Team" ColumnName="Made_Team" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

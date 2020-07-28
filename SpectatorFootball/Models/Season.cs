@@ -28,6 +28,7 @@ namespace SpectatorFootball.Models
             this.Player_Ratings = new HashSet<Player_Ratings>();
             this.Playoff_Teams_by_Season = new HashSet<Playoff_Teams_by_Season>();
             this.Teams_by_Season = new List<Teams_by_Season>();
+            this.Training_Camp_by_Season = new HashSet<Training_Camp_by_Season>();
         }
     
         public long ID { get; set; }
@@ -55,5 +56,7 @@ namespace SpectatorFootball.Models
         public virtual ICollection<Playoff_Teams_by_Season> Playoff_Teams_by_Season { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual List<Teams_by_Season> Teams_by_Season { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Training_Camp_by_Season> Training_Camp_by_Season { get; set; }
     }
 }

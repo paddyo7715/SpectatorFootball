@@ -544,7 +544,7 @@
     <Property Name="Retired" Type="integer" Nullable="false" />
     <Property Name="Eligible_for_Draft" Type="integer" Nullable="false" />
     <Property Name="Draft_Profile" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
-    <Property Name="Draft_Grade" Type="integer" Nullable="false" />
+    <Property Name="Draft_Grade" Type="real" Nullable="false" />
   </EntityType>
   <EntityType Name="Playoff_Teams_by_Season">
     <Key>
@@ -619,6 +619,17 @@
     <Property Name="Away_Pants_Stripe_Color_3" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
     <Property Name="Stadium_Field_Type" Type="integer" Nullable="false" />
     <Property Name="Stadium_Field_Color" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Training_Camp_by_Season">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Player_ID" Type="integer" Nullable="false" />
+    <Property Name="Season_ID" Type="integer" Nullable="false" />
+    <Property Name="Franchise_ID" Type="integer" Nullable="false" />
+    <Property Name="Grade" Type="integer" Nullable="false" />
+    <Property Name="Made_Team" Type="integer" Nullable="false" />
   </EntityType>
   <Association Name="FK_Conference_0_0">
     <End Role="Season" Type="Self.Season" Multiplicity="1" />
@@ -1179,14 +1190,14 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Game_Player_Punt_Returner_Stats_0_0">
-    <End Role="Players" Type="Self.Players" Multiplicity="1" />
+    <End Role="Game" Type="Self.Game" Multiplicity="1" />
     <End Role="Game_Player_Punt_Returner_Stats" Type="Self.Game_Player_Punt_Returner_Stats" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Players">
+      <Principal Role="Game">
         <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="Game_Player_Punt_Returner_Stats">
-        <PropertyRef Name="Player_ID" />
+        <PropertyRef Name="Game_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1203,14 +1214,14 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Game_Player_Punt_Returner_Stats_2_0">
-    <End Role="Game" Type="Self.Game" Multiplicity="1" />
+    <End Role="Players" Type="Self.Players" Multiplicity="1" />
     <End Role="Game_Player_Punt_Returner_Stats" Type="Self.Game_Player_Punt_Returner_Stats" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Game">
+      <Principal Role="Players">
         <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="Game_Player_Punt_Returner_Stats">
-        <PropertyRef Name="Game_ID" />
+        <PropertyRef Name="Player_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1502,6 +1513,42 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Training_Camp_by_Season_0_0">
+    <End Role="Franchise" Type="Self.Franchise" Multiplicity="1" />
+    <End Role="Training_Camp_by_Season" Type="Self.Training_Camp_by_Season" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Franchise">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Training_Camp_by_Season">
+        <PropertyRef Name="Franchise_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Training_Camp_by_Season_1_0">
+    <End Role="Season" Type="Self.Season" Multiplicity="1" />
+    <End Role="Training_Camp_by_Season" Type="Self.Training_Camp_by_Season" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Season">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Training_Camp_by_Season">
+        <PropertyRef Name="Season_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Training_Camp_by_Season_2_0">
+    <End Role="Players" Type="Self.Players" Multiplicity="1" />
+    <End Role="Training_Camp_by_Season" Type="Self.Training_Camp_by_Season" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Players">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Training_Camp_by_Season">
+        <PropertyRef Name="Player_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="mainModelStoreContainer">
     <EntitySet Name="Award" EntityType="Self.Award" store:Type="Tables" />
     <EntitySet Name="Conference" EntityType="Self.Conference" store:Type="Tables" />
@@ -1538,6 +1585,7 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
     <EntitySet Name="Playoff_Teams_by_Season" EntityType="Self.Playoff_Teams_by_Season" store:Type="Tables" />
     <EntitySet Name="Season" EntityType="Self.Season" store:Type="Tables" />
     <EntitySet Name="Teams_by_Season" EntityType="Self.Teams_by_Season" store:Type="Tables" />
+    <EntitySet Name="Training_Camp_by_Season" EntityType="Self.Training_Camp_by_Season" store:Type="Tables" />
     <AssociationSet Name="FK_Conference_0_0" Association="Self.FK_Conference_0_0">
       <End Role="Season" EntitySet="Season" />
       <End Role="Conference" EntitySet="Conference" />
@@ -1723,7 +1771,7 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
       <End Role="Game_Player_Punt_Receiver_Stats" EntitySet="Game_Player_Punt_Receiver_Stats" />
     </AssociationSet>
     <AssociationSet Name="FK_Game_Player_Punt_Returner_Stats_0_0" Association="Self.FK_Game_Player_Punt_Returner_Stats_0_0">
-      <End Role="Players" EntitySet="Players" />
+      <End Role="Game" EntitySet="Game" />
       <End Role="Game_Player_Punt_Returner_Stats" EntitySet="Game_Player_Punt_Returner_Stats" />
     </AssociationSet>
     <AssociationSet Name="FK_Game_Player_Punt_Returner_Stats_1_0" Association="Self.FK_Game_Player_Punt_Returner_Stats_1_0">
@@ -1731,7 +1779,7 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
       <End Role="Game_Player_Punt_Returner_Stats" EntitySet="Game_Player_Punt_Returner_Stats" />
     </AssociationSet>
     <AssociationSet Name="FK_Game_Player_Punt_Returner_Stats_2_0" Association="Self.FK_Game_Player_Punt_Returner_Stats_2_0">
-      <End Role="Game" EntitySet="Game" />
+      <End Role="Players" EntitySet="Players" />
       <End Role="Game_Player_Punt_Returner_Stats" EntitySet="Game_Player_Punt_Returner_Stats" />
     </AssociationSet>
     <AssociationSet Name="FK_Game_Player_Punter_Stats_0_0" Association="Self.FK_Game_Player_Punter_Stats_0_0">
@@ -1829,6 +1877,18 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
     <AssociationSet Name="FK_Teams_by_Season_1_0" Association="Self.FK_Teams_by_Season_1_0">
       <End Role="Season" EntitySet="Season" />
       <End Role="Teams_by_Season" EntitySet="Teams_by_Season" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Training_Camp_by_Season_0_0" Association="Self.FK_Training_Camp_by_Season_0_0">
+      <End Role="Franchise" EntitySet="Franchise" />
+      <End Role="Training_Camp_by_Season" EntitySet="Training_Camp_by_Season" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Training_Camp_by_Season_1_0" Association="Self.FK_Training_Camp_by_Season_1_0">
+      <End Role="Season" EntitySet="Season" />
+      <End Role="Training_Camp_by_Season" EntitySet="Training_Camp_by_Season" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Training_Camp_by_Season_2_0" Association="Self.FK_Training_Camp_by_Season_2_0">
+      <End Role="Players" EntitySet="Players" />
+      <End Role="Training_Camp_by_Season" EntitySet="Training_Camp_by_Season" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

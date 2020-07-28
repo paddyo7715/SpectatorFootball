@@ -8,8 +8,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("models/leaguecontext.context.tt")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("models/leaguecontext.tt")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("models/leagueedm.context.tt")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("models/leagueedm.tt")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("models/settingsedm.context.tt")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("models/settingsedm.tt")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("log4net.config.xml")]
