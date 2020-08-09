@@ -8,16 +8,22 @@ namespace SpectatorFootball.League
 {
     public class Standings_Row
     {
-        int Team_ID = 0;
-        string Team_Name = null;
-        string clinch_char = null;
-        int wins = 0;
-        int loses = 0;
-        int ties = 0;
-        int winpct;
-        int pointsfor = 0;
-        int pointagainst = 0;
-        string streak_char = null;
+        public long Div_Num { get; set; }
+        public long Team_ID { get; set; }
+        public string Team_Name { get; set; }
+        public string clinch_char { get; set; }
+        public long wins { get; set; }
+        public long loses { get; set; }
+        public long ties { get; set; }
+        public long winpct { get; set; }
+        public long pointsfor { get; set; }
+        public long pointagainst { get; set; }
+        public string Streakchar { get; set; }
+
+
+
+
+
     }
 
 }

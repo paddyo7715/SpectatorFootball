@@ -159,6 +159,10 @@ namespace SpectatorFootball
                 logger.Info("Saving new league to database");
                 LeagueDAO.Create_New_League(nls,ddf);
 
+                //Backup the database file as season started
+                string backed_up_file = DIRPath_League + Path.DirectorySeparatorChar + app_Constants.BACKUP_FOLDER + Path.DirectorySeparatorChar + nls.Season.Year + "_SeasonStarted_" + New_League_File;
+                File.Copy(df, backed_up_file);
+
                 // Update the progress bar
                 i = 100;
                 process_state = "";
@@ -332,6 +336,28 @@ namespace SpectatorFootball
             LeagueDAO ld = new LeagueDAO();
 
             r = ld.getStandings(Season_ID, League_con_string);
+
+            List<Standing_Streak> sstreak = ld.getStandingsStreak(Season_ID, League_con_string);
+
+            //Now we need to set the streak in the standings list for each team.  
+            int team_id = -1;
+            foreach (Standing_Streak ss in sstreak)
+            {
+                if (team_id != ss.team_id)
+                {
+                    string streak_char = ss.Result + ss.Games;
+                    foreach (Standings_Row sr in r)
+                    {
+                        if (sr.Team_ID == ss.team_id)
+                        {
+                            sr.Streakchar = streak_char;
+                            break;
+                        }
+                        else
+                            continue;
+                    }
+                }
+            }
 
             return r;
         }

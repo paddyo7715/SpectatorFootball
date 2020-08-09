@@ -122,11 +122,18 @@ namespace SpectatorFootball
         }
 
         public List<Standings_Row> getStandings(long season_id, string league_filepath)
+
         {
             List<Standings_Row> r = null;
 
             string con = Common.LeageConnection.Connect(league_filepath);
-//This SQL statement returns the complete standings.  This could not have been doen in linq
+            //This SQL statement returns the complete standings.  This could not have been doen in linq
+            //Note:  for some reason the streak char does not return.  I'm leaving the sql part for the
+            //string char in this sql statement, in the hope that some day it will work.
+            //The issue is not EF6, as I originally thought.  The issue seems to be the sqlite provider
+            //for .net.
+            //I need to add the streak char to the list of standing_row objects in another method.
+
             string sSQL = @"select (T.Team_Slot / ((LS.num_teams / LS.Number_of_Divisions)+1)) + 1 as Div_Num, T.id as Team_ID,
                             T.City || ' ' || T.Nickname as Team_Name,
                             case when clinch = 2 then 'x' when clinch = 1 then 'y' else ' ' end as clinch_char,
@@ -135,7 +142,8 @@ namespace SpectatorFootball
                             pointsfor, pointagainst, 
                             case when streak / 1000 = 1 then 'W' || (streak % 1000)
 	                             when streak / 1000 = 2 then 'L' || (streak % 1000)
-	                             when streak / 1000 = 3 then 'T' || (streak % 1000) end as streak_char
+	                             when streak / 1000 = 3 then 'T' || (streak % 1000) 
+                                 else '' end as Streakchar
                             from
                             (select franchise_id, sum(clinch) as clinch, sum(wins) as wins, sum(loses) as loses,
                             sum(ties) as ties, sum(home_score) as pointsfor, sum(away_sore) as pointagainst, sum(streak) as streak from
@@ -160,48 +168,120 @@ namespace SpectatorFootball
                             select franchise_id, case when rank <= (select number_of_divisions from League_Structure_by_Season where season_id = @Season_ID) THEN 2 else 1 end, 0, 0, 0, 0, 0,0 from Playoff_Teams_by_Season
                             where season_id = @Season_ID
                             union
-                            select franchise_id, 0, 0, 0, 0, 0, 0, case when result = 'W' then 1000 + Games when result = 'L' then 2000 + games else 3000 + games end from
-                            (SELECT franchise_id,Result, 
-                              week, 
-                              COUNT(*) as Games
-                            FROM
-                            (SELECT franchise_id, week, Result, 
-                              (SELECT COUNT(*) 
-                               FROM 
-                               (
-                            select home_team_franchise_id as franchise_id, week, case WHEN Home_Score > Away_Score THEN 'W' WHEN Home_Score < Away_Score THEN 'L' ELSE 'T' END as Result from Game
-                            where game_done = 1 and week < 1000
-                            union
-                            select away_team_franchise_id, week, case WHEN Away_Score > Home_Score THEN 'W' WHEN Away_Score < Home_Score THEN 'L' ELSE 'T' END as Result from Game 
-                            where game_done = 1 and week < 1000
-                            order by franchise_id, week
-                               ) G 
-                               WHERE G.franchise_id = GR.franchise_id and G.Result <> GR.Result 
-                               AND G.week <= GR.week) as RunGroup 
-                            FROM 
+                            select GG.franchise_id, 0, 0, 0, 0, 0, 0, case when result = 'W' then 1000 + Games when result = 'L' then 2000 + games else 3000 + games end as streak from
+                                        (SELECT franchise_id,Result, 
+                                            week, 
+                                            COUNT(*) as Games
+                                        FROM
+                                        (SELECT franchise_id, week, Result, 
+                                            (SELECT COUNT(*) 
+                                            FROM 
+                                            (
+                                        select home_team_franchise_id as franchise_id, week, case WHEN Home_Score > Away_Score THEN 'W' WHEN Home_Score < Away_Score THEN 'L' ELSE 'T' END as Result from Game
+                                        where game_done = 1 and week < 1000
+                                        union
+                                        select away_team_franchise_id, week, case WHEN Away_Score > Home_Score THEN 'W' WHEN Away_Score < Home_Score THEN 'L' ELSE 'T' END as Result from Game 
+                                        where game_done = 1 and week < 1000
+                                        order by franchise_id, week
+                                            ) G 
+                                            WHERE G.franchise_id = GR.franchise_id and G.Result <> GR.Result 
+                                            AND G.week <= GR.week) as RunGroup 
+                                        FROM 
+                                        (
+                                        select home_team_franchise_id as franchise_id, week, case WHEN Home_Score > Away_Score THEN 'W' WHEN Home_Score < Away_Score THEN 'L' ELSE 'T' END as Result from Game
+                                        where game_done = 1 and week < 1000
+                                        union
+                                        select away_team_franchise_id, week, case WHEN Away_Score > Home_Score THEN 'W' WHEN Away_Score < Home_Score THEN 'L' ELSE 'T' END as Result from Game 
+                                        where game_done = 1 and week < 1000
+                                        order by franchise_id, week
+                                        ) GR)
+                                        GROUP BY franchise_id, Result, RunGroup
+                                        ORDER BY franchise_id, week) GG,
+                            (SELECT FRANCHISE_ID as franchise_id, MAX(week) as week FROM
                             (
-                            select home_team_franchise_id as franchise_id, week, case WHEN Home_Score > Away_Score THEN 'W' WHEN Home_Score < Away_Score THEN 'L' ELSE 'T' END as Result from Game
-                            where game_done = 1 and week < 1000
+                            (select home_team_franchise_id as franchise_id, max(week) as week from game where week < 1000 and season_id = @Season_ID group by 
+                            home_team_franchise_id 
                             union
-                            select away_team_franchise_id, week, case WHEN Away_Score > Home_Score THEN 'W' WHEN Away_Score < Home_Score THEN 'L' ELSE 'T' END as Result from Game 
-                            where game_done = 1 and week < 1000
-                            order by franchise_id, week
-                            ) GR)
-                            GROUP BY franchise_id, Result, RunGroup
-                            ORDER BY franchise_id, week) GG
-                            where week = (select max(week) from Game where week < 1000 and (GG.franchise_id = Home_Team_Franchise_ID or GG.franchise_id = Away_Team_Franchise_ID) ))
+                            select away_team_franchise_id as franchise_id, max(week) as week from game where week < 1000 and season_id = @Season_ID group by 
+                            away_team_franchise_id) 
+                            )
+                            GROUP BY FRANCHISE_ID) as g2
+                            where GG.franchise_id = g2.franchise_id and
+	                                GG.week = g2.week)
                             group by franchise_id) A, Teams_by_Season T, League_Structure_by_Season LS
                             where A.franchise_id = T.franchise_id and
                                   T.season_id = LS.season_id and
 	                              T.season_id = @Season_ID 
                             order by Div_Num,winpct desc, wins-loses, random();";
 
+            sSQL = sSQL.Replace("@Season_ID", season_id + "");
+
+
+            SQLiteConnection ObjConnection = new SQLiteConnection("Data Source=C:\\Users\\Brenden\\Documents\\Spect_Football_Data\\APFL\\APFL.db;");
 
             using (var context = new leagueContext(con))
             {
-                List<Standings_Row> standings = context.Database.SqlQuery<Standings_Row>("sSQL").ToList();
-                r = standings;
+                context.Configuration.AutoDetectChangesEnabled = false;
+                r = context.Database.SqlQuery<Standings_Row>(sSQL).ToList();
             }
+
+            return r;
+        }
+
+        public List<Standing_Streak> getStandingsStreak(long season_id, string league_filepath)
+
+        {
+            List<Standing_Streak> r = null;
+
+            string con = Common.LeageConnection.Connect(league_filepath);
+
+            string sSQL = @"
+                        SELECT ID as team_id, Result,
+                          week,
+                          COUNT(*) as Games
+                        FROM
+                        (SELECT franchise_id, week, Result,
+                          (SELECT COUNT(*)
+                           FROM
+                           (
+                        select home_team_franchise_id as franchise_id, week, case WHEN Home_Score > Away_Score THEN 'W' 
+                        WHEN Home_Score < Away_Score THEN 'L' ELSE 'T' END as Result from Game
+                        where game_done = 1 and week < 1000
+                        union
+                        select away_team_franchise_id, week, case WHEN Away_Score > Home_Score THEN 'W' WHEN Away_Score < 
+                        Home_Score THEN 'L' ELSE 'T' END as Result from Game
+                        where game_done = 1 and week < 1000
+                        order by franchise_id, week
+                           ) G
+                           WHERE G.franchise_id = GR.franchise_id and G.Result <> GR.Result
+                           AND G.week <= GR.week) as RunGroup
+                        FROM
+                        (
+                        select home_team_franchise_id as franchise_id, week, case WHEN Home_Score > Away_Score THEN 'W' 
+                        WHEN Home_Score < Away_Score THEN 'L' ELSE 'T' END as Result from Game
+                        where game_done = 1 and week < 1000
+                        union
+                        select away_team_franchise_id, week, case WHEN Away_Score > Home_Score THEN 'W' WHEN Away_Score < 
+                        Home_Score THEN 'L' ELSE 'T' END as Result from Game
+                        where game_done = 1 and week < 1000
+                        order by franchise_id, week
+                        ) GR) xx, teams_by_season tbs
+                        where season_id = @Season_ID and xx.franchise_id = tbs.franchise_id
+                        GROUP BY team_id, Result, RunGroup
+                        ORDER BY team_id, week desc
+                        ";
+
+            sSQL = sSQL.Replace("@Season_ID", season_id + "");
+
+
+            SQLiteConnection ObjConnection = new SQLiteConnection("Data Source=C:\\Users\\Brenden\\Documents\\Spect_Football_Data\\APFL\\APFL.db;");
+
+            using (var context = new leagueContext(con))
+            {
+                context.Configuration.AutoDetectChangesEnabled = false;
+                r = context.Database.SqlQuery<Standing_Streak>(sSQL).ToList();
+            }
+
             return r;
         }
 
