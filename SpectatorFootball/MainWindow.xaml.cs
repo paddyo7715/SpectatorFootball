@@ -8,9 +8,13 @@ using System;
 using System.ComponentModel;
 using log4net;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using SpectatorFootball.Models;
 using SpectatorFootball.League;
 using SpectatorFootball.Common;
+using SpectatorFootball.WindowsLeague;
+using SpectatorFootball.Enum;
+using System.IO;
 
 namespace SpectatorFootball
 {
@@ -32,6 +36,8 @@ namespace SpectatorFootball
         private NewLeagueUC NewLeagueUC = null;
         private PlayerNamesUC PlayerNamesUC = null;
         private StockTeamsUC Stock_teamsUC = null;
+
+        private LeagueStandings LStandingsUX = null;
 
         private static ILog logger = LogManager.GetLogger("RollingFile");
 
@@ -56,6 +62,8 @@ namespace SpectatorFootball
 
             MainMenuUC.Show_NewLeague += Show_NewLeague;
             MainMenuUC.Show_LoadLeague += Show_LoadLeague;
+
+            setNonLeagueMenu();
 
             logger.Info("Main form created");
 
@@ -92,6 +100,7 @@ namespace SpectatorFootball
             New_Team_DetailUC = null;
             PlayerNamesUC = null;
             Stock_teamsUC = null;
+            setNonLeagueMenu();
         }
         private void Show_NewLeague(object sender, EventArgs e)
         {
@@ -256,13 +265,23 @@ namespace SpectatorFootball
                 Loaded_League.season = ls.LoadSeason(null, (string)e.League_Short_Name);
                 Loaded_League.Current_Year = Loaded_League.season.Year;
 
+                //Add teams to Main Top Menu
+                SetLeagueTeamsMenu(Loaded_League.season.Teams_by_Season);
+
                 //Set league state
                 Loaded_League.LState = ls.getSeasonState("", Loaded_League.season.ID, (string)e.League_Short_Name);
+
+                //Set top menu based on league state
+                setMenuonState(Loaded_League.LState);
 
                 //Load the league standings
                 Loaded_League.Standings = ls.getLeageStandings(Loaded_League.season.ID, (string)e.League_Short_Name);
 
                 //if league has been loaded then show the league standings window.
+                LStandingsUX = new LeagueStandings(this);
+                LStandingsUX.SetupLeagueStructure(Loaded_League.Standings);
+                sp_uc.Children.Clear();
+                sp_uc.Children.Add(LStandingsUX);
 
                 Mouse.OverrideCursor = null;
             }
@@ -298,6 +317,148 @@ namespace SpectatorFootball
                 logger.Error("Error Showing Update Stock Team Form");
                 logger.Error(ex);
                 MessageBox.Show(CommonUtils.substr(ex.Message, 0, 100), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+
+        public void SetLeagueTeamsMenu(List<Teams_by_Season> ts)
+        {
+            List<Teams_by_Season> sorted_teams = ts.OrderBy(x => x.City).ThenBy(x => x.Nickname).ToList();
+
+            // Clear the existing item(s) (this will actually remove the "English" element defined in XAML)
+            MenuItem teams_menuitem = (MenuItem)Main_menu_top.FindName("MenuTeams");
+            teams_menuitem.IsEnabled = true;
+            teams_menuitem.Items.Clear();
+            string appPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + Loaded_League.season.League_Structure_by_Season[0].Short_Name.ToUpper();
+
+            foreach (Teams_by_Season t in sorted_teams)
+            {
+                MenuItem mi = new MenuItem();
+                string image_url = appPath + Path.DirectorySeparatorChar + app_Constants.LEAGUE_HELMETS_SUBFOLDER + Path.DirectorySeparatorChar + t.Helmet_Image_File;
+
+                var BitmapImage = new BitmapImage(new Uri(image_url));
+                var helmet_img = new Image();
+                helmet_img.Width = 25;
+                helmet_img.Height = 25;
+                helmet_img.Source = BitmapImage;
+                mi.Icon = helmet_img;
+                mi.Header = t.City + " " + t.Nickname;
+                mi.CommandParameter = t.ID;
+
+                mi.Click += new RoutedEventHandler(MenuTeam_Click);
+                teams_menuitem.Items.Add(mi);
+
+            }
+
+        }
+        //When the user clicks a team in the teams menu
+        private void MenuTeam_Click(object sender, System.EventArgs e)
+        {
+            MenuItem mi = (MenuItem)sender;
+            long id = (long)mi.CommandParameter;
+
+        }
+        //If either the team in the team menu or the user double clicks a team on the standings
+        //then this method will be called to show the team detail
+        private void ShowTeamDetail(long id)
+        {
+
+        }
+
+        //When the menu menu is shown then disable the league-related menu items
+        private void setNonLeagueMenu()
+        {
+            MenuLeague.IsEnabled = false;
+            MenuTeams.IsEnabled = false;
+            MenuStats.IsEnabled = false;
+            MenuTasks.IsEnabled = false;
+        }
+
+        private void setMenuonState(League_State ls)
+        {
+            MenuLeague.IsEnabled = true;
+            foreach (MenuItem m in MenuLeague.Items)
+                m.IsEnabled = true;
+
+            MenuTeams.IsEnabled = true;
+            foreach (MenuItem m in MenuTeams.Items)
+                m.IsEnabled = true;
+
+            MenuStats.IsEnabled = true;
+            foreach (MenuItem m in MenuStats.Items)
+                m.IsEnabled = true;
+
+            MenuTasks.IsEnabled = true;
+            foreach (MenuItem m in MenuTasks.Items)
+                m.IsEnabled = true;
+
+            switch (ls)
+            {
+                case League_State.Season_Started:
+                {
+                        MenuTrainingCamp.IsEnabled = false;
+                        MenuInjuries.IsEnabled = false;
+                        MenuPlayoffs.IsEnabled = false;
+
+                        MenuStats.IsEnabled = false;
+
+                        MenuEndSeason.IsEnabled = false;
+                        break;
+                }
+                case League_State.Draft_Started:
+                    {
+                        MenuTrainingCamp.IsEnabled = false;
+                        MenuInjuries.IsEnabled = false;
+                        MenuPlayoffs.IsEnabled = false;
+
+                        MenuStats.IsEnabled = false;
+
+                        MenuEndSeason.IsEnabled = false;
+                        break;
+                    }
+                case League_State.Draft_Completed:
+                    {
+                        MenuInjuries.IsEnabled = false;
+                        MenuPlayoffs.IsEnabled = false;
+
+                        MenuStats.IsEnabled = false;
+
+                        MenuEndSeason.IsEnabled = false;
+                        break;
+                    }
+                case League_State.Training_Camp_Ended:
+                    {
+                        MenuPlayoffs.IsEnabled = false;
+
+                        MenuEndSeason.IsEnabled = false;
+                        break;
+                    }
+                case League_State.Regular_Season_in_Progress:
+                    {
+                        MenuPlayoffs.IsEnabled = false;
+
+                        MenuEndSeason.IsEnabled = false;
+                        break;
+                    }
+                case League_State.Regular_Season_Ended:
+                    {
+                        MenuEndSeason.IsEnabled = false;
+                        break;
+                    }
+                case League_State.Playoffs_In_Progress:
+                    {
+                        MenuEndSeason.IsEnabled = false;
+                        break;
+                    }
+                case League_State.Season_Ended:
+                    {
+                        break;
+                    }
+                case League_State.Previous_Year:
+                    {
+                        MenuInjuries.IsEnabled = false;
+                        break;
+                    }
             }
         }
     }

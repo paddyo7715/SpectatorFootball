@@ -294,9 +294,9 @@ namespace SpectatorFootball
             using (var context = new leagueContext(con))
             {
                 if (year == null)
-                    s = context.Seasons.OrderByDescending(x => x.Year).Include(b => b.League_Structure_by_Season).FirstOrDefault();
+                    s = context.Seasons.OrderByDescending(x => x.Year).Include(b => b.League_Structure_by_Season).Include(b => b.Teams_by_Season).FirstOrDefault();
                 else
-                    s = context.Seasons.Where(x => x.Year == long.Parse(year)).Include(b => b.League_Structure_by_Season).FirstOrDefault();
+                    s = context.Seasons.Where(x => x.Year == long.Parse(year)).Include(b => b.League_Structure_by_Season).Include(b => b.Teams_by_Season).FirstOrDefault();
             }
 
             logger.Info("Season Successfully Loaded.");

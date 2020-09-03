@@ -5,6 +5,8 @@ using System.Configuration;
 using System.Data.Entity.Core.EntityClient;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.AccessControl;
+using System.Security.Principal;
 
 namespace SpectatorFootball
 {
@@ -228,7 +230,16 @@ namespace SpectatorFootball
             r = (int)(((true_value / range) * 100.0) + 0.5) ;
             return r;
         }
+        public static void SetFullAccess(string DIRPath_League)
+        {
+            // Get directory access info
+            DirectoryInfo dinfo = new DirectoryInfo(DIRPath_League);
+            DirectorySecurity dSecurity = dinfo.GetAccessControl();
+            // Add the FileSystemAccessRule to the security settings. 
+            dSecurity.AddAccessRule(new FileSystemAccessRule(new SecurityIdentifier(WellKnownSidType.WorldSid, null), FileSystemRights.FullControl, InheritanceFlags.ObjectInherit | InheritanceFlags.ContainerInherit, PropagationFlags.NoPropagateInherit, AccessControlType.Allow));
+            // Set the access control
+            dinfo.SetAccessControl(dSecurity);
+        }
     }
-
 
 }

@@ -109,6 +109,7 @@
     <Compile Include="CustomControls\CustomTextBox.cs" />
     <Compile Include="DAO\DBVersionDAO.cs" />
     <Compile Include="DAO\HomeTownsDAO.cs" />
+    <Compile Include="DAO\TeamDAO.cs" />
     <Compile Include="Draft\Draft_Helper.cs" />
     <Compile Include="Enum\League_State.cs" />
     <Compile Include="Enum\Player_Pos.cs" />
@@ -306,6 +307,9 @@
     <Compile Include="Team\Uniform.cs" />
     <Compile Include="Team\Uniform_Image.cs" />
     <Compile Include="Versioning\App_Version.cs" />
+    <Compile Include="WindowsLeague\LeagueStandings.xaml.cs">
+      <DependentUpon>LeagueStandings.xaml</DependentUpon>
+    </Compile>
     <Page Include="Help_Forms\Help_NewLeague.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -366,6 +370,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Stock_Team_detail.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowsLeague\LeagueStandings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -546,6 +554,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

@@ -11,6 +11,8 @@ using SpectatorFootball.DAO;
 using SpectatorFootball.Drafts;
 using SpectatorFootball.Versioning;
 using SpectatorFootball.Enum;
+using System.Security.AccessControl;
+using System.Security.Principal;
 
 namespace SpectatorFootball
 {
@@ -44,18 +46,22 @@ namespace SpectatorFootball
                 logger.Info("Creating league folder");
                 DIRPath_League = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + nls.Season.League_Structure_by_Season[0].Short_Name.ToUpper();
                 Directory.CreateDirectory(DIRPath_League);
+                CommonUtils.SetFullAccess(DIRPath_League);
 
                 // Create Backup Folder
                 logger.Info("Creating league backup folder");
                 Directory.CreateDirectory(DIRPath_League + Path.DirectorySeparatorChar + app_Constants.BACKUP_FOLDER);
+                CommonUtils.SetFullAccess(DIRPath_League + Path.DirectorySeparatorChar + app_Constants.BACKUP_FOLDER);
 
                 // Create the helmet image League Folder
                 logger.Info("Creating league helmet folder");
                 Directory.CreateDirectory(DIRPath_League + Path.DirectorySeparatorChar + app_Constants.LEAGUE_HELMETS_SUBFOLDER);
+                CommonUtils.SetFullAccess(DIRPath_League + Path.DirectorySeparatorChar + app_Constants.LEAGUE_HELMETS_SUBFOLDER);
 
                 // Create the stadium image League folder
                 logger.Info("Creating league image folder");
                 Directory.CreateDirectory(DIRPath_League + Path.DirectorySeparatorChar + app_Constants.LEAGUE_STADIUM_SUBFOLDER);
+                CommonUtils.SetFullAccess(DIRPath_League + Path.DirectorySeparatorChar + app_Constants.LEAGUE_STADIUM_SUBFOLDER);
 
                 // Copy the League Logo file
                 logger.Info("Starting league Logo Copy and Rename");

@@ -13,21 +13,31 @@
         Closing="MainWindow_Closing">
     <DockPanel>
         <Menu Name="Main_menu_top" DockPanel.Dock="Top">
-            <MenuItem Header="File">
-                <MenuItem Header="New" Click = "Show_NewLeague" />
-                <MenuItem Header="Load" Click = "Show_LoadLeague" />
+            <MenuItem Name="MenuFile" Header="File" >
+                <MenuItem Name="MenuNew" Header="New" Click = "Show_NewLeague" />
+                <MenuItem Name="MenuLoad" Header="Load" Click = "Show_LoadLeague" />
                 <Separator />
-                <MenuItem Header="Exit" Click = "mmTopExit_Click" />
+                <MenuItem Name="MenuExit" Header="MenuExit" Click = "mmTopExit_Click" />
             </MenuItem>
-            <MenuItem Header="League">
-                <MenuItem Header="Standings" />
-                <MenuItem Header="Playoffs" />
-                <MenuItem Header="Schedule" />
-                <MenuItem Header="Team Stats" />
-                <MenuItem Header="Player Stats" />
-                <MenuItem Header="Champions" />
-                <MenuItem Header="Records" />
-                <MenuItem Header="League Info" />
+            <MenuItem Name="MenuLeague" Header="League">
+                <MenuItem Name="MenuStandings" Header="Standings" />
+                <MenuItem Name="MenuSchedule" Header="Schedule" />
+                <MenuItem Name="MenuDraft" Header="Draft" />
+                <MenuItem Name="MenuTrainingCamp" Header="Training Camp" />
+                <MenuItem Name="MenuInjuries" Header="Injuries" />
+                <MenuItem Name="MenuPlayoffs" Header="Playoffs" />
+                <MenuItem Name="MenuLeagueInfo" Header="League Info" />
+            </MenuItem>
+            <MenuItem Name="MenuTeams" Header="Teams">
+            </MenuItem>
+            <MenuItem Name="MenuStats" Header="Stats">
+                <MenuItem Name="MenuPlayerStats" Header="Player Stats" />
+                <MenuItem Name="MenuTeamStats" Header="Team Stats" />
+                <MenuItem Name="MenuRecords" Header="Records" />
+                <MenuItem Name="MenuChampions" Header="Champions" />
+            </MenuItem>
+            <MenuItem Name="MenuTasks" Header="Tasks">
+                <MenuItem  Name="MenuEndSeason" Header="End Season" />
             </MenuItem>
             <MenuItem Header="Help">
                 <MenuItem Header="Education" />
