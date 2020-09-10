@@ -337,6 +337,8 @@ namespace SpectatorFootball
 
         public List<Standings_Row> getLeageStandings(long Season_ID, string League_Shortname)
         {
+            string DIRPath_League = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + League_Shortname.ToUpper();
+            string helment_img_path = DIRPath_League + Path.DirectorySeparatorChar + app_Constants.LEAGUE_HELMETS_SUBFOLDER;
             List<Standings_Row> r;
             string League_con_string = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + League_Shortname + Path.DirectorySeparatorChar + League_Shortname + "." + app_Constants.DB_FILE_EXT;
             LeagueDAO ld = new LeagueDAO();
@@ -345,7 +347,8 @@ namespace SpectatorFootball
 
             List<Standing_Streak> sstreak = ld.getStandingsStreak(Season_ID, League_con_string);
 
-            //Now we need to set the streak in the standings list for each team.  
+            //Now we need to set the streak in the standings list for each team, also set the
+            //path to the helment image.  
             int team_id = -1;
             foreach (Standing_Streak ss in sstreak)
             {
@@ -362,7 +365,14 @@ namespace SpectatorFootball
                         else
                             continue;
                     }
+
                 }
+            }
+
+            foreach (Standings_Row sr in r)
+            {
+                string helmet_img = sr.Helmet_img;
+                sr.Helmet_img = helment_img_path + Path.DirectorySeparatorChar + helmet_img;
             }
 
             return r;

@@ -280,5 +280,20 @@
             <Setter Property="FontSize" Value="12"/>
             <Setter Property="Foreground" Value="white"/>
         </Style>
+        
+        <!-- Gridview header alignment left -->
+        <Style x:Key="HeaderStyleLeft" TargetType="GridViewColumnHeader">
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        </Style>
+
+        <!-- Submit, Cancel, Back, Forward type buttons -->
+        <Style TargetType="ListView" x:Key="StandingsGridStyle">
+            <Setter Property="FontFamily" Value="Verdana"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="Normal"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+        </Style>
     </Application.Resources>
 </Application>

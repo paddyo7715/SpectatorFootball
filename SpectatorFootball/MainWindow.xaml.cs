@@ -279,7 +279,7 @@ namespace SpectatorFootball
 
                 //if league has been loaded then show the league standings window.
                 LStandingsUX = new LeagueStandings(this);
-                LStandingsUX.SetupLeagueStructure(Loaded_League.Standings);
+                LStandingsUX.SetupLeagueStructure();
                 sp_uc.Children.Clear();
                 sp_uc.Children.Add(LStandingsUX);
 

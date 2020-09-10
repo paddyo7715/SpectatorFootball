@@ -247,8 +247,7 @@ namespace SpectatorFootball
             pw.New_Mem_Season.Season.League_Structure_by_Season[0].Number_of_Divisions = num_divs;
             pw.New_Mem_Season.Season.League_Structure_by_Season[0].Number_of_Conferences = num_confs;
 
-//            pw.New_Mem_Season.Season.Teams = new List<Team>();
-                
+            pw.New_Mem_Season.Season.Teams_by_Season = new List<Teams_by_Season>();
             for (int i = 1; i <= num_teams; i++)
                 pw.New_Mem_Season.Season.Teams_by_Season.Add(new Teams_by_Season() { ID = i, Team_Slot = i , City = app_Constants.EMPTY_TEAM_SLOT });
 

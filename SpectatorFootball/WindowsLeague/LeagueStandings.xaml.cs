@@ -30,6 +30,7 @@ namespace SpectatorFootball.WindowsLeague
         public LeagueStandings(MainWindow pw)
         {
             InitializeComponent();
+            this.pw = pw;
         }
 
     public void SetupLeagueStructure()
@@ -50,7 +51,7 @@ namespace SpectatorFootball.WindowsLeague
         Style UnselNewTeamSP = (Style)System.Windows.Application.Current.FindResource("UnselNewTeamSP");
         Style DragEnt_NewTeamSP = (Style)System.Windows.Application.Current.FindResource("DragEnt_NewTeamSP");
 
-            League_Structure_by_Season ls = pw.Loaded_League.season.League_Structure_by_Season[0];
+        League_Structure_by_Season ls = pw.Loaded_League.season.League_Structure_by_Season[0];
 
         num_weeks = (int) ls.Number_of_weeks;
         num_games = (int) ls.Number_of_Games;
@@ -91,7 +92,6 @@ namespace SpectatorFootball.WindowsLeague
         // setting division from new_teams on teams tab
         Style Teamlbltyle = (Style)System.Windows.Application.Current.FindResource("Teamlbltyle");
 
-        int t_id = 1;
         int num_divs_per_conf;
         if (num_confs == 0)
             num_divs_per_conf = num_divs;
@@ -109,78 +109,64 @@ namespace SpectatorFootball.WindowsLeague
             conf1_sp.Orientation = Orientation.Horizontal;
             conf1_sp.HorizontalAlignment = HorizontalAlignment.Center;
 
-            var txtConf1 = new CustomTextBox();
-            txtConf1.Name = "newlConf1";
-            txtConf1.Width = 150;
-            txtConf1.Style = MediumLargetxttyle;
-            txtConf1.MaxLength = 60;
-            txtConf1.PlaceholderText = "Conference 1";
+            var lblConf1 = new Label();
+            lblConf1.Name = "standConf1";
+            lblConf1.Width = 150;
+            lblConf1.Style = Conflbltyle;
 
-            conf1_sp.Children.Add(txtConf1);
+            conf1_sp.Children.Add(lblConf1);
             v_sp1.Children.Add(conf1_sp);
 
-            this.RegisterName(txtConf1.Name, txtConf1);
+            this.RegisterName(lblConf1.Name, lblConf1);
 
             for (int i = 1; i <= num_divs_per_conf; i++)
             {
-                var txtDivision1 = new CustomTextBox();
-                txtDivision1.Name = "newldiv" + i.ToString();
-                txtDivision1.Width = 150;
-                txtDivision1.Style = MediumLargetxttyle;
-                txtDivision1.PlaceholderText = "Division " + i.ToString();
 
-                var gb_div = new GroupBox();
-                gb_div.Margin = new Thickness(1, 1, 1, 1);
-                gb_div.FontSize = 14;
-                gb_div.Header = txtDivision1;
+                ListView lbDiv = new ListView();
+                lbDiv.Name = "DivGrid" + i.ToString();
+                lbDiv.Style = (Style)FindResource("StandingsGridStyle");
 
-                var v_sp_in_groupbox = new StackPanel();
-                v_sp_in_groupbox.Orientation = Orientation.Vertical;
-                v_sp_in_groupbox.Width = 350;
+                GridView gr = new GridView();
+                GridViewColumn grc1 = new GridViewColumn(); grc1.Header = ""; grc1.Width = 20; grc1.DisplayMemberBinding = new Binding("clinch_char");
 
-                gb_div.Content = v_sp_in_groupbox;
+                FrameworkElementFactory h_image = new FrameworkElementFactory(typeof(Image));
+                Binding b = new Binding("Helmet_img");
+                h_image.SetBinding(Image.SourceProperty, b);
+                h_image.SetValue(Image.WidthProperty, 20.0);
+                h_image.SetValue(Image.HeightProperty, 20.0);
 
-                this.RegisterName(txtDivision1.Name, txtDivision1);
+                FrameworkElementFactory lb_team = new FrameworkElementFactory(typeof(Label));
+                Binding b2 = new Binding("Team_Name");
+                lb_team.SetBinding(Label.ContentProperty, b2);
 
-                for (int z = 1; z <= teams_per_division; z++)
-                {
-                    var sp_team = new StackPanel();
-                    sp_team.Orientation = Orientation.Horizontal;
-                    sp_team.Style = UnselNewTeamSP;
+                FrameworkElementFactory sp_team = new FrameworkElementFactory(typeof(StackPanel));
+                sp_team.SetValue(StackPanel.OrientationProperty, Orientation.Horizontal);
+                sp_team.AppendChild(h_image);
+                sp_team.AppendChild(lb_team);
+                GridViewColumn grc2 = new GridViewColumn(); grc2.Header = ""; grc2.Width = 200;
+                DataTemplate datatemp = new DataTemplate();
+                datatemp.VisualTree = sp_team;
+                grc2.CellTemplate = datatemp;
+                grc2.Header = pw.Loaded_League.season.Divisions.Where(x => x.ID == i).Select(x => x.Name).First();
+                grc2.HeaderContainerStyle = (Style)FindResource("HeaderStyleLeft");
 
-                    var helmet_img = new Image();
-                    helmet_img.Name = "newlimgTeam" + t_id.ToString();
-                    helmet_img.Width = 20;
-                    helmet_img.Height = 20;
+                GridViewColumn grc3 = new GridViewColumn(); grc3.Header = "W"; grc3.Width = 20; grc3.DisplayMemberBinding = new Binding("wins");
+                GridViewColumn grc4 = new GridViewColumn(); grc4.Header = "L"; grc4.Width = 20; grc4.DisplayMemberBinding = new Binding("loses");
+                GridViewColumn grc5 = new GridViewColumn(); grc5.Header = "T"; grc5.Width = 20; grc5.DisplayMemberBinding = new Binding("ties");
+                GridViewColumn grc6 = new GridViewColumn(); grc6.Header = "PCT"; grc6.Width = 30; grc6.DisplayMemberBinding = new Binding("winpct");
+                GridViewColumn grc7 = new GridViewColumn(); grc7.Header = "PF"; grc7.Width = 30; grc7.DisplayMemberBinding = new Binding("pointsfor");
+                GridViewColumn grc8 = new GridViewColumn(); grc8.Header = "PA"; grc8.Width = 30; grc8.DisplayMemberBinding = new Binding("pointagainst");
+                GridViewColumn grc9 = new GridViewColumn(); grc9.Header = "Strk"; grc9.Width = 30; grc9.DisplayMemberBinding = new Binding("Streakchar");
+                gr.Columns.Add(grc1); gr.Columns.Add(grc2); gr.Columns.Add(grc3);
+                gr.Columns.Add(grc4); gr.Columns.Add(grc5); gr.Columns.Add(grc6);
+                gr.Columns.Add(grc7); gr.Columns.Add(grc8); gr.Columns.Add(grc9);
+                lbDiv.View = gr;
+                lbDiv.Margin = new Thickness(15, 0, 15, 11);
 
-                    var team_label = new Label();
-                    team_label.Name = "newllblTeam" + t_id.ToString();
-                    team_label.Padding = new Thickness(10, 0, 0, 0);
-                    team_label.Width = 250;
-                    team_label.Style = Teamlbltyle;
+                v_sp1.Children.Add(lbDiv);
 
-                    sp_team.Children.Add(helmet_img);
-                    sp_team.Children.Add(team_label);
-                    sp_team.AllowDrop = true;
+                this.RegisterName(lbDiv.Name, lbDiv);
 
-                    sp_team.AddHandler(UIElement.MouseDownEvent, new MouseButtonEventHandler(sp_team_MouseDown));
-                    sp_team.AddHandler(UIElement.MouseMoveEvent, new MouseEventHandler(sp_team_MouseMove));
-                    sp_team.AddHandler(UIElement.DragEnterEvent, new DragEventHandler(sp_team_dragenter));
-                    sp_team.AddHandler(UIElement.DragLeaveEvent, new DragEventHandler(sp_team_dragleave));
-                    sp_team.AddHandler(UIElement.DropEvent, new DragEventHandler(sp_team_drop));
-
-                    sp_team.Style = UnselNewTeamSP;
-
-                    v_sp_in_groupbox.Children.Add(sp_team);
-
-                    this.RegisterName(helmet_img.Name, helmet_img);
-                    this.RegisterName(team_label.Name, team_label);
-
-                    logger.Debug("Team " + t_id.ToString() + " control created");
-
-                    t_id += 1;
-                }
-                v_sp1.Children.Add(gb_div);
             }
 
             var v_sp2 = new StackPanel();
@@ -192,75 +178,64 @@ namespace SpectatorFootball.WindowsLeague
             conf2_sp.Orientation = Orientation.Horizontal;
             conf2_sp.HorizontalAlignment = HorizontalAlignment.Center;
 
-            var txtConf2 = new CustomTextBox();
-            txtConf2.Name = "newlConf2";
-            txtConf2.Width = 150;
-            txtConf2.Style = MediumLargetxttyle;
-            txtConf2.MaxLength = 60;
-            txtConf2.PlaceholderText = "Conference 2";
+            var lblConf2 = new Label();
+            lblConf2.Name = "standConf2";
+            lblConf2.Width = 150;
+            lblConf2.Style = Conflbltyle;
 
-            conf2_sp.Children.Add(txtConf2);
+            conf2_sp.Children.Add(lblConf2);
             v_sp2.Children.Add(conf2_sp);
 
-            this.RegisterName(txtConf2.Name, txtConf2);
+            this.RegisterName(lblConf2.Name, lblConf2);
 
             for (int i = num_divs_per_conf + 1; i <= num_divs; i++)
             {
-                var txtDivision2 = new CustomTextBox();
-                txtDivision2.Name = "newldiv" + i.ToString();
-                txtDivision2.Width = 150;
-                txtDivision2.Style = MediumLargetxttyle;
-                txtDivision2.PlaceholderText = "Division " + i.ToString();
+                ListView lbDiv = new ListView();
+                lbDiv.Name = "DivGrid" + i.ToString();
+                lbDiv.Style = (Style)FindResource("StandingsGridStyle");
 
-                var gb_div = new GroupBox();
-                gb_div.Margin = new Thickness(1, 1, 1, 1);
-                gb_div.FontSize = 14;
-                gb_div.Header = txtDivision2;
+                GridView gr = new GridView();
+                GridViewColumn grc1 = new GridViewColumn(); grc1.Header = ""; grc1.Width = 20; grc1.DisplayMemberBinding = new Binding("clinch_char");
 
-                var v_sp_in_groupbox = new StackPanel();
-                v_sp_in_groupbox.Orientation = Orientation.Vertical;
-                v_sp_in_groupbox.Width = 350;
+                FrameworkElementFactory h_image = new FrameworkElementFactory(typeof(Image));
+                Binding b = new Binding("Helmet_img");
+                h_image.SetBinding(Image.SourceProperty, b);
+                h_image.SetValue(Image.WidthProperty, 20.0);
+                h_image.SetValue(Image.HeightProperty, 20.0);
 
-                gb_div.Content = v_sp_in_groupbox;
+                FrameworkElementFactory lb_team = new FrameworkElementFactory(typeof(Label));
+                Binding b2 = new Binding("Team_Name");
+                lb_team.SetBinding(Label.ContentProperty, b2);
 
-                this.RegisterName(txtDivision2.Name, txtDivision2);
+                FrameworkElementFactory sp_team = new FrameworkElementFactory(typeof(StackPanel));
+                sp_team.SetValue(StackPanel.OrientationProperty, Orientation.Horizontal);
+                sp_team.AppendChild(h_image);
+                sp_team.AppendChild(lb_team);
+                GridViewColumn grc2 = new GridViewColumn(); grc2.Header = ""; grc2.Width = 200;
+                DataTemplate datatemp = new DataTemplate();
+                datatemp.VisualTree = sp_team;
+                grc2.CellTemplate = datatemp;
+                grc2.Header = pw.Loaded_League.season.Divisions.Where(x => x.ID == i).Select(x => x.Name).First();
+                grc2.HeaderContainerStyle = (Style)FindResource("HeaderStyleLeft");
 
-                for (int z = 1; z <= teams_per_division; z++)
-                {
-                    var sp_team = new StackPanel();
-                    sp_team.Orientation = Orientation.Horizontal;
+                GridViewColumn grc3 = new GridViewColumn(); grc3.Header = "W"; grc3.Width = 20; grc3.DisplayMemberBinding = new Binding("wins");
+                GridViewColumn grc4 = new GridViewColumn(); grc4.Header = "L"; grc4.Width = 20; grc4.DisplayMemberBinding = new Binding("loses");
+                GridViewColumn grc5 = new GridViewColumn(); grc5.Header = "T"; grc5.Width = 20; grc5.DisplayMemberBinding = new Binding("ties");
+                GridViewColumn grc6 = new GridViewColumn(); grc6.Header = "PCT"; grc6.Width = 30; grc6.DisplayMemberBinding = new Binding("winpct");
+                GridViewColumn grc7 = new GridViewColumn(); grc7.Header = "PF"; grc7.Width = 30; grc7.DisplayMemberBinding = new Binding("pointsfor");
+                GridViewColumn grc8 = new GridViewColumn(); grc8.Header = "PA"; grc8.Width = 30; grc8.DisplayMemberBinding = new Binding("pointagainst");
+                GridViewColumn grc9 = new GridViewColumn(); grc9.Header = "Strk"; grc9.Width = 30; grc9.DisplayMemberBinding = new Binding("Streakchar");
+                gr.Columns.Add(grc1); gr.Columns.Add(grc2); gr.Columns.Add(grc3);
+                gr.Columns.Add(grc4); gr.Columns.Add(grc5); gr.Columns.Add(grc6);
+                gr.Columns.Add(grc7); gr.Columns.Add(grc8); gr.Columns.Add(grc9);
+                lbDiv.View = gr;
+                lbDiv.Margin = new Thickness(15, 0, 15, 11);
 
-                    var helmet_img = new Image();
-                    helmet_img.Name = "newlimgTeam" + t_id.ToString();
-                    helmet_img.Width = 20;
-                    helmet_img.Height = 20;
+                v_sp2.Children.Add(lbDiv);
 
-                    var team_label = new Label();
-                    team_label.Name = "newllblTeam" + t_id.ToString();
-                    team_label.Padding = new Thickness(10, 0, 0, 0);
-                    team_label.Width = 250;
-                    team_label.Style = Teamlbltyle;
+                this.RegisterName(lbDiv.Name, lbDiv);
 
-                    sp_team.Children.Add(helmet_img);
-                    sp_team.Children.Add(team_label);
-                    sp_team.AllowDrop = true;
-                    sp_team.AddHandler(UIElement.MouseDownEvent, new MouseButtonEventHandler(sp_team_MouseDown));
-                    sp_team.AddHandler(UIElement.MouseMoveEvent, new MouseEventHandler(sp_team_MouseMove));
-                    sp_team.AddHandler(UIElement.DragEnterEvent, new DragEventHandler(sp_team_dragenter));
-                    sp_team.AddHandler(UIElement.DragLeaveEvent, new DragEventHandler(sp_team_dragleave));
-                    sp_team.AddHandler(UIElement.DropEvent, new DragEventHandler(sp_team_drop));
-                    sp_team.Style = UnselNewTeamSP;
 
-                    v_sp_in_groupbox.Children.Add(sp_team);
-
-                    this.RegisterName(helmet_img.Name, helmet_img);
-                    this.RegisterName(team_label.Name, team_label);
-
-                    logger.Debug("Team " + t_id.ToString() + " control created");
-
-                    t_id += 1;
-                }
-                v_sp2.Children.Add(gb_div);
             }
 
             sp1.Children.Add(v_sp1);
@@ -274,63 +249,56 @@ namespace SpectatorFootball.WindowsLeague
 
             for (int i = 1; i <= num_divs; i++)
             {
-                var txtDivision1 = new CustomTextBox();
-                txtDivision1.Name = "newldiv" + i.ToString();
-                txtDivision1.Width = 150;
-                txtDivision1.Style = MediumLargetxttyle;
-                txtDivision1.PlaceholderText = "Division " + i.ToString();
+                    ListView lbDiv = new ListView();
+                    lbDiv.Name = "DivGrid" + i.ToString();
+                    lbDiv.Style = (Style)FindResource("StandingsGridStyle");
 
-                var gb_div = new GroupBox();
-                gb_div.Margin = new Thickness(1, 1, 1, 1);
-                gb_div.FontSize = 14;
-                gb_div.Header = txtDivision1;
+                    GridView gr = new GridView();
+                    GridViewColumn grc1 = new GridViewColumn(); grc1.Header = ""; grc1.Width = 20; grc1.DisplayMemberBinding = new Binding("clinch_char");
 
-                var v_sp_in_groupbox = new StackPanel();
-                v_sp_in_groupbox.Orientation = Orientation.Vertical;
-                v_sp_in_groupbox.Width = 350;
+                    FrameworkElementFactory h_image = new FrameworkElementFactory(typeof(Image));
+                    Binding b = new Binding("Helmet_img");
+                    h_image.SetBinding(Image.SourceProperty, b);
+                    h_image.SetValue(Image.WidthProperty, 20.0);
+                    h_image.SetValue(Image.HeightProperty, 20.0);
 
-                gb_div.Content = v_sp_in_groupbox;
-                this.RegisterName(txtDivision1.Name, txtDivision1);
+                    FrameworkElementFactory lb_team = new FrameworkElementFactory(typeof(Label));
+                    Binding b2 = new Binding("Team_Name");
+                    lb_team.SetBinding(Label.ContentProperty, b2);
 
-                for (int z = 1; z <= teams_per_division; z++)
-                {
-                    var sp_team = new StackPanel();
-                    sp_team.Orientation = Orientation.Horizontal;
+                    FrameworkElementFactory sp_team = new FrameworkElementFactory(typeof(StackPanel));
+                    sp_team.SetValue(StackPanel.OrientationProperty, Orientation.Horizontal);
+                    sp_team.AppendChild(h_image);
+                    sp_team.AppendChild(lb_team);
+                    GridViewColumn grc2 = new GridViewColumn(); grc2.Header = ""; grc2.Width = 200;
+                    DataTemplate datatemp = new DataTemplate();
+                    datatemp.VisualTree = sp_team;
+                    grc2.CellTemplate = datatemp;
+                    grc2.Header = pw.Loaded_League.season.Divisions.Where(x => x.ID == i).Select(x => x.Name).First();
+                    grc2.HeaderContainerStyle = (Style)FindResource("HeaderStyleLeft");
 
-                    var helmet_img = new Image();
-                    helmet_img.Name = "newlimgTeam" + t_id.ToString();
-                    helmet_img.Width = 20;
-                    helmet_img.Height = 20;
+                    GridViewColumn grc3 = new GridViewColumn(); grc3.Header = "W"; grc3.Width = 20; grc3.DisplayMemberBinding = new Binding("wins");
+                    GridViewColumn grc4 = new GridViewColumn(); grc4.Header = "L"; grc4.Width = 20; grc4.DisplayMemberBinding = new Binding("loses");
+                    GridViewColumn grc5 = new GridViewColumn(); grc5.Header = "T"; grc5.Width = 20; grc5.DisplayMemberBinding = new Binding("ties");
+                    GridViewColumn grc6 = new GridViewColumn(); grc6.Header = "PCT"; grc6.Width = 30; grc6.DisplayMemberBinding = new Binding("winpct");
+                    GridViewColumn grc7 = new GridViewColumn(); grc7.Header = "PF"; grc7.Width = 30; grc7.DisplayMemberBinding = new Binding("pointsfor");
+                    GridViewColumn grc8 = new GridViewColumn(); grc8.Header = "PA"; grc8.Width = 30; grc8.DisplayMemberBinding = new Binding("pointagainst");
+                    GridViewColumn grc9 = new GridViewColumn(); grc9.Header = "Strk"; grc9.Width = 30;  grc9.DisplayMemberBinding = new Binding("Streakchar");
+                    gr.Columns.Add(grc1); gr.Columns.Add(grc2); gr.Columns.Add(grc3);
+                    gr.Columns.Add(grc4); gr.Columns.Add(grc5); gr.Columns.Add(grc6);
+                    gr.Columns.Add(grc7); gr.Columns.Add(grc8); gr.Columns.Add(grc9);
+                    lbDiv.View = gr;
+                    lbDiv.Margin = new Thickness(15, 0, 15, 11);
 
-                    var team_label = new Label();
-                    team_label.Name = "newllblTeam" + t_id.ToString();
-                    team_label.Padding = new Thickness(10, 0, 0, 0);
-                    team_label.Width = 250;
-                    team_label.Style = Largelblstyle;
+                    v2_sp.Children.Add(lbDiv);
 
-                    sp_team.Children.Add(helmet_img);
-                    sp_team.Children.Add(team_label);
-                    sp_team.AllowDrop = true;
-                    sp_team.AddHandler(UIElement.MouseDownEvent, new MouseButtonEventHandler(sp_team_MouseDown));
-                    sp_team.AddHandler(UIElement.MouseMoveEvent, new MouseEventHandler(sp_team_MouseMove));
-                    sp_team.AddHandler(UIElement.DragEnterEvent, new DragEventHandler(sp_team_dragenter));
-                    sp_team.AddHandler(UIElement.DragLeaveEvent, new DragEventHandler(sp_team_dragleave));
-                    sp_team.AddHandler(UIElement.DropEvent, new DragEventHandler(sp_team_drop));
-                    sp_team.Style = UnselNewTeamSP;
-
-                    v_sp_in_groupbox.Children.Add(sp_team);
-
-                    this.RegisterName(helmet_img.Name, helmet_img);
-                    this.RegisterName(team_label.Name, team_label);
-
-                    logger.Debug("Team " + t_id.ToString() + " control created");
-
-                    t_id += 1;
+                    this.RegisterName(lbDiv.Name, lbDiv);
                 }
-                v2_sp.Children.Add(gb_div);
-            }
 
-            sp1.Children.Add(v2_sp);
+
+
+
+                sp1.Children.Add(v2_sp);
         }
 
         setStandings();
@@ -350,6 +318,59 @@ namespace SpectatorFootball.WindowsLeague
         }
         public void setStandings()
         {
+            Style Teamlbltyle = (Style)System.Windows.Application.Current.FindResource("Teamlbltyle");
+
+            logger.Info("Setting team labels");
+
+            if (pw.Loaded_League.season.League_Structure_by_Season[0].Number_of_Conferences > 0)
+            {
+                Label ConfLbl = (Label)this.FindName("standConf1");
+                Label ConfLb2 = (Label)this.FindName("standConf2");
+                ConfLbl.Content = pw.Loaded_League.season.Conferences.Where(x => x.Ordinal == 1).Select(b => b.Conf_Name).First();
+                ConfLb2.Content = pw.Loaded_League.season.Conferences.Where(x => x.Ordinal == 2).Select(b => b.Conf_Name).First();
+
+            }
+
+            League_Structure_by_Season ls = pw.Loaded_League.season.League_Structure_by_Season[0];
+            int num_divs = (int)ls.Number_of_Divisions;
+            int teams_per_div = (int)ls.Num_Teams / num_divs;
+            for (int i = 1; i <= num_divs; i++)
+            {
+                string divgrid = "DivGrid" + i.ToString();
+                ListView lsDivGrid = (ListView)this.FindName(divgrid);
+                lsDivGrid.Items.Clear();
+
+                for (int t = 0; t < teams_per_div; t++)
+                {
+                    int ind = ((i - 1) * teams_per_div) + t;
+                    lsDivGrid.Items.Add(pw.Loaded_League.Standings[ind]);
+                }
+
+
+
+                /*                string teamLabel = "newllblTeam" + i.ToString();
+                                string teamImage = "newlimgTeam" + i.ToString();
+                                logger.Debug("setting teamlabel and teamimage " + " " + teamImage);
+
+                                Label teamLbl = (Label)this.FindName(teamLabel);
+                                Image teamImg = (Image)this.FindName(teamImage);
+                                logger.Debug("teamlabel and teamimg found");
+
+                                teamLbl.Style = Teamlbltyle;
+
+                                List<Standings_Row> st = pw.Loaded_League.Standings;
+                                teamLbl.Content = st[i-1].Team_Name;
+                                teamLbl.VerticalContentAlignment = VerticalAlignment.Center;
+                */
+
+                //                string img_path = pw.New_Mem_Season.Season.Teams_by_Season[i - 1].Helmet_img_path;
+
+                //                 if (img_path != null && img_path.Length > 0)
+                //                {
+                //                    var helmetIMG_source = new BitmapImage(new Uri(img_path));
+                //                    teamImg.Source = helmetIMG_source;
+                //               }
+            }
 
         }
     }

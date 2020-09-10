@@ -135,7 +135,7 @@ namespace SpectatorFootball
             //I need to add the streak char to the list of standing_row objects in another method.
 
             string sSQL = @"select (T.Team_Slot / ((LS.num_teams / LS.Number_of_Divisions)+1)) + 1 as Div_Num, T.id as Team_ID,
-                            T.City || ' ' || T.Nickname as Team_Name,
+                            T.Helmet_Image_File as Helmet_img, T.City || ' ' || T.Nickname as Team_Name,
                             case when clinch = 2 then 'x' when clinch = 1 then 'y' else ' ' end as clinch_char,
                             wins, loses, ties, 
                             case when wins + loses = 0 then 0 else ((wins * 1000) + (ties * 500)) / (wins+loses) end as winpct,
@@ -294,9 +294,9 @@ namespace SpectatorFootball
             using (var context = new leagueContext(con))
             {
                 if (year == null)
-                    s = context.Seasons.OrderByDescending(x => x.Year).Include(b => b.League_Structure_by_Season).Include(b => b.Teams_by_Season).FirstOrDefault();
+                    s = context.Seasons.OrderByDescending(x => x.Year).Include(b => b.League_Structure_by_Season).Include(b => b.Teams_by_Season).Include(c => c.Conferences).Include(d => d.Divisions).FirstOrDefault();
                 else
-                    s = context.Seasons.Where(x => x.Year == long.Parse(year)).Include(b => b.League_Structure_by_Season).Include(b => b.Teams_by_Season).FirstOrDefault();
+                    s = context.Seasons.Where(x => x.Year == long.Parse(year)).Include(b => b.League_Structure_by_Season).Include(b => b.Teams_by_Season).Include(c => c.Conferences).Include(d => d.Divisions).FirstOrDefault();
             }
 
             logger.Info("Season Successfully Loaded.");

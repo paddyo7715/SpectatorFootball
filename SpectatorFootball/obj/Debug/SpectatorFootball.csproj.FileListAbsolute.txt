@@ -62,6 +62,6 @@ C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\New_
 C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\New_Team_DetailUC.baml
 C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\LoadLeague.g.cs
 C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\LoadLeague.baml
-C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\SpectatorFootball.csprojAssemblyReference.cache
 C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\WindowsLeague\LeagueStandings.g.cs
 C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\WindowsLeague\LeagueStandings.baml
+C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\SpectatorFootball.csprojAssemblyReference.cache
