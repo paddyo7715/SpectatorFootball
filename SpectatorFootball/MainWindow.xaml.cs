@@ -63,6 +63,7 @@ namespace SpectatorFootball
             MainMenuUC.Show_NewLeague += Show_NewLeague;
             MainMenuUC.Show_LoadLeague += Show_LoadLeague;
 
+
             setNonLeagueMenu();
 
             logger.Info("Main form created");
@@ -282,6 +283,7 @@ namespace SpectatorFootball
                 LStandingsUX.SetupLeagueStructure();
                 sp_uc.Children.Clear();
                 sp_uc.Children.Add(LStandingsUX);
+                LStandingsUX.Show_TeamDetail += Show_TeamDetail;
 
                 Mouse.OverrideCursor = null;
             }
@@ -294,7 +296,15 @@ namespace SpectatorFootball
             }
         }
 
+        private void Show_TeamDetail(object sender, teamEventArgs e)
+        {
 
+            int id = e.team_num-1;
+            string team_name = Loaded_League.Standings[id].Team_Name;
+            Teams_by_Season t = Loaded_League.season.Teams_by_Season.Where(x => x.City + " " + x.Nickname == team_name).First();
+            ShowTeamDetail(t);
+
+        }
 
         private void Show_UpdateStockTeam(object sender, StockteamEventArgs e)
         {
@@ -356,11 +366,13 @@ namespace SpectatorFootball
         {
             MenuItem mi = (MenuItem)sender;
             long id = (long)mi.CommandParameter;
+            Teams_by_Season t = Loaded_League.season.Teams_by_Season.Where(x => x.ID == id).First();
+            ShowTeamDetail(t);
 
         }
         //If either the team in the team menu or the user double clicks a team on the standings
         //then this method will be called to show the team detail
-        private void ShowTeamDetail(long id)
+        private void ShowTeamDetail(Teams_by_Season t)
         {
 
         }

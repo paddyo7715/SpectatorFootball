@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Text.RegularExpressions;
 
 namespace SpectatorFootball.WindowsLeague
 {
@@ -27,6 +28,8 @@ namespace SpectatorFootball.WindowsLeague
         private static ILog logger = LogManager.GetLogger("RollingFile");
         // pw is the parent window mainwindow
         private MainWindow pw;
+
+        public event EventHandler<teamEventArgs> Show_TeamDetail;
         public LeagueStandings(MainWindow pw)
         {
             InitializeComponent();
@@ -290,6 +293,9 @@ namespace SpectatorFootball.WindowsLeague
                     lbDiv.View = gr;
                     lbDiv.Margin = new Thickness(15, 0, 15, 11);
 
+//                    lbDiv.AddHandler(UIElement.MouseDownEvent, new MouseButtonEventHandler(ListViewDiv_MouseDownEvent));
+                    lbDiv.AddHandler(GridViewRowPresenter.MouseLeftButtonUpEvent, new RoutedEventHandler(ListViewDiv_MouseDownEvent));
+
                     v2_sp.Children.Add(lbDiv);
 
                     this.RegisterName(lbDiv.Name, lbDiv);
@@ -347,31 +353,23 @@ namespace SpectatorFootball.WindowsLeague
                 }
 
 
-
-                /*                string teamLabel = "newllblTeam" + i.ToString();
-                                string teamImage = "newlimgTeam" + i.ToString();
-                                logger.Debug("setting teamlabel and teamimage " + " " + teamImage);
-
-                                Label teamLbl = (Label)this.FindName(teamLabel);
-                                Image teamImg = (Image)this.FindName(teamImage);
-                                logger.Debug("teamlabel and teamimg found");
-
-                                teamLbl.Style = Teamlbltyle;
-
-                                List<Standings_Row> st = pw.Loaded_League.Standings;
-                                teamLbl.Content = st[i-1].Team_Name;
-                                teamLbl.VerticalContentAlignment = VerticalAlignment.Center;
-                */
-
-                //                string img_path = pw.New_Mem_Season.Season.Teams_by_Season[i - 1].Helmet_img_path;
-
-                //                 if (img_path != null && img_path.Length > 0)
-                //                {
-                //                    var helmetIMG_source = new BitmapImage(new Uri(img_path));
-                //                    teamImg.Source = helmetIMG_source;
-                //               }
             }
 
         }
+        private void ListViewDiv_MouseDownEvent(object sender, RoutedEventArgs e)
+        {
+            ListView ls = (ListView)sender;
+            var rw = ls.SelectedItems[0];
+            string divName = ls.Name;
+
+            long teams_per_div = pw.Loaded_League.season.League_Structure_by_Season[0].Num_Teams /
+                pw.Loaded_League.season.League_Structure_by_Season[0].Number_of_Divisions;
+            string div_string = Regex.Replace(divName, "[^0-9.]", "");
+            int div_num = int.Parse(div_string);
+            int div_team_num = ls.SelectedIndex;
+            int n = (int)(((div_num - 1) * teams_per_div) + div_team_num)+1;
+            Show_TeamDetail?.Invoke(this, new teamEventArgs(n));
+        }
+
     }
 }
