@@ -300,16 +300,20 @@ namespace SpectatorFootball
 
                 int draft_count = m[0];
                 int draft_completed_count = m[1];
-                int training_camp_count = m[2];
-                int Unplayed_Regular_Season_Games_Count = m[3];
-                int playoff_teams_count = m[4];
-                int Unplayed_Playoff_Games_Count = m[5];
-                int player_awards_count = m[6];
+                int teamsLessThanFull_Count = m[2];
+                int training_camp_count = m[3];
+                int Unplayed_Regular_Season_Games_Count = m[4];
+                int playoff_teams_count = m[5];
+                int Unplayed_Playoff_Games_Count = m[6];
+                int player_awards_count = m[7];
 
                 if (draft_count == 0)
                     r = League_State.Draft_Completed;
                 else if (draft_count > 0 && draft_completed_count > 0)
                     r = League_State.Draft_Started;
+
+                if (teamsLessThanFull_Count == 0)
+                    r = League_State.FreeAgency_Completed;
 
                 if (training_camp_count > 0)
                     r = League_State.Training_Camp_Ended;

@@ -240,6 +240,8 @@ namespace SpectatorFootball
 
         // Teams
         public const string EMPTY_TEAM_SLOT = "Empty Team Slot";
+        public const int TRAINING_CAMP_TEAM_PLAYER_COUNT = 84;
+        public const int REGULAR_SEASON_TEAM_PLAYER_COUNT = 48;
 
     }
 }

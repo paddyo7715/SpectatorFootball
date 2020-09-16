@@ -29,6 +29,7 @@ namespace SpectatorFootball.WindowsLeague
         // pw is the parent window mainwindow
         private MainWindow pw;
 
+        public event EventHandler Show_MainMenu;
         public event EventHandler<teamEventArgs> Show_TeamDetail;
         public LeagueStandings(MainWindow pw)
         {
@@ -371,5 +372,10 @@ namespace SpectatorFootball.WindowsLeague
             Show_TeamDetail?.Invoke(this, new teamEventArgs(n));
         }
 
+        private void standBack_Click(object sender, RoutedEventArgs e)
+        {
+            pw.Loaded_League = null;
+            Show_MainMenu?.Invoke(this, new EventArgs());
+        }
     }
 }

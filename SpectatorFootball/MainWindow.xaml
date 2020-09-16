@@ -16,13 +16,15 @@
             <MenuItem Name="MenuFile" Header="File" >
                 <MenuItem Name="MenuNew" Header="New" Click = "Show_NewLeague" />
                 <MenuItem Name="MenuLoad" Header="Load" Click = "Show_LoadLeague" />
+                <MenuItem Name="MenuMain" Header="Main Menu" Click = "Show_MainMenu" />
                 <Separator />
-                <MenuItem Name="MenuExit" Header="MenuExit" Click = "mmTopExit_Click" />
+                <MenuItem Name="MenuExit" Header="Exit" Click = "mmTopExit_Click" />
             </MenuItem>
             <MenuItem Name="MenuLeague" Header="League">
                 <MenuItem Name="MenuStandings" Header="Standings" />
                 <MenuItem Name="MenuSchedule" Header="Schedule" />
                 <MenuItem Name="MenuDraft" Header="Draft" />
+                <MenuItem Name="MenuFreeAgency" Header="Free Agency" />
                 <MenuItem Name="MenuTrainingCamp" Header="Training Camp" />
                 <MenuItem Name="MenuInjuries" Header="Injuries" />
                 <MenuItem Name="MenuPlayoffs" Header="Playoffs" />

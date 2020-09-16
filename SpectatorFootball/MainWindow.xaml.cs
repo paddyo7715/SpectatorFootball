@@ -69,7 +69,7 @@ namespace SpectatorFootball
             logger.Info("Main form created");
 
         }
-
+        //*********************  MainWindow Methods *****************************
         private void MainWindow_Closing(object sender, CancelEventArgs e)
         {
             var response = MessageBox.Show("Do you really want to exit?", "Exiting...", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
@@ -81,7 +81,7 @@ namespace SpectatorFootball
                 CloseApplication();
             }
         }
-        private void mmTopExit_Click(object sender, RoutedEventArgs e)  
+        private void mmTopExit_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
@@ -90,6 +90,7 @@ namespace SpectatorFootball
         {
             System.Windows.Application.Current.Shutdown();
         }
+
         private void Show_MainMenu(object sender, EventArgs e)
         {
             logger.Info("Showing Main Menu");
@@ -103,6 +104,68 @@ namespace SpectatorFootball
             Stock_teamsUC = null;
             setNonLeagueMenu();
         }
+        //*********************  Admin Evens ************************************
+        private void Show_PlayerNames(object sender, EventArgs e)
+        {
+            logger.Info("Show Player names");
+
+            PlayerNamesUC = new PlayerNamesUC();
+            PlayerNamesUC.clearpage();
+            PlayerNamesUC.Show_MainMenu += Show_MainMenu;
+
+            sp_uc.Children.Clear();
+            sp_uc.Children.Add(PlayerNamesUC);
+        }
+        private void Show_StockTeams(object sender, EventArgs e)
+        {
+            try
+            {
+                Mouse.OverrideCursor = Cursors.Wait;
+                logger.Info("Show stock teams");
+                var sts = new StockTeams_Services();
+                st_list = sts.getAllStockTeams();
+
+                logger.Debug("Stock Team List retrieved");
+
+                Stock_teamsUC = new StockTeamsUC(st_list);
+                Stock_teamsUC.Show_MainMenu += Show_MainMenu;
+                Stock_teamsUC.Show_NewStockTeam += Show_NewStockTeam;
+                Stock_teamsUC.Show_UpdateStockTeam += this.Show_UpdateStockTeam;
+                sp_uc.Children.Clear();
+                sp_uc.Children.Add(Stock_teamsUC);
+                Mouse.OverrideCursor = null;
+            }
+            catch (Exception ex)
+            {
+                Mouse.OverrideCursor = null;
+                logger.Error("Error Showing Stock Team Management Form");
+                logger.Error(ex);
+                MessageBox.Show(CommonUtils.substr(ex.Message, 0, 100), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        private void Show_NewStockTeam(object sender, EventArgs e)
+        {
+            try
+            {
+                Mouse.OverrideCursor = Cursors.Wait;
+                logger.Info("Show new Stock Team Form");
+                Stock_Team_detailUC = new Stock_Team_detail(null);
+                Stock_Team_detailUC.backtoStockTeams += Show_StockTeams;
+
+                sp_uc.Children.Clear();
+                sp_uc.Children.Add(Stock_Team_detailUC);
+                //                Mouse.OverrideCursor = null;
+            }
+            catch (Exception ex)
+            {
+                Mouse.OverrideCursor = null;
+                logger.Error("Error Showing New Stock Team Detail Form");
+                logger.Error(ex);
+                MessageBox.Show(CommonUtils.substr(ex.Message, 0, 100), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        //*********************  New League  ************************************
         private void Show_NewLeague(object sender, EventArgs e)
         {
             try
@@ -159,68 +222,10 @@ namespace SpectatorFootball
 
             Mouse.OverrideCursor = null;
         }
-        private void Show_PlayerNames(object sender, EventArgs e)
-        {
-            logger.Info("Show Player names");
+        //*********************  Loaded League **********************************
 
-            PlayerNamesUC = new PlayerNamesUC();
-            PlayerNamesUC.clearpage();
-            PlayerNamesUC.Show_MainMenu += Show_MainMenu;
-
-            sp_uc.Children.Clear();
-            sp_uc.Children.Add(PlayerNamesUC);
-        }
-        private void Show_StockTeams(object sender, EventArgs e)
-        {
-            try
-            {
-                Mouse.OverrideCursor = Cursors.Wait;
-                logger.Info("Show stock teams");
-                var sts = new StockTeams_Services();
-                st_list = sts.getAllStockTeams();
-
-                logger.Debug("Stock Team List retrieved");
-
-                Stock_teamsUC = new StockTeamsUC(st_list);
-                Stock_teamsUC.Show_MainMenu += Show_MainMenu;
-                Stock_teamsUC.Show_NewStockTeam += Show_NewStockTeam;
-                Stock_teamsUC.Show_UpdateStockTeam += this.Show_UpdateStockTeam;
-                sp_uc.Children.Clear();
-                sp_uc.Children.Add(Stock_teamsUC);
-                Mouse.OverrideCursor = null;
-            }
-            catch (Exception ex)
-            {
-                Mouse.OverrideCursor = null;
-                logger.Error("Error Showing Stock Team Management Form");
-                logger.Error(ex);
-                MessageBox.Show(CommonUtils.substr(ex.Message, 0, 100), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-        private void Show_NewStockTeam(object sender, EventArgs e)
-        {
-            try
-            {
-                Mouse.OverrideCursor = Cursors.Wait;
-                logger.Info("Show new Stock Team Form");
-                Stock_Team_detailUC = new Stock_Team_detail(null);
-                Stock_Team_detailUC.backtoStockTeams += Show_StockTeams;
-
-                sp_uc.Children.Clear();
-                sp_uc.Children.Add(Stock_Team_detailUC);
-//                Mouse.OverrideCursor = null;
-            }
-            catch (Exception ex)
-            {
-                Mouse.OverrideCursor = null;
-                logger.Error("Error Showing New Stock Team Detail Form");
-                logger.Error(ex);
-                MessageBox.Show(CommonUtils.substr(ex.Message, 0, 100), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
-//This event handler is in response to the user clicking the load league button from the main menu
-//and displays the load league dialog box.
+        //This event handler is in response to the user clicking the load league button from the main menu
+        //and displays the load league dialog box.
         private void Show_LoadLeague(object sender, EventArgs e)
         {
 
@@ -247,7 +252,7 @@ namespace SpectatorFootball
 
                 int r_code = int.Parse(r[0]);
                 if (r_code == 2) //can not load league
-                    MessageBox.Show("Can not load league because the database and program versions are incompatible!","Error!",MessageBoxButton.OK,MessageBoxImage.Error);
+                    MessageBox.Show("Can not load league because the database and program versions are incompatible!", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
                 else if (r_code == 1)
                 {
                     var response = MessageBox.Show("This league and your program have different versions.  Do you wish to upgrade your league file to match the program?  Note tha your league file will be backed up before an update is attempted,  League database file vesion " + r[1] + " program vesion " + r[2], "Update??", MessageBoxButton.YesNo, MessageBoxImage.Question);
@@ -257,7 +262,7 @@ namespace SpectatorFootball
                         ls.UpgradeDB((string)e.League_Short_Name, r[1], r[2]);
                     }
                     else
-                    {                        
+                    {
                         logger.Info("User decided not to upgrade database.");
                     }
                 }
@@ -284,6 +289,7 @@ namespace SpectatorFootball
                 sp_uc.Children.Clear();
                 sp_uc.Children.Add(LStandingsUX);
                 LStandingsUX.Show_TeamDetail += Show_TeamDetail;
+                LStandingsUX.Show_MainMenu += Show_MainMenu;
 
                 Mouse.OverrideCursor = null;
             }
@@ -295,17 +301,15 @@ namespace SpectatorFootball
                 MessageBox.Show(CommonUtils.substr(ex.Message, 0, 100), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
         private void Show_TeamDetail(object sender, teamEventArgs e)
         {
 
-            int id = e.team_num-1;
+            int id = e.team_num - 1;
             string team_name = Loaded_League.Standings[id].Team_Name;
             Teams_by_Season t = Loaded_League.season.Teams_by_Season.Where(x => x.City + " " + x.Nickname == team_name).First();
             ShowTeamDetail(t);
 
         }
-
         private void Show_UpdateStockTeam(object sender, StockteamEventArgs e)
         {
             try
@@ -319,7 +323,7 @@ namespace SpectatorFootball
 
                 sp_uc.Children.Clear();
                 sp_uc.Children.Add(Stock_Team_detailUC);
- 
+
             }
             catch (Exception ex)
             {
@@ -329,8 +333,22 @@ namespace SpectatorFootball
                 MessageBox.Show(CommonUtils.substr(ex.Message, 0, 100), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+        //When the user clicks a team in the teams menu
+        private void MenuTeam_Click(object sender, System.EventArgs e)
+        {
+            MenuItem mi = (MenuItem)sender;
+            long id = (long)mi.CommandParameter;
+            Teams_by_Season t = Loaded_League.season.Teams_by_Season.Where(x => x.ID == id).First();
+            ShowTeamDetail(t);
 
+        }
+        //If either the team in the team menu or the user double clicks a team on the standings
+        //then this method will be called to show the team detail
+        private void ShowTeamDetail(Teams_by_Season t)
+        {
 
+        }
+        //*********************  General Methods  *******************************
         public void SetLeagueTeamsMenu(List<Teams_by_Season> ts)
         {
             List<Teams_by_Season> sorted_teams = ts.OrderBy(x => x.City).ThenBy(x => x.Nickname).ToList();
@@ -361,21 +379,6 @@ namespace SpectatorFootball
             }
 
         }
-        //When the user clicks a team in the teams menu
-        private void MenuTeam_Click(object sender, System.EventArgs e)
-        {
-            MenuItem mi = (MenuItem)sender;
-            long id = (long)mi.CommandParameter;
-            Teams_by_Season t = Loaded_League.season.Teams_by_Season.Where(x => x.ID == id).First();
-            ShowTeamDetail(t);
-
-        }
-        //If either the team in the team menu or the user double clicks a team on the standings
-        //then this method will be called to show the team detail
-        private void ShowTeamDetail(Teams_by_Season t)
-        {
-
-        }
 
         //When the menu menu is shown then disable the league-related menu items
         private void setNonLeagueMenu()
@@ -385,7 +388,6 @@ namespace SpectatorFootball
             MenuStats.IsEnabled = false;
             MenuTasks.IsEnabled = false;
         }
-
         private void setMenuonState(League_State ls)
         {
             MenuLeague.IsEnabled = true;
@@ -407,7 +409,7 @@ namespace SpectatorFootball
             switch (ls)
             {
                 case League_State.Season_Started:
-                {
+                    {
                         MenuTrainingCamp.IsEnabled = false;
                         MenuInjuries.IsEnabled = false;
                         MenuPlayoffs.IsEnabled = false;
@@ -416,7 +418,7 @@ namespace SpectatorFootball
 
                         MenuEndSeason.IsEnabled = false;
                         break;
-                }
+                    }
                 case League_State.Draft_Started:
                     {
                         MenuTrainingCamp.IsEnabled = false;
@@ -430,6 +432,18 @@ namespace SpectatorFootball
                     }
                 case League_State.Draft_Completed:
                     {
+                        MenuTrainingCamp.IsEnabled = false;
+                        MenuInjuries.IsEnabled = false;
+                        MenuPlayoffs.IsEnabled = false;
+
+                        MenuStats.IsEnabled = false;
+
+                        MenuEndSeason.IsEnabled = false;
+                        break;
+                    }
+                case League_State.FreeAgency_Completed:
+                    {
+                        MenuTrainingCamp.IsEnabled = false;
                         MenuInjuries.IsEnabled = false;
                         MenuPlayoffs.IsEnabled = false;
 
@@ -473,5 +487,6 @@ namespace SpectatorFootball
                     }
             }
         }
+
     }
 }

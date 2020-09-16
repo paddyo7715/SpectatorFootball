@@ -16,6 +16,9 @@
             <Image Grid.Column="1" Name="League_image" Width="120" Height="60"></Image>
 <!--            <Button Grid.Column="2" Name="help_btn" Focusable="false" Style="{StaticResource appHelpBTN}" Click="help_btn_Click">Help ?</Button> -->
         </Grid>
+        <Grid DockPanel.Dock="Bottom">
+            <Button Name="standBack" Style="{StaticResource appSubmitStyle}" Click="standBack_Click" Width="300">- - - - Back to Main Menu - - - - </Button>
+        </Grid>
         <StackPanel Name="sp1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="top" >
         </StackPanel>
 
