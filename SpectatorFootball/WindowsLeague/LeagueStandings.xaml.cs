@@ -57,7 +57,25 @@ namespace SpectatorFootball.WindowsLeague
 
         League_Structure_by_Season ls = pw.Loaded_League.season.League_Structure_by_Season[0];
 
-        num_weeks = (int) ls.Number_of_weeks;
+        //Set either the Logo Image or Label depending on if the user has selected a logo image
+        if (ls.League_Logo_File == null || ls.League_Logo_File.Trim() == "")
+            {
+                League_Logo_lbl.Content = ls.Short_Name;
+                League_Logo_lbl.Visibility = Visibility.Visible;
+                League_image.Visibility = Visibility.Hidden;
+            }
+        else
+            {
+                string Logo_image_path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + System.IO.Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + System.IO.Path.DirectorySeparatorChar + ls.Short_Name + System.IO.Path.DirectorySeparatorChar + ls.League_Logo_File;
+                League_image.Source = new BitmapImage(new Uri((string)Logo_image_path));
+                League_Logo_lbl.Visibility = Visibility.Hidden;
+                League_image.Visibility = Visibility.Visible;
+            }
+
+
+
+
+         num_weeks = (int) ls.Number_of_weeks;
         num_games = (int) ls.Number_of_Games;
         num_divs = (int) ls.Number_of_Divisions;
         num_teams = (int) ls.Num_Teams;

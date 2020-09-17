@@ -47,16 +47,22 @@ namespace SpectatorFootball
                     h_sp.Orientation = Orientation.Horizontal;
 
                     BitmapImage BitmapImage = null;
-                    Image helmet_img = null;
+                    Image logo_img = null;
 
                     if (s[0].Length > 0)
                     {
                         BitmapImage = new BitmapImage(new Uri(d + Path.DirectorySeparatorChar + s[0]));
-                        helmet_img = new Image();
-                        helmet_img.Width = 50;
-                        helmet_img.Height = 40;
-                        helmet_img.Source = BitmapImage;
-                        h_sp.Children.Add(helmet_img);
+                        logo_img = new Image();
+                        logo_img.Width = 50;
+                        logo_img.Height = 40;
+                        logo_img.Source = BitmapImage;
+                        h_sp.Children.Add(logo_img);
+                    }
+                    else
+                    {
+                        Label lblShortName = new Label();
+                        lblShortName.Content = league_name;
+                        h_sp.Children.Add(lblShortName);
                     }
 
                     var team_label = new Label();

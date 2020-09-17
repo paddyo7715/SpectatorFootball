@@ -135,9 +135,6 @@ namespace SpectatorFootball
             if (!CommonUtils.isAlphaNumeric(newl1longname.Text, true))
                 throw new Exception("On the Settings Tab, Invalid character in League Long Name!");
 
-            if (CommonUtils.isBlank(newLogoPath.Text))
-                throw new Exception("On the Settings Tab, League Logo Must be Selected!");
-
             if (CommonUtils.isBlank(newl1championshipgame.Text))
                 throw new Exception("On the Settings Tab, Championship Game must be supplied!");
             if (!CommonUtils.isAlphaNumeric(newl1championshipgame.Text, true))
@@ -625,10 +622,18 @@ namespace SpectatorFootball
                 else if (newlDraft_FR.IsChecked == true) DraftType = "FR";
                 else if (newlDraft_CR.IsChecked == true) DraftType = "CR";
 
-                ls.Short_Name = newl1shortname.Text;
+                ls.Short_Name = newl1shortname.Text.ToUpper();
                 ls.Long_Name = newl1longname.Text;
-                ls.League_Logo_Filepath = newLogoPath.Text;
-                ls.League_Logo_File = Path.GetFileName(newLogoPath.Text);
+                if (newLogoPath.Text != null && newLogoPath.Text.Trim().Length > 0)
+                {
+                    ls.League_Logo_Filepath = newLogoPath.Text;
+                    ls.League_Logo_File = Path.GetFileName(newLogoPath.Text);
+                }
+                else
+                {
+                    ls.League_Logo_Filepath = "";
+                    ls.League_Logo_File = "";
+                }
                 ls.Championship_Game_Name = newl1championshipgame.Text;
                 ls.Number_of_Conferences = Convert.ToInt32(newlnumconferences.Text);
                 ls.Number_of_Divisions = Convert.ToInt32(newlnumdivisions.Text);
@@ -949,6 +954,9 @@ namespace SpectatorFootball
             {
                 string filepath = OpenFileDialog.FileName;
                 newLogoPath.Text = filepath;
+
+                League_Logo_lbl.Visibility = Visibility.Hidden;
+                League_image.Visibility = Visibility.Visible;
              }
         }
 

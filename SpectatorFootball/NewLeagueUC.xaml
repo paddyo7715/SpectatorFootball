@@ -17,8 +17,10 @@
                 <ColumnDefinition Width="2*" />
                 <ColumnDefinition Width="2*" />
             </Grid.ColumnDefinitions>
-
-            <Image Grid.Column="1" Name="League_image" Source="{Binding ElementName=newLogoPath, Path=Text, Converter={StaticResource ImageConverter}}" Width="120" Height="60"></Image>
+            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                <Label Name="League_Logo_lbl" Content="{Binding Text, ElementName=newl1shortname, UpdateSourceTrigger=LostFocus }" Style="{StaticResource MedLabelstyle}"></Label>
+                <Image Name="League_image" Visibility="Hidden" Source="{Binding ElementName=newLogoPath, Path=Text, Converter={StaticResource ImageConverter}}" Width="120" Height="60"></Image>
+            </StackPanel>
             <Button Grid.Column="2" Name="help_btn" Focusable="false" Style="{StaticResource appHelpBTN}" Click="help_btn_Click">Help ?</Button>
         </Grid>
         <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
@@ -43,7 +45,7 @@
                                 <TextBox Name="newl1longname" Width="600" Style="{StaticResource Largetxttyle}"  MaxLength="100" />
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
-                                <Label Width="300" Style="{StaticResource Largelbltyle}">League Logo Image:</Label>
+                                <Label Width="300" Style="{StaticResource Largelbltyle}">League Logo Image (Optional):</Label>
                                 <TextBox Name="newLogoPath" IsReadOnly="True" Style="{StaticResource Largetxttyle}" Width="265" />
                                 <Button Name="newl1longnameLeagueLogoPath" FontSize="12" Width="90" Height="20" Click="newl1longnameLeagueLogoPath_Click">Select File</Button>
                             </StackPanel>

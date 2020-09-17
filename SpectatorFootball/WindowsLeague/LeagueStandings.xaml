@@ -13,8 +13,11 @@
                 <ColumnDefinition Width="2*" />
                 <ColumnDefinition Width="2*" />
             </Grid.ColumnDefinitions>
-            <Image Grid.Column="1" Name="League_image" Width="120" Height="60"></Image>
-<!--            <Button Grid.Column="2" Name="help_btn" Focusable="false" Style="{StaticResource appHelpBTN}" Click="help_btn_Click">Help ?</Button> -->
+            <StackPanel Grid.Column="2" Orientation="Horizontal">
+                <Label Name="League_Logo_lbl" Style="{StaticResource MedLabelstyle}"></Label>
+                <Image Name="League_image" Visibility="Hidden" Width="120" Height="60"></Image>
+            </StackPanel>
+            <!--            <Button Grid.Column="2" Name="help_btn" Focusable="false" Style="{StaticResource appHelpBTN}" Click="help_btn_Click">Help ?</Button> -->
         </Grid>
         <Grid DockPanel.Dock="Bottom">
             <Button Name="standBack" Style="{StaticResource appSubmitStyle}" Click="standBack_Click" Width="300">- - - - Back to Main Menu - - - - </Button>

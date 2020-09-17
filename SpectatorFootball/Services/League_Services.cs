@@ -63,11 +63,15 @@ namespace SpectatorFootball
                 Directory.CreateDirectory(DIRPath_League + Path.DirectorySeparatorChar + app_Constants.LEAGUE_STADIUM_SUBFOLDER);
                 CommonUtils.SetFullAccess(DIRPath_League + Path.DirectorySeparatorChar + app_Constants.LEAGUE_STADIUM_SUBFOLDER);
 
-                // Copy the League Logo file
-                logger.Info("Starting league Logo Copy and Rename");
-                string sf = nls.Season.League_Structure_by_Season[0].League_Logo_Filepath;
-                string df = DIRPath_League + Path.DirectorySeparatorChar + Path.GetFileName(sf);
-                File.Copy(sf, df);
+                // Copy the League Logo file if selected
+                if (nls.Season.League_Structure_by_Season[0].League_Logo_Filepath != null &&
+                    nls.Season.League_Structure_by_Season[0].League_Logo_Filepath.Trim() != "")
+                {
+                    logger.Info("Starting league Logo Copy and Rename");
+                    string sf = nls.Season.League_Structure_by_Season[0].League_Logo_Filepath;
+                    string df = DIRPath_League + Path.DirectorySeparatorChar + Path.GetFileName(sf);
+                    File.Copy(sf, df);
+                }
 
                 //Create League Profile file
                 using (StreamWriter sw = new StreamWriter(DIRPath_League + Path.DirectorySeparatorChar + app_Constants.LEAGUE_PROFILE_FILE))
@@ -167,7 +171,7 @@ namespace SpectatorFootball
 
                 //Backup the database file as season started
                 string backed_up_file = DIRPath_League + Path.DirectorySeparatorChar + app_Constants.BACKUP_FOLDER + Path.DirectorySeparatorChar + nls.Season.Year + "_SeasonStarted_" + New_League_File;
-                File.Copy(df, backed_up_file);
+                File.Copy(ddf, backed_up_file);
 
                 // Update the progress bar
                 i = 100;
