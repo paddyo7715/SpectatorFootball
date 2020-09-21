@@ -11,6 +11,11 @@
             <Label Style="{StaticResource popupTT}" HorizontalAlignment="Center">Load League</Label>
 
             <ListView Margin="4" Padding="0" Name="LoadLeagueGrid" HorizontalContentAlignment="left"  Background="LightGray" Width="400" Height="200">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="Height" Value="40" />
+                    </Style>
+                </ListView.ItemContainerStyle>
             </ListView>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">

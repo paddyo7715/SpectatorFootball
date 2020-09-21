@@ -61,6 +61,7 @@ namespace SpectatorFootball
                     else
                     {
                         Label lblShortName = new Label();
+                        lblShortName.Width = 50;
                         lblShortName.Content = league_name;
                         h_sp.Children.Add(lblShortName);
                     }

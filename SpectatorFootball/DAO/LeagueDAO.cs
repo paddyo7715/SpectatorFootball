@@ -331,6 +331,18 @@ namespace SpectatorFootball
             return new int[] { draft_count, draft_completed_count, teamsLessThanFull_Count, training_camp_count, Unplayed_Regular_Season_Games_Count , Playoff_Teams, Unplayed_Playoff_Games_Count , player_awards_count };
 
         }
+        public List<Season> getAllSeasons(string league_filepath)
+        {
+            List<Season> r = new List<Season>();
+
+            string con = Common.LeageConnection.Connect(league_filepath);
+            using (var context = new leagueContext(con))
+            {
+                r = context.Seasons.OrderByDescending(x => x.ID).ToList();
+            }
+
+            return r;
+        }
 
     }
 }

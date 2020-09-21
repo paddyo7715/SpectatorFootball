@@ -29,6 +29,9 @@ namespace SpectatorFootball.WindowsLeague
         // pw is the parent window mainwindow
         private MainWindow pw;
 
+        private Style DivGridHeader_Style = (Style)System.Windows.Application.Current.FindResource("StandingGridHDRStyle");
+
+
         public event EventHandler Show_MainMenu;
         public event EventHandler<teamEventArgs> Show_TeamDetail;
         public LeagueStandings(MainWindow pw)
@@ -71,9 +74,6 @@ namespace SpectatorFootball.WindowsLeague
                 League_Logo_lbl.Visibility = Visibility.Hidden;
                 League_image.Visibility = Visibility.Visible;
             }
-
-
-
 
          num_weeks = (int) ls.Number_of_weeks;
         num_games = (int) ls.Number_of_Games;
@@ -149,7 +149,9 @@ namespace SpectatorFootball.WindowsLeague
                 lbDiv.Style = (Style)FindResource("StandingsGridStyle");
 
                 GridView gr = new GridView();
+                
                 GridViewColumn grc1 = new GridViewColumn(); grc1.Header = ""; grc1.Width = 20; grc1.DisplayMemberBinding = new Binding("clinch_char");
+                grc1.HeaderContainerStyle = DivGridHeader_Style;
 
                 FrameworkElementFactory h_image = new FrameworkElementFactory(typeof(Image));
                 Binding b = new Binding("Helmet_img");
@@ -173,18 +175,25 @@ namespace SpectatorFootball.WindowsLeague
                 grc2.HeaderContainerStyle = (Style)FindResource("HeaderStyleLeft");
 
                 GridViewColumn grc3 = new GridViewColumn(); grc3.Header = "W"; grc3.Width = 20; grc3.DisplayMemberBinding = new Binding("wins");
+                grc3.HeaderContainerStyle = DivGridHeader_Style;
                 GridViewColumn grc4 = new GridViewColumn(); grc4.Header = "L"; grc4.Width = 20; grc4.DisplayMemberBinding = new Binding("loses");
+                grc4.HeaderContainerStyle = DivGridHeader_Style;
                 GridViewColumn grc5 = new GridViewColumn(); grc5.Header = "T"; grc5.Width = 20; grc5.DisplayMemberBinding = new Binding("ties");
+                grc5.HeaderContainerStyle = DivGridHeader_Style;
                 GridViewColumn grc6 = new GridViewColumn(); grc6.Header = "PCT"; grc6.Width = 30; grc6.DisplayMemberBinding = new Binding("winpct");
+                grc6.HeaderContainerStyle = DivGridHeader_Style;
                 GridViewColumn grc7 = new GridViewColumn(); grc7.Header = "PF"; grc7.Width = 30; grc7.DisplayMemberBinding = new Binding("pointsfor");
+                grc7.HeaderContainerStyle = DivGridHeader_Style;
                 GridViewColumn grc8 = new GridViewColumn(); grc8.Header = "PA"; grc8.Width = 30; grc8.DisplayMemberBinding = new Binding("pointagainst");
+                grc8.HeaderContainerStyle = DivGridHeader_Style;
                 GridViewColumn grc9 = new GridViewColumn(); grc9.Header = "Strk"; grc9.Width = 30; grc9.DisplayMemberBinding = new Binding("Streakchar");
+                grc9.HeaderContainerStyle = DivGridHeader_Style;
                 gr.Columns.Add(grc1); gr.Columns.Add(grc2); gr.Columns.Add(grc3);
                 gr.Columns.Add(grc4); gr.Columns.Add(grc5); gr.Columns.Add(grc6);
                 gr.Columns.Add(grc7); gr.Columns.Add(grc8); gr.Columns.Add(grc9);
                 lbDiv.View = gr;
                 lbDiv.Margin = new Thickness(15, 0, 15, 11);
-
+                lbDiv.AddHandler(GridViewRowPresenter.MouseLeftButtonUpEvent, new RoutedEventHandler(ListViewDiv_MouseUpEvent));
                 v_sp1.Children.Add(lbDiv);
 
                 this.RegisterName(lbDiv.Name, lbDiv);
@@ -218,6 +227,7 @@ namespace SpectatorFootball.WindowsLeague
 
                 GridView gr = new GridView();
                 GridViewColumn grc1 = new GridViewColumn(); grc1.Header = ""; grc1.Width = 20; grc1.DisplayMemberBinding = new Binding("clinch_char");
+                grc1.HeaderContainerStyle = DivGridHeader_Style;
 
                 FrameworkElementFactory h_image = new FrameworkElementFactory(typeof(Image));
                 Binding b = new Binding("Helmet_img");
@@ -241,18 +251,25 @@ namespace SpectatorFootball.WindowsLeague
                 grc2.HeaderContainerStyle = (Style)FindResource("HeaderStyleLeft");
 
                 GridViewColumn grc3 = new GridViewColumn(); grc3.Header = "W"; grc3.Width = 20; grc3.DisplayMemberBinding = new Binding("wins");
+                grc3.HeaderContainerStyle = DivGridHeader_Style;
                 GridViewColumn grc4 = new GridViewColumn(); grc4.Header = "L"; grc4.Width = 20; grc4.DisplayMemberBinding = new Binding("loses");
+                grc4.HeaderContainerStyle = DivGridHeader_Style;
                 GridViewColumn grc5 = new GridViewColumn(); grc5.Header = "T"; grc5.Width = 20; grc5.DisplayMemberBinding = new Binding("ties");
+                grc5.HeaderContainerStyle = DivGridHeader_Style;
                 GridViewColumn grc6 = new GridViewColumn(); grc6.Header = "PCT"; grc6.Width = 30; grc6.DisplayMemberBinding = new Binding("winpct");
+                grc6.HeaderContainerStyle = DivGridHeader_Style;
                 GridViewColumn grc7 = new GridViewColumn(); grc7.Header = "PF"; grc7.Width = 30; grc7.DisplayMemberBinding = new Binding("pointsfor");
+                grc7.HeaderContainerStyle = DivGridHeader_Style;
                 GridViewColumn grc8 = new GridViewColumn(); grc8.Header = "PA"; grc8.Width = 30; grc8.DisplayMemberBinding = new Binding("pointagainst");
+                grc8.HeaderContainerStyle = DivGridHeader_Style;
                 GridViewColumn grc9 = new GridViewColumn(); grc9.Header = "Strk"; grc9.Width = 30; grc9.DisplayMemberBinding = new Binding("Streakchar");
+                grc9.HeaderContainerStyle = DivGridHeader_Style;
                 gr.Columns.Add(grc1); gr.Columns.Add(grc2); gr.Columns.Add(grc3);
                 gr.Columns.Add(grc4); gr.Columns.Add(grc5); gr.Columns.Add(grc6);
                 gr.Columns.Add(grc7); gr.Columns.Add(grc8); gr.Columns.Add(grc9);
                 lbDiv.View = gr;
                 lbDiv.Margin = new Thickness(15, 0, 15, 11);
-
+                lbDiv.AddHandler(GridViewRowPresenter.MouseLeftButtonUpEvent, new RoutedEventHandler(ListViewDiv_MouseUpEvent));
                 v_sp2.Children.Add(lbDiv);
 
                 this.RegisterName(lbDiv.Name, lbDiv);
@@ -277,6 +294,7 @@ namespace SpectatorFootball.WindowsLeague
 
                     GridView gr = new GridView();
                     GridViewColumn grc1 = new GridViewColumn(); grc1.Header = ""; grc1.Width = 20; grc1.DisplayMemberBinding = new Binding("clinch_char");
+                    grc1.HeaderContainerStyle = DivGridHeader_Style;
 
                     FrameworkElementFactory h_image = new FrameworkElementFactory(typeof(Image));
                     Binding b = new Binding("Helmet_img");
@@ -300,20 +318,26 @@ namespace SpectatorFootball.WindowsLeague
                     grc2.HeaderContainerStyle = (Style)FindResource("HeaderStyleLeft");
 
                     GridViewColumn grc3 = new GridViewColumn(); grc3.Header = "W"; grc3.Width = 20; grc3.DisplayMemberBinding = new Binding("wins");
+                    grc3.HeaderContainerStyle = DivGridHeader_Style;
                     GridViewColumn grc4 = new GridViewColumn(); grc4.Header = "L"; grc4.Width = 20; grc4.DisplayMemberBinding = new Binding("loses");
+                    grc4.HeaderContainerStyle = DivGridHeader_Style;
                     GridViewColumn grc5 = new GridViewColumn(); grc5.Header = "T"; grc5.Width = 20; grc5.DisplayMemberBinding = new Binding("ties");
+                    grc5.HeaderContainerStyle = DivGridHeader_Style;
                     GridViewColumn grc6 = new GridViewColumn(); grc6.Header = "PCT"; grc6.Width = 30; grc6.DisplayMemberBinding = new Binding("winpct");
+                    grc6.HeaderContainerStyle = DivGridHeader_Style;
                     GridViewColumn grc7 = new GridViewColumn(); grc7.Header = "PF"; grc7.Width = 30; grc7.DisplayMemberBinding = new Binding("pointsfor");
+                    grc7.HeaderContainerStyle = DivGridHeader_Style;
                     GridViewColumn grc8 = new GridViewColumn(); grc8.Header = "PA"; grc8.Width = 30; grc8.DisplayMemberBinding = new Binding("pointagainst");
+                    grc8.HeaderContainerStyle = DivGridHeader_Style;
                     GridViewColumn grc9 = new GridViewColumn(); grc9.Header = "Strk"; grc9.Width = 30;  grc9.DisplayMemberBinding = new Binding("Streakchar");
+                    grc9.HeaderContainerStyle = DivGridHeader_Style;
                     gr.Columns.Add(grc1); gr.Columns.Add(grc2); gr.Columns.Add(grc3);
                     gr.Columns.Add(grc4); gr.Columns.Add(grc5); gr.Columns.Add(grc6);
                     gr.Columns.Add(grc7); gr.Columns.Add(grc8); gr.Columns.Add(grc9);
                     lbDiv.View = gr;
                     lbDiv.Margin = new Thickness(15, 0, 15, 11);
 
-//                    lbDiv.AddHandler(UIElement.MouseDownEvent, new MouseButtonEventHandler(ListViewDiv_MouseDownEvent));
-                    lbDiv.AddHandler(GridViewRowPresenter.MouseLeftButtonUpEvent, new RoutedEventHandler(ListViewDiv_MouseDownEvent));
+                    lbDiv.AddHandler(GridViewRowPresenter.MouseLeftButtonUpEvent, new RoutedEventHandler(ListViewDiv_MouseUpEvent));
 
                     v2_sp.Children.Add(lbDiv);
 
@@ -375,19 +399,23 @@ namespace SpectatorFootball.WindowsLeague
             }
 
         }
-        private void ListViewDiv_MouseDownEvent(object sender, RoutedEventArgs e)
+        private void ListViewDiv_MouseUpEvent(object sender, RoutedEventArgs e)
         {
             ListView ls = (ListView)sender;
-            var rw = ls.SelectedItems[0];
-            string divName = ls.Name;
 
-            long teams_per_div = pw.Loaded_League.season.League_Structure_by_Season[0].Num_Teams /
-                pw.Loaded_League.season.League_Structure_by_Season[0].Number_of_Divisions;
-            string div_string = Regex.Replace(divName, "[^0-9.]", "");
-            int div_num = int.Parse(div_string);
-            int div_team_num = ls.SelectedIndex;
-            int n = (int)(((div_num - 1) * teams_per_div) + div_team_num)+1;
-            Show_TeamDetail?.Invoke(this, new teamEventArgs(n));
+            if (ls.SelectedItems.Count > 0)
+            {
+                var rw = ls.SelectedItems[0];
+                string divName = ls.Name;
+
+                long teams_per_div = pw.Loaded_League.season.League_Structure_by_Season[0].Num_Teams /
+                    pw.Loaded_League.season.League_Structure_by_Season[0].Number_of_Divisions;
+                string div_string = Regex.Replace(divName, "[^0-9.]", "");
+                int div_num = int.Parse(div_string);
+                int div_team_num = ls.SelectedIndex;
+                int n = (int)(((div_num - 1) * teams_per_div) + div_team_num) + 1;
+                Show_TeamDetail?.Invoke(this, new teamEventArgs(n));
+            }
         }
 
         private void standBack_Click(object sender, RoutedEventArgs e)

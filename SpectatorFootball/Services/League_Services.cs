@@ -386,7 +386,18 @@ namespace SpectatorFootball
             return r;
         }
 
+        public List<Season> getAllSeasons(string League_Shortname)
+        {
+            string DIRPath_League = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + League_Shortname.ToUpper();
+            string helment_img_path = DIRPath_League + Path.DirectorySeparatorChar + app_Constants.LEAGUE_HELMETS_SUBFOLDER;
+            List<Season> r;
+            string League_con_string = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + League_Shortname + Path.DirectorySeparatorChar + League_Shortname + "." + app_Constants.DB_FILE_EXT;
+            LeagueDAO ld = new LeagueDAO();
 
+            r = ld.getAllSeasons(League_con_string);
+
+            return r;
+        }
 
     }
 }
