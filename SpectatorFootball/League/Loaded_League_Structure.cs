@@ -14,6 +14,7 @@ namespace SpectatorFootball.League
         public long Current_Year{ get; set; }
         public List<Standings_Row> Standings = null;
         public Season season = null;
+        public List<Season> AllSeasons = null;
 
     }
 }

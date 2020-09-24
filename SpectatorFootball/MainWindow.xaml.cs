@@ -270,6 +270,7 @@ namespace SpectatorFootball
                 //Load the league season.  Null for year parameter mean load the latest year
                 Loaded_League.season = ls.LoadSeason(null, (string)e.League_Short_Name);
                 Loaded_League.Current_Year = Loaded_League.season.Year;
+                Loaded_League.AllSeasons = ls.getAllSeasons((string)e.League_Short_Name);
 
                 //Add teams to Main Top Menu
                 SetLeagueTeamsMenu(Loaded_League.season.Teams_by_Season);
@@ -388,7 +389,7 @@ namespace SpectatorFootball
             MenuStats.IsEnabled = false;
             MenuTasks.IsEnabled = false;
         }
-        private void setMenuonState(League_State ls)
+        public void setMenuonState(League_State ls)
         {
             MenuLeague.IsEnabled = true;
             foreach (MenuItem m in MenuLeague.Items)

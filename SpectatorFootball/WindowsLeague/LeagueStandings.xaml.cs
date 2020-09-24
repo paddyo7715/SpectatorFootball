@@ -31,6 +31,8 @@ namespace SpectatorFootball.WindowsLeague
 
         private Style DivGridHeader_Style = (Style)System.Windows.Application.Current.FindResource("StandingGridHDRStyle");
 
+        public List<Season> Seasons { get; set; }
+        public long CurrYear { get; set; }
 
         public event EventHandler Show_MainMenu;
         public event EventHandler<teamEventArgs> Show_TeamDetail;
@@ -38,6 +40,9 @@ namespace SpectatorFootball.WindowsLeague
         {
             InitializeComponent();
             this.pw = pw;
+            Seasons = pw.Loaded_League.AllSeasons;
+            CurrYear = pw.Loaded_League.Current_Year;
+            DataContext = this;
         }
 
     public void SetupLeagueStructure()
@@ -344,9 +349,6 @@ namespace SpectatorFootball.WindowsLeague
                     this.RegisterName(lbDiv.Name, lbDiv);
                 }
 
-
-
-
                 sp1.Children.Add(v2_sp);
         }
 
@@ -422,6 +424,43 @@ namespace SpectatorFootball.WindowsLeague
         {
             pw.Loaded_League = null;
             Show_MainMenu?.Invoke(this, new EventArgs());
+        }
+
+        private void standingsSeasonsdb_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string sYear = null;
+
+            if (standingsSeasonsdb.SelectedIndex == 0)
+                GoCurrentSeason.IsEnabled = false;
+            else
+            {
+                GoCurrentSeason.IsEnabled = true;
+                sYear = standingsSeasonsdb.SelectedValue.ToString();
+            }
+
+            //Load the league season.  Null for year parameter mean load the latest year
+            string short_name = pw.Loaded_League.season.League_Structure_by_Season[0].Short_Name;
+            League_Services ls = new League_Services();
+            pw.Loaded_League.season = ls.LoadSeason(null, short_name);
+            pw.Loaded_League.Current_Year = (long)standingsSeasonsdb.SelectedValue;
+
+            //Set league state
+            pw.Loaded_League.LState = ls.getSeasonState("", pw.Loaded_League.season.ID, short_name);
+
+            //Set top menu based on league state
+            pw.setMenuonState(pw.Loaded_League.LState);
+
+            //Load the league standings
+            pw.Loaded_League.Standings = ls.getLeageStandings(pw.Loaded_League.season.ID, short_name);
+
+            //Update Standings
+            setStandings();
+
+        }
+
+        private void GoCurrentSeason_Click(object sender, RoutedEventArgs e)
+        {
+            standingsSeasonsdb.SelectedIndex = 0;
         }
     }
 }
