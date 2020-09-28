@@ -113,6 +113,12 @@
     <Compile Include="Draft\Draft_Helper.cs" />
     <Compile Include="Enum\League_State.cs" />
     <Compile Include="Enum\Player_Pos.cs" />
+    <Compile Include="Help_Forms\Help_LeagueStandings.xaml.cs">
+      <DependentUpon>Help_LeagueStandings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Help_Forms\Next_Standings.xaml.cs">
+      <DependentUpon>Next_Standings.xaml</DependentUpon>
+    </Compile>
     <Compile Include="League\League_Helper.cs" />
     <Compile Include="League\Loaded_League_Structure.cs" />
     <Compile Include="League\New_League_Structure.cs" />
@@ -310,6 +316,10 @@
     <Compile Include="WindowsLeague\LeagueStandings.xaml.cs">
       <DependentUpon>LeagueStandings.xaml</DependentUpon>
     </Compile>
+    <Page Include="Help_Forms\Help_LeagueStandings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Help_Forms\Help_NewLeague.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -317,6 +327,10 @@
     <Page Include="Help_Forms\Help_NewTeam.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Help_Forms\Next_Standings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="LoadLeague.xaml">
       <SubType>Designer</SubType>

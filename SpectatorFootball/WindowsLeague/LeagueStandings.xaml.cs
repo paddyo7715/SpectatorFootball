@@ -17,6 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Text.RegularExpressions;
+using SpectatorFootball.Help_Forms;
 
 namespace SpectatorFootball.WindowsLeague
 {
@@ -428,39 +429,63 @@ namespace SpectatorFootball.WindowsLeague
 
         private void standingsSeasonsdb_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            string sYear = null;
 
-            if (standingsSeasonsdb.SelectedIndex == 0)
-                GoCurrentSeason.IsEnabled = false;
-            else
+            if (standingsSeasonsdb.SelectedValue != null)
             {
-                GoCurrentSeason.IsEnabled = true;
-                sYear = standingsSeasonsdb.SelectedValue.ToString();
+
+                string sYear = null;
+
+                if (standingsSeasonsdb.SelectedIndex == 0)
+                    GoCurrentSeason.IsEnabled = false;
+                else
+                {
+                    GoCurrentSeason.IsEnabled = true;
+                    sYear = standingsSeasonsdb.SelectedValue.ToString();
+                }
+
+                //Load the league season.  Null for year parameter mean load the latest year
+                string short_name = pw.Loaded_League.season.League_Structure_by_Season[0].Short_Name;
+                League_Services ls = new League_Services();
+                pw.Loaded_League.season = ls.LoadSeason(null, short_name);
+                pw.Loaded_League.Current_Year = (long)standingsSeasonsdb.SelectedValue;
+
+                //Set league state
+                pw.Loaded_League.LState = ls.getSeasonState("", pw.Loaded_League.season.ID, short_name);
+
+                //Set top menu based on league state
+                pw.setMenuonState(pw.Loaded_League.LState);
+
+                //Load the league standings
+                pw.Loaded_League.Standings = ls.getLeageStandings(pw.Loaded_League.season.ID, short_name);
+
+                //Update Standings
+                setStandings();
             }
-
-            //Load the league season.  Null for year parameter mean load the latest year
-            string short_name = pw.Loaded_League.season.League_Structure_by_Season[0].Short_Name;
-            League_Services ls = new League_Services();
-            pw.Loaded_League.season = ls.LoadSeason(null, short_name);
-            pw.Loaded_League.Current_Year = (long)standingsSeasonsdb.SelectedValue;
-
-            //Set league state
-            pw.Loaded_League.LState = ls.getSeasonState("", pw.Loaded_League.season.ID, short_name);
-
-            //Set top menu based on league state
-            pw.setMenuonState(pw.Loaded_League.LState);
-
-            //Load the league standings
-            pw.Loaded_League.Standings = ls.getLeageStandings(pw.Loaded_League.season.ID, short_name);
-
-            //Update Standings
-            setStandings();
 
         }
 
         private void GoCurrentSeason_Click(object sender, RoutedEventArgs e)
         {
             standingsSeasonsdb.SelectedIndex = 0;
+        }
+
+        private void standings_NextStepbtn_Click(object sender, RoutedEventArgs e)
+        {
+            var Next_form = new Next_Standings();
+            Next_form.Top = (SystemParameters.PrimaryScreenHeight - Next_form.Height) / 2;
+            Next_form.Left = (SystemParameters.PrimaryScreenWidth - Next_form.Width) / 2;
+            Next_form.SetContent(pw.Loaded_League.LState);
+            Next_form.ShowDialog();
+        }
+
+        private void help_btn_Click(object sender, RoutedEventArgs e)
+        {
+
+            var help_form = new Help_LeagueStandings();
+            help_form.Top = (SystemParameters.PrimaryScreenHeight - help_form.Height) / 2;
+            help_form.Left = (SystemParameters.PrimaryScreenWidth - help_form.Width) / 2;
+            help_form.ShowDialog();
+
         }
     }
 }

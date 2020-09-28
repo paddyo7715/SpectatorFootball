@@ -331,8 +331,6 @@ namespace SpectatorFootball
                 {
                     if (Unplayed_Playoff_Games_Count > 0)
                         r = League_State.Playoffs_In_Progress;
-                    else
-                        r = League_State.Playoffs_Ended;
                 }
 
                 if (player_awards_count > 0)

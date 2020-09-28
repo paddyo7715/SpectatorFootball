@@ -9,24 +9,27 @@
     <DockPanel Height="730">
         <Grid DockPanel.Dock="Top">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                <Label Content="Year:" Height="25" Style="{StaticResource Normallbltyle}"></Label>
+            <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                <Label Content="Year:" Height="25" FontSize="14" Style="{StaticResource Normallbltyle}"></Label>
                 <ComboBox x:Name="standingsSeasonsdb" FontSize="14" Width="75" Style="{StaticResource ComboBoxstyle}" SelectionChanged="standingsSeasonsdb_SelectionChanged" IsEditable="False" 
                     ItemsSource="{Binding Seasons}"
                     DisplayMemberPath="Year"
                     SelectedValuePath="Year"
                     SelectedValue="{Binding CurrYear}" />
-                <Button Name="GoCurrentSeason" Style="{StaticResource appSubmitStyle}" Margin="4" IsEnabled="False" Click="GoCurrentSeason_Click" >Current Season</Button>
+                <Button Name="GoCurrentSeason" Height="25" Style="{StaticResource appSubmitStyle}" Margin="4" IsEnabled="False" Click="GoCurrentSeason_Click" >Current</Button>
             </StackPanel>
-            <StackPanel Grid.Column="2" Orientation="Horizontal">
+            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
                 <Label Name="League_Logo_lbl" Style="{StaticResource MedLabelstyle}"></Label>
                 <Image Name="League_image" Visibility="Hidden" Width="120" Height="60"></Image>
             </StackPanel>
-            <!--            <Button Grid.Column="3" Name="help_btn" Focusable="false" Style="{StaticResource appHelpBTN}" Click="help_btn_Click">Help ?</Button> -->
+            <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="right">
+                <Button Name="next_btn" Focusable="false" Style="{StaticResource appHelpBTN}" Click="standings_NextStepbtn_Click">Next Step?</Button> 
+                <Button Name="help_btn" Focusable="false" Style="{StaticResource appHelpBTN}" Click="help_btn_Click">Help ?</Button> 
+            </StackPanel>
         </Grid>
         <Grid DockPanel.Dock="Bottom">
             <Button Name="standBack" Style="{StaticResource appSubmitStyle}" Click="standBack_Click" Width="300">- - - - Back to Main Menu - - - - </Button>
