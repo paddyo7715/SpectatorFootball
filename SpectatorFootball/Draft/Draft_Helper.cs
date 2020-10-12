@@ -1,15 +1,18 @@
-﻿using SpectatorFootball.Models;
+﻿using SpectatorFootball.DraftNS;
+using SpectatorFootball.Enum;
+using SpectatorFootball.Models;
+using SpectatorFootball.Team;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpectatorFootball.Drafts
+namespace SpectatorFootball.DraftsNS
 {
-    class Draft_Helper
+    public class Draft_Helper
     {
-        public List<Draft> Create_Draft(long year, string draft_Type,int Draft_Rounds ,List<Franchise> this_year_franchises, string league_filepath)
+        public List<Draft> Create_Draft(long year, string draft_Type, int Draft_Rounds, List<Franchise> this_year_franchises, string league_filepath)
         {
             //if league_filepath is null then this is a new league.
 
@@ -53,7 +56,7 @@ namespace SpectatorFootball.Drafts
                     {
                         foreach (Franchise f in Round_order)
                         {
-                            r.Add(new Draft() { Franchise_ID = f.ID, Pick_Number = p_num, Round = rd } );
+                            r.Add(new Draft() { Franchise_ID = f.ID, Pick_Number = p_num, Round = rd });
                             p_num++;
                         }
                     }
@@ -250,6 +253,197 @@ namespace SpectatorFootball.Drafts
             foreach (int i in ly_order)
                 if (!this_year_franchises.Exists(x => x.ID == i))
                     r.Add(i);
+            return r;
+        }
+
+
+        public Draft_Need getDraftNeeds(int Season_ID, List<Player> players, int draftRound, int DraftRounds)
+        {
+            Draft_Need r = new Draft_Need();
+
+            //           List<Pos_Starter_Tot> r = new List<Pos_Starter_Tot>();
+            double percent_complete = (draftRound / DraftRounds) * 100.0;
+
+            //First decide which positions that the team does NOT want to draft
+            foreach (Player_Pos pp in System.Enum.GetValues(typeof(Player_Pos)))
+            {
+                int iPos = (int)pp;
+                int pos_count = players.Where(x => x.Pos == iPos && x.Retired == 0).Count();
+                bool bTooManyPlayers = isTooManyPosPlayers(pp, pos_count);
+                if (bTooManyPlayers || ((pp == Player_Pos.K || pp == Player_Pos.P) && (percent_complete < app_Constants.DRAFT_ROUND_PERCNT_BEFORE_KICKERS_CONSIDERED)))
+                    r.Unwanted_Positions.Add(pp);
+            }
+
+            //Next, get all potential starts on the team, exluding players that are too old
+            foreach (Player p in players)
+            {
+                double Overall_Grade;
+                Player_Pos pos = (Player_Pos)p.Pos;
+                if (p.Drafts.Any(x => x.Season_ID == Season_ID))
+                    Overall_Grade = p.Draft_Grade;
+                else
+                    Overall_Grade = Player_Helper.Create_Overall_Rating((Player_Pos)p.Pos, p.Player_Ratings.First());
+
+                if (Overall_Grade >= app_Constants.STARTER_MIN_OVERALL_GRADE && p.Age < app_Constants.DRAFT_STARTER_AGE_TOO_OLD)
+                    r.Wanted_Positions.Add((Player_Pos)p.Pos);
+            }
+
+            //Next sort the wanted positions by a random order favoring more popular positions
+            r.Wanted_Positions = OrderWantedPositions(r.Wanted_Positions);
+
+            return r;
+        }
+        private bool isTooManyPosPlayers(Player_Pos p, int player_tot)
+        {
+            bool r = false;
+
+            switch (p)
+            {
+                case Player_Pos.QB:
+                    if (player_tot >= app_Constants.TRIANINGCAMP_QB_PER_TEAM)
+                        r = true;
+                        break;
+                case Player_Pos.RB:
+                    if (player_tot >= app_Constants.TRIANINGCAMP_RB_PER_TEAM)
+                        r = true;
+                        break;
+                case Player_Pos.WR:
+                    if (player_tot >= app_Constants.TRIANINGCAMP_WR_PER_TEAM)
+                        r = true;
+                        break;
+                case Player_Pos.TE:
+                    if (player_tot >= app_Constants.TRIANINGCAMP_TE_PER_TEAM)
+                        r = true;
+                        break;
+                case Player_Pos.OL:
+                    if (player_tot >= app_Constants.TRIANINGCAMP_OL_PER_TEAM)
+                        r = true;
+                        break;
+                case Player_Pos.DL:
+                    if (player_tot >= app_Constants.TRIANINGCAMP_DL_PER_TEAM)
+                        r = true;
+                        break;
+                case Player_Pos.LB:
+                    if (player_tot >= app_Constants.TRIANINGCAMP_LB_PER_TEAM)
+                        r = true;
+                        break;
+                case Player_Pos.DB:
+                    if (player_tot >= app_Constants.TRIANINGCAMP_DB_PER_TEAM)
+                        r = true;
+                        break;
+                case Player_Pos.K:
+                    if (player_tot >= app_Constants.TRIANINGCAMP_K_PER_TEAM)
+                        r = true;
+                        break;
+                case Player_Pos.P:
+                    if (player_tot >= app_Constants.TRIANINGCAMP_P_PER_TEAM)
+                        r = true;
+                        break;
+            }
+
+            return r;
+        }
+
+        private List<Player_Pos> OrderWantedPositions(List<Player_Pos> pp)
+        {
+            List<Player_Pos> r = new List<Player_Pos>();
+            List<Draft_Pos_Importance> dpi = new List<Draft_Pos_Importance>();
+            foreach (Player_Pos p in pp)
+            {
+                int pos_importance = 0;
+                switch (p)
+                {
+                    case Player_Pos.QB:
+                        pos_importance = CommonUtils.getRandomNum(1, app_Constants.DRAFTIMPORTANCE_QB_PER_TEAM);
+                        break;
+                    case Player_Pos.RB:
+                        pos_importance = CommonUtils.getRandomNum(1, app_Constants.DRAFTIMPORTANCE_RB_PER_TEAM);
+                        break;
+                    case Player_Pos.WR:
+                        pos_importance = CommonUtils.getRandomNum(1, app_Constants.DRAFTIMPORTANCE_WR_PER_TEAM);
+                        break;
+                    case Player_Pos.TE:
+                        pos_importance = CommonUtils.getRandomNum(1, app_Constants.DRAFTIMPORTANCE_TE_PER_TEAM);
+                        break;
+                    case Player_Pos.OL:
+                        pos_importance = CommonUtils.getRandomNum(1, app_Constants.DRAFTIMPORTANCE_OL_PER_TEAM);
+                        break;
+                    case Player_Pos.DL:
+                        pos_importance = CommonUtils.getRandomNum(1, app_Constants.DRAFTIMPORTANCE_DL_PER_TEAM);
+                        break;
+                    case Player_Pos.LB:
+                        pos_importance = CommonUtils.getRandomNum(1, app_Constants.DRAFTIMPORTANCE_LB_PER_TEAM);
+                        break;
+                    case Player_Pos.DB:
+                        pos_importance = CommonUtils.getRandomNum(1, app_Constants.DRAFTIMPORTANCE_DB_PER_TEAM);
+                        break;
+                    case Player_Pos.K:
+                        pos_importance = CommonUtils.getRandomNum(1, app_Constants.DRAFTIMPORTANCE_K_PER_TEAM);
+                        break;
+                    case Player_Pos.P:
+                        pos_importance = CommonUtils.getRandomNum(1, app_Constants.DRAFTIMPORTANCE_P_PER_TEAM);
+                        break;
+                }
+
+                dpi.Add(new Draft_Pos_Importance { Pos = p, Importance = pos_importance });
+            }
+
+            r = dpi.OrderByDescending(x => x.Importance).Select(x => x.Pos).ToList();
+
+            return r;
+        }
+
+        public Player MakePick(Draft_Need dn, List<Player> Draft_Class)
+        {
+            Player r = null;
+            int i = 0;
+            int pos_count = 1;
+            int search_limit;
+
+            List<Player> Unsolected_players = Draft_Class.Where(x => x.Franchise_ID == null).ToList();
+
+            foreach (Player_Pos pp in dn.Wanted_Positions)
+            {
+                i++;
+                foreach (Player p in Unsolected_players)
+                {
+                    if (p.Pos == (int)pp)
+                    {
+                        r = p;
+                        break;
+                    }
+                    if (pos_count == 1)
+                        search_limit = app_Constants.DRAFT_FIRST_CHOICE_PICK_DEPTH;
+                    else
+                        search_limit = app_Constants.DRAFT_OTHER_CHOICE_PICK_DEPTH;
+
+                    if (i >= search_limit)
+                        break;
+
+                    i++;
+                }
+                if (r != null)
+                    break;
+                pos_count++;
+            }
+
+            //Only if a draft choice was not found then take the next available pick that is not in the
+            //unwanted list
+            if (r == null)
+            {
+                foreach (Player p in Unsolected_players)
+                {
+                   if (!dn.Unwanted_Positions.Contains((Player_Pos)p.Pos))
+                    {
+                        r = p;
+                        break;
+                    }
+                }
+            }
+
+            //Fianlly, if the draft pick has still not been made then just take the first player available in the draft
+            r = Unsolected_players.First();
+
             return r;
         }
 

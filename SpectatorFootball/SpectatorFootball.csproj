@@ -108,9 +108,12 @@
     <Compile Include="Common\Validator.cs" />
     <Compile Include="CustomControls\CustomTextBox.cs" />
     <Compile Include="DAO\DBVersionDAO.cs" />
+    <Compile Include="DAO\DraftDAO.cs" />
     <Compile Include="DAO\HomeTownsDAO.cs" />
     <Compile Include="DAO\TeamDAO.cs" />
     <Compile Include="Draft\Draft_Helper.cs" />
+    <Compile Include="Draft\Draft_Need.cs" />
+    <Compile Include="Draft\Draft_Pos_Importance.cs" />
     <Compile Include="Enum\League_State.cs" />
     <Compile Include="Enum\Player_Pos.cs" />
     <Compile Include="Help_Forms\Help_LeagueStandings.xaml.cs">
@@ -122,8 +125,8 @@
     <Compile Include="League\League_Helper.cs" />
     <Compile Include="League\Loaded_League_Structure.cs" />
     <Compile Include="League\New_League_Structure.cs" />
-    <Compile Include="League\Standings_Row.cs" />
-    <Compile Include="League\Standing_Streak.cs" />
+    <Compile Include="Models\Standings_Row.cs" />
+    <Compile Include="Models\Standing_Streak.cs" />
     <Compile Include="LoadLeague.xaml.cs">
       <DependentUpon>LoadLeague.xaml</DependentUpon>
     </Compile>
@@ -300,6 +303,7 @@
     <Compile Include="Schedule\Schedule.cs" />
     <Compile Include="Schedule\Validate_Sched.cs" />
     <Compile Include="Services\Administration_Services.cs" />
+    <Compile Include="Services\Draft_Services.cs" />
     <Compile Include="Services\League_Services.cs" />
     <Compile Include="Services\StockTeams_Services.cs" />
     <Compile Include="Services\Team_Services.cs" />
@@ -309,6 +313,7 @@
     <Compile Include="Stock_Team_detail.xaml.cs">
       <DependentUpon>Stock_Team_detail.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Team\Pos_Starter_Tot.cs" />
     <Compile Include="Team\Team_Helper.cs" />
     <Compile Include="Team\Uniform.cs" />
     <Compile Include="Team\Uniform_Image.cs" />

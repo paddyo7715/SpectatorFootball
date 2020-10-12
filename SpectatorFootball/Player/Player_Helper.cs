@@ -61,7 +61,7 @@ namespace SpectatorFootball
 
             //Create draft ratings that are used to create draft profile grade and scouting report.
             Player_Ratings draft_ratings = Draft_Profile.setDraftRatings(ratings);
-            r.Draft_Grade = Draft_Profile.Create_Draft_Overall(pos, draft_ratings);
+            r.Draft_Grade = Player_Helper.Create_Overall_Rating(pos, draft_ratings);
             r.Draft_Profile = Draft_Profile.Create_Draft_Scoutingrpt(pos, draft_ratings);
 
             logger.Debug("Finished");
@@ -553,6 +553,80 @@ namespace SpectatorFootball
 
             return r;
         }
- 
+        public static double Create_Overall_Rating(Player_Pos pos, Player_Ratings pr)
+        {
+
+            double OverAll = 0.0;
+            switch (pos)
+            {
+                case Player_Pos.QB:
+                    {
+
+                        OverAll = Convert.ToSingle(pr.Ball_Safety_Rating * app_Constants.QB_FUMBLE_PERCENT + pr.Arm_Strength_Rating * app_Constants.QB_ARMSTRENGTH_PERCENT + pr.Accuracy_Rating * app_Constants.QB_ACCURACY_RATING + pr.Decision_Making * app_Constants.QB_DESISION_RATING);
+                        break;
+                    }
+
+                case Player_Pos.RB:
+                    {
+
+                        OverAll = Convert.ToSingle(pr.Ball_Safety_Rating * app_Constants.RB_FUMBLE_PERCENT + pr.Running_Power_Rating * app_Constants.RB_RUNNING_PWER_PERCENT + pr.Speed_Rating * app_Constants.RB_SPEED_PERCENT + (pr.Hands_Rating + 100 - app_Constants.SECONDARY_1_ABILITY_HIGH_RATING) * app_Constants.RB_HANDS_PERCENT + pr.Agilty_Rating * app_Constants.RB_AGILITY_PERCENT);
+                        break;
+                    }
+
+                case Player_Pos.WR:
+                    {
+
+                        OverAll = Convert.ToSingle(pr.Ball_Safety_Rating * app_Constants.WR_FUMBLE_PERCENT + pr.Speed_Rating * app_Constants.WR_SPEED_PERCENT + pr.Hands_Rating * app_Constants.WR_HANDS_PERCENT + pr.Agilty_Rating * app_Constants.WR_AGILITY_PERCENT);
+                        break;
+                    }
+
+                case Player_Pos.TE:
+                    {
+
+                        OverAll = Convert.ToSingle(pr.Ball_Safety_Rating * app_Constants.TE_FUMBLE_PERCENT + (pr.Speed_Rating + 100 - app_Constants.SECONDARY_1_ABILITY_HIGH_RATING) * app_Constants.TE_SPEED_PERCENT + pr.Hands_Rating * app_Constants.TE_HANDS_PERCENT + (pr.Agilty_Rating + 100 - app_Constants.SECONDARY_1_ABILITY_HIGH_RATING) * app_Constants.TE_AGILITY_PERCENT + (pr.Pass_Block_Rating + 100 - app_Constants.SECONDARY_1_ABILITY_HIGH_RATING) * app_Constants.TE_PASS_BLOCK_PERCENT + (pr.Run_Block_Rating + 100 - app_Constants.SECONDARY_1_ABILITY_HIGH_RATING) * app_Constants.TE_RUN_BLOCK_PERCENT);
+                        break;
+                    }
+
+                case Player_Pos.OL:
+                    {
+
+                        OverAll = Convert.ToSingle(pr.Pass_Block_Rating * app_Constants.OL_PASS_BLOCK_PERCENT + pr.Run_Block_Rating * app_Constants.OL_RUN_BLOCK_PERCENT + (pr.Agilty_Rating + 100 - app_Constants.SECONDARY_3_ABILITY_HIGH_RATING) * app_Constants.OL_AGILITY_PERCENT);
+                        break;
+                    }
+
+                case Player_Pos.DL:
+                    {
+
+                        OverAll = Convert.ToSingle(pr.Pass_Attack * app_Constants.DL_PASS_ATTACK_PERCENT + pr.Run_Attack * app_Constants.DL_RUN_ATTACK_PERCENT + pr.Tackle_Rating * app_Constants.DL_TACKLE_PERCENT + (pr.Agilty_Rating + 100 - app_Constants.SECONDARY_3_ABILITY_HIGH_RATING) * app_Constants.DL_AGILITY_PERCENT + (pr.Speed_Rating + 100 - app_Constants.SECONDARY_3_ABILITY_HIGH_RATING) * app_Constants.DL_SPEED_PERCENT);
+                        break;
+                    }
+
+                case Player_Pos.DB:
+                    {
+
+                        OverAll = Convert.ToSingle(pr.Speed_Rating * app_Constants.DB_SPEED_PERCENT + pr.Hands_Rating * app_Constants.DB_HANDS_PERCENT + pr.Tackle_Rating * app_Constants.DB_TACKLING_PERCENT + pr.Agilty_Rating * app_Constants.DB_AGILITY_PERCENT);
+                        break;
+                    }
+
+                case Player_Pos.LB:
+                    {
+
+                        OverAll = Convert.ToSingle(pr.Pass_Attack * app_Constants.LB_PASS_ATTACK_PERCENT + pr.Run_Attack * app_Constants.LB_RUN_ATTACK_PERCENT + pr.Tackle_Rating * app_Constants.LB_TACKLE_PERCENT + (pr.Hands_Rating + 100 - app_Constants.SECONDARY_2_ABILITY_HIGH_RATING) * app_Constants.LB_HANDS_PERCENT + (pr.Speed_Rating + 100 - app_Constants.SECONDARY_1_ABILITY_HIGH_RATING) * app_Constants.LB_SPEED_PERCENT + (pr.Agilty_Rating + 100 - app_Constants.SECONDARY_1_ABILITY_HIGH_RATING) * app_Constants.LB_AGILITY_PERCENT);
+                        break;
+                    }
+
+                case Player_Pos.K:
+                case Player_Pos.P:
+                    {
+
+                        OverAll = Convert.ToSingle(pr.Kicker_Leg_Accuracy * app_Constants.K_KICK_ACC + pr.Kicker_Leg_Power * app_Constants.K_LEG_STRENGTH);
+                        break;
+                    }
+            }
+
+            return OverAll;
+        }
+
+
     }
 }

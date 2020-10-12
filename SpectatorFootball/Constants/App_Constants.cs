@@ -32,8 +32,13 @@ namespace SpectatorFootball
         // Draft
         public const float DRAFT_MULTIPLIER = 2.0f;  //Multiplied by number of rounds to determine num of players to create for draft.
         public const int NORMAL_DRAFT_ROUNDS = 7;
+        public const int STARTER_MIN_OVERALL_GRADE = 85;
+        public const double DRAFT_ROUND_PERCNT_BEFORE_KICKERS_CONSIDERED = 70.0;
+        public const int DRAFT_STARTER_AGE_TOO_OLD = 35;
+        public const int DRAFT_FIRST_CHOICE_PICK_DEPTH = 20;
+        public const int DRAFT_OTHER_CHOICE_PICK_DEPTH = 10;
 
-        // Players
+        // Players On a team - 48 total
         public const int QB_PER_TEAM = 3;
         public const int RB_PER_TEAM = 4;
         public const int WR_PER_TEAM = 4;
@@ -47,6 +52,48 @@ namespace SpectatorFootball
         public const int K_PER_TEAM = 1;
         public const int P_PER_TEAM = 1;
 
+        // Players On a Training Camp Team 70 total
+        public const int TRIANINGCAMP_QB_PER_TEAM = 5;
+        public const int TRIANINGCAMP_RB_PER_TEAM = 7;
+        public const int TRIANINGCAMP_WR_PER_TEAM = 7;
+        public const int TRIANINGCAMP_TE_PER_TEAM = 3;
+        public const int TRIANINGCAMP_OL_PER_TEAM = 13;  
+
+        public const int TRIANINGCAMP_DL_PER_TEAM = 12;
+        public const int TRIANINGCAMP_LB_PER_TEAM = 11;
+        public const int TRIANINGCAMP_DB_PER_TEAM = 12;  
+
+        public const int TRIANINGCAMP_K_PER_TEAM = 2;
+        public const int TRIANINGCAMP_P_PER_TEAM = 2;
+
+        //Players Starters 22 + 2 kickers
+        public const int STARTER_QB_PER_TEAM = 1;
+        public const int STARTER_RB_PER_TEAM = 2;
+        public const int STARTER_WR_PER_TEAM = 2;
+        public const int STARTER_TE_PER_TEAM = 1;
+        public const int STARTER_OL_PER_TEAM = 5;
+
+        public const int STARTER_DL_PER_TEAM = 4;
+        public const int STARTER_LB_PER_TEAM = 3;
+        public const int STARTER_DB_PER_TEAM = 4;
+
+        public const int STARTER_K_PER_TEAM = 1;
+        public const int STARTER_P_PER_TEAM = 1;
+
+        // Players Draft importance by position. 
+        //This is the upper range for random number 1 to n
+        public const int DRAFTIMPORTANCE_QB_PER_TEAM = 25;
+        public const int DRAFTIMPORTANCE_RB_PER_TEAM = 12;
+        public const int DRAFTIMPORTANCE_WR_PER_TEAM = 12;
+        public const int DRAFTIMPORTANCE_TE_PER_TEAM = 12;
+        public const int DRAFTIMPORTANCE_OL_PER_TEAM = 12;
+
+        public const int DRAFTIMPORTANCE_DL_PER_TEAM = 12;
+        public const int DRAFTIMPORTANCE_LB_PER_TEAM = 12;
+        public const int DRAFTIMPORTANCE_DB_PER_TEAM = 12;
+
+        public const int DRAFTIMPORTANCE_K_PER_TEAM = 0; //+12 near end of draf
+        public const int DRAFTIMPORTANCE_P_PER_TEAM = 0; //+12 near end of draf
 
         //Player Height and Weight Ranges.
         //Height is in inches

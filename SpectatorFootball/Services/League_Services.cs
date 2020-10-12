@@ -8,7 +8,7 @@ using SpectatorFootball.Models;
 using System.Data.Entity.Validation;
 using SpectatorFootball.League;
 using SpectatorFootball.DAO;
-using SpectatorFootball.Drafts;
+using SpectatorFootball.DraftsNS;
 using SpectatorFootball.Versioning;
 using SpectatorFootball.Enum;
 using System.Security.AccessControl;
