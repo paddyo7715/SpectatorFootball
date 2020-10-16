@@ -21,7 +21,7 @@
                 <MenuItem Name="MenuExit" Header="Exit" Click = "mmTopExit_Click" />
             </MenuItem>
             <MenuItem Name="MenuLeague" Header="League">
-                <MenuItem Name="MenuStandings" Header="Standings" />
+                <MenuItem Name="MenuStandings" Header="Standings" Click= "Show_LeagueStandings" />
                 <MenuItem Name="MenuSchedule" Header="Schedule" />
                 <MenuItem Name="MenuDraft" Header="Draft" />
                 <MenuItem Name="MenuFreeAgency" Header="Free Agency" />

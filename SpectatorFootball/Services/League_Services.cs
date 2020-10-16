@@ -288,7 +288,7 @@ namespace SpectatorFootball
             return r;
         }
 
-        public League_State getSeasonState(string year, long Season_ID, string League_Shortname)
+        public League_State getSeasonState(bool Latest_year, long Season_ID, string League_Shortname)
         {
             League_State r;
             string League_con_string = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + League_Shortname + Path.DirectorySeparatorChar + League_Shortname + "." + app_Constants.DB_FILE_EXT;
@@ -296,7 +296,7 @@ namespace SpectatorFootball
 
             r = League_State.Season_Started;
 
-            if (year == null)
+            if (!Latest_year)
                 r = League_State.Previous_Year;
             else
             {

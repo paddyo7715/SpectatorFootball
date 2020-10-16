@@ -38,6 +38,7 @@ namespace SpectatorFootball
         private StockTeamsUC Stock_teamsUC = null;
 
         private LeagueStandings LStandingsUX = null;
+        private bool bUpdateStandings = false;
 
         private static ILog logger = LogManager.GetLogger("RollingFile");
 
@@ -62,7 +63,6 @@ namespace SpectatorFootball
 
             MainMenuUC.Show_NewLeague += Show_NewLeague;
             MainMenuUC.Show_LoadLeague += Show_LoadLeague;
-
 
             setNonLeagueMenu();
 
@@ -276,7 +276,7 @@ namespace SpectatorFootball
                 SetLeagueTeamsMenu(Loaded_League.season.Teams_by_Season);
 
                 //Set league state
-                Loaded_League.LState = ls.getSeasonState("", Loaded_League.season.ID, (string)e.League_Short_Name);
+                Loaded_League.LState = ls.getSeasonState(true, Loaded_League.season.ID, (string)e.League_Short_Name);
 
                 //Set top menu based on league state
                 setMenuonState(Loaded_League.LState);
@@ -309,6 +309,31 @@ namespace SpectatorFootball
             string team_name = Loaded_League.Standings[id].Team_Name;
             Teams_by_Season t = Loaded_League.season.Teams_by_Season.Where(x => x.City + " " + x.Nickname == team_name).First();
             ShowTeamDetail(t);
+
+        }
+        private void Show_LeagueStandings(object sender, EventArgs e)
+        {
+            bool latest_year = true;
+
+            if (bUpdateStandings)
+            {
+                League_Services ls = new League_Services();
+                string league_shortname = Loaded_League.season.League_Structure_by_Season[0].Short_Name;
+
+                //Set league state
+                Loaded_League.LState = ls.getSeasonState(true, Loaded_League.season.ID, league_shortname);
+
+                //Set top menu based on league state
+                setMenuonState(Loaded_League.LState);
+
+                //Load the league standings
+                Loaded_League.Standings = ls.getLeageStandings(Loaded_League.season.ID, league_shortname);
+
+                LStandingsUX.setStandings();
+            }
+
+            sp_uc.Children.Clear();
+            sp_uc.Children.Add(LStandingsUX);
 
         }
         private void Show_UpdateStockTeam(object sender, StockteamEventArgs e)

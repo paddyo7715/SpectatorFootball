@@ -9,7 +9,6 @@ namespace SpectatorFootball
     {
         public event EventHandler Show_NewLeague;
         public event EventHandler Show_LoadLeague;
-
         public MainMenuUC()
         {
             InitializeComponent();
@@ -32,5 +31,6 @@ namespace SpectatorFootball
         {
             Show_LoadLeague?.Invoke(this, new EventArgs());
         }
+
     }
 }

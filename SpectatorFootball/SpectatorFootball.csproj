@@ -318,8 +318,11 @@
     <Compile Include="Team\Uniform.cs" />
     <Compile Include="Team\Uniform_Image.cs" />
     <Compile Include="Versioning\App_Version.cs" />
-    <Compile Include="WindowsLeague\LeagueStandings.xaml.cs">
-      <DependentUpon>LeagueStandings.xaml</DependentUpon>
+    <Compile Include="WindowsLeague\LeagueDraftUX.xaml.cs">
+      <DependentUpon>LeagueDraftUX.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsLeague\LeagueStandingsUX.xaml.cs">
+      <DependentUpon>LeagueStandingsUX.xaml</DependentUpon>
     </Compile>
     <Page Include="Help_Forms\Help_LeagueStandings.xaml">
       <SubType>Designer</SubType>
@@ -392,7 +395,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="WindowsLeague\LeagueStandings.xaml">
+    <Page Include="WindowsLeague\LeagueDraftUX.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowsLeague\LeagueStandingsUX.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

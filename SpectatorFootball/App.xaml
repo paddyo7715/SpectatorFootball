@@ -295,15 +295,32 @@
             <Setter Property="Foreground" Value="Black"/>
             <Setter Property="Background" Value="White"/>
             <Setter Property="BorderBrush" Value="Black"/>
-            
-            
         </Style>
-        
+
+        <!-- Sliders -->
+        <Style TargetType="Slider" x:Key="GeneralSlider">
+            <Setter Property="FontFamily" Value="Verdana"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="Normal"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+        </Style>
+
         <!-- Standings Header styling-->
         <Style TargetType="{x:Type GridViewColumnHeader}" BasedOn="{StaticResource {x:Type GridViewColumnHeader}}" x:Key="StandingGridHDRStyle">
             <Setter Property="TextBlock.TextWrapping" Value="Wrap"/>
             <Setter Property="TextBlock.Foreground" Value="Black"/>
             <Setter Property="IsHitTestVisible" Value="False"/>
+        </Style>
+        
+        <!-- Draft -->
+        <Style TargetType="TextBlock" x:Key="DraftAnnouncementStyle">
+            <Setter Property="FontFamily" Value="Verdana"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="Black"/>
         </Style>
     </Application.Resources>
 </Application>
