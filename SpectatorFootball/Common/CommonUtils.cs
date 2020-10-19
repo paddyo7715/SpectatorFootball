@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.AccessControl;
 using System.Security.Principal;
+using System.Windows.Media.Imaging;
+using System.Windows.Controls;
 
 namespace SpectatorFootball
 {
@@ -239,6 +241,20 @@ namespace SpectatorFootball
             dSecurity.AddAccessRule(new FileSystemAccessRule(new SecurityIdentifier(WellKnownSidType.WorldSid, null), FileSystemRights.FullControl, InheritanceFlags.ObjectInherit | InheritanceFlags.ContainerInherit, PropagationFlags.NoPropagateInherit, AccessControlType.Allow));
             // Set the access control
             dinfo.SetAccessControl(dSecurity);
+        }
+        public static BitmapImage getImageorBlank(string filename_path)
+        {
+            BitmapImage r = new BitmapImage();
+
+            try
+            {
+                Uri imgurl = new Uri(filename_path);
+                var helmetIMG_source = new BitmapImage(imgurl);
+                r = new BitmapImage(imgurl);
+            }
+            catch (Exception e) { }
+
+            return r;
         }
     }
 

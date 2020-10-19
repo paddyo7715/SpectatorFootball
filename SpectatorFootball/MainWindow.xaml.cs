@@ -272,17 +272,21 @@ namespace SpectatorFootball
                 Loaded_League.Current_Year = Loaded_League.season.Year;
                 Loaded_League.AllSeasons = ls.getAllSeasons((string)e.League_Short_Name);
 
-                //Add teams to Main Top Menu
-                SetLeagueTeamsMenu(Loaded_League.season.Teams_by_Season);
-
                 //Set league state
                 Loaded_League.LState = ls.getSeasonState(true, Loaded_League.season.ID, (string)e.League_Short_Name);
 
                 //Set top menu based on league state
                 setMenuonState(Loaded_League.LState);
 
+                //Load all team Helmet images for efficiency
+                League_Helper lh = new League_Helper();
+                Loaded_League.Team_Helmets = lh.getAllTeamHelmets((string)e.League_Short_Name, Loaded_League.season.Teams_by_Season);
+
+                //Add teams to Main Top Menu
+                SetLeagueTeamsMenu(Loaded_League);
+
                 //Load the league standings
-                Loaded_League.Standings = ls.getLeageStandings(Loaded_League.season.ID, (string)e.League_Short_Name);
+                Loaded_League.Standings = ls.getLeageStandings(Loaded_League);
 
                 //if league has been loaded then show the league standings window.
                 LStandingsUX = new LeagueStandings(this);
@@ -327,7 +331,7 @@ namespace SpectatorFootball
                 setMenuonState(Loaded_League.LState);
 
                 //Load the league standings
-                Loaded_League.Standings = ls.getLeageStandings(Loaded_League.season.ID, league_shortname);
+                Loaded_League.Standings = ls.getLeageStandings(Loaded_League);
 
                 LStandingsUX.setStandings();
             }
@@ -375,22 +379,21 @@ namespace SpectatorFootball
 
         }
         //*********************  General Methods  *******************************
-        public void SetLeagueTeamsMenu(List<Teams_by_Season> ts)
+        public void SetLeagueTeamsMenu(Loaded_League_Structure lls)
         {
-            List<Teams_by_Season> sorted_teams = ts.OrderBy(x => x.City).ThenBy(x => x.Nickname).ToList();
+            List<Teams_by_Season> sorted_teams = lls.season.Teams_by_Season.OrderBy(x => x.City).ThenBy(x => x.Nickname).ToList();
 
             // Clear the existing item(s) (this will actually remove the "English" element defined in XAML)
             MenuItem teams_menuitem = (MenuItem)Main_menu_top.FindName("MenuTeams");
             teams_menuitem.IsEnabled = true;
             teams_menuitem.Items.Clear();
-            string appPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + Loaded_League.season.League_Structure_by_Season[0].Short_Name.ToUpper();
+//            string appPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + Loaded_League.season.League_Structure_by_Season[0].Short_Name.ToUpper();
 
             foreach (Teams_by_Season t in sorted_teams)
             {
                 MenuItem mi = new MenuItem();
-                string image_url = appPath + Path.DirectorySeparatorChar + app_Constants.LEAGUE_HELMETS_SUBFOLDER + Path.DirectorySeparatorChar + t.Helmet_Image_File;
 
-                var BitmapImage = new BitmapImage(new Uri(image_url));
+                var BitmapImage = lls.getHelmetImg(t.Helmet_Image_File);
                 var helmet_img = new Image();
                 helmet_img.Width = 25;
                 helmet_img.Height = 25;

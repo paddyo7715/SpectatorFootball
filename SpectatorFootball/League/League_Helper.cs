@@ -7,6 +7,7 @@ using SpectatorFootball.Models;
 using SpectatorFootball.Enum;
 using log4net;
 using System.Windows.Controls;
+using System.IO;
 
 namespace SpectatorFootball.League
 {
@@ -51,6 +52,22 @@ namespace SpectatorFootball.League
                 Player p = Player_Helper.CreatePlayer(Pos, true);
 
                 r.Add(p);
+            }
+
+            return r;
+        }
+        public List<League_Helmet> getAllTeamHelmets(string shortname, List<Teams_by_Season> tbs)
+        {
+            List<League_Helmet> r = new List<League_Helmet>();
+            string DIRPath_League = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + shortname.ToUpper();
+            string helment_img_path = DIRPath_League + Path.DirectorySeparatorChar + app_Constants.LEAGUE_HELMETS_SUBFOLDER;
+
+            foreach (Teams_by_Season t in tbs)
+            {
+                League_Helmet lh = new League_Helmet();
+                lh.Image = CommonUtils.getImageorBlank(helment_img_path + Path.DirectorySeparatorChar + t.Helmet_Image_File);
+                lh.Helmet_File = t.Helmet_Image_File;
+                r.Add(lh);
             }
 
             return r;

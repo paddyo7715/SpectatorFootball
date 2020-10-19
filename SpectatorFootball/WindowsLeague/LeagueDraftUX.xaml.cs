@@ -1,5 +1,7 @@
-﻿using System;
+﻿using SpectatorFootball.Models;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,10 +22,15 @@ namespace SpectatorFootball.WindowsLeague
     /// </summary>
     public partial class LeagueDraftUX : UserControl
     {
+        //bindings for UI
+        ObservableCollection<DraftPick> Draft_Pick_list = null;
+
         public event EventHandler Show_Standings;
         public LeagueDraftUX()
         {
             InitializeComponent();
+
+            lstPicks.DataContext = Draft_Pick_list;
         }
 
         private void btnStandings_Click(object sender, RoutedEventArgs e)

@@ -44,6 +44,19 @@
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
             <TextBlock Name="txtAnnouncement" Style="{StaticResource DraftAnnouncementStyle}" Width="300" Height="200" TextWrapping="Wrap"></TextBlock>
         </StackPanel>
+        <StackPanel>
+            <ListView Name="lstPicks">
+                <ListView.View>
+                    <GridView AllowsColumnReorder="true">
+                        <GridViewColumn Header="Pick Num" Width="50" DisplayMemberBinding="{Binding Path=Pick_no}" />
+                        <GridViewColumn Header="Age" Width="50" DisplayMemberBinding="{Binding Path=Round}" />
+                        <GridViewColumn Header="Book" Width="250" DisplayMemberBinding="{Binding Path=Book}" />
+                        <GridViewColumn Header="MVP" Width="50" DisplayMemberBinding="{Binding Path=Mvp}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </StackPanel>
+
 
     </DockPanel>
 </UserControl>

@@ -160,8 +160,9 @@ namespace SpectatorFootball.WindowsLeague
                 grc1.HeaderContainerStyle = DivGridHeader_Style;
 
                 FrameworkElementFactory h_image = new FrameworkElementFactory(typeof(Image));
-                Binding b = new Binding("Helmet_img");
+                Binding b = new Binding("HelmetImage");
                 h_image.SetBinding(Image.SourceProperty, b);
+
                 h_image.SetValue(Image.WidthProperty, 20.0);
                 h_image.SetValue(Image.HeightProperty, 20.0);
 
@@ -236,7 +237,9 @@ namespace SpectatorFootball.WindowsLeague
                 grc1.HeaderContainerStyle = DivGridHeader_Style;
 
                 FrameworkElementFactory h_image = new FrameworkElementFactory(typeof(Image));
-                Binding b = new Binding("Helmet_img");
+                    //                Binding b = new Binding("Helmet_img");
+                    //                h_image.SetBinding(Image.SourceProperty, b);
+                Binding b = new Binding("HelmetImage");
                 h_image.SetBinding(Image.SourceProperty, b);
                 h_image.SetValue(Image.WidthProperty, 20.0);
                 h_image.SetValue(Image.HeightProperty, 20.0);
@@ -303,7 +306,7 @@ namespace SpectatorFootball.WindowsLeague
                     grc1.HeaderContainerStyle = DivGridHeader_Style;
 
                     FrameworkElementFactory h_image = new FrameworkElementFactory(typeof(Image));
-                    Binding b = new Binding("Helmet_img");
+                    Binding b = new Binding("HelmetImage");
                     h_image.SetBinding(Image.SourceProperty, b);
                     h_image.SetValue(Image.WidthProperty, 20.0);
                     h_image.SetValue(Image.HeightProperty, 20.0);
@@ -458,7 +461,7 @@ namespace SpectatorFootball.WindowsLeague
                 pw.setMenuonState(pw.Loaded_League.LState);
 
                 //Load the league standings
-                pw.Loaded_League.Standings = ls.getLeageStandings(pw.Loaded_League.season.ID, short_name);
+                pw.Loaded_League.Standings = ls.getLeageStandings(pw.Loaded_League);
 
                 //Update Standings
                 setStandings();

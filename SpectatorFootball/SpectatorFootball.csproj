@@ -122,9 +122,11 @@
     <Compile Include="Help_Forms\Next_Standings.xaml.cs">
       <DependentUpon>Next_Standings.xaml</DependentUpon>
     </Compile>
+    <Compile Include="League\League_Helmet.cs" />
     <Compile Include="League\League_Helper.cs" />
     <Compile Include="League\Loaded_League_Structure.cs" />
     <Compile Include="League\New_League_Structure.cs" />
+    <Compile Include="Models\DraftPick.cs" />
     <Compile Include="Models\Standings_Row.cs" />
     <Compile Include="Models\Standing_Streak.cs" />
     <Compile Include="LoadLeague.xaml.cs">

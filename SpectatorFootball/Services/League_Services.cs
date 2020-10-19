@@ -341,17 +341,17 @@ namespace SpectatorFootball
 
             }
 
-        public List<Standings_Row> getLeageStandings(long Season_ID, string League_Shortname)
+        public List<Standings_Row> getLeageStandings(Loaded_League_Structure lld)
         {
-            string DIRPath_League = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + League_Shortname.ToUpper();
+            string DIRPath_League = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + lld.season.League_Structure_by_Season[0].Short_Name.ToUpper();
             string helment_img_path = DIRPath_League + Path.DirectorySeparatorChar + app_Constants.LEAGUE_HELMETS_SUBFOLDER;
             List<Standings_Row> r;
-            string League_con_string = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + League_Shortname + Path.DirectorySeparatorChar + League_Shortname + "." + app_Constants.DB_FILE_EXT;
+            string League_con_string = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + lld.season.League_Structure_by_Season[0].Short_Name.ToUpper() + Path.DirectorySeparatorChar + lld.season.League_Structure_by_Season[0].Short_Name.ToUpper() + "." + app_Constants.DB_FILE_EXT;
             LeagueDAO ld = new LeagueDAO();
 
-            r = ld.getStandings(Season_ID, League_con_string);
+            r = ld.getStandings(lld.season.ID, League_con_string);
 
-            List<Standing_Streak> sstreak = ld.getStandingsStreak(Season_ID, League_con_string);
+            List<Standing_Streak> sstreak = ld.getStandingsStreak(lld.season.ID, League_con_string);
 
             //Now we need to set the streak in the standings list for each team, also set the
             //path to the helment image.  
@@ -377,8 +377,9 @@ namespace SpectatorFootball
 
             foreach (Standings_Row sr in r)
             {
-                string helmet_img = sr.Helmet_img;
-                sr.Helmet_img = helment_img_path + Path.DirectorySeparatorChar + helmet_img;
+                //                string helmet_img = sr.Helmet_img;
+                //                sr.Helmet_img = helment_img_path + Path.DirectorySeparatorChar + helmet_img;
+                sr.HelmetImage = lld.getHelmetImg(sr.Helmet_img);  
             }
 
             return r;
