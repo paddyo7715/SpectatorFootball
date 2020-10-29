@@ -217,8 +217,6 @@ namespace SpectatorFootball
             sSQL = sSQL.Replace("@Season_ID", season_id + "");
 
 
-            SQLiteConnection ObjConnection = new SQLiteConnection("Data Source=C:\\Users\\Brenden\\Documents\\Spect_Football_Data\\APFL\\APFL.db;");
-
             using (var context = new leagueContext(con))
             {
                 context.Configuration.AutoDetectChangesEnabled = false;

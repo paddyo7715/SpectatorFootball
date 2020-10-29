@@ -376,11 +376,7 @@ namespace SpectatorFootball
             }
 
             foreach (Standings_Row sr in r)
-            {
-                //                string helmet_img = sr.Helmet_img;
-                //                sr.Helmet_img = helment_img_path + Path.DirectorySeparatorChar + helmet_img;
                 sr.HelmetImage = lld.getHelmetImg(sr.Helmet_img);  
-            }
 
             return r;
         }

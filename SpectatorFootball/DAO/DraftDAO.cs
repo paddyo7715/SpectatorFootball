@@ -14,7 +14,6 @@ namespace SpectatorFootball.DAO
 
         public void SelectPlayer(Player p, Draft d_selection, string league_filepath)
         {
-            List<Player> r = null;
 
             string con = Common.LeageConnection.Connect(league_filepath);
 
@@ -35,6 +34,38 @@ namespace SpectatorFootball.DAO
             }
 
             return;
+        }
+
+        public List<DraftPick> GetDraftList(long season_id, string league_filepath)
+        {
+            List<DraftPick> r = null;
+
+            string con = Common.LeageConnection.Connect(league_filepath);
+
+            using (var context = new leagueContext(con))
+            {
+                context.Database.Log = Console.Write;
+
+                r = (from d in context.Drafts
+                        join t in context.Teams_by_Season
+                        on d.Franchise equals t.Franchise
+                        join p in context.Players
+                        on d.Player_ID equals p.ID into Inners
+                        from pn in Inners.DefaultIfEmpty()
+                        where d.Season_ID == season_id && t.Season_ID == season_id
+                        orderby d.Pick_Number
+                        select new DraftPick
+                        {
+                            Pick_no = d.Pick_Number,
+                            Round = d.Round,
+                            helmet_filename = t.Helmet_Image_File,
+                            Team_Name = t.City + " " + t.Nickname,
+                            Pick_Pos_Name = (pn.Pos + " " + pn.First_Name + " " + pn.Last_Name).Trim()
+                        }).ToList();
+
+            }
+
+             return r;
         }
 
     }

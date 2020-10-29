@@ -39,6 +39,7 @@ namespace SpectatorFootball
 
         private LeagueStandings LStandingsUX = null;
         private bool bUpdateStandings = false;
+        private LeagueDraftUX LDraft = null;
 
         private static ILog logger = LogManager.GetLogger("RollingFile");
 
@@ -160,6 +161,29 @@ namespace SpectatorFootball
             {
                 Mouse.OverrideCursor = null;
                 logger.Error("Error Showing New Stock Team Detail Form");
+                logger.Error(ex);
+                MessageBox.Show(CommonUtils.substr(ex.Message, 0, 100), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        private void Show_UpdateStockTeam(object sender, StockteamEventArgs e)
+        {
+            try
+            {
+                Mouse.OverrideCursor = Cursors.Wait;
+                logger.Info("Show Update Stock Team form");
+
+                int team_ind = e.team_ind;
+                Stock_Team_detailUC = new Stock_Team_detail(st_list[team_ind]);
+                Stock_Team_detailUC.backtoStockTeams += Show_StockTeams;
+
+                sp_uc.Children.Clear();
+                sp_uc.Children.Add(Stock_Team_detailUC);
+
+            }
+            catch (Exception ex)
+            {
+                Mouse.OverrideCursor = null;
+                logger.Error("Error Showing Update Stock Team Form");
                 logger.Error(ex);
                 MessageBox.Show(CommonUtils.substr(ex.Message, 0, 100), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -340,29 +364,25 @@ namespace SpectatorFootball
             sp_uc.Children.Add(LStandingsUX);
 
         }
-        private void Show_UpdateStockTeam(object sender, StockteamEventArgs e)
+
+        private void Show_LeagueDraft(object sender, EventArgs e)
         {
             try
             {
-                Mouse.OverrideCursor = Cursors.Wait;
-                logger.Info("Show Update Stock Team form");
-
-                int team_ind = e.team_ind;
-                Stock_Team_detailUC = new Stock_Team_detail(st_list[team_ind]);
-                Stock_Team_detailUC.backtoStockTeams += Show_StockTeams;
-
+                LeagueDraftUX LDraft = new LeagueDraftUX(this);
                 sp_uc.Children.Clear();
-                sp_uc.Children.Add(Stock_Team_detailUC);
-
+                sp_uc.Children.Add(LDraft);
             }
             catch (Exception ex)
             {
                 Mouse.OverrideCursor = null;
-                logger.Error("Error Showing Update Stock Team Form");
+                logger.Error("Error Creating the Legue Draft form");
                 logger.Error(ex);
                 MessageBox.Show(CommonUtils.substr(ex.Message, 0, 100), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+
         }
+
         //When the user clicks a team in the teams menu
         private void MenuTeam_Click(object sender, System.EventArgs e)
         {
