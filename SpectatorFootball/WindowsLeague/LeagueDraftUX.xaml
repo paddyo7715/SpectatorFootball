@@ -3,9 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local1="clr-namespace:SpectatorFootball.BindingConverters"             
              xmlns:local="clr-namespace:SpectatorFootball.WindowsLeague"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <local1:iPosConverter x:Key="iPosConverter" />
+        <local1:DoubleFormatConverter x:Key="DoubleFormatConverter" />
+        <local1:inttoWeight x:Key="inttoWeight" />
+    </UserControl.Resources>    
     <DockPanel Height="730">
         <Grid DockPanel.Dock="Top">
             <Grid.ColumnDefinitions>
@@ -33,22 +39,19 @@
                 <Slider Name="tckPickSpeed" Style="{StaticResource GeneralSlider}" Orientation="Horizontal"  Maximum="5" TickFrequency="1" Value="3" IsSnapToTickEnabled="True" />
                 <Label Name="lblPickSpeed" Style="{StaticResource MedLabelstyle}"></Label>
             </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Image Name="imgPickMinus3" Height="30" Width="30"></Image>
-                <Image Name="imgPickMinus2" Height="30" Width="30"></Image>
-                <Image Name="imgPickMinus1" Height="30" Width="30"></Image>
-                <Image Name="imgPickCurrent" Height="40" Width="40"></Image>
-                <Image Name="imgPickPlus1" Height="30" Width="30"></Image>
-                <Image Name="imgPickPlus2" Height="30" Width="30"></Image>
-                <Image Name="imgPickPlus3" Height="30" Width="30"></Image>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
                 <TextBlock Name="txtAnnouncement" Style="{StaticResource DraftAnnouncementStyle}" Width="400" Height="100" TextWrapping="Wrap"></TextBlock>
             </StackPanel>
-            <StackPanel Orientation="Vertical">
-                <ListView Name="lstPicks" Height="400" Width="570">
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                <Label HorizontalAlignment="Center" Style="{StaticResource Conflbltyle}">Draft Tracker</Label>
+                <ListView Name="lstPicks" Style="{StaticResource StandingsGridStyle}" Height="200" Width="570">
                     <ListView.View>
-                        <GridView AllowsColumnReorder="true">
+                        <GridView AllowsColumnReorder="false">
+                            <GridView.ColumnHeaderContainerStyle>
+                                <Style TargetType="{x:Type GridViewColumnHeader}">
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                </Style>
+                            </GridView.ColumnHeaderContainerStyle>
                             <GridViewColumn Header="Pick Num" Width="50" DisplayMemberBinding="{Binding Path=Pick_no}" />
                             <GridViewColumn Header="Round" Width="50" DisplayMemberBinding="{Binding Path=Round}" />
                             <GridViewColumn Header="">
@@ -64,6 +67,50 @@
                     </ListView.View>
                 </ListView>
             </StackPanel>
+
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                <Label HorizontalAlignment="Center" Style="{StaticResource Conflbltyle}">Draft Pool</Label>
+                <ListView Name="lstDraftPlayers" Style="{StaticResource StandingsGridStyle}" Height="200" Width="400">
+                    <ListView.View>
+                        <GridView AllowsColumnReorder="false">
+                            <GridView.ColumnHeaderContainerStyle>
+                                <Style TargetType="{x:Type GridViewColumnHeader}">
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                </Style>
+                            </GridView.ColumnHeaderContainerStyle>
+                            <GridViewColumn Header="POS">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Width="30" TextAlignment="Center">
+                                        <Run Text="{Binding Pos, Converter={StaticResource iPosConverter}}" />
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn Header="Player Name">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Width="160">
+                                        <Run Text="{Binding First_Name}" />
+                                        <Run Text=" " /> <!-- space -->
+                                        <Run Text="{Binding Last_Name}" />
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn Header="Height" Width="50" DisplayMemberBinding="{Binding Path=Height, Converter={StaticResource  inttoWeight}}"  />
+                            <GridViewColumn Header="Weight" Width="50" DisplayMemberBinding="{Binding Path=Weight}"  />
+
+                            <GridViewColumn Header="Grade" Width="60" DisplayMemberBinding="{Binding Path=Draft_Grade, Converter={StaticResource DoubleFormatConverter}}"  />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </StackPanel>
+
+
+
         </StackPanel>
 
     </DockPanel>

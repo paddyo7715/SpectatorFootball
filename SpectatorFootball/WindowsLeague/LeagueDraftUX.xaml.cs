@@ -25,6 +25,8 @@ namespace SpectatorFootball.WindowsLeague
     {
         //bindings for UI
         ObservableCollection<DraftPick> Draft_Pick_list = null;
+        ObservableCollection<Player> Draft_Players_list = null;
+
 
         // pw is the parent window mainwindow
         private MainWindow pw;
@@ -36,9 +38,11 @@ namespace SpectatorFootball.WindowsLeague
             this.pw = pw;
             Draft_Services ds = new Draft_Services();
             Draft_Pick_list = new ObservableCollection<DraftPick>(ds.GetDraftList(pw.Loaded_League));
+            Draft_Players_list = new ObservableCollection<Player>(ds.getDraftablePlayers(pw.Loaded_League));
 
-            //            lstPicks.DataContext = Draft_Pick_list;
             lstPicks.ItemsSource = Draft_Pick_list;
+            lstDraftPlayers.ItemsSource = Draft_Players_list;
+           
         }
 
         private void btnStandings_Click(object sender, RoutedEventArgs e)
@@ -70,5 +74,6 @@ namespace SpectatorFootball.WindowsLeague
         {
 
         }
+
     }
 }

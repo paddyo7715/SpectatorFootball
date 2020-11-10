@@ -98,7 +98,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BindingConverters\ColorConverter.cs" />
+    <Compile Include="BindingConverters\DoubleFormatConverter.cs" />
     <Compile Include="BindingConverters\ImageConverter.cs" />
+    <Compile Include="BindingConverters\inttoWeight.cs" />
+    <Compile Include="BindingConverters\iPosConverter.cs" />
     <Compile Include="BindingConverters\StadiumImageConverter.cs" />
     <Compile Include="BindingConverters\StockHelmetConverter.cs" />
     <Compile Include="BindingConverters\TextConverter.cs" />

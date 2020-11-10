@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.Entity;
 
 namespace SpectatorFootball.DAO
 {
@@ -44,7 +45,7 @@ namespace SpectatorFootball.DAO
 
             using (var context = new leagueContext(con))
             {
-                context.Database.Log = Console.Write;
+//                context.Database.Log = Console.Write;
 
                 r = (from d in context.Drafts
                         join t in context.Teams_by_Season
@@ -66,6 +67,20 @@ namespace SpectatorFootball.DAO
             }
 
              return r;
+        }
+
+        public List<Player> getDraftablePlayers(long season_id, string league_filepath)
+        {
+            List<Player> r = null;
+
+            string con = Common.LeageConnection.Connect(league_filepath);
+
+            using (var context = new leagueContext(con))
+            {
+                r = context.Players.Where(x => x.Player_Ratings.Max(y => y.Season_ID) == season_id).OrderByDescending(x => x.Draft_Grade - ((x.Pos / 8) * 100)).ToList();
+            }
+
+            return r;
         }
 
     }

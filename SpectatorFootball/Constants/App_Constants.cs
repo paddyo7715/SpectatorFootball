@@ -32,7 +32,7 @@ namespace SpectatorFootball
         // Draft
         public const float DRAFT_MULTIPLIER = 2.0f;  //Multiplied by number of rounds to determine num of players to create for draft.
         public const int NORMAL_DRAFT_ROUNDS = 7;
-        public const int STARTER_MIN_OVERALL_GRADE = 85;
+        public const int STARTER_MIN_OVERALL_GRADE = 82;
         public const double DRAFT_ROUND_PERCNT_BEFORE_KICKERS_CONSIDERED = 70.0;
         public const int DRAFT_STARTER_AGE_TOO_OLD = 35;
         public const int DRAFT_FIRST_CHOICE_PICK_DEPTH = 20;

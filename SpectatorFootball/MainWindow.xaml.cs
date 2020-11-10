@@ -341,7 +341,6 @@ namespace SpectatorFootball
         }
         private void Show_LeagueStandings(object sender, EventArgs e)
         {
-            bool latest_year = true;
 
             if (bUpdateStandings)
             {
@@ -372,6 +371,7 @@ namespace SpectatorFootball
                 LeagueDraftUX LDraft = new LeagueDraftUX(this);
                 sp_uc.Children.Clear();
                 sp_uc.Children.Add(LDraft);
+                LDraft.Show_Standings += Show_LeagueStandings;
             }
             catch (Exception ex)
             {

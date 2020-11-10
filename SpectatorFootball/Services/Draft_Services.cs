@@ -36,7 +36,7 @@ namespace SpectatorFootball.Services
             Draft_Need dn = dh.getDraftNeeds(Season_ID, p, draftRound, DraftRounds);
 
             //Next, make the pick
-            r = dh.MakePick(dn,Draft_Class);
+            r = dh.MakePick(dn, Draft_Class);
             r.Franchise_ID = Franchise_ID;
             d_selection.Player_ID = r.ID;
 
@@ -71,6 +71,18 @@ namespace SpectatorFootball.Services
                     d.Pick_Pos_Name = ppos.ToString() + " " + pick_pos_name;
                 }
             }
+
+            return r;
+        }
+        public List<Player> getDraftablePlayers(Loaded_League_Structure lls)
+        {
+            List<Player> r = null;
+            string DIRPath_League = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + lls.season.League_Structure_by_Season[0].Short_Name.ToUpper();
+
+            string League_con_string = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + lls.season.League_Structure_by_Season[0].Short_Name.ToUpper() + Path.DirectorySeparatorChar + lls.season.League_Structure_by_Season[0].Short_Name.ToUpper() + "." + app_Constants.DB_FILE_EXT;
+            DraftDAO dd = new DraftDAO();
+
+            r = dd.getDraftablePlayers(lls.season.ID, League_con_string);
 
             return r;
         }
