@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
+using SpectatorFootball.Enum;
 
 namespace SpectatorFootball.DAO
 {
@@ -77,7 +78,8 @@ namespace SpectatorFootball.DAO
 
             using (var context = new leagueContext(con))
             {
-                r = context.Players.Where(x => x.Player_Ratings.Max(y => y.Season_ID) == season_id).OrderByDescending(x => x.Draft_Grade - ((x.Pos / 8) * 100)).ToList();
+                int iFirstKicker = System.Enum.GetNames(typeof(Player_Pos)).Length - 2;
+                r = context.Players.Where(x => x.Player_Ratings.Max(y => y.Season_ID) == season_id).OrderByDescending(x => x.Draft_Grade - ((x.Pos / iFirstKicker) * 100)).ToList();
             }
 
             return r;

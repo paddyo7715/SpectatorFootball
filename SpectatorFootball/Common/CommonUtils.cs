@@ -9,6 +9,7 @@ using System.Security.AccessControl;
 using System.Security.Principal;
 using System.Windows.Media.Imaging;
 using System.Windows.Controls;
+using SpectatorFootball.Enum;
 
 namespace SpectatorFootball
 {

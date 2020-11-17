@@ -84,6 +84,7 @@ namespace SpectatorFootball
         {
 
             List<string> Player_Attributes = new List<string>();
+            string r = null;
 
             StringBuilder sb = new StringBuilder();
 
@@ -533,9 +534,13 @@ namespace SpectatorFootball
                         break;
                     }
             }
+            // When returning the value for the players draft profile, remove the isse where it ends in , and
+            r = sb.ToString().Replace(",  and ", " and ");
 
-// When returning the value for the players draft profile, remove the isse where it ends in , and
-            return sb.ToString().Replace(",  and ", " and ");
+            //Capitalize the first letter in the scouting report
+            r = char.ToUpper(r[0]) + r.Substring(1);
+
+            return r;
         }
 
     }

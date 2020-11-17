@@ -11,6 +11,7 @@
         <local1:iPosConverter x:Key="iPosConverter" />
         <local1:DoubleFormatConverter x:Key="DoubleFormatConverter" />
         <local1:inttoWeight x:Key="inttoWeight" />
+        <local1:SpeedInttoString x:Key="SpeedInttoString" />
     </UserControl.Resources>    
     <DockPanel Height="730">
         <Grid DockPanel.Dock="Top">
@@ -35,9 +36,9 @@
                 <Button Name="NextPick" Style="{StaticResource appHelpBTN}" Click="NextPick_Click">Make Next Pick</Button>
                 <Button Name="simRound" Style="{StaticResource appHelpBTN}" Click="simRound_Click">Sim Round</Button>
                 <Button Name="simDraft" Style="{StaticResource appHelpBTN}" Click="simDraft_Click">Sim Draft</Button>
-                <Label Style="{StaticResource Normallbltyle}">Speed:</Label>
-                <Slider Name="tckPickSpeed" Style="{StaticResource GeneralSlider}" Orientation="Horizontal"  Maximum="5" TickFrequency="1" Value="3" IsSnapToTickEnabled="True" />
-                <Label Name="lblPickSpeed" Style="{StaticResource MedLabelstyle}"></Label>
+                <Label Style="{StaticResource Normallbltyle}" Height="30" Width="60">Speed:</Label>
+                <Slider Name="tckPickSpeed" Height="20" Width="100" Style="{StaticResource GeneralSlider}" Orientation="Horizontal"  Maximum="4" TickFrequency="1" Value="2" IsSnapToTickEnabled="True" />
+                <Label Name="lblPickSpeed" Style="{StaticResource Normallbltyle}" Height="30" Width="100" Content="{Binding ElementName=tckPickSpeed, Path=Value, Converter={StaticResource SpeedInttoString}}"></Label>
             </StackPanel>
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
                 <TextBlock Name="txtAnnouncement" Style="{StaticResource DraftAnnouncementStyle}" Width="400" Height="100" TextWrapping="Wrap"></TextBlock>
@@ -70,7 +71,7 @@
 
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
                 <Label HorizontalAlignment="Center" Style="{StaticResource Conflbltyle}">Draft Pool</Label>
-                <ListView Name="lstDraftPlayers" Style="{StaticResource StandingsGridStyle}" Height="200" Width="400">
+                <ListView Name="lstDraftPlayers" MouseDoubleClick="lstDraftPlayers_Click" Style="{StaticResource StandingsGridStyle}" Height="200" Width="400">
                     <ListView.View>
                         <GridView AllowsColumnReorder="false">
                             <GridView.ColumnHeaderContainerStyle>

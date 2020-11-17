@@ -99,9 +99,12 @@
     </ApplicationDefinition>
     <Compile Include="BindingConverters\ColorConverter.cs" />
     <Compile Include="BindingConverters\DoubleFormatConverter.cs" />
+    <Compile Include="BindingConverters\handednessConverter.cs" />
     <Compile Include="BindingConverters\ImageConverter.cs" />
     <Compile Include="BindingConverters\inttoWeight.cs" />
     <Compile Include="BindingConverters\iPosConverter.cs" />
+    <Compile Include="BindingConverters\longiPosConverter.cs" />
+    <Compile Include="BindingConverters\SpeedInttoString.cs" />
     <Compile Include="BindingConverters\StadiumImageConverter.cs" />
     <Compile Include="BindingConverters\StockHelmetConverter.cs" />
     <Compile Include="BindingConverters\TextConverter.cs" />
@@ -117,6 +120,9 @@
     <Compile Include="Draft\Draft_Helper.cs" />
     <Compile Include="Draft\Draft_Need.cs" />
     <Compile Include="Draft\Draft_Pos_Importance.cs" />
+    <Compile Include="Draft_Profile_Popup.xaml.cs">
+      <DependentUpon>Draft_Profile_Popup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Enum\League_State.cs" />
     <Compile Include="Enum\Player_Pos.cs" />
     <Compile Include="Help_Forms\Help_LeagueStandings.xaml.cs">
@@ -329,6 +335,10 @@
     <Compile Include="WindowsLeague\LeagueStandingsUX.xaml.cs">
       <DependentUpon>LeagueStandingsUX.xaml</DependentUpon>
     </Compile>
+    <Page Include="Draft_Profile_Popup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Help_Forms\Help_LeagueStandings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

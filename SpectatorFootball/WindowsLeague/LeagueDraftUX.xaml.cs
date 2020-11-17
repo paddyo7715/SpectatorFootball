@@ -45,6 +45,20 @@ namespace SpectatorFootball.WindowsLeague
            
         }
 
+        private void lstDraftPlayers_Click(object sender, RoutedEventArgs e)
+        {
+            ListView ls = (ListView)sender;
+
+            if (ls.SelectedItems.Count > 0)
+            {
+                Player p = Draft_Players_list[ls.SelectedIndex];
+                Draft_Profile_Popup dpp = new Draft_Profile_Popup(p);
+                dpp.Top = (SystemParameters.PrimaryScreenHeight - dpp.Height) / 2;
+                dpp.Left = (SystemParameters.PrimaryScreenWidth - dpp.Width) / 2;
+                dpp.ShowDialog();
+            }
+        }
+
         private void btnStandings_Click(object sender, RoutedEventArgs e)
         {
             Show_Standings?.Invoke(this, new EventArgs());

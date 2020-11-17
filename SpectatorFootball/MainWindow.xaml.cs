@@ -368,10 +368,12 @@ namespace SpectatorFootball
         {
             try
             {
+                Mouse.OverrideCursor = Cursors.Wait;
                 LeagueDraftUX LDraft = new LeagueDraftUX(this);
                 sp_uc.Children.Clear();
                 sp_uc.Children.Add(LDraft);
                 LDraft.Show_Standings += Show_LeagueStandings;
+                Mouse.OverrideCursor = null;
             }
             catch (Exception ex)
             {
