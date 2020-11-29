@@ -15,7 +15,7 @@ namespace SpectatorFootball.DAO
     {
         private static ILog logger = LogManager.GetLogger("RollingFile");
 
-        public List<Player> GetTeamPlayers(long season_id, long franchise_id, string league_filepath)
+        public List<Player> GetTeamPlayers(long season_id, long? franchise_id, string league_filepath)
         {
             List<Player> r = null;
 

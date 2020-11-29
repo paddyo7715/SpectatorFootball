@@ -120,7 +120,7 @@
     <Compile Include="Draft\Draft_Helper.cs" />
     <Compile Include="Draft\Draft_Need.cs" />
     <Compile Include="Draft\Draft_Pos_Importance.cs" />
-    <Compile Include="Draft_Profile_Popup.xaml.cs">
+    <Compile Include="WindowsLeague\Draft_Profile_Popup.xaml.cs">
       <DependentUpon>Draft_Profile_Popup.xaml</DependentUpon>
     </Compile>
     <Compile Include="Enum\League_State.cs" />
@@ -335,7 +335,7 @@
     <Compile Include="WindowsLeague\LeagueStandingsUX.xaml.cs">
       <DependentUpon>LeagueStandingsUX.xaml</DependentUpon>
     </Compile>
-    <Page Include="Draft_Profile_Popup.xaml">
+    <Page Include="WindowsLeague\Draft_Profile_Popup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

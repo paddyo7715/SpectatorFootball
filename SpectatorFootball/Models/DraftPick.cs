@@ -15,6 +15,9 @@ namespace SpectatorFootball.Models
         public BitmapImage HelmetImage { get; set; }
         public string Team_Name { get; set; }
         public string Pick_Pos_Name { get; set; }
+        public long Season_ID { get; set; }
+        public long ID { get; set; }
+        public long? Franchise_ID { get; set; }
 
     }
 }

@@ -71,5 +71,5 @@ C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\Wind
 C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\WindowsLeague\LeagueDraftUX.baml
 C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\WindowsLeague\LeagueStandingsUX.baml
 C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\SpectatorFootball.csprojAssemblyReference.cache
-C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\Draft_Profile_Popup.g.cs
-C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\Draft_Profile_Popup.baml
+C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\WindowsLeague\Draft_Profile_Popup.g.cs
+C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\WindowsLeague\Draft_Profile_Popup.baml

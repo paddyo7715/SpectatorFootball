@@ -275,17 +275,37 @@ namespace SpectatorFootball.DraftsNS
             }
 
             //Next, get all potential starts on the team, exluding players that are too old
-            foreach (Player p in players)
+            foreach (Player_Pos pp in System.Enum.GetValues(typeof(Player_Pos)))
             {
-                double Overall_Grade;
-                Player_Pos pos = (Player_Pos)p.Pos;
-                if (p.Drafts.Any(x => x.Season_ID == Season_ID))
-                    Overall_Grade = p.Draft_Grade;
-                else
-                    Overall_Grade = Player_Helper.Create_Overall_Rating((Player_Pos)p.Pos, p.Player_Ratings.First());
+                int iPos = (int)pp;
+                int pos_starter_count = 0;
 
-                if (Overall_Grade >= app_Constants.STARTER_MIN_OVERALL_GRADE && p.Age < app_Constants.DRAFT_STARTER_AGE_TOO_OLD)
-                    r.Wanted_Positions.Add((Player_Pos)p.Pos);
+                //if the position is in the unwanted positions list then don't bother investigating
+                //if it should be a priority for this team's pick
+                if (r.Unwanted_Positions.Contains(pp))
+                    continue;
+
+                List<Player> pList = players.Where(x => x.Pos == iPos).ToList();
+
+                foreach (Player p in pList)
+                {
+                    double Overall_Grade;
+                    Player_Pos pos = (Player_Pos)p.Pos;
+                    if (p.Drafts.Any(x => x.Season_ID == Season_ID))
+                        Overall_Grade = p.Draft_Grade;
+                    else
+                        Overall_Grade = Player_Helper.Create_Overall_Rating((Player_Pos)p.Pos, p.Player_Ratings.First());
+
+                    if (Overall_Grade >= app_Constants.STARTER_MIN_OVERALL_GRADE || p.Age < app_Constants.DRAFT_STARTER_AGE_TOO_OLD)
+                        pos_starter_count++;
+                }
+
+                //if the team already has the needed number of viable starters at the postiion then
+                //do not make it a priority to draft that position
+                if (pos_starter_count >= getNumStarters(pp))
+                    continue;
+
+                r.Wanted_Positions.Add(pp);
             }
 
             //Next sort the wanted positions by a random order favoring more popular positions
@@ -343,6 +363,47 @@ namespace SpectatorFootball.DraftsNS
 
             return r;
         }
+        private int getNumStarters(Player_Pos p)
+        {
+            int r = 0;
+
+            switch (p)
+            {
+                case Player_Pos.QB:
+                        r = app_Constants.STARTER_QB_PER_TEAM;
+                    break;
+                case Player_Pos.RB:
+                    r = app_Constants.STARTER_RB_PER_TEAM;
+                    break;
+                case Player_Pos.WR:
+                    r = app_Constants.STARTER_WR_PER_TEAM;
+                    break;
+                case Player_Pos.TE:
+                    r = app_Constants.STARTER_TE_PER_TEAM;
+                    break;
+                case Player_Pos.OL:
+                    r = app_Constants.STARTER_OL_PER_TEAM;
+                    break;
+                case Player_Pos.DL:
+                    r = app_Constants.STARTER_DL_PER_TEAM;
+                    break;
+                case Player_Pos.LB:
+                    r = app_Constants.STARTER_LB_PER_TEAM;
+                    break;
+                case Player_Pos.DB:
+                    r = app_Constants.STARTER_DB_PER_TEAM;
+                    break;
+                case Player_Pos.K:
+                    r = app_Constants.STARTER_K_PER_TEAM;
+                    break;
+                case Player_Pos.P:
+                    r = app_Constants.STARTER_P_PER_TEAM;
+                    break;
+            }
+
+            return r;
+        }
+
 
         private List<Player_Pos> OrderWantedPositions(List<Player_Pos> pp)
         {
@@ -400,11 +461,19 @@ namespace SpectatorFootball.DraftsNS
             int pos_count = 1;
             int search_limit;
 
-            List<Player> Unsolected_players = Draft_Class.Where(x => x.Franchise_ID == null).ToList();
+            List<Player> Unsolected_players = Draft_Class.Where(x => x.Franchise_ID == null).OrderByDescending(x => x.Draft_Grade).ToList();
 
             foreach (Player_Pos pp in dn.Wanted_Positions)
             {
-                i++;
+                i = 0;
+                if (pos_count == 1)
+                    search_limit = app_Constants.DRAFT_FIRST_CHOICE_PICK_DEPTH;
+                else
+                    if (pp != dn.Wanted_Positions[dn.Wanted_Positions.Count() - 1])
+                        search_limit = app_Constants.DRAFT_OTHER_CHOICE_PICK_DEPTH;
+                    else //if this is the last wanted position then there is really no limit
+                        search_limit = int.MaxValue;
+
                 foreach (Player p in Unsolected_players)
                 {
                     if (p.Pos == (int)pp)
@@ -412,15 +481,21 @@ namespace SpectatorFootball.DraftsNS
                         r = p;
                         break;
                     }
-                    if (pos_count == 1)
-                        search_limit = app_Constants.DRAFT_FIRST_CHOICE_PICK_DEPTH;
-                    else
-                        search_limit = app_Constants.DRAFT_OTHER_CHOICE_PICK_DEPTH;
 
                     if (i >= search_limit)
                         break;
 
-                    i++;
+                    Player_Pos p_pos = (Player_Pos)p.Pos;
+                    if (pp == Player_Pos.K || pp == Player_Pos.P)
+                    {
+                        if (p_pos == Player_Pos.K || p_pos == Player_Pos.P)
+                            i++;
+                    }
+                    else
+                    {
+                        if (p_pos != Player_Pos.K && p_pos != Player_Pos.P)
+                            i++;
+                    }
                 }
                 if (r != null)
                     break;
@@ -442,7 +517,8 @@ namespace SpectatorFootball.DraftsNS
             }
 
             //Fianlly, if the draft pick has still not been made then just take the first player available in the draft
-            r = Unsolected_players.First();
+            if (r == null)
+                r = Unsolected_players.First();
 
             return r;
         }

@@ -16,5 +16,12 @@ namespace SpectatorFootball.DraftNS
 
         public List<Player_Pos> Unwanted_Positions  { get; set; }
 
+        public Draft_Need()
+        {
+            Wanted_Positions = new List<Player_Pos>();
+            Unwanted_Positions = new List<Player_Pos>();
+        }
     }
+
+
 }

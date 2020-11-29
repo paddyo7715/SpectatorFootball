@@ -32,7 +32,6 @@
         </Grid>
         <StackPanel Orientation="Vertical">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="top" >
-                <Button Name="stopPick" Style="{StaticResource appHelpBTN}" Click="stockPick_Click">Make Next Pick</Button>
                 <Button Name="NextPick" Style="{StaticResource appHelpBTN}" Click="NextPick_Click">Make Next Pick</Button>
                 <Button Name="simRound" Style="{StaticResource appHelpBTN}" Click="simRound_Click">Sim Round</Button>
                 <Button Name="simDraft" Style="{StaticResource appHelpBTN}" Click="simDraft_Click">Sim Draft</Button>

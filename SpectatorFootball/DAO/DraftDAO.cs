@@ -14,10 +14,20 @@ namespace SpectatorFootball.DAO
     {
         private static ILog logger = LogManager.GetLogger("RollingFile");
 
-        public void SelectPlayer(Player p, Draft d_selection, string league_filepath)
+        public void SelectPlayer(Player p, DraftPick dp_selection, string league_filepath)
         {
 
             string con = Common.LeageConnection.Connect(league_filepath);
+
+            Draft d_selection = new Draft()
+            {
+                ID = dp_selection.ID,
+                Pick_Number = dp_selection.Pick_no,
+                Round = dp_selection.Round,
+                Season_ID = dp_selection.Season_ID,
+                Player_ID = p.ID,
+                Franchise_ID = (long)p.Franchise_ID
+            };
 
             using (var context = new leagueContext(con))
             {
@@ -32,6 +42,8 @@ namespace SpectatorFootball.DAO
                     context.Drafts.Add(d_selection);
                     context.Entry(d_selection).State = System.Data.Entity.EntityState.Modified;
                     context.SaveChanges();
+
+                    dbContextTransaction.Commit();
                 }
             }
 
@@ -62,7 +74,10 @@ namespace SpectatorFootball.DAO
                             Round = d.Round,
                             helmet_filename = t.Helmet_Image_File,
                             Team_Name = t.City + " " + t.Nickname,
-                            Pick_Pos_Name = (pn.Pos + " " + pn.First_Name + " " + pn.Last_Name).Trim()
+                            Pick_Pos_Name = (pn.Pos + " " + pn.First_Name + " " + pn.Last_Name).Trim(),
+                            Season_ID = d.Season_ID,
+                            Franchise_ID = d.Franchise_ID,
+                            ID = d.ID
                         }).ToList();
 
             }
