@@ -103,6 +103,7 @@
     <Compile Include="BindingConverters\ImageConverter.cs" />
     <Compile Include="BindingConverters\inttoWeight.cs" />
     <Compile Include="BindingConverters\iPosConverter.cs" />
+    <Compile Include="BindingConverters\isNullConverter.cs" />
     <Compile Include="BindingConverters\longiPosConverter.cs" />
     <Compile Include="BindingConverters\SpeedInttoString.cs" />
     <Compile Include="BindingConverters\StadiumImageConverter.cs" />

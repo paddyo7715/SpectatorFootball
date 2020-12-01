@@ -315,6 +315,8 @@
             <Setter Property="BorderBrush" Value="Black"/>
         </Style>
 
+
+
         <!-- Sliders -->
         <Style TargetType="Slider" x:Key="GeneralSlider">
             <Setter Property="FontFamily" Value="Verdana"/>

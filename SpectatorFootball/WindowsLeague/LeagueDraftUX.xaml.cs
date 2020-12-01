@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,6 +18,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace SpectatorFootball.WindowsLeague
 {
@@ -164,7 +166,11 @@ namespace SpectatorFootball.WindowsLeague
                     DraftPick dp = Draft_Pick_list.Where(x => x.Pick_Pos_Name.Trim() == "").OrderBy(x => x.Pick_no).First();
                     Player p = ds.Select_Draft_Pick(pw.Loaded_League.season.League_Structure_by_Season[0].Short_Name, Draft_Players_list.ToList(), dp, draft_rounds);
                     updatelists(dp.ID - 1, p);
-                    lstPicks.Items.Refresh();
+                    System.Threading.Thread.Sleep(100);
+
+                    int pid = Draft_Players_list.IndexOf(p);
+                    updateUI(dp,pid);
+
                     if (!Draft_Pick_list.Any(x => x.Pick_Pos_Name.Trim() == ""))
                         bMorePicks = false;
 
@@ -229,6 +235,19 @@ namespace SpectatorFootball.WindowsLeague
             //            d.Pick_Pos_Name = ((Player_Pos)p.Pos).ToString() + " " + p.First_Name + " " + p.Last_Name;
             int i = (int)draftpick_ind;
             Draft_Pick_list[i].Pick_Pos_Name = ((Player_Pos)p.Pos).ToString() + " " + p.First_Name + " " + p.Last_Name;
+        }
+        private void updateUI(DraftPick dp, int pid)
+        {
+            Application.Current.Dispatcher.Invoke(DispatcherPriority.Background, 
+                new ThreadStart(delegate { 
+                    lstPicks.Items.Refresh(); 
+                    lstPicks.SelectedItem = dp.ID - 1; 
+                    lstPicks.ScrollIntoView(Draft_Pick_list[(int)dp.ID - 1]);
+
+                    lstDraftPlayers.Items.Refresh();
+                    lstDraftPlayers.ScrollIntoView(Draft_Players_list[pid]);
+                }));
+
         }
     }
 }

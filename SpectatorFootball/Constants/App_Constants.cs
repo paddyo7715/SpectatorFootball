@@ -35,8 +35,8 @@ namespace SpectatorFootball
         public const int STARTER_MIN_OVERALL_GRADE = 82;
         public const double DRAFT_ROUND_PERCNT_BEFORE_KICKERS_CONSIDERED = 70.0;
         public const int DRAFT_STARTER_AGE_TOO_OLD = 35;
-        public const int DRAFT_FIRST_CHOICE_PICK_DEPTH = 20;
-        public const int DRAFT_OTHER_CHOICE_PICK_DEPTH = 10;
+        public const int DRAFT_FIRST_CHOICE_PICK_DEPTH = 15;
+        public const int DRAFT_OTHER_CHOICE_PICK_DEPTH = 5;
 
         // Players On a team - 48 total
         public const int QB_PER_TEAM = 3;
