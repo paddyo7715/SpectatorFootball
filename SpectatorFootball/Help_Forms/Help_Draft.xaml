@@ -1,0 +1,35 @@
+﻿<Window x:Class="SpectatorFootball.Help_Forms.Help_Draft"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SpectatorFootball.Help_Forms"
+        mc:Ignorable="d"
+        Height="250" Width="700" WindowStyle="none" ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True">
+    <Border Style="{StaticResource popupBD}" BorderThickness="1">
+        <StackPanel Style="{StaticResource popupSP}" Height="240" Width="690" Orientation="Vertical" >
+            <Label Style="{StaticResource popupTT}" HorizontalAlignment="Center">Draft Task</Label>
+            <TextBlock Style="{StaticResource HelpTB}" Width="670" Height="160" Margin="5,5,5,0" TextWrapping="Wrap">
+The draft window allows you to view the initial or yearly draft for your league.
+<LineBreak/>  
+<LineBreak/>  
+From this window you can view your league's draft.  When conductiong your draft, you have the following options:<LineBreak/>
+    *   Advance one draft pick by clicking on the Make Next Pick button.<LineBreak/>
+    *   Complete the next round in the draft by clicking on the Sim Round button.<LineBreak/>
+    *   Completing the whole draft by clicking on the Sim Draft button.<LineBreak/>
+<LineBreak/>
+<LineBreak/>
+You can select the speed at which draft picks will be made using the Speed slider.  Note that you can change the speed slider<LineBreak/> 
+even while picks are being made.<LineBreak/>
+                
+When a pick is made, you will see the pick announced in the announcer box.<LineBreak/>
+                
+You can also see a draft profile for a player by double-clicking the player in the Draft Pool list.<LineBreak/>                
+<LineBreak/>
+<LineBreak/>                
+            </TextBlock>
+            <Button Name="hlp_nl_close" Style="{StaticResource appSubmitStyle}" Click="hlp_nl_close_Click_1" >Close</Button>
+        </StackPanel>
+    </Border>
+
+</Window>

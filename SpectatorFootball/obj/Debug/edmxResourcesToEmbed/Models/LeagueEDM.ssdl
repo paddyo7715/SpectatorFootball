@@ -53,6 +53,16 @@
     <Property Name="ID" Type="integer" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
   </EntityType>
+  <EntityType Name="Free_Agency">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Season_ID" Type="integer" Nullable="false" />
+    <Property Name="Week" Type="nvarchar" MaxLength="2147483647" />
+    <Property Name="Franchise_ID" Type="integer" Nullable="false" />
+    <Property Name="Player_ID" Type="integer" Nullable="false" />
+  </EntityType>
   <EntityType Name="Game">
     <Key>
       <PropertyRef Name="ID" />
@@ -688,6 +698,30 @@
       </Principal>
       <Dependent Role="Draft">
         <PropertyRef Name="Player_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Free_Agency_0_0">
+    <End Role="Players" Type="Self.Players" Multiplicity="1" />
+    <End Role="Free_Agency" Type="Self.Free_Agency" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Players">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Free_Agency">
+        <PropertyRef Name="Player_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Free_Agency_1_0">
+    <End Role="Season" Type="Self.Season" Multiplicity="1" />
+    <End Role="Free_Agency" Type="Self.Free_Agency" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Season">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Free_Agency">
+        <PropertyRef Name="Season_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1556,6 +1590,7 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
     <EntitySet Name="Division" EntityType="Self.Division" store:Type="Tables" />
     <EntitySet Name="Draft" EntityType="Self.Draft" store:Type="Tables" />
     <EntitySet Name="Franchise" EntityType="Self.Franchise" store:Type="Tables" />
+    <EntitySet Name="Free_Agency" EntityType="Self.Free_Agency" store:Type="Tables" />
     <EntitySet Name="Game" EntityType="Self.Game" store:Type="Tables" />
     <EntitySet Name="Game_Player_FG_Defense_Stats" EntityType="Self.Game_Player_FG_Defense_Stats" store:Type="Tables" />
     <EntitySet Name="Game_Player_Kick_Returner_Stats" EntityType="Self.Game_Player_Kick_Returner_Stats" store:Type="Tables" />
@@ -1605,6 +1640,14 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
     <AssociationSet Name="FK_Draft_2_0" Association="Self.FK_Draft_2_0">
       <End Role="Players" EntitySet="Players" />
       <End Role="Draft" EntitySet="Draft" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Free_Agency_0_0" Association="Self.FK_Free_Agency_0_0">
+      <End Role="Players" EntitySet="Players" />
+      <End Role="Free_Agency" EntitySet="Free_Agency" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Free_Agency_1_0" Association="Self.FK_Free_Agency_1_0">
+      <End Role="Season" EntitySet="Season" />
+      <End Role="Free_Agency" EntitySet="Free_Agency" />
     </AssociationSet>
     <AssociationSet Name="FK_Game_0_0" Association="Self.FK_Game_0_0">
       <End Role="Season" EntitySet="Season" />

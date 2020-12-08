@@ -20,6 +20,7 @@ namespace SpectatorFootball.Models
             this.Conferences = new HashSet<Conference>();
             this.Divisions = new HashSet<Division>();
             this.Drafts = new HashSet<Draft>();
+            this.Free_Agency = new HashSet<Free_Agency>();
             this.Games = new HashSet<Game>();
             this.Hall_of_Fame = new HashSet<Hall_of_Fame>();
             this.Injuries = new HashSet<Injury>();
@@ -40,6 +41,8 @@ namespace SpectatorFootball.Models
         public virtual ICollection<Division> Divisions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Draft> Drafts { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Free_Agency> Free_Agency { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Game> Games { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

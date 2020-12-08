@@ -1,5 +1,6 @@
 ﻿using log4net;
 using SpectatorFootball.Enum;
+using SpectatorFootball.Help_Forms;
 using SpectatorFootball.Models;
 using SpectatorFootball.Services;
 using System;
@@ -41,6 +42,10 @@ namespace SpectatorFootball.WindowsLeague
         {
             InitializeComponent();
             this.pw = pw;
+
+            lblDraftHeader.Content = pw.Loaded_League.season.Year.ToString() + " " +
+                pw.Loaded_League.season.League_Structure_by_Season[0].Short_Name + " Draft";
+
             Draft_Services ds = new Draft_Services();
             Draft_Pick_list = new ObservableCollection<DraftPick>(ds.GetDraftList(pw.Loaded_League));
             Draft_Players_list = new ObservableCollection<Player>(ds.getDraftablePlayers(pw.Loaded_League));
@@ -73,7 +78,10 @@ namespace SpectatorFootball.WindowsLeague
 
         private void help_btn_Click(object sender, RoutedEventArgs e)
         {
-
+            var help_form = new Help_Draft();
+            help_form.Top = (SystemParameters.PrimaryScreenHeight - help_form.Height) / 2;
+            help_form.Left = (SystemParameters.PrimaryScreenWidth - help_form.Width) / 2;
+            help_form.ShowDialog();
         }
 
         private void NextPick_Click(object sender, RoutedEventArgs e)
@@ -83,12 +91,16 @@ namespace SpectatorFootball.WindowsLeague
                 Mouse.OverrideCursor = Cursors.Wait;
                 logger.Info("Making single draft pick");
                 disableDraftBTNS();
+                System.Threading.Thread.Sleep(delayMilaSeconds());
                 int draft_rounds = Convert.ToInt32(Draft_Pick_list.Count / pw.Loaded_League.season.League_Structure_by_Season[0].Num_Teams);
                 Draft_Services ds = new Draft_Services();
                 DraftPick dp = Draft_Pick_list.Where(x => x.Pick_Pos_Name.Trim() == "").OrderBy(x => x.Pick_no).First();
                 Player p = ds.Select_Draft_Pick(pw.Loaded_League.season.League_Structure_by_Season[0].Short_Name, Draft_Players_list.ToList(), dp, draft_rounds);
                 updatelists(dp.ID -1, p);
-                lstPicks.Items.Refresh();
+
+                int pid = Draft_Players_list.IndexOf(p);
+                updateUI(dp, pid);
+
                 Mouse.OverrideCursor = null;
             }
             catch (Exception ex)
@@ -120,10 +132,14 @@ namespace SpectatorFootball.WindowsLeague
                 int draft_rounds = Convert.ToInt32(Draft_Pick_list.Count / pw.Loaded_League.season.League_Structure_by_Season[0].Num_Teams);
                 do
                 {
+                    System.Threading.Thread.Sleep(delayMilaSeconds());
                     DraftPick dp = Draft_Pick_list.Where(x => x.Pick_Pos_Name.Trim() == "").OrderBy(x => x.Pick_no).First();
                     Player p = ds.Select_Draft_Pick(pw.Loaded_League.season.League_Structure_by_Season[0].Short_Name, Draft_Players_list.ToList(), dp, draft_rounds);
                     updatelists(dp.ID - 1, p);
-                    lstPicks.Items.Refresh();
+
+                    int pid = Draft_Players_list.IndexOf(p);
+                    updateUI(dp, pid);
+
                     if (bFirst)
                     {
                         initial_round = dp.Round;
@@ -163,10 +179,10 @@ namespace SpectatorFootball.WindowsLeague
                 int draft_rounds = Convert.ToInt32(Draft_Pick_list.Count / pw.Loaded_League.season.League_Structure_by_Season[0].Num_Teams);
                 do
                 {
+                    System.Threading.Thread.Sleep(delayMilaSeconds());
                     DraftPick dp = Draft_Pick_list.Where(x => x.Pick_Pos_Name.Trim() == "").OrderBy(x => x.Pick_no).First();
                     Player p = ds.Select_Draft_Pick(pw.Loaded_League.season.League_Structure_by_Season[0].Short_Name, Draft_Players_list.ToList(), dp, draft_rounds);
                     updatelists(dp.ID - 1, p);
-                    System.Threading.Thread.Sleep(100);
 
                     int pid = Draft_Players_list.IndexOf(p);
                     updateUI(dp,pid);
@@ -245,9 +261,39 @@ namespace SpectatorFootball.WindowsLeague
                     lstPicks.ScrollIntoView(Draft_Pick_list[(int)dp.ID - 1]);
 
                     lstDraftPlayers.Items.Refresh();
+                    lstDraftPlayers.SelectedItem = pid;
                     lstDraftPlayers.ScrollIntoView(Draft_Players_list[pid]);
+
+                    txtAnnouncement.Text = "The " + dp.Team_Name + " have selected\r\n " + dp.Pick_Pos_Name;
                 }));
 
+        }
+        private int delayMilaSeconds()
+        {
+            int r = 0;
+
+            int speed = (int)tckPickSpeed.Value;
+            switch (speed)
+            {
+                case 0:
+                    r = 5000;
+                    break;
+                case 1:
+                    r = 2500;
+                    break;
+                case 2:
+                    r = 1000;
+                    break;
+                case 3:
+                    r = 500;
+                    break;
+                case 4:
+                    r = 0;
+                    break;
+            }
+
+
+            return r;
         }
     }
 }

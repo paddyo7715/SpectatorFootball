@@ -36,6 +36,7 @@ namespace SpectatorFootball.Models
         public virtual DbSet<Division> Divisions { get; set; }
         public virtual DbSet<Draft> Drafts { get; set; }
         public virtual DbSet<Franchise> Franchises { get; set; }
+        public virtual DbSet<Free_Agency> Free_Agency { get; set; }
         public virtual DbSet<Game> Games { get; set; }
         public virtual DbSet<Game_Player_FG_Defense_Stats> Game_Player_FG_Defense_Stats { get; set; }
         public virtual DbSet<Game_Player_Kick_Returner_Stats> Game_Player_Kick_Returner_Stats { get; set; }

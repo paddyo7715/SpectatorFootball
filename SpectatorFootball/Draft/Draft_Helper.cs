@@ -458,7 +458,6 @@ namespace SpectatorFootball.DraftsNS
         {
             Player r = null;
             int i = 0;
-            int pos_count = 1;
             int search_limit;
 
             List<Player> Unsolected_players = Draft_Class.Where(x => x.Franchise_ID == null).OrderByDescending(x => x.Draft_Grade).ToList();
@@ -466,8 +465,8 @@ namespace SpectatorFootball.DraftsNS
             foreach (Player_Pos pp in dn.Wanted_Positions)
             {
                 i = 0;
-                if (pos_count == 1)
-                    search_limit = app_Constants.DRAFT_FIRST_CHOICE_PICK_DEPTH;
+                if (pp == Player_Pos.QB)
+                    search_limit = app_Constants.DRAFT_QB_CHOICE_PICK_DEPTH;
                 else
                     if (pp != dn.Wanted_Positions[dn.Wanted_Positions.Count() - 1])
                         search_limit = app_Constants.DRAFT_OTHER_CHOICE_PICK_DEPTH;
@@ -499,7 +498,6 @@ namespace SpectatorFootball.DraftsNS
                 }
                 if (r != null)
                     break;
-                pos_count++;
             }
 
             //Only if a draft choice was not found then take the next available pick that is not in the

@@ -121,32 +121,8 @@
     <Compile Include="Draft\Draft_Helper.cs" />
     <Compile Include="Draft\Draft_Need.cs" />
     <Compile Include="Draft\Draft_Pos_Importance.cs" />
-    <Compile Include="WindowsLeague\Draft_Profile_Popup.xaml.cs">
-      <DependentUpon>Draft_Profile_Popup.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Enum\League_State.cs" />
-    <Compile Include="Enum\Player_Pos.cs" />
-    <Compile Include="Help_Forms\Help_LeagueStandings.xaml.cs">
-      <DependentUpon>Help_LeagueStandings.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Help_Forms\Next_Standings.xaml.cs">
-      <DependentUpon>Next_Standings.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="League\League_Helmet.cs" />
-    <Compile Include="League\League_Helper.cs" />
-    <Compile Include="League\Loaded_League_Structure.cs" />
-    <Compile Include="League\New_League_Structure.cs" />
-    <Compile Include="Models\DraftPick.cs" />
-    <Compile Include="Models\Standings_Row.cs" />
-    <Compile Include="Models\Standing_Streak.cs" />
-    <Compile Include="LoadLeague.xaml.cs">
-      <DependentUpon>LoadLeague.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MainMenuUC.xaml.cs">
-      <DependentUpon>MainMenuUC.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="Help_Forms\Help_Draft.xaml.cs">
+      <DependentUpon>Help_Draft.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\Award.cs">
       <DependentUpon>LeagueEDM.tt</DependentUpon>
@@ -164,6 +140,9 @@
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Franchise.cs">
+      <DependentUpon>LeagueEDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Free_Agency.cs">
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Game.cs">
@@ -226,9 +205,6 @@
     <Compile Include="Models\Hall_of_Fame.cs">
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\HomeTown.cs">
-      <DependentUpon>SettingsEDM.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Injury.cs">
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
@@ -265,14 +241,50 @@
     <Compile Include="Models\Playoff_Teams_by_Season.cs">
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Season.cs">
+      <DependentUpon>LeagueEDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Teams_by_Season.cs">
+      <DependentUpon>LeagueEDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Training_Camp_by_Season.cs">
+      <DependentUpon>LeagueEDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsLeague\Draft_Profile_Popup.xaml.cs">
+      <DependentUpon>Draft_Profile_Popup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Enum\League_State.cs" />
+    <Compile Include="Enum\Player_Pos.cs" />
+    <Compile Include="Help_Forms\Help_LeagueStandings.xaml.cs">
+      <DependentUpon>Help_LeagueStandings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Help_Forms\Next_Standings.xaml.cs">
+      <DependentUpon>Next_Standings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="League\League_Helmet.cs" />
+    <Compile Include="League\League_Helper.cs" />
+    <Compile Include="League\Loaded_League_Structure.cs" />
+    <Compile Include="League\New_League_Structure.cs" />
+    <Compile Include="Models\DraftPick.cs" />
+    <Compile Include="Models\Standings_Row.cs" />
+    <Compile Include="Models\Standing_Streak.cs" />
+    <Compile Include="LoadLeague.xaml.cs">
+      <DependentUpon>LoadLeague.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainMenuUC.xaml.cs">
+      <DependentUpon>MainMenuUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HomeTown.cs">
+      <DependentUpon>SettingsEDM.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Potential_First_Names.cs">
       <DependentUpon>SettingsEDM.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Potential_Last_Names.cs">
       <DependentUpon>SettingsEDM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Season.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SettingsEDM.Context.cs">
       <AutoGen>True</AutoGen>
@@ -291,12 +303,6 @@
     </Compile>
     <Compile Include="Models\Stock_Teams.cs">
       <DependentUpon>SettingsEDM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Teams_by_Season.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Training_Camp_by_Season.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
     <Compile Include="NarrationAndText\ScoutingReport.cs" />
     <Compile Include="NewLeagueUC.xaml.cs">
@@ -336,6 +342,10 @@
     <Compile Include="WindowsLeague\LeagueStandingsUX.xaml.cs">
       <DependentUpon>LeagueStandingsUX.xaml</DependentUpon>
     </Compile>
+    <Page Include="Help_Forms\Help_Draft.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="WindowsLeague\Draft_Profile_Popup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

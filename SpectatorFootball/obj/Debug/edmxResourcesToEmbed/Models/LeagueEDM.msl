@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="mainModelStoreContainer" CdmEntityContainer="mainEntities3">
+  <EntityContainerMapping StorageEntityContainer="mainModelStoreContainer" CdmEntityContainer="mainEntities">
     <EntitySetMapping Name="Awards">
       <EntityTypeMapping TypeName="mainModel.Award">
         <MappingFragment StoreEntitySet="Award">
@@ -57,6 +57,17 @@
         <MappingFragment StoreEntitySet="Franchise">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Free_Agency">
+      <EntityTypeMapping TypeName="mainModel.Free_Agency">
+        <MappingFragment StoreEntitySet="Free_Agency">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Season_ID" ColumnName="Season_ID" />
+          <ScalarProperty Name="Week" ColumnName="Week" />
+          <ScalarProperty Name="Franchise_ID" ColumnName="Franchise_ID" />
+          <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
