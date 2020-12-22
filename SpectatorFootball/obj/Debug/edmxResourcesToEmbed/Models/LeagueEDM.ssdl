@@ -59,9 +59,10 @@
     </Key>
     <Property Name="ID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Season_ID" Type="integer" Nullable="false" />
-    <Property Name="Week" Type="nvarchar" MaxLength="2147483647" />
+    <Property Name="Week" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
     <Property Name="Franchise_ID" Type="integer" Nullable="false" />
     <Property Name="Player_ID" Type="integer" Nullable="false" />
+    <Property Name="Signed" Type="integer" Nullable="false" />
   </EntityType>
   <EntityType Name="Game">
     <Key>
@@ -519,7 +520,7 @@
     <Property Name="Season_ID" Type="integer" Nullable="false" />
     <Property Name="Ball_Safety_Rating" Type="integer" Nullable="false" />
     <Property Name="Accuracy_Rating" Type="integer" Nullable="false" />
-    <Property Name="Decision_Making" Type="integer" Nullable="false" />
+    <Property Name="Decision_Making_Rating" Type="integer" Nullable="false" />
     <Property Name="Arm_Strength_Rating" Type="integer" Nullable="false" />
     <Property Name="Pass_Block_Rating" Type="integer" Nullable="false" />
     <Property Name="Run_Block_Rating" Type="integer" Nullable="false" />
@@ -527,14 +528,14 @@
     <Property Name="Speed_Rating" Type="integer" Nullable="false" />
     <Property Name="Agilty_Rating" Type="integer" Nullable="false" />
     <Property Name="Hands_Rating" Type="integer" Nullable="false" />
-    <Property Name="Pass_Attack" Type="integer" Nullable="false" />
-    <Property Name="Run_Attack" Type="integer" Nullable="false" />
+    <Property Name="Pass_Attack_Rating" Type="integer" Nullable="false" />
+    <Property Name="Run_Attack_Rating" Type="integer" Nullable="false" />
     <Property Name="Tackle_Rating" Type="integer" Nullable="false" />
-    <Property Name="Kicker_Leg_Power" Type="integer" Nullable="false" />
-    <Property Name="Kicker_Leg_Accuracy" Type="integer" Nullable="false" />
+    <Property Name="Kicker_Leg_Power_Rating" Type="integer" Nullable="false" />
+    <Property Name="Kicker_Leg_Accuracy_Rating" Type="integer" Nullable="false" />
     <Property Name="Work_Ethic_Ratings" Type="integer" Nullable="false" />
     <Property Name="Toughness_Ratings" Type="integer" Nullable="false" />
-    <Property Name="Sportsmanship_Ratings" Type="integer" />
+    <Property Name="Sportsmanship_Ratings" Type="integer" Nullable="false" />
   </EntityType>
   <EntityType Name="Players">
     <Key>
@@ -702,18 +703,6 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Free_Agency_0_0">
-    <End Role="Players" Type="Self.Players" Multiplicity="1" />
-    <End Role="Free_Agency" Type="Self.Free_Agency" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Players">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Free_Agency">
-        <PropertyRef Name="Player_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Free_Agency_1_0">
     <End Role="Season" Type="Self.Season" Multiplicity="1" />
     <End Role="Free_Agency" Type="Self.Free_Agency" Multiplicity="*" />
     <ReferentialConstraint>
@@ -722,6 +711,30 @@
       </Principal>
       <Dependent Role="Free_Agency">
         <PropertyRef Name="Season_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Free_Agency_1_0">
+    <End Role="Franchise" Type="Self.Franchise" Multiplicity="1" />
+    <End Role="Free_Agency" Type="Self.Free_Agency" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Franchise">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Free_Agency">
+        <PropertyRef Name="Franchise_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Free_Agency_2_0">
+    <End Role="Players" Type="Self.Players" Multiplicity="1" />
+    <End Role="Free_Agency" Type="Self.Free_Agency" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Players">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Free_Agency">
+        <PropertyRef Name="Player_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1464,18 +1477,6 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Player_Ratings_0_0">
-    <End Role="Players" Type="Self.Players" Multiplicity="1" />
-    <End Role="Player_Ratings" Type="Self.Player_Ratings" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Players">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Player_Ratings">
-        <PropertyRef Name="Player_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Player_Ratings_1_0">
     <End Role="Season" Type="Self.Season" Multiplicity="1" />
     <End Role="Player_Ratings" Type="Self.Player_Ratings" Multiplicity="*" />
     <ReferentialConstraint>
@@ -1484,6 +1485,18 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
       </Principal>
       <Dependent Role="Player_Ratings">
         <PropertyRef Name="Season_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Player_Ratings_1_0">
+    <End Role="Players" Type="Self.Players" Multiplicity="1" />
+    <End Role="Player_Ratings" Type="Self.Player_Ratings" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Players">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Player_Ratings">
+        <PropertyRef Name="Player_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1642,11 +1655,15 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
       <End Role="Draft" EntitySet="Draft" />
     </AssociationSet>
     <AssociationSet Name="FK_Free_Agency_0_0" Association="Self.FK_Free_Agency_0_0">
-      <End Role="Players" EntitySet="Players" />
+      <End Role="Season" EntitySet="Season" />
       <End Role="Free_Agency" EntitySet="Free_Agency" />
     </AssociationSet>
     <AssociationSet Name="FK_Free_Agency_1_0" Association="Self.FK_Free_Agency_1_0">
-      <End Role="Season" EntitySet="Season" />
+      <End Role="Franchise" EntitySet="Franchise" />
+      <End Role="Free_Agency" EntitySet="Free_Agency" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Free_Agency_2_0" Association="Self.FK_Free_Agency_2_0">
+      <End Role="Players" EntitySet="Players" />
       <End Role="Free_Agency" EntitySet="Free_Agency" />
     </AssociationSet>
     <AssociationSet Name="FK_Game_0_0" Association="Self.FK_Game_0_0">
@@ -1894,11 +1911,11 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
       <End Role="Player_Awards" EntitySet="Player_Awards" />
     </AssociationSet>
     <AssociationSet Name="FK_Player_Ratings_0_0" Association="Self.FK_Player_Ratings_0_0">
-      <End Role="Players" EntitySet="Players" />
+      <End Role="Season" EntitySet="Season" />
       <End Role="Player_Ratings" EntitySet="Player_Ratings" />
     </AssociationSet>
     <AssociationSet Name="FK_Player_Ratings_1_0" Association="Self.FK_Player_Ratings_1_0">
-      <End Role="Season" EntitySet="Season" />
+      <End Role="Players" EntitySet="Players" />
       <End Role="Player_Ratings" EntitySet="Player_Ratings" />
     </AssociationSet>
     <AssociationSet Name="FK_Players_0_0" Association="Self.FK_Players_0_0">

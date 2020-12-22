@@ -116,11 +116,13 @@
     <Compile Include="CustomControls\CustomTextBox.cs" />
     <Compile Include="DAO\DBVersionDAO.cs" />
     <Compile Include="DAO\DraftDAO.cs" />
+    <Compile Include="DAO\FreeAgencyDAO.cs" />
     <Compile Include="DAO\HomeTownsDAO.cs" />
     <Compile Include="DAO\TeamDAO.cs" />
     <Compile Include="Draft\Draft_Helper.cs" />
-    <Compile Include="Draft\Draft_Need.cs" />
     <Compile Include="Draft\Draft_Pos_Importance.cs" />
+    <Compile Include="Free_Agency\FreeAgency_Helper.cs" />
+    <Compile Include="Free_Agency\Pos_and_Count.cs" />
     <Compile Include="Help_Forms\Help_Draft.xaml.cs">
       <DependentUpon>Help_Draft.xaml</DependentUpon>
     </Compile>
@@ -142,6 +144,7 @@
     <Compile Include="Models\Franchise.cs">
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\FreeAgencyTrans.cs" />
     <Compile Include="Models\Free_Agency.cs">
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
@@ -232,6 +235,7 @@
     <Compile Include="Models\Player.cs">
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Player_and_Ratings.cs" />
     <Compile Include="Models\Player_Awards.cs">
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
@@ -250,6 +254,8 @@
     <Compile Include="Models\Training_Camp_by_Season.cs">
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
+    <Compile Include="Services\FreeAgency_Services.cs" />
+    <Compile Include="Draft\Draft_Need.cs" />
     <Compile Include="WindowsLeague\Draft_Profile_Popup.xaml.cs">
       <DependentUpon>Draft_Profile_Popup.xaml</DependentUpon>
     </Compile>
@@ -339,6 +345,9 @@
     <Compile Include="WindowsLeague\LeagueDraftUX.xaml.cs">
       <DependentUpon>LeagueDraftUX.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WindowsLeague\LeagueFreeAgencyUX.xaml.cs">
+      <DependentUpon>LeagueFreeAgencyUX.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WindowsLeague\LeagueStandingsUX.xaml.cs">
       <DependentUpon>LeagueStandingsUX.xaml</DependentUpon>
     </Compile>
@@ -422,6 +431,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="WindowsLeague\LeagueDraftUX.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowsLeague\LeagueFreeAgencyUX.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

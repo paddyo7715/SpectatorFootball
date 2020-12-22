@@ -36,6 +36,46 @@ namespace SpectatorFootball.League
             return r;
         }
 
+        private static int getRandomPos()
+        {
+            int r = 0;
+            int rand_num = CommonUtils.getRandomNum(1, app_Constants.REGULAR_SEASON_TEAM_PLAYER_COUNT);
+
+            int numQB = app_Constants.QB_PER_TEAM;
+            int numRB = app_Constants.RB_PER_TEAM;
+            int numWR = app_Constants.WR_PER_TEAM;
+            int numTE = app_Constants.TE_PER_TEAM;
+            int numOL = app_Constants.OL_PER_TEAM;
+
+            int numDL = app_Constants.DL_PER_TEAM;
+            int numLB = app_Constants.LB_PER_TEAM;
+            int numDB = app_Constants.DB_PER_TEAM;
+
+            int numK = app_Constants.K_PER_TEAM;
+
+            if (rand_num <= numQB)
+                r = 0;
+            else if (rand_num <= (numQB + numRB))
+                r = 1;
+            else if (rand_num <= (numQB + numRB + numWR))
+                r = 2;
+            else if (rand_num <= (numQB + numRB + numWR + numTE))
+                r = 3;
+            else if (rand_num <= (numQB + numRB + numWR + numTE + numOL))
+                r = 4;
+            else if (rand_num <= (numQB + numRB + numWR + numTE + numOL + numDL))
+                r = 5;
+            else if (rand_num <= (numQB + numRB + numWR + numTE + numOL + numDL + numLB))
+                r = 6;
+            else if (rand_num <= (numQB + numRB + numWR + numTE + numOL + numDL + numLB + numDB))
+                r = 7;
+            else if (rand_num <= (numQB + numRB + numWR + numTE + numOL + numDL + numLB + numDB + numK))
+                r = 8;
+            else
+                r = 9;
+
+            return r;
+        }
         public static List<Player> Create_New_Players(int num_players)
         {
 
@@ -44,7 +84,10 @@ namespace SpectatorFootball.League
 
             for (int i = 0; i < num_players; i++)
             {
-                int int_pos_num = CommonUtils.getRandomNum(0, iTotal_Player_Positions - 1);
+
+//                int int_pos_num = CommonUtils.getRandomNum(0, iTotal_Player_Positions - 1);
+                int int_pos_num = getRandomPos();
+
                 Player_Pos Pos = (Player_Pos)int_pos_num;
 
                 logger.Debug("i=" + i + " Pos=" + Pos.ToString());

@@ -13,7 +13,8 @@ namespace SpectatorFootball.Enum
         Season_Started, //New season, but draft has not started.
         Draft_Started,  //The draft has started.
         Draft_Completed,  //The draft has completed.
-        FreeAgency_Completed, //Teams have added players to fill out their roster before training camp
+        FreeAgency_Started, //Free Agency has started but not yet completed
+        FreeAgency_Completed,  //Free Agency has completed
         Training_Camp_Ended,  //Training camp has been completed.
         Regular_Season_in_Progress, //Training camp has ended and the regular season has not yet ended.
         Regular_Season_Ended,  //Every game in the regular season has ended.  Assing playoff teams.

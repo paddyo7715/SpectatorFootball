@@ -40,6 +40,7 @@ namespace SpectatorFootball
         private LeagueStandings LStandingsUX = null;
         private bool bUpdateStandings = false;
         private LeagueDraftUX LDraft = null;
+        private LeagueFreeAgencyUX LFreeAgency = null;
 
         private static ILog logger = LogManager.GetLogger("RollingFile");
 
@@ -369,7 +370,7 @@ namespace SpectatorFootball
             try
             {
                 Mouse.OverrideCursor = Cursors.Wait;
-                LeagueDraftUX LDraft = new LeagueDraftUX(this);
+                LDraft = new LeagueDraftUX(this);
                 sp_uc.Children.Clear();
                 sp_uc.Children.Add(LDraft);
                 LDraft.Show_Standings += Show_LeagueStandings;
@@ -384,6 +385,28 @@ namespace SpectatorFootball
             }
 
         }
+
+        private void Show_FreeAgency(object sender, EventArgs e)
+        {
+            try
+            {
+                Mouse.OverrideCursor = Cursors.Wait;
+                LFreeAgency = new LeagueFreeAgencyUX(this);
+                sp_uc.Children.Clear();
+                sp_uc.Children.Add(LFreeAgency);
+                LFreeAgency.Show_Standings += Show_LeagueStandings;
+                Mouse.OverrideCursor = null;
+            }
+            catch (Exception ex)
+            {
+                Mouse.OverrideCursor = null;
+                logger.Error("Error Creating the Legue Draft form");
+                logger.Error(ex);
+                MessageBox.Show(CommonUtils.substr(ex.Message, 0, 100), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+        }
+
 
         //When the user clicks a team in the teams menu
         private void MenuTeam_Click(object sender, System.EventArgs e)

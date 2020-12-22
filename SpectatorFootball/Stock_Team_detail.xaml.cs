@@ -35,9 +35,6 @@ namespace SpectatorFootball
         public ObservableCollection<Xceed.Wpf.Toolkit.ColorItem> Recent_ColorList = new ObservableCollection<Xceed.Wpf.Toolkit.ColorItem>();
         public ObservableCollection<Xceed.Wpf.Toolkit.ColorItem> Standard_ColorList = new ObservableCollection<Xceed.Wpf.Toolkit.ColorItem>();
 
-        private string original_city = null;
-        private string original_nickname = null;
-
         public bool Event_from_Code { get; set; } = false;
         private static ILog logger = LogManager.GetLogger("RollingFile");
 

@@ -18,6 +18,7 @@ namespace SpectatorFootball.Models
         public Franchise()
         {
             this.Drafts = new HashSet<Draft>();
+            this.Free_Agency = new HashSet<Free_Agency>();
             this.Game_Player_FG_Defense_Stats = new HashSet<Game_Player_FG_Defense_Stats>();
             this.Game_Player_Kick_Returner_Stats = new HashSet<Game_Player_Kick_Returner_Stats>();
             this.Game_Player_Kicker_Stats = new HashSet<Game_Player_Kicker_Stats>();
@@ -46,6 +47,8 @@ namespace SpectatorFootball.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Draft> Drafts { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Free_Agency> Free_Agency { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Game_Player_FG_Defense_Stats> Game_Player_FG_Defense_Stats { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

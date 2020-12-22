@@ -57,6 +57,15 @@ namespace SpectatorFootball.Help_Forms
                         txtNextContent.Text = sb.ToString();
                         break;
                     }
+                case League_State.FreeAgency_Started:
+                    {
+                        StringBuilder sb = new StringBuilder();
+                        sb.Append("Free Agency has started, but is not yet completed");
+                        sb.Append("\n\n");
+                        sb.Append("The next step would be to resume Free Agency by selecting Free Agency from the League Menu Item");
+                        txtNextContent.Text = sb.ToString();
+                        break;
+                    }
                 case League_State.FreeAgency_Completed:
                     {
                         StringBuilder sb = new StringBuilder();

@@ -37,13 +37,13 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label Content ="Height:"  Height="30" Style="{StaticResource PopupLabel}"></Label>
-                    <TextBlock Name="txtHeight" Width="30"  Height="20" Style="{StaticResource PopupText}" Text="{Binding Height, Converter={StaticResource  inttoWeight}}"></TextBlock>
+                    <TextBlock Name="txtHeight" Width="35"  Height="20" Style="{StaticResource PopupText}" Text="{Binding Height, Converter={StaticResource  inttoWeight}}"></TextBlock>
                     <Label Content ="Weight"   Height="30" Style="{StaticResource PopupLabel}"></Label>
-                    <TextBlock Name="txtWeight" Width="30"  Height="20" Style="{StaticResource PopupText}"  Text ="{Binding Weight}"></TextBlock>
+                    <TextBlock Name="txtWeight" Width="35"  Height="20" Style="{StaticResource PopupText}"  Text ="{Binding Weight}"></TextBlock>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label Content ="Hometown:"  Height="30" Style="{StaticResource PopupLabel}"></Label>
-                    <TextBlock Name="txtHometown" Width="205"  Height="20" Style="{StaticResource PopupText}"  Text ="{Binding HomeTown}"></TextBlock>
+                    <TextBlock Name="txtHometown" Width="250"  Height="20" Style="{StaticResource PopupText}"  Text ="{Binding HomeTown}"></TextBlock>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label Content ="Draft Grade:"  Height="30" Style="{StaticResource PopupLabel}"></Label>

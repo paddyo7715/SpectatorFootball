@@ -35,33 +35,33 @@ namespace SpectatorFootball
         public const int STARTER_MIN_OVERALL_GRADE = 82;
         public const double DRAFT_ROUND_PERCNT_BEFORE_KICKERS_CONSIDERED = 70.0;
         public const int DRAFT_STARTER_AGE_TOO_OLD = 35;
-        public const int DRAFT_QB_CHOICE_PICK_DEPTH = 12;
+        public const int DRAFT_QB_CHOICE_PICK_DEPTH = 15;
         public const int DRAFT_OTHER_CHOICE_PICK_DEPTH = 5;
 
-        // Players On a team - 48 total
+        // Players On a team - 53 total
         public const int QB_PER_TEAM = 3;
         public const int RB_PER_TEAM = 4;
-        public const int WR_PER_TEAM = 4;
+        public const int WR_PER_TEAM = 6;
         public const int TE_PER_TEAM = 3;
-        public const int OL_PER_TEAM = 9;
+        public const int OL_PER_TEAM = 10;
 
-        public const int DL_PER_TEAM = 8;
-        public const int LB_PER_TEAM = 7;
+        public const int DL_PER_TEAM = 9;
+        public const int LB_PER_TEAM = 8;
         public const int DB_PER_TEAM = 8;
 
         public const int K_PER_TEAM = 1;
         public const int P_PER_TEAM = 1;
 
         // Players On a Training Camp Team 70 total
-        public const int TRIANINGCAMP_QB_PER_TEAM = 4;
+        public const int TRIANINGCAMP_QB_PER_TEAM = 5;
         public const int TRIANINGCAMP_RB_PER_TEAM = 7;
-        public const int TRIANINGCAMP_WR_PER_TEAM = 7;
-        public const int TRIANINGCAMP_TE_PER_TEAM = 4;
-        public const int TRIANINGCAMP_OL_PER_TEAM = 13;  
+        public const int TRIANINGCAMP_WR_PER_TEAM = 10;
+        public const int TRIANINGCAMP_TE_PER_TEAM = 5;
+        public const int TRIANINGCAMP_OL_PER_TEAM = 14;  
 
-        public const int TRIANINGCAMP_DL_PER_TEAM = 12;
-        public const int TRIANINGCAMP_LB_PER_TEAM = 11;
-        public const int TRIANINGCAMP_DB_PER_TEAM = 12;  
+        public const int TRIANINGCAMP_DL_PER_TEAM = 15;
+        public const int TRIANINGCAMP_LB_PER_TEAM = 13;
+        public const int TRIANINGCAMP_DB_PER_TEAM = 13;  
 
         public const int TRIANINGCAMP_K_PER_TEAM = 2;
         public const int TRIANINGCAMP_P_PER_TEAM = 2;
@@ -82,7 +82,7 @@ namespace SpectatorFootball
 
         // Players Draft importance by position. 
         //This is the upper range for random number 1 to n
-        public const int DRAFTIMPORTANCE_QB_PER_TEAM = 25;
+        public const int DRAFTIMPORTANCE_QB_PER_TEAM = 30;
         public const int DRAFTIMPORTANCE_RB_PER_TEAM = 12;
         public const int DRAFTIMPORTANCE_WR_PER_TEAM = 12;
         public const int DRAFTIMPORTANCE_TE_PER_TEAM = 12;
@@ -287,8 +287,8 @@ namespace SpectatorFootball
 
         // Teams
         public const string EMPTY_TEAM_SLOT = "Empty Team Slot";
-        public const int TRAINING_CAMP_TEAM_PLAYER_COUNT = 84;
-        public const int REGULAR_SEASON_TEAM_PLAYER_COUNT = 48;
+        public const int TRAINING_CAMP_TEAM_PLAYER_COUNT = 86;
+        public const int REGULAR_SEASON_TEAM_PLAYER_COUNT = 53;
 
     }
 }

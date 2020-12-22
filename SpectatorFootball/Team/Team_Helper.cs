@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using SpectatorFootball.Enum;
 using SpectatorFootball.Models;
 
 namespace SpectatorFootball
@@ -131,6 +132,57 @@ namespace SpectatorFootball
 
             return r;
         }
+        public static bool isTooManyPosPlayersCamp(Player_Pos p, int player_tot)
+        {
+            bool r = false;
+
+            switch (p)
+            {
+                case Player_Pos.QB:
+                    if (player_tot >= app_Constants.TRIANINGCAMP_QB_PER_TEAM)
+                        r = true;
+                    break;
+                case Player_Pos.RB:
+                    if (player_tot >= app_Constants.TRIANINGCAMP_RB_PER_TEAM)
+                        r = true;
+                    break;
+                case Player_Pos.WR:
+                    if (player_tot >= app_Constants.TRIANINGCAMP_WR_PER_TEAM)
+                        r = true;
+                    break;
+                case Player_Pos.TE:
+                    if (player_tot >= app_Constants.TRIANINGCAMP_TE_PER_TEAM)
+                        r = true;
+                    break;
+                case Player_Pos.OL:
+                    if (player_tot >= app_Constants.TRIANINGCAMP_OL_PER_TEAM)
+                        r = true;
+                    break;
+                case Player_Pos.DL:
+                    if (player_tot >= app_Constants.TRIANINGCAMP_DL_PER_TEAM)
+                        r = true;
+                    break;
+                case Player_Pos.LB:
+                    if (player_tot >= app_Constants.TRIANINGCAMP_LB_PER_TEAM)
+                        r = true;
+                    break;
+                case Player_Pos.DB:
+                    if (player_tot >= app_Constants.TRIANINGCAMP_DB_PER_TEAM)
+                        r = true;
+                    break;
+                case Player_Pos.K:
+                    if (player_tot >= app_Constants.TRIANINGCAMP_K_PER_TEAM)
+                        r = true;
+                    break;
+                case Player_Pos.P:
+                    if (player_tot >= app_Constants.TRIANINGCAMP_P_PER_TEAM)
+                        r = true;
+                    break;
+            }
+
+            return r;
+        }
+
 
     }
 }

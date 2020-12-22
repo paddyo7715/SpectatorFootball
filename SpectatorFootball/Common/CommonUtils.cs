@@ -253,7 +253,7 @@ namespace SpectatorFootball
                 var helmetIMG_source = new BitmapImage(imgurl);
                 r = new BitmapImage(imgurl);
             }
-            catch (Exception e) { }
+            catch (Exception) { }
 
             return r;
         }

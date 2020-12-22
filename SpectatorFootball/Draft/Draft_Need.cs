@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpectatorFootball.DraftNS
+namespace SpectatorFootball.Team
 {
     //This class represents a single positional draft need.  When a team is on the clock to
     //select a draft pick, they will have one of these records which will list positions that

@@ -58,6 +58,7 @@
     <Property Name="ID" Type="Int64" Nullable="false" />
     <Property Name="Name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
     <NavigationProperty Name="Drafts" Relationship="Self.FK_Draft_1_0" FromRole="Franchise" ToRole="Draft" />
+    <NavigationProperty Name="Free_Agency" Relationship="Self.FK_Free_Agency_1_0" FromRole="Franchise" ToRole="Free_Agency" />
     <NavigationProperty Name="Game_Player_FG_Defense_Stats" Relationship="Self.FK_Game_Player_FG_Defense_Stats_0_0" FromRole="Franchise" ToRole="Game_Player_FG_Defense_Stats" />
     <NavigationProperty Name="Game_Player_Kick_Returner_Stats" Relationship="Self.FK_Game_Player_Kick_Returner_Stats_2_0" FromRole="Franchise" ToRole="Game_Player_Kick_Returner_Stats" />
     <NavigationProperty Name="Game_Player_Kicker_Stats" Relationship="Self.FK_Game_Player_Kicker_Stats_2_0" FromRole="Franchise" ToRole="Game_Player_Kicker_Stats" />
@@ -86,11 +87,13 @@
     </Key>
     <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Season_ID" Type="Int64" Nullable="false" />
-    <Property Name="Week" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+    <Property Name="Week" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Franchise_ID" Type="Int64" Nullable="false" />
     <Property Name="Player_ID" Type="Int64" Nullable="false" />
-    <NavigationProperty Name="Player" Relationship="Self.FK_Free_Agency_0_0" FromRole="Free_Agency" ToRole="Players" />
-    <NavigationProperty Name="Season" Relationship="Self.FK_Free_Agency_1_0" FromRole="Free_Agency" ToRole="Season" />
+    <Property Name="Signed" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="Franchise" Relationship="Self.FK_Free_Agency_1_0" FromRole="Free_Agency" ToRole="Franchise" />
+    <NavigationProperty Name="Season" Relationship="Self.FK_Free_Agency_0_0" FromRole="Free_Agency" ToRole="Season" />
+    <NavigationProperty Name="Player" Relationship="Self.FK_Free_Agency_2_0" FromRole="Free_Agency" ToRole="Players" />
   </EntityType>
   <EntityType Name="Game">
     <Key>
@@ -628,7 +631,7 @@
     <Property Name="Season_ID" Type="Int64" Nullable="false" />
     <Property Name="Ball_Safety_Rating" Type="Int64" Nullable="false" />
     <Property Name="Accuracy_Rating" Type="Int64" Nullable="false" />
-    <Property Name="Decision_Making" Type="Int64" Nullable="false" />
+    <Property Name="Decision_Making_Rating" Type="Int64" Nullable="false" />
     <Property Name="Arm_Strength_Rating" Type="Int64" Nullable="false" />
     <Property Name="Pass_Block_Rating" Type="Int64" Nullable="false" />
     <Property Name="Run_Block_Rating" Type="Int64" Nullable="false" />
@@ -636,16 +639,16 @@
     <Property Name="Speed_Rating" Type="Int64" Nullable="false" />
     <Property Name="Agilty_Rating" Type="Int64" Nullable="false" />
     <Property Name="Hands_Rating" Type="Int64" Nullable="false" />
-    <Property Name="Pass_Attack" Type="Int64" Nullable="false" />
-    <Property Name="Run_Attack" Type="Int64" Nullable="false" />
+    <Property Name="Pass_Attack_Rating" Type="Int64" Nullable="false" />
+    <Property Name="Run_Attack_Rating" Type="Int64" Nullable="false" />
     <Property Name="Tackle_Rating" Type="Int64" Nullable="false" />
-    <Property Name="Kicker_Leg_Power" Type="Int64" Nullable="false" />
-    <Property Name="Kicker_Leg_Accuracy" Type="Int64" Nullable="false" />
+    <Property Name="Kicker_Leg_Power_Rating" Type="Int64" Nullable="false" />
+    <Property Name="Kicker_Leg_Accuracy_Rating" Type="Int64" Nullable="false" />
     <Property Name="Work_Ethic_Ratings" Type="Int64" Nullable="false" />
     <Property Name="Toughness_Ratings" Type="Int64" Nullable="false" />
-    <Property Name="Sportsmanship_Ratings" Type="Int64" />
-    <NavigationProperty Name="Player" Relationship="Self.FK_Player_Ratings_0_0" FromRole="Player_Ratings" ToRole="Players" />
-    <NavigationProperty Name="Season" Relationship="Self.FK_Player_Ratings_1_0" FromRole="Player_Ratings" ToRole="Season" />
+    <Property Name="Sportsmanship_Ratings" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="Season" Relationship="Self.FK_Player_Ratings_0_0" FromRole="Player_Ratings" ToRole="Season" />
+    <NavigationProperty Name="Player" Relationship="Self.FK_Player_Ratings_1_0" FromRole="Player_Ratings" ToRole="Players" />
   </EntityType>
   <EntityType Name="Player">
     <Key>
@@ -668,7 +671,7 @@
     <Property Name="Draft_Grade" Type="Double" Nullable="false" />
     <NavigationProperty Name="Drafts" Relationship="Self.FK_Draft_2_0" FromRole="Players" ToRole="Draft" />
     <NavigationProperty Name="Franchise" Relationship="Self.FK_Players_0_0" FromRole="Players" ToRole="Franchise" />
-    <NavigationProperty Name="Free_Agency" Relationship="Self.FK_Free_Agency_0_0" FromRole="Players" ToRole="Free_Agency" />
+    <NavigationProperty Name="Free_Agency" Relationship="Self.FK_Free_Agency_2_0" FromRole="Players" ToRole="Free_Agency" />
     <NavigationProperty Name="Game_Player_FG_Defense_Stats" Relationship="Self.FK_Game_Player_FG_Defense_Stats_1_0" FromRole="Players" ToRole="Game_Player_FG_Defense_Stats" />
     <NavigationProperty Name="Game_Player_Kick_Returner_Stats" Relationship="Self.FK_Game_Player_Kick_Returner_Stats_0_0" FromRole="Players" ToRole="Game_Player_Kick_Returner_Stats" />
     <NavigationProperty Name="Game_Player_Kicker_Stats" Relationship="Self.FK_Game_Player_Kicker_Stats_1_0" FromRole="Players" ToRole="Game_Player_Kicker_Stats" />
@@ -689,7 +692,7 @@
     <NavigationProperty Name="Hall_of_Fame" Relationship="Self.FK_Hall_of_Fame_1_0" FromRole="Players" ToRole="Hall_of_Fame" />
     <NavigationProperty Name="Injuries" Relationship="Self.FK_Injuries_0_0" FromRole="Players" ToRole="Injuries" />
     <NavigationProperty Name="Player_Awards" Relationship="Self.FK_Player_Awards_1_0" FromRole="Players" ToRole="Player_Awards" />
-    <NavigationProperty Name="Player_Ratings" Relationship="Self.FK_Player_Ratings_0_0" FromRole="Players" ToRole="Player_Ratings" />
+    <NavigationProperty Name="Player_Ratings" Relationship="Self.FK_Player_Ratings_1_0" FromRole="Players" ToRole="Player_Ratings" />
     <NavigationProperty Name="Training_Camp_by_Season" Relationship="Self.FK_Training_Camp_by_Season_2_0" FromRole="Players" ToRole="Training_Camp_by_Season" />
   </EntityType>
   <EntityType Name="Playoff_Teams_by_Season">
@@ -713,13 +716,13 @@
     <NavigationProperty Name="Conferences" Relationship="Self.FK_Conference_0_0" FromRole="Season" ToRole="Conference" />
     <NavigationProperty Name="Divisions" Relationship="Self.FK_Division_0_0" FromRole="Season" ToRole="Division" />
     <NavigationProperty Name="Drafts" Relationship="Self.FK_Draft_0_0" FromRole="Season" ToRole="Draft" />
-    <NavigationProperty Name="Free_Agency" Relationship="Self.FK_Free_Agency_1_0" FromRole="Season" ToRole="Free_Agency" />
+    <NavigationProperty Name="Free_Agency" Relationship="Self.FK_Free_Agency_0_0" FromRole="Season" ToRole="Free_Agency" />
     <NavigationProperty Name="Games" Relationship="Self.FK_Game_0_0" FromRole="Season" ToRole="Game" />
     <NavigationProperty Name="Hall_of_Fame" Relationship="Self.FK_Hall_of_Fame_0_0" FromRole="Season" ToRole="Hall_of_Fame" />
     <NavigationProperty Name="Injuries" Relationship="Self.FK_Injuries_1_0" FromRole="Season" ToRole="Injuries" />
     <NavigationProperty Name="League_Structure_by_Season" Relationship="Self.FK_League_Structure_by_Season_0_0" FromRole="Season" ToRole="League_Structure_by_Season" />
     <NavigationProperty Name="Player_Awards" Relationship="Self.FK_Player_Awards_0_0" FromRole="Season" ToRole="Player_Awards" />
-    <NavigationProperty Name="Player_Ratings" Relationship="Self.FK_Player_Ratings_1_0" FromRole="Season" ToRole="Player_Ratings" />
+    <NavigationProperty Name="Player_Ratings" Relationship="Self.FK_Player_Ratings_0_0" FromRole="Season" ToRole="Player_Ratings" />
     <NavigationProperty Name="Playoff_Teams_by_Season" Relationship="Self.FK_Playoff_Teams_by_Season_1_0" FromRole="Season" ToRole="Playoff_Teams_by_Season" />
     <NavigationProperty Name="Teams_by_Season" Relationship="Self.FK_Teams_by_Season_1_0" FromRole="Season" ToRole="Teams_by_Season" />
     <NavigationProperty Name="Training_Camp_by_Season" Relationship="Self.FK_Training_Camp_by_Season_1_0" FromRole="Season" ToRole="Training_Camp_by_Season" />
@@ -854,6 +857,18 @@
       </Principal>
       <Dependent Role="Draft">
         <PropertyRef Name="Player_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Free_Agency_1_0">
+    <End Role="Franchise" Type="Self.Franchise" Multiplicity="1" />
+    <End Role="Free_Agency" Type="Self.Free_Agency" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Franchise">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Free_Agency">
+        <PropertyRef Name="Franchise_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1110,18 +1125,6 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Free_Agency_0_0">
-    <End Role="Players" Type="Self.Player" Multiplicity="1" />
-    <End Role="Free_Agency" Type="Self.Free_Agency" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Players">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Free_Agency">
-        <PropertyRef Name="Player_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Free_Agency_1_0">
     <End Role="Season" Type="Self.Season" Multiplicity="1" />
     <End Role="Free_Agency" Type="Self.Free_Agency" Multiplicity="*" />
     <ReferentialConstraint>
@@ -1130,6 +1133,18 @@
       </Principal>
       <Dependent Role="Free_Agency">
         <PropertyRef Name="Season_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Free_Agency_2_0">
+    <End Role="Players" Type="Self.Player" Multiplicity="1" />
+    <End Role="Free_Agency" Type="Self.Free_Agency" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Players">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Free_Agency">
+        <PropertyRef Name="Player_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1662,18 +1677,6 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Player_Ratings_0_0">
-    <End Role="Players" Type="Self.Player" Multiplicity="1" />
-    <End Role="Player_Ratings" Type="Self.Player_Ratings" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Players">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Player_Ratings">
-        <PropertyRef Name="Player_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Player_Ratings_1_0">
     <End Role="Season" Type="Self.Season" Multiplicity="1" />
     <End Role="Player_Ratings" Type="Self.Player_Ratings" Multiplicity="*" />
     <ReferentialConstraint>
@@ -1682,6 +1685,18 @@
       </Principal>
       <Dependent Role="Player_Ratings">
         <PropertyRef Name="Season_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Player_Ratings_1_0">
+    <End Role="Players" Type="Self.Player" Multiplicity="1" />
+    <End Role="Player_Ratings" Type="Self.Player_Ratings" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Players">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Player_Ratings">
+        <PropertyRef Name="Player_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1733,7 +1748,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="mainEntities" annotation:LazyLoadingEnabled="true">
+  <EntityContainer Name="mainEntities4" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Awards" EntityType="Self.Award" />
     <EntitySet Name="Conferences" EntityType="Self.Conference" />
     <EntitySet Name="DBVersions" EntityType="Self.DBVersion" />
@@ -1790,6 +1805,10 @@
     <AssociationSet Name="FK_Draft_2_0" Association="Self.FK_Draft_2_0">
       <End Role="Players" EntitySet="Players" />
       <End Role="Draft" EntitySet="Drafts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Free_Agency_1_0" Association="Self.FK_Free_Agency_1_0">
+      <End Role="Franchise" EntitySet="Franchises" />
+      <End Role="Free_Agency" EntitySet="Free_Agency" />
     </AssociationSet>
     <AssociationSet Name="FK_Game_Player_FG_Defense_Stats_0_0" Association="Self.FK_Game_Player_FG_Defense_Stats_0_0">
       <End Role="Franchise" EntitySet="Franchises" />
@@ -1876,11 +1895,11 @@
       <End Role="Training_Camp_by_Season" EntitySet="Training_Camp_by_Season" />
     </AssociationSet>
     <AssociationSet Name="FK_Free_Agency_0_0" Association="Self.FK_Free_Agency_0_0">
-      <End Role="Players" EntitySet="Players" />
+      <End Role="Season" EntitySet="Seasons" />
       <End Role="Free_Agency" EntitySet="Free_Agency" />
     </AssociationSet>
-    <AssociationSet Name="FK_Free_Agency_1_0" Association="Self.FK_Free_Agency_1_0">
-      <End Role="Season" EntitySet="Seasons" />
+    <AssociationSet Name="FK_Free_Agency_2_0" Association="Self.FK_Free_Agency_2_0">
+      <End Role="Players" EntitySet="Players" />
       <End Role="Free_Agency" EntitySet="Free_Agency" />
     </AssociationSet>
     <AssociationSet Name="FK_Game_0_0" Association="Self.FK_Game_0_0">
@@ -2060,11 +2079,11 @@
       <End Role="Player_Awards" EntitySet="Player_Awards" />
     </AssociationSet>
     <AssociationSet Name="FK_Player_Ratings_0_0" Association="Self.FK_Player_Ratings_0_0">
-      <End Role="Players" EntitySet="Players" />
+      <End Role="Season" EntitySet="Seasons" />
       <End Role="Player_Ratings" EntitySet="Player_Ratings" />
     </AssociationSet>
     <AssociationSet Name="FK_Player_Ratings_1_0" Association="Self.FK_Player_Ratings_1_0">
-      <End Role="Season" EntitySet="Seasons" />
+      <End Role="Players" EntitySet="Players" />
       <End Role="Player_Ratings" EntitySet="Player_Ratings" />
     </AssociationSet>
     <AssociationSet Name="FK_Training_Camp_by_Season_2_0" Association="Self.FK_Training_Camp_by_Season_2_0">

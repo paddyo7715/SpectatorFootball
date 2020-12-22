@@ -269,7 +269,7 @@ namespace SpectatorFootball.DraftsNS
             {
                 int iPos = (int)pp;
                 int pos_count = players.Where(x => x.Pos == iPos && x.Retired == 0).Count();
-                bool bTooManyPlayers = isTooManyPosPlayers(pp, pos_count);
+                bool bTooManyPlayers = Team_Helper.isTooManyPosPlayersCamp(pp, pos_count);
                 if (bTooManyPlayers || ((pp == Player_Pos.K || pp == Player_Pos.P) && (percent_complete < app_Constants.DRAFT_ROUND_PERCNT_BEFORE_KICKERS_CONSIDERED)))
                     r.Unwanted_Positions.Add(pp);
             }
@@ -310,56 +310,6 @@ namespace SpectatorFootball.DraftsNS
 
             //Next sort the wanted positions by a random order favoring more popular positions
             r.Wanted_Positions = OrderWantedPositions(r.Wanted_Positions);
-
-            return r;
-        }
-        private bool isTooManyPosPlayers(Player_Pos p, int player_tot)
-        {
-            bool r = false;
-
-            switch (p)
-            {
-                case Player_Pos.QB:
-                    if (player_tot >= app_Constants.TRIANINGCAMP_QB_PER_TEAM)
-                        r = true;
-                        break;
-                case Player_Pos.RB:
-                    if (player_tot >= app_Constants.TRIANINGCAMP_RB_PER_TEAM)
-                        r = true;
-                        break;
-                case Player_Pos.WR:
-                    if (player_tot >= app_Constants.TRIANINGCAMP_WR_PER_TEAM)
-                        r = true;
-                        break;
-                case Player_Pos.TE:
-                    if (player_tot >= app_Constants.TRIANINGCAMP_TE_PER_TEAM)
-                        r = true;
-                        break;
-                case Player_Pos.OL:
-                    if (player_tot >= app_Constants.TRIANINGCAMP_OL_PER_TEAM)
-                        r = true;
-                        break;
-                case Player_Pos.DL:
-                    if (player_tot >= app_Constants.TRIANINGCAMP_DL_PER_TEAM)
-                        r = true;
-                        break;
-                case Player_Pos.LB:
-                    if (player_tot >= app_Constants.TRIANINGCAMP_LB_PER_TEAM)
-                        r = true;
-                        break;
-                case Player_Pos.DB:
-                    if (player_tot >= app_Constants.TRIANINGCAMP_DB_PER_TEAM)
-                        r = true;
-                        break;
-                case Player_Pos.K:
-                    if (player_tot >= app_Constants.TRIANINGCAMP_K_PER_TEAM)
-                        r = true;
-                        break;
-                case Player_Pos.P:
-                    if (player_tot >= app_Constants.TRIANINGCAMP_P_PER_TEAM)
-                        r = true;
-                        break;
-            }
 
             return r;
         }

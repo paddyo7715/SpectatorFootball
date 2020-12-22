@@ -318,6 +318,8 @@ namespace SpectatorFootball
 
                 if (teamsLessThanFull_Count == 0)
                     r = League_State.FreeAgency_Completed;
+                else
+                    r = League_State.FreeAgency_Started;
 
                 if (training_camp_count > 0)
                     r = League_State.Training_Camp_Ended;

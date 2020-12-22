@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="mainModelStoreContainer" CdmEntityContainer="mainEntities">
+  <EntityContainerMapping StorageEntityContainer="mainModelStoreContainer" CdmEntityContainer="mainEntities4">
     <EntitySetMapping Name="Awards">
       <EntityTypeMapping TypeName="mainModel.Award">
         <MappingFragment StoreEntitySet="Award">
@@ -68,6 +68,7 @@
           <ScalarProperty Name="Week" ColumnName="Week" />
           <ScalarProperty Name="Franchise_ID" ColumnName="Franchise_ID" />
           <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
+          <ScalarProperty Name="Signed" ColumnName="Signed" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -531,7 +532,7 @@
           <ScalarProperty Name="Season_ID" ColumnName="Season_ID" />
           <ScalarProperty Name="Ball_Safety_Rating" ColumnName="Ball_Safety_Rating" />
           <ScalarProperty Name="Accuracy_Rating" ColumnName="Accuracy_Rating" />
-          <ScalarProperty Name="Decision_Making" ColumnName="Decision_Making" />
+          <ScalarProperty Name="Decision_Making_Rating" ColumnName="Decision_Making_Rating" />
           <ScalarProperty Name="Arm_Strength_Rating" ColumnName="Arm_Strength_Rating" />
           <ScalarProperty Name="Pass_Block_Rating" ColumnName="Pass_Block_Rating" />
           <ScalarProperty Name="Run_Block_Rating" ColumnName="Run_Block_Rating" />
@@ -539,11 +540,11 @@
           <ScalarProperty Name="Speed_Rating" ColumnName="Speed_Rating" />
           <ScalarProperty Name="Agilty_Rating" ColumnName="Agilty_Rating" />
           <ScalarProperty Name="Hands_Rating" ColumnName="Hands_Rating" />
-          <ScalarProperty Name="Pass_Attack" ColumnName="Pass_Attack" />
-          <ScalarProperty Name="Run_Attack" ColumnName="Run_Attack" />
+          <ScalarProperty Name="Pass_Attack_Rating" ColumnName="Pass_Attack_Rating" />
+          <ScalarProperty Name="Run_Attack_Rating" ColumnName="Run_Attack_Rating" />
           <ScalarProperty Name="Tackle_Rating" ColumnName="Tackle_Rating" />
-          <ScalarProperty Name="Kicker_Leg_Power" ColumnName="Kicker_Leg_Power" />
-          <ScalarProperty Name="Kicker_Leg_Accuracy" ColumnName="Kicker_Leg_Accuracy" />
+          <ScalarProperty Name="Kicker_Leg_Power_Rating" ColumnName="Kicker_Leg_Power_Rating" />
+          <ScalarProperty Name="Kicker_Leg_Accuracy_Rating" ColumnName="Kicker_Leg_Accuracy_Rating" />
           <ScalarProperty Name="Work_Ethic_Ratings" ColumnName="Work_Ethic_Ratings" />
           <ScalarProperty Name="Toughness_Ratings" ColumnName="Toughness_Ratings" />
           <ScalarProperty Name="Sportsmanship_Ratings" ColumnName="Sportsmanship_Ratings" />

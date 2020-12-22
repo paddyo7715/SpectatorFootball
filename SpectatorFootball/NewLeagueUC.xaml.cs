@@ -209,7 +209,6 @@ namespace SpectatorFootball
             int num_confs;
             int num_playoff_teams;
             int teams_per_division;
-            int j;
             Style Largelblstyle = (Style)System.Windows.Application.Current.FindResource("Largelbltyle");
             Style GroupBoxstyle = (Style)System.Windows.Application.Current.FindResource("GroupBoxstyle");
             Style Largetxttyle = (Style)System.Windows.Application.Current.FindResource("Largetxttyle");

@@ -77,7 +77,7 @@ namespace SpectatorFootball
 
             using (var context = new leagueContext(con))
             {
-                var teamRankings = context.Database.SqlQuery<int>("sSQL", new SqlParameter("@year", year)).ToList();
+                var teamRankings = context.Database.SqlQuery<int>(sSQL, new SqlParameter("@year", year)).ToList();
                 r = teamRankings;
             }
             return r;
@@ -115,7 +115,7 @@ namespace SpectatorFootball
 
             using (var context = new leagueContext(con))
             {
-                var teamRankings = context.Database.SqlQuery<int>("sSQL", new SqlParameter("@year", year)).ToList();
+                var teamRankings = context.Database.SqlQuery<int>(sSQL, new SqlParameter("@year", year)).ToList();
                 r = teamRankings;
             }
             return r;

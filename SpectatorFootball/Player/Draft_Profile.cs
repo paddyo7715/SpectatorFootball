@@ -101,7 +101,6 @@ namespace SpectatorFootball
                         int i = 0;
                         bool bFirst = false;
                         bool bLast = false;
-                        bool bNexttoLast = false;
                         foreach (string pa in Player_Attributes)
                         {
                             if (i == 0)
@@ -120,7 +119,7 @@ namespace SpectatorFootball
                                     sb.Append(ScoutingReport.AccuracyReport((int) pr.Accuracy_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
                                     break;
                                 case "Decision_Making":
-                                    sb.Append(ScoutingReport.DecisionMakingReport((int)pr.Decision_Making, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
+                                    sb.Append(ScoutingReport.DecisionMakingReport((int)pr.Decision_Making_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
                                     break;
                                 case "Arm_Strength_Rating":
                                     sb.Append(ScoutingReport.ArmStrengthReport((int)pr.Arm_Strength_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
@@ -145,7 +144,6 @@ namespace SpectatorFootball
                         int i = 0;
                         bool bFirst = false;
                         bool bLast = false;
-                        bool bNexttoLast = false;
                         foreach (string pa in Player_Attributes)
                         {
                             if (i == 0)
@@ -192,7 +190,6 @@ namespace SpectatorFootball
                         int i = 0;
                         bool bFirst = false;
                         bool bLast = false;
-                        bool bNexttoLast = false;
                         foreach (string pa in Player_Attributes)
                         {
                             if (i == 0)
@@ -238,7 +235,6 @@ namespace SpectatorFootball
                         int i = 0;
                         bool bFirst = false;
                         bool bLast = false;
-                        bool bNexttoLast = false;
                         foreach (string pa in Player_Attributes)
                         {
                             if (i == 0)
@@ -286,7 +282,6 @@ namespace SpectatorFootball
                         int i = 0;
                         bool bFirst = false;
                         bool bLast = false;
-                        bool bNexttoLast = false;
                         foreach (string pa in Player_Attributes)
                         {
                             if (i == 0)
@@ -325,7 +320,6 @@ namespace SpectatorFootball
                         int i = 0;
                         bool bFirst = false;
                         bool bLast = false;
-                        bool bNexttoLast = false;
                         foreach (string pa in Player_Attributes)
                         {
                             if (i == 0)
@@ -341,10 +335,10 @@ namespace SpectatorFootball
                             switch (pa)
                             {
                                 case "PassRushing":
-                                    sb.Append(ScoutingReport.PassRushingReport((int)pr.Pass_Attack, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
+                                    sb.Append(ScoutingReport.PassRushingReport((int)pr.Pass_Attack_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
                                     break;
                                 case "RunStopping":
-                                    sb.Append(ScoutingReport.RunStoppingReport((int)pr.Run_Attack, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
+                                    sb.Append(ScoutingReport.RunStoppingReport((int)pr.Run_Attack_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
                                     break;
                             }
                             i++;
@@ -365,7 +359,6 @@ namespace SpectatorFootball
                         int i = 0;
                         bool bFirst = false;
                         bool bLast = false;
-                        bool bNexttoLast = false;
                         foreach (string pa in Player_Attributes)
                         {
                             if (i == 0)
@@ -415,7 +408,6 @@ namespace SpectatorFootball
                         int i = 0;
                         bool bFirst = false;
                         bool bLast = false;
-                        bool bNexttoLast = false;
                         foreach (string pa in Player_Attributes)
                         {
                             if (i == 0)
@@ -440,10 +432,10 @@ namespace SpectatorFootball
                                     sb.Append(ScoutingReport.TackleReport((int)pr.Tackle_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
                                     break;
                                 case "PassRushing":
-                                    sb.Append(ScoutingReport.PassRushingReport((int)pr.Pass_Attack, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
+                                    sb.Append(ScoutingReport.PassRushingReport((int)pr.Pass_Attack_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
                                     break;
                                 case "RunStopping":
-                                    sb.Append(ScoutingReport.RunStoppingReport((int)pr.Run_Attack, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
+                                    sb.Append(ScoutingReport.RunStoppingReport((int)pr.Run_Attack_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
                                     break;
                             }
                             i++;
@@ -464,7 +456,6 @@ namespace SpectatorFootball
                         int i = 0;
                         bool bFirst = false;
                         bool bLast = false;
-                        bool bNexttoLast = false;
                         foreach (string pa in Player_Attributes)
                         {
                             if (i == 0)
@@ -480,10 +471,10 @@ namespace SpectatorFootball
                             switch (pa)
                             {
                                 case "legstrength":
-                                    sb.Append(ScoutingReport.LegPowerReport((int)pr.Kicker_Leg_Power, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
+                                    sb.Append(ScoutingReport.LegPowerReport((int)pr.Kicker_Leg_Power_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
                                     break;
                                 case "kickeraccuracy":
-                                    sb.Append(ScoutingReport.LegAccuracyKReport((int)pr.Kicker_Leg_Accuracy, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
+                                    sb.Append(ScoutingReport.LegAccuracyKReport((int)pr.Kicker_Leg_Accuracy_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
                                     break;
 
                             }
@@ -504,7 +495,6 @@ namespace SpectatorFootball
                         int i = 0;
                         bool bFirst = false;
                         bool bLast = false;
-                        bool bNexttoLast = false;
                         foreach (string pa in Player_Attributes)
                         {
                             if (i == 0)
@@ -520,10 +510,10 @@ namespace SpectatorFootball
                             switch (pa)
                             {
                                 case "legstrength":
-                                    sb.Append(ScoutingReport.LegPowerReport((int)pr.Kicker_Leg_Power, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
+                                    sb.Append(ScoutingReport.LegPowerReport((int)pr.Kicker_Leg_Power_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
                                     break;
                                 case "kickeraccuracy":
-                                    sb.Append(ScoutingReport.LegAccuracyPReport((int)pr.Kicker_Leg_Accuracy, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
+                                    sb.Append(ScoutingReport.LegAccuracyPReport((int)pr.Kicker_Leg_Accuracy_Rating, app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING, bFirst, bLast));
                                     break;
 
                             }

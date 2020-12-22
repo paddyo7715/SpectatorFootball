@@ -19,7 +19,7 @@ namespace SpectatorFootball.Models
         public long Season_ID { get; set; }
         public long Ball_Safety_Rating { get; set; }
         public long Accuracy_Rating { get; set; }
-        public long Decision_Making { get; set; }
+        public long Decision_Making_Rating { get; set; }
         public long Arm_Strength_Rating { get; set; }
         public long Pass_Block_Rating { get; set; }
         public long Run_Block_Rating { get; set; }
@@ -27,16 +27,16 @@ namespace SpectatorFootball.Models
         public long Speed_Rating { get; set; }
         public long Agilty_Rating { get; set; }
         public long Hands_Rating { get; set; }
-        public long Pass_Attack { get; set; }
-        public long Run_Attack { get; set; }
+        public long Pass_Attack_Rating { get; set; }
+        public long Run_Attack_Rating { get; set; }
         public long Tackle_Rating { get; set; }
-        public long Kicker_Leg_Power { get; set; }
-        public long Kicker_Leg_Accuracy { get; set; }
+        public long Kicker_Leg_Power_Rating { get; set; }
+        public long Kicker_Leg_Accuracy_Rating { get; set; }
         public long Work_Ethic_Ratings { get; set; }
         public long Toughness_Ratings { get; set; }
-        public Nullable<long> Sportsmanship_Ratings { get; set; }
+        public long Sportsmanship_Ratings { get; set; }
     
-        public virtual Player Player { get; set; }
         public virtual Season Season { get; set; }
+        public virtual Player Player { get; set; }
     }
 }

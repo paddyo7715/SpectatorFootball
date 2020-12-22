@@ -28,16 +28,12 @@ namespace SpectatorFootball
         private Boolean bLoadingForm = true;
 
         public event EventHandler<TeamUpdatedEventArgs> backtoNewLeague;
-        public event EventHandler backtoStockTeams;
 
         // Property Roster As List(Of PlayerMdl) = Nothing
         public Uniform_Image Uniform_Img { get; set; }
 
         public ObservableCollection<Xceed.Wpf.Toolkit.ColorItem> Recent_ColorList = new ObservableCollection<Xceed.Wpf.Toolkit.ColorItem>();
         public ObservableCollection<Xceed.Wpf.Toolkit.ColorItem> Standard_ColorList = new ObservableCollection<Xceed.Wpf.Toolkit.ColorItem>();
-
-        private string original_city = null;
-        private string original_nickname = null;
 
         public bool Event_from_Code { get; set; } = false;
         private static ILog logger = LogManager.GetLogger("RollingFile");
