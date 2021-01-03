@@ -82,7 +82,8 @@ namespace SpectatorFootball.Services
             List<Pos_and_Count> p = td.GetTeamPlayerPosCounts(Season_ID, Franchise_ID, League_con_string);
 
             //Only if the team needs to select more players
-            if (p.Count() < app_Constants.TRAINING_CAMP_TEAM_PLAYER_COUNT)
+            int num_players = p.Sum(x => x.pos_count);
+            if (num_players < app_Constants.TRAINING_CAMP_TEAM_PLAYER_COUNT)
             {
                 foreach (Player_Pos pp in System.Enum.GetValues(typeof(Player_Pos)))
                 {

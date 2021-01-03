@@ -428,7 +428,7 @@ namespace SpectatorFootball
                 case Player_Pos.OL:
                     {
                         r.Pass_Block_Rating = CommonUtils.getRandomNum(app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING);
-                        r.Run_Block_Rating = CommonUtils.getRandomNum(Math.Max(app_Constants.PRIMARY_ABILITY_LOW_RATING, (int)r.Pass_Block_Rating - app_Constants.OL_RUN_PASS_BLOCK_DELTA), Math.Min(app_Constants.PRIMARY_ABILITY_HIGH_RATING, (int)r.Pass_Block_Rating + app_Constants.OL_RUN_PASS_BLOCK_DELTA));
+                        r.Run_Block_Rating = CommonUtils.getRandomNum(app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING);
 
                         r.Tackle_Rating = CommonUtils.getRandomNum(app_Constants.SECONDARY_1_ABILITY_LOW_RATING, app_Constants.SECONDARY_1_ABILITY_HIGH_RATING);
                         r.Speed_Rating = CommonUtils.getRandomNum(app_Constants.SECONDARY_3_ABILITY_LOW_RATING, app_Constants.SECONDARY_3_ABILITY_HIGH_RATING);
@@ -633,11 +633,10 @@ namespace SpectatorFootball
             var classProperties = pr.GetType().GetProperties();
             foreach (var cp in classProperties)
             {
-                if (cp.Name.IndexOf("_Ratings") != -1)
+                if (cp.Name.IndexOf("_Rating") != -1)
                 {
                     long x = (long)((long)cp.GetValue(pr) * .8);
                     cp.SetValue(pr,x);
-                    break;
                 }
             }
 

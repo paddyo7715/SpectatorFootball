@@ -33,7 +33,7 @@
         </Grid>
         <StackPanel Orientation="Vertical">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="top" >
-                <Button Name="btnFreeAgency" Style="{StaticResource appHelpBTN}" Click="btnFreeAgency_Click">Execute Free Agency</Button>
+                <Button Name="btnFreeAgency" Style="{StaticResource appHelpBTN}" Width="200" Click="btnFreeAgency_Click">Execute Free Agency</Button>
             </StackPanel>
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
                 <Label HorizontalAlignment="Center" Style="{StaticResource Conflbltyle}">Free Agency Tracker</Label>

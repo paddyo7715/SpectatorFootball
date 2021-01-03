@@ -30,12 +30,12 @@ namespace SpectatorFootball
         public const string SETTINGS_DB = "BlankDB.db";
 
         // Draft
-        public const float DRAFT_MULTIPLIER = 2.0f;  //Multiplied by number of rounds to determine num of players to create for draft.
+        public const float DRAFT_MULTIPLIER = 1.6f;  //Multiplied by number of rounds to determine num of players to create for draft.
         public const int NORMAL_DRAFT_ROUNDS = 7;
         public const int STARTER_MIN_OVERALL_GRADE = 82;
         public const double DRAFT_ROUND_PERCNT_BEFORE_KICKERS_CONSIDERED = 70.0;
         public const int DRAFT_STARTER_AGE_TOO_OLD = 35;
-        public const int DRAFT_QB_CHOICE_PICK_DEPTH = 15;
+        public const int DRAFT_QB_CHOICE_PICK_DEPTH = 10;
         public const int DRAFT_OTHER_CHOICE_PICK_DEPTH = 5;
 
         // Players On a team - 53 total
@@ -52,7 +52,7 @@ namespace SpectatorFootball
         public const int K_PER_TEAM = 1;
         public const int P_PER_TEAM = 1;
 
-        // Players On a Training Camp Team 70 total
+        // Players On a Training Camp Team 86 total
         public const int TRIANINGCAMP_QB_PER_TEAM = 5;
         public const int TRIANINGCAMP_RB_PER_TEAM = 7;
         public const int TRIANINGCAMP_WR_PER_TEAM = 10;
@@ -82,7 +82,7 @@ namespace SpectatorFootball
 
         // Players Draft importance by position. 
         //This is the upper range for random number 1 to n
-        public const int DRAFTIMPORTANCE_QB_PER_TEAM = 30;
+        public const int DRAFTIMPORTANCE_QB_PER_TEAM = 35;
         public const int DRAFTIMPORTANCE_RB_PER_TEAM = 12;
         public const int DRAFTIMPORTANCE_WR_PER_TEAM = 12;
         public const int DRAFTIMPORTANCE_TE_PER_TEAM = 12;
@@ -265,7 +265,7 @@ namespace SpectatorFootball
         public const int NEWLEAGE_HIGH_AGE = 35;
 
         // Abilities
-        public const int OL_RUN_PASS_BLOCK_DELTA = 5;
+        public const int OL_RUN_PASS_BLOCK_DELTA = 80;
 
         public const int PRIMARY_ABILITY_LOW_RATING = 40;
         public const int PRIMARY_ABILITY_HIGH_RATING = 100;

@@ -39,7 +39,7 @@ namespace SpectatorFootball.DAO
 
             using (var context = new leagueContext(con))
             {
-                r = context.Players.GroupBy(x => x.Pos).Select(x => new Pos_and_Count { pos = (int)x.Key, pos_count = x.Count() }).ToList();
+                r = context.Players.Where(x => x.Franchise_ID == franchise_id && x.Retired == 0).GroupBy(x => x.Pos).Select(x => new Pos_and_Count { pos = (int)x.Key, pos_count = x.Count() }).ToList();
             }
 
             return r;
@@ -54,6 +54,20 @@ namespace SpectatorFootball.DAO
             using (var context = new leagueContext(con))
             {
                 r = context.Teams_by_Season.Where(x => x.Franchise_ID == franchise_id && x.Season_ID == season_id).First();
+            }
+
+            return r;
+        }
+
+        public List<long> getAllFranchiseIDThisSeason(long season_id, string league_filepath)
+        {
+            List<long> r = null;
+
+            string con = Common.LeageConnection.Connect(league_filepath);
+
+            using (var context = new leagueContext(con))
+            {
+                r = context.Teams_by_Season.Where(x => x.Season_ID == season_id).Select(x => x.Franchise_ID).ToList();
             }
 
             return r;

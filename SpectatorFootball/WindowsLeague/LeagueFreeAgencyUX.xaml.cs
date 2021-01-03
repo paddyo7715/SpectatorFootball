@@ -67,7 +67,22 @@ namespace SpectatorFootball.WindowsLeague
 
         private void btnFreeAgency_Click(object sender, RoutedEventArgs e)
         {
+            List<long> fa_order = Team_Helper.getAllFranchiseIDThisSeason(pw.Loaded_League);
+            fa_order = CommonUtils.ShufleList(fa_order);
+            FreeAgency_Services fas = new FreeAgency_Services();
+            while (fa_order.Count() > 0)
+            {
 
+                for (int i=0; i < fa_order.Count; i++)
+                {
+                    Player p = fas.Select_Free_Agent(pw.Loaded_League, fa_order[i], FreeAgency_Players_list.ToList(), FreeAgency_Pick_list.ToList());
+                    if (p == null)
+                    {
+                        fa_order.RemoveAt(i);
+                        i--;
+                    }
+                }
+            }
         }
         private bool isFreeAgencyDone()
         {

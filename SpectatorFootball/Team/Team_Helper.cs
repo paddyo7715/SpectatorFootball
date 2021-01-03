@@ -1,5 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using SpectatorFootball.DAO;
 using SpectatorFootball.Enum;
+using SpectatorFootball.League;
 using SpectatorFootball.Models;
 
 namespace SpectatorFootball
@@ -109,8 +113,6 @@ namespace SpectatorFootball
 
         }
 
-
-
         public static bool isUniqueTeam(List<Teams_by_Season> lt, int orig_ind, Teams_by_Season new_team)
         {
             bool r = false;
@@ -179,6 +181,18 @@ namespace SpectatorFootball
                         r = true;
                     break;
             }
+
+            return r;
+        }
+
+        public static List<long> getAllFranchiseIDThisSeason(Loaded_League_Structure lls)
+        {
+            List<long> r = null;
+
+            string League_Shortname = lls.season.League_Structure_by_Season[0].Short_Name;
+            TeamDAO tda = new TeamDAO();
+            string League_con_string = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + League_Shortname + Path.DirectorySeparatorChar + League_Shortname + "." + app_Constants.DB_FILE_EXT;
+            r = tda.getAllFranchiseIDThisSeason(lls.season.League_Structure_by_Season[0].Season_ID, League_con_string);
 
             return r;
         }

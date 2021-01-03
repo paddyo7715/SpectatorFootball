@@ -113,7 +113,6 @@ namespace SpectatorFootball.DAO
 
                     //Save the Free Agency Record
                     context.Free_Agency.Add(fa_entity);
-                    context.Entry(fa_entity).State = System.Data.Entity.EntityState.Modified;
                     context.SaveChanges();
 
                     dbContextTransaction.Commit();
