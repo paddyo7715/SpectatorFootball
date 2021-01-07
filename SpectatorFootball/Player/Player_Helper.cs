@@ -10,7 +10,7 @@ namespace SpectatorFootball
     public class Player_Helper
     {
         private static ILog logger = LogManager.GetLogger("RollingFile");
-        public static Player CreatePlayer(Player_Pos pos, Boolean bNewLeage)
+        public static Player CreatePlayer(Player_Pos pos, Boolean bNewLeage,bool bCrappify)
         {
             Player r = new Player();
 
@@ -33,7 +33,10 @@ namespace SpectatorFootball
 
             Player_Ratings ratings = Create_Player_Ratings(pos);
 
-              int[] m = CreateHeightWeight(pos, ratings);
+            if (bCrappify)
+                CrappifyPlayerRatings(ratings);
+
+            int[] m = CreateHeightWeight(pos, ratings);
             r.Height = m[0];
             r.Weight = m[1];
 

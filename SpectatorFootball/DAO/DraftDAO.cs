@@ -94,7 +94,7 @@ namespace SpectatorFootball.DAO
             using (var context = new leagueContext(con))
             {
                 int iFirstKicker = System.Enum.GetNames(typeof(Player_Pos)).Length - 2;
-                r = context.Players.Where(x => x.Player_Ratings.Max(y => y.Season_ID) == season_id).OrderByDescending(x => x.Draft_Grade - ((x.Pos / iFirstKicker) * 100)).ToList();
+                r = context.Players.Where(x => x.Player_Ratings.Max(y => y.Season_ID) == season_id).OrderByDescending(x => x.Draft_Grade - ((x.Pos / iFirstKicker) * 100)).Include(i => i.Drafts).ToList();
             }
 
             return r;

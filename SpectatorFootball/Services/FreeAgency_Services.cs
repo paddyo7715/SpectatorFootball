@@ -67,9 +67,9 @@ namespace SpectatorFootball.Services
             return r;
         }
         //A returned null means no player selected, so this team has enough players
-        public Player Select_Free_Agent(Loaded_League_Structure lls,long Franchise_ID, List<Player_and_Ratings> Free_Agents, List<FreeAgencyTrans> faTransList)
+        public Player_and_Ratings Select_Free_Agent(Loaded_League_Structure lls,long Franchise_ID, List<Player_and_Ratings> Free_Agents, ref FreeAgencyTrans faTrans)
         {
-            Player r = null;
+            Player_and_Ratings r = null;
             List<Player_Pos> Needed_pos = new List<Player_Pos>();
             long Season_ID = lls.season.League_Structure_by_Season[0].Season_ID;
             string League_Shortname = lls.season.League_Structure_by_Season[0].Short_Name;
@@ -106,33 +106,31 @@ namespace SpectatorFootball.Services
                     if (Needed_pos.Contains((Player_Pos)par.p.Pos))
                     {
                         par.p.Franchise_ID = Franchise_ID;
-                        r = par.p;
+                        r = par;
                         break;    
                     }
                 }
                 //If a player could not be found then assign a new, not very good, player
                 if (r == null)
                 {
-                    Player new_player = Player_Helper.CreatePlayer(Needed_pos[0], true);
-                    Player_Helper.CrappifyPlayerRatings(new_player.Player_Ratings.First());
+                    Player new_player = Player_Helper.CreatePlayer(Needed_pos[0], true,true);
                     double new_overall_rating = Player_Helper.Create_Overall_Rating((Player_Pos)new_player.Pos, new_player.Player_Ratings.First());
 
                     Player_DAO pda = new Player_DAO();
                     pda.AddSinglePlayer(new_player, League_con_string);
-
-                    r = new_player;
+                    r = new Player_and_Ratings();
+                    r.p = new_player;
                     Free_Agents.Add(new Player_and_Ratings() { p = new_player, pr = new_player.Player_Ratings.ToList(), Overall_Grade = new_overall_rating });
                 }
 
-                r.Franchise_ID = Franchise_ID;
-
+                r.p.Franchise_ID = Franchise_ID;
                 Teams_by_Season tbs = td.getTeamfromFranchiseID(Season_ID, Franchise_ID, League_con_string);
                 string helmet_filename = tbs.Helmet_Image_File;
                 BitmapImage HelmetImage = lls.getHelmetImg(tbs.Helmet_Image_File);
                 string Team_Name = tbs.City + " " + tbs.Nickname;
-                string Pick_Pos_Name = (r.Pos + " " + r.First_Name + " " + r.Last_Name).Trim();
+                string Pick_Pos_Name = (((Player_Pos)r.p.Pos).ToString() + " " + r.p.First_Name + " " + r.p.Last_Name).Trim();
 
-                FreeAgencyTrans ft = new FreeAgencyTrans()
+                faTrans = new FreeAgencyTrans()
                 {
                     Franchise_ID = Franchise_ID,
                     HelmetImage = HelmetImage,
@@ -141,10 +139,9 @@ namespace SpectatorFootball.Services
                     Team_Name = Team_Name,
                     Pick_Pos_Name = Pick_Pos_Name
                 };
-                faTransList.Add(ft);
 
                 FreeAgencyDAO fad = new FreeAgencyDAO();
-                fad.SelectPlayer(r, ft, League_con_string);
+                fad.SelectPlayer(r.p, faTrans, League_con_string);
             }
 
             return r;

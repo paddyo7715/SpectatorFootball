@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,6 +18,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace SpectatorFootball.WindowsLeague
 {
@@ -67,29 +69,71 @@ namespace SpectatorFootball.WindowsLeague
 
         private void btnFreeAgency_Click(object sender, RoutedEventArgs e)
         {
-            List<long> fa_order = Team_Helper.getAllFranchiseIDThisSeason(pw.Loaded_League);
-            fa_order = CommonUtils.ShufleList(fa_order);
-            FreeAgency_Services fas = new FreeAgency_Services();
-            while (fa_order.Count() > 0)
+            try
             {
-
-                for (int i=0; i < fa_order.Count; i++)
+                Mouse.OverrideCursor = Cursors.Wait;
+                logger.Info("Beginning executing free agency at beginning of season.");
+                List<long> fa_order = Team_Helper.getAllFranchiseIDThisSeason(pw.Loaded_League);
+                fa_order = CommonUtils.ShufleList(fa_order);
+                FreeAgency_Services fas = new FreeAgency_Services();
+                while (fa_order.Count() > 0)
                 {
-                    Player p = fas.Select_Free_Agent(pw.Loaded_League, fa_order[i], FreeAgency_Players_list.ToList(), FreeAgency_Pick_list.ToList());
-                    if (p == null)
+
+                    for (int i = 0; i < fa_order.Count; i++)
                     {
-                        fa_order.RemoveAt(i);
-                        i--;
+                        FreeAgencyTrans fatrans = null;
+                        Player_and_Ratings p = fas.Select_Free_Agent(pw.Loaded_League, fa_order[i], FreeAgency_Players_list.ToList(), ref fatrans);
+                        if (p == null)
+                        {
+                            fa_order.RemoveAt(i);
+                            i--;
+                        }
+                        else
+                        {
+                            FreeAgency_Players_list.Remove(p);
+                            FreeAgency_Pick_list.Add(fatrans);
+                        }
+
+                        updateUI();
                     }
                 }
+                btnFreeAgency.IsEnabled = false;
+                logger.Info("Ending executing free agency at beginning of season.");
+                Mouse.OverrideCursor = null;
+            }
+            catch (Exception ex)
+            {
+                Mouse.OverrideCursor = null;
+                logger.Error("Error executing free agency at beginning of season");
+                logger.Error(ex);
+                MessageBox.Show(CommonUtils.substr(ex.Message, 0, 100), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
             }
         }
         private bool isFreeAgencyDone()
         {
             bool r = false;
-            FreeAgency_Helper fah = new FreeAgency_Helper();
-            r = fah.isFreeAgencyDone(pw.Loaded_League);
+            //            FreeAgency_Helper fah = new FreeAgency_Helper();
+            //            r = fah.isFreeAgencyDone(pw.Loaded_League);
+
+            if (pw.Loaded_League.LState == Enum.League_State.FreeAgency_Started ||
+                pw.Loaded_League.LState == Enum.League_State.Draft_Completed)
+                r = false;
+            else
+                r = true;
+
             return r;
+        }
+        private void updateUI()
+        {
+            Application.Current.Dispatcher.Invoke(DispatcherPriority.Background,
+                new ThreadStart(delegate {
+                    lstPicks.Items.Refresh();
+                    lstFreeAgents.Items.Refresh();
+                    lstPicks.SelectedItem = FreeAgency_Pick_list.Count() - 1;
+                    lstPicks.ScrollIntoView(FreeAgency_Pick_list[(int)FreeAgency_Pick_list.Count() - 1]);
+                }));
+
         }
     }
 

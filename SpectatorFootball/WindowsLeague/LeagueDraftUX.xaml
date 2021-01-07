@@ -13,6 +13,7 @@
         <local1:inttoWeight x:Key="inttoWeight" />
         <local1:SpeedInttoString x:Key="SpeedInttoString" />
         <local1:isNullConverter x:Key="isNullConverter" />
+        <local1:HasAnyConverter x:Key="HasAnyConverter" />
     </UserControl.Resources>    
     <DockPanel Height="730">
         <Grid DockPanel.Dock="Top">
@@ -75,7 +76,7 @@
                     <ListView.ItemContainerStyle>
                         <Style TargetType="{x:Type ListViewItem}"  >
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding Franchise_ID, Converter={StaticResource isNullConverter}}" Value="false">
+                                <DataTrigger Binding="{Binding Drafts.Count, Converter={StaticResource HasAnyConverter}}" Value="false">
                                     <Setter Property="Background" Value="Gray"/>
                                 </DataTrigger>
                             </Style.Triggers>
