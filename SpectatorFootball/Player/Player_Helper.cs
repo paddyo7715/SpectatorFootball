@@ -33,8 +33,21 @@ namespace SpectatorFootball
 
             Player_Ratings ratings = Create_Player_Ratings(pos);
 
+            //if the player is younger than 28 then there is a chance that
+            //their ratings should be lessened based on their age.
+            if (age < app_Constants.PLAYER_ABILITY_PEAK_AGE)
+            {
+                int rnd = CommonUtils.getRandomNum(1, 100);
+
+                if (rnd <= app_Constants.DRAFT_PERCENT_CRAPPIFY)
+                {
+                    int ageDelt = (int) Math.Round(((app_Constants.PLAYER_ABILITY_PEAK_AGE - age) * app_Constants.DRAFT_DELTA_MULTIPLYER));
+                    CrappifyPlayerRatings(ratings, ageDelt);
+                }
+            }
+
             if (bCrappify)
-                CrappifyPlayerRatings(ratings);
+                CrappifyPlayerRatings(ratings,20);
 
             int[] m = CreateHeightWeight(pos, ratings);
             r.Height = m[0];
@@ -628,17 +641,22 @@ namespace SpectatorFootball
 
             return OverAll;
         }
-        public static void CrappifyPlayerRatings(Player_Ratings pr)
+        public static void CrappifyPlayerRatings(Player_Ratings pr, int reducePercent)
         {
-            //this method is called on a nwely created player's ratings when a player at that position 
-            //can not be found and the newly created player must not be good, so all of their ratings
-            //are decreased by 1/3.
+            double mfactor = (double)((100.0 - reducePercent) / 100.0);
+
             var classProperties = pr.GetType().GetProperties();
             foreach (var cp in classProperties)
             {
+                if (cp.Name == "Work_Ethic_Ratings" ||
+                    cp.Name == "Sportsmanship_Ratings" ||
+                    cp.Name == "Toughness_Ratings")
+                    continue;
+
                 if (cp.Name.IndexOf("_Rating") != -1)
                 {
-                    long x = (long)((long)cp.GetValue(pr) * .8);
+                    //                    long x = (long)((long)cp.GetValue(pr) * .8);
+                    long x = (long)((long)cp.GetValue(pr) * mfactor);
                     cp.SetValue(pr,x);
                 }
             }

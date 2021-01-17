@@ -1,5 +1,7 @@
 ﻿using log4net;
+using SpectatorFootball.Enum;
 using SpectatorFootball.Free_Agency;
+using SpectatorFootball.Help_Forms;
 using SpectatorFootball.Models;
 using SpectatorFootball.Services;
 using System;
@@ -37,6 +39,7 @@ namespace SpectatorFootball.WindowsLeague
         private MainWindow pw;
 
         public event EventHandler Show_Standings;
+        public event EventHandler Set_TopMenu;
         public LeagueFreeAgencyUX(MainWindow pw)
         {
             InitializeComponent();
@@ -53,18 +56,23 @@ namespace SpectatorFootball.WindowsLeague
             lstPicks.ItemsSource = FreeAgency_Pick_list;
             lstFreeAgents.ItemsSource = FreeAgency_Players_list;
 
-            if (isFreeAgencyDone())
+            if (pw.Loaded_League.LState != League_State.Draft_Completed &&
+                pw.Loaded_League.LState != League_State.FreeAgency_Started)
                 btnFreeAgency.IsEnabled = false;
 
         }
         private void btnStandings_Click(object sender, RoutedEventArgs e)
         {
+            if (Mouse.OverrideCursor == Cursors.Wait) return;
             Show_Standings?.Invoke(this, new EventArgs());
         }
 
         private void help_btn_Click(object sender, RoutedEventArgs e)
         {
-
+            var help_form = new Help_FreeAgency();
+            help_form.Top = (SystemParameters.PrimaryScreenHeight - help_form.Height) / 2;
+            help_form.Left = (SystemParameters.PrimaryScreenWidth - help_form.Width) / 2;
+            help_form.ShowDialog();
         }
 
         private void btnFreeAgency_Click(object sender, RoutedEventArgs e)
@@ -98,8 +106,14 @@ namespace SpectatorFootball.WindowsLeague
                     }
                 }
                 btnFreeAgency.IsEnabled = false;
+                League_Services ls = new League_Services();
+
+                pw.Loaded_League.LState = ls.getSeasonState(true,
+                     pw.Loaded_League.season.ID, pw.Loaded_League.season.League_Structure_by_Season[0].Short_Name);
+                Set_TopMenu?.Invoke(this, new EventArgs());
                 logger.Info("Ending executing free agency at beginning of season.");
                 Mouse.OverrideCursor = null;
+                MessageBox.Show("Pre-season Free Agency has ended.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)
             {

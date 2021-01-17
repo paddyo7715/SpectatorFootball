@@ -38,6 +38,7 @@ namespace SpectatorFootball.WindowsLeague
         private MainWindow pw;
 
         public event EventHandler Show_Standings;
+        public event EventHandler Set_TopMenu;
         public LeagueDraftUX(MainWindow pw)
         {
             InitializeComponent();
@@ -53,7 +54,8 @@ namespace SpectatorFootball.WindowsLeague
             lstPicks.ItemsSource = Draft_Pick_list;
             lstDraftPlayers.ItemsSource = Draft_Players_list;
 
-            if (!MorePicks())
+            if (pw.Loaded_League.LState != League_State.Draft_Started &&
+                pw.Loaded_League.LState != League_State.Season_Started)
                 EndofDraft();
         }
 
@@ -65,14 +67,14 @@ namespace SpectatorFootball.WindowsLeague
             {
                 Player p = Draft_Players_list[ls.SelectedIndex];
                 Draft_Profile_Popup dpp = new Draft_Profile_Popup(p);
-                dpp.Top = (SystemParameters.PrimaryScreenHeight - dpp.Height) / 2;
                 dpp.Left = (SystemParameters.PrimaryScreenWidth - dpp.Width) / 2;
-                dpp.ShowDialog();
+                 dpp.ShowDialog();
             }
         }
 
         private void btnStandings_Click(object sender, RoutedEventArgs e)
         {
+            if (Mouse.OverrideCursor == Cursors.Wait) return;
             Show_Standings?.Invoke(this, new EventArgs());
         }
 
@@ -113,7 +115,9 @@ namespace SpectatorFootball.WindowsLeague
             }
             finally
             {
-                EndofPicksorDraft();
+                if (EndofPicksorDraft())
+                    MessageBox.Show("Draft has Completed.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+
             }
         }
 
@@ -162,7 +166,8 @@ namespace SpectatorFootball.WindowsLeague
             }
             finally
             {
-                EndofPicksorDraft();
+                if (EndofPicksorDraft())
+                    MessageBox.Show("Draft has Completed.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 
@@ -203,7 +208,8 @@ namespace SpectatorFootball.WindowsLeague
             }
             finally
             {
-                EndofPicksorDraft();
+                if (EndofPicksorDraft())
+                    MessageBox.Show("Draft has Completed.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
         private bool MorePicks()
@@ -236,19 +242,26 @@ namespace SpectatorFootball.WindowsLeague
             simRound.IsEnabled = true;
             simDraft.IsEnabled = true;
         }
-        private void EndofPicksorDraft()
+        private bool EndofPicksorDraft()
         {
             bool bMorePicks = false;
             bMorePicks = Draft_Pick_list.Any(x => x.Pick_Pos_Name.Trim() == "");
             if (bMorePicks)
                 enableDraftBTNS();
             else
+            {
                 EndofDraft();
+                League_Services ls = new League_Services();
+
+                pw.Loaded_League.LState = ls.getSeasonState(true,
+                     pw.Loaded_League.season.ID, pw.Loaded_League.season.League_Structure_by_Season[0].Short_Name);
+                Set_TopMenu?.Invoke(this, new EventArgs());
+            }
+
+            return !bMorePicks;
         }
         private void updatelists(long draftpick_ind, Player p)
         {
-            //            DraftPick d = Draft_Pick_list.Where(x => x.ID == dp.ID).First();
-            //            d.Pick_Pos_Name = ((Player_Pos)p.Pos).ToString() + " " + p.First_Name + " " + p.Last_Name;
             int i = (int)draftpick_ind;
             Draft_Pick_list[i].Pick_Pos_Name = ((Player_Pos)p.Pos).ToString() + " " + p.First_Name + " " + p.Last_Name;
         }

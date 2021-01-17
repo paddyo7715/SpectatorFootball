@@ -54,8 +54,8 @@
         </Style>
         <!-- help border -->
         <Style TargetType="Border" x:Key="popupBD">
-            <Setter Property="Background" Value="black"/>
-            <Setter Property="BorderBrush" Value="black"/>
+            <Setter Property="Background" Value="Black"/>
+            <Setter Property="BorderBrush" Value="Black"/>
         </Style>
         <!-- help textblock -->
         <Style TargetType="TextBlock" x:Key="HelpTB">

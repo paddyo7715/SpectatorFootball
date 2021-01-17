@@ -1,0 +1,29 @@
+﻿<Window x:Class="SpectatorFootball.Help_Forms.Help_FreeAgency"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SpectatorFootball.Help_Forms"
+        mc:Ignorable="d"
+        Height="250" Width="750" WindowStyle="none" ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True">
+    <Border Style="{StaticResource popupBD}" BorderThickness="1">
+        <StackPanel Style="{StaticResource popupSP}" Height="240" Width="740" Orientation="Vertical" >
+            <Label Style="{StaticResource popupTT}" HorizontalAlignment="Center">Free Agency Screen</Label>
+            <TextBlock Style="{StaticResource HelpTB}" Width="720" Height="160" Margin="5,5,5,0" >
+The free agency screen serves two purposes:<LineBreak/>
+1.  Allow you to start pre-season free agency, where teams sign free agents to fill out their roster for training camp.<LineBreak/>
+2.  View free agent transaction after training camp and thru the season.<LineBreak/>
+<LineBreak/>
+You can perform pre-season free agency by click on the Execute Free Agency button.  Teams will then sign free agents until<LineBreak/>
+the have enough players per team to go into training camp.<LineBreak/>
+<LineBreak/>
+Note that you can only perform pre-season free agency once the draft has been completed.<LineBreak/>
+<LineBreak/>
+Later on, you may return to the free agency screen to see other free agency transactions, such as players cut by teams in training camp<LineBreak/>
+or signed or released once the regular season starts.<LineBreak/>
+            </TextBlock>
+            <Button Name="hlp_nl_close" Style="{StaticResource appSubmitStyle}" Click="hlp_nl_close_Click">Close</Button>
+        </StackPanel>
+    </Border>
+
+</Window>

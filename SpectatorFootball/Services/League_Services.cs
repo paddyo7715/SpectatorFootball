@@ -310,22 +310,37 @@ namespace SpectatorFootball
                 int playoff_teams_count = m[5];
                 int Unplayed_Playoff_Games_Count = m[6];
                 int player_awards_count = m[7];
+                int teams_in_league_count = m[8];
 
                 if (draft_count == 0)
                     r = League_State.Draft_Completed;
                 else if (draft_count > 0 && draft_completed_count > 0)
                     r = League_State.Draft_Started;
 
-                if (teamsLessThanFull_Count == 0)
-                    r = League_State.FreeAgency_Completed;
-                else
-                    r = League_State.FreeAgency_Started;
+                if (r == League_State.Draft_Completed)
+                {
+                    if (teamsLessThanFull_Count == 0)
+                        r = League_State.FreeAgency_Completed;
+                    else
+                        if (teamsLessThanFull_Count < teams_in_league_count)
+                        {
+                            r = League_State.FreeAgency_Started;
+                        }
+                }
 
                 if (training_camp_count > 0)
-                    r = League_State.Training_Camp_Ended;
+                {
+                    if (teamsLessThanFull_Count == 0)
+                        r = League_State.Training_Camp_Ended;
+                    else
+                        r = League_State.Training_Camp_Started;
+                }
 
                 if (Unplayed_Regular_Season_Games_Count > 0)
-                    r = League_State.Regular_Season_in_Progress;
+                {
+                    if (r == League_State.Training_Camp_Ended)
+                        r = League_State.Regular_Season_in_Progress;
+                }
                 else
                     r = League_State.Regular_Season_Ended;
 

@@ -31,12 +31,16 @@ namespace SpectatorFootball
 
         // Draft
         public const float DRAFT_MULTIPLIER = 1.6f;  //Multiplied by number of rounds to determine num of players to create for draft.
+        public const double DRAFT_DELTA_MULTIPLYER = 1.5;
         public const int NORMAL_DRAFT_ROUNDS = 7;
         public const int STARTER_MIN_OVERALL_GRADE = 82;
         public const double DRAFT_ROUND_PERCNT_BEFORE_KICKERS_CONSIDERED = 70.0;
         public const int DRAFT_STARTER_AGE_TOO_OLD = 35;
+        public const int PLAYER_ABILITY_PEAK_AGE = 28;
         public const int DRAFT_QB_CHOICE_PICK_DEPTH = 10;
         public const int DRAFT_OTHER_CHOICE_PICK_DEPTH = 5;
+        public const int DRAFT_PERCENT_CRAPPIFY = 75;
+
 
         // Players On a team - 53 total
         public const int QB_PER_TEAM = 3;
@@ -260,8 +264,8 @@ namespace SpectatorFootball
 
 
         // age
-        public const int STARTING_ROOKIE_AGE = 20;
-        public const int NEWLEAGE_LOW_AGE = 20;
+        public const int STARTING_ROOKIE_AGE = 21;
+        public const int NEWLEAGE_LOW_AGE = 21;
         public const int NEWLEAGE_HIGH_AGE = 35;
 
         // Abilities

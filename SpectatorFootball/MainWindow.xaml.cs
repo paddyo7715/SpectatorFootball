@@ -41,6 +41,7 @@ namespace SpectatorFootball
         private bool bUpdateStandings = false;
         private LeagueDraftUX LDraft = null;
         private LeagueFreeAgencyUX LFreeAgency = null;
+        private TrainingCampUX LTrainingCampUX = null;
 
         private static ILog logger = LogManager.GetLogger("RollingFile");
 
@@ -74,6 +75,12 @@ namespace SpectatorFootball
         //*********************  MainWindow Methods *****************************
         private void MainWindow_Closing(object sender, CancelEventArgs e)
         {
+            if (Mouse.OverrideCursor == Cursors.Wait)
+            {
+                e.Cancel = true;
+                return;
+            }
+
             var response = MessageBox.Show("Do you really want to exit?", "Exiting...", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
             if (response == MessageBoxResult.No)
                 e.Cancel = true;
@@ -85,11 +92,13 @@ namespace SpectatorFootball
         }
         private void mmTopExit_Click(object sender, RoutedEventArgs e)
         {
+            if (Mouse.OverrideCursor == Cursors.Wait) return;
             this.Close();
         }
 
         private void CloseApplication()
         {
+            if (Mouse.OverrideCursor == Cursors.Wait) return;
             System.Windows.Application.Current.Shutdown();
         }
 
@@ -156,7 +165,6 @@ namespace SpectatorFootball
 
                 sp_uc.Children.Clear();
                 sp_uc.Children.Add(Stock_Team_detailUC);
-                //                Mouse.OverrideCursor = null;
             }
             catch (Exception ex)
             {
@@ -195,6 +203,8 @@ namespace SpectatorFootball
         {
             try
             {
+                if (Mouse.OverrideCursor == Cursors.Wait) return;
+
                 Mouse.OverrideCursor = Cursors.Wait;
 
                 logger.Info("Entering Create new league");
@@ -247,12 +257,13 @@ namespace SpectatorFootball
 
             Mouse.OverrideCursor = null;
         }
-        //*********************  Loaded League **********************************
+        //*********************  Load League **********************************
 
         //This event handler is in response to the user clicking the load league button from the main menu
         //and displays the load league dialog box.
         private void Show_LoadLeague(object sender, EventArgs e)
         {
+            if (Mouse.OverrideCursor == Cursors.Wait) return;
 
             Loaded_League = null;
             var LL_form = new LoadLeague();
@@ -342,6 +353,7 @@ namespace SpectatorFootball
         }
         private void Show_LeagueStandings(object sender, EventArgs e)
         {
+            if (Mouse.OverrideCursor == Cursors.Wait) return;
 
             if (bUpdateStandings)
             {
@@ -365,8 +377,17 @@ namespace SpectatorFootball
 
         }
 
+        private void Set_TopMenu(object sender, EventArgs e)
+        {
+            //Set top menu based on league state
+            setMenuonState(Loaded_League.LState);
+        }
+
+
         private void Show_LeagueDraft(object sender, EventArgs e)
         {
+            if (Mouse.OverrideCursor == Cursors.Wait) return;
+
             try
             {
                 Mouse.OverrideCursor = Cursors.Wait;
@@ -374,6 +395,8 @@ namespace SpectatorFootball
                 sp_uc.Children.Clear();
                 sp_uc.Children.Add(LDraft);
                 LDraft.Show_Standings += Show_LeagueStandings;
+                LDraft.Set_TopMenu += Set_TopMenu;
+            
                 Mouse.OverrideCursor = null;
             }
             catch (Exception ex)
@@ -388,6 +411,8 @@ namespace SpectatorFootball
 
         private void Show_FreeAgency(object sender, EventArgs e)
         {
+            if (Mouse.OverrideCursor == Cursors.Wait) return;
+
             try
             {
                 Mouse.OverrideCursor = Cursors.Wait;
@@ -395,6 +420,31 @@ namespace SpectatorFootball
                 sp_uc.Children.Clear();
                 sp_uc.Children.Add(LFreeAgency);
                 LFreeAgency.Show_Standings += Show_LeagueStandings;
+                LFreeAgency.Set_TopMenu += Set_TopMenu;
+                Mouse.OverrideCursor = null;
+            }
+            catch (Exception ex)
+            {
+                Mouse.OverrideCursor = null;
+                logger.Error("Error Creating the Legue Draft form");
+                logger.Error(ex);
+                MessageBox.Show(CommonUtils.substr(ex.Message, 0, 100), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+        }
+
+        private void Show_TrainingCamp(object sender, EventArgs e)
+        {
+            if (Mouse.OverrideCursor == Cursors.Wait) return;
+
+            try
+            {
+                Mouse.OverrideCursor = Cursors.Wait;
+                LTrainingCampUX = new TrainingCampUX(this);
+                sp_uc.Children.Clear();
+                sp_uc.Children.Add(LTrainingCampUX);
+                LTrainingCampUX.Show_Standings += Show_LeagueStandings;
+                LTrainingCampUX.Set_TopMenu += Set_TopMenu;
                 Mouse.OverrideCursor = null;
             }
             catch (Exception ex)
@@ -411,6 +461,8 @@ namespace SpectatorFootball
         //When the user clicks a team in the teams menu
         private void MenuTeam_Click(object sender, System.EventArgs e)
         {
+            if (Mouse.OverrideCursor == Cursors.Wait) return;
+
             MenuItem mi = (MenuItem)sender;
             long id = (long)mi.CommandParameter;
             Teams_by_Season t = Loaded_League.season.Teams_by_Season.Where(x => x.ID == id).First();
@@ -483,18 +535,9 @@ namespace SpectatorFootball
             switch (ls)
             {
                 case League_State.Season_Started:
-                    {
-                        MenuTrainingCamp.IsEnabled = false;
-                        MenuInjuries.IsEnabled = false;
-                        MenuPlayoffs.IsEnabled = false;
-
-                        MenuStats.IsEnabled = false;
-
-                        MenuEndSeason.IsEnabled = false;
-                        break;
-                    }
                 case League_State.Draft_Started:
                     {
+                        MenuFreeAgency.IsEnabled = false;
                         MenuTrainingCamp.IsEnabled = false;
                         MenuInjuries.IsEnabled = false;
                         MenuPlayoffs.IsEnabled = false;
@@ -504,7 +547,9 @@ namespace SpectatorFootball
                         MenuEndSeason.IsEnabled = false;
                         break;
                     }
+
                 case League_State.Draft_Completed:
+                case League_State.FreeAgency_Started:
                     {
                         MenuTrainingCamp.IsEnabled = false;
                         MenuInjuries.IsEnabled = false;
@@ -516,8 +561,9 @@ namespace SpectatorFootball
                         break;
                     }
                 case League_State.FreeAgency_Completed:
+                case League_State.Training_Camp_Started:
                     {
-                        MenuTrainingCamp.IsEnabled = false;
+                        MenuTrainingCamp.IsEnabled = true;
                         MenuInjuries.IsEnabled = false;
                         MenuPlayoffs.IsEnabled = false;
 
@@ -527,12 +573,6 @@ namespace SpectatorFootball
                         break;
                     }
                 case League_State.Training_Camp_Ended:
-                    {
-                        MenuPlayoffs.IsEnabled = false;
-
-                        MenuEndSeason.IsEnabled = false;
-                        break;
-                    }
                 case League_State.Regular_Season_in_Progress:
                     {
                         MenuPlayoffs.IsEnabled = false;

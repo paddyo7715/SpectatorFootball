@@ -6,7 +6,7 @@
         xmlns:local1="clr-namespace:SpectatorFootball.BindingConverters" 
         xmlns:local="clr-namespace:SpectatorFootball"
         mc:Ignorable="d"
-        Height="390" Width="400" WindowStyle="none" ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True">
+        Height ="390" Width="400" WindowStyle="none" ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True">
     <Window.Resources>
         <local1:DoubleFormatConverter x:Key="DoubleFormatConverter" />
         <local1:inttoWeight x:Key="inttoWeight" />

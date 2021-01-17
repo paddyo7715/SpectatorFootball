@@ -127,6 +127,9 @@
     <Compile Include="Help_Forms\Help_Draft.xaml.cs">
       <DependentUpon>Help_Draft.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Help_Forms\Help_FreeAgency.xaml.cs">
+      <DependentUpon>Help_FreeAgency.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Models\Award.cs">
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
@@ -352,7 +355,14 @@
     <Compile Include="WindowsLeague\LeagueStandingsUX.xaml.cs">
       <DependentUpon>LeagueStandingsUX.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WindowsLeague\TrainingCampUX.xaml.cs">
+      <DependentUpon>TrainingCampUX.xaml</DependentUpon>
+    </Compile>
     <Page Include="Help_Forms\Help_Draft.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Help_Forms\Help_FreeAgency.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -440,6 +450,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="WindowsLeague\LeagueStandingsUX.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowsLeague\TrainingCampUX.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

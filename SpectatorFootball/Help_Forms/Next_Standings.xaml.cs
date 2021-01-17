@@ -75,6 +75,15 @@ namespace SpectatorFootball.Help_Forms
                         txtNextContent.Text = sb.ToString();
                         break;
                     }
+                case League_State.Training_Camp_Started:
+                    {
+                        StringBuilder sb = new StringBuilder();
+                        sb.Append("Training Camp has started but is not yet completed");
+                        sb.Append("\n\n");
+                        sb.Append("The next step would be to play regualer season games by selecting Schedule from the League Menu Item");
+                        txtNextContent.Text = sb.ToString();
+                        break;
+                    }
                 case League_State.Training_Camp_Ended:
                     {
                         StringBuilder sb = new StringBuilder();
