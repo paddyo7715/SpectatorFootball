@@ -120,6 +120,7 @@
     <Compile Include="DAO\FreeAgencyDAO.cs" />
     <Compile Include="DAO\HomeTownsDAO.cs" />
     <Compile Include="DAO\TeamDAO.cs" />
+    <Compile Include="DAO\TrainingCampDAO.cs" />
     <Compile Include="Draft\Draft_Helper.cs" />
     <Compile Include="Draft\Draft_Pos_Importance.cs" />
     <Compile Include="Free_Agency\FreeAgency_Helper.cs" />
@@ -240,6 +241,7 @@
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Player_and_Ratings.cs" />
+    <Compile Include="Models\Player_and_Ratings_and_Draft.cs" />
     <Compile Include="Models\Player_Awards.cs">
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
@@ -255,11 +257,13 @@
     <Compile Include="Models\Teams_by_Season.cs">
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TrainingCampStatus.cs" />
     <Compile Include="Models\Training_Camp_by_Season.cs">
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
     <Compile Include="Services\FreeAgency_Services.cs" />
     <Compile Include="Draft\Draft_Need.cs" />
+    <Compile Include="Services\TrainingCamp_Services.cs" />
     <Compile Include="WindowsLeague\Draft_Profile_Popup.xaml.cs">
       <DependentUpon>Draft_Profile_Popup.xaml</DependentUpon>
     </Compile>
