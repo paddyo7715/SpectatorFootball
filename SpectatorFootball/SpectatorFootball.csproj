@@ -108,6 +108,7 @@
     <Compile Include="BindingConverters\longiPosConverter.cs" />
     <Compile Include="BindingConverters\SpeedInttoString.cs" />
     <Compile Include="BindingConverters\StadiumImageConverter.cs" />
+    <Compile Include="BindingConverters\StatusConverter.cs" />
     <Compile Include="BindingConverters\StockHelmetConverter.cs" />
     <Compile Include="BindingConverters\TextConverter.cs" />
     <Compile Include="Common\LeageConnection.cs" />
@@ -264,6 +265,7 @@
     <Compile Include="Services\FreeAgency_Services.cs" />
     <Compile Include="Draft\Draft_Need.cs" />
     <Compile Include="Services\TrainingCamp_Services.cs" />
+    <Compile Include="Training_Camp\TrainingCamp_Helper.cs" />
     <Compile Include="WindowsLeague\Draft_Profile_Popup.xaml.cs">
       <DependentUpon>Draft_Profile_Popup.xaml</DependentUpon>
     </Compile>

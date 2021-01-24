@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpectatorFootball.Free_Agency
+namespace SpectatorFootball.Free_AgencyNS
 {
     class FreeAgency_Helper
     {

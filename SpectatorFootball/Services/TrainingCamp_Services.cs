@@ -33,5 +33,23 @@ namespace SpectatorFootball.Services
 
             return r;
         }
+
+        public void Execute_Team_TrainingCamp(long franchise_id, long season_id, string league_filepath)
+        {
+            TrainingCampDAO tDAO = new TrainingCampDAO();
+            List<Player_and_Ratings_and_Draft> prd_list = tDAO.getTrainingCampPlayers(franchise_id, season_id, league_filepath);
+            List<Player> PlayersMadeTeam = new List<Player>();
+            List<Player> PlayersCut = new List<Player>();
+            List<Free_Agency> CutTransactions = new List<Free_Agency>();
+
+            /*
+                        create loop positions for each position call a different method in trainingcamp_helper
+                        and pass in a list of just that position on the team of Player_and_Ratings_and_Draft
+                         in the method I will set the madeteam boolean
+                            when returning from the set the jersey number.  I can check all players in prd_list
+                            to see if the proposed number is used or not.
+            */
+        }
     }
 }
+

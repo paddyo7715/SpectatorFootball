@@ -9,7 +9,7 @@ using SpectatorFootball.League;
 using System.Linq;
 using System.Data.SqlClient;
 using System.Data.Entity;
-using SpectatorFootball.Free_Agency;
+using SpectatorFootball.Free_AgencyNS;
 
 namespace SpectatorFootball.DAO
 {

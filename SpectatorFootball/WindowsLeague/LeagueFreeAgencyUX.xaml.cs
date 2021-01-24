@@ -1,6 +1,6 @@
 ﻿using log4net;
 using SpectatorFootball.Enum;
-using SpectatorFootball.Free_Agency;
+using SpectatorFootball.Free_AgencyNS;
 using SpectatorFootball.Help_Forms;
 using SpectatorFootball.Models;
 using SpectatorFootball.Services;

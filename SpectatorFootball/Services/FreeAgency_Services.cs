@@ -1,6 +1,6 @@
 ﻿using SpectatorFootball.DAO;
 using SpectatorFootball.Enum;
-using SpectatorFootball.Free_Agency;
+using SpectatorFootball.Free_AgencyNS;
 using SpectatorFootball.League;
 using SpectatorFootball.Models;
 using System;
