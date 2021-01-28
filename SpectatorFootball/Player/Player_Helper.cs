@@ -352,9 +352,17 @@ namespace SpectatorFootball
                         r.Arm_Strength_Rating = CommonUtils.getRandomNum(app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING);
                         r.Ball_Safety_Rating = CommonUtils.getRandomNum(app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING);
 
-                        r.Agilty_Rating = CommonUtils.getRandomNum(app_Constants.SECONDARY_3_ABILITY_LOW_RATING, app_Constants.SECONDARY_3_ABILITY_HIGH_RATING);
-                        r.Speed_Rating = CommonUtils.getRandomNum(app_Constants.SECONDARY_3_ABILITY_LOW_RATING, app_Constants.SECONDARY_3_ABILITY_HIGH_RATING);
-
+                        int temprnd = CommonUtils.getRandomNum(1, 100);
+                        if (temprnd <= app_Constants.QB_CHANCE_RUNNER)
+                        {
+                            r.Agilty_Rating = CommonUtils.getRandomNum(app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.SECONDARY_3_ABILITY_HIGH_RATING);
+                            r.Speed_Rating = CommonUtils.getRandomNum(app_Constants.PRIMARY_ABILITY_HIGH_RATING, app_Constants.SECONDARY_3_ABILITY_HIGH_RATING);
+                        }
+                        else
+                        {
+                            r.Agilty_Rating = CommonUtils.getRandomNum(app_Constants.SECONDARY_3_ABILITY_LOW_RATING, app_Constants.SECONDARY_3_ABILITY_HIGH_RATING);
+                            r.Speed_Rating = CommonUtils.getRandomNum(app_Constants.SECONDARY_3_ABILITY_LOW_RATING, app_Constants.SECONDARY_3_ABILITY_HIGH_RATING);
+                        }
                         r.Hands_Rating = CommonUtils.getRandomNum(app_Constants.TERTIARY_ABILITY_LOW_RATING, app_Constants.TERTIARY_ABILITY_HIGH_RATING);
                         r.Kicker_Leg_Accuracy_Rating = CommonUtils.getRandomNum(app_Constants.TERTIARY_ABILITY_LOW_RATING, app_Constants.TERTIARY_ABILITY_HIGH_RATING);
                         r.Kicker_Leg_Power_Rating = CommonUtils.getRandomNum(app_Constants.TERTIARY_ABILITY_LOW_RATING, app_Constants.TERTIARY_ABILITY_HIGH_RATING);
@@ -577,7 +585,8 @@ namespace SpectatorFootball
                 case Player_Pos.QB:
                     {
 
-                        OverAll = Convert.ToSingle(pr.Ball_Safety_Rating * app_Constants.QB_FUMBLE_PERCENT + pr.Arm_Strength_Rating * app_Constants.QB_ARMSTRENGTH_PERCENT + pr.Accuracy_Rating * app_Constants.QB_ACCURACY_RATING + pr.Decision_Making_Rating * app_Constants.QB_DESISION_RATING);
+                        OverAll = Convert.ToSingle(pr.Ball_Safety_Rating * app_Constants.QB_FUMBLE_PERCENT + pr.Arm_Strength_Rating * app_Constants.QB_ARMSTRENGTH_PERCENT + pr.Accuracy_Rating * app_Constants.QB_ACCURACY_RATING + pr.Decision_Making_Rating * app_Constants.QB_DESISION_RATING +
+                            pr.Agilty_Rating * app_Constants.QB_AGILITY_RATING + pr.Speed_Rating * app_Constants.QB_SPEED_RATING);
                         break;
                     }
 

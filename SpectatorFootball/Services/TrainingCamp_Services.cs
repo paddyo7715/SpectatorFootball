@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using SpectatorFootball.Enum;
+using SpectatorFootball.Training_CampNS;
 
 namespace SpectatorFootball.Services
 {
@@ -29,6 +31,7 @@ namespace SpectatorFootball.Services
             {
                 string helmet_filename = d.helmet_filename;
                 d.HelmetImage = lls.getHelmetImg(helmet_filename);
+
             }
 
             return r;
@@ -42,6 +45,39 @@ namespace SpectatorFootball.Services
             List<Player> PlayersCut = new List<Player>();
             List<Free_Agency> CutTransactions = new List<Free_Agency>();
 
+            //Set the starting of their draft grade which is either the overall grad or
+            //draft profile grade if this is the player's first year.
+            foreach (Player_and_Ratings_and_Draft p in prd_list)
+            {
+                Player player = p.p;
+                Player_Pos ppos = (Player_Pos)player.Pos;
+                if (player.Drafts.Count() == 0)
+                    p.Grade = Player_Helper.Create_Overall_Rating(ppos, p.pr[0]);
+                else
+                    p.Grade = player.Draft_Grade;
+            }
+
+                
+            foreach (Player_Pos pp in System.Enum.GetValues(typeof(Player_Pos)))
+            {
+                List<Player_and_Ratings_and_Draft> posResultList = null;
+//        int iPos = (int)pp;
+                switch (pp)
+                {
+                    case Player_Pos.QB:
+                        posResultList = TrainingCamp_Helper.TrainingCampQB(prd_list);
+                        break;
+                    case Player_Pos.RB:
+                        posResultList = TrainingCamp_Helper.TrainingCampRB(prd_list);
+                        break;
+                }
+
+                //next add to the free agency transaction and player lists from the 
+                //posResultList based on that bool of wether they made the team
+
+
+
+            }
             /*
                         create loop positions for each position call a different method in trainingcamp_helper
                         and pass in a list of just that position on the team of Player_and_Ratings_and_Draft

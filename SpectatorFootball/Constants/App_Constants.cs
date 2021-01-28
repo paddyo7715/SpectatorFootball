@@ -187,9 +187,11 @@ namespace SpectatorFootball
 
         // Player Ratings Percentages for overall rating
         public const double QB_FUMBLE_PERCENT = 0.03;
-        public const double QB_ARMSTRENGTH_PERCENT = 0.15;
-        public const double QB_ACCURACY_RATING = 0.45;
-        public const double QB_DESISION_RATING = 0.37;
+        public const double QB_ARMSTRENGTH_PERCENT = 0.14;
+        public const double QB_ACCURACY_RATING = 0.43;
+        public const double QB_DESISION_RATING = 0.36;
+        public const double QB_SPEED_RATING = 0.02;
+        public const double QB_AGILITY_RATING = 0.02;
 
         public const double RB_RUNNING_PWER_PERCENT = 0.28;
         public const double RB_SPEED_PERCENT = 0.2;
@@ -270,6 +272,7 @@ namespace SpectatorFootball
 
         // Abilities
         public const int OL_RUN_PASS_BLOCK_DELTA = 80;
+        public const int QB_CHANCE_RUNNER = 10;
 
         public const int PRIMARY_ABILITY_LOW_RATING = 40;
         public const int PRIMARY_ABILITY_HIGH_RATING = 100;
@@ -293,6 +296,43 @@ namespace SpectatorFootball
         public const string EMPTY_TEAM_SLOT = "Empty Team Slot";
         public const int TRAINING_CAMP_TEAM_PLAYER_COUNT = 86;
         public const int REGULAR_SEASON_TEAM_PLAYER_COUNT = 53;
+
+        //Training Camp
+        public const int TRAINING_CAMP_NUM_PLAYS = 100;
+
+        public const int TRAINING_CAMP_QB_PRESSURE_RATE = 33;
+        public const int TRAINING_CAMP_QB_RECEIVER_OPEN = 50;
+        public const int TRAINING_CAMP_QB_RECEIVER_CATCH_PERC = 85;
+        public const int TRAINING_CAMP_QB_DEFENDER_INT_PERC = 5;
+        public const int TRAINING_CAMP_QB_10YRD_PASS_PERC = 40;
+        public const int TRAINING_CAMP_QB_20YRD_PASS_PERC = 65;
+        public const int TRAINING_CAMP_QB_30YRD_PASS_PERC = 80;
+        public const int TRAINING_CAMP_QB_40YRD_PASS_PERC = 95;
+        public const double TRAINING_CAMP_QB_RECEIVE_AFTER_CATCH_MULTIPLYER = 1.5;
+        public const int TRAINING_CAMP_QB_PRESSURE_REDUCER = 10;
+        public const int TRAINING_CAMP_QB_LOOKS = 2;
+        public const double TRAINING_CAMP_QB_COVERED_DIVIDER = 0.25;
+
+        public const Double TRAINING_CAMP_QB_COMPLETION_AWARD = 1.0;
+        public const Double TRAINING_CAMP_QB_TD_AWARD = 6.0;
+        public const Double TRAINING_CAMP_QB_INT_AWARD = -6.0;
+
+        public const int TRAINING_CAMP_RB_PERCENT_RECEIVER = 66;
+        public const int TRAINING_CAMP_RB_ACCURACY_PERC = 80;
+        public const int TRAINING_CAMP_RB_PASS_LEN = 10;
+        public const int TRAINING_CAMP_RB_DELTA = 5;
+        public const int TRAINING_CAMP_RB_POWER_BREAK_AWAY = 2;
+        public const int TRAINING_CAMP_RB_AGILITY_BREAK_AWAY = 12;
+        public const int TRAINING_CAMP_RB_STRIDE = 2;
+        public const int TRAINING_CAMP_RB_POWER_BUMP = 100;
+        public const int TRAINING_CAMP_RB_GAIN_FOR_POINT = 5;
+
+        public const double TRAINING_CAMP_RB_RUNNING_LOSS = -1;
+        public const double TRAINING_CAMP_RB_RUNNING_PLUS5 = 1;
+        public const double TRAINING_CAMP_RB_TD = 6.0;
+
+        public const int TRAINING_CAMP_RECEIVER_PASS_CAUGHT = 1;
+        public const int TRAINING_CAMP_RECEIVER_AFTER_CATCH_FACTOR = 300;
 
     }
 }
