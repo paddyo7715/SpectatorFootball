@@ -152,7 +152,7 @@ namespace SpectatorFootball.Training_CampNS
                         int iacc = CommonUtils.getRandomNum(1, 100);
                         if (iacc <= app_Constants.TRAINING_CAMP_RB_ACCURACY_PERC)
                         {
-                            int itemp7 = CommonUtils.getRandomNum(1, 10);
+                            int itemp7 = CommonUtils.getRandomNum(1, 100 + app_Constants.TRAINING_CAMP_RECEIVER_FUDGE);
                             if (itemp7 <= iHands)
                             {
                                 //pass caught
@@ -213,6 +213,129 @@ namespace SpectatorFootball.Training_CampNS
 
             return r;
         }
+
+        public static List<Player_and_Ratings_and_Draft> TrainingCampWR(List<Player_and_Ratings_and_Draft> pList)
+        {
+            List<Player_and_Ratings_and_Draft> r = new List<Player_and_Ratings_and_Draft>();
+
+            foreach (Player_and_Ratings_and_Draft p in r)
+            {
+                double tc_grade = 0.0;
+                for (int i = 0; i < app_Constants.TRAINING_CAMP_NUM_PLAYS; i++)
+                {
+                    int iHands = (int)p.pr[0].Hands_Rating;
+                    int iAgility = (int)p.pr[0].Agilty_Rating;
+                    int iSpeed = (int)p.pr[0].Speed_Rating;
+
+                    int iYardLine = CommonUtils.getRandomNum(1, 100);
+
+                    //Did receiver get open
+                    int itemprndOpen = CommonUtils.getRandomNum(1, app_Constants.TRAINING_CAMP_RECEIVER_OPEN_FUDGE);
+                    if ((iAgility + iSpeed) < itemprndOpen)
+                    {
+                        int iacc = CommonUtils.getRandomNum(1, 100);
+                        if (iacc <= app_Constants.TRAINING_CAMP_RB_ACCURACY_PERC)
+                        {
+                            int itemp7 = CommonUtils.getRandomNum(1, 100 + app_Constants.TRAINING_CAMP_RECEIVER_FUDGE);
+                            if (itemp7 <= iHands)
+                            {
+                                //pass caught
+                                tc_grade += app_Constants.TRAINING_CAMP_RECEIVER_PASS_CAUGHT;
+
+                                //See if the player can get a TD for more points
+                                int yeardsGainged = app_Constants.TRAINING_CAMP_RB_PASS_LEN;
+                                int ii;
+                                for (ii = iYardLine; ii < 100; ii += yeardsGainged)
+                                {
+                                    int itempaa = CommonUtils.getRandomNum(1, app_Constants.TRAINING_CAMP_RECEIVER_AFTER_CATCH_FACTOR);
+                                    if (itempaa > (iAgility + iSpeed))
+                                        break;
+                                }
+                                if (ii >= 100)
+                                    tc_grade += app_Constants.TRAINING_CAMP_RB_TD;
+                            }
+                        }
+                    } //did receiver get open
+                }  //numer of plays
+
+            } //for for each player
+
+            return r;
+        }
+
+        public static List<Player_and_Ratings_and_Draft> TrainingCampTE(List<Player_and_Ratings_and_Draft> pList)
+        {
+            List<Player_and_Ratings_and_Draft> r = new List<Player_and_Ratings_and_Draft>();
+
+            foreach (Player_and_Ratings_and_Draft p in r)
+            {
+                double tc_grade = 0.0;
+                for (int i = 0; i < app_Constants.TRAINING_CAMP_NUM_PLAYS; i++)
+                {
+                    int iHands = (int)p.pr[0].Hands_Rating;
+                    int iAgility = (int)p.pr[0].Agilty_Rating;
+                    int iSpeed = (int)p.pr[0].Speed_Rating;
+                    int iRunBlocking = (int)p.pr[0].Running_Power_Rating;
+                    int iPassBlocking = (int)p.pr[0].Pass_Block_Rating;
+
+                    int itemprunpass = CommonUtils.getRandomNum(1, 100);
+                    if (itemprunpass <= app_Constants.TRAINING_CAMP_TE_BLOCK_PERCENT)
+                    {
+                        int itempblocktype = CommonUtils.getRandomNum(1, 100);
+                        if (itempblocktype <= app_Constants.TRAINING_CAMP_TE_BLOCK_RECEIVER_PERCENT)
+                        {
+                            //Run block
+                            int inttemprblock = CommonUtils.getRandomNum(1, 100);
+                            if (inttemprblock < iRunBlocking)
+                                tc_grade += app_Constants.TRAINING_CAMP_TE_GOOD_RUN_BLOCK;
+                        }
+                        else
+                        {
+                            //Pass block
+                            int inttemppblock = CommonUtils.getRandomNum(1, 100);
+                            if (inttemppblock < iPassBlocking)
+                                tc_grade += app_Constants.TRAINING_CAMP_TE_GOOD_PASS_BLOCK;
+                        }
+                    }
+                    else
+                    {
+                        int iYardLine = CommonUtils.getRandomNum(1, 100);
+
+                        //Did receiver get open
+                        int itemprndOpen = CommonUtils.getRandomNum(1, app_Constants.TRAINING_CAMP_RECEIVER_OPEN_FUDGE);
+                        if ((iAgility + iSpeed) < itemprndOpen)
+                        {
+                            int iacc = CommonUtils.getRandomNum(1, 100);
+                            if (iacc <= app_Constants.TRAINING_CAMP_RB_ACCURACY_PERC)
+                            {
+                                int itemp7 = CommonUtils.getRandomNum(1, 100 + app_Constants.TRAINING_CAMP_RECEIVER_FUDGE);
+                                if (itemp7 <= iHands)
+                                {
+                                    //pass caught
+                                    tc_grade += app_Constants.TRAINING_CAMP_RECEIVER_PASS_CAUGHT;
+
+                                    //See if the player can get a TD for more points
+                                    int yeardsGainged = app_Constants.TRAINING_CAMP_RB_PASS_LEN;
+                                    int ii;
+                                    for (ii = iYardLine; ii < 100; ii += yeardsGainged)
+                                    {
+                                        int itempaa = CommonUtils.getRandomNum(1, app_Constants.TRAINING_CAMP_RECEIVER_AFTER_CATCH_FACTOR);
+                                        if (itempaa > (iAgility + iSpeed))
+                                            break;
+                                    }
+                                    if (ii >= 100)
+                                        tc_grade += app_Constants.TRAINING_CAMP_RB_TD;
+                                }
+                            }
+                        } //did receiver get open
+                    } //block or receiver
+                }  //numer of plays
+
+            } //for for each player
+
+            return r;
+        }
+
 
     }
 }

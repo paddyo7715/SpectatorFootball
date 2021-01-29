@@ -70,6 +70,12 @@ namespace SpectatorFootball.Services
                     case Player_Pos.RB:
                         posResultList = TrainingCamp_Helper.TrainingCampRB(prd_list);
                         break;
+                    case Player_Pos.WR:
+                        posResultList = TrainingCamp_Helper.TrainingCampWR(prd_list);
+                        break;
+                    case Player_Pos.TE:
+                        posResultList = TrainingCamp_Helper.TrainingCampTE(prd_list);
+                        break;
                 }
 
                 //next add to the free agency transaction and player lists from the 

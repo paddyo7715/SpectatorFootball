@@ -327,12 +327,21 @@ namespace SpectatorFootball
         public const int TRAINING_CAMP_RB_POWER_BUMP = 100;
         public const int TRAINING_CAMP_RB_GAIN_FOR_POINT = 5;
 
-        public const double TRAINING_CAMP_RB_RUNNING_LOSS = -1;
-        public const double TRAINING_CAMP_RB_RUNNING_PLUS5 = 1;
+        public const double TRAINING_CAMP_RB_RUNNING_LOSS = -1.0;
+        public const double TRAINING_CAMP_RB_RUNNING_PLUS5 = 1.0;
         public const double TRAINING_CAMP_RB_TD = 6.0;
 
+        public const int TRAINING_CAMP_RECEIVER_FUDGE = 2;
         public const int TRAINING_CAMP_RECEIVER_PASS_CAUGHT = 1;
         public const int TRAINING_CAMP_RECEIVER_AFTER_CATCH_FACTOR = 300;
+        public const int TRAINING_CAMP_RECEIVER_OPEN_FUDGE = 240;
+
+        public const int TRAINING_CAMP_TE_BLOCK_PERCENT = 50;
+        public const int TRAINING_CAMP_TE_BLOCK_RECEIVER_PERCENT = 50;
+        public const int TRAINING_CAMP_TE_FUDGE = 5;
+
+        public const Double TRAINING_CAMP_TE_GOOD_RUN_BLOCK = 1.0;
+        public const Double TRAINING_CAMP_TE_GOOD_PASS_BLOCK = 1.0;
 
     }
 }
