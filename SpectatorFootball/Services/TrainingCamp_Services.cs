@@ -76,6 +76,24 @@ namespace SpectatorFootball.Services
                     case Player_Pos.TE:
                         posResultList = TrainingCamp_Helper.TrainingCampTE(prd_list);
                         break;
+                    case Player_Pos.OL:
+                        posResultList = TrainingCamp_Helper.TrainingCampOL(prd_list);
+                        break;
+                    case Player_Pos.DL:
+                        posResultList = TrainingCamp_Helper.TrainingCampDL(prd_list);
+                        break;
+                    case Player_Pos.LB:
+                        posResultList = TrainingCamp_Helper.TrainingCampLB(prd_list);
+                        break;
+                    case Player_Pos.DB:
+                        posResultList = TrainingCamp_Helper.TrainingCampDB(prd_list);
+                        break;
+                    case Player_Pos.K:
+                        posResultList = TrainingCamp_Helper.TrainingCampFG(prd_list);
+                        break;
+                    case Player_Pos.P:
+                        posResultList = TrainingCamp_Helper.TrainingCampP(prd_list);
+                        break;
                 }
 
                 //next add to the free agency transaction and player lists from the 
