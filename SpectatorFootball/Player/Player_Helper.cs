@@ -222,7 +222,7 @@ namespace SpectatorFootball
             return r;
         }
 
-        public int getPlayerNumber(Player_Pos pos)
+        public static int getPlayerNumber(Player_Pos pos)
         {
             int r = default(int);
 
@@ -672,6 +672,30 @@ namespace SpectatorFootball
 
             return;
         }
+        public static bool isOffense(long iPos)
+        {
+
+            bool r = false;
+            Player_Pos pp = (Player_Pos)iPos;
+
+            switch (pp)
+            {
+                case Player_Pos.QB:
+                case Player_Pos.RB:
+                case Player_Pos.WR:
+                case Player_Pos.TE:
+                case Player_Pos.OL:
+                case Player_Pos.K:
+                case Player_Pos.P:
+                    {
+                        r = true;
+                        break;
+                    }
+            }
+
+            return r;
+        }
+
 
 
     }

@@ -258,6 +258,7 @@
     <Compile Include="Models\Teams_by_Season.cs">
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TrainingCampResults.cs" />
     <Compile Include="Models\TrainingCampStatus.cs" />
     <Compile Include="Models\Training_Camp_by_Season.cs">
       <DependentUpon>LeagueEDM.tt</DependentUpon>
@@ -364,6 +365,9 @@
     <Compile Include="WindowsLeague\TrainingCampUX.xaml.cs">
       <DependentUpon>TrainingCampUX.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WindowsLeague\TrainingCamp_Results_Popup.xaml.cs">
+      <DependentUpon>TrainingCamp_Results_Popup.xaml</DependentUpon>
+    </Compile>
     <Page Include="Help_Forms\Help_Draft.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -460,6 +464,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="WindowsLeague\TrainingCampUX.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowsLeague\TrainingCamp_Results_Popup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

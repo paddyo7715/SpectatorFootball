@@ -61,6 +61,8 @@ namespace SpectatorFootball.WindowsLeague
 
         private void lstDraftPlayers_Click(object sender, RoutedEventArgs e)
         {
+            if (Mouse.OverrideCursor == Cursors.Wait) return;
+
             ListView ls = (ListView)sender;
 
             if (ls.SelectedItems.Count > 0)

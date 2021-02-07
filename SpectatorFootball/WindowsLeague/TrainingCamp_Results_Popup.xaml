@@ -1,0 +1,58 @@
+﻿<Window x:Class="SpectatorFootball.WindowsLeague.TrainingCamp_Results_Popup"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SpectatorFootball.WindowsLeague"
+        mc:Ignorable="d"
+       Height ="390" Width="400" WindowStyle="none" ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True">
+    <Border Style="{StaticResource popupBD}" BorderThickness="1">
+        <StackPanel Style="{StaticResource popupSP}" Height="380" Width="390" Orientation="Vertical" >
+            <StackPanel Orientation="Horizontal">
+                <Image Name="imgTeamHelmet" Width="100" Height="100"></Image>
+                <Label Style="{StaticResource popupTT}" Name="lblTeamName" HorizontalAlignment="Center"></Label>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Style="{StaticResource popupTT}" Name="lblTrainingCampYear" HorizontalAlignment="Center"></Label>
+            </StackPanel>
+            <StackPanel Style="{StaticResource popupSP}" Width="370" Height="300" Margin="5,5,5,0" Orientation="Horizontal" >
+                <GroupBox FontSize="18" FontWeight="Bold" Style="{StaticResource GroupBoxstyle}" >
+                    <GroupBox.Header>
+                        Made Team:
+                    </GroupBox.Header>
+                    <StackPanel Width="450" Orientation="horizontal" >
+                        <StackPanel Orientation="vertical">
+                            <Label Style="{StaticResource popupTT}" HorizontalAlignment="Center">Offense</Label>
+                            <ListView Margin="10" Name="lvMadeOffense" HorizontalContentAlignment="left"  Background="LightGray" Width="200" Height="220">
+                            </ListView>
+                        </StackPanel>
+                        <StackPanel Orientation="vertical">
+                            <Label Style="{StaticResource popupTT}" HorizontalAlignment="Center">Defense</Label>
+                            <ListView Margin="10" Name="lvMadeDefense" HorizontalContentAlignment="left"  Background="LightGray" Width="200" Height="220">
+                            </ListView>
+                        </StackPanel>
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox FontSize="18" FontWeight="Bold" Style="{StaticResource GroupBoxstyle}" >
+                    <GroupBox.Header>
+                        Cut:
+                    </GroupBox.Header>
+                    <StackPanel Width="450" Orientation="horizontal" >
+                        <StackPanel Orientation="vertical">
+                            <Label Style="{StaticResource popupTT}" HorizontalAlignment="Center">Offense</Label>
+                            <ListView Margin="10" Name="lvCutOffense" HorizontalContentAlignment="left"  Background="LightGray" Width="200" Height="220">
+                            </ListView>
+                        </StackPanel>
+                        <StackPanel Orientation="vertical">
+                            <Label Style="{StaticResource popupTT}" HorizontalAlignment="Center">Defense</Label>
+                            <ListView Margin="10" Name="lvCutDefense" HorizontalContentAlignment="left"  Background="LightGray" Width="200" Height="220">
+                            </ListView>
+                        </StackPanel>
+                    </StackPanel>
+                </GroupBox>
+            </StackPanel>
+            <Button Name="close_btn" Style="{StaticResource appSubmitStyle}" Click="btnclose_Click" >Close</Button>
+        </StackPanel>
+    </Border>
+</Window>
+

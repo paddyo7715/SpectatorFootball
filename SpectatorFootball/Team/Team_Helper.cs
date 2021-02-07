@@ -185,6 +185,48 @@ namespace SpectatorFootball
             return r;
         }
 
+        public static int getNumPlayersByPosition(Player_Pos p)
+        {
+            int r = 0;
+
+            switch (p)
+            {
+                case Player_Pos.QB:
+                    r = app_Constants.TRIANINGCAMP_QB_PER_TEAM;
+                    break;
+                case Player_Pos.RB:
+                    r = app_Constants.TRIANINGCAMP_RB_PER_TEAM;
+                    break;
+                case Player_Pos.WR:
+                    r = app_Constants.TRIANINGCAMP_WR_PER_TEAM;
+                    break;
+                case Player_Pos.TE:
+                    r = app_Constants.TRIANINGCAMP_TE_PER_TEAM;
+                    break;
+                case Player_Pos.OL:
+                    r = app_Constants.TRIANINGCAMP_OL_PER_TEAM;
+                    break;
+                case Player_Pos.DL:
+                    r = app_Constants.TRIANINGCAMP_DL_PER_TEAM;
+                    break;
+                case Player_Pos.LB:
+                    r = app_Constants.TRIANINGCAMP_LB_PER_TEAM;
+                    break;
+                case Player_Pos.DB:
+                    r = app_Constants.TRIANINGCAMP_DB_PER_TEAM;
+                    break;
+                case Player_Pos.K:
+                    r = app_Constants.TRIANINGCAMP_K_PER_TEAM;
+                    break;
+                case Player_Pos.P:
+                    r = app_Constants.TRIANINGCAMP_P_PER_TEAM;
+                   break;
+            }
+
+            return r;
+        }
+
+
         public static List<long> getAllFranchiseIDThisSeason(Loaded_League_Structure lls)
         {
             List<long> r = null;

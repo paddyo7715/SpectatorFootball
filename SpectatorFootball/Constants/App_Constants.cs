@@ -297,6 +297,10 @@ namespace SpectatorFootball
         public const int TRAINING_CAMP_TEAM_PLAYER_COUNT = 86;
         public const int REGULAR_SEASON_TEAM_PLAYER_COUNT = 53;
 
+        //Free Agency
+        public const string FREE_AGENCY_WEEK = "Free Agency";
+        public const string TRAINING_CAMP_WEEK = "Training Camp";
+
         //Training Camp
         public const int TRAINING_CAMP_NUM_PLAYS = 100;
 

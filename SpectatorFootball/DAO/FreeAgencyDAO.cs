@@ -95,7 +95,7 @@ namespace SpectatorFootball.DAO
 
             SpectatorFootball.Models.Free_Agency fa_entity = new SpectatorFootball.Models.Free_Agency()
             {
-                Week = "Training Camp",
+                Week = app_Constants.FREE_AGENCY_WEEK,
                 Signed = 1,
                 Season_ID = fa_selection.Season_ID,
                 Player_ID = p.ID,

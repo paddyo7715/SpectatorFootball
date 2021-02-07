@@ -67,6 +67,35 @@ namespace SpectatorFootball.WindowsLeague
         {
 
         }
+        private void lstTrainingCamp_Click(object sender, RoutedEventArgs e)
+        {
+            ListView ls = (ListView)sender;
+
+            if (ls.SelectedItems.Count > 0)
+            {
+                try
+                {
+                    if (Mouse.OverrideCursor == Cursors.Wait) return;
+                    TrainingCampStatus tc_Status = TrainingCamp_Status_list[ls.SelectedIndex];
+                    TrainingCamp_Services tcs = new TrainingCamp_Services();
+                    TrainingCampResults tcResult = tcs.getPlayersTrainingCampResult(tc_Status.Franchise_ID, tc_Status.Season_ID, pw.Loaded_League.season.League_Structure_by_Season[0].Short_Name);
+                    TrainingCamp_Results_Popup dpp = new TrainingCamp_Results_Popup(tcResult);
+                    dpp.Left = (SystemParameters.PrimaryScreenWidth - dpp.Width) / 2;
+                    dpp.ShowDialog();
+                    Mouse.OverrideCursor = null;
+                }
+                catch (Exception ex)
+                {
+                    Mouse.OverrideCursor = null;
+                    btnTrainingCamp.IsEnabled = true;
+                    logger.Error("Error Showing Training Camp Results for Team");
+                    logger.Error(ex);
+                    MessageBox.Show(CommonUtils.substr(ex.Message, 0, 100), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+ 
+        }
+
         private void btnTrainingCamp_Click(object sender, RoutedEventArgs e)
         {
             try

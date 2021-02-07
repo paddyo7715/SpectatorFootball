@@ -56,5 +56,68 @@ namespace SpectatorFootball.DAO
 
             return r;
         }
+        public void updatePlayersandFreeAgency(List<Player> pList, List<Free_Agency> faList,
+            List<Training_Camp_by_Season> tc_list, string league_filepath)
+        {
+            string con = Common.LeageConnection.Connect(league_filepath);
+
+
+            using (var context = new leagueContext(con))
+            {
+                using (var dbContextTransaction = context.Database.BeginTransaction())
+                {
+                    //Save the player record
+                    foreach (Player p in pList)
+                    {
+                        context.Players.Add(p);
+                        context.Entry(p).State = System.Data.Entity.EntityState.Modified;
+                    }
+                    context.SaveChanges();
+
+                    context.Training_Camp_by_Season.AddRange(tc_list);
+                    context.SaveChanges();
+
+                    //Save the free agency records
+                    context.Free_Agency.AddRange(faList);
+                    context.SaveChanges();
+
+                    dbContextTransaction.Commit();
+                }
+            }
+        }
+        public List<Player> getPlayersTrainingCampMade(long franchise_id, long season_id, string league_filepath)
+        {
+            List<Player> r = null;
+
+            string con = Common.LeageConnection.Connect(league_filepath);
+
+            using (var context = new leagueContext(con))
+            {
+
+                r = context.Training_Camp_by_Season.Where(x => x.Franchise_ID == franchise_id &&
+                x.Season_ID == season_id && x.Made_Team == 1).Select(x => x.Player).ToList();
+
+            }
+           
+            return r;
+        }
+
+        public List<Player> getPlayersTrainingCampCut(long franchise_id, long season_id, string league_filepath)
+        {
+            List<Player> r = null;
+
+            string con = Common.LeageConnection.Connect(league_filepath);
+
+            using (var context = new leagueContext(con))
+            {
+
+                r = context.Training_Camp_by_Season.Where(x => x.Franchise_ID == franchise_id &&
+                x.Season_ID == season_id && x.Made_Team == 0).Select(x => x.Player).ToList();
+
+            }
+
+            return r;
+        }
+
     }
 }
