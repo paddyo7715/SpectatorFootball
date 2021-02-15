@@ -316,6 +316,7 @@ namespace SpectatorFootball
         public const int TRAINING_CAMP_QB_PRESSURE_REDUCER = 10;
         public const int TRAINING_CAMP_QB_LOOKS = 2;
         public const double TRAINING_CAMP_QB_COVERED_DIVIDER = 0.25;
+        public const int TRAINING_CAMP_QB_FUDGE = 3;
 
         public const Double TRAINING_CAMP_QB_COMPLETION_AWARD = 1.0;
         public const Double TRAINING_CAMP_QB_TD_AWARD = 6.0;

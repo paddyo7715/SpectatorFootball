@@ -56,9 +56,10 @@ namespace SpectatorFootball.Services
             //draft profile grade if this is the player's first year.
             foreach (Player_and_Ratings_and_Draft p in prd_list)
             {
+                bool bJust_draft = p.bJust_Drafted;
                 Player player = p.p;
                 Player_Pos ppos = (Player_Pos)player.Pos;
-                if (player.Drafts.Count() == 0)
+                if (!bJust_draft)
                     p.Grade = Player_Helper.Create_Overall_Rating(ppos, p.pr[0]);
                 else
                     p.Grade = player.Draft_Grade;
@@ -214,10 +215,10 @@ namespace SpectatorFootball.Services
 
             TrainingCampResults tcr = new TrainingCampResults();
 
-            tcr.OffMade = MadePlayers.Where(x => Player_Helper.isOffense(x.Pos)).ToList();
-            tcr.DefMade = MadePlayers.Where(x => !Player_Helper.isOffense(x.Pos)).ToList();
-            tcr.OffCut = CutPlayers.Where(x => Player_Helper.isOffense(x.Pos)).ToList();
-            tcr.DefCut = CutPlayers.Where(x => !Player_Helper.isOffense(x.Pos)).ToList();
+            tcr.OffMade = MadePlayers.Where(x => Player_Helper.isOffense(x.Pos)).OrderBy(x => x.Pos).ToList();
+            tcr.DefMade = MadePlayers.Where(x => !Player_Helper.isOffense(x.Pos)).OrderBy(x => x.Pos).ToList();
+            tcr.OffCut = CutPlayers.Where(x => Player_Helper.isOffense(x.Pos)).OrderBy(x => x.Pos).ToList();
+            tcr.DefCut = CutPlayers.Where(x => !Player_Helper.isOffense(x.Pos)).OrderBy(x => x.Pos).ToList();
 
             return r;
         }

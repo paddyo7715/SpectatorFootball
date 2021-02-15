@@ -10,8 +10,8 @@ namespace SpectatorFootball.Models
     {
         public Player p { get; set; }
         public List<Player_Ratings> pr { get; set; }
+        public bool bJust_Drafted { get; set; }
         public double Overall_Grade { get; set; }
-        public List<Draft> d { get; set; }
         public double Grade { get; set; }
         public bool bMadeTeam { get; set; }
     }

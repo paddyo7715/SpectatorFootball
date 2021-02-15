@@ -108,7 +108,7 @@ namespace SpectatorFootball.DAO
                 {
                     //Save the player record
                     context.Players.Add(p);
-                    context.Entry(p).State = System.Data.Entity.EntityState.Modified;
+//                    context.Entry(p).Property(x => x.Franchise_ID).IsModified = true;
                     context.SaveChanges();
 
                     //Save the Free Agency Record

@@ -3,9 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local1="clr-namespace:SpectatorFootball.BindingConverters"
         xmlns:local="clr-namespace:SpectatorFootball.WindowsLeague"
         mc:Ignorable="d"
        Height ="390" Width="400" WindowStyle="none" ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True">
+    <Window.Resources>
+        <local1:iPosConverter x:Key="iPosConverter" />
+    </Window.Resources>
     <Border Style="{StaticResource popupBD}" BorderThickness="1">
         <StackPanel Style="{StaticResource popupSP}" Height="380" Width="390" Orientation="Vertical" >
             <StackPanel Orientation="Horizontal">
@@ -24,11 +28,71 @@
                         <StackPanel Orientation="vertical">
                             <Label Style="{StaticResource popupTT}" HorizontalAlignment="Center">Offense</Label>
                             <ListView Margin="10" Name="lvMadeOffense" HorizontalContentAlignment="left"  Background="LightGray" Width="200" Height="220">
+                                <ListView.View>
+                                    <GridView AllowsColumnReorder="false">
+                                        <GridView.ColumnHeaderContainerStyle>
+                                            <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                            </Style>
+                                        </GridView.ColumnHeaderContainerStyle>
+                                        <GridViewColumn Header="POS">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Width="30" TextAlignment="Center">
+                                        <Run Text="{Binding Pos, Converter={StaticResource iPosConverter}}" />
+                                                    </TextBlock>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+
+                                        <GridViewColumn Header="Player Name">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Width="160">
+                                        <Run Text="{Binding First_Name}" />
+                                        <Run Text=" " /> <!-- space -->
+                                        <Run Text="{Binding Last_Name}" />
+                                                    </TextBlock>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                    </GridView>
+                                </ListView.View>
                             </ListView>
                         </StackPanel>
                         <StackPanel Orientation="vertical">
                             <Label Style="{StaticResource popupTT}" HorizontalAlignment="Center">Defense</Label>
                             <ListView Margin="10" Name="lvMadeDefense" HorizontalContentAlignment="left"  Background="LightGray" Width="200" Height="220">
+                                <ListView.View>
+                                    <GridView AllowsColumnReorder="false">
+                                        <GridView.ColumnHeaderContainerStyle>
+                                            <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                            </Style>
+                                        </GridView.ColumnHeaderContainerStyle>
+                                        <GridViewColumn Header="POS">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Width="30" TextAlignment="Center">
+                                        <Run Text="{Binding Pos, Converter={StaticResource iPosConverter}}" />
+                                                    </TextBlock>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+
+                                        <GridViewColumn Header="Player Name">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Width="160">
+                                        <Run Text="{Binding First_Name}" />
+                                        <Run Text=" " /> <!-- space -->
+                                        <Run Text="{Binding Last_Name}" />
+                                                    </TextBlock>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                    </GridView>
+                                </ListView.View>
                             </ListView>
                         </StackPanel>
                     </StackPanel>
@@ -41,11 +105,71 @@
                         <StackPanel Orientation="vertical">
                             <Label Style="{StaticResource popupTT}" HorizontalAlignment="Center">Offense</Label>
                             <ListView Margin="10" Name="lvCutOffense" HorizontalContentAlignment="left"  Background="LightGray" Width="200" Height="220">
+                                <ListView.View>
+                                    <GridView AllowsColumnReorder="false">
+                                        <GridView.ColumnHeaderContainerStyle>
+                                            <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                            </Style>
+                                        </GridView.ColumnHeaderContainerStyle>
+                                        <GridViewColumn Header="POS">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Width="30" TextAlignment="Center">
+                                        <Run Text="{Binding Pos, Converter={StaticResource iPosConverter}}" />
+                                                    </TextBlock>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+
+                                        <GridViewColumn Header="Player Name">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Width="160">
+                                        <Run Text="{Binding First_Name}" />
+                                        <Run Text=" " /> <!-- space -->
+                                        <Run Text="{Binding Last_Name}" />
+                                                    </TextBlock>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                    </GridView>
+                                </ListView.View>
                             </ListView>
                         </StackPanel>
                         <StackPanel Orientation="vertical">
                             <Label Style="{StaticResource popupTT}" HorizontalAlignment="Center">Defense</Label>
                             <ListView Margin="10" Name="lvCutDefense" HorizontalContentAlignment="left"  Background="LightGray" Width="200" Height="220">
+                                <ListView.View>
+                                    <GridView AllowsColumnReorder="false">
+                                        <GridView.ColumnHeaderContainerStyle>
+                                            <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                            </Style>
+                                        </GridView.ColumnHeaderContainerStyle>
+                                        <GridViewColumn Header="POS">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Width="30" TextAlignment="Center">
+                                        <Run Text="{Binding Pos, Converter={StaticResource iPosConverter}}" />
+                                                    </TextBlock>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+
+                                        <GridViewColumn Header="Player Name">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Width="160">
+                                        <Run Text="{Binding First_Name}" />
+                                        <Run Text=" " /> <!-- space -->
+                                        <Run Text="{Binding Last_Name}" />
+                                                    </TextBlock>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                    </GridView>
+                                </ListView.View>
                             </ListView>
                         </StackPanel>
                     </StackPanel>

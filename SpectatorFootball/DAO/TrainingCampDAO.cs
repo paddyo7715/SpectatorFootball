@@ -24,7 +24,8 @@ namespace SpectatorFootball.DAO
                     .Select(x => new TrainingCampStatus
                     {
                         helmet_filename = x.Helmet_Image_File,
-//                        HelmetImage = null,
+                        Franchise_ID = x.Franchise_ID,
+                        Season_ID = x.Season_ID,
                         Team_Name = x.City + " " + x.Nickname,
                         Status = x.Franchise.Training_Camp_by_Season.Any(y => y.Season_ID == season_id) ? 3 : 1
                     }).ToList();
@@ -48,9 +49,9 @@ namespace SpectatorFootball.DAO
                     {
                         p = x,
                         pr = x.Player_Ratings.Where(w => w.Season_ID == season_id).ToList(),
-                        Overall_Grade = 0,
-                        d = x.Drafts.Where(w => w.Season_ID == season_id).ToList()
-                    }).ToList();
+                        bJust_Drafted = x.Drafts.Any(u => u.Season_ID == season_id),
+                        Overall_Grade = 0
+                    }).ToList();  
 
             }
 

@@ -38,13 +38,13 @@
                         <Style TargetType="{x:Type ListViewItem}">
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding Status}" Value="1">
-                                    <Setter Property="Background" Value="IndianRed" />
+                                    <Setter Property="Background" Value="LightGreen" />
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding Status}" Value="2">
                                     <Setter Property="Background" Value="Yellow" />
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding Status}" Value="3">
-                                    <Setter Property="Background" Value="LightGreen" />
+                                    <Setter Property="Background" Value="IndianRed" />
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>

@@ -1,5 +1,6 @@
 ﻿using log4net;
 using SpectatorFootball.Enum;
+using SpectatorFootball.Help_Forms;
 using SpectatorFootball.Models;
 using SpectatorFootball.Services;
 using System;
@@ -65,24 +66,35 @@ namespace SpectatorFootball.WindowsLeague
         }
         private void help_btn_Click(object sender, RoutedEventArgs e)
         {
-
+            var help_form = new Help_TrainingCamp();
+            help_form.Top = (SystemParameters.PrimaryScreenHeight - help_form.Height) / 2;
+            help_form.Left = (SystemParameters.PrimaryScreenWidth - help_form.Width) / 2;
+            help_form.ShowDialog();
         }
         private void lstTrainingCamp_Click(object sender, RoutedEventArgs e)
         {
             ListView ls = (ListView)sender;
 
-            if (ls.SelectedItems.Count > 0)
-            {
+             if (ls.SelectedItems.Count > 0)
+             {
                 try
                 {
                     if (Mouse.OverrideCursor == Cursors.Wait) return;
+
                     TrainingCampStatus tc_Status = TrainingCamp_Status_list[ls.SelectedIndex];
-                    TrainingCamp_Services tcs = new TrainingCamp_Services();
-                    TrainingCampResults tcResult = tcs.getPlayersTrainingCampResult(tc_Status.Franchise_ID, tc_Status.Season_ID, pw.Loaded_League.season.League_Structure_by_Season[0].Short_Name);
-                    TrainingCamp_Results_Popup dpp = new TrainingCamp_Results_Popup(tcResult);
-                    dpp.Left = (SystemParameters.PrimaryScreenWidth - dpp.Width) / 2;
-                    dpp.ShowDialog();
-                    Mouse.OverrideCursor = null;
+
+                    if (tc_Status.Status == 3)
+                    {
+                        Mouse.OverrideCursor = Cursors.Wait;
+                        TrainingCamp_Services tcs = new TrainingCamp_Services();
+                        TrainingCampResults tcResult = tcs.getPlayersTrainingCampResult(tc_Status.Franchise_ID, tc_Status.Season_ID, pw.Loaded_League.season.League_Structure_by_Season[0].Short_Name);
+                        TrainingCamp_Results_Popup dpp = new TrainingCamp_Results_Popup(tcResult);
+                        dpp.Left = (SystemParameters.PrimaryScreenWidth - dpp.Width) / 2;
+                        dpp.ShowDialog();
+                        Mouse.OverrideCursor = null;
+                    }
+                    else
+                        MessageBox.Show("This team has not completed training camp yet", "", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 catch (Exception ex)
                 {
@@ -107,7 +119,6 @@ namespace SpectatorFootball.WindowsLeague
                 if (t.Status != 3) t.Status = 2;
 
                 updateUI(0);
-
                
                 List<long> InProgress_Franchises_List = TrainingCamp_Status_list.Where(x => x.Status != 3).Select(x => x.Franchise_ID).ToList();
                 while (InProgress_Franchises_List.Count() > 0)
@@ -117,13 +128,20 @@ namespace SpectatorFootball.WindowsLeague
                     TrainingCampStatus tcs = TrainingCamp_Status_list.Where(x => x.Franchise_ID == f_id).First();
                     int tcs_index = TrainingCamp_Status_list.IndexOf(tcs);
 
+                    TrainingCamp_Services tc_service = new TrainingCamp_Services();
+                    tc_service.Execute_Team_TrainingCamp(f_id,
+                        pw.Loaded_League.season.ID, pw.Loaded_League.season.League_Structure_by_Season[0].Short_Name);
+                    TrainingCamp_Status_list[tcs_index].Status = 3;
                     InProgress_Franchises_List.RemoveAt(tcs_index);
                     updateUI(tcs_index);
                 }
 
 
+
+                Set_TopMenu?.Invoke(this, new EventArgs());
+                logger.Info("Ending executing free agency at beginning of season.");
                 Mouse.OverrideCursor = null;
-                MessageBox.Show("Training Camp has Completed.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("All Training Camps have Completed.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
 
             }
             catch (Exception ex)

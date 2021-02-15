@@ -114,6 +114,10 @@ namespace SpectatorFootball.Services
                 if (r == null)
                 {
                     Player new_player = Player_Helper.CreatePlayer(Needed_pos[0], true,true);
+                    //Set the season id on the player_rating, since it is not
+                    //set from the method
+                    Player_Ratings pr = new_player.Player_Ratings.First();
+                    pr.Season_ID = Season_ID;
                     double new_overall_rating = Player_Helper.Create_Overall_Rating((Player_Pos)new_player.Pos, new_player.Player_Ratings.First());
 
                     Player_DAO pda = new Player_DAO();

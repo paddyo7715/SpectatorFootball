@@ -83,3 +83,5 @@ C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\Wind
 C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\WindowsLeague\TrainingCampUX.baml
 C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\WindowsLeague\TrainingCamp_Results_Popup.g.cs
 C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\WindowsLeague\TrainingCamp_Results_Popup.baml
+C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\Help_Forms\Help_TrainingCamp.g.cs
+C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\Help_Forms\Help_TrainingCamp.baml

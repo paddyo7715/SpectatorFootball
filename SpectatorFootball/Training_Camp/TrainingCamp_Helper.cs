@@ -17,14 +17,13 @@ namespace SpectatorFootball.Training_CampNS
             foreach (Player_and_Ratings_and_Draft p in r)
             {
                 double tc_grade = 0.0;
+                int iAccuracy = (int)p.pr[0].Accuracy_Rating;
+                int iArmStrength = (int)p.pr[0].Arm_Strength_Rating;
+                int iDecisionMaking = (int)p.pr[0].Decision_Making_Rating;
+                int iAgility = (int)p.pr[0].Agilty_Rating;
+                int iSpeed = (int)p.pr[0].Speed_Rating;
                 for (int i=0; i < app_Constants.TRAINING_CAMP_NUM_PLAYS; i++)
                 {
-                    int iAccuracy = (int)p.pr[0].Accuracy_Rating;
-                    int iArmStrength = (int)p.pr[0].Arm_Strength_Rating;
-                    int iDecisionMaking = (int)p.pr[0].Decision_Making_Rating;
-                    int iAgility = (int)p.pr[0].Agilty_Rating;
-                    int iSpeed = (int)p.pr[0].Speed_Rating;
-
                     int accuracy_delta = 0;
 
                     //Execute qb play
@@ -85,11 +84,11 @@ namespace SpectatorFootball.Training_CampNS
                             bReceiverOpen = true;
                             break;
                         }
-                        itemp2 = CommonUtils.getRandomNum(1, 100);
-                        if (iDecisionMaking <= itemp2)
-                            continue;
-                        else
+                        itemp2 = CommonUtils.getRandomNum(1, 100 + app_Constants.TRAINING_CAMP_QB_FUDGE);
+                        if (itemp2 <= iDecisionMaking)
                             break;
+                        else
+                            continue;
 
                     }
 
@@ -99,8 +98,8 @@ namespace SpectatorFootball.Training_CampNS
                     if (bReceiverOpen)
                     {
 
-                        int itemp3 = CommonUtils.getRandomNum(1, 100);
-                        if (iAccuracy <= itemp3)
+                        int itemp3 = CommonUtils.getRandomNum(1, 100 + app_Constants.TRAINING_CAMP_QB_FUDGE);
+                        if (itemp3 <= iAccuracy)
                         {
                             tc_grade += app_Constants.TRAINING_CAMP_QB_COMPLETION_AWARD;
                             if ((ipassattyards * app_Constants.TRAINING_CAMP_QB_RECEIVE_AFTER_CATCH_MULTIPLYER) + iYardLine >= 100)
@@ -109,11 +108,11 @@ namespace SpectatorFootball.Training_CampNS
                     }
                     else
                     {
-                        iAccuracy *= (int)app_Constants.TRAINING_CAMP_QB_COVERED_DIVIDER;
+                        iAccuracy = (int)(iAccuracy *app_Constants.TRAINING_CAMP_QB_COVERED_DIVIDER);
                         if (iAccuracy <= 0)
                             iAccuracy = 1;
-                        int itemp3 = CommonUtils.getRandomNum(1, 100);
-                        if (iAccuracy <= itemp3)
+                        int itemp3 = CommonUtils.getRandomNum(1, 100 + app_Constants.TRAINING_CAMP_QB_FUDGE);
+                        if (itemp3 <= iAccuracy)
                         {
                             tc_grade += app_Constants.TRAINING_CAMP_QB_COMPLETION_AWARD;
                             if ((ipassattyards * app_Constants.TRAINING_CAMP_QB_RECEIVE_AFTER_CATCH_MULTIPLYER) + iYardLine >= 100)
@@ -138,14 +137,14 @@ namespace SpectatorFootball.Training_CampNS
 
             foreach (Player_and_Ratings_and_Draft p in r)
             {
+                int iRunningPower = (int)p.pr[0].Running_Power_Rating;
+                int iHands = (int)p.pr[0].Hands_Rating;
+                int iAgility = (int)p.pr[0].Agilty_Rating;
+                int iSpeed = (int)p.pr[0].Speed_Rating;
+
                 double tc_grade = 0.0;
                 for (int i = 0; i < app_Constants.TRAINING_CAMP_NUM_PLAYS; i++)
                 {
-                    int iRunningPower = (int)p.pr[0].Running_Power_Rating;
-                    int iHands = (int)p.pr[0].Hands_Rating;
-                    int iAgility = (int)p.pr[0].Agilty_Rating;
-                    int iSpeed = (int)p.pr[0].Speed_Rating;
-
                     int iYardLine = CommonUtils.getRandomNum(1, 100);
                     int itemp9 = CommonUtils.getRandomNum(1, 100);
                     if (itemp9 <= app_Constants.TRAINING_CAMP_RB_PERCENT_RECEIVER)
@@ -162,7 +161,7 @@ namespace SpectatorFootball.Training_CampNS
 
                                 //See if the player can get a TD for more points
                                 int yeardsGainged = app_Constants.TRAINING_CAMP_RB_PASS_LEN;
-                                int ii;
+                                int ii=0;
                                 for (ii = iYardLine + yeardsGainged; ii < 100; ii+= app_Constants.TRAINING_CAMP_RECEIVER_YAC)
                                 {
                                     int itempaa = CommonUtils.getRandomNum(1, app_Constants.TRAINING_CAMP_RECEIVER_AFTER_CATCH_FACTOR);
@@ -183,28 +182,28 @@ namespace SpectatorFootball.Training_CampNS
                             //Before breaking out, a runners power running ability is important
                             if (iii < (iYardLine + app_Constants.TRAINING_CAMP_RB_POWER_BREAK_AWAY))
                             {
-                                int itemp12 = CommonUtils.getRandomNum(1, 100 + app_Constants.TRAINING_CAMP_RB_POWER_BUMP) ;
-                                if (itemp12 > (app_Constants.TRAINING_CAMP_RB_POWER_BUMP + iRunningPower - app_Constants.TRAINING_CAMP_RB_DELTA))
+                                int itemp12 = CommonUtils.getRandomNum(1, 100) ;
+                                if (itemp12 > (iRunningPower - app_Constants.TRAINING_CAMP_RB_DELTA))
                                     break;
                             }
                             else if (iii < (iYardLine + app_Constants.TRAINING_CAMP_RB_AGILITY_BREAK_AWAY))
                             {
-                                int itemp12 = CommonUtils.getRandomNum(1, 100 + app_Constants.TRAINING_CAMP_RB_POWER_BUMP) ;
-                                if (itemp12 > (app_Constants.TRAINING_CAMP_RB_POWER_BUMP + iAgility - app_Constants.TRAINING_CAMP_RB_DELTA))
+                                int itemp12 = CommonUtils.getRandomNum(1, 100) ;
+                                if (itemp12 > (iAgility - app_Constants.TRAINING_CAMP_RB_DELTA))
                                     break;
                             }
                             else
                             {
-                                int itemp12 = CommonUtils.getRandomNum(1, 100 + app_Constants.TRAINING_CAMP_RB_POWER_BUMP);
-                                if (itemp12 > (app_Constants.TRAINING_CAMP_RB_POWER_BUMP + iSpeed - app_Constants.TRAINING_CAMP_RB_DELTA))
+                                int itemp12 = CommonUtils.getRandomNum(1, 100);
+                                if (itemp12 > (iSpeed - app_Constants.TRAINING_CAMP_RB_DELTA))
                                     break;
                             }
                         }
                         if (iii < iYardLine)
                             tc_grade += app_Constants.TRAINING_CAMP_RB_RUNNING_LOSS;
-                        else if ((iii - iYardLine) > app_Constants.TRAINING_CAMP_RB_GAIN_FOR_POINT)
+                        if ((iii - iYardLine) > app_Constants.TRAINING_CAMP_RB_GAIN_FOR_POINT)
                             tc_grade += app_Constants.TRAINING_CAMP_RB_RUNNING_PLUS5;
-                        else if (iii >= 100)
+                        if (iii >= 100)
                             tc_grade += app_Constants.TRAINING_CAMP_RB_TD;
 
 
@@ -224,17 +223,17 @@ namespace SpectatorFootball.Training_CampNS
             foreach (Player_and_Ratings_and_Draft p in r)
             {
                 double tc_grade = 0.0;
+                int iHands = (int)p.pr[0].Hands_Rating;
+                int iAgility = (int)p.pr[0].Agilty_Rating;
+                int iSpeed = (int)p.pr[0].Speed_Rating;
+
                 for (int i = 0; i < app_Constants.TRAINING_CAMP_NUM_PLAYS; i++)
                 {
-                    int iHands = (int)p.pr[0].Hands_Rating;
-                    int iAgility = (int)p.pr[0].Agilty_Rating;
-                    int iSpeed = (int)p.pr[0].Speed_Rating;
-
                     int iYardLine = CommonUtils.getRandomNum(1, 100);
 
                     //Did receiver get open
                     int itemprndOpen = CommonUtils.getRandomNum(1, app_Constants.TRAINING_CAMP_RECEIVER_OPEN_FUDGE);
-                    if ((iAgility + iSpeed) < itemprndOpen)
+                    if (itemprndOpen < (iAgility + iSpeed))
                     {
                         int iacc = CommonUtils.getRandomNum(1, 100);
                         if (iacc <= app_Constants.TRAINING_CAMP_RB_ACCURACY_PERC)
@@ -268,8 +267,6 @@ namespace SpectatorFootball.Training_CampNS
                                     ipassattyards = 60;
                                 }
 
-
-
                                 //See if the player can get a TD for more points
                                 int ii;
                                 for (ii = iYardLine + ipassattyards; ii < 100; ii += app_Constants.TRAINING_CAMP_RECEIVER_YAC)
@@ -297,14 +294,14 @@ namespace SpectatorFootball.Training_CampNS
             foreach (Player_and_Ratings_and_Draft p in r)
             {
                 double tc_grade = 0.0;
+                int iHands = (int)p.pr[0].Hands_Rating;
+                int iAgility = (int)p.pr[0].Agilty_Rating;
+                int iSpeed = (int)p.pr[0].Speed_Rating;
+                int iRunBlocking = (int)p.pr[0].Run_Block_Rating;
+                int iPassBlocking = (int)p.pr[0].Pass_Block_Rating;
+
                 for (int i = 0; i < app_Constants.TRAINING_CAMP_NUM_PLAYS; i++)
                 {
-                    int iHands = (int)p.pr[0].Hands_Rating;
-                    int iAgility = (int)p.pr[0].Agilty_Rating;
-                    int iSpeed = (int)p.pr[0].Speed_Rating;
-                    int iRunBlocking = (int)p.pr[0].Running_Power_Rating;
-                    int iPassBlocking = (int)p.pr[0].Pass_Block_Rating;
-
                     int itemprunpass = CommonUtils.getRandomNum(1, 100);
                     if (itemprunpass <= app_Constants.TRAINING_CAMP_TE_BLOCK_PERCENT)
                     {
@@ -319,7 +316,7 @@ namespace SpectatorFootball.Training_CampNS
                         else
                         {
                             //Pass block
-                            int inttemppblock = CommonUtils.getRandomNum(1, 200);
+                            int inttemppblock = CommonUtils.getRandomNum(1, 200 + app_Constants.TRAINING_BLOCK_FUDGE);
                             if (inttemppblock < (iPassBlocking + iAgility))
                                 tc_grade += app_Constants.TRAINING_CAMP_BLOCKER_GOOD_PASS_BLOCK;
                         }
@@ -330,7 +327,7 @@ namespace SpectatorFootball.Training_CampNS
 
                         //Did receiver get open
                         int itemprndOpen = CommonUtils.getRandomNum(1, app_Constants.TRAINING_CAMP_RECEIVER_OPEN_FUDGE);
-                        if ((iAgility + iSpeed) < itemprndOpen)
+                        if (itemprndOpen < (iAgility + iSpeed)  )
                         {
                             int iacc = CommonUtils.getRandomNum(1, 100);
                             if (iacc <= app_Constants.TRAINING_CAMP_RB_ACCURACY_PERC)
@@ -371,12 +368,12 @@ namespace SpectatorFootball.Training_CampNS
             foreach (Player_and_Ratings_and_Draft p in r)
             {
                 double tc_grade = 0.0;
+                int iAgility = (int)p.pr[0].Agilty_Rating;
+                int iRunBlocking = (int)p.pr[0].Run_Block_Rating;
+                int iPassBlocking = (int)p.pr[0].Pass_Block_Rating;
+
                 for (int i = 0; i < app_Constants.TRAINING_CAMP_NUM_PLAYS; i++)
                 {
-                    int iAgility = (int)p.pr[0].Agilty_Rating;
-                    int iRunBlocking = (int)p.pr[0].Running_Power_Rating;
-                    int iPassBlocking = (int)p.pr[0].Pass_Block_Rating;
-
                     int itempblocktype = CommonUtils.getRandomNum(1, 100);
                     if (itempblocktype <= app_Constants.TRAINING_BLOCKER_RUN_PERCENT)
                     {
@@ -408,12 +405,12 @@ namespace SpectatorFootball.Training_CampNS
             foreach (Player_and_Ratings_and_Draft p in r)
             {
                 double tc_grade = 0.0;
+                int iAgility = (int)p.pr[0].Agilty_Rating;
+                int iRunAttacking = (int)p.pr[0].Run_Attack_Rating;
+                int iPassAttacking = (int)p.pr[0].Pass_Attack_Rating;
+
                 for (int i = 0; i < app_Constants.TRAINING_CAMP_NUM_PLAYS; i++)
                 {
-
-                    int iAgility = (int)p.pr[0].Agilty_Rating;
-                    int iRunAttacking = (int)p.pr[0].Run_Attack_Rating;
-                    int iPassAttacking = (int)p.pr[0].Pass_Attack_Rating;
 
                     int itempblocktype = CommonUtils.getRandomNum(1, 100);
                     if (itempblocktype <= app_Constants.TRAINING_BLOCKER_RUN_PERCENT)
@@ -446,13 +443,15 @@ namespace SpectatorFootball.Training_CampNS
             foreach (Player_and_Ratings_and_Draft p in r)
             {
                 double tc_grade = 0.0;
+                int iHands = (int)p.pr[0].Hands_Rating;
+                int iAgility = (int)p.pr[0].Agilty_Rating;
+                int iSpeed = (int)p.pr[0].Speed_Rating;
+                int iRunAttacking = (int)p.pr[0].Run_Attack_Rating;
+                int iPassAttacking = (int)p.pr[0].Pass_Attack_Rating;
+
                 for (int i = 0; i < app_Constants.TRAINING_CAMP_NUM_PLAYS; i++)
                 {
-                    int iHands = (int)p.pr[0].Hands_Rating;
-                    int iAgility = (int)p.pr[0].Agilty_Rating;
-                    int iSpeed = (int)p.pr[0].Speed_Rating;
-                    int iRunAttacking = (int)p.pr[0].Run_Attack_Rating;
-                    int iPassAttacking = (int)p.pr[0].Pass_Attack_Rating;
+
 
                     int itemprunpass = CommonUtils.getRandomNum(1, 100);
                     if (itemprunpass <= app_Constants.TRAINING_CAMP_LB_BLOCK_PERCENT)
@@ -518,12 +517,12 @@ namespace SpectatorFootball.Training_CampNS
             foreach (Player_and_Ratings_and_Draft p in r)
             {
                 double tc_grade = 0.0;
+                int iHands = (int)p.pr[0].Hands_Rating;
+                int iAgility = (int)p.pr[0].Agilty_Rating;
+                int iSpeed = (int)p.pr[0].Speed_Rating;
+
                 for (int i = 0; i < app_Constants.TRAINING_CAMP_NUM_PLAYS; i++)
                 {
-                    int iHands = (int)p.pr[0].Hands_Rating;
-                    int iAgility = (int)p.pr[0].Agilty_Rating;
-                    int iSpeed = (int)p.pr[0].Speed_Rating;
-
 
                         int iYardLine = CommonUtils.getRandomNum(1, 100);
 
@@ -589,11 +588,11 @@ namespace SpectatorFootball.Training_CampNS
             foreach (Player_and_Ratings_and_Draft p in r)
             {
                 double tc_grade = 0.0;
+                int iLegStrength = (int)p.pr[0].Kicker_Leg_Power_Rating;
+                int iLegAccuracy = (int)p.pr[0].Kicker_Leg_Accuracy_Rating;
+
                 for (int i = 0; i < app_Constants.TRAINING_CAMP_NUM_PLAYS; i++)
                 {
-                    int iLegStrength = (int)p.pr[0].Kicker_Leg_Power_Rating;
-                    int iLegAccuracy = (int)p.pr[0].Kicker_Leg_Accuracy_Rating;
-
                     int iYardLine = CommonUtils.getRandomNum(1, app_Constants.TRAINING_CAMP_FG_FURTHEST_YRD);
                     iYardLine += app_Constants.TRAINING_CAMP_FG_EXTRA_YEARDS;
 
@@ -628,11 +627,11 @@ namespace SpectatorFootball.Training_CampNS
             foreach (Player_and_Ratings_and_Draft p in r)
             {
                 double tc_grade = 0.0;
+                int iLegStrength = (int)p.pr[0].Kicker_Leg_Power_Rating;
+                int iLegAccuracy = (int)p.pr[0].Kicker_Leg_Accuracy_Rating;
+
                 for (int i = 0; i < app_Constants.TRAINING_CAMP_NUM_PLAYS; i++)
                 {
-                    int iLegStrength = (int)p.pr[0].Kicker_Leg_Power_Rating;
-                    int iLegAccuracy = (int)p.pr[0].Kicker_Leg_Accuracy_Rating;
-
                     int iYardLine = CommonUtils.getRandomNum(1, app_Constants.TRAINING_CAMP_P_COFFIN_YRD);
                     int Punt_length = app_Constants.TRAINING_CAMP_P_MIN_PUNT;
 

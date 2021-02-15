@@ -355,8 +355,8 @@ namespace SpectatorFootball
                         int temprnd = CommonUtils.getRandomNum(1, 100);
                         if (temprnd <= app_Constants.QB_CHANCE_RUNNER)
                         {
-                            r.Agilty_Rating = CommonUtils.getRandomNum(app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.SECONDARY_3_ABILITY_HIGH_RATING);
-                            r.Speed_Rating = CommonUtils.getRandomNum(app_Constants.PRIMARY_ABILITY_HIGH_RATING, app_Constants.SECONDARY_3_ABILITY_HIGH_RATING);
+                            r.Agilty_Rating = CommonUtils.getRandomNum(app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING);
+                            r.Speed_Rating = CommonUtils.getRandomNum(app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING);
                         }
                         else
                         {
