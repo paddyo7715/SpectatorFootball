@@ -318,7 +318,7 @@ namespace SpectatorFootball
         public const double TRAINING_CAMP_QB_COVERED_DIVIDER = 0.25;
         public const int TRAINING_CAMP_QB_FUDGE = 3;
 
-        public const Double TRAINING_CAMP_QB_COMPLETION_AWARD = 1.0;
+        public const Double TRAINING_CAMP_QB_COMPLETION_AWARD = 1.2;
         public const Double TRAINING_CAMP_QB_TD_AWARD = 6.0;
         public const Double TRAINING_CAMP_QB_INT_AWARD = -6.0;
 
@@ -358,10 +358,10 @@ namespace SpectatorFootball
         public const int TRAINING_CAMP_LB_FUDGE = 3;
 
         public const Double TRAINING_CAMP_COVER_RECEIVER = 1.2;
-        public const Double TRAINING_CAMP_COVER_int = 6.0;
+        public const Double TRAINING_CAMP_COVER_int = 1.0;
         public const double TRAINING_CAMP_COVER_SURRENDER_TD = -6.0;
 
-        public const int TRAINING_CAMP_FG_FURTHEST_YRD = 45;
+        public const int TRAINING_CAMP_FG_FURTHEST_YRD = 50;
         public const int TRAINING_CAMP_FG_EXTRA_YEARDS = 15;
         public const int TRAINING_CAMP_FG_FUDGE = 3;
 
@@ -372,7 +372,7 @@ namespace SpectatorFootball
         public const int TRAINING_CAMP_P_FUDGE = 5;
         public const int TRAINING_CAMP_P_YARD_INC = 5;
 
-        public const double TRAINING_CAMP_P_COFFIN_CORNER_AWARD = 3.0;
+        public const double TRAINING_CAMP_P_COFFIN_CORNER_AWARD = 5.0;
 
     }
 }

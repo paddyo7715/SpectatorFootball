@@ -109,13 +109,13 @@ namespace SpectatorFootball.Services
                 //posResultList based on that bool of wether they made the team
                 int Num_Team_Slots = Team_Helper.getNumPlayersByPosition(pp);
 
-                //The reason the list is sorted in decending order is that I would want to
+                //The reason the list is sorted in ascending order is that I would want to
                 //clear the franchise id and jersey number from players that are cut from
                 //the team first.  Note that these players may or may not have a jersey
                 //number depending on if they were on the team last year.
                 //This is helpful so that for a player that does make the team and does
                 //not yet have a jersey number can get one of the freed up.
-                posResultList = posResultList.OrderByDescending(x => x.Grade).ToList();
+                posResultList = posResultList.OrderBy(x => x.Grade).ToList();
 
                 int icount = posResultList.Count();
                 foreach (Player_and_Ratings_and_Draft p in posResultList)
@@ -140,10 +140,9 @@ namespace SpectatorFootball.Services
                             Made_Team = 0
                         };
                         F_Trans.Add(fa);
-
+                        tc_list.Add(tcamp);
                         p.p.Franchise_ID = null;
                         p.p.Jersey_Number = null;
-
                     }
                     else
                     {
@@ -187,10 +186,8 @@ namespace SpectatorFootball.Services
                             Grade = (long)p.Grade,
                             Made_Team = 1
                         };
-
                         tc_list.Add(tcamp);
                     }
-
                     Updated_Players.Add(p.p);
                     icount--;
                 }
