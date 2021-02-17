@@ -132,7 +132,7 @@ namespace SpectatorFootball.WindowsLeague
                     tc_service.Execute_Team_TrainingCamp(f_id,
                         pw.Loaded_League.season.ID, pw.Loaded_League.season.League_Structure_by_Season[0].Short_Name);
                     TrainingCamp_Status_list[tcs_index].Status = 3;
-                    InProgress_Franchises_List.RemoveAt(tcs_index);
+                    InProgress_Franchises_List.RemoveAt(rnd);
                     updateUI(tcs_index);
                 }
 

@@ -39,10 +39,10 @@ namespace SpectatorFootball.DAO
             List<Player_and_Ratings_and_Draft> r = null;
 
             string con = Common.LeageConnection.Connect(league_filepath);
-
+   
             using (var context = new leagueContext(con))
             {
-
+//                context.Database.Log = Console.Write;
                 r = context.Players.Where(x => x.Retired == 0 && x.Franchise_ID == franchise_id)
                     .Where(x => x.Player_Ratings.Any(i => i.Season_ID == season_id))
                     .Select(x => new Player_and_Ratings_and_Draft
@@ -70,6 +70,7 @@ namespace SpectatorFootball.DAO
                     //Save the player record
                     foreach (Player p in pList)
                     {
+                        p.Player_Ratings = null;
                         context.Players.Add(p);
                         context.Entry(p).State = System.Data.Entity.EntityState.Modified;
                     }
