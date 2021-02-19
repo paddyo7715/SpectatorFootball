@@ -29,10 +29,8 @@ namespace SpectatorFootball
                     if (sourceProperty.Name == destProperty.Name && sourceProperty.PropertyType == destProperty.PropertyType)
                     {
                         long new_value = (long) sourceProperty.GetValue(pr);
-                        if (new_value >= app_Constants.PRIMARY_ABILITY_LOW_RATING)
-                        {
-                            new_value = alterValue(Convert.ToInt32(new_value));
-                        }
+
+                         new_value = alterValue(Convert.ToInt32(new_value));
 
                         destProperty.SetValue(r, new_value);
                         break;
@@ -52,18 +50,18 @@ namespace SpectatorFootball
             int rmd = CommonUtils.getRandomNum(1, 100);
             if (rmd >= 85)
             {
-                loweri = v - 25;
-                upperi = v + 25;
+                loweri = v - 40;
+                upperi = v + 40;
             }
             else if (rmd >= 65)
             {
-                loweri = v - 15;
-                upperi = v + 15;
+                loweri = v - 25;
+                upperi = v + 25;
             }
-            else if (rmd >= 40)
+            else if (rmd >= 30)
             {
-                loweri = v - 5;
-                upperi = v + 5;
+                loweri = v - 12;
+                upperi = v + 12;
             }
             else 
             {
