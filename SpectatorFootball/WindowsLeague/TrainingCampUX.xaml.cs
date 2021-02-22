@@ -85,20 +85,18 @@ namespace SpectatorFootball.WindowsLeague
 
                     if (tc_Status.Status == 3)
                     {
-                        Mouse.OverrideCursor = Cursors.Wait;
                         TrainingCamp_Services tcs = new TrainingCamp_Services();
                         TrainingCampResults tcResult = tcs.getPlayersTrainingCampResult(tc_Status.Franchise_ID, tc_Status.Season_ID, pw.Loaded_League.season.League_Structure_by_Season[0].Short_Name);
                         TrainingCamp_Results_Popup dpp = new TrainingCamp_Results_Popup(tcResult);
                         dpp.Left = (SystemParameters.PrimaryScreenWidth - dpp.Width) / 2;
+                        dpp.Top = 100;
                         dpp.ShowDialog();
-                        Mouse.OverrideCursor = null;
                     }
                     else
                         MessageBox.Show("This team has not completed training camp yet", "", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 catch (Exception ex)
                 {
-                    Mouse.OverrideCursor = null;
                     btnTrainingCamp.IsEnabled = true;
                     logger.Error("Error Showing Training Camp Results for Team");
                     logger.Error(ex);

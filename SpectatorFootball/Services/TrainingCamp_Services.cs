@@ -39,8 +39,8 @@ namespace SpectatorFootball.Services
 
         public void Execute_Team_TrainingCamp(long franchise_id, long season_id, string League_Shortname)
         {
-            //Pass the filepath and filename to the StreamWriter Constructor
-            StreamWriter sw = new StreamWriter("C:\\Database\\Players.txt", true);
+            //For testing player draft versus overall and training camp results
+//            StreamWriter sw = new StreamWriter("C:\\Database\\Players.txt", true);
 
             string DIRPath_League = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + League_Shortname.ToUpper();
             string League_con_string = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + League_Shortname + Path.DirectorySeparatorChar + League_Shortname + "." + app_Constants.DB_FILE_EXT;
@@ -120,17 +120,17 @@ namespace SpectatorFootball.Services
                 //not yet have a jersey number can get one of the freed up.
                 posResultList = posResultList.OrderBy(x => x.Grade).ToList();
 
-                sw.WriteLine("Franchise id: " + franchise_id);
-
+//For testing player ratings and draft profile and training camp grade
+//                sw.WriteLine("Franchise id: " + franchise_id);
                 int icount = posResultList.Count();
                 foreach (Player_and_Ratings_and_Draft p in posResultList)
                 {
 
 
-                    //Write a line of text
-                    sw.WriteLine(p.p.ID + " " + pp.ToString() +  " O: " + Player_Helper.Create_Overall_Rating(pp,p.pr.First())
-                        + " D: " + p.p.Draft_Grade + " T: " + p.Grade + " Age: " + p.p.Age);
-                    //Write a second line of text
+                    //For testing player ratings and draft profile and training camp grade
+//                    sw.WriteLine(p.p.ID + " " + pp.ToString() +  " O: " + Player_Helper.Create_Overall_Rating(pp,p.pr.First())
+//                        + " D: " + p.p.Draft_Grade + " T: " + p.Grade + " Age: " + p.p.Age);
+
 
 
 
@@ -210,8 +210,8 @@ namespace SpectatorFootball.Services
 
             }
 
-            //Close the file
-            sw.Close();
+            //For testing player ratings and draft profile and training camp grade
+            //            sw.Close();
 
             TrainingCampDAO tcDAO = new TrainingCampDAO();
             tcDAO.updatePlayersandFreeAgency(Updated_Players, F_Trans, tc_list, League_con_string);
@@ -228,12 +228,12 @@ namespace SpectatorFootball.Services
             List<Player> MadePlayers = tcd.getPlayersTrainingCampMade(franchise_id, season_id, League_con_string);
             List<Player> CutPlayers = tcd.getPlayersTrainingCampCut(franchise_id, season_id, League_con_string);
 
-            TrainingCampResults tcr = new TrainingCampResults();
+            r = new TrainingCampResults();
 
-            tcr.OffMade = MadePlayers.Where(x => Player_Helper.isOffense(x.Pos)).OrderBy(x => x.Pos).ToList();
-            tcr.DefMade = MadePlayers.Where(x => !Player_Helper.isOffense(x.Pos)).OrderBy(x => x.Pos).ToList();
-            tcr.OffCut = CutPlayers.Where(x => Player_Helper.isOffense(x.Pos)).OrderBy(x => x.Pos).ToList();
-            tcr.DefCut = CutPlayers.Where(x => !Player_Helper.isOffense(x.Pos)).OrderBy(x => x.Pos).ToList();
+            r.OffMade = MadePlayers.Where(x => Player_Helper.isOffense(x.Pos)).OrderBy(x => x.Pos).ToList();
+            r.DefMade = MadePlayers.Where(x => !Player_Helper.isOffense(x.Pos)).OrderBy(x => x.Pos).ToList();
+            r.OffCut = CutPlayers.Where(x => Player_Helper.isOffense(x.Pos)).OrderBy(x => x.Pos).ToList();
+            r.DefCut = CutPlayers.Where(x => !Player_Helper.isOffense(x.Pos)).OrderBy(x => x.Pos).ToList();
 
             return r;
         }

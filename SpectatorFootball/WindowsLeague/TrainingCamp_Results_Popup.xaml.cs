@@ -27,10 +27,9 @@ namespace SpectatorFootball.WindowsLeague
             this.tcResult = tcResult;
 
             lvMadeOffense.ItemsSource = tcResult.OffMade;
-            lvCutOffense.ItemsSource = tcResult.DefMade;
-            lvMadeOffense.ItemsSource = tcResult.OffCut;
+            lvMadeDefense.ItemsSource = tcResult.DefMade;
+            lvCutOffense.ItemsSource = tcResult.OffCut;
             lvCutDefense.ItemsSource = tcResult.DefCut;
-
 
         }
         private void btnclose_Click(object sender, RoutedEventArgs e)

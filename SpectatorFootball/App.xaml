@@ -248,6 +248,13 @@
             <Setter Property="Margin" Value="10,10,10,10"/>
         </Style>
 
+        <Style TargetType="GroupBox" x:Key="PopupGroupBoxstyle">
+            <Setter Property="FontFamily" Value="Verdana"/>
+            <Setter Property="FontWeight" Value="Normal"/>
+            <Setter Property="Foreground" Value="DarkBlue"/>
+            <Setter Property="Background" Value="LightBlue"/>
+        </Style>
+
         <!-- Label Team STandings -->
         <Style TargetType="Label" x:Key="Teamlbltyle">
             <Setter Property="Height" Value="20"/>
