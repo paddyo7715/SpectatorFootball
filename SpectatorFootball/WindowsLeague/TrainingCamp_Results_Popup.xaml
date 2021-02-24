@@ -14,11 +14,12 @@
         <StackPanel Style="{StaticResource popupSP}" Height="590" Width="990" Orientation="Vertical" >
             <StackPanel Orientation="Horizontal">
                 <Image Name="imgTeamHelmet" Width="100" Height="100"></Image>
-                <Label Style="{StaticResource popupTT}" Name="lblTeamName" HorizontalAlignment="Center"></Label>
+                <StackPanel Orientation="Vertical">
+                    <Label Style="{StaticResource popupTC}" Name="lblTeamName" HorizontalAlignment="Left"></Label>
+                    <Label Style="{StaticResource popupTC}" Name="lblTrainingCampYear" HorizontalAlignment="Left"></Label>
+                </StackPanel>
             </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Label Style="{StaticResource popupTT}" Name="lblTrainingCampYear" HorizontalAlignment="Center"></Label>
-            </StackPanel>
+
             <StackPanel Style="{StaticResource popupSP}" Width="990" Height="408" Margin="5,5,5,0" Orientation="Horizontal" >
                 <GroupBox FontSize="11" FontWeight="Bold" Style="{StaticResource PopupGroupBoxstyle}" >
                     <GroupBox.Header>

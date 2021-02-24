@@ -17,7 +17,7 @@ The training camp record status' are as follows:<LineBreak/>
 <Bold>Red</Bold> indicates that the team's training camp has completed.<LineBreak/>                    
 <LineBreak/>
 Once a team's training camp has completed, you can click on the status record to view<LineBreak/>
-the team's final roster and which players were cut.<LineBreak/>
+view which players made the team and which were cut.<LineBreak/>
             </TextBlock>
             <Button Name="hlp_tc_close" Style="{StaticResource appSubmitStyle}" Click="hlp_tc_close_Click">Close</Button>
         </StackPanel>

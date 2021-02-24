@@ -21,9 +21,13 @@ namespace SpectatorFootball.WindowsLeague
     public partial class TrainingCamp_Results_Popup : Window
     {
         TrainingCampResults tcResult = null;
-        public TrainingCamp_Results_Popup(TrainingCampResults tcResult)
+        public TrainingCamp_Results_Popup(BitmapImage HelmetImage, string TeamName, long Year, TrainingCampResults tcResult)
         {
             InitializeComponent();
+            imgTeamHelmet.Source = HelmetImage;
+            lblTeamName.Content = TeamName;
+            lblTrainingCampYear.Content = Year.ToString() + " Training Camp Results";
+
             this.tcResult = tcResult;
 
             lvMadeOffense.ItemsSource = tcResult.OffMade;

@@ -58,6 +58,12 @@ namespace SpectatorFootball.WindowsLeague
             if (pw.Loaded_League.LState != League_State.FreeAgency_Completed &&
                 pw.Loaded_League.LState != League_State.Training_Camp_Started)
                 btnTrainingCamp.IsEnabled = false;
+
+            if (pw.Loaded_League.LState == League_State.FreeAgency_Completed ||
+                pw.Loaded_League.LState == League_State.Training_Camp_Started)
+                btnTrainingCamp.IsEnabled = true;
+            else
+                btnTrainingCamp.IsEnabled = false;
         }
         private void btnStandings_Click(object sender, RoutedEventArgs e)
         {
@@ -85,9 +91,13 @@ namespace SpectatorFootball.WindowsLeague
 
                     if (tc_Status.Status == 3)
                     {
+                        BitmapImage HelmetImage = tc_Status.HelmetImage;
+                        string TeamName = tc_Status.Team_Name;
+                        long year = pw.Loaded_League.season.Year;
+
                         TrainingCamp_Services tcs = new TrainingCamp_Services();
                         TrainingCampResults tcResult = tcs.getPlayersTrainingCampResult(tc_Status.Franchise_ID, tc_Status.Season_ID, pw.Loaded_League.season.League_Structure_by_Season[0].Short_Name);
-                        TrainingCamp_Results_Popup dpp = new TrainingCamp_Results_Popup(tcResult);
+                        TrainingCamp_Results_Popup dpp = new TrainingCamp_Results_Popup(HelmetImage, TeamName, year, tcResult);
                         dpp.Left = (SystemParameters.PrimaryScreenWidth - dpp.Width) / 2;
                         dpp.Top = 100;
                         dpp.ShowDialog();
@@ -134,8 +144,7 @@ namespace SpectatorFootball.WindowsLeague
                     updateUI(tcs_index);
                 }
 
-
-
+                pw.Loaded_League.LState = League_State.Training_Camp_Ended;
                 Set_TopMenu?.Invoke(this, new EventArgs());
                 logger.Info("Ending executing free agency at beginning of season.");
                 Mouse.OverrideCursor = null;

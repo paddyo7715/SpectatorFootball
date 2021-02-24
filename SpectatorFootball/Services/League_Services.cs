@@ -304,13 +304,15 @@ namespace SpectatorFootball
 
                 int draft_count = m[0];
                 int draft_completed_count = m[1];
-                int teamsLessThanFull_Count = m[2];
-                int training_camp_count = m[3];
-                int Unplayed_Regular_Season_Games_Count = m[4];
-                int playoff_teams_count = m[5];
-                int Unplayed_Playoff_Games_Count = m[6];
-                int player_awards_count = m[7];
-                int teams_in_league_count = m[8];
+                int teamsLessThanTCFull_Count = m[2];
+                int teamsnotFull_Count = m[3];
+                int training_camp_count = m[4];
+                int Unplayed_Regular_Season_Games_Count = m[5];
+                int anyPlayer_Regular_Season_Games = m[6];
+                int playoff_teams_count = m[7];
+                int Unplayed_Playoff_Games_Count = m[8];
+                int player_awards_count = m[9];
+                int teams_in_league_count = m[10];
 
                 if (draft_count == 0)
                     r = League_State.Draft_Completed;
@@ -319,10 +321,10 @@ namespace SpectatorFootball
 
                 if (r == League_State.Draft_Completed)
                 {
-                    if (teamsLessThanFull_Count == 0)
+                    if (teamsLessThanTCFull_Count == 0)
                         r = League_State.FreeAgency_Completed;
                     else
-                        if (teamsLessThanFull_Count < teams_in_league_count)
+                        if (teamsLessThanTCFull_Count < teams_in_league_count)
                         {
                             r = League_State.FreeAgency_Started;
                         }
@@ -330,7 +332,7 @@ namespace SpectatorFootball
 
                 if (training_camp_count > 0)
                 {
-                    if (teamsLessThanFull_Count == 0)
+                    if (teamsnotFull_Count == 0)
                         r = League_State.Training_Camp_Ended;
                     else
                         r = League_State.Training_Camp_Started;
@@ -338,7 +340,7 @@ namespace SpectatorFootball
 
                 if (Unplayed_Regular_Season_Games_Count > 0)
                 {
-                    if (r == League_State.Training_Camp_Ended)
+                    if (anyPlayer_Regular_Season_Games > 0)
                         r = League_State.Regular_Season_in_Progress;
                 }
                 else

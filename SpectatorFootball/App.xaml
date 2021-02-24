@@ -78,7 +78,13 @@
             <Setter Property="Foreground" Value="White"/>
         </Style>
 
-
+        <Style TargetType="Label" x:Key="popupTC">
+            <Setter Property="FontFamily" Value="Verdana"/>
+            <Setter Property="FontSize" Value="28"/>
+            <Setter Property="FontWeight" Value="Normal"/>
+            <Setter Property="Foreground" Value="DarkBlue"/>
+        </Style>
+        
         <!-- Popup fonts label -->
         <Style TargetType="Label" x:Key="PopupLabel">
             <Setter Property="FontFamily" Value="Verdana"/>
