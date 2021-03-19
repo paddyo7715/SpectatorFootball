@@ -355,5 +355,14 @@
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="Background" Value="Black"/>
         </Style>
+
+        <!-- Schedule form -->
+        <Style TargetType="ListView" x:Key="SchedWeekLVStyle">
+            <Setter Property="FontFamily" Value="Verdana"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="LightGray"/>
+        </Style>
     </Application.Resources>
 </Application>

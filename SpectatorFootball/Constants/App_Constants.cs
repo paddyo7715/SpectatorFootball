@@ -10,6 +10,7 @@ namespace SpectatorFootball
         // Max Settings
         public const int MAX_DIVISIONS = 20;
         public const int MAX_TEAMS = 200;
+        public const int MAX_PLAYOFF_TEAMS = 64;
 
         // Folders / Files
         public const int MIN_FREE_DISK_SPACE = 50;
@@ -40,7 +41,6 @@ namespace SpectatorFootball
         public const int DRAFT_QB_CHOICE_PICK_DEPTH = 10;
         public const int DRAFT_OTHER_CHOICE_PICK_DEPTH = 5;
         public const int DRAFT_PERCENT_CRAPPIFY = 75;
-
 
         // Players On a team - 53 total
         public const int QB_PER_TEAM = 3;
@@ -264,7 +264,6 @@ namespace SpectatorFootball
         public static Color STOCK_SOCKS_COLOR = Color.FromArgb(236, 133, 102);
         public static Color STOCK_CLEATES_COLOR = Color.FromArgb(113, 89, 111);
 
-
         // age
         public const int STARTING_ROOKIE_AGE = 21;
         public const int NEWLEAGE_LOW_AGE = 21;
@@ -373,6 +372,19 @@ namespace SpectatorFootball
         public const int TRAINING_CAMP_P_YARD_INC = 5;
 
         public const double TRAINING_CAMP_P_COFFIN_CORNER_AWARD = 5.0;
+
+        //Schdule
+        public const int PLAYOFF_WIDLCARD_WEEK_1 = 1000;
+        public const int PLAYOFF_WIDLCARD_WEEK_2 = 1300;
+        public const int PLAYOFF_WIDLCARD_WEEK_3 = 1600;
+        public const int PLAYOFF_DIVISIONAL_WEEK = 2000;
+        public const int PLAYOFF_CONFERENCE_WEEK = 3000;
+        public const int PLAYOFF_CHAMPIONSHIP_WEEK = 9999;
+
+        //Game
+        public const int GAME_QUARTER_SECONDS = 60 * 15;
+        public const int QTRS_IN_REGULATION = 4;
+
 
     }
 }

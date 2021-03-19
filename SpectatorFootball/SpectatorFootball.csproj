@@ -120,12 +120,14 @@
     <Compile Include="DAO\DraftDAO.cs" />
     <Compile Include="DAO\FreeAgencyDAO.cs" />
     <Compile Include="DAO\HomeTownsDAO.cs" />
+    <Compile Include="DAO\ScheduleDAO.cs" />
     <Compile Include="DAO\TeamDAO.cs" />
     <Compile Include="DAO\TrainingCampDAO.cs" />
     <Compile Include="Draft\Draft_Helper.cs" />
     <Compile Include="Draft\Draft_Pos_Importance.cs" />
     <Compile Include="Free_Agency\FreeAgency_Helper.cs" />
     <Compile Include="Free_Agency\Pos_and_Count.cs" />
+    <Compile Include="Game\Game_Helper.cs" />
     <Compile Include="Help_Forms\Help_Draft.xaml.cs">
       <DependentUpon>Help_Draft.xaml</DependentUpon>
     </Compile>
@@ -255,6 +257,7 @@
     <Compile Include="Models\Playoff_Teams_by_Season.cs">
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Sched_Week_With_Name.cs" />
     <Compile Include="Models\Season.cs">
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
@@ -266,8 +269,11 @@
     <Compile Include="Models\Training_Camp_by_Season.cs">
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\WeeklyScheduleRec.cs" />
+    <Compile Include="Playoffs\Playoff_Helper.cs" />
     <Compile Include="Services\FreeAgency_Services.cs" />
     <Compile Include="Draft\Draft_Need.cs" />
+    <Compile Include="Services\Schedule_Services.cs" />
     <Compile Include="Services\TrainingCamp_Services.cs" />
     <Compile Include="Training_Camp\TrainingCamp_Helper.cs" />
     <Compile Include="WindowsLeague\Draft_Profile_Popup.xaml.cs">
@@ -364,6 +370,9 @@
     </Compile>
     <Compile Include="WindowsLeague\LeagueStandingsUX.xaml.cs">
       <DependentUpon>LeagueStandingsUX.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsLeague\ScheduleUX.xaml.cs">
+      <DependentUpon>ScheduleUX.xaml</DependentUpon>
     </Compile>
     <Compile Include="WindowsLeague\TrainingCampUX.xaml.cs">
       <DependentUpon>TrainingCampUX.xaml</DependentUpon>
@@ -467,6 +476,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="WindowsLeague\LeagueStandingsUX.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowsLeague\ScheduleUX.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

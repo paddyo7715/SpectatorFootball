@@ -42,6 +42,7 @@ namespace SpectatorFootball
         private LeagueDraftUX LDraft = null;
         private LeagueFreeAgencyUX LFreeAgency = null;
         private TrainingCampUX LTrainingCampUX = null;
+        private ScheduleUX SchedUX = null;
 
         private static ILog logger = LogManager.GetLogger("RollingFile");
 
@@ -227,7 +228,7 @@ namespace SpectatorFootball
             catch (Exception ex)
             {
                 Mouse.OverrideCursor = null;
-                logger.Error("Error showing new form");
+                logger.Error("Error showing new league form");
                 logger.Error(ex);
                 MessageBox.Show(CommonUtils.substr(ex.Message, 0, 100), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -244,18 +245,28 @@ namespace SpectatorFootball
         }
         private void Show_NewTeamDetail(object sender, teamEventArgs e)
         {
-            Mouse.OverrideCursor = Cursors.Wait;
-            logger.Info("Show new team detail");
+            try
+            {
+                Mouse.OverrideCursor = Cursors.Wait;
+                logger.Info("Show new team detail");
 
-            int team_ind = e.team_num - 1;
+                int team_ind = e.team_num - 1;
 
-            New_Team_DetailUC = new New_Team_DetailUC(New_Mem_Season.Season.Teams_by_Season[team_ind], true);
-            New_Team_DetailUC.backtoNewLeague += Back_NewLeague;
+                New_Team_DetailUC = new New_Team_DetailUC(New_Mem_Season.Season.Teams_by_Season[team_ind], true);
+                New_Team_DetailUC.backtoNewLeague += Back_NewLeague;
 
-            sp_uc.Children.Clear();
-            sp_uc.Children.Add(New_Team_DetailUC);
+                sp_uc.Children.Clear();
+                sp_uc.Children.Add(New_Team_DetailUC);
 
-            Mouse.OverrideCursor = null;
+                Mouse.OverrideCursor = null;
+            }
+            catch (Exception ex)
+            {
+                Mouse.OverrideCursor = null;
+                logger.Error("Error showing new team detail form");
+                logger.Error(ex);
+                MessageBox.Show(CommonUtils.substr(ex.Message, 0, 100), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
         //*********************  Load League **********************************
 
@@ -353,27 +364,38 @@ namespace SpectatorFootball
         }
         private void Show_LeagueStandings(object sender, EventArgs e)
         {
-            if (Mouse.OverrideCursor == Cursors.Wait) return;
-
-            if (bUpdateStandings)
+            try
             {
-                League_Services ls = new League_Services();
-                string league_shortname = Loaded_League.season.League_Structure_by_Season[0].Short_Name;
 
-                //Set league state
-                Loaded_League.LState = ls.getSeasonState(true, Loaded_League.season.ID, league_shortname);
+                if (Mouse.OverrideCursor == Cursors.Wait) return;
 
-                //Set top menu based on league state
-                setMenuonState(Loaded_League.LState);
+                if (bUpdateStandings)
+                {
+                    League_Services ls = new League_Services();
+                    string league_shortname = Loaded_League.season.League_Structure_by_Season[0].Short_Name;
 
-                //Load the league standings
-                Loaded_League.Standings = ls.getLeageStandings(Loaded_League);
+                    //Set league state
+                    Loaded_League.LState = ls.getSeasonState(true, Loaded_League.season.ID, league_shortname);
 
-                LStandingsUX.setStandings();
+                    //Set top menu based on league state
+                    setMenuonState(Loaded_League.LState);
+
+                    //Load the league standings
+                    Loaded_League.Standings = ls.getLeageStandings(Loaded_League);
+
+                    LStandingsUX.setStandings();
+                }
+
+                sp_uc.Children.Clear();
+                sp_uc.Children.Add(LStandingsUX);
             }
-
-            sp_uc.Children.Clear();
-            sp_uc.Children.Add(LStandingsUX);
+            catch (Exception ex)
+            {
+                Mouse.OverrideCursor = null;
+                logger.Error("Error showing league standings form");
+                logger.Error(ex);
+                MessageBox.Show(CommonUtils.substr(ex.Message, 0, 100), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
 
         }
 
@@ -426,7 +448,7 @@ namespace SpectatorFootball
             catch (Exception ex)
             {
                 Mouse.OverrideCursor = null;
-                logger.Error("Error Creating the Legue Draft form");
+                logger.Error("Error Creating the Free Agency form");
                 logger.Error(ex);
                 MessageBox.Show(CommonUtils.substr(ex.Message, 0, 100), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -450,7 +472,31 @@ namespace SpectatorFootball
             catch (Exception ex)
             {
                 Mouse.OverrideCursor = null;
-                logger.Error("Error Creating the Legue Draft form");
+                logger.Error("Error Creating the Training Camp form");
+                logger.Error(ex);
+                MessageBox.Show(CommonUtils.substr(ex.Message, 0, 100), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+        }
+
+        private void Show_LeagueSchedule(object sender, EventArgs e)
+        {
+            if (Mouse.OverrideCursor == Cursors.Wait) return;
+
+            try
+            {
+                Mouse.OverrideCursor = Cursors.Wait;
+                SchedUX = new ScheduleUX(this);
+                sp_uc.Children.Clear();
+                sp_uc.Children.Add(SchedUX);
+                SchedUX.Show_Standings += Show_LeagueStandings;
+                SchedUX.Set_TopMenu += Set_TopMenu;
+                Mouse.OverrideCursor = null;
+            }
+            catch (Exception ex)
+            {
+                Mouse.OverrideCursor = null;
+                logger.Error("Error Creating the Schedule form");
                 logger.Error(ex);
                 MessageBox.Show(CommonUtils.substr(ex.Message, 0, 100), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
