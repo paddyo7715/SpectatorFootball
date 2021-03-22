@@ -25,6 +25,20 @@ namespace SpectatorFootball.League
             return Team_Helmets.Where(x => x.Helmet_File.ToUpper() == f.ToUpper()).Select(x => x.Image).First();
         }
 
+        public string getTeamStandings(string sCityNickname)
+        {
+            string r = null;
+
+            Standings_Row sr = Standings.Where(x => x.Team_Name == sCityNickname).First();
+
+            r = sr.wins.ToString() + "-" + sr.loses.ToString();
+
+            if (sr.ties > 0)
+                r += "-" + sr.ties.ToString();
+
+            return r;
+        }
+
     }
 
 }

@@ -7,7 +7,7 @@ using System.Windows.Media.Imaging;
 
 namespace SpectatorFootball.Models
 {
-    class WeeklyScheduleRec
+    public class WeeklyScheduleRec
     {
 
         public long Game_ID { get; set; }
@@ -23,6 +23,7 @@ namespace SpectatorFootball.Models
         public string Home_Team_Name { get; set; }
         public long? QTR { get; set; }
         public long? QTR_Time { get; set; }
+        public string Action { get; set; }
 
 
     }

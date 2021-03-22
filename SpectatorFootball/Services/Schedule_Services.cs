@@ -1,5 +1,6 @@
 ﻿using SpectatorFootball.DAO;
 using SpectatorFootball.GameNS;
+using SpectatorFootball.League;
 using SpectatorFootball.Models;
 using SpectatorFootball.Playoffs;
 using System;
@@ -53,13 +54,14 @@ namespace SpectatorFootball.Services
 
         }
 
-        public List<WeeklyScheduleRec> getWeeklySched(long Season_ID, long week, string League_Shortname)
+        public List<WeeklyScheduleRec> getWeeklySched(Loaded_League_Structure lls, long week)
         {
+            string League_Shortname = lls.season.League_Structure_by_Season.First().Short_Name;
             string DIRPath_League = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + League_Shortname.ToUpper();
             string League_con_string = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + League_Shortname + Path.DirectorySeparatorChar + League_Shortname + "." + app_Constants.DB_FILE_EXT;
 
             ScheduleDAO sDAO = new ScheduleDAO();
-            List<WeeklyScheduleRec> r = sDAO.getWeeklySched(Season_ID, week, League_con_string);
+            List<WeeklyScheduleRec> r = sDAO.getWeeklySched(lls.season.ID, week, League_con_string);
 
             foreach (WeeklyScheduleRec srec in r)
             {
@@ -69,16 +71,31 @@ namespace SpectatorFootball.Services
                     srec.Status = "FINAL";
                     if (srec.QTR > app_Constants.QTRS_IN_REGULATION)
                         srec.Status += " (OT)";
+
+                    srec.Action = "Box Score";
                 }
                 else
                 {
                     if (srec.QTR == null)
+                    {
                         srec.Status = "";
+                        srec.Action = "";
+                    }
                     else
+                    {
                         srec.Status = Game_Helper.getQTRTime(srec.QTR, srec.QTR_Time);
+                        srec.Action = "Resume";
+                    }
                 }
 
+                string sAwayRecord = "(" + lls.getTeamStandings(srec.Away_Team_Name) + ")";
+                string sHomeRecord = "(" +lls.getTeamStandings(srec.Home_Team_Name) + ")";
 
+                srec.Away_Team_Name = sAwayRecord + " " + srec.Away_Team_Name;
+                srec.Home_Team_Name += " " + sHomeRecord;
+
+                srec.Away_HelmetImage = lls.getHelmetImg(srec.Away_helmet_filename);
+                srec.Home_HelmetImage = lls.getHelmetImg(srec.Home_helmet_filename);
             }
 
 

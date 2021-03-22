@@ -25,7 +25,7 @@ namespace SpectatorFootball.WindowsLeague
     {
         //bindings for UI
         public ObservableCollection<Sched_Week_With_Name> Schedule_Weeks_List { get; set; }
-        //        ObservableCollection<Player_and_Ratings> FreeAgency_Players_list = null;
+        public ObservableCollection<WeeklyScheduleRec> Weekly_Sched_List { get; set; }
 
         private MainWindow pw;
 
@@ -49,7 +49,7 @@ namespace SpectatorFootball.WindowsLeague
 
             Schedule_Weeks_List = new ObservableCollection<Sched_Week_With_Name>(ss.GetSchedWeeks(Season_ID, League_Shortname, conferences, PlayoffTeams, ChampGameName));
 
-            //            lstWeeks.ItemsSource = Schedule_Weeks_List;
+            lstGames.ItemsSource = Weekly_Sched_List;
 
             Sched_Week_With_Name swwn = Schedule_Weeks_List.Where(x => x.Current_Week == true).First();
             cboWeek.SelectedItem = swwn;
@@ -107,6 +107,9 @@ namespace SpectatorFootball.WindowsLeague
 
                 if (iWeek == Schedule_Weeks_List.Count() - 1)
                     btnNext.IsEnabled = false;
+
+                Schedule_Services ss = new Schedule_Services();
+                Weekly_Sched_List = new ObservableCollection<WeeklyScheduleRec>(ss.getWeeklySched(pw.Loaded_League, iWeek));
             }
 
         }

@@ -47,6 +47,59 @@
                 <Label HorizontalAlignment="Center" Name="lblWeekName" Style="{StaticResource Conflbltyle}"></Label>
 
                 <ListView Name="lstGames" Style="{StaticResource SchedWeekLVStyle}" Height="400" Width="800">
+                    <ListView.View>
+                        <GridView AllowsColumnReorder="false">
+                            <GridViewColumn Header="">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBox Width="100">Text="{Binding Status}"></TextBox>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBox Width="120">Text="{Binding Away_Team_Name}"></TextBox>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                        <Image Name="HelmetImgAWY" Source="{Binding Path=Away_HelmetImage}"  Width="20" Height="20" />
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBox Width="20">Text="@"></TextBox>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Image Name="HelmetImgHME" Source="{Binding Path=Home_HelmetImage}"  Width="20" Height="20" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBox Width="120">Text="{Binding Home_Team_Name}"></TextBox>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBox Width="120">Text="{Binding Action}"></TextBox>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
                 </ListView>
             </StackPanel>
         </StackPanel>
