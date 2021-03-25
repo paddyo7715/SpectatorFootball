@@ -79,7 +79,7 @@ namespace SpectatorFootball.Services
                     if (srec.QTR == null)
                     {
                         srec.Status = "";
-                        srec.Action = "";
+                        srec.Action = "Play";
                     }
                     else
                     {

@@ -55,7 +55,7 @@ namespace SpectatorFootball.DAO
                      join ht in context.Teams_by_Season
                      on g.Home_Team_Franchise_ID equals ht.Franchise_ID
                      where g.Season_ID == season_id && at.Season_ID == season_id
-                     && ht.Season_ID == season_id
+                     && ht.Season_ID == season_id && g.Week == Week
                      orderby g.ID
                      select new WeeklyScheduleRec
                      {

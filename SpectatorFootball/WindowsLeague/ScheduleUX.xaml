@@ -52,14 +52,14 @@
                             <GridViewColumn Header="">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBox Width="100">Text="{Binding Status}"></TextBox>
+                                        <Label Width="100" Content="{Binding Status}" Style="{StaticResource SchedTeanlbltyle}"></Label>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
                             <GridViewColumn Header="">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBox Width="120">Text="{Binding Away_Team_Name}"></TextBox>
+                                        <Label Width="250" Content="{Binding Away_Team_Name}" Style="{StaticResource SchedTeanlbltyle}"></Label>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -73,7 +73,7 @@
                             <GridViewColumn Header="">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBox Width="20">Text="@"></TextBox>
+                                        <Label Width="20" Content="@" Style="{StaticResource SchedTeanlbltyle}"></Label>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -87,14 +87,14 @@
                             <GridViewColumn Header="">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBox Width="120">Text="{Binding Home_Team_Name}"></TextBox>
+                                        <Label Width="250" Content="{Binding Home_Team_Name}" Style="{StaticResource SchedTeanlbltyle}"></Label>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
                             <GridViewColumn Header="">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBox Width="120">Text="{Binding Action}"></TextBox>
+                                        <Label Width="120" Content="{Binding Action}" Style="{StaticResource SchedTeanlbltyle}"></Label>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -15,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace SpectatorFootball.WindowsLeague
 {
@@ -48,8 +50,6 @@ namespace SpectatorFootball.WindowsLeague
             pw.Loaded_League.season.League_Structure_by_Season[0].Short_Name + " Schedule";
 
             Schedule_Weeks_List = new ObservableCollection<Sched_Week_With_Name>(ss.GetSchedWeeks(Season_ID, League_Shortname, conferences, PlayoffTeams, ChampGameName));
-
-            lstGames.ItemsSource = Weekly_Sched_List;
 
             Sched_Week_With_Name swwn = Schedule_Weeks_List.Where(x => x.Current_Week == true).First();
             cboWeek.SelectedItem = swwn;
@@ -109,7 +109,9 @@ namespace SpectatorFootball.WindowsLeague
                     btnNext.IsEnabled = false;
 
                 Schedule_Services ss = new Schedule_Services();
-                Weekly_Sched_List = new ObservableCollection<WeeklyScheduleRec>(ss.getWeeklySched(pw.Loaded_League, iWeek));
+                Weekly_Sched_List = new ObservableCollection<WeeklyScheduleRec>(ss.getWeeklySched(pw.Loaded_League, sw.iWeek));
+                lstGames.ItemsSource = Weekly_Sched_List;
+
             }
 
         }
