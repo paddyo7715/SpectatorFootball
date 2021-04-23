@@ -24,6 +24,7 @@ namespace SpectatorFootball.Models
         public long? QTR { get; set; }
         public long? QTR_Time { get; set; }
         public string Action { get; set; }
+        public long iWeek { get; set; }
 
 
     }

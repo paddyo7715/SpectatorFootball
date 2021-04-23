@@ -13,6 +13,9 @@
                 <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="#00000000"/>
             </Style.Resources>
         </Style>
+        <Style x:Key="myHeaderStyle" TargetType="{x:Type GridViewColumnHeader}">
+            <Setter Property="Visibility" Value="Collapsed" />
+        </Style>
     </UserControl.Resources>
     <DockPanel Height="730">
         <Grid DockPanel.Dock="Top">
@@ -46,9 +49,9 @@
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
                 <Label HorizontalAlignment="Center" Name="lblWeekName" Style="{StaticResource Conflbltyle}"></Label>
 
-                <ListView Name="lstGames" Style="{StaticResource SchedWeekLVStyle}" Height="400" Width="800">
+                <ListView Name="lstGames" Style="{StaticResource SchedWeekLVStyle}" MouseDoubleClick="lstGames_Click" Height="400" Width="1000">
                     <ListView.View>
-                        <GridView AllowsColumnReorder="false">
+                        <GridView AllowsColumnReorder="false" ColumnHeaderContainerStyle="{StaticResource myHeaderStyle}">
                             <GridViewColumn Header="">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
@@ -59,7 +62,7 @@
                             <GridViewColumn Header="">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Label Width="250" Content="{Binding Away_Team_Name}" Style="{StaticResource SchedTeanlbltyle}"></Label>
+                                        <Label Width="300" HorizontalContentAlignment="Right" Content="{Binding Away_Team_Name}" Style="{StaticResource SchedTeanlbltyle}"></Label>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -87,14 +90,14 @@
                             <GridViewColumn Header="">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Label Width="250" Content="{Binding Home_Team_Name}" Style="{StaticResource SchedTeanlbltyle}"></Label>
+                                        <Label Width="300" Content="{Binding Home_Team_Name}" Style="{StaticResource SchedTeanlbltyle}"></Label>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
                             <GridViewColumn Header="">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Label Width="120" Content="{Binding Action}" Style="{StaticResource SchedTeanlbltyle}"></Label>
+                                        <Label Width="120" Content="{Binding Action}" Style="{StaticResource SchedClickablelbltyle}"></Label>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>

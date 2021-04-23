@@ -54,7 +54,7 @@ namespace SpectatorFootball.Services
 
         }
 
-        public List<WeeklyScheduleRec> getWeeklySched(Loaded_League_Structure lls, long week)
+        public List<WeeklyScheduleRec> getWeeklySched(Loaded_League_Structure lls, long week, long current_week)
         {
             string League_Shortname = lls.season.League_Structure_by_Season.First().Short_Name;
             string DIRPath_League = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + League_Shortname.ToUpper();
@@ -66,25 +66,28 @@ namespace SpectatorFootball.Services
             foreach (WeeklyScheduleRec srec in r)
             {
                 //Set the Game status for the weekly schedule
-                if (srec.Game_Complete)
+                if (srec.iWeek <= current_week)
                 {
-                    srec.Status = "FINAL";
-                    if (srec.QTR > app_Constants.QTRS_IN_REGULATION)
-                        srec.Status += " (OT)";
-
-                    srec.Action = "Box Score";
-                }
-                else
-                {
-                    if (srec.QTR == null)
+                    if (srec.Game_Complete)
                     {
-                        srec.Status = "";
-                        srec.Action = "Play";
+                        srec.Status = "FINAL";
+                        if (srec.QTR > app_Constants.QTRS_IN_REGULATION)
+                            srec.Status += " (OT)";
+
+                        srec.Action = "Game Summary";
                     }
                     else
                     {
-                        srec.Status = Game_Helper.getQTRTime(srec.QTR, srec.QTR_Time);
-                        srec.Action = "Resume";
+                        if (srec.QTR == null)
+                        {
+                            srec.Status = "";
+                            srec.Action = "Play";
+                        }
+                        else
+                        {
+                            srec.Status = Game_Helper.getQTRTime(srec.QTR, srec.QTR_Time);
+                            srec.Action = "Resume";
+                        }
                     }
                 }
 

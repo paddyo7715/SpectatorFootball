@@ -14,14 +14,16 @@ namespace SpectatorFootball.Models
     
     public partial class Game_Player_Penalty_Stats
     {
+        public long ID { get; set; }
         public long Game_ID { get; set; }
         public long Player_ID { get; set; }
         public long Franchise_ID { get; set; }
-        public long Penalties { get; set; }
+        public long Penalty_ID { get; set; }
         public long Penalty_Yards { get; set; }
     
         public virtual Franchise Franchise { get; set; }
         public virtual Game Game { get; set; }
         public virtual Player Player { get; set; }
+        public virtual Penalty Penalty { get; set; }
     }
 }

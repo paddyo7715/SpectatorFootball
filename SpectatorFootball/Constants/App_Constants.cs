@@ -382,7 +382,7 @@ namespace SpectatorFootball
         public const int PLAYOFF_CHAMPIONSHIP_WEEK = 9999;
 
         //Game
-        public const int GAME_QUARTER_SECONDS = 60 * 15;
+        public const int GAME_QUARTER_SECONDS = 900;
         public const int QTRS_IN_REGULATION = 4;
 
 

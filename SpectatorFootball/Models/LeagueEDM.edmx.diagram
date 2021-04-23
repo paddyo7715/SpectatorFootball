@@ -4,123 +4,119 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="654030b0fcb9418ab6befcd59d84c350" Name="Diagram1">
-        <EntityTypeShape EntityType="mainModel.Award" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="mainModel.Conference" Width="1.5" PointX="3" PointY="54.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="mainModel.DBVersion" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="mainModel.Division" Width="1.5" PointX="3" PointY="57.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="mainModel.Draft" Width="1.5" PointX="5.25" PointY="112.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="mainModel.Franchise" Width="1.5" PointX="0.75" PointY="64.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="mainModel.Free_Agency" Width="1.5" PointX="8.25" PointY="112.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="mainModel.Game" Width="1.5" PointX="6" PointY="88.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="mainModel.Game_Player_FG_Defense_Stats" Width="1.5" PointX="5.25" PointY="108.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="mainModel.Game_Player_Kick_Returner_Stats" Width="1.5" PointX="5.25" PointY="116.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="mainModel.Game_Player_Kicker_Stats" Width="1.5" PointX="11.25" PointY="110.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="mainModel.Game_Player_Kickoff_Defenders" Width="1.5" PointX="8.25" PointY="108.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="mainModel.Game_Player_Kickoff_Receiver_Stats" Width="1.5" PointX="8.25" PointY="116.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="mainModel.Game_Player_Offensive_Linemen_Stats" Width="1.5" PointX="11.25" PointY="106.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="mainModel.Game_Player_Pass_Defense_Stats" Width="1.5" PointX="11.25" PointY="118.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="mainModel.Game_Player_Pass_Rushers_Stats" Width="1.5" PointX="5.25" PointY="102.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="mainModel.Game_Player_Passing_Stats" Width="1.5" PointX="14.25" PointY="108.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="mainModel.Game_Player_Penalties_Stats" Width="1.5" PointX="5.25" PointY="120.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="mainModel.Game_Player_Penalty_Stats" Width="1.5" PointX="8.25" PointY="104.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="mainModel.Game_Player_Punt_Defenders" Width="1.5" PointX="8.25" PointY="120.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="mainModel.Game_Player_Punt_Receiver_Stats" Width="1.5" PointX="14.25" PointY="104.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="mainModel.Game_Player_Punt_Returner_Stats" Width="1.5" PointX="14.25" PointY="120.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="mainModel.Game_Player_Punter_Stats" Width="1.5" PointX="11.25" PointY="101.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="mainModel.Game_Player_Receiving_Stats" Width="1.5" PointX="5.25" PointY="124.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="mainModel.Game_Player_Rushing_Stats" Width="1.5" PointX="8.25" PointY="100.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="mainModel.Game_Scoring_Summary" Width="1.5" PointX="8.25" PointY="94.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="mainModel.Hall_of_Fame" Width="1.5" PointX="5.25" PointY="158.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="mainModel.Injury" Width="1.5" PointX="5.25" PointY="154.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="mainModel.League_Structure_by_Season" Width="1.5" PointX="3" PointY="70.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="mainModel.Penalty" Width="1.5" PointX="3" PointY="120.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="mainModel.Player_Awards" Width="1.5" PointX="5.25" PointY="161" IsExpanded="true" />
-        <EntityTypeShape EntityType="mainModel.Player_Ratings" Width="1.5" PointX="8.25" PointY="156.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="mainModel.Player" Width="1.5" PointX="3" PointY="154.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="mainModel.Playoff_Teams_by_Season" Width="1.5" PointX="3" PointY="66.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="mainModel.Season" Width="1.5" PointX="0.75" PointY="59.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="mainModel.Teams_by_Season" Width="1.5" PointX="6" PointY="61.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="mainModel.Training_Camp_by_Season" Width="1.5" PointX="8.25" PointY="124.75" IsExpanded="true" />
-        <AssociationConnector Association="mainModel.FK_Conference_0_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Division_0_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Draft_0_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Draft_1_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Draft_2_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Free_Agency_1_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Game_Player_FG_Defense_Stats_0_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Game_Player_Kick_Returner_Stats_2_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Game_Player_Kicker_Stats_2_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Game_Player_Kickoff_Defenders_0_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Game_Player_Kickoff_Receiver_Stats_0_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Game_Player_Offensive_Linemen_Stats_1_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Game_Player_Pass_Defense_Stats_0_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Game_Player_Pass_Rushers_Stats_2_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Game_Player_Passing_Stats_0_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Game_Player_Penalties_Stats_2_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Game_Player_Penalty_Stats_2_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Game_Player_Punt_Defenders_0_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Game_Player_Punt_Receiver_Stats_0_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Game_Player_Punt_Returner_Stats_1_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Game_Player_Punter_Stats_2_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Game_Player_Receiving_Stats_1_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Game_Player_Rushing_Stats_2_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Players_0_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Playoff_Teams_by_Season_0_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Teams_by_Season_0_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Training_Camp_by_Season_0_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Free_Agency_0_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Free_Agency_2_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Game_0_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Game_Player_FG_Defense_Stats_2_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Game_Player_Kick_Returner_Stats_1_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Game_Player_Kicker_Stats_0_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Game_Player_Kickoff_Defenders_1_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Game_Player_Kickoff_Receiver_Stats_2_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Game_Player_Offensive_Linemen_Stats_2_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Game_Player_Pass_Defense_Stats_2_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Game_Player_Pass_Rushers_Stats_0_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Game_Player_Passing_Stats_1_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Game_Player_Penalties_Stats_1_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Game_Player_Penalty_Stats_1_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Game_Player_Punt_Defenders_1_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Game_Player_Punt_Receiver_Stats_2_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Game_Player_Punt_Returner_Stats_0_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Game_Player_Punter_Stats_0_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Game_Player_Receiving_Stats_2_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Game_Player_Rushing_Stats_1_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Game_Scoring_Summary_0_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Game_Player_FG_Defense_Stats_1_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Game_Player_Kick_Returner_Stats_0_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Game_Player_Kicker_Stats_1_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Game_Player_Kickoff_Defenders_2_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Game_Player_Kickoff_Receiver_Stats_1_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Game_Player_Offensive_Linemen_Stats_0_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Game_Player_Pass_Defense_Stats_1_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Game_Player_Pass_Rushers_Stats_1_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Game_Player_Passing_Stats_2_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Game_Player_Penalties_Stats_0_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Game_Player_Penalties_Stats_3_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Game_Player_Penalty_Stats_0_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Game_Player_Punt_Defenders_2_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Game_Player_Punt_Receiver_Stats_1_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Game_Player_Punt_Returner_Stats_2_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Game_Player_Punter_Stats_1_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Game_Player_Receiving_Stats_0_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Game_Player_Rushing_Stats_0_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Hall_of_Fame_0_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Hall_of_Fame_1_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Injuries_0_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Injuries_1_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_League_Structure_by_Season_0_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Player_Awards_0_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Player_Awards_1_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Player_Ratings_0_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Player_Ratings_1_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Training_Camp_by_Season_2_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Playoff_Teams_by_Season_1_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Teams_by_Season_1_0" ManuallyRouted="false" />
-        <AssociationConnector Association="mainModel.FK_Training_Camp_by_Season_1_0" ManuallyRouted="false" />
+      <Diagram DiagramId="a7d72f9402fb40adb7c8cc768511ade5" Name="Diagram1">
+        <EntityTypeShape EntityType="LeagueModel.Award" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LeagueModel.Conference" Width="1.5" PointX="3" PointY="48.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="LeagueModel.DBVersion" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LeagueModel.Division" Width="1.5" PointX="3" PointY="51.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="LeagueModel.Draft" Width="1.5" PointX="5.25" PointY="100.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="LeagueModel.Franchise" Width="1.5" PointX="0.75" PointY="58.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="LeagueModel.Free_Agency" Width="1.5" PointX="8.25" PointY="100.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="LeagueModel.Game" Width="1.5" PointX="3" PointY="85" IsExpanded="true" />
+        <EntityTypeShape EntityType="LeagueModel.Game_Player_Defense_Stats" Width="1.5" PointX="5.25" PointY="94.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="LeagueModel.Game_Player_FG_Defense_Stats" Width="1.5" PointX="5.25" PointY="104.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="LeagueModel.Game_Player_Kick_Returner_Stats" Width="1.5" PointX="8.25" PointY="95.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="LeagueModel.Game_Player_Kicker_Stats" Width="1.5" PointX="8.25" PointY="104.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="LeagueModel.Game_Player_Kickoff_Defenders" Width="1.5" PointX="11.25" PointY="100" IsExpanded="true" />
+        <EntityTypeShape EntityType="LeagueModel.Game_Player_Kickoff_Receiver_Stats" Width="1.5" PointX="11.25" PointY="96.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="LeagueModel.Game_Player_Offensive_Linemen_Stats" Width="1.5" PointX="11.25" PointY="105" IsExpanded="true" />
+        <EntityTypeShape EntityType="LeagueModel.Game_Player_Pass_Defense_Stats" Width="1.5" PointX="5.25" PointY="108.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="LeagueModel.Game_Player_Passing_Stats" Width="1.5" PointX="8.25" PointY="90.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="LeagueModel.Game_Player_Penalty_Stats" Width="1.5" PointX="11.25" PointY="92.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="LeagueModel.Game_Player_Punt_Defenders" Width="1.5" PointX="14.25" PointY="100.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="LeagueModel.Game_Player_Punt_Receiver_Stats" Width="1.5" PointX="14.25" PointY="96.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="LeagueModel.Game_Player_Punt_Returner_Stats" Width="1.5" PointX="14.25" PointY="104.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="LeagueModel.Game_Player_Punter_Stats" Width="1.5" PointX="14.25" PointY="90.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="LeagueModel.Game_Player_Receiving_Stats" Width="1.5" PointX="5.25" PointY="89.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="LeagueModel.Game_Player_Rushing_Stats" Width="1.5" PointX="8.25" PointY="110" IsExpanded="true" />
+        <EntityTypeShape EntityType="LeagueModel.Game_Scoring_Summary" Width="1.5" PointX="5.25" PointY="86.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="LeagueModel.Hall_of_Fame" Width="1.5" PointX="5.25" PointY="139.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="LeagueModel.Injury" Width="1.5" PointX="5.25" PointY="136.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LeagueModel.League_Structure_by_Season" Width="1.5" PointX="3" PointY="63.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="LeagueModel.Penalty" Width="1.5" PointX="9" PointY="86.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="LeagueModel.Player_Awards" Width="1.5" PointX="5.25" PointY="142.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LeagueModel.Player_Ratings" Width="1.5" PointX="8.25" PointY="138.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="LeagueModel.Player" Width="1.5" PointX="3" PointY="136.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="LeagueModel.Playoff_Teams_by_Season" Width="1.5" PointX="3" PointY="59.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="LeagueModel.Season" Width="1.5" PointX="0.75" PointY="53.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="LeagueModel.Teams_by_Season" Width="1.5" PointX="6" PointY="55.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="LeagueModel.Training_Camp_by_Season" Width="1.5" PointX="11.25" PointY="109.375" IsExpanded="true" />
+        <AssociationConnector Association="LeagueModel.FK_Conference_0_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Division_0_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Draft_0_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Draft_1_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Draft_2_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Free_Agency_1_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Game_Player_Defense_Stats_2_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Game_Player_FG_Defense_Stats_0_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Game_Player_Kick_Returner_Stats_2_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Game_Player_Kicker_Stats_1_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Game_Player_Kickoff_Defenders_0_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Game_Player_Kickoff_Receiver_Stats_0_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Game_Player_Offensive_Linemen_Stats_1_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Game_Player_Pass_Defense_Stats_0_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Game_Player_Passing_Stats_2_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Game_Player_Penalty_Stats_3_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Game_Player_Punt_Defenders_0_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Game_Player_Punt_Receiver_Stats_0_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Game_Player_Punt_Returner_Stats_0_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Game_Player_Punter_Stats_2_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Game_Player_Receiving_Stats_1_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Game_Player_Rushing_Stats_2_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Players_0_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Playoff_Teams_by_Season_0_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Teams_by_Season_0_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Training_Camp_by_Season_0_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Free_Agency_0_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Free_Agency_2_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Game_0_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Game_Player_Defense_Stats_0_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Game_Player_FG_Defense_Stats_2_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Game_Player_Kick_Returner_Stats_1_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Game_Player_Kicker_Stats_0_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Game_Player_Kickoff_Defenders_1_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Game_Player_Kickoff_Receiver_Stats_2_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Game_Player_Offensive_Linemen_Stats_2_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Game_Player_Pass_Defense_Stats_2_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Game_Player_Passing_Stats_1_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Game_Player_Penalty_Stats_2_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Game_Player_Punt_Defenders_1_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Game_Player_Punt_Receiver_Stats_2_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Game_Player_Punt_Returner_Stats_1_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Game_Player_Punter_Stats_0_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Game_Player_Receiving_Stats_2_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Game_Player_Rushing_Stats_1_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Game_Scoring_Summary_0_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Game_Player_Defense_Stats_1_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Game_Player_FG_Defense_Stats_1_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Game_Player_Kick_Returner_Stats_0_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Game_Player_Kicker_Stats_2_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Game_Player_Kickoff_Defenders_2_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Game_Player_Kickoff_Receiver_Stats_1_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Game_Player_Offensive_Linemen_Stats_0_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Game_Player_Pass_Defense_Stats_1_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Game_Player_Passing_Stats_0_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Game_Player_Penalty_Stats_0_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Game_Player_Penalty_Stats_1_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Game_Player_Punt_Defenders_2_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Game_Player_Punt_Receiver_Stats_1_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Game_Player_Punt_Returner_Stats_2_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Game_Player_Punter_Stats_1_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Game_Player_Receiving_Stats_0_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Game_Player_Rushing_Stats_0_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Hall_of_Fame_0_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Hall_of_Fame_1_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Injuries_0_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Injuries_1_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_League_Structure_by_Season_0_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Player_Awards_0_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Player_Awards_1_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Player_Ratings_0_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Player_Ratings_1_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Training_Camp_by_Season_2_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Playoff_Teams_by_Season_1_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Teams_by_Season_1_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Training_Camp_by_Season_1_0" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

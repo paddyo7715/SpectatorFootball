@@ -38,6 +38,7 @@ namespace SpectatorFootball.Models
         public virtual DbSet<Franchise> Franchises { get; set; }
         public virtual DbSet<Free_Agency> Free_Agency { get; set; }
         public virtual DbSet<Game> Games { get; set; }
+        public virtual DbSet<Game_Player_Defense_Stats> Game_Player_Defense_Stats { get; set; }
         public virtual DbSet<Game_Player_FG_Defense_Stats> Game_Player_FG_Defense_Stats { get; set; }
         public virtual DbSet<Game_Player_Kick_Returner_Stats> Game_Player_Kick_Returner_Stats { get; set; }
         public virtual DbSet<Game_Player_Kicker_Stats> Game_Player_Kicker_Stats { get; set; }
@@ -45,9 +46,7 @@ namespace SpectatorFootball.Models
         public virtual DbSet<Game_Player_Kickoff_Receiver_Stats> Game_Player_Kickoff_Receiver_Stats { get; set; }
         public virtual DbSet<Game_Player_Offensive_Linemen_Stats> Game_Player_Offensive_Linemen_Stats { get; set; }
         public virtual DbSet<Game_Player_Pass_Defense_Stats> Game_Player_Pass_Defense_Stats { get; set; }
-        public virtual DbSet<Game_Player_Pass_Rushers_Stats> Game_Player_Pass_Rushers_Stats { get; set; }
         public virtual DbSet<Game_Player_Passing_Stats> Game_Player_Passing_Stats { get; set; }
-        public virtual DbSet<Game_Player_Penalties_Stats> Game_Player_Penalties_Stats { get; set; }
         public virtual DbSet<Game_Player_Penalty_Stats> Game_Player_Penalty_Stats { get; set; }
         public virtual DbSet<Game_Player_Punt_Defenders> Game_Player_Punt_Defenders { get; set; }
         public virtual DbSet<Game_Player_Punt_Receiver_Stats> Game_Player_Punt_Receiver_Stats { get; set; }

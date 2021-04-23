@@ -1,0 +1,120 @@
+﻿<Window x:Class="SpectatorFootball.WindowsLeague.BoxScore_Popup"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SpectatorFootball.WindowsLeague"
+        mc:Ignorable="d"
+       Height ="600" Width="900" WindowStyle="none" ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True">
+    <Border Style="{StaticResource popupBD}" BorderThickness="1">
+        <StackPanel Style="{StaticResource popupSP}" Height="590" Width="890" Orientation="Vertical" >
+            <StackPanel Orientation="Horizontal">
+                    <Label Style="{StaticResource popupTC}" Content="Game Summary"  HorizontalAlignment="Center"></Label>
+            </StackPanel>
+                <StackPanel Style="{StaticResource popupSP}" Width="780" Height="408" Margin="5,5,5,0" Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Width="780">
+                        <StackPanel Orientation="Vertical">
+                            <Label Name="lblAwayCity" Width="300" Height="70" Style="{StaticResource boxscoreTeamLabel}" Content="{Binding Game.AwayCity}"></Label>
+                            <Label Name="lblAwayNichname" Width="300" Height="70" Style="{StaticResource boxscoreTeamLabel}" Content="{Binding Game.AwayNickname}"></Label>
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical">
+                            <Label Name="lblAwayScore" Width="100" Height="140" Style="{StaticResource boxscoreTeamLabel}" Content="{Binding Game.Away_Score}"></Label>
+                        </StackPanel>
+                        <StackPanel>
+                            <Label Content="    "></Label></StackPanel>
+                        <StackPanel Orientation="Vertical">
+                            <Label Name="lblHomeScore" Width="100" Height="140" Style="{StaticResource boxscoreTeamLabel}" Content="{Binding Game.Home_Score}"></Label>
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical">
+                            <Label Name="lblHomeCity" Width="300" Height="70" Style="{StaticResource boxscoreTeamLabel}" Content="{Binding Game.HomeCity}"></Label>
+                            <Label Name="lblHomeNichname" Width="300" Height="70" Style="{StaticResource boxscoreTeamLabel}" Content="{Binding Game.HomeNickname}"></Label>
+                        </StackPanel>
+                        <TabControl  Background="Transparent" Foreground="White">
+                            <TabItem Header="Box Score" Margin="-2,-2,2,-1">
+                                <ScrollViewer HorizontalAlignment="Left"  Height="408" VerticalAlignment="Top" Width="780" VerticalScrollBarVisibility="Auto">
+                                <StackPanel Orientation="Vertical">
+                                    <StackPanel Name="spQTRScore" Orientation="Horizontal"></StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label Content="      " Width="200" Style="{StaticResource Teamlbltyle}"></Label>
+                                        <Label Name="lblBSAwayAbbrv" Width="150"  Style="{StaticResource Teamlbltyle}"></Label>
+                                        <Label Name="lblBSHomeAbbrv" Width="150"  Style="{StaticResource Teamlbltyle}"></Label>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label Content="First Downs" Width="200" Style="{StaticResource Teamlbltyle}"></Label>
+                                        <Label Name="lblAwayBSFirstDowns" Width="150"  Style="{StaticResource Teamlbltyle}"></Label>
+                                        <Label Name="lblHomeBSFirstDowns" Width="150"  Style="{StaticResource Teamlbltyle}"></Label>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label Content="Rushing Yards" Width="200" Style="{StaticResource Teamlbltyle}"></Label>
+                                        <Label Name="lblAwayBSRushingYards" Width="150"  Style="{StaticResource Teamlbltyle}"></Label>
+                                        <Label Name="lblHomeBSRushingYards" Width="150"  Style="{StaticResource Teamlbltyle}"></Label>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label Content="Passing Yards" Width="200" Style="{StaticResource Teamlbltyle}"></Label>
+                                        <Label Name="lblAwayBSPassingYards" Width="150"  Style="{StaticResource Teamlbltyle}"></Label>
+                                        <Label Name="lblHomeBSPassingYards" Width="150"  Style="{StaticResource Teamlbltyle}"></Label>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label Content="Total Yards" Width="200" Style="{StaticResource Teamlbltyle}"></Label>
+                                        <Label Name="lblAwayBSTotalYards" Width="150"  Style="{StaticResource Teamlbltyle}"></Label>
+                                        <Label Name="lblHomeBSTotalYards" Width="150"  Style="{StaticResource Teamlbltyle}"></Label>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label Content="3rd Down Conv" Width="200" Style="{StaticResource Teamlbltyle}"></Label>
+                                        <Label Name="lblAwayBS3rdDownConv" Width="150"  Style="{StaticResource Teamlbltyle}"></Label>
+                                        <Label Name="lblHomeBS3rdDownConv" Width="150"  Style="{StaticResource Teamlbltyle}"></Label>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label Content="4th Down Conv" Width="200" Style="{StaticResource Teamlbltyle}"></Label>
+                                        <Label Name="lblAwayBS4thDownConv" Width="150"  Style="{StaticResource Teamlbltyle}"></Label>
+                                        <Label Name="lblHomeBS4thDownConv" Width="150"  Style="{StaticResource Teamlbltyle}"></Label>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label Content="Turnovers" Width="200" Style="{StaticResource Teamlbltyle}"></Label>
+                                        <Label Name="lblAwayBSTurnovers" Width="150"  Style="{StaticResource Teamlbltyle}"></Label>
+                                        <Label Name="lblHomeBSTurnovers" Width="150"  Style="{StaticResource Teamlbltyle}"></Label>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label Content="Fields Goals" Width="200" Style="{StaticResource Teamlbltyle}"></Label>
+                                        <Label Name="lblAwayBSFieldGoals" Width="150"  Style="{StaticResource Teamlbltyle}"></Label>
+                                        <Label Name="lblHomeBSFieldGoals" Width="150"  Style="{StaticResource Teamlbltyle}"></Label>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label Content="Sacks Allowed" Width="200" Style="{StaticResource Teamlbltyle}"></Label>
+                                        <Label Name="lblAwayBSSacks" Width="150"  Style="{StaticResource Teamlbltyle}"></Label>
+                                        <Label Name="lblHomeBSSacks" Width="150"  Style="{StaticResource Teamlbltyle}"></Label>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label Content="Time of Poss" Width="200" Style="{StaticResource Teamlbltyle}"></Label>
+                                        <Label Name="lblAwayBSTimeofPoss" Width="150"  Style="{StaticResource Teamlbltyle}"></Label>
+                                        <Label Name="lblHomeBSTimeofPoss" Width="150"  Style="{StaticResource Teamlbltyle}"></Label>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label Content="Penalties" Visibility="Collapsed" Name="lblPenalties" Width="200" Style="{StaticResource Teamlbltyle}"></Label>
+                                        <Label Name="lblAwayPenalties" Visibility="Collapsed" Width="150"  Style="{StaticResource Teamlbltyle}"></Label>
+                                        <Label Name="lblHomePenalties" Visibility="Collapsed" Width="150"  Style="{StaticResource Teamlbltyle}"></Label>
+                                    </StackPanel>
+                                </StackPanel>
+                            </ScrollViewer>
+                        </TabItem>
+                            <TabItem Header="Away Team Stats">
+
+                            </TabItem>
+                            <TabItem Header="Home Team Stats">
+
+                            </TabItem>
+                            <TabItem Header="Scoring Summary">
+
+                            </TabItem>
+
+                        </TabControl>
+
+                    </StackPanel>
+                        <Button Name="close_btn" Style="{StaticResource appSubmitStyle}" Click="btnclose_Click" >Close</Button>
+                </StackPanel>
+
+        </StackPanel>
+    </Border>
+</Window>
+
+

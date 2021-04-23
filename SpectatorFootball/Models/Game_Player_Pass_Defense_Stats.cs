@@ -20,13 +20,11 @@ namespace SpectatorFootball.Models
         public long Started { get; set; }
         public long Ints { get; set; }
         public long Def_Int_Yards { get; set; }
-        public long Def_Safety { get; set; }
         public long Def_int_TDs { get; set; }
         public long Def_Pass_Defenses { get; set; }
         public long Tackles { get; set; }
         public long Def_Missed_Tackles { get; set; }
         public long Touchdowns_Surrendered { get; set; }
-        public long Sacks { get; set; }
         public long Forced_Fumbles { get; set; }
         public long Fumble_Recoveries { get; set; }
         public long Fumble_Return_Yards { get; set; }

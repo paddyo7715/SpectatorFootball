@@ -119,6 +119,7 @@
     <Compile Include="DAO\DBVersionDAO.cs" />
     <Compile Include="DAO\DraftDAO.cs" />
     <Compile Include="DAO\FreeAgencyDAO.cs" />
+    <Compile Include="DAO\GameDAO.cs" />
     <Compile Include="DAO\HomeTownsDAO.cs" />
     <Compile Include="DAO\ScheduleDAO.cs" />
     <Compile Include="DAO\TeamDAO.cs" />
@@ -140,6 +141,7 @@
     <Compile Include="Models\Award.cs">
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\BoxScore.cs" />
     <Compile Include="Models\Conference.cs">
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
@@ -160,6 +162,9 @@
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Game.cs">
+      <DependentUpon>LeagueEDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Game_Player_Defense_Stats.cs">
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Game_Player_FG_Defense_Stats.cs">
@@ -184,12 +189,6 @@
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Game_Player_Pass_Defense_Stats.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Game_Player_Pass_Rushers_Stats.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Game_Player_Penalties_Stats.cs">
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Game_Player_Penalty_Stats.cs">
@@ -273,9 +272,13 @@
     <Compile Include="Playoffs\Playoff_Helper.cs" />
     <Compile Include="Services\FreeAgency_Services.cs" />
     <Compile Include="Draft\Draft_Need.cs" />
+    <Compile Include="Services\Game_Services.cs" />
     <Compile Include="Services\Schedule_Services.cs" />
     <Compile Include="Services\TrainingCamp_Services.cs" />
     <Compile Include="Training_Camp\TrainingCamp_Helper.cs" />
+    <Compile Include="WindowsLeague\BoxScore_Popup.xaml.cs">
+      <DependentUpon>BoxScore_Popup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WindowsLeague\Draft_Profile_Popup.xaml.cs">
       <DependentUpon>Draft_Profile_Popup.xaml</DependentUpon>
     </Compile>
@@ -389,6 +392,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Help_Forms\Help_TrainingCamp.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowsLeague\BoxScore_Popup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

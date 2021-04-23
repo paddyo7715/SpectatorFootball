@@ -21,48 +21,13 @@ namespace SpectatorFootball.Models
         public long Fumbles { get; set; }
         public long Fumbles_Lost { get; set; }
         public long Sacked { get; set; }
-        public long Pass_Comp_1to5 { get; set; }
-        public long Pass_Att_1to5 { get; set; }
-        public long Pass_Yards_1to5 { get; set; }
-        public long Pass_TDs_1to5 { get; set; }
-        public long Pass_Ints_1to5 { get; set; }
-        public long Pass_Comp_6to9 { get; set; }
-        public long Pass_Att_6to9 { get; set; }
-        public long Pass_Yards_6to9 { get; set; }
-        public long Pass_TDs_6to9 { get; set; }
-        public long Pass_Ints_6to9 { get; set; }
-        public long Pass_Comp_10to19 { get; set; }
-        public long Pass_Att_10to19 { get; set; }
-        public long Pass_Yards_10to19 { get; set; }
-        public long Pass_TDs_10to19 { get; set; }
-        public long Pass_Ints_10to19 { get; set; }
-        public long Pass_Comp_20to29 { get; set; }
-        public long Pass_Att_20to29 { get; set; }
-        public long Pass_Yards_20to29 { get; set; }
-        public long Pass_TDs_20to29 { get; set; }
-        public long Pass_Ints_20to29 { get; set; }
-        public long Pass_Comp_30to39 { get; set; }
-        public long Pass_Att_30to39 { get; set; }
-        public long Pass_Yards_30to39 { get; set; }
-        public long Pass_TDs_30to39 { get; set; }
-        public long Pass_Ints_30to39 { get; set; }
-        public long Pass_Comp_40to49 { get; set; }
-        public long Pass_Att_40to49 { get; set; }
-        public long Pass_Yards_40to49 { get; set; }
-        public long Pass_TDs_40to49 { get; set; }
-        public long Pass_Ints_40to49 { get; set; }
-        public long Pass_Comp_50to59 { get; set; }
-        public long Pass_Att_50to59 { get; set; }
-        public long Pass_Yards_50to59 { get; set; }
-        public long Pass_TDs_50to59 { get; set; }
-        public long Pass_Ints_50to59 { get; set; }
-        public long Pass_Comp_60andOver { get; set; }
-        public long Pass_Att_60andOver { get; set; }
-        public long Pass_Yards_60andOver { get; set; }
-        public long Pass_TDs_60andOver { get; set; }
-        public long Pass_Ints_60andOver { get; set; }
+        public long Pass_Comp { get; set; }
+        public long Pass_Att { get; set; }
+        public long Pass_Yards { get; set; }
+        public long Pass_TDs { get; set; }
+        public long Pass_Ints { get; set; }
         public long Long { get; set; }
-        public long Pass_Blocks { get; set; }
+        public long Passes_Blocks { get; set; }
     
         public virtual Franchise Franchise { get; set; }
         public virtual Game Game { get; set; }

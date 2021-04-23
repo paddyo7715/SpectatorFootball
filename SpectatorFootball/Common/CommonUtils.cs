@@ -257,6 +257,25 @@ namespace SpectatorFootball
 
             return r;
         }
+
+        public static long ZeroifNull(long? l)
+        {
+            if (l == null)
+                return 0;
+            else
+                return (long)l;
+        }
+        public static string getTimestringFromSeconds(long sec)
+        {
+            string r = null;
+
+            long minutes = sec / 60;
+            long seconds = sec % 60;
+
+            r = minutes.ToString() + ":" + seconds.ToString();
+
+            return r;
+        }
     }
 
 }

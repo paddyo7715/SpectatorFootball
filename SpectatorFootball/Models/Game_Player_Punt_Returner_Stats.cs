@@ -20,6 +20,7 @@ namespace SpectatorFootball.Models
         public long Punts_Returned { get; set; }
         public long Punts_Returned_Yards { get; set; }
         public long Punts_Returned_TDs { get; set; }
+        public long Punt_Returned_Yards_Long { get; set; }
         public long Punts_Returned_Fumbles { get; set; }
         public long Punts_Returned_Fumbles_Lost { get; set; }
         public long Punts_Muffed { get; set; }

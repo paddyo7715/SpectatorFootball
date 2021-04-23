@@ -17,7 +17,7 @@ namespace SpectatorFootball.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Penalty()
         {
-            this.Game_Player_Penalties_Stats = new HashSet<Game_Player_Penalties_Stats>();
+            this.Game_Player_Penalty_Stats = new HashSet<Game_Player_Penalty_Stats>();
         }
     
         public long ID { get; set; }
@@ -32,6 +32,6 @@ namespace SpectatorFootball.Models
         public string Description { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Game_Player_Penalties_Stats> Game_Player_Penalties_Stats { get; set; }
+        public virtual ICollection<Game_Player_Penalty_Stats> Game_Player_Penalty_Stats { get; set; }
     }
 }

@@ -68,7 +68,8 @@ namespace SpectatorFootball.DAO
                          Home_helmet_filename = ht.Helmet_Image_File,
                          Home_Team_Name = ht.City + " " + ht.Nickname,
                          QTR = g.Quarter,
-                         QTR_Time = g.Time
+                         QTR_Time = g.Time,
+                         iWeek = g.Week
                      }).ToList();
             }
 
