@@ -276,6 +276,39 @@ namespace SpectatorFootball
 
             return r;
         }
+        public static bool isTwoColorDifferent(string s1, string s2)
+        {
+            int r1 = 0;
+            int g1 = 0;
+            int b1 = 0;
+
+            int r2 = 0;
+            int g2 = 0;
+            int b2 = 0;
+
+            int diff = 0;
+
+            bool r = false;
+
+            r1 = Convert.ToInt32(s1.Substring(1, 2), 16);
+            g1 = Convert.ToInt32(s1.Substring(3, 2), 16);
+            b1 = Convert.ToInt32(s1.Substring(5, 2), 16);
+
+            r2 = Convert.ToInt32(s2.Substring(1, 2), 16);
+            g2 = Convert.ToInt32(s2.Substring(3, 2), 16);
+            b2 = Convert.ToInt32(s2.Substring(5, 2), 16);
+
+            diff = Math.Abs(r1 - r2) + Math.Abs(g1 - g2) + Math.Abs(b1 - b2);
+
+            if (diff <= app_Constants.MINCOLORDIFF)
+                r = false;
+            else
+                r = true;
+
+            return r;
+
+
+        }
     }
 
 }

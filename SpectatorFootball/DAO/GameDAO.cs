@@ -59,12 +59,8 @@ namespace SpectatorFootball.DAO
                      select new BoxScore
                      {
                          Game = g,
-                         AwayCity = at.City,
-                         AwayNickname = at.Nickname,
-                         AwayCityAbbr = at.City_Abr,
-                         HomeCity = ht.City,
-                         HomeNickname = ht.Nickname,
-                         HomeCityAbbr = ht.City_Abr
+                         aTeam = at,
+                         hTeam = ht
                      }).First();
             }
 

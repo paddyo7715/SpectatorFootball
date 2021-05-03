@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using SpectatorFootball.BindingConverters;
 
 namespace SpectatorFootball.WindowsLeague
 {
@@ -25,11 +26,23 @@ namespace SpectatorFootball.WindowsLeague
         Style popupTC = (Style)System.Windows.Application.Current.FindResource("popupTC");
         private bool bPenalties;
 
+        private Style aDivGridHeader_Style = (Style)System.Windows.Application.Current.FindResource("aBoxGridHDRStyle");
+        private Style hDivGridHeader_Style = (Style)System.Windows.Application.Current.FindResource("hBoxGridHDRStyle");
+
+
         public BoxScore_Popup(BoxScore bs_rec, bool bPenalties)
         {
             InitializeComponent();
             this.bs_rec = bs_rec;
             DataContext = this;
+            string[] s1 = Uniform.getBackForgroundcolors(bs_rec.aTeam.Home_jersey_Color,
+                bs_rec.aTeam.Home_Jersey_Number_Color, bs_rec.aTeam.Home_Jersey_Number_Outline_Color);
+            string[] s2 = Uniform.getBackForgroundcolors(bs_rec.hTeam.Home_jersey_Color,
+                bs_rec.hTeam.Home_Jersey_Number_Color, bs_rec.hTeam.Home_Jersey_Number_Outline_Color);
+
+            setHeaderStyleColors(aDivGridHeader_Style, bs_rec.aTeam, s1);
+            setHeaderStyleColors(hDivGridHeader_Style, bs_rec.hTeam, s2);
+
             setBoxScoreValues();
         }
         //Need to set box score tab values in code because many of the 
@@ -43,12 +56,12 @@ namespace SpectatorFootball.WindowsLeague
             lblBlank.Style = popupTC;
 
             var lblAwayTeam = new Label();
-            lblAwayTeam.Name = bs_rec.AwayCityAbbr;
+            lblAwayTeam.Name = bs_rec.aTeam.City_Abr;
             lblAwayTeam.Width = 150;
             lblAwayTeam.Style = popupTC;
 
             var lblHomeTeam = new Label();
-            lblHomeTeam.Name = bs_rec.HomeCityAbbr;
+            lblHomeTeam.Name = bs_rec.hTeam.City_Abr;
             lblHomeTeam.Width = 150;
             lblHomeTeam.Style = popupTC;
 
@@ -224,8 +237,8 @@ namespace SpectatorFootball.WindowsLeague
 
             spQTRScore.Children.Add(v_QTRFINAL);
 
-            lblBSAwayAbbrv.Content = bs_rec.AwayCityAbbr;
-            lblBSHomeAbbrv.Content = bs_rec.HomeCityAbbr;
+            lblBSAwayAbbrv.Content = bs_rec.aTeam.City_Abr;
+            lblBSHomeAbbrv.Content = bs_rec.hTeam.City_Abr;
 
             lblAwayBSFirstDowns.Content = bs_rec.Game.Away_FirstDowns;
             lblHomeBSFirstDowns.Content = bs_rec.Game.Home_FirstDowns;
@@ -328,7 +341,7 @@ namespace SpectatorFootball.WindowsLeague
                 .OrderByDescending(x => x.Rush_Yards).ToList();
 
             List<Game_Player_Receiving_Stats> away_Receiving_stats = bs_rec.Game.Game_Player_Receiving_Stats
-                .Where(x => x.Franchise_ID == bs_rec.Game.Away_Team_Franchise_ID && x.Rec_Catches > 0)
+                .Where(x => x.Franchise_ID == bs_rec.Game.Away_Team_Franchise_ID && (x.Rec_Catches > 0 || x.Rec_Drops > 0))
                 .OrderByDescending(x => x.Rec_Yards).ToList();
 
             List<Game_Player_Pass_Defense_Stats> away_Pass_Defense_stats = bs_rec.Game.Game_Player_Pass_Defense_Stats
@@ -356,6 +369,30 @@ namespace SpectatorFootball.WindowsLeague
                 .OrderByDescending(x => x.Punts_Returned).ToList();
 
 
+            lstAwayPassing.ItemsSource = away_Passing_stats;
+            lstAwayRushing.ItemsSource = away_Rushing_stats;
+            lstAwayReceiving.ItemsSource = away_Receiving_stats;
+            lstAwayPassDefense.ItemsSource = away_Pass_Defense_stats;
+            lstAwayDefense.ItemsSource = away_Defense_stats;
+            lstAwayKicking.ItemsSource = away_kicker_stats;
+            lstAwayPunting.ItemsSource = away_punter_stats;
+            lstAwayKickReturn.ItemsSource = away_KickoffReturns_stats;
+            lstAwayPuntReturn.ItemsSource = away_PuntReturns_stats;
+
+            setListviewHeaders(lstAwayPassing);
+            setListviewHeaders(lstAwayRushing);
+            setListviewHeaders(lstAwayReceiving);
+            setListviewHeaders(lstAwayPassDefense);
+            setListviewHeaders(lstAwayDefense);
+            setListviewHeaders(lstAwayKicking);
+            setListviewHeaders(lstAwayPunting);
+            setListviewHeaders(lstAwayKickReturn);
+            setListviewHeaders(lstAwayPuntReturn);
+
+            lblAwaystatshdr.Content = bs_rec.aTeam.Nickname;
+
+            //because ef6 is limited and can not sort or filter subentries (includes), I must do it myself.
+            //For example, I do not want to include QBs that don't have any attempts in the stats line
             List<Game_Player_Passing_Stats> home_Passing_stats = bs_rec.Game.Game_Player_Passing_Stats
                 .Where(x => x.Franchise_ID == bs_rec.Game.Home_Team_Franchise_ID && x.Pass_Att > 0)
                 .OrderByDescending(x => x.Pass_Yards).ToList();
@@ -391,6 +428,57 @@ namespace SpectatorFootball.WindowsLeague
             List<Game_Player_Punt_Returner_Stats> home_PuntReturns_stats = bs_rec.Game.Game_Player_Punt_Returner_Stats
                 .Where(x => x.Franchise_ID == bs_rec.Game.Home_Team_Franchise_ID)
                 .OrderByDescending(x => x.Punts_Returned).ToList();
+
+            lstHomePassing.ItemsSource = home_Passing_stats;
+            lstHomeRushing.ItemsSource = home_Rushing_stats;
+            lstHomeReceiving.ItemsSource = home_Receiving_stats;
+            lstHomePassDefense.ItemsSource = home_Pass_Defense_stats;
+            lstHomeDefense.ItemsSource = home_Defense_stats;
+            lstHomeKicking.ItemsSource = home_kicker_stats;
+            lstHomePunting.ItemsSource = home_punter_stats;
+            lstHomeKickReturn.ItemsSource = home_KickoffReturns_stats;
+            lstHomePuntReturn.ItemsSource = home_PuntReturns_stats;
+
+            setListviewHeaders(lstHomePassing);
+            setListviewHeaders(lstHomeRushing);
+            setListviewHeaders(lstHomeReceiving);
+            setListviewHeaders(lstHomePassDefense);
+            setListviewHeaders(lstHomeDefense);
+            setListviewHeaders(lstHomeKicking);
+            setListviewHeaders(lstHomePunting);
+            setListviewHeaders(lstHomeKickReturn);
+            setListviewHeaders(lstHomePuntReturn);
+
+            lblHomestatshdr.Content = bs_rec.hTeam.Nickname;
+
+
+        }
+        private void btnclose_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+        private void setListviewHeaders(ListView lv)
+        {
+            GridView gr = (GridView)lstAwayPassing.View;
+            gr.ColumnHeaderContainerStyle = aDivGridHeader_Style;
+        }
+        private void setHeaderStyleColors(Style s, Teams_by_Season t, string[] s1)
+        {
+
+            Setter sForeg = new Setter()
+            {
+                Property = TextBlock.ForegroundProperty,
+                Value = new SolidColorBrush(CommonUtils.getColorfromHex(s1[0]))
+            };
+
+            Setter sBackg = new Setter()
+            {
+                Property = TextBlock.BackgroundProperty,
+                Value = new SolidColorBrush(CommonUtils.getColorfromHex(s1[1]))
+            };
+
+            s.Setters.Add(sForeg);
+            s.Setters.Add(sBackg);
 
         }
     }

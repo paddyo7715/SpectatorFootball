@@ -16,6 +16,7 @@ namespace SpectatorFootball.Models
     {
         public long ID { get; set; }
         public long Game_ID { get; set; }
+        public long Time { get; set; }
         public string Scoring_Summary { get; set; }
     
         public virtual Game Game { get; set; }

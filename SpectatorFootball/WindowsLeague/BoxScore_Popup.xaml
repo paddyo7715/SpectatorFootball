@@ -3,9 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SpectatorFootball.WindowsLeague"
+        xmlns:local1="clr-namespace:SpectatorFootball.BindingConverters" 
+        xmlns:local="clr-namespace:SpectatorFootball"
         mc:Ignorable="d"
        Height ="600" Width="900" WindowStyle="none" ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True">
+    <Window.Resources>
+        <local1:avgYardsConverter  x:Key="avgYardsConverter" />
+    </Window.Resources>
     <Border Style="{StaticResource popupBD}" BorderThickness="1">
         <StackPanel Style="{StaticResource popupSP}" Height="590" Width="890" Orientation="Vertical" >
             <StackPanel Orientation="Horizontal">
@@ -97,12 +101,761 @@
                                 </StackPanel>
                             </ScrollViewer>
                         </TabItem>
-                            <TabItem Header="Away Team Stats">
+                        <TabItem>
+                            <TabItem.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Name="lblAwaystatshdr" />
+                                </StackPanel>
+                            </TabItem.Header>
+                            <StackPanel Orientation="Vertical">
+                                <ListView Name="lstAwayPassing" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Height="200" Width="570">
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="ListViewItem">
+                                            <Setter Property="Focusable" Value="false"/>
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+                                    <ListView.View>
+                                        <GridView AllowsColumnReorder="false">
+                                            <GridView.ColumnHeaderContainerStyle>
+                                                <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                    <Setter Property="IsEnabled" Value="False"/>
+                                                </Style>
+                                            </GridView.ColumnHeaderContainerStyle>
+                                            <GridViewColumn Header="Player">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Width="160">
+                                        <Run Text="{Binding Player.First_Name}" />
+                                        <Run Text=" " /> <!-- space -->
+                                        <Run Text="{Binding Player.Last_Name}" />
+                                                        </TextBlock>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn Header="CP/ATT">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Width="50">
+                                        <Run Text="{Binding Pass_Comp}" />
+                                        <Run Text="/" /> <!-- space -->
+                                        <Run Text="{Binding Pass_Att}" />
+                                                        </TextBlock>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn Header="YDS" Width="50" DisplayMemberBinding="{Binding Path=Pass_Yards}" />
+                                            <GridViewColumn Header="TD" Width="50" DisplayMemberBinding="{Binding Path=Pass_TDs}" />
+                                            <GridViewColumn Header="INT" Width="50" DisplayMemberBinding="{Binding Path=Pass_Ints}" />
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                                <ListView Name="lstAwayRushing" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Height="200" Width="570">
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="ListViewItem">
+                                            <Setter Property="Focusable" Value="false"/>
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+                                    <ListView.View>
+                                        <GridView AllowsColumnReorder="false">
+                                            <GridView.ColumnHeaderContainerStyle>
+                                                <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                    <Setter Property="IsEnabled" Value="False"/>
+                                                </Style>
+                                            </GridView.ColumnHeaderContainerStyle>
+                                            <GridViewColumn Header="Player">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Width="160">
+                                        <Run Text="{Binding Player.First_Name}" />
+                                        <Run Text=" " /> <!-- space -->
+                                        <Run Text="{Binding Player.Last_Name}" />
+                                                        </TextBlock>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn Header="CAR" Width="50" DisplayMemberBinding="{Binding Path=Rush_Att}" />
+                                            <GridViewColumn Header="YDS" Width="50" DisplayMemberBinding="{Binding Path=Rush_Yards}" />
+                                            <GridViewColumn Header="TD" Width="50" DisplayMemberBinding="{Binding Path=Rush_TDs}" />
 
-                            </TabItem>
-                            <TabItem Header="Home Team Stats">
+                                            <GridViewColumn Header="AVG">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Width="50">
+                                                           <MultiBinding Converter="{StaticResource avgYardsConverter}"
+                                                                         ConverterParameter="FormaavgYards">
+                                                              <Binding Path="Rush_Att"/>
+                                                              <Binding Path="Rush_Yards"/>
+                                                           </MultiBinding>
+                                                        </TextBlock>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                                <ListView Name="lstAwayReceiving" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Height="200" Width="570">
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="ListViewItem">
+                                            <Setter Property="Focusable" Value="false"/>
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+                                    <ListView.View>
+                                        <GridView AllowsColumnReorder="false">
+                                            <GridView.ColumnHeaderContainerStyle>
+                                                <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                    <Setter Property="IsEnabled" Value="False"/>
+                                                </Style>
+                                            </GridView.ColumnHeaderContainerStyle>
+                                            <GridViewColumn Header="Player">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Width="160">
+                                        <Run Text="{Binding Player.First_Name}" />
+                                        <Run Text=" " /> <!-- space -->
+                                        <Run Text="{Binding Player.Last_Name}" />
+                                                        </TextBlock>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn Header="REC" Width="50" DisplayMemberBinding="{Binding Path=Rec_Catches}" />
+                                            <GridViewColumn Header="YDS" Width="50" DisplayMemberBinding="{Binding Path=Rec_Yards}" />
+                                            <GridViewColumn Header="TD" Width="50" DisplayMemberBinding="{Binding Path=Rec_TDs}" />
+                                            <GridViewColumn Header="DROP" Width="50" DisplayMemberBinding="{Binding Path=Rec_Drops}" />
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                                <ListView Name="lstAwayPassDefense" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Height="200" Width="570">
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="ListViewItem">
+                                            <Setter Property="Focusable" Value="false"/>
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+                                    <ListView.View>
+                                        <GridView AllowsColumnReorder="false">
+                                            <GridView.ColumnHeaderContainerStyle>
+                                                <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                    <Setter Property="IsEnabled" Value="False"/>
+                                                </Style>
+                                            </GridView.ColumnHeaderContainerStyle>
+                                            <GridViewColumn Header="Player">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Width="160">
+                                        <Run Text="{Binding Player.First_Name}" />
+                                        <Run Text=" " /> <!-- space -->
+                                        <Run Text="{Binding Player.Last_Name}" />
+                                                        </TextBlock>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn Header="INT" Width="67" DisplayMemberBinding="{Binding Path=Ints}" />
+                                            <GridViewColumn Header="PD" Width="67" DisplayMemberBinding="{Binding Path=Def_Pass_Defenses}" />
+                                            <GridViewColumn Header="Tackle" Width="67" DisplayMemberBinding="{Binding Path=Tackles}" />
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                                <ListView Name="lstAwayDefense" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Height="200" Width="570">
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="ListViewItem">
+                                            <Setter Property="Focusable" Value="false"/>
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+                                    <ListView.View>
+                                        <GridView AllowsColumnReorder="false">
+                                            <GridView.ColumnHeaderContainerStyle>
+                                                <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                    <Setter Property="IsEnabled" Value="False"/>
+                                                </Style>
+                                            </GridView.ColumnHeaderContainerStyle>
+                                            <GridViewColumn Header="Player">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Width="160">
+                                        <Run Text="{Binding Player.First_Name}" />
+                                        <Run Text=" " /> <!-- space -->
+                                        <Run Text="{Binding Player.Last_Name}" />
+                                                        </TextBlock>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn Header="Tackle" Width="50" DisplayMemberBinding="{Binding Path=Def_Tackles}" />
+                                            <GridViewColumn Header="Sack" Width="50" DisplayMemberBinding="{Binding Path=Def_Sacks}" />
+                                            <GridViewColumn Header="TFL" Width="50" DisplayMemberBinding="{Binding Path=Def_Rushing_Loss}" />
+                                            <GridViewColumn Header="MT" Width="50" DisplayMemberBinding="{Binding Path=Def_Missed_Tackles}" />
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                                <ListView Name="lstAwayKicking" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Height="200" Width="570">
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="ListViewItem">
+                                            <Setter Property="Focusable" Value="false"/>
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+                                    <ListView.View>
+                                        <GridView AllowsColumnReorder="false">
+                                            <GridView.ColumnHeaderContainerStyle>
+                                                <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                    <Setter Property="IsEnabled" Value="False"/>
+                                                </Style>
+                                            </GridView.ColumnHeaderContainerStyle>
+                                            <GridViewColumn Header="Player">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Width="160">
+                                        <Run Text="{Binding Player.First_Name}" />
+                                        <Run Text=" " /> <!-- space -->
+                                        <Run Text="{Binding Player.Last_Name}" />
+                                                        </TextBlock>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn Header="FG">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Width="67">
+                                        <Run Text="{Binding FG_Made}" />
+                                        <Run Text="/" /> 
+                                        <Run Text="{Binding FG_Att}" />
+                                                        </TextBlock>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn Header="LONG" Width="67" DisplayMemberBinding="{Binding Path=FG_Long}" />
+                                            <GridViewColumn Header="FG">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Width="66">
+                                        <Run Text="{Binding XP_Made}" />
+                                        <Run Text="/" /> 
+                                        <Run Text="{Binding XP_Att}" />
+                                                        </TextBlock>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                                <ListView Name="lstAwayPunting" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Height="200" Width="570">
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="ListViewItem">
+                                            <Setter Property="Focusable" Value="false"/>
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+                                    <ListView.View>
+                                        <GridView AllowsColumnReorder="false">
+                                            <GridView.ColumnHeaderContainerStyle>
+                                                <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                    <Setter Property="IsEnabled" Value="False"/>
+                                                </Style>
+                                            </GridView.ColumnHeaderContainerStyle>
+                                            <GridViewColumn Header="Player">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Width="160">
+                                        <Run Text="{Binding Player.First_Name}" />
+                                        <Run Text=" " /> <!-- space -->
+                                        <Run Text="{Binding Player.Last_Name}" />
+                                                        </TextBlock>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn Header="PUNTS" Width="67" DisplayMemberBinding="{Binding Path=num_punts}" />
+                                            <GridViewColumn Header="AVG">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Width="67">
+                                                           <MultiBinding Converter="{StaticResource avgYardsConverter}"
+                                                                         ConverterParameter="FormaavgYards">
+                                                              <Binding Path="num_punts"/>
+                                                              <Binding Path="Punt_yards"/>
+                                                           </MultiBinding>
+                                                        </TextBlock>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn Header="I20">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Width="66">
+                                                           <MultiBinding Converter="{StaticResource avgYardsConverter}"
+                                                                         ConverterParameter="FormaavgYards">
+                                                              <Binding Path="Punt_killed_num"/>
+                                                              <Binding Path="Punt_Killed_att"/>
+                                                           </MultiBinding>
+                                                        </TextBlock>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                                <ListView Name="lstAwayKickReturn" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Height="200" Width="570">
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="ListViewItem">
+                                            <Setter Property="Focusable" Value="false"/>
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+                                    <ListView.View>
+                                        <GridView AllowsColumnReorder="false">
+                                            <GridView.ColumnHeaderContainerStyle>
+                                                <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                    <Setter Property="IsEnabled" Value="False"/>
+                                                </Style>
+                                            </GridView.ColumnHeaderContainerStyle>
+                                            <GridViewColumn Header="Player">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Width="160">
+                                        <Run Text="{Binding Player.First_Name}" />
+                                        <Run Text=" " /> <!-- space -->
+                                        <Run Text="{Binding Player.Last_Name}" />
+                                                        </TextBlock>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn Header="RET" Width="50" DisplayMemberBinding="{Binding Path=Kickoffs_Returned}" />
+                                            <GridViewColumn Header="AVG">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Width="50">
+                                                           <MultiBinding Converter="{StaticResource avgYardsConverter}"
+                                                                         ConverterParameter="FormaavgYards">
+                                                              <Binding Path="Kickoffs_Returned"/>
+                                                              <Binding Path="Kickoffs_Returned_Yards"/>
+                                                           </MultiBinding>
+                                                        </TextBlock>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn Header="TD" Width="50" DisplayMemberBinding="{Binding Path=Kickoffs_Returned_TDs}" />
+                                            <GridViewColumn Header="LONG" Width="50" DisplayMemberBinding="{Binding Path=Kickoff_Return_Yards_Long}" />
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                                <ListView Name="lstAwayPuntReturn" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Height="200" Width="570">
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="ListViewItem">
+                                            <Setter Property="Focusable" Value="false"/>
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+                                    <ListView.View>
+                                        <GridView AllowsColumnReorder="false">
+                                            <GridView.ColumnHeaderContainerStyle>
+                                                <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                    <Setter Property="IsEnabled" Value="False"/>
+                                                </Style>
+                                            </GridView.ColumnHeaderContainerStyle>
+                                            <GridViewColumn Header="Player">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Width="160">
+                                        <Run Text="{Binding Player.First_Name}" />
+                                        <Run Text=" " /> <!-- space -->
+                                        <Run Text="{Binding Player.Last_Name}" />
+                                                        </TextBlock>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn Header="RET" Width="50" DisplayMemberBinding="{Binding Path=Punts_Returned}" />
+                                            <GridViewColumn Header="AVG">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Width="50">
+                                                           <MultiBinding Converter="{StaticResource avgYardsConverter}"
+                                                                         ConverterParameter="FormaavgYards">
+                                                              <Binding Path="Punts_Returned"/>
+                                                              <Binding Path="Punts_Returned_Yards"/>
+                                                           </MultiBinding>
+                                                        </TextBlock>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn Header="TD" Width="50" DisplayMemberBinding="{Binding Path=Punts_Returned_TDs}" />
+                                            <GridViewColumn Header="LONG" Width="50" DisplayMemberBinding="{Binding Path=Punt_Returned_Yards_Long}" />
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
 
-                            </TabItem>
+                            </StackPanel>
+                        </TabItem>
+                        <TabItem>
+                                <TabItem.Header>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label Name="lblHomestatshdr" />
+                                    </StackPanel>
+                                </TabItem.Header>
+                            <StackPanel Orientation="Vertical">
+                                <ListView Name="lstHomePassing" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Height="200" Width="570">
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="ListViewItem">
+                                            <Setter Property="Focusable" Value="false"/>
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+                                    <ListView.View>
+                                        <GridView AllowsColumnReorder="false">
+                                            <GridView.ColumnHeaderContainerStyle>
+                                                <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                    <Setter Property="IsEnabled" Value="False"/>
+                                                </Style>
+                                            </GridView.ColumnHeaderContainerStyle>
+                                            <GridViewColumn Header="Player">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Width="160">
+                                        <Run Text="{Binding Player.First_Name}" />
+                                        <Run Text=" " /> <!-- space -->
+                                        <Run Text="{Binding Player.Last_Name}" />
+                                                        </TextBlock>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn Header="CP/ATT">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Width="50">
+                                        <Run Text="{Binding Pass_Comp}" />
+                                        <Run Text="/" /> <!-- space -->
+                                        <Run Text="{Binding Pass_Att}" />
+                                                        </TextBlock>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn Header="YDS" Width="50" DisplayMemberBinding="{Binding Path=Pass_Yards}" />
+                                            <GridViewColumn Header="TD" Width="50" DisplayMemberBinding="{Binding Path=Pass_TDs}" />
+                                            <GridViewColumn Header="INT" Width="50" DisplayMemberBinding="{Binding Path=Pass_Ints}" />
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                                <ListView Name="lstHomeRushing" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Height="200" Width="570">
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="ListViewItem">
+                                            <Setter Property="Focusable" Value="false"/>
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+                                    <ListView.View>
+                                        <GridView AllowsColumnReorder="false">
+                                            <GridView.ColumnHeaderContainerStyle>
+                                                <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                    <Setter Property="IsEnabled" Value="False"/>
+                                                </Style>
+                                            </GridView.ColumnHeaderContainerStyle>
+                                            <GridViewColumn Header="Player">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Width="160">
+                                        <Run Text="{Binding Player.First_Name}" />
+                                        <Run Text=" " /> <!-- space -->
+                                        <Run Text="{Binding Player.Last_Name}" />
+                                                        </TextBlock>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn Header="CAR" Width="50" DisplayMemberBinding="{Binding Path=Rush_Att}" />
+                                            <GridViewColumn Header="YDS" Width="50" DisplayMemberBinding="{Binding Path=Rush_Yards}" />
+                                            <GridViewColumn Header="TD" Width="50" DisplayMemberBinding="{Binding Path=Rush_TDs}" />
+
+                                            <GridViewColumn Header="AVG">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Width="50">
+                                                           <MultiBinding Converter="{StaticResource avgYardsConverter}"
+                                                                         ConverterParameter="FormaavgYards">
+                                                              <Binding Path="Rush_Att"/>
+                                                              <Binding Path="Rush_Yards"/>
+                                                           </MultiBinding>
+                                                        </TextBlock>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                                <ListView Name="lstHomeReceiving" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Height="200" Width="570">
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="ListViewItem">
+                                            <Setter Property="Focusable" Value="false"/>
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+                                    <ListView.View>
+                                        <GridView AllowsColumnReorder="false">
+                                            <GridView.ColumnHeaderContainerStyle>
+                                                <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                    <Setter Property="IsEnabled" Value="False"/>
+                                                </Style>
+                                            </GridView.ColumnHeaderContainerStyle>
+                                            <GridViewColumn Header="Player">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Width="160">
+                                        <Run Text="{Binding Player.First_Name}" />
+                                        <Run Text=" " /> <!-- space -->
+                                        <Run Text="{Binding Player.Last_Name}" />
+                                                        </TextBlock>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn Header="REC" Width="50" DisplayMemberBinding="{Binding Path=Rec_Catches}" />
+                                            <GridViewColumn Header="YDS" Width="50" DisplayMemberBinding="{Binding Path=Rec_Yards}" />
+                                            <GridViewColumn Header="TD" Width="50" DisplayMemberBinding="{Binding Path=Rec_TDs}" />
+                                            <GridViewColumn Header="DROP" Width="50" DisplayMemberBinding="{Binding Path=Rec_Drops}" />
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                                <ListView Name="lstHomePassDefense" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Height="200" Width="570">
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="ListViewItem">
+                                            <Setter Property="Focusable" Value="false"/>
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+                                    <ListView.View>
+                                        <GridView AllowsColumnReorder="false">
+                                            <GridView.ColumnHeaderContainerStyle>
+                                                <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                    <Setter Property="IsEnabled" Value="False"/>
+                                                </Style>
+                                            </GridView.ColumnHeaderContainerStyle>
+                                            <GridViewColumn Header="Player">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Width="160">
+                                        <Run Text="{Binding Player.First_Name}" />
+                                        <Run Text=" " /> <!-- space -->
+                                        <Run Text="{Binding Player.Last_Name}" />
+                                                        </TextBlock>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn Header="INT" Width="67" DisplayMemberBinding="{Binding Path=Ints}" />
+                                            <GridViewColumn Header="PD" Width="67" DisplayMemberBinding="{Binding Path=Def_Pass_Defenses}" />
+                                            <GridViewColumn Header="Tackle" Width="67" DisplayMemberBinding="{Binding Path=Tackles}" />
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                                <ListView Name="lstHomeDefense" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Height="200" Width="570">
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="ListViewItem">
+                                            <Setter Property="Focusable" Value="false"/>
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+                                    <ListView.View>
+                                        <GridView AllowsColumnReorder="false">
+                                            <GridView.ColumnHeaderContainerStyle>
+                                                <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                    <Setter Property="IsEnabled" Value="False"/>
+                                                </Style>
+                                            </GridView.ColumnHeaderContainerStyle>
+                                            <GridViewColumn Header="Player">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Width="160">
+                                        <Run Text="{Binding Player.First_Name}" />
+                                        <Run Text=" " /> <!-- space -->
+                                        <Run Text="{Binding Player.Last_Name}" />
+                                                        </TextBlock>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn Header="Tackle" Width="50" DisplayMemberBinding="{Binding Path=Def_Tackles}" />
+                                            <GridViewColumn Header="Sack" Width="50" DisplayMemberBinding="{Binding Path=Def_Sacks}" />
+                                            <GridViewColumn Header="TFL" Width="50" DisplayMemberBinding="{Binding Path=Def_Rushing_Loss}" />
+                                            <GridViewColumn Header="MT" Width="50" DisplayMemberBinding="{Binding Path=Def_Missed_Tackles}" />
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                                <ListView Name="lstHomeKicking" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Height="200" Width="570">
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="ListViewItem">
+                                            <Setter Property="Focusable" Value="false"/>
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+                                    <ListView.View>
+                                        <GridView AllowsColumnReorder="false">
+                                            <GridView.ColumnHeaderContainerStyle>
+                                                <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                    <Setter Property="IsEnabled" Value="False"/>
+                                                </Style>
+                                            </GridView.ColumnHeaderContainerStyle>
+                                            <GridViewColumn Header="Player">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Width="160">
+                                        <Run Text="{Binding Player.First_Name}" />
+                                        <Run Text=" " /> <!-- space -->
+                                        <Run Text="{Binding Player.Last_Name}" />
+                                                        </TextBlock>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn Header="FG">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Width="67">
+                                        <Run Text="{Binding FG_Made}" />
+                                        <Run Text="/" /> 
+                                        <Run Text="{Binding FG_Att}" />
+                                                        </TextBlock>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn Header="LONG" Width="67" DisplayMemberBinding="{Binding Path=FG_Long}" />
+                                            <GridViewColumn Header="FG">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Width="66">
+                                        <Run Text="{Binding XP_Made}" />
+                                        <Run Text="/" /> 
+                                        <Run Text="{Binding XP_Att}" />
+                                                        </TextBlock>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                                <ListView Name="lstHomePunting" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Height="200" Width="570">
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="ListViewItem">
+                                            <Setter Property="Focusable" Value="false"/>
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+                                    <ListView.View>
+                                        <GridView AllowsColumnReorder="false">
+                                            <GridView.ColumnHeaderContainerStyle>
+                                                <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                    <Setter Property="IsEnabled" Value="False"/>
+                                                </Style>
+                                            </GridView.ColumnHeaderContainerStyle>
+                                            <GridViewColumn Header="Player">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Width="160">
+                                        <Run Text="{Binding Player.First_Name}" />
+                                        <Run Text=" " /> <!-- space -->
+                                        <Run Text="{Binding Player.Last_Name}" />
+                                                        </TextBlock>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn Header="PUNTS" Width="67" DisplayMemberBinding="{Binding Path=num_punts}" />
+                                            <GridViewColumn Header="AVG">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Width="67">
+                                                           <MultiBinding Converter="{StaticResource avgYardsConverter}"
+                                                                         ConverterParameter="FormaavgYards">
+                                                              <Binding Path="num_punts"/>
+                                                              <Binding Path="Punt_yards"/>
+                                                           </MultiBinding>
+                                                        </TextBlock>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn Header="I20">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Width="66">
+                                                           <MultiBinding Converter="{StaticResource avgYardsConverter}"
+                                                                         ConverterParameter="FormaavgYards">
+                                                              <Binding Path="Punt_killed_num"/>
+                                                              <Binding Path="Punt_Killed_att"/>
+                                                           </MultiBinding>
+                                                        </TextBlock>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                                <ListView Name="lstHomeKickReturn" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Height="200" Width="570">
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="ListViewItem">
+                                            <Setter Property="Focusable" Value="false"/>
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+                                    <ListView.View>
+                                        <GridView AllowsColumnReorder="false">
+                                            <GridView.ColumnHeaderContainerStyle>
+                                                <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                    <Setter Property="IsEnabled" Value="False"/>
+                                                </Style>
+                                            </GridView.ColumnHeaderContainerStyle>
+                                            <GridViewColumn Header="Player">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Width="160">
+                                        <Run Text="{Binding Player.First_Name}" />
+                                        <Run Text=" " /> <!-- space -->
+                                        <Run Text="{Binding Player.Last_Name}" />
+                                                        </TextBlock>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn Header="RET" Width="50" DisplayMemberBinding="{Binding Path=Kickoffs_Returned}" />
+                                            <GridViewColumn Header="AVG">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Width="50">
+                                                           <MultiBinding Converter="{StaticResource avgYardsConverter}"
+                                                                         ConverterParameter="FormaavgYards">
+                                                              <Binding Path="Kickoffs_Returned"/>
+                                                              <Binding Path="Kickoffs_Returned_Yards"/>
+                                                           </MultiBinding>
+                                                        </TextBlock>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn Header="TD" Width="50" DisplayMemberBinding="{Binding Path=Kickoffs_Returned_TDs}" />
+                                            <GridViewColumn Header="LONG" Width="50" DisplayMemberBinding="{Binding Path=Kickoff_Return_Yards_Long}" />
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                                <ListView Name="lstHomePuntReturn" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Height="200" Width="570">
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="ListViewItem">
+                                            <Setter Property="Focusable" Value="false"/>
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+                                    <ListView.View>
+                                        <GridView AllowsColumnReorder="false">
+                                            <GridView.ColumnHeaderContainerStyle>
+                                                <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                    <Setter Property="IsEnabled" Value="False"/>
+                                                </Style>
+                                            </GridView.ColumnHeaderContainerStyle>
+                                            <GridViewColumn Header="Player">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Width="160">
+                                        <Run Text="{Binding Player.First_Name}" />
+                                        <Run Text=" " /> <!-- space -->
+                                        <Run Text="{Binding Player.Last_Name}" />
+                                                        </TextBlock>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn Header="RET" Width="50" DisplayMemberBinding="{Binding Path=Punts_Returned}" />
+                                            <GridViewColumn Header="AVG">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Width="50">
+                                                           <MultiBinding Converter="{StaticResource avgYardsConverter}"
+                                                                         ConverterParameter="FormaavgYards">
+                                                              <Binding Path="Punts_Returned"/>
+                                                              <Binding Path="Punts_Returned_Yards"/>
+                                                           </MultiBinding>
+                                                        </TextBlock>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn Header="TD" Width="50" DisplayMemberBinding="{Binding Path=Punts_Returned_TDs}" />
+                                            <GridViewColumn Header="LONG" Width="50" DisplayMemberBinding="{Binding Path=Punt_Returned_Yards_Long}" />
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+
+                            </StackPanel>
+
+                        </TabItem>
                             <TabItem Header="Scoring Summary">
 
                             </TabItem>

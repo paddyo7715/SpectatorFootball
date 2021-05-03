@@ -10,10 +10,7 @@ namespace SpectatorFootball.Models
     {
         public Game Game { get; set; }
         public string AwayNickname { get; set; }
-        public string AwayCity { get; set; }
-        public string AwayCityAbbr { get; set; }
-        public string HomeNickname { get; set; }
-        public string HomeCity { get; set; }
-        public string HomeCityAbbr { get; set; }
+        public Teams_by_Season aTeam { get; set; }
+        public Teams_by_Season hTeam { get; set; }
     }
 }

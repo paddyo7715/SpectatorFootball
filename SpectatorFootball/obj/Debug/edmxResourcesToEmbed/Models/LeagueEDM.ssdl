@@ -382,6 +382,7 @@
     </Key>
     <Property Name="ID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Game_ID" Type="integer" Nullable="false" />
+    <Property Name="Time" Type="integer" Nullable="false" />
     <Property Name="Scoring_Summary" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
   </EntityType>
   <EntityType Name="Hall_of_Fame">

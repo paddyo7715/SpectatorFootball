@@ -25,6 +25,7 @@ namespace SpectatorFootball.Models
         {
         }
 
+    
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();

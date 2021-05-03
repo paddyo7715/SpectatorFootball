@@ -293,5 +293,30 @@ namespace SpectatorFootball
             if (!bfound)
                 lup_l.Add(lup);
         }
+        //This method sets the foreground and background color for a team for such things as 
+        //a teams score in game or in the team detail or boxscore stats.
+        public static string[] getBackForgroundcolors(string homejersey, string homenumber, string homeoutline)
+        {
+            string white = "#FFFFFF";
+            string black = "#000000";
+            string[] r = null;
+            string foreground = null;
+            string background = homejersey;
+
+            r[0] = background;
+
+            if (CommonUtils.isTwoColorDifferent(background, homenumber))
+                foreground = homenumber;
+            else if (CommonUtils.isTwoColorDifferent(background, homeoutline))
+                    foreground = homeoutline;
+            else if (CommonUtils.isTwoColorDifferent(background, white))
+                foreground = white;
+            else
+                foreground = black;
+
+            r[1] = foreground;           
+
+            return r;
+        }
     }
 }

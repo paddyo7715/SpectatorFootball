@@ -366,7 +366,23 @@
             <Setter Property="TextBlock.Foreground" Value="Black"/>
             <Setter Property="IsHitTestVisible" Value="False"/>
         </Style>
-        
+
+        <!-- Boxscore individual stats header colomns away-->
+        <Style TargetType="{x:Type GridViewColumnHeader}" BasedOn="{StaticResource {x:Type GridViewColumnHeader}}" x:Key="aBoxGridHDRStyle">
+            <Setter Property="TextBlock.TextWrapping" Value="Wrap"/>
+            <Setter Property="TextBlock.Foreground" Value="Black"/>
+            <Setter Property="TextBlock.Background" Value="White"/>
+            <Setter Property="IsHitTestVisible" Value="False"/>
+        </Style>
+
+        <!-- Boxscore individual stats header colomns home-->
+        <Style TargetType="{x:Type GridViewColumnHeader}" BasedOn="{StaticResource {x:Type GridViewColumnHeader}}" x:Key="hBoxGridHDRStyle">
+            <Setter Property="TextBlock.TextWrapping" Value="Wrap"/>
+            <Setter Property="TextBlock.Foreground" Value="Black"/>
+            <Setter Property="TextBlock.Background" Value="White"/>
+            <Setter Property="IsHitTestVisible" Value="False"/>
+        </Style>
+
         <!-- Draft -->
         <Style TargetType="TextBlock" x:Key="DraftAnnouncementStyle">
             <Setter Property="FontFamily" Value="Verdana"/>
