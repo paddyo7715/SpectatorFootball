@@ -265,17 +265,6 @@ namespace SpectatorFootball
             else
                 return (long)l;
         }
-        public static string getTimestringFromSeconds(long sec)
-        {
-            string r = null;
-
-            long minutes = sec / 60;
-            long seconds = sec % 60;
-
-            r = minutes.ToString() + ":" + seconds.ToString();
-
-            return r;
-        }
         public static bool isTwoColorDifferent(string s1, string s2)
         {
             int r1 = 0;

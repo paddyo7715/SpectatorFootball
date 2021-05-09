@@ -107,11 +107,13 @@
     <Compile Include="BindingConverters\iPosConverter.cs" />
     <Compile Include="BindingConverters\isNullConverter.cs" />
     <Compile Include="BindingConverters\longiPosConverter.cs" />
+    <Compile Include="BindingConverters\qtrConverter.cs" />
     <Compile Include="BindingConverters\SpeedInttoString.cs" />
     <Compile Include="BindingConverters\StadiumImageConverter.cs" />
     <Compile Include="BindingConverters\StatusConverter.cs" />
     <Compile Include="BindingConverters\StockHelmetConverter.cs" />
     <Compile Include="BindingConverters\TextConverter.cs" />
+    <Compile Include="BindingConverters\timeConverter.cs" />
     <Compile Include="Common\LeageConnection.cs" />
     <Compile Include="Common\LoadLeagueEventArgs.cs" />
     <Compile Include="Common\SettingsConnection.cs" />

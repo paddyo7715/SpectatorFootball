@@ -393,6 +393,7 @@
           <ScalarProperty Name="Game_ID" ColumnName="Game_ID" />
           <ScalarProperty Name="Time" ColumnName="Time" />
           <ScalarProperty Name="Scoring_Summary" ColumnName="Scoring_Summary" />
+          <ScalarProperty Name="Quarter" ColumnName="Quarter" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

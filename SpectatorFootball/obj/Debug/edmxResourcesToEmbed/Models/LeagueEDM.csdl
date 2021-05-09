@@ -481,6 +481,7 @@
     <Property Name="Game_ID" Type="Int64" Nullable="false" />
     <Property Name="Time" Type="Int64" Nullable="false" />
     <Property Name="Scoring_Summary" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Quarter" Type="Int64" Nullable="false" />
     <NavigationProperty Name="Game" Relationship="Self.FK_Game_Scoring_Summary_0_0" FromRole="Game_Scoring_Summary" ToRole="Game" />
   </EntityType>
   <EntityType Name="Hall_of_Fame">

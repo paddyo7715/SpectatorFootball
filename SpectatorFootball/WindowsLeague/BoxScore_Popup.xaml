@@ -9,6 +9,8 @@
        Height ="600" Width="900" WindowStyle="none" ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True">
     <Window.Resources>
         <local1:avgYardsConverter  x:Key="avgYardsConverter" />
+        <local1:qtrConverter  x:Key="qtrConverter" />
+        <local1:timeConverter  x:Key="timeConverter" />
     </Window.Resources>
     <Border Style="{StaticResource popupBD}" BorderThickness="1">
         <StackPanel Style="{StaticResource popupSP}" Height="590" Width="890" Orientation="Vertical" >
@@ -854,12 +856,26 @@
                                 </ListView>
 
                             </StackPanel>
-
                         </TabItem>
                             <TabItem Header="Scoring Summary">
+                            <StackPanel>
+                                <ListView Name="lstScoringSummary" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Height="200" Width="400">
+                                    <ListView.View>
+                                        <GridView AllowsColumnReorder="false">
+                                            <GridView.ColumnHeaderContainerStyle>
+                                                <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                    <Setter Property="IsEnabled" Value="False"/>
+                                                </Style>
+                                            </GridView.ColumnHeaderContainerStyle>
 
+                                            <GridViewColumn Header="QTR" Width="50" DisplayMemberBinding="{Binding Path=Quarter, Converter={StaticResource  qtrConverter}}"  />
+                                            <GridViewColumn Header="Time" Width="50" DisplayMemberBinding="{Binding Path=Time, Converter={StaticResource  timeConverter}}"  />
+                                            <GridViewColumn Header="Scoring" Width="50" DisplayMemberBinding="{Binding Path=Scoring_Summary}"  />
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                            </StackPanel>
                             </TabItem>
-
                         </TabControl>
 
                     </StackPanel>

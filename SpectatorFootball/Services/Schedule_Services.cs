@@ -85,7 +85,9 @@ namespace SpectatorFootball.Services
                         }
                         else
                         {
-                            srec.Status = Game_Helper.getQTRTime(srec.QTR, srec.QTR_Time);
+                            srec.Status = Game_Helper.getQTRString(srec.QTR) + " " +
+                                          Game_Helper.getTimestringFromSeconds(srec.QTR_Time);
+
                             srec.Action = "Resume";
                         }
                     }

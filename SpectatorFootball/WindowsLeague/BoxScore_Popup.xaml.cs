@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using SpectatorFootball.BindingConverters;
+using SpectatorFootball.GameNS;
 
 namespace SpectatorFootball.WindowsLeague
 {
@@ -317,8 +318,8 @@ namespace SpectatorFootball.WindowsLeague
             lblAwayBSSacks.Content = bs_rec.Game.Game_Player_Defense_Stats.Where(x => x.Franchise_ID == bs_rec.Game.Home_Team_Franchise_ID).Sum(x => x.Def_Sacks);
             lblHomeBSSacks.Content = bs_rec.Game.Game_Player_Defense_Stats.Where(x => x.Franchise_ID == bs_rec.Game.Away_Team_Franchise_ID).Sum(x => x.Def_Sacks);
 
-            lblAwayBSTimeofPoss.Content = CommonUtils.getTimestringFromSeconds((long)bs_rec.Game.Away_TOP);
-            lblHomeBSTimeofPoss.Content = CommonUtils.getTimestringFromSeconds((long)bs_rec.Game.Home_TOP);
+            lblAwayBSTimeofPoss.Content = Game_Helper.getTimestringFromSeconds((long)bs_rec.Game.Away_TOP);
+            lblHomeBSTimeofPoss.Content = Game_Helper.getTimestringFromSeconds((long)bs_rec.Game.Home_TOP);
 
 //Only if the league is configured for penalties then show the penalty count for the game
             if (bPenalties)
@@ -450,6 +451,8 @@ namespace SpectatorFootball.WindowsLeague
             setListviewHeaders(lstHomePuntReturn);
 
             lblHomestatshdr.Content = bs_rec.hTeam.Nickname;
+
+            lstScoringSummary.ItemsSource = bs_rec.Game.Game_Scoring_Summary;
 
 
         }
