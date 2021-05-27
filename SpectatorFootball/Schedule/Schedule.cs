@@ -11,7 +11,7 @@ namespace SpectatorFootball
         private int Conferences;
         private int Weeks;
         private int byes;
-        private List<string> sched = new List<string>();
+        private List<string> sched = null;
         private Random rha = new Random();
 
         public Schedule(string Short_Name, int Number_of_Teams, int Num_Teams_Per_Division, int Conferences, int weeks, int byes)
@@ -76,14 +76,15 @@ namespace SpectatorFootball
 
         public List<string> Generate_Regular_Schedule()
         {
+        START_METHOD:
+            ;
+            sched = new List<string>();
             List<string> Weekly_sched;
             int expected_home_games;
             int expected_away_games;
             int i;
             int tries;
 
-        START_METHOD:
-            ;
             int[] gt = null;
 
             Weekly_sched = new List<string>();
@@ -362,8 +363,11 @@ namespace SpectatorFootball
 
                 tries += 1;
                 if (tries >= 200000)
+                {
                     // file.WriteLine("exceeded tries >= 200000) goto outer ")
-                    goto OUTER_DO;
+                    tries = 0;
+                    goto START_METHOD;
+                }
 
                 int w3 = 1;
                 while (w3 <= Weeks + byes)

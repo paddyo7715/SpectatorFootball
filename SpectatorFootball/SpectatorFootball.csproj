@@ -115,6 +115,7 @@
     <Compile Include="BindingConverters\TextConverter.cs" />
     <Compile Include="BindingConverters\timeConverter.cs" />
     <Compile Include="Common\LeageConnection.cs" />
+    <Compile Include="Common\List_and_Default.cs" />
     <Compile Include="Common\LoadLeagueEventArgs.cs" />
     <Compile Include="Common\SettingsConnection.cs" />
     <Compile Include="Common\Validator.cs" />

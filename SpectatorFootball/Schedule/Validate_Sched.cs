@@ -31,7 +31,11 @@ namespace SpectatorFootball
                 //Make sure number of weeks in schedule is correct.
                 string lastgame = sched[sched.Count - 1];
                 string[] mtemp = lastgame.Split(',');
-                if (mtemp[0] != (Weeks + byes).ToString())
+
+                int last_week = 0;
+                int.TryParse(mtemp[0], out last_week);
+
+                if (last_week > (Weeks + byes) || last_week < Weeks)
                     throw new Exception("Invalid schedule created:  Incorrect number of weeks scheduled." + (Weeks + byes).ToString() + " games expected, but " + mtemp[0] + " games were scheduled");
 
                 int expected_games = Teams / 2 * Weeks;
