@@ -13,6 +13,9 @@ using SpectatorFootball.Models;
 using SpectatorFootball.Versioning;
 using SpectatorFootball.League;
 using SpectatorFootball.CustomControls;
+using System.Collections.ObjectModel;
+using SpectatorFootball.Common;
+using System.Linq;
 
 namespace SpectatorFootball
 {
@@ -33,8 +36,13 @@ namespace SpectatorFootball
         public event EventHandler<teamEventArgs> Show_NewTeam;
 
         public BackgroundWorker bw = null;
-        public Progress_Dialog pop = null; 
+        public Progress_Dialog pop = null;
 
+        private List_and_Default games_weeks_list = null;
+
+
+        //bindings for UI
+        public List<string> League_Structs_List = null;
         public NewLeagueUC(MainWindow pw, List<Stock_Teams> st_list)
         {
 
@@ -50,9 +58,16 @@ namespace SpectatorFootball
                 newl1StartingYear.Items.Add(i.ToString());
 
             newl1StartingYear.Text = icurrentyear.ToString();
-            newl1Structure.SelectedIndex = 0;
 
             setStockTeams();
+
+            List_and_Default ldStruct = League_Helper.getAllLeagueStructures();
+            League_Structs_List = ldStruct.source_list;
+            newl1Structure.ItemsSource = League_Structs_List;
+            newl1Structure.SelectedValue = ldStruct.selected;
+
+            //            DataContext = this;
+
         }
         private void setStockTeams()
         {
@@ -200,8 +215,6 @@ namespace SpectatorFootball
 
         private void newl1Structure_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ComboBoxItem cbitem = (ComboBoxItem)newl1Structure.SelectedItem;
-            int[] v = CommonUtils.getLeagueStructure(cbitem.Content.ToString());
             int num_weeks;
             int num_games;
             int num_divs;
@@ -209,6 +222,32 @@ namespace SpectatorFootball
             int num_confs;
             int num_playoff_teams;
             int teams_per_division;
+
+            int[] v = CommonUtils.getLeagueStructure(newl1Structure.SelectedItem.ToString());
+
+            num_teams = v[0];
+            num_divs = v[1];
+            num_confs = v[2];
+
+            games_weeks_list = League_Helper.getWeeksforStructure(newl1Structure.SelectedItem.ToString());
+
+            List<string> games_only_list = CommonUtils.ListfromListofDelimitted(games_weeks_list.source_list, ",");
+            newl1Games.ItemsSource = games_only_list;
+            newl1Games.SelectedValue = games_weeks_list.selected.Split(',')[0];
+            string game_weeks_val = games_weeks_list.source_list.Where(x => x.Split(',')[0] == games_weeks_list.selected.Split(',')[0]).First();
+            string[] m = game_weeks_val.Split(',');
+
+            num_weeks = int.Parse(m[1]);
+            num_games = int.Parse(m[0]);
+
+            List_and_Default playoff_teams_list = League_Helper.getPlayoffGamesforStructure(newl1Structure.SelectedItem.ToString());
+            newl1PlayoffTeams.ItemsSource = playoff_teams_list.source_list;
+            newl1PlayoffTeams.SelectedValue = playoff_teams_list.selected;
+//right here is the issue
+            num_playoff_teams = int.Parse(playoff_teams_list.selected);
+
+            teams_per_division = num_teams / num_divs;
+
             Style Largelblstyle = (Style)System.Windows.Application.Current.FindResource("Largelbltyle");
             Style GroupBoxstyle = (Style)System.Windows.Application.Current.FindResource("GroupBoxstyle");
             Style Largetxttyle = (Style)System.Windows.Application.Current.FindResource("Largetxttyle");
@@ -217,29 +256,16 @@ namespace SpectatorFootball
             Style UnselNewTeamSP = (Style)System.Windows.Application.Current.FindResource("UnselNewTeamSP");
             Style DragEnt_NewTeamSP = (Style)System.Windows.Application.Current.FindResource("DragEnt_NewTeamSP");
 
-            num_weeks = v[0];
-            num_games = v[1];
-            num_divs = v[2];
-            num_teams = v[3];
-            num_confs = v[4];
-            num_playoff_teams = v[5];
-            teams_per_division = num_teams / num_divs;
-
-            logger.Info("League structure changed to " + "num_weeks " + num_weeks.ToString() + "num_games " + num_games.ToString() + "num_divs " + num_divs.ToString() + "num_teams " + num_teams.ToString() + "num_confs " + num_confs.ToString() + "num_playoff_teams " + num_playoff_teams.ToString() + "teams_per_division " + teams_per_division.ToString());
-
-            newlnumweeks.Text = num_weeks.ToString();
-            newlnumgames.Text = num_games.ToString();
             newlnumdivisions.Text = num_divs.ToString();
             newlnumteams.Text = num_teams.ToString();
             newlnumconferences.Text = num_confs.ToString();
-            newlnumplayoffteams.Text = num_playoff_teams.ToString();
 
-            logger.Debug("Set all teams blank");
 
-            pw.New_Mem_Season.Season.League_Structure_by_Season[0].Number_of_weeks = num_weeks;
-            pw.New_Mem_Season.Season.League_Structure_by_Season[0].Number_of_Games = num_games;
             pw.New_Mem_Season.Season.League_Structure_by_Season[0].Num_Teams = num_teams;
-            pw.New_Mem_Season.Season.League_Structure_by_Season[0].Num_Playoff_Teams = num_playoff_teams;
+//the commented out values are now set in the subevent
+//            pw.New_Mem_Season.Season.League_Structure_by_Season[0].Number_of_weeks = num_weeks;
+//            pw.New_Mem_Season.Season.League_Structure_by_Season[0].Number_of_Games = num_games;
+//            pw.New_Mem_Season.Season.League_Structure_by_Season[0].Num_Playoff_Teams = num_playoff_teams;
             pw.New_Mem_Season.Season.League_Structure_by_Season[0].Number_of_Divisions = num_divs;
             pw.New_Mem_Season.Season.League_Structure_by_Season[0].Number_of_Conferences = num_confs;
 
@@ -252,11 +278,14 @@ namespace SpectatorFootball
             logger.Debug("Clear previous division selections");
             sp1.Children.Clear();
 
-            if (this.FindName("newllblConf1") != null)
-                unregisterControl("newlConf1");
+            unregisterControl("newlConf1");
 
-            if (this.FindName("newllblConf2") != null)
-                unregisterControl("newlConf2");
+            unregisterControl("newlConf2");
+
+            //Any previous conference textboxes
+            unregisterControl("txtConf1");
+
+            unregisterControl("txtConf2");
 
             logger.Debug("Unregister all div controls");
             for (int I = 1; I <= Convert.ToInt32(app_Constants.MAX_DIVISIONS); I++)
@@ -538,8 +567,36 @@ namespace SpectatorFootball
             }
             catch (Exception IG)
             {
-                logger.Error("Error unregisting code " + IG.Message);
-                logger.Error(IG);
+            }
+        }
+        private void newl1PlayoffTeams_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (newl1PlayoffTeams.SelectedItem != null)
+            {
+                int num_playoff_teams = int.Parse(newl1PlayoffTeams.SelectedItem.ToString());
+                newlnumplayoffteams.Text = num_playoff_teams.ToString();
+                pw.New_Mem_Season.Season.League_Structure_by_Season[0].Num_Playoff_Teams = num_playoff_teams;
+            }
+        }
+        private void newl1Games_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+            int num_weeks;
+            int num_games;
+
+            if (newl1Games.SelectedItem != null)
+            {
+                string game_weeks_val = games_weeks_list.source_list.Where(x => x.Split(',')[0] == newl1Games.SelectedItem.ToString().Split(',')[0]).First();
+                string[] m = game_weeks_val.Split(',');
+
+                num_weeks = int.Parse(m[1]);
+                num_games = int.Parse(m[0]);
+
+                newlnumweeks.Text = num_weeks.ToString();
+                newlnumgames.Text = num_games.ToString();
+
+                pw.New_Mem_Season.Season.League_Structure_by_Season[0].Number_of_weeks = num_weeks;
+                pw.New_Mem_Season.Season.League_Structure_by_Season[0].Number_of_Games = num_games;
             }
         }
         private void newl1Next_Click(object sender, RoutedEventArgs e)

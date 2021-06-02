@@ -59,18 +59,13 @@
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
                                 <Label  Width="300" Style="{StaticResource Largelbltyle}">Structure:</Label>
-                                <ComboBox Name="newl1Structure" FontSize="14" Width="550" Style="{StaticResource ComboBoxstyle}" SelectionChanged="newl1Structure_SelectionChanged" IsEditable="False" >
-                                    <ComboBoxItem Content="Teams 8 Games 10 Weeks 11 Conferences 0 Divisions 2 PlayoffTeams 4"></ComboBoxItem>
-                                    <ComboBoxItem Content="Teams 10 Games 12 Weeks 13 Conferences 0 Divisions 2 PlayoffTeams 4"></ComboBoxItem>
-                                    <ComboBoxItem Content="Teams 12 Games 14 Weeks 16 Conferences 0 Divisions 3 PlayoffTeams 4"></ComboBoxItem>
-                                    <ComboBoxItem Content="Teams 16 Games 16 Weeks 18 Conferences 2 Divisions 4 PlayoffTeams 6"></ComboBoxItem>
-                                    <ComboBoxItem Content="Teams 20 Games 16 Weeks 18 Conferences 2 Divisions 4 PlayoffTeams 8"></ComboBoxItem>
-                                    <ComboBoxItem Content="Teams 24 Games 14 Weeks 16 Conferences 2 Divisions 6 PlayoffTeams 8"></ComboBoxItem>
-                                    <ComboBoxItem Content="Teams 28 Games 18 Weeks 20 Conferences 2 Divisions 4 PlayoffTeams 8"></ComboBoxItem>
-                                    <ComboBoxItem Content="Teams 32 Games 16 Weeks 18 Conferences 2 Divisions 8 PlayoffTeams 12"></ComboBoxItem>
-                                    <ComboBoxItem Content="Teams 36 Games 16 Weeks 18 Conferences 2 Divisions 6 PlayoffTeams 10"></ComboBoxItem>
-                                    <ComboBoxItem Content="Teams 40 Games 18 Weeks 20 Conferences 2 Divisions 8 PlayoffTeams 12"></ComboBoxItem>
-                                </ComboBox>
+                                <ComboBox Name="newl1Structure" FontSize="14" Width="300" Style="{StaticResource ComboBoxstyle}" SelectionChanged="newl1Structure_SelectionChanged" IsEditable="False" />
+
+                                <Label  Width="100" Style="{StaticResource Largelbltyle}"># of Games:</Label>
+                                <ComboBox Name="newl1Games" FontSize="14" Width="45" Style="{StaticResource ComboBoxstyle}" SelectionChanged="newl1Games_SelectionChanged" IsEditable="False" />
+                                <Label  Width="152" Style="{StaticResource Largelbltyle}"> # of Playoff Teams:</Label>
+                                <ComboBox Name="newl1PlayoffTeams" FontSize="14" Width="45" Style="{StaticResource ComboBoxstyle}" SelectionChanged="newl1PlayoffTeams_SelectionChanged" IsEditable="False" />
+
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel Orientation="vertical" Width="300" HorizontalAlignment="Left" VerticalAlignment="Center">

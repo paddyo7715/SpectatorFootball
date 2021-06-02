@@ -520,7 +520,7 @@ namespace SpectatorFootball.League
                     r.source_list.Add("28");
                     r.source_list.Add("30");
 
-                    r.selected = "10";
+                    r.selected = "14";
                     break;
                 case "36 teams 6 divisions 2 conferences":
                     r.source_list.Add("6");
@@ -539,7 +539,7 @@ namespace SpectatorFootball.League
                     r.source_list.Add("32");
                     r.source_list.Add("34");
 
-                    r.selected = "12";
+                    r.selected = "14";
                     break;
                 case "40 teams 8 divisions 2 conferences":
                     r.source_list.Add("8");
@@ -581,7 +581,7 @@ namespace SpectatorFootball.League
                     r.source_list.Add("36");
                     r.source_list.Add("38");
 
-                    r.selected = "10";
+                    r.selected = "14";
                     break;
             }
 

@@ -89,50 +89,29 @@ namespace SpectatorFootball
         {
             int i = 0;
             int Teams = default(int);
-            int Weeks_in_Season = default(int);
-            int Games_in_Season = default(int);
             int Num_Divisions = default(int);
             int Conferences = default(int);
-            int PlayoffTeams = default(int);
 
             String[] ls = s.Split(' ');
             foreach (String l in ls)
             {
                 switch (l)
                 {
-                    case "Teams":
+                    case "teams":
                         {
-                            Teams = int.Parse(ls[i + 1]);
+                            Teams = int.Parse(ls[i - 1]);
                             break;
                         }
 
-                    case "Games":
+                    case "conferences":
                         {
-                            Games_in_Season = int.Parse(ls[i + 1]);
+                            Conferences = int.Parse(ls[i - 1]);
                             break;
                         }
 
-                    case "Weeks":
+                    case "divisions":
                         {
-                            Weeks_in_Season = int.Parse(ls[i + 1]);
-                            break;
-                        }
-
-                    case "Conferences":
-                        {
-                            Conferences = int.Parse(ls[i + 1]);
-                            break;
-                        }
-
-                    case "Divisions":
-                        {
-                            Num_Divisions = int.Parse(ls[i + 1]);
-                            break;
-                        }
-
-                    case "PlayoffTeams":
-                        {
-                            PlayoffTeams = int.Parse(ls[i + 1]);
+                            Num_Divisions = int.Parse(ls[i - 1]);
                             break;
                         }
                 }
@@ -140,7 +119,7 @@ namespace SpectatorFootball
                 i += 1;
             }
 
-            return new int[] { Weeks_in_Season, Games_in_Season, Num_Divisions, Teams, Conferences, PlayoffTeams };
+            return new int[] { Teams, Num_Divisions, Conferences };
         }
 
         public static int getConferenceNum_from_Team_Number(int num_confs, int t_num)
@@ -295,8 +274,21 @@ namespace SpectatorFootball
                 r = true;
 
             return r;
+        }
+
+        
+        public static List<string> ListfromListofDelimitted(List<string> s, string delimChar)
+        {
+            List<string> r = new List<string>();
+
+            foreach (string i in s)
+            {
+                string[] sa = i.Split(char.Parse(delimChar));
+                r.Add(sa[0]);
+            }
 
 
+            return r;
         }
     }
 
