@@ -42,7 +42,7 @@
                 <Label Name="lblPickSpeed" Style="{StaticResource Normallbltyle}" Height="30" Width="100" Content="{Binding ElementName=tckPickSpeed, Path=Value, Converter={StaticResource SpeedInttoString}}"></Label>
             </StackPanel>
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
-                <TextBlock Name="txtAnnouncement" Style="{StaticResource DraftAnnouncementStyle}" Width="400" Height="100" TextWrapping="Wrap"></TextBlock>
+                <TextBlock Name="txtAnnouncement" TextAlignment="Center" Style="{StaticResource DraftAnnouncementStyle}" Width="600" Height="100" TextWrapping="Wrap"></TextBlock>
             </StackPanel>
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
                 <Label HorizontalAlignment="Center" Style="{StaticResource Conflbltyle}">Draft Tracker</Label>
@@ -72,7 +72,7 @@
 
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
                 <Label HorizontalAlignment="Center" Style="{StaticResource Conflbltyle}">Draft Pool</Label>
-                <ListView Name="lstDraftPlayers" MouseDoubleClick="lstDraftPlayers_Click" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Height="200" Width="400">
+                <ListView Name="lstDraftPlayers" MouseDoubleClick="lstDraftPlayers_Click" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Height="200" Width="420">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="{x:Type ListViewItem}"  >
                             <Style.Triggers>

@@ -77,12 +77,16 @@ namespace SpectatorFootball.DAO
                             Pick_Pos_Name = (pn.Pos + " " + pn.First_Name + " " + pn.Last_Name).Trim(),
                             Season_ID = d.Season_ID,
                             Franchise_ID = d.Franchise_ID,
-                            ID = d.ID
+                            ID = d.ID,
+                            Home_Jersey_Color = t.Home_jersey_Color,
+                            Home_Jersey_Number_Color = t.Home_Jersey_Number_Color,
+                            Home_Jersey_Outline_Color = t.Home_Jersey_Number_Outline_Color,
+                            Helmet_Color = t.Helmet_Color,
+                            Helmet_Logo_Color = t.Helmet_Logo_Color
                         }).ToList();
-
             }
 
-             return r;
+            return r;
         }
 
         public List<Player> getDraftablePlayers(long season_id, string league_filepath)

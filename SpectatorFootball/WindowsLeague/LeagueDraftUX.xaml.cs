@@ -279,7 +279,9 @@ namespace SpectatorFootball.WindowsLeague
                     lstDraftPlayers.SelectedItem = pid;
                     lstDraftPlayers.ScrollIntoView(Draft_Players_list[pid]);
 
-                    txtAnnouncement.Text = "The " + dp.Team_Name + " have selected\r\n " + dp.Pick_Pos_Name;
+                    txtAnnouncement.Text = "With the #" + dp.Pick_no + " pick in the " + pw.Loaded_League.season.Year + " " + pw.Loaded_League.season.League_Structure_by_Season[0].Short_Name + " draft, the" + Environment.NewLine + 
+                    dp.Team_Name + " have selected " + Environment.NewLine +  
+                    dp.Pick_Pos_Name;
                 }));
 
         }

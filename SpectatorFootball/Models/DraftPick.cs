@@ -18,6 +18,12 @@ namespace SpectatorFootball.Models
         public long Season_ID { get; set; }
         public long ID { get; set; }
         public long? Franchise_ID { get; set; }
+        public string Home_Jersey_Color { get; set; }
+        public string Home_Jersey_Number_Color { get; set; }
+        public string Home_Jersey_Outline_Color { get; set; }
+        public string Helmet_Color { get; set; }
+        public string Helmet_Logo_Color { get; set; }
+
 
     }
 }

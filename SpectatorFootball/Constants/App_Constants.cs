@@ -211,9 +211,9 @@ namespace SpectatorFootball
         public const double TE_PASS_BLOCK_PERCENT = 0.04;
         public const double TE_RUN_BLOCK_PERCENT = 0.13;
 
-        public const double OL_PASS_BLOCK_PERCENT = 0.28;
+        public const double OL_PASS_BLOCK_PERCENT = 0.40;
         public const double OL_RUN_BLOCK_PERCENT = 0.44;
-        public const double OL_AGILITY_PERCENT = 0.28;
+        public const double OL_AGILITY_PERCENT = 0.1;
 
         public const double DL_PASS_ATTACK_PERCENT = 0.2;
         public const double DL_RUN_ATTACK_PERCENT = 0.33;

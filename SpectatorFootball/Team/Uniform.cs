@@ -293,9 +293,12 @@ namespace SpectatorFootball
             if (!bfound)
                 lup_l.Add(lup);
         }
-        //This method sets the foreground and background color for a team for such things as 
-        //a teams score in game or in the team detail or boxscore stats.
-        public static string[] getBackForgroundcolors(string homejersey, string homenumber, string homeoutline)
+        //This method returns the colors for a team in the following ordedr
+        //  0 - background
+        //  1 - foreground
+        //  2 - tertiary color
+        public static string[] getTeamDispColors(string homejersey, string homenumber, string homeoutline,
+            string helmet, string helmet_logo)
         {
             string white = "#FFFFFF";
             string black = "#000000";
@@ -308,13 +311,26 @@ namespace SpectatorFootball
             if (CommonUtils.isTwoColorDifferent(background, homenumber))
                 foreground = homenumber;
             else if (CommonUtils.isTwoColorDifferent(background, homeoutline))
-                    foreground = homeoutline;
+                foreground = homeoutline;
             else if (CommonUtils.isTwoColorDifferent(background, white))
                 foreground = white;
             else
                 foreground = black;
 
-            r[1] = foreground;           
+            r[1] = foreground;
+
+            //sometimes we only need the first two colors, as in the box score popup, so don't even
+            //bother trying to get the third color in that case.
+            if (helmet != null)
+            {
+                r[2] = background;
+                if (CommonUtils.isTwoColorDifferent(background, helmet_logo) ||
+                    CommonUtils.isTwoColorDifferent(foreground, helmet_logo))
+                    r[2] = helmet_logo;
+                if (CommonUtils.isTwoColorDifferent(background, helmet) ||
+                    CommonUtils.isTwoColorDifferent(foreground, helmet))
+                    r[2] = helmet;
+            }
 
             return r;
         }
