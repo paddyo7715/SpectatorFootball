@@ -23,7 +23,6 @@ namespace SpectatorFootball.Models
         public string Home_Jersey_Outline_Color { get; set; }
         public string Helmet_Color { get; set; }
         public string Helmet_Logo_Color { get; set; }
-
-
+        public string Home_Pants_Color { get; set; }
     }
 }

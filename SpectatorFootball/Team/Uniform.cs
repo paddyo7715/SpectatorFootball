@@ -298,17 +298,21 @@ namespace SpectatorFootball
         //  1 - foreground
         //  2 - tertiary color
         public static string[] getTeamDispColors(string homejersey, string homenumber, string homeoutline,
-            string helmet, string helmet_logo)
+            string helmet, string helmet_logo, string homepants)
         {
             string white = "#FFFFFF";
             string black = "#000000";
-            string[] r = null;
+            string[] r = new string[3];
             string foreground = null;
-            string background = homejersey;
+            string background = helmet;
 
             r[0] = background;
 
-            if (CommonUtils.isTwoColorDifferent(background, homenumber))
+            if (CommonUtils.isTwoColorDifferent(background, helmet_logo))
+                foreground = helmet_logo;
+            else if (CommonUtils.isTwoColorDifferent(background, homejersey))
+                foreground = homejersey;
+            else if (CommonUtils.isTwoColorDifferent(background, homenumber))
                 foreground = homenumber;
             else if (CommonUtils.isTwoColorDifferent(background, homeoutline))
                 foreground = homeoutline;
@@ -324,12 +328,13 @@ namespace SpectatorFootball
             if (helmet != null)
             {
                 r[2] = background;
-                if (CommonUtils.isTwoColorDifferent(background, helmet_logo) ||
-                    CommonUtils.isTwoColorDifferent(foreground, helmet_logo))
-                    r[2] = helmet_logo;
-                if (CommonUtils.isTwoColorDifferent(background, helmet) ||
-                    CommonUtils.isTwoColorDifferent(foreground, helmet))
-                    r[2] = helmet;
+                if (CommonUtils.isTwoColorDifferent(background, homejersey) &&
+                    CommonUtils.isTwoColorDifferent(foreground, homejersey))
+                    r[2] = homejersey;
+
+                if (CommonUtils.isTwoColorDifferent(background, homepants) &&
+                    CommonUtils.isTwoColorDifferent(foreground, homepants))
+                    r[2] = homepants;
             }
 
             return r;

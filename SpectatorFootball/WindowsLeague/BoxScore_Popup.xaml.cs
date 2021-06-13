@@ -37,9 +37,9 @@ namespace SpectatorFootball.WindowsLeague
             this.bs_rec = bs_rec;
             DataContext = this;
             string[] s1 = Uniform.getTeamDispColors(bs_rec.aTeam.Home_jersey_Color,
-                bs_rec.aTeam.Home_Jersey_Number_Color, bs_rec.aTeam.Home_Jersey_Number_Outline_Color,null,null);
+                bs_rec.aTeam.Home_Jersey_Number_Color, bs_rec.aTeam.Home_Jersey_Number_Outline_Color,null,null,null);
             string[] s2 = Uniform.getTeamDispColors(bs_rec.hTeam.Home_jersey_Color,
-                bs_rec.hTeam.Home_Jersey_Number_Color, bs_rec.hTeam.Home_Jersey_Number_Outline_Color,null,null);
+                bs_rec.hTeam.Home_Jersey_Number_Color, bs_rec.hTeam.Home_Jersey_Number_Outline_Color,null,null,null);
 
             setHeaderStyleColors(aDivGridHeader_Style, bs_rec.aTeam, s1);
             setHeaderStyleColors(hDivGridHeader_Style, bs_rec.hTeam, s2);

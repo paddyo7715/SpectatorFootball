@@ -42,7 +42,9 @@
                 <Label Name="lblPickSpeed" Style="{StaticResource Normallbltyle}" Height="30" Width="100" Content="{Binding ElementName=tckPickSpeed, Path=Value, Converter={StaticResource SpeedInttoString}}"></Label>
             </StackPanel>
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
-                <TextBlock Name="txtAnnouncement" TextAlignment="Center" Style="{StaticResource DraftAnnouncementStyle}" Width="600" Height="100" TextWrapping="Wrap"></TextBlock>
+                <Border Name="brdAnnouncement" BorderThickness="6">
+                    <TextBlock Name="txtAnnouncement" TextAlignment="Center" Style="{StaticResource DraftAnnouncementStyle}" Width="600" Height="100" TextWrapping="Wrap"></TextBlock>
+                </Border>
             </StackPanel>
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
                 <Label HorizontalAlignment="Center" Style="{StaticResource Conflbltyle}">Draft Tracker</Label>

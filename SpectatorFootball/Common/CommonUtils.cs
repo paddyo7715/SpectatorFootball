@@ -10,6 +10,7 @@ using System.Security.Principal;
 using System.Windows.Media.Imaging;
 using System.Windows.Controls;
 using SpectatorFootball.Enum;
+using System.Windows.Media;
 
 namespace SpectatorFootball
 {
@@ -136,6 +137,11 @@ namespace SpectatorFootball
             return r;
         }
 
+        public static Brush getBrushfromHexString(string sHex)
+        {
+            var bc = new BrushConverter();
+            return (Brush)bc.ConvertFrom(sHex);
+        }
         public static string getHexfromColor(System.Windows.Media.Color c)
         {
             string r = null;

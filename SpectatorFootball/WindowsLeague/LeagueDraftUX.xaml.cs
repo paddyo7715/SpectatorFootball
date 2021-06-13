@@ -39,6 +39,9 @@ namespace SpectatorFootball.WindowsLeague
 
         public event EventHandler Show_Standings;
         public event EventHandler Set_TopMenu;
+
+        private Style announcerStyle = (Style)System.Windows.Application.Current.FindResource("DraftAnnouncementStyle");
+
         public LeagueDraftUX(MainWindow pw)
         {
             InitializeComponent();
@@ -282,6 +285,13 @@ namespace SpectatorFootball.WindowsLeague
                     txtAnnouncement.Text = "With the #" + dp.Pick_no + " pick in the " + pw.Loaded_League.season.Year + " " + pw.Loaded_League.season.League_Structure_by_Season[0].Short_Name + " draft, the" + Environment.NewLine + 
                     dp.Team_Name + " have selected " + Environment.NewLine +  
                     dp.Pick_Pos_Name;
+
+                    string[] s1 = Uniform.getTeamDispColors(dp.Home_Jersey_Color,
+                          dp.Home_Jersey_Number_Color, dp.Home_Jersey_Outline_Color, dp.Helmet_Color, dp.Helmet_Logo_Color,dp.Home_Pants_Color);
+
+                    txtAnnouncement.Background = CommonUtils.getBrushfromHexString(s1[0]);
+                    txtAnnouncement.Foreground = CommonUtils.getBrushfromHexString(s1[1]);
+                    brdAnnouncement.BorderBrush = CommonUtils.getBrushfromHexString(s1[2]);
                 }));
 
         }

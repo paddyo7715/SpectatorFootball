@@ -82,7 +82,8 @@ namespace SpectatorFootball.DAO
                             Home_Jersey_Number_Color = t.Home_Jersey_Number_Color,
                             Home_Jersey_Outline_Color = t.Home_Jersey_Number_Outline_Color,
                             Helmet_Color = t.Helmet_Color,
-                            Helmet_Logo_Color = t.Helmet_Logo_Color
+                            Helmet_Logo_Color = t.Helmet_Logo_Color,
+                            Home_Pants_Color = t.Home_Pants_Color
                         }).ToList();
             }
 
