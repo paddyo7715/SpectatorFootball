@@ -17,7 +17,7 @@ namespace SpectatorFootball
             string con = Common.SettingsConnection.Connect();
             using (var context = new settingsContext(con))
             {
-                context.Database.Log = Console.Write;
+//                context.Database.Log = Console.Write;
                 r = context.Stock_Teams.Where(x => true).OrderBy( x => x.City).ThenBy(x => x.Nickname).ToList();
 
             }

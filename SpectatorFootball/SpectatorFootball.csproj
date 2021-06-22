@@ -384,6 +384,9 @@
     <Compile Include="WindowsLeague\ScheduleUX.xaml.cs">
       <DependentUpon>ScheduleUX.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WindowsLeague\Team_DetailUX.xaml.cs">
+      <DependentUpon>Team_DetailUX.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WindowsLeague\TrainingCampUX.xaml.cs">
       <DependentUpon>TrainingCampUX.xaml</DependentUpon>
     </Compile>
@@ -498,6 +501,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="WindowsLeague\ScheduleUX.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowsLeague\Team_DetailUX.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

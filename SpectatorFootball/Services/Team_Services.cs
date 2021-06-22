@@ -4,6 +4,9 @@ using SpectatorFootball.Enum;
 using SpectatorFootball.DAO;
 using System;
 using SpectatorFootball.DraftNS;
+using SpectatorFootball.League;
+using System.Linq;
+using System.IO;
 
 namespace SpectatorFootball
 {
@@ -28,6 +31,16 @@ namespace SpectatorFootball
             }
 
             return r;
+        }
+
+        public void UpdateTeam(Loaded_League_Structure lls, Teams_by_Season t)
+        {
+            string League_Shortname = lls.season.League_Structure_by_Season.First().Short_Name;
+            string DIRPath_League = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + League_Shortname.ToUpper();
+            string League_con_string = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + League_Shortname + Path.DirectorySeparatorChar + League_Shortname + "." + app_Constants.DB_FILE_EXT;
+
+            TeamDAO tDAO = new TeamDAO();
+            tDAO.UpdateTeam(t, League_con_string);
         }
 
 

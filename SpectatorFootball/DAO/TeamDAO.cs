@@ -73,5 +73,18 @@ namespace SpectatorFootball.DAO
             return r;
         }
 
+        public void UpdateTeam(Teams_by_Season t, string league_filepath)
+        {
+
+            string con = Common.LeageConnection.Connect(league_filepath);
+            using (var context = new leagueContext(con))
+            {
+                context.Teams_by_Season.Add(t);
+                context.Entry(t).State = System.Data.Entity.EntityState.Modified;
+                context.SaveChanges();
+            }
+
+        }
+
     }
 }

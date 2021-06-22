@@ -38,7 +38,10 @@ namespace SpectatorFootball
         private StockTeamsUC Stock_teamsUC = null;
 
         private LeagueStandings LStandingsUX = null;
-        private bool bUpdateStandings = false;
+
+        public bool bUpdateStandings = false;
+        public bool bUpdateTeams = false;
+
         private LeagueDraftUX LDraft = null;
         private LeagueFreeAgencyUX LFreeAgency = null;
         private TrainingCampUX LTrainingCampUX = null;
@@ -369,8 +372,16 @@ namespace SpectatorFootball
 
                 if (Mouse.OverrideCursor == Cursors.Wait) return;
 
+                if (bUpdateTeams)
+                {
+                    bUpdateTeams = false;
+                    SetLeagueTeamsMenu(Loaded_League);
+                }
+
+
                 if (bUpdateStandings)
                 {
+                    bUpdateStandings = false;
                     League_Services ls = new League_Services();
                     string league_shortname = Loaded_League.season.League_Structure_by_Season[0].Short_Name;
 
