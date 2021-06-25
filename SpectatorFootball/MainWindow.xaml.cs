@@ -39,6 +39,8 @@ namespace SpectatorFootball
 
         private LeagueStandings LStandingsUX = null;
 
+        private Team_DetailUX TeamDetUX = null;
+
         public bool bUpdateStandings = false;
         public bool bUpdateTeams = false;
 
@@ -530,7 +532,24 @@ namespace SpectatorFootball
         //then this method will be called to show the team detail
         private void ShowTeamDetail(Teams_by_Season t)
         {
+            if (Mouse.OverrideCursor == Cursors.Wait) return;
 
+            try
+            {
+                Mouse.OverrideCursor = Cursors.Wait;
+                TeamDetUX = new Team_DetailUX(this, t);
+                sp_uc.Children.Clear();
+                sp_uc.Children.Add(TeamDetUX);
+                TeamDetUX.Show_Standings += Show_LeagueStandings;
+                Mouse.OverrideCursor = null;
+            }
+            catch (Exception ex)
+            {
+                Mouse.OverrideCursor = null;
+                logger.Error("Error Creating the Schedule form");
+                logger.Error(ex);
+                MessageBox.Show(CommonUtils.substr(ex.Message, 0, 100), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
         //*********************  General Methods  *******************************
         public void SetLeagueTeamsMenu(Loaded_League_Structure lls)

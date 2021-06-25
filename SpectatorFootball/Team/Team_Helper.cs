@@ -58,7 +58,7 @@ namespace SpectatorFootball
             {
                 foreach (var destProperty in destProperties)
                 {
-                    if (sourceProperty.Name == destProperty.Name && sourceProperty.PropertyType == destProperty.PropertyType)
+                    if (sourceProperty.Name == destProperty.Name && sourceProperty.PropertyType == destProperty.PropertyType && sourceProperty.Name != "Franchise")
                     {
                         destProperty.SetValue(r, sourceProperty.GetValue(t));
                         break;

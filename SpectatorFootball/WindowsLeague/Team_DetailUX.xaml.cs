@@ -18,6 +18,7 @@ using log4net;
 using SpectatorFootball.Models;
 using System.Collections.ObjectModel;
 using SpectatorFootball.Common;
+using SpectatorFootball.Services;
 
 namespace SpectatorFootball.WindowsLeague
 {
@@ -38,6 +39,8 @@ namespace SpectatorFootball.WindowsLeague
         public ObservableCollection<Xceed.Wpf.Toolkit.ColorItem> Standard_ColorList = new ObservableCollection<Xceed.Wpf.Toolkit.ColorItem>();
 
         public Uniform_Image Uniform_Img { get; set; }
+
+        public List<WeeklyScheduleRec> Team_Sched_List { get; set; }
 
         private Boolean bLoadingForm = true;
         public bool Event_from_Code { get; set; } = false;
@@ -102,11 +105,48 @@ namespace SpectatorFootball.WindowsLeague
                 }
             }
 
+            string teamName = this_team.City + " " + this_team.Nickname;
+            string teamRecord = "(" + pw.Loaded_League.getTeamStandings(teamName) + ")";
+            lblBanner.Content = teamName + " " + teamRecord;
 
+            List<Uniform_Color_percents> Color_Percents_List = null;
+            Color_Percents_List = Uniform.getColorList(binding_team.Home_Jersey_Number_Color, binding_team.Home_jersey_Color, binding_team.Helmet_Color,
+                binding_team.Home_Pants_Color, binding_team.Home_Sleeve_Color, binding_team.Home_Jersey_Shoulder_Stripe, binding_team.Home_Jersey_Sleeve_Stripe_Color_1,
+                binding_team.Home_Jersey_Sleeve_Stripe_Color_2, binding_team.Home_Jersey_Sleeve_Stripe_Color_3, binding_team.Home_Jersey_Sleeve_Stripe_Color_4,
+                binding_team.Home_Jersey_Sleeve_Stripe_Color_5, binding_team.Home_Jersey_Sleeve_Stripe_Color_6, binding_team.Home_Pants_Stripe_Color_1,
+                binding_team.Home_Pants_Stripe_Color_2, binding_team.Home_Pants_Stripe_Color_3);
+
+            if (Color_Percents_List.Count > 2)
+            {
+                var BackBrush = new LinearGradientBrush();
+                BackBrush.StartPoint = new Point(0, 0);
+                BackBrush.EndPoint = new Point(1, 1);
+
+                float running_value = 0;
+                for (int i = 1; i <= Color_Percents_List.Count - 1; i++)
+                {
+                    BackBrush.GradientStops.Add(new GradientStop(CommonUtils.getColorfromHex(Color_Percents_List[i].color_string), running_value));
+
+                    running_value = Color_Percents_List[i].value;
+
+                    BackBrush.GradientStops.Add(new GradientStop(CommonUtils.getColorfromHex(Color_Percents_List[i].color_string), running_value));
+                }
+                lblBanner.Background = BackBrush;
+            }
+            else
+                lblBanner.Background = new SolidColorBrush(CommonUtils.getColorfromHex(Color_Percents_List[1].color_string));
+
+            lblBanner.Foreground = new SolidColorBrush(CommonUtils.getColorfromHex(Color_Percents_List[0].color_string));
+
+            Schedule_Services ss = new Schedule_Services();
+            Team_Sched_List = ss.getTeamSched(pw.Loaded_League, binding_team.Franchise_ID);
+            lstGames.ItemsSource = Team_Sched_List;
 
             this.pw = pw;
         }
-        private void New_Team_detail_Loaded(Object sender, EventArgs e)
+
+
+        private void Team_detail_Loaded(Object sender, EventArgs e)
         {
 
             setInitialUniform();
@@ -1233,6 +1273,37 @@ namespace SpectatorFootball.WindowsLeague
 
         }
 
+        private void lstGames_Click(object sender, RoutedEventArgs e)
+        {
+            ListView ls = (ListView)sender;
+
+            if (Mouse.OverrideCursor == Cursors.Wait ||
+                (ls.SelectedItems.Count == 0)) return;
+
+            WeeklyScheduleRec wsr = Team_Sched_List[ls.SelectedIndex];
+
+            if (wsr.Action == "") return;
+
+            Game_Services gs = new Game_Services();
+
+            Game g = null;
+            g = gs.geGamefromID(wsr.Game_ID, pw.Loaded_League);
+
+            if (wsr.Action == "Game Summary")
+            {
+                WeeklyScheduleRec wsched = Team_Sched_List[lstGames.SelectedIndex];
+                BoxScore bs_rec = gs.getGameandStatsfromID(wsched.Game_ID, pw.Loaded_League);
+
+                bool bPenalties = false;
+                long cur_season_id = pw.Loaded_League.AllSeasons.Where(x => x.Year == pw.Loaded_League.Current_Year).Select(x => x.Year).First();
+                long l = pw.Loaded_League.season.League_Structure_by_Season.Where(x => x.Season_ID == cur_season_id).Select(x => x.Penalties).First();
+                bPenalties = l == 1 ? true : false;
+
+                BoxScore_Popup dpp = new BoxScore_Popup(bs_rec, bPenalties);
+                dpp.Left = (SystemParameters.PrimaryScreenWidth - dpp.Width) / 2;
+                dpp.ShowDialog();
+            }
+        }
 
     }
 

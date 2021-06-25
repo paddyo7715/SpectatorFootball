@@ -73,7 +73,7 @@ namespace SpectatorFootball.WindowsLeague
                 Player p = Draft_Players_list[ls.SelectedIndex];
                 Draft_Profile_Popup dpp = new Draft_Profile_Popup(p);
                 dpp.Left = (SystemParameters.PrimaryScreenWidth - dpp.Width) / 2;
-                 dpp.ShowDialog();
+                dpp.ShowDialog();
             }
         }
 

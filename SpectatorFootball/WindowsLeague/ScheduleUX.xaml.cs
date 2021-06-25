@@ -136,7 +136,17 @@ namespace SpectatorFootball.WindowsLeague
 
             if (wsr.Action == "Game Summary")
             {
+                WeeklyScheduleRec wsched = Weekly_Sched_List[lstGames.SelectedIndex];
+                BoxScore bs_rec = gs.getGameandStatsfromID(wsched.Game_ID, pw.Loaded_League);
 
+                bool bPenalties = false;
+                long cur_season_id = pw.Loaded_League.AllSeasons.Where(x => x.Year == pw.Loaded_League.Current_Year).Select(x => x.Year).First();
+                long l = pw.Loaded_League.season.League_Structure_by_Season.Where(x => x.Season_ID == cur_season_id).Select(x => x.Penalties).First();
+                bPenalties = l == 1 ? true : false;
+
+                BoxScore_Popup dpp = new BoxScore_Popup(bs_rec, bPenalties);
+                dpp.Left = (SystemParameters.PrimaryScreenWidth - dpp.Width) / 2;
+                dpp.ShowDialog();
             }
             else
             {
@@ -165,9 +175,6 @@ namespace SpectatorFootball.WindowsLeague
 
                 }
             }
-
-
-
 
         }
 
