@@ -387,6 +387,9 @@ namespace SpectatorFootball
         public const int GAME_QUARTER_SECONDS = 900;
         public const int QTRS_IN_REGULATION = 4;
 
+        //Stats
+        public const double MAX_QBR = 158.3;
+
 
     }
 }

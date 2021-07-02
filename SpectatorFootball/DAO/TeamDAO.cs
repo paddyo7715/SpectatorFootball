@@ -10,10 +10,11 @@ using System.Linq;
 using System.Data.SqlClient;
 using System.Data.Entity;
 using SpectatorFootball.Free_AgencyNS;
+using SpectatorFootball.Team;
 
 namespace SpectatorFootball.DAO
 {
-    class TeamDAO
+    public class TeamDAO
     {
         private static ILog logger = LogManager.GetLogger("RollingFile");
 
@@ -84,6 +85,35 @@ namespace SpectatorFootball.DAO
                 context.SaveChanges();
             }
 
+        }
+        public Team_Player_Accum_Stats getTeamSeasonStats(long season_id, long franchise_id, string league_filepath)
+        {
+            Team_Player_Accum_Stats r = new Team_Player_Accum_Stats();
+
+            List<Passing_Accum_Stats> PassStats = null;
+
+            string con = Common.LeageConnection.Connect(league_filepath);
+
+            using (var context = new leagueContext(con))
+            {
+                PassStats = context.Game_Player_Passing_Stats.Where(x => x.Game.Season_ID == season_id &&
+                    (x.Game.Home_Team_Franchise_ID == franchise_id || x.Game.Away_Team_Franchise_ID == franchise_id)).GroupBy(x => x.Player)
+                    .Select(x => new Passing_Accum_Stats
+                    {
+                        p = x.Key,
+                        Completes = x.Sum(s => s.Pass_Comp),
+                        Ateempts = x.Sum(s => s.Pass_Att),
+                        Yards = x.Sum(s => s.Pass_Yards),
+                        TDs = x.Sum(s => s.Pass_TDs),
+                        Ints = x.Sum(s => s.Pass_Ints),
+                        Fumbles = x.Sum(s => s.Fumbles),
+                        Fumbles_Lost = x.Sum(s => s.Fumbles_Lost)
+                    }).ToList();
+            }
+
+            r.Passing_Stats = PassStats;
+
+            return r;
         }
 
     }

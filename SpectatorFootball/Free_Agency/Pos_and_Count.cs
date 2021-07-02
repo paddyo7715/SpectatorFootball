@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SpectatorFootball.Free_AgencyNS
 {
-    class Pos_and_Count
+    public class Pos_and_Count
     {
         public int pos { get; set; }
         public int pos_count { get; set; }

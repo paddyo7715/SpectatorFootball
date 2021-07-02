@@ -7,6 +7,7 @@ using SpectatorFootball.DraftNS;
 using SpectatorFootball.League;
 using System.Linq;
 using System.IO;
+using SpectatorFootball.Team;
 
 namespace SpectatorFootball
 {
@@ -43,6 +44,24 @@ namespace SpectatorFootball
             tDAO.UpdateTeam(t, League_con_string);
         }
 
+        public Team_Player_Accum_Stats getTeamSeasonStats(string League_Shortname, long season_id, long Franchise_id)
+        {
+            Team_Player_Accum_Stats r = null;
 
+            string DIRPath_League = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + League_Shortname.ToUpper();
+            string League_con_string = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + League_Shortname + Path.DirectorySeparatorChar + League_Shortname + "." + app_Constants.DB_FILE_EXT;
+            TeamDAO td = new TeamDAO();
+
+            r = td.getTeamSeasonStats(season_id, Franchise_id, League_con_string);
+
+            //Add passing complete % and QB rating to passing stats
+            foreach (var p in r.Passing_Stats)
+            {
+                p.Comp_Percent = Player_Helper.FormatCompPercent(p.Completes, p.Ateempts);
+                p.QBR = Player_Helper.CalculateQBR(p.Completes, p.Ateempts, p.Yards, p.TDs, p.Ints);
+            }
+
+            return r;
+        }
     }
 }

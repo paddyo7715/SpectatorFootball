@@ -695,8 +695,54 @@ namespace SpectatorFootball
 
             return r;
         }
+        public static string FormatCompPercent(long comp, long att)
+        {
+            string r = null;
+            if (comp > 0)
+            {
+                double tmp = ((double)att / (double)comp) * 100.0;
+                r = tmp.ToString("0.0");
+            }
+            else
+                r = "0.0";
+
+            return r;
+        }
+        public static string CalculateQBR(long comp, long att, long yards, long TDs, long ints)
+        {
+            string r = null;
+            double dTemp = 0.0;
+
+            if (att > 0)
+            {
+                double cat1 = ((double)comp / (double)att - 0.3) * 5.0;
+                double cat2 = ((double)yards / (double)att - 3.0) * 0.25;
+                double cat3 = ((double)TDs / (double)att) * 20.0;
+                double cat4 = 2.375 -  ((double)ints / (double)att) * 25.0;
+
+                cat1 = Math.Max(cat1, 0.0);
+                cat1 = Math.Min(cat1, 2.375);
+
+                cat2 = Math.Max(cat2, 0.0);
+                cat2 = Math.Min(cat2, 2.375);
+
+                cat3 = Math.Max(cat3, 0.0);
+                cat3 = Math.Min(cat3, 2.375);
+
+                cat4 = Math.Max(cat4, 0.0);
+                cat4 = Math.Min(cat4, 2.375);
+
+                dTemp = ((cat1 + cat2 + cat3 + cat4) / 6) * 100; 
+            }
+
+            if (dTemp > app_Constants.MAX_QBR)
+                dTemp = app_Constants.MAX_QBR;
+
+            r = dTemp.ToString("0.0");
+            return r;
 
 
+        }
 
     }
 }

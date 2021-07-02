@@ -293,9 +293,10 @@ namespace SpectatorFootball
                 r.Add(sa[0]);
             }
 
-
             return r;
         }
+
+        
     }
 
 }
