@@ -740,8 +740,19 @@ namespace SpectatorFootball
 
             r = dTemp.ToString("0.0");
             return r;
+        }
+        public static string CalcYardsPerCarry_or_Catch(long count, long Yards)
+        {
+            string r = null;
+            if (count > 0)
+            {
+                double tmp = ((double)Yards / (double)count);
+                r = tmp.ToString("0.0");
+            }
+            else
+                r = "0.0";
 
-
+            return r;
         }
 
     }

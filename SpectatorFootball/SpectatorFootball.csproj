@@ -148,6 +148,7 @@
     <Compile Include="Models\Award.cs">
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Blocking_Accum_Stats.cs" />
     <Compile Include="Models\BoxScore.cs" />
     <Compile Include="Models\Conference.cs">
       <DependentUpon>LeagueEDM.tt</DependentUpon>
@@ -228,6 +229,8 @@
     <Compile Include="Models\Injury.cs">
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Kicking_Accum_Stats.cs" />
+    <Compile Include="Models\KickReturn_Accum_Stats.cs" />
     <Compile Include="Models\LeagueEDM.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -247,6 +250,8 @@
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Passing_Accum_Stats.cs" />
+    <Compile Include="Models\Defense_Accum_Stats.cs" />
+    <Compile Include="Models\Pass_Defense_Accum_Stats.cs" />
     <Compile Include="Models\Penalty.cs">
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
@@ -264,6 +269,10 @@
     <Compile Include="Models\Playoff_Teams_by_Season.cs">
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Punting_Accum_Stats.cs" />
+    <Compile Include="Models\PuntReturns_Accum_Stats.cs" />
+    <Compile Include="Models\Receiving_Accum_Stats.cs" />
+    <Compile Include="Models\Rushing_Accum_Stats.cs" />
     <Compile Include="Models\Sched_Week_With_Name.cs" />
     <Compile Include="Models\Season.cs">
       <DependentUpon>LeagueEDM.tt</DependentUpon>

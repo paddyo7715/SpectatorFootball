@@ -19,6 +19,7 @@ using SpectatorFootball.Models;
 using System.Collections.ObjectModel;
 using SpectatorFootball.Common;
 using SpectatorFootball.Services;
+using SpectatorFootball.Team;
 
 namespace SpectatorFootball.WindowsLeague
 {
@@ -41,6 +42,8 @@ namespace SpectatorFootball.WindowsLeague
         public Uniform_Image Uniform_Img { get; set; }
 
         public List<WeeklyScheduleRec> Team_Sched_List { get; set; }
+
+        public Team_Player_Accum_Stats Team_Stats = null;
 
         private Boolean bLoadingForm = true;
         public bool Event_from_Code { get; set; } = false;
@@ -141,6 +144,10 @@ namespace SpectatorFootball.WindowsLeague
             Schedule_Services ss = new Schedule_Services();
             Team_Sched_List = ss.getTeamSched(pw.Loaded_League, binding_team.Franchise_ID);
             lstGames.ItemsSource = Team_Sched_List;
+
+            Team_Services ts = new Team_Services();
+            Team_Stats = ts.getTeamSeasonStats(pw.Loaded_League.season.League_Structure_by_Season[0].Short_Name,
+                pw.Loaded_League.season.ID, this_team.Franchise_ID);
 
             this.pw = pw;
         }

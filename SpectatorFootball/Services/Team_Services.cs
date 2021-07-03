@@ -61,6 +61,31 @@ namespace SpectatorFootball
                 p.QBR = Player_Helper.CalculateQBR(p.Completes, p.Ateempts, p.Yards, p.TDs, p.Ints);
             }
 
+            //Add the yards per carry stat to the rushing stats
+            foreach (var s in r.Rushing_Stats)
+                s.Yards_Per_Carry = Player_Helper.CalcYardsPerCarry_or_Catch(s.Rushes , s.Yards);
+
+            //Add the yards per catch stat to the receiving stats
+            foreach (var s in r.Receiving_Stats)
+                s.Yards_Per_Catch = Player_Helper.CalcYardsPerCarry_or_Catch(s.Catches, s.Yards);
+
+            //Add the FG percent to kicking stats
+            foreach (var s in r.Kicking_Stats)
+                s.FG_Percent = Player_Helper.CalcYardsPerCarry_or_Catch(s.FG_Made, s.FG_ATT);
+
+            //Add punt avg to the punting stats
+            foreach (var s in r.Punting_Stats)
+                s.Punt_AVG = Player_Helper.CalcYardsPerCarry_or_Catch(s.Punts, s.Yards);
+
+            //Add kick return avg to kick return stats
+            foreach (var s in r.KickRet_Stats)
+                s.Yards_avg = Player_Helper.CalcYardsPerCarry_or_Catch(s.Returns, s.Yards);
+
+            //Add punt return avg to punt return stats
+            foreach (var s in r.PuntRet_Stats)
+                s.Yards_avg = Player_Helper.CalcYardsPerCarry_or_Catch(s.Returns, s.Yards);
+
+
             return r;
         }
     }
