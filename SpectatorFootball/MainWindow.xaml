@@ -52,6 +52,8 @@
             </MenuItem>
         </Menu>
 
-        <StackPanel Name="sp_uc" Orientation="Vertical" VerticalAlignment="Top"></StackPanel>
+        <Viewbox Stretch="Uniform">
+            <StackPanel Name="sp_uc" Orientation="Vertical" VerticalAlignment="Top"></StackPanel>
+        </Viewbox>
     </DockPanel>
 </Window>

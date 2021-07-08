@@ -149,6 +149,30 @@ namespace SpectatorFootball.WindowsLeague
             Team_Stats = ts.getTeamSeasonStats(pw.Loaded_League.season.League_Structure_by_Season[0].Short_Name,
                 pw.Loaded_League.season.ID, this_team.Franchise_ID);
 
+            lstPassing.ItemsSource = Team_Stats.Passing_Stats;
+
+            lblPassNoStats.Visibility = Visibility.Hidden;
+            if (Team_Stats.Passing_Stats.Count() == 0)
+                lblPassNoStats.Visibility = Visibility.Visible;
+
+            lstRushing.ItemsSource = Team_Stats.Rushing_Stats;
+
+            lblRushNoStats.Visibility = Visibility.Hidden;
+            if (Team_Stats.Rushing_Stats.Count() == 0)
+                lblRushNoStats.Visibility = Visibility.Visible;
+
+            lstReceiving.ItemsSource = Team_Stats.Receiving_Stats;
+
+            lblReceiveNoStats.Visibility = Visibility.Hidden;
+            if (Team_Stats.Receiving_Stats.Count() == 0)
+                lblReceiveNoStats.Visibility = Visibility.Visible;
+
+            lstBlocking.ItemsSource = Team_Stats.Blocking_Stats;
+
+            lblBlockNoStats.Visibility = Visibility.Hidden;
+            if (Team_Stats.Blocking_Stats.Count() == 0)
+                lblBlockNoStats.Visibility = Visibility.Visible;
+
             this.pw = pw;
         }
 

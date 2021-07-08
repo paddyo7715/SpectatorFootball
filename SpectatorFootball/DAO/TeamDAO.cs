@@ -118,7 +118,7 @@ namespace SpectatorFootball.DAO
                         Ints = x.Sum(s => s.Pass_Ints),
                         Fumbles = x.Sum(s => s.Fumbles),
                         Fumbles_Lost = x.Sum(s => s.Fumbles_Lost),
-                    }).ToList();
+                    }).OrderByDescending(x => x.Yards).ThenByDescending(x => x.TDs).ToList();
 
                 RushingStats = context.Game_Player_Rushing_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 &&
                     (x.Game.Home_Team_Franchise_ID == franchise_id || x.Game.Away_Team_Franchise_ID == franchise_id)).GroupBy(x => x.Player)
@@ -130,7 +130,7 @@ namespace SpectatorFootball.DAO
                         TDs = x.Sum(s => s.Rush_TDs),
                         Fumbles = x.Sum(s => s.Fumbles),
                         Fumbles_Lost = x.Sum(s => s.Fumbles_Lost)
-                    }).ToList();
+                    }).OrderByDescending(x => x.Yards).ThenByDescending(x => x.TDs).ToList();
 
                 ReceivingStats = context.Game_Player_Receiving_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 &&
                     (x.Game.Home_Team_Franchise_ID == franchise_id || x.Game.Away_Team_Franchise_ID == franchise_id)).GroupBy(x => x.Player)
@@ -143,7 +143,7 @@ namespace SpectatorFootball.DAO
                         Drops = x.Sum(s => s.Rec_Drops),
                         Fumbles = x.Sum(s => s.Fumbles),
                         Fumbles_Lost = x.Sum(s => s.Fumbles_Lost)
-                    }).ToList();
+                    }).OrderByDescending(x => x.Catches).ThenByDescending(x => x.Yards).ToList();
 
                 BlockingStats = context.Game_Player_Offensive_Linemen_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 &&
                     (x.Game.Home_Team_Franchise_ID == franchise_id || x.Game.Away_Team_Franchise_ID == franchise_id)).GroupBy(x => x.Player)
@@ -154,7 +154,7 @@ namespace SpectatorFootball.DAO
                         Pancakes = x.Sum(s => s.OLine_Pancakes),
                         Sacks_Allowed = x.Sum(s => s.OLine_Sacks_Allowed),
                         Pressures_Allowed = x.Sum(s => s.QB_Pressures_Allowed)
-                    }).ToList();
+                    }).OrderByDescending(x => x.Pancakes).ThenByDescending(x => x.Plays).ToList();
 
                 DefenseStats = context.Game_Player_Defense_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 &&
                     (x.Game.Home_Team_Franchise_ID == franchise_id || x.Game.Away_Team_Franchise_ID == franchise_id)).GroupBy(x => x.Player)
@@ -167,7 +167,7 @@ namespace SpectatorFootball.DAO
                         Pressures = x.Sum(s => s.QB_Pressures),
                         Run_for_Loss = x.Sum(s => s.Def_Rushing_Loss),
                         Forced_Fumble = x.Sum(s => s.Forced_Fumbles)
-                    }).ToList();
+                    }).OrderByDescending(x => x.Tackles).ThenByDescending(x => x.Sacks).ThenByDescending(x => x.Run_for_Loss).ToList();
 
                 PassDefenseStats = context.Game_Player_Pass_Defense_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 &&
                     (x.Game.Home_Team_Franchise_ID == franchise_id || x.Game.Away_Team_Franchise_ID == franchise_id)).GroupBy(x => x.Player)
@@ -178,7 +178,7 @@ namespace SpectatorFootball.DAO
                         Ints = x.Sum(s => s.Ints),
                         TDs_Surrendered = x.Sum(s => s.Touchdowns_Surrendered),
                         Forced_Fumble = x.Sum(s => s.Forced_Fumbles)
-                    }).ToList();
+                    }).OrderByDescending(x => x.Ints).ThenByDescending(x => x.Pass_Defenses).ToList();
 
                 KickerStats = context.Game_Player_Kicker_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 &&
                     (x.Game.Home_Team_Franchise_ID == franchise_id || x.Game.Away_Team_Franchise_ID == franchise_id)).GroupBy(x => x.Player)
@@ -190,7 +190,7 @@ namespace SpectatorFootball.DAO
                         FG_Long = x.Max(s => s.FG_Long),
                         XP_ATT = x.Sum(s => s.XP_Att),
                         XP_Made = x.Sum(s => s.XP_Made)
-                    }).ToList();
+                    }).OrderByDescending(x => x.FG_Made).ToList();
 
                 PunterStats = context.Game_Player_Punter_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 &&
                     (x.Game.Home_Team_Franchise_ID == franchise_id || x.Game.Away_Team_Franchise_ID == franchise_id)).GroupBy(x => x.Player)
@@ -200,7 +200,7 @@ namespace SpectatorFootball.DAO
                         Punts = x.Sum(s => s.num_punts),
                         Yards = x.Sum(s => s.Punt_yards),
                         Coffin_Corners = x.Sum(s => s.Punt_killed_num)
-                    }).ToList();
+                    }).OrderByDescending(x => x.Punts).ToList();
 
                 KickoffReturnStats = context.Game_Player_Kick_Returner_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 &&
                     (x.Game.Home_Team_Franchise_ID == franchise_id || x.Game.Away_Team_Franchise_ID == franchise_id)).GroupBy(x => x.Player)
@@ -212,7 +212,7 @@ namespace SpectatorFootball.DAO
                         Yards_Long = x.Max(s => s.Kickoff_Return_Yards_Long),
                         TDs = x.Sum(s => s.Kickoffs_Returned_TDs),
                         Fumbles = x.Sum(s => s.Kickoffs_Returned_Fumbles + s.Kickoffs_Muffed)
-                    }).ToList();
+                    }).OrderByDescending(x => x.Returns).ToList();
 
                 PuntReturnStats = context.Game_Player_Punt_Returner_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 &&
                     (x.Game.Home_Team_Franchise_ID == franchise_id || x.Game.Away_Team_Franchise_ID == franchise_id)).GroupBy(x => x.Player)
@@ -224,7 +224,7 @@ namespace SpectatorFootball.DAO
                         Yards_Long = x.Max(s => s.Punt_Returned_Yards_Long),
                         TDs = x.Sum(s => s.Punts_Returned_TDs),
                         Fumbles = x.Sum(s => s.Punts_Returned_Fumbles + s.Punts_Muffed)
-                    }).ToList();
+                    }).OrderByDescending(x => x.Returns).ToList();
 
             }
 
