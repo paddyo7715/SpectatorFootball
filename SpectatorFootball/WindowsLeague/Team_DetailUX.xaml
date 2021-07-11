@@ -534,6 +534,251 @@
                             </ListView>
                             <Label Name="lblBlockNoStats" HorizontalContentAlignment="Center" Style="{StaticResource Normallbltyle}" Content="No Blocking Stats"></Label>
 
+                            <Label Style="{StaticResource MedLabelstyle}" Content="Defense"></Label>
+                            <ListView Name="lstDefense" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Width="960">
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="ListViewItem">
+                                        <Setter Property="Focusable" Value="false"/>
+                                    </Style>
+                                </ListView.ItemContainerStyle>
+                                <ListView.View>
+                                    <GridView AllowsColumnReorder="false">
+                                        <GridView.ColumnHeaderContainerStyle>
+                                            <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                            </Style>
+                                        </GridView.ColumnHeaderContainerStyle>
+                                        <GridViewColumn Header="Player"  Width="270">
+                                            <GridViewColumn.HeaderContainerStyle>
+                                                <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                    <Setter Property="HorizontalContentAlignment" Value="Left" />
+                                                </Style>
+                                            </GridViewColumn.HeaderContainerStyle>
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock TextAlignment="Left">
+                                        <Run Text="{Binding Player.First_Name}" />
+                                        <Run Text=" " /> <!-- space -->
+                                        <Run Text="{Binding Player.Last_Name}" />
+                                                    </TextBlock>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="Plays" Width="80" DisplayMemberBinding="{Binding Path=Plays}" />
+                                        <GridViewColumn Header="Tackles" Width="80" DisplayMemberBinding="{Binding Path=Tackles}" />
+                                        <GridViewColumn Header="Sacks" Width="80" DisplayMemberBinding="{Binding Path=Sacks}" />
+                                        <GridViewColumn Header="Pressures" Width="80" DisplayMemberBinding="{Binding Path=Pressures}" />
+                                        <GridViewColumn Header="Runs for Loss" Width="120" DisplayMemberBinding="{Binding Path=Run_for_Loss}" />
+                                        <GridViewColumn Header="Forced Fumbles" Width="120" DisplayMemberBinding="{Binding Path=Forced_Fumble}" />
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                            <Label Name="lblDefenseNoStats" HorizontalContentAlignment="Center" Style="{StaticResource Normallbltyle}" Content="No Defense Stats"></Label>
+
+                            <Label Style="{StaticResource MedLabelstyle}" Content="Pass Defense"></Label>
+                            <ListView Name="lstPassDefense" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Width="960">
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="ListViewItem">
+                                        <Setter Property="Focusable" Value="false"/>
+                                    </Style>
+                                </ListView.ItemContainerStyle>
+                                <ListView.View>
+                                    <GridView AllowsColumnReorder="false">
+                                        <GridView.ColumnHeaderContainerStyle>
+                                            <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                            </Style>
+                                        </GridView.ColumnHeaderContainerStyle>
+                                        <GridViewColumn Header="Player"  Width="270">
+                                            <GridViewColumn.HeaderContainerStyle>
+                                                <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                    <Setter Property="HorizontalContentAlignment" Value="Left" />
+                                                </Style>
+                                            </GridViewColumn.HeaderContainerStyle>
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock TextAlignment="Left">
+                                        <Run Text="{Binding Player.First_Name}" />
+                                        <Run Text=" " /> <!-- space -->
+                                        <Run Text="{Binding Player.Last_Name}" />
+                                                    </TextBlock>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="Pass Defenses" Width="120" DisplayMemberBinding="{Binding Path=Pass_Defenses}" />
+                                        <GridViewColumn Header="Ints" Width="80" DisplayMemberBinding="{Binding Path=Ints}" />
+                                        <GridViewColumn Header="TDs Surrendered" Width="120" DisplayMemberBinding="{Binding Path=TDs_Surrendered}" />
+                                        <GridViewColumn Header="Forced Fumbles" Width="120" DisplayMemberBinding="{Binding Path=Forced_Fumble}" />
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                            <Label Name="lblPassDefenseNoStats" HorizontalContentAlignment="Center" Style="{StaticResource Normallbltyle}" Content="No Pass Defense Stats"></Label>
+
+                            <Label Style="{StaticResource MedLabelstyle}" Content="FG Kicking"></Label>
+                            <ListView Name="lstFGKicking" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Width="960">
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="ListViewItem">
+                                        <Setter Property="Focusable" Value="false"/>
+                                    </Style>
+                                </ListView.ItemContainerStyle>
+                                <ListView.View>
+                                    <GridView AllowsColumnReorder="false">
+                                        <GridView.ColumnHeaderContainerStyle>
+                                            <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                            </Style>
+                                        </GridView.ColumnHeaderContainerStyle>
+                                        <GridViewColumn Header="Player"  Width="270">
+                                            <GridViewColumn.HeaderContainerStyle>
+                                                <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                    <Setter Property="HorizontalContentAlignment" Value="Left" />
+                                                </Style>
+                                            </GridViewColumn.HeaderContainerStyle>
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock TextAlignment="Left">
+                                        <Run Text="{Binding Player.First_Name}" />
+                                        <Run Text=" " /> <!-- space -->
+                                        <Run Text="{Binding Player.Last_Name}" />
+                                                    </TextBlock>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="FG Att" Width="100" DisplayMemberBinding="{Binding Path=FG_ATT}" />
+                                        <GridViewColumn Header="FG Made" Width="100" DisplayMemberBinding="{Binding Path=FG_Made}" />
+                                        <GridViewColumn Header="FG %" Width="100" DisplayMemberBinding="{Binding Path=FG_Percent}" />
+                                        <GridViewColumn Header="FG Long" Width="100" DisplayMemberBinding="{Binding Path=FG_Long}" />
+                                        <GridViewColumn Header="XP Att" Width="100" DisplayMemberBinding="{Binding Path=XP_ATT}" />
+                                        <GridViewColumn Header="XP Made" Width="100" DisplayMemberBinding="{Binding Path=XP_Made}" />
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                            <Label Name="lblFGKickingNoStats" HorizontalContentAlignment="Center" Style="{StaticResource Normallbltyle}" Content="No FG Kicking Stats"></Label>
+
+                            <Label Style="{StaticResource MedLabelstyle}" Content="Kickoff Returns"></Label>
+                            <ListView Name="lstKickoffReturns" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Width="960">
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="ListViewItem">
+                                        <Setter Property="Focusable" Value="false"/>
+                                    </Style>
+                                </ListView.ItemContainerStyle>
+                                <ListView.View>
+                                    <GridView AllowsColumnReorder="false">
+                                        <GridView.ColumnHeaderContainerStyle>
+                                            <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                            </Style>
+                                        </GridView.ColumnHeaderContainerStyle>
+                                        <GridViewColumn Header="Player"  Width="270">
+                                            <GridViewColumn.HeaderContainerStyle>
+                                                <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                    <Setter Property="HorizontalContentAlignment" Value="Left" />
+                                                </Style>
+                                            </GridViewColumn.HeaderContainerStyle>
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock TextAlignment="Left">
+                                        <Run Text="{Binding Player.First_Name}" />
+                                        <Run Text=" " /> <!-- space -->
+                                        <Run Text="{Binding Player.Last_Name}" />
+                                                    </TextBlock>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="Returns" Width="80" DisplayMemberBinding="{Binding Path=Returns}" />
+                                        <GridViewColumn Header="Yards" Width="80" DisplayMemberBinding="{Binding Path=Yards}" />
+                                        <GridViewColumn Header="Yards/Return" Width="80" DisplayMemberBinding="{Binding Path=Yards_avg}" />
+                                        <GridViewColumn Header="Yards Long" Width="100" DisplayMemberBinding="{Binding Path=Yards_Long}" />
+                                        <GridViewColumn Header="TDs" Width="80" DisplayMemberBinding="{Binding Path=TDs}" />
+                                        <GridViewColumn Header="Fumbles" Width="80" DisplayMemberBinding="{Binding Path=Fumbles}" />
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                            <Label Name="lblKickReturnsNoStats" HorizontalContentAlignment="Center" Style="{StaticResource Normallbltyle}" Content="No Kickoff Returns Stats"></Label>
+
+                            <Label Style="{StaticResource MedLabelstyle}" Content="Punting"></Label>
+                            <ListView Name="lstPunting" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Width="960">
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="ListViewItem">
+                                        <Setter Property="Focusable" Value="false"/>
+                                    </Style>
+                                </ListView.ItemContainerStyle>
+                                <ListView.View>
+                                    <GridView AllowsColumnReorder="false">
+                                        <GridView.ColumnHeaderContainerStyle>
+                                            <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                            </Style>
+                                        </GridView.ColumnHeaderContainerStyle>
+                                        <GridViewColumn Header="Player"  Width="270">
+                                            <GridViewColumn.HeaderContainerStyle>
+                                                <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                    <Setter Property="HorizontalContentAlignment" Value="Left" />
+                                                </Style>
+                                            </GridViewColumn.HeaderContainerStyle>
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock TextAlignment="Left">
+                                        <Run Text="{Binding Player.First_Name}" />
+                                        <Run Text=" " /> <!-- space -->
+                                        <Run Text="{Binding Player.Last_Name}" />
+                                                    </TextBlock>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="Punts" Width="80" DisplayMemberBinding="{Binding Path=Punts}" />
+                                        <GridViewColumn Header="Yards" Width="80" DisplayMemberBinding="{Binding Path=Yards}" />
+                                        <GridViewColumn Header="Punt AVG" Width="100" DisplayMemberBinding="{Binding Path=Punt_AVG}" />
+                                        <GridViewColumn Header="Coffin Corners" Width="100" DisplayMemberBinding="{Binding Path=Coffin_Corners}" />
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                            <Label Name="lblPuntingNoStats" HorizontalContentAlignment="Center" Style="{StaticResource Normallbltyle}" Content="No Punting Stats"></Label>
+
+                            <Label Style="{StaticResource MedLabelstyle}" Content="Punt Returns"></Label>
+                            <ListView Name="lstPuntReturns" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Width="960">
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="ListViewItem">
+                                        <Setter Property="Focusable" Value="false"/>
+                                    </Style>
+                                </ListView.ItemContainerStyle>
+                                <ListView.View>
+                                    <GridView AllowsColumnReorder="false">
+                                        <GridView.ColumnHeaderContainerStyle>
+                                            <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                            </Style>
+                                        </GridView.ColumnHeaderContainerStyle>
+                                        <GridViewColumn Header="Player"  Width="270">
+                                            <GridViewColumn.HeaderContainerStyle>
+                                                <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                    <Setter Property="HorizontalContentAlignment" Value="Left" />
+                                                </Style>
+                                            </GridViewColumn.HeaderContainerStyle>
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock TextAlignment="Left">
+                                        <Run Text="{Binding Player.First_Name}" />
+                                        <Run Text=" " /> <!-- space -->
+                                        <Run Text="{Binding Player.Last_Name}" />
+                                                    </TextBlock>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="Returns" Width="80" DisplayMemberBinding="{Binding Path=Returns}" />
+                                        <GridViewColumn Header="Yards" Width="80" DisplayMemberBinding="{Binding Path=Yards}" />
+                                        <GridViewColumn Header="Yards/Return" Width="80" DisplayMemberBinding="{Binding Path=Yards_avg}" />
+                                        <GridViewColumn Header="Yards Long" Width="100" DisplayMemberBinding="{Binding Path=Yards_Long}" />
+                                        <GridViewColumn Header="TDs" Width="80" DisplayMemberBinding="{Binding Path=TDs}" />
+                                        <GridViewColumn Header="Fumbles" Width="80" DisplayMemberBinding="{Binding Path=Fumbles}" />
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                            <Label Name="lblPuntReturnsNoStats" HorizontalContentAlignment="Center" Style="{StaticResource Normallbltyle}" Content="No Punt Returns Stats"></Label>
+
+
+
+
 
 
 

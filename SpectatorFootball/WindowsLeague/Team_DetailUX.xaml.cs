@@ -173,6 +173,42 @@ namespace SpectatorFootball.WindowsLeague
             if (Team_Stats.Blocking_Stats.Count() == 0)
                 lblBlockNoStats.Visibility = Visibility.Visible;
 
+            lstDefense.ItemsSource = Team_Stats.Defense_Stats;
+
+            lblDefenseNoStats.Visibility = Visibility.Hidden;
+            if (Team_Stats.Defense_Stats.Count() == 0)
+                lblDefenseNoStats.Visibility = Visibility.Visible;
+
+            lstPassDefense.ItemsSource = Team_Stats.Pass_Defense_Stats;
+
+            lblPassDefenseNoStats.Visibility = Visibility.Hidden;
+            if (Team_Stats.Pass_Defense_Stats.Count() == 0)
+                lblPassDefenseNoStats.Visibility = Visibility.Visible;
+
+            lstFGKicking.ItemsSource = Team_Stats.Kicking_Stats;
+
+            lblFGKickingNoStats.Visibility = Visibility.Hidden;
+            if (Team_Stats.Kicking_Stats.Count() == 0)
+                lblFGKickingNoStats.Visibility = Visibility.Visible;
+
+            lstKickoffReturns.ItemsSource = Team_Stats.KickRet_Stats;
+
+            lblKickReturnsNoStats.Visibility = Visibility.Hidden;
+            if (Team_Stats.KickRet_Stats.Count() == 0)
+                lblKickReturnsNoStats.Visibility = Visibility.Visible;
+
+            lstPunting.ItemsSource = Team_Stats.Punting_Stats;
+
+            lblPuntingNoStats.Visibility = Visibility.Hidden;
+            if (Team_Stats.Punting_Stats.Count() == 0)
+                lblPuntingNoStats.Visibility = Visibility.Visible;
+
+            lstPuntReturns.ItemsSource = Team_Stats.PuntRet_Stats;
+
+            lblPuntReturnsNoStats.Visibility = Visibility.Hidden;
+            if (Team_Stats.PuntRet_Stats.Count() == 0)
+                lblPuntReturnsNoStats.Visibility = Visibility.Visible;
+
             this.pw = pw;
         }
 
