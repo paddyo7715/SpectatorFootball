@@ -277,10 +277,6 @@ namespace SpectatorFootball.WindowsLeague
             away_turnovers += bs_rec.Game.Game_Player_Passing_Stats.Where(x => x.Franchise_ID == bs_rec.Game.Away_Team_Franchise_ID).Sum(x => x.Fumbles_Lost);
             home_turnovers += bs_rec.Game.Game_Player_Passing_Stats.Where(x => x.Franchise_ID == bs_rec.Game.Home_Team_Franchise_ID).Sum(x => x.Fumbles_Lost);
 
-            //add kickoff returner muffed kickoffs lost
-            away_turnovers += bs_rec.Game.Game_Player_Kick_Returner_Stats.Where(x => x.Franchise_ID == bs_rec.Game.Away_Team_Franchise_ID).Sum(x => x.Kickoffs_Muffed_Lost);
-            home_turnovers += bs_rec.Game.Game_Player_Kick_Returner_Stats.Where(x => x.Franchise_ID == bs_rec.Game.Home_Team_Franchise_ID).Sum(x => x.Kickoffs_Muffed_Lost);
-
             //add kickoff returner fumbles lost
             away_turnovers += bs_rec.Game.Game_Player_Kick_Returner_Stats.Where(x => x.Franchise_ID == bs_rec.Game.Away_Team_Franchise_ID).Sum(x => x.Kickoffs_Returned_Fumbles_Lost);
             home_turnovers += bs_rec.Game.Game_Player_Kick_Returner_Stats.Where(x => x.Franchise_ID == bs_rec.Game.Home_Team_Franchise_ID).Sum(x => x.Kickoffs_Returned_Fumbles_Lost);

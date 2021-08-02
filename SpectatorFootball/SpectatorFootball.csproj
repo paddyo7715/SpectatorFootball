@@ -305,6 +305,7 @@
     <Compile Include="Models\Season.cs">
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TeamStatsRaw.cs" />
     <Compile Include="Models\Teams_by_Season.cs">
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
@@ -321,6 +322,7 @@
     <Compile Include="Services\Schedule_Services.cs" />
     <Compile Include="Services\TrainingCamp_Services.cs" />
     <Compile Include="Team\Team_Player_Accum_Stats.cs" />
+    <Compile Include="Team\Three_Coll_List.cs" />
     <Compile Include="Training_Camp\TrainingCamp_Helper.cs" />
     <Compile Include="WindowsLeague\BoxScore_Popup.xaml.cs">
       <DependentUpon>BoxScore_Popup.xaml</DependentUpon>

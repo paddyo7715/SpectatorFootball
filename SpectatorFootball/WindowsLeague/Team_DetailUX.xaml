@@ -367,6 +367,47 @@
                         </ListView>
                     </StackPanel>
                 </TabItem>
+                <TabItem Header="Team Stats">
+                    <StackPanel Orientation="Vertical"  Width="1000" Height="700">
+                        <ListView Name="lstTeamOppStats" Style="{StaticResource SchedWeekLVStyle}" Width="650">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem" >
+                                    <Setter Property="Focusable" Value="false"/>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.View>
+                                <GridView AllowsColumnReorder="false">
+                                    <GridView.ColumnHeaderContainerStyle>
+                                        <Style TargetType="{x:Type GridViewColumnHeader}">
+                                            <Setter Property="IsEnabled" Value="False"/>
+                                        </Style>
+                                    </GridView.ColumnHeaderContainerStyle>
+                                    <GridViewColumn Header="Team">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Label Width="150" HorizontalContentAlignment="Left" Content="{Binding Path=col1}" Style="{StaticResource boxscoreTeamLabel}" FontWeight="Bold"></Label>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Header="">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Label Width="300" HorizontalContentAlignment="Center" Content="{Binding Path=col2}" Style="{StaticResource boxscoreTeamLabel}" FontWeight="Bold"></Label>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Header="Opponents">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Label Width="150" HorizontalContentAlignment="Right" Content="{Binding Path=col3}" Style="{StaticResource boxscoreTeamLabel}" FontWeight="Bold"></Label>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </StackPanel>
+                </TabItem>
                 <TabItem Header="Player Stats">
                     <ScrollViewer HorizontalAlignment="Left"  VerticalAlignment="Top" Width="1000" Height="700" VerticalScrollBarVisibility="Auto">
                         <StackPanel Orientation="Vertical">
@@ -775,18 +816,51 @@
                                 </ListView.View>
                             </ListView>
                             <Label Name="lblPuntReturnsNoStats" HorizontalContentAlignment="Center" Style="{StaticResource Normallbltyle}" Content="No Punt Returns Stats"></Label>
-
-
-
-
-
-
-
-
-
-                        </StackPanel>
+                       </StackPanel>
                     </ScrollViewer>
                 </TabItem>
+                <TabItem Header="Roster" Name="tabRoster">
+                    <StackPanel Orientation="Vertical"  Width="1000" Height="700">
+                        <ListView Name="lstRoster" Style="{StaticResource SchedWeekLVStyle}" Width="650">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem" >
+                                    <Setter Property="Focusable" Value="false"/>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.View>
+                                <GridView AllowsColumnReorder="false">
+                                    <GridView.ColumnHeaderContainerStyle>
+                                        <Style TargetType="{x:Type GridViewColumnHeader}">
+                                            <Setter Property="IsEnabled" Value="False"/>
+                                        </Style>
+                                    </GridView.ColumnHeaderContainerStyle>
+                                    <GridViewColumn Header="Team">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Label Width="150" HorizontalContentAlignment="Left" Content="{Binding Path=col1}" Style="{StaticResource boxscoreTeamLabel}" FontWeight="Bold"></Label>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Header="">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Label Width="300" HorizontalContentAlignment="Center" Content="{Binding Path=col2}" Style="{StaticResource boxscoreTeamLabel}" FontWeight="Bold"></Label>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Header="Opponents">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Label Width="150" HorizontalContentAlignment="Right" Content="{Binding Path=col3}" Style="{StaticResource boxscoreTeamLabel}" FontWeight="Bold"></Label>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </StackPanel>
+                </TabItem>
+
             </TabControl>
         </StackPanel>
     </DockPanel>

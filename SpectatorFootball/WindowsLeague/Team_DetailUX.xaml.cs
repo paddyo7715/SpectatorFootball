@@ -209,6 +209,27 @@ namespace SpectatorFootball.WindowsLeague
             if (Team_Stats.PuntRet_Stats.Count() == 0)
                 lblPuntReturnsNoStats.Visibility = Visibility.Visible;
 
+            List<Three_Coll_List> t_Stats_lst = ts.getTeamStats(pw.Loaded_League.season.League_Structure_by_Season[0].Short_Name,
+                pw.Loaded_League.season.ID, this_team.Franchise_ID);
+     
+            lstTeamOppStats.ItemsSource = t_Stats_lst;
+            ((GridView)lstTeamOppStats.View).Columns[0].Header = this_team.City;
+
+            //if the user is viewing a previous year in this league, then do NOT show the
+            //roster tab and do not allow team attributes to be altered
+            if (pw.Loaded_League.LState == Enum.League_State.Previous_Year)
+            {
+                tabRoster.Visibility = Visibility.Hidden;
+                DetSave.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                tabRoster.Visibility = Visibility.Visible;
+                DetSave.Visibility = Visibility.Visible;
+
+                List<Player_Ratings> RosterList = ts.getTeamRoster(pw.Loaded_League.season.ID, this_team.Franchise_ID, pw.Loaded_League.season.League_Structure_by_Season[0].Short_Name);
+            }
+
             this.pw = pw;
         }
 

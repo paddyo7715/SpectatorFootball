@@ -170,8 +170,6 @@
           <Property Name="Kickoff_Return_Yards_Long" Type="integer" Nullable="false" />
           <Property Name="Kickoffs_Returned_Fumbles" Type="integer" Nullable="false" />
           <Property Name="Kickoffs_Returned_Fumbles_Lost" Type="integer" Nullable="false" />
-          <Property Name="Kickoffs_Muffed" Type="integer" Nullable="false" />
-          <Property Name="Kickoffs_Muffed_Lost" Type="integer" Nullable="false" />
         </EntityType>
         <EntityType Name="Game_Player_Kicker_Stats">
           <Key>
@@ -328,8 +326,6 @@
           <Property Name="Punt_Returned_Yards_Long" Type="integer" Nullable="false" />
           <Property Name="Punts_Returned_Fumbles" Type="integer" Nullable="false" />
           <Property Name="Punts_Returned_Fumbles_Lost" Type="integer" Nullable="false" />
-          <Property Name="Punts_Muffed" Type="integer" Nullable="false" />
-          <Property Name="Punts_Muffed_Lost" Type="integer" Nullable="false" />
         </EntityType>
         <EntityType Name="Game_Player_Punter_Stats">
           <Key>
@@ -780,18 +776,6 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Game_Player_Kick_Returner_Stats_0_0">
-          <End Role="Players" Type="Self.Players" Multiplicity="1" />
-          <End Role="Game_Player_Kick_Returner_Stats" Type="Self.Game_Player_Kick_Returner_Stats" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Players">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Game_Player_Kick_Returner_Stats">
-              <PropertyRef Name="Player_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Game_Player_Kick_Returner_Stats_1_0">
           <End Role="Game" Type="Self.Game" Multiplicity="1" />
           <End Role="Game_Player_Kick_Returner_Stats" Type="Self.Game_Player_Kick_Returner_Stats" Multiplicity="*" />
           <ReferentialConstraint>
@@ -803,7 +787,7 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Game_Player_Kick_Returner_Stats_2_0">
+        <Association Name="FK_Game_Player_Kick_Returner_Stats_1_0">
           <End Role="Franchise" Type="Self.Franchise" Multiplicity="1" />
           <End Role="Game_Player_Kick_Returner_Stats" Type="Self.Game_Player_Kick_Returner_Stats" Multiplicity="*" />
           <ReferentialConstraint>
@@ -812,6 +796,18 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
             </Principal>
             <Dependent Role="Game_Player_Kick_Returner_Stats">
               <PropertyRef Name="Franchise_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Game_Player_Kick_Returner_Stats_2_0">
+          <End Role="Players" Type="Self.Players" Multiplicity="1" />
+          <End Role="Game_Player_Kick_Returner_Stats" Type="Self.Game_Player_Kick_Returner_Stats" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Players">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Game_Player_Kick_Returner_Stats">
+              <PropertyRef Name="Player_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1609,15 +1605,15 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
             <End Role="Game_Player_FG_Defense_Stats" EntitySet="Game_Player_FG_Defense_Stats" />
           </AssociationSet>
           <AssociationSet Name="FK_Game_Player_Kick_Returner_Stats_0_0" Association="Self.FK_Game_Player_Kick_Returner_Stats_0_0">
-            <End Role="Players" EntitySet="Players" />
-            <End Role="Game_Player_Kick_Returner_Stats" EntitySet="Game_Player_Kick_Returner_Stats" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Game_Player_Kick_Returner_Stats_1_0" Association="Self.FK_Game_Player_Kick_Returner_Stats_1_0">
             <End Role="Game" EntitySet="Game" />
             <End Role="Game_Player_Kick_Returner_Stats" EntitySet="Game_Player_Kick_Returner_Stats" />
           </AssociationSet>
-          <AssociationSet Name="FK_Game_Player_Kick_Returner_Stats_2_0" Association="Self.FK_Game_Player_Kick_Returner_Stats_2_0">
+          <AssociationSet Name="FK_Game_Player_Kick_Returner_Stats_1_0" Association="Self.FK_Game_Player_Kick_Returner_Stats_1_0">
             <End Role="Franchise" EntitySet="Franchise" />
+            <End Role="Game_Player_Kick_Returner_Stats" EntitySet="Game_Player_Kick_Returner_Stats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Game_Player_Kick_Returner_Stats_2_0" Association="Self.FK_Game_Player_Kick_Returner_Stats_2_0">
+            <End Role="Players" EntitySet="Players" />
             <End Role="Game_Player_Kick_Returner_Stats" EntitySet="Game_Player_Kick_Returner_Stats" />
           </AssociationSet>
           <AssociationSet Name="FK_Game_Player_Kicker_Stats_0_0" Association="Self.FK_Game_Player_Kicker_Stats_0_0">
@@ -1919,7 +1915,7 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
           <NavigationProperty Name="Free_Agency" Relationship="Self.FK_Free_Agency_1_0" FromRole="Franchise" ToRole="Free_Agency" />
           <NavigationProperty Name="Game_Player_Defense_Stats" Relationship="Self.FK_Game_Player_Defense_Stats_2_0" FromRole="Franchise" ToRole="Game_Player_Defense_Stats" />
           <NavigationProperty Name="Game_Player_FG_Defense_Stats" Relationship="Self.FK_Game_Player_FG_Defense_Stats_0_0" FromRole="Franchise" ToRole="Game_Player_FG_Defense_Stats" />
-          <NavigationProperty Name="Game_Player_Kick_Returner_Stats" Relationship="Self.FK_Game_Player_Kick_Returner_Stats_2_0" FromRole="Franchise" ToRole="Game_Player_Kick_Returner_Stats" />
+          <NavigationProperty Name="Game_Player_Kick_Returner_Stats" Relationship="Self.FK_Game_Player_Kick_Returner_Stats_1_0" FromRole="Franchise" ToRole="Game_Player_Kick_Returner_Stats" />
           <NavigationProperty Name="Game_Player_Kicker_Stats" Relationship="Self.FK_Game_Player_Kicker_Stats_1_0" FromRole="Franchise" ToRole="Game_Player_Kicker_Stats" />
           <NavigationProperty Name="Game_Player_Kickoff_Defenders" Relationship="Self.FK_Game_Player_Kickoff_Defenders_0_0" FromRole="Franchise" ToRole="Game_Player_Kickoff_Defenders" />
           <NavigationProperty Name="Game_Player_Kickoff_Receiver_Stats" Relationship="Self.FK_Game_Player_Kickoff_Receiver_Stats_0_0" FromRole="Franchise" ToRole="Game_Player_Kickoff_Receiver_Stats" />
@@ -2005,7 +2001,7 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
           <NavigationProperty Name="Season" Relationship="Self.FK_Game_0_0" FromRole="Game" ToRole="Season" />
           <NavigationProperty Name="Game_Player_Defense_Stats" Relationship="Self.FK_Game_Player_Defense_Stats_0_0" FromRole="Game" ToRole="Game_Player_Defense_Stats" />
           <NavigationProperty Name="Game_Player_FG_Defense_Stats" Relationship="Self.FK_Game_Player_FG_Defense_Stats_2_0" FromRole="Game" ToRole="Game_Player_FG_Defense_Stats" />
-          <NavigationProperty Name="Game_Player_Kick_Returner_Stats" Relationship="Self.FK_Game_Player_Kick_Returner_Stats_1_0" FromRole="Game" ToRole="Game_Player_Kick_Returner_Stats" />
+          <NavigationProperty Name="Game_Player_Kick_Returner_Stats" Relationship="Self.FK_Game_Player_Kick_Returner_Stats_0_0" FromRole="Game" ToRole="Game_Player_Kick_Returner_Stats" />
           <NavigationProperty Name="Game_Player_Kicker_Stats" Relationship="Self.FK_Game_Player_Kicker_Stats_0_0" FromRole="Game" ToRole="Game_Player_Kicker_Stats" />
           <NavigationProperty Name="Game_Player_Kickoff_Defenders" Relationship="Self.FK_Game_Player_Kickoff_Defenders_1_0" FromRole="Game" ToRole="Game_Player_Kickoff_Defenders" />
           <NavigationProperty Name="Game_Player_Kickoff_Receiver_Stats" Relationship="Self.FK_Game_Player_Kickoff_Receiver_Stats_2_0" FromRole="Game" ToRole="Game_Player_Kickoff_Receiver_Stats" />
@@ -2077,11 +2073,9 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
           <Property Name="Kickoff_Return_Yards_Long" Type="Int64" Nullable="false" />
           <Property Name="Kickoffs_Returned_Fumbles" Type="Int64" Nullable="false" />
           <Property Name="Kickoffs_Returned_Fumbles_Lost" Type="Int64" Nullable="false" />
-          <Property Name="Kickoffs_Muffed" Type="Int64" Nullable="false" />
-          <Property Name="Kickoffs_Muffed_Lost" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="Franchise" Relationship="Self.FK_Game_Player_Kick_Returner_Stats_2_0" FromRole="Game_Player_Kick_Returner_Stats" ToRole="Franchise" />
-          <NavigationProperty Name="Game" Relationship="Self.FK_Game_Player_Kick_Returner_Stats_1_0" FromRole="Game_Player_Kick_Returner_Stats" ToRole="Game" />
-          <NavigationProperty Name="Player" Relationship="Self.FK_Game_Player_Kick_Returner_Stats_0_0" FromRole="Game_Player_Kick_Returner_Stats" ToRole="Players" />
+          <NavigationProperty Name="Franchise" Relationship="Self.FK_Game_Player_Kick_Returner_Stats_1_0" FromRole="Game_Player_Kick_Returner_Stats" ToRole="Franchise" />
+          <NavigationProperty Name="Game" Relationship="Self.FK_Game_Player_Kick_Returner_Stats_0_0" FromRole="Game_Player_Kick_Returner_Stats" ToRole="Game" />
+          <NavigationProperty Name="Player" Relationship="Self.FK_Game_Player_Kick_Returner_Stats_2_0" FromRole="Game_Player_Kick_Returner_Stats" ToRole="Players" />
         </EntityType>
         <EntityType Name="Game_Player_Kicker_Stats">
           <Key>
@@ -2266,8 +2260,6 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
           <Property Name="Punt_Returned_Yards_Long" Type="Int64" Nullable="false" />
           <Property Name="Punts_Returned_Fumbles" Type="Int64" Nullable="false" />
           <Property Name="Punts_Returned_Fumbles_Lost" Type="Int64" Nullable="false" />
-          <Property Name="Punts_Muffed" Type="Int64" Nullable="false" />
-          <Property Name="Punts_Muffed_Lost" Type="Int64" Nullable="false" />
           <NavigationProperty Name="Franchise" Relationship="Self.FK_Game_Player_Punt_Returner_Stats_0_0" FromRole="Game_Player_Punt_Returner_Stats" ToRole="Franchise" />
           <NavigationProperty Name="Game" Relationship="Self.FK_Game_Player_Punt_Returner_Stats_1_0" FromRole="Game_Player_Punt_Returner_Stats" ToRole="Game" />
           <NavigationProperty Name="Player" Relationship="Self.FK_Game_Player_Punt_Returner_Stats_2_0" FromRole="Game_Player_Punt_Returner_Stats" ToRole="Players" />
@@ -2473,7 +2465,7 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
           <NavigationProperty Name="Free_Agency" Relationship="Self.FK_Free_Agency_2_0" FromRole="Players" ToRole="Free_Agency" />
           <NavigationProperty Name="Game_Player_Defense_Stats" Relationship="Self.FK_Game_Player_Defense_Stats_1_0" FromRole="Players" ToRole="Game_Player_Defense_Stats" />
           <NavigationProperty Name="Game_Player_FG_Defense_Stats" Relationship="Self.FK_Game_Player_FG_Defense_Stats_1_0" FromRole="Players" ToRole="Game_Player_FG_Defense_Stats" />
-          <NavigationProperty Name="Game_Player_Kick_Returner_Stats" Relationship="Self.FK_Game_Player_Kick_Returner_Stats_0_0" FromRole="Players" ToRole="Game_Player_Kick_Returner_Stats" />
+          <NavigationProperty Name="Game_Player_Kick_Returner_Stats" Relationship="Self.FK_Game_Player_Kick_Returner_Stats_2_0" FromRole="Players" ToRole="Game_Player_Kick_Returner_Stats" />
           <NavigationProperty Name="Game_Player_Kicker_Stats" Relationship="Self.FK_Game_Player_Kicker_Stats_2_0" FromRole="Players" ToRole="Game_Player_Kicker_Stats" />
           <NavigationProperty Name="Game_Player_Kickoff_Defenders" Relationship="Self.FK_Game_Player_Kickoff_Defenders_2_0" FromRole="Players" ToRole="Game_Player_Kickoff_Defenders" />
           <NavigationProperty Name="Game_Player_Kickoff_Receiver_Stats" Relationship="Self.FK_Game_Player_Kickoff_Receiver_Stats_1_0" FromRole="Players" ToRole="Game_Player_Kickoff_Receiver_Stats" />
@@ -2694,7 +2686,7 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Game_Player_Kick_Returner_Stats_2_0">
+        <Association Name="FK_Game_Player_Kick_Returner_Stats_1_0">
           <End Role="Franchise" Type="Self.Franchise" Multiplicity="1" />
           <End Role="Game_Player_Kick_Returner_Stats" Type="Self.Game_Player_Kick_Returner_Stats" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2970,7 +2962,7 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Game_Player_Kick_Returner_Stats_1_0">
+        <Association Name="FK_Game_Player_Kick_Returner_Stats_0_0">
           <End Role="Game" Type="Self.Game" Multiplicity="1" />
           <End Role="Game_Player_Kick_Returner_Stats" Type="Self.Game_Player_Kick_Returner_Stats" Multiplicity="*" />
           <ReferentialConstraint>
@@ -3174,7 +3166,7 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Game_Player_Kick_Returner_Stats_0_0">
+        <Association Name="FK_Game_Player_Kick_Returner_Stats_2_0">
           <End Role="Players" Type="Self.Player" Multiplicity="1" />
           <End Role="Game_Player_Kick_Returner_Stats" Type="Self.Game_Player_Kick_Returner_Stats" Multiplicity="*" />
           <ReferentialConstraint>
@@ -3579,7 +3571,7 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
             <End Role="Franchise" EntitySet="Franchises" />
             <End Role="Game_Player_FG_Defense_Stats" EntitySet="Game_Player_FG_Defense_Stats" />
           </AssociationSet>
-          <AssociationSet Name="FK_Game_Player_Kick_Returner_Stats_2_0" Association="Self.FK_Game_Player_Kick_Returner_Stats_2_0">
+          <AssociationSet Name="FK_Game_Player_Kick_Returner_Stats_1_0" Association="Self.FK_Game_Player_Kick_Returner_Stats_1_0">
             <End Role="Franchise" EntitySet="Franchises" />
             <End Role="Game_Player_Kick_Returner_Stats" EntitySet="Game_Player_Kick_Returner_Stats" />
           </AssociationSet>
@@ -3671,7 +3663,7 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
             <End Role="Game" EntitySet="Games" />
             <End Role="Game_Player_FG_Defense_Stats" EntitySet="Game_Player_FG_Defense_Stats" />
           </AssociationSet>
-          <AssociationSet Name="FK_Game_Player_Kick_Returner_Stats_1_0" Association="Self.FK_Game_Player_Kick_Returner_Stats_1_0">
+          <AssociationSet Name="FK_Game_Player_Kick_Returner_Stats_0_0" Association="Self.FK_Game_Player_Kick_Returner_Stats_0_0">
             <End Role="Game" EntitySet="Games" />
             <End Role="Game_Player_Kick_Returner_Stats" EntitySet="Game_Player_Kick_Returner_Stats" />
           </AssociationSet>
@@ -3739,7 +3731,7 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
             <End Role="Players" EntitySet="Players" />
             <End Role="Game_Player_FG_Defense_Stats" EntitySet="Game_Player_FG_Defense_Stats" />
           </AssociationSet>
-          <AssociationSet Name="FK_Game_Player_Kick_Returner_Stats_0_0" Association="Self.FK_Game_Player_Kick_Returner_Stats_0_0">
+          <AssociationSet Name="FK_Game_Player_Kick_Returner_Stats_2_0" Association="Self.FK_Game_Player_Kick_Returner_Stats_2_0">
             <End Role="Players" EntitySet="Players" />
             <End Role="Game_Player_Kick_Returner_Stats" EntitySet="Game_Player_Kick_Returner_Stats" />
           </AssociationSet>
@@ -4029,8 +4021,6 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
                 <ScalarProperty Name="Kickoff_Return_Yards_Long" ColumnName="Kickoff_Return_Yards_Long" />
                 <ScalarProperty Name="Kickoffs_Returned_Fumbles" ColumnName="Kickoffs_Returned_Fumbles" />
                 <ScalarProperty Name="Kickoffs_Returned_Fumbles_Lost" ColumnName="Kickoffs_Returned_Fumbles_Lost" />
-                <ScalarProperty Name="Kickoffs_Muffed" ColumnName="Kickoffs_Muffed" />
-                <ScalarProperty Name="Kickoffs_Muffed_Lost" ColumnName="Kickoffs_Muffed_Lost" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -4188,8 +4178,6 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
                 <ScalarProperty Name="Punt_Returned_Yards_Long" ColumnName="Punt_Returned_Yards_Long" />
                 <ScalarProperty Name="Punts_Returned_Fumbles" ColumnName="Punts_Returned_Fumbles" />
                 <ScalarProperty Name="Punts_Returned_Fumbles_Lost" ColumnName="Punts_Returned_Fumbles_Lost" />
-                <ScalarProperty Name="Punts_Muffed" ColumnName="Punts_Muffed" />
-                <ScalarProperty Name="Punts_Muffed_Lost" ColumnName="Punts_Muffed_Lost" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

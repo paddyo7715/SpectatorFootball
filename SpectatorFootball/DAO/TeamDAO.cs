@@ -11,6 +11,7 @@ using System.Data.SqlClient;
 using System.Data.Entity;
 using SpectatorFootball.Free_AgencyNS;
 using SpectatorFootball.Team;
+using SpectatorFootball.Enum;
 
 namespace SpectatorFootball.DAO
 {
@@ -86,7 +87,7 @@ namespace SpectatorFootball.DAO
             }
 
         }
-        public Team_Player_Accum_Stats getTeamSeasonStats(long season_id, long franchise_id, string league_filepath)
+        public Team_Player_Accum_Stats getTeamSeasonPlayerStats(long season_id, long franchise_id, string league_filepath)
         {
             Team_Player_Accum_Stats r = new Team_Player_Accum_Stats();
 
@@ -211,7 +212,7 @@ namespace SpectatorFootball.DAO
                         Yards = x.Sum(s => s.Kickoffs_Returned_Yards),
                         Yards_Long = x.Max(s => s.Kickoff_Return_Yards_Long),
                         TDs = x.Sum(s => s.Kickoffs_Returned_TDs),
-                        Fumbles = x.Sum(s => s.Kickoffs_Returned_Fumbles + s.Kickoffs_Muffed)
+                        Fumbles = x.Sum(s => s.Kickoffs_Returned_Fumbles)
                     }).OrderByDescending(x => x.Returns).ToList();
 
                 PuntReturnStats = context.Game_Player_Punt_Returner_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 &&
@@ -223,7 +224,7 @@ namespace SpectatorFootball.DAO
                         Yards = x.Sum(s => s.Punts_Returned_Yards),
                         Yards_Long = x.Max(s => s.Punt_Returned_Yards_Long),
                         TDs = x.Sum(s => s.Punts_Returned_TDs),
-                        Fumbles = x.Sum(s => s.Punts_Returned_Fumbles + s.Punts_Muffed)
+                        Fumbles = x.Sum(s => s.Punts_Returned_Fumbles)
                     }).OrderByDescending(x => x.Returns).ToList();
 
             }
@@ -240,6 +241,92 @@ namespace SpectatorFootball.DAO
             r.PuntRet_Stats = PuntReturnStats;
 
             return r;
+        }
+        public TeamStatsRaw getTeamStats(long season_id, long franchise_id, string league_filepath)
+        {
+            string con = Common.LeageConnection.Connect(league_filepath);
+
+            TeamStatsRaw r = null;
+
+            string sSQL = @"select ifnull(SUM(CASE WHEN Home_Team_Franchise_ID = @Franchise_ID then Home_Score else Away_Score end),0) as Team_Points,
+                       ifnull(SUM(CASE WHEN Home_Team_Franchise_ID <> @Franchise_ID then Away_Score else Home_Score end),0) as Opp_Points,
+                       ifnull(SUM(CASE WHEN Home_Team_Franchise_ID = @Franchise_ID then Home_firstdowns else Away_firstdowns end),0) as Team_First_Downs,
+                       ifnull(SUM(CASE WHEN Home_Team_Franchise_ID <> @Franchise_ID then Away_firstdowns else Home_firstdowns end),0) as Opp_First_Downs,
+                       ifnull(SUM(CASE WHEN Home_Team_Franchise_ID = @Franchise_ID then Home_thirddown_conversions else Away_thirddown_conversions end),0) as Team_Third_Downs_Made,
+                       ifnull(SUM(CASE WHEN Home_Team_Franchise_ID <> @Franchise_ID then Away_thirddown_conversions else Away_thirddown_conversions end),0) as Opp_Third_Downs_Made,
+                       ifnull(SUM(CASE WHEN Home_Team_Franchise_ID = @Franchise_ID then Home_thirddowns else Away_thirddowns end),0) as Team_Third_Downs_Att,
+                       ifnull(SUM(CASE WHEN Home_Team_Franchise_ID <> @Franchise_ID then Away_thirddowns else Away_thirddowns end),0) as Opp_Third_Downs_Att,
+                       ifnull(SUM(CASE WHEN Home_Team_Franchise_ID = @Franchise_ID then Home_fourthdown_conversions else Away_fourthdown_conversions end),0) as Team_fourth_Downs_Made,
+                       ifnull(SUM(CASE WHEN Home_Team_Franchise_ID <> @Franchise_ID then Away_fourthdown_conversions else Away_fourthdown_conversions end),0) as Opp_fourth_Downs_Made,
+                       ifnull(SUM(CASE WHEN Home_Team_Franchise_ID = @Franchise_ID then Home_fourthdowns else Away_fourthdowns end),0) as Team_fourth_Downs_Att,
+                       ifnull(SUM(CASE WHEN Home_Team_Franchise_ID <> @Franchise_ID then Away_fourthdowns else Away_fourthdowns end),0) as Opp_fourth_Downs_Att,
+                       ((select ifnull(sum(p.pass_yards),0) from Game g, Game_Player_Passing_Stats p where g.Season_ID = @Season_ID  and  g.Home_Team_Franchise_ID = @Franchise_ID and g.ID = p.Game_ID) +
+	                   (select ifnull(sum(p.pass_yards),0) from Game g, Game_Player_Passing_Stats p where g.Season_ID = @Season_ID  and g.Away_Team_Franchise_ID = @Franchise_ID and g.ID = p.Game_ID)) as Team_Passing_Yards,
+                       ((select ifnull(sum(p.pass_yards),0) from Game g, Game_Player_Passing_Stats p where g.Season_ID = @Season_ID  and g.Home_Team_Franchise_ID <> @Franchise_ID and g.ID = p.Game_ID) +
+	                   (select ifnull(sum(p.pass_yards),0) from Game g, Game_Player_Passing_Stats p where g.Season_ID = @Season_ID  and g.Away_Team_Franchise_ID <> @Franchise_ID and g.ID = p.Game_ID)) as Opp_Passing_Yards,
+                        ((select ifnull(sum(p.rush_yards),0) from Game g, Game_Player_Rushing_Stats p where g.Season_ID = @Season_ID  and g.Home_Team_Franchise_ID = @Franchise_ID and g.ID = p.Game_ID) +
+	                   (select ifnull(sum(p.rush_yards),0) from Game g, Game_Player_Rushing_Stats p where g.Season_ID = @Season_ID  and g.Away_Team_Franchise_ID = @Franchise_ID and g.ID = p.Game_ID)) as Team_Rushing_Yards,
+                       ((select ifnull(sum(p.rush_yards),0) from Game g, Game_Player_Rushing_Stats p where g.Season_ID = @Season_ID  and g.Home_Team_Franchise_ID <> @Franchise_ID and g.ID = p.Game_ID) +
+	                   (select ifnull(sum(p.rush_yards),0) from Game g, Game_Player_Rushing_Stats p where g.Season_ID = @Season_ID  and g.Away_Team_Franchise_ID <> @Franchise_ID and g.ID = p.Game_ID)) as Opp_Rushing_Yards,
+                         ((select ifnull(sum(p.Def_Sacks),0) from Game g, Game_Player_Defense_Stats p where g.Season_ID = @Season_ID  and g.Home_Team_Franchise_ID = @Franchise_ID and g.ID = p.Game_ID) +
+	                   (select ifnull(sum(p.Def_Sacks),0) from Game g, Game_Player_Defense_Stats p where g.Season_ID = @Season_ID  and g.Away_Team_Franchise_ID = @Franchise_ID and g.ID = p.Game_ID)) as Team_Sacks,
+                       ((select ifnull(sum(p.Def_Sacks),0) from Game g, Game_Player_Defense_Stats p where g.Season_ID = @Season_ID  and g.Home_Team_Franchise_ID <> @Franchise_ID and g.ID = p.Game_ID) +
+	                   (select ifnull(sum(p.Def_Sacks),0) from Game g, Game_Player_Defense_Stats p where g.Season_ID = @Season_ID  and g.Away_Team_Franchise_ID <> @Franchise_ID and g.ID = p.Game_ID)) as Opp_Sacks,
+                          ((select ifnull(sum(p.Kickoffs_Returned_Fumbles_Lost),0) from Game g, Game_Player_Kick_Returner_Stats p where g.Season_ID = @Season_ID  and g.Home_Team_Franchise_ID = @Franchise_ID and g.ID = p.Game_ID) +
+	                   (select ifnull(sum(p.Kickoffs_Returned_Fumbles_Lost),0) from Game g, Game_Player_Kick_Returner_Stats p where g.Season_ID = @Season_ID  and g.Away_Team_Franchise_ID = @Franchise_ID and g.ID = p.Game_ID) +
+	                (select ifnull(sum(p.Fumbles_Lost),0) from Game g, Game_Player_Passing_Stats p where g.Season_ID = @Season_ID  and g.Home_Team_Franchise_ID = @Franchise_ID and g.ID = p.Game_ID) +
+	                   (select ifnull(sum(p.Fumbles_Lost),0) from Game g, Game_Player_Passing_Stats p where g.Season_ID = @Season_ID  and g.Away_Team_Franchise_ID = @Franchise_ID and g.ID = p.Game_ID) +
+	                (select ifnull(sum(p.Punts_Returned_Fumbles_Lost),0) from Game g, Game_Player_Punt_Returner_Stats p where g.Season_ID = @Season_ID  and g.Home_Team_Franchise_ID = @Franchise_ID and g.ID = p.Game_ID) +
+	                   (select ifnull(sum(p.Punts_Returned_Fumbles_Lost),0) from Game g, Game_Player_Punt_Returner_Stats p where g.Season_ID = @Season_ID  and g.Away_Team_Franchise_ID = @Franchise_ID and g.ID = p.Game_ID) +
+	                (select ifnull(sum(p.Fumbles_Lost),0) from Game g, Game_Player_Punter_Stats p where g.Season_ID = @Season_ID  and g.Home_Team_Franchise_ID = @Franchise_ID and g.ID = p.Game_ID) +
+	                   (select ifnull(sum(p.Fumbles_Lost),0) from Game g, Game_Player_Punter_Stats p where g.Season_ID = @Season_ID  and g.Away_Team_Franchise_ID = @Franchise_ID and g.ID = p.Game_ID) +
+	                (select ifnull(sum(p.Fumbles_Lost),0) from Game g, Game_Player_Receiving_Stats p where g.Season_ID = @Season_ID  and g.Home_Team_Franchise_ID = @Franchise_ID and g.ID = p.Game_ID) +
+	                   (select ifnull(sum(p.Fumbles_Lost),0) from Game g, Game_Player_Receiving_Stats p where g.Season_ID = @Season_ID  and g.Away_Team_Franchise_ID = @Franchise_ID and g.ID = p.Game_ID) +
+	                (select ifnull(sum(p.Fumbles_Lost),0) from Game g, Game_Player_Rushing_Stats p where g.Season_ID = @Season_ID  and g.Home_Team_Franchise_ID = @Franchise_ID and g.ID = p.Game_ID) +
+	                   (select ifnull(sum(p.Fumbles_Lost),0) from Game g, Game_Player_Rushing_Stats p where g.Season_ID = @Season_ID  and g.Away_Team_Franchise_ID = @Franchise_ID and g.ID = p.Game_ID)
+	                ) as Team_Turnovers,
+                          ((select ifnull(sum(p.Kickoffs_Returned_Fumbles_Lost),0) from Game g, Game_Player_Kick_Returner_Stats p where g.Season_ID = @Season_ID  and g.Home_Team_Franchise_ID <> @Franchise_ID and g.ID = p.Game_ID) +
+	                   (select ifnull(sum(p.Kickoffs_Returned_Fumbles_Lost),0) from Game g, Game_Player_Kick_Returner_Stats p where g.Season_ID = @Season_ID  and g.Away_Team_Franchise_ID <> @Franchise_ID and g.ID = p.Game_ID) +
+	                (select ifnull(sum(p.Fumbles_Lost),0) from Game g, Game_Player_Passing_Stats p where g.Season_ID = @Season_ID  and g.Home_Team_Franchise_ID <> @Franchise_ID and g.ID = p.Game_ID) +
+	                   (select ifnull(sum(p.Fumbles_Lost),0) from Game g, Game_Player_Passing_Stats p where g.Season_ID = @Season_ID  and g.Away_Team_Franchise_ID <> @Franchise_ID and g.ID = p.Game_ID) +
+	                (select ifnull(sum(p.Punts_Returned_Fumbles_Lost),0) from Game g, Game_Player_Punt_Returner_Stats p where g.Season_ID = @Season_ID  and g.Home_Team_Franchise_ID <> @Franchise_ID and g.ID = p.Game_ID) +
+	                   (select ifnull(sum(p.Punts_Returned_Fumbles_Lost),0) from Game g, Game_Player_Punt_Returner_Stats p where g.Season_ID = @Season_ID  and g.Away_Team_Franchise_ID <> @Franchise_ID and g.ID = p.Game_ID) +
+	                (select ifnull(sum(p.Fumbles_Lost),0) from Game g, Game_Player_Punter_Stats p where g.Season_ID = @Season_ID  and g.Home_Team_Franchise_ID <> @Franchise_ID and g.ID = p.Game_ID) +
+	                   (select ifnull(sum(p.Fumbles_Lost),0) from Game g, Game_Player_Punter_Stats p where g.Season_ID = @Season_ID  and g.Away_Team_Franchise_ID <> @Franchise_ID and g.ID = p.Game_ID) +
+	                (select ifnull(sum(p.Fumbles_Lost),0) from Game g, Game_Player_Receiving_Stats p where g.Season_ID = @Season_ID  and g.Home_Team_Franchise_ID <> @Franchise_ID and g.ID = p.Game_ID) +
+	                   (select ifnull(sum(p.Fumbles_Lost),0) from Game g, Game_Player_Receiving_Stats p where g.Season_ID = @Season_ID  and g.Away_Team_Franchise_ID <> @Franchise_ID and g.ID = p.Game_ID) +
+	                (select ifnull(sum(p.Fumbles_Lost),0) from Game g, Game_Player_Rushing_Stats p where g.Season_ID = @Season_ID  and g.Home_Team_Franchise_ID <> @Franchise_ID and g.ID = p.Game_ID) +
+	                   (select ifnull(sum(p.Fumbles_Lost),0) from Game g, Game_Player_Rushing_Stats p where g.Season_ID = @Season_ID  and g.Away_Team_Franchise_ID <> @Franchise_ID and g.ID = p.Game_ID)
+	                ) as Opp_Turnovers
+                    from Game where Season_ID = @Season_ID  and (Home_Team_Franchise_ID = @Franchise_ID or Away_Team_Franchise_ID = @Franchise_ID) and Week < 1000 and Game_Done = 1; ;";
+
+
+            sSQL = sSQL.Replace("@Season_ID", season_id + "");
+            sSQL = sSQL.Replace("@Franchise_ID", franchise_id + "");
+
+
+            using (var context = new leagueContext(con))
+            {
+                context.Configuration.AutoDetectChangesEnabled = false;
+                r = context.Database.SqlQuery<TeamStatsRaw>(sSQL).First();
+            }
+
+            return r;
+        }
+        public List<Player_Ratings> getTeamRoster(long season_id, long Franchise_id, string league_filepath)
+        {
+            List<Player_Ratings> r = null;
+
+
+            string con = Common.LeageConnection.Connect(league_filepath);
+
+            using (var context = new leagueContext(con))
+            {
+                r = context.Player_Ratings.Where(x => x.Season_ID == season_id && x.Player.Franchise_ID == Franchise_id).Include(x => x.Player).OrderBy(x => x.Player.Last_Name).ThenBy(x => x.Player.First_Name).ToList();
+            }
+            return r;
+
+
         }
     }
 }

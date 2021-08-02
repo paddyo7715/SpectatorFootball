@@ -23,8 +23,6 @@ namespace SpectatorFootball.Models
         public long Kickoff_Return_Yards_Long { get; set; }
         public long Kickoffs_Returned_Fumbles { get; set; }
         public long Kickoffs_Returned_Fumbles_Lost { get; set; }
-        public long Kickoffs_Muffed { get; set; }
-        public long Kickoffs_Muffed_Lost { get; set; }
     
         public virtual Franchise Franchise { get; set; }
         public virtual Game Game { get; set; }

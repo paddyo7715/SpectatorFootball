@@ -172,8 +172,6 @@
           <ScalarProperty Name="Kickoff_Return_Yards_Long" ColumnName="Kickoff_Return_Yards_Long" />
           <ScalarProperty Name="Kickoffs_Returned_Fumbles" ColumnName="Kickoffs_Returned_Fumbles" />
           <ScalarProperty Name="Kickoffs_Returned_Fumbles_Lost" ColumnName="Kickoffs_Returned_Fumbles_Lost" />
-          <ScalarProperty Name="Kickoffs_Muffed" ColumnName="Kickoffs_Muffed" />
-          <ScalarProperty Name="Kickoffs_Muffed_Lost" ColumnName="Kickoffs_Muffed_Lost" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -331,8 +329,6 @@
           <ScalarProperty Name="Punt_Returned_Yards_Long" ColumnName="Punt_Returned_Yards_Long" />
           <ScalarProperty Name="Punts_Returned_Fumbles" ColumnName="Punts_Returned_Fumbles" />
           <ScalarProperty Name="Punts_Returned_Fumbles_Lost" ColumnName="Punts_Returned_Fumbles_Lost" />
-          <ScalarProperty Name="Punts_Muffed" ColumnName="Punts_Muffed" />
-          <ScalarProperty Name="Punts_Muffed_Lost" ColumnName="Punts_Muffed_Lost" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

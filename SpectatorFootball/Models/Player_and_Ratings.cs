@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SpectatorFootball.Models
 {
-    class Player_and_Ratings
+    public class Player_and_Ratings
     {
         public Player p { get; set; }
         public List<Player_Ratings> pr { get; set; }
