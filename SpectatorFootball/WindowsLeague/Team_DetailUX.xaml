@@ -821,40 +821,62 @@
                 </TabItem>
                 <TabItem Header="Roster" Name="tabRoster">
                     <StackPanel Orientation="Vertical"  Width="1000" Height="700">
-                        <ListView Name="lstRoster" Style="{StaticResource SchedWeekLVStyle}" Width="650">
-                            <ListView.ItemContainerStyle>
-                                <Style TargetType="ListViewItem" >
-                                    <Setter Property="Focusable" Value="false"/>
+                        <ListView Name="detRoster" Style="{StaticResource SmallAltListViewStyle}" HorizontalContentAlignment="Center"  AlternationCount="2" Width="940" Height="400">
+
+                            <ListView.Resources>
+                                <Style TargetType="{x:Type GridViewColumnHeader}">
+                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
                                 </Style>
-                            </ListView.ItemContainerStyle>
+
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="Focusable" Value="false"/>
+                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                    <Style.Triggers>
+                                        <Trigger Property="ItemsControl.AlternationIndex"  Value="0">
+                                            <Setter Property="Background" Value="LightBlue" />
+                                        </Trigger>
+                                        <Trigger Property="ItemsControl.AlternationIndex"  Value="1">
+                                            <Setter Property="Background" Value="LightGray" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ListView.Resources>
                             <ListView.View>
-                                <GridView AllowsColumnReorder="false">
-                                    <GridView.ColumnHeaderContainerStyle>
-                                        <Style TargetType="{x:Type GridViewColumnHeader}">
-                                            <Setter Property="IsEnabled" Value="False"/>
-                                        </Style>
-                                    </GridView.ColumnHeaderContainerStyle>
-                                    <GridViewColumn Header="Team">
+                                <GridView>
+                                    <GridViewColumn Header="Num" Width="40" DisplayMemberBinding="{Binding Jersey_Number}" />
+                                    <GridViewColumn Header="Name"  Width="200">
+                                        <GridViewColumn.HeaderContainerStyle>
+                                            <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                <Setter Property="HorizontalContentAlignment" Value="Left" />
+                                            </Style>
+                                        </GridViewColumn.HeaderContainerStyle>
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <Label Width="150" HorizontalContentAlignment="Left" Content="{Binding Path=col1}" Style="{StaticResource boxscoreTeamLabel}" FontWeight="Bold"></Label>
+                                                <TextBlock TextAlignment="Left">
+                                        <Run Text="{Binding Player.First_Name}" />
+                                        <Run Text=" " /> <!-- space -->
+                                        <Run Text="{Binding Player.Last_Name}" />
+                                                </TextBlock>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
-                                    <GridViewColumn Header="">
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <Label Width="300" HorizontalContentAlignment="Center" Content="{Binding Path=col2}" Style="{StaticResource boxscoreTeamLabel}" FontWeight="Bold"></Label>
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
-                                    <GridViewColumn Header="Opponents">
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <Label Width="150" HorizontalContentAlignment="Right" Content="{Binding Path=col3}" Style="{StaticResource boxscoreTeamLabel}" FontWeight="Bold"></Label>
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
+                                    <GridViewColumn Header="Age" Width="40" DisplayMemberBinding="{Binding Age}"  />
+                                    <GridViewColumn Header="Pos" Width="40" DisplayMemberBinding="{Binding Pos}" />
+                                    <GridViewColumn Header="All" Width="50" DisplayMemberBinding="{Binding Ratings.OverAll, StringFormat='{}{0:#0.00}' }"  />
+                                    <GridViewColumn Header="Acc" Width="30" DisplayMemberBinding="{Binding Ratings.Accuracy_Rating}" />
+                                    <GridViewColumn Header="Dsc" Width="30" DisplayMemberBinding="{Binding Ratings.Decision_Making}" />
+                                    <GridViewColumn Header="Arm" Width="40" DisplayMemberBinding="{Binding Ratings.Arm_Strength_Rating}" />
+                                    <GridViewColumn Header="PBlk" Width="40" DisplayMemberBinding="{Binding Ratings.Pass_Block_Rating}" />
+                                    <GridViewColumn Header="RBlk" Width="40" DisplayMemberBinding="{Binding Ratings.Run_Block_Rating}" />
+                                    <GridViewColumn Header="RPwr" Width="40" DisplayMemberBinding="{Binding Ratings.Running_Power_Rating}" />
+                                    <GridViewColumn Header="Spd" Width="40" DisplayMemberBinding="{Binding Ratings.Speed_Rating}" />
+                                    <GridViewColumn Header="Agil" Width="40" DisplayMemberBinding="{Binding Ratings.Agilty_Rating}" />
+                                    <GridViewColumn Header="Hnd" Width="40" DisplayMemberBinding="{Binding Ratings.Hands_Rating}" />
+                                    <GridViewColumn Header="Patt" Width="40" DisplayMemberBinding="{Binding Ratings.Pass_Attack}" />
+                                    <GridViewColumn Header="RAtt" Width="40" DisplayMemberBinding="{Binding Ratings.Run_Attack}" />
+                                    <GridViewColumn Header="Tack" Width="40" DisplayMemberBinding="{Binding Ratings.Tackle_Rating}" />
+                                    <GridViewColumn Header="Leg S" Width="40" DisplayMemberBinding="{Binding Ratings.Leg_Strength}" />
+                                    <GridViewColumn Header="Leg A" Width="40" DisplayMemberBinding="{Binding Ratings.Kicking_Accuracy}" />
                                 </GridView>
                             </ListView.View>
                         </ListView>

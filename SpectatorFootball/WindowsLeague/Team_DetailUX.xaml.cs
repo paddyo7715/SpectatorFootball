@@ -219,15 +219,12 @@ namespace SpectatorFootball.WindowsLeague
             //roster tab and do not allow team attributes to be altered
             if (pw.Loaded_League.LState == Enum.League_State.Previous_Year)
             {
-                tabRoster.Visibility = Visibility.Hidden;
-                DetSave.Visibility = Visibility.Hidden;
+                DisableUpdates();
             }
             else
             {
-                tabRoster.Visibility = Visibility.Visible;
-                DetSave.Visibility = Visibility.Visible;
-
                 List<Player_Ratings> RosterList = ts.getTeamRoster(pw.Loaded_League.season.ID, this_team.Franchise_ID, pw.Loaded_League.season.League_Structure_by_Season[0].Short_Name);
+                detRoster.ItemsSource = RosterList;
             }
 
             this.pw = pw;
@@ -1391,6 +1388,68 @@ namespace SpectatorFootball.WindowsLeague
                 dpp.Left = (SystemParameters.PrimaryScreenWidth - dpp.Width) / 2;
                 dpp.ShowDialog();
             }
+        }
+        private void DisableUpdates()
+        {
+            tabRoster.Visibility = Visibility.Hidden;
+            DetSave.Visibility = Visibility.Hidden;
+
+            newtCityAbb.IsEnabled = false;
+            newtCity.IsEnabled = false;
+            newtNickname.IsEnabled = false;
+            newtStadium.IsEnabled = false;
+            newtStadiumLocation.IsEnabled = false;
+            newl1FieldType.IsEnabled = false;
+            newl1FieldColor.IsEnabled = false;
+            newtStadiumCapacity.IsEnabled = false;
+            newtStadiumPath.IsEnabled = false;
+            newtbtnStadiumPath.IsEnabled = false;
+
+            newtHelmentColor.IsEnabled = false;
+            newtHelmentLogoColor.IsEnabled = false;
+            newtFacemaskColor.IsEnabled = false;
+
+            newtHelmetImgPath.IsEnabled = false;
+            newtbtnHelmetImgPath.IsEnabled = false;
+
+            newtSockColor.IsEnabled = false;
+            newtCleatsColor.IsEnabled = false;
+
+            newtHomeJerseyColor.IsEnabled = false;
+            newtHomeSleeveColor.IsEnabled = false;
+            newtHomeJerseyNumberColor.IsEnabled = false;
+            newtHomeNumberOutlineColor.IsEnabled = false;
+            newtHomeShoulderStripeColor.IsEnabled = false;
+
+            newtHomeJerseySleeve1Color.IsEnabled = false;
+            newtHomeJerseySleeve2Color.IsEnabled = false;
+            newtHomeJerseySleeve3Color.IsEnabled = false;
+            newtHomeJerseySleeve4Color.IsEnabled = false;
+            newtHomeJerseySleeve5Color.IsEnabled = false;
+            newtHomeJerseySleeve6Color.IsEnabled = false;
+
+            newtHomePantsColor.IsEnabled = false;
+            newtHomePantsStripe1Color.IsEnabled = false;
+            newtHomePantsStripe2Color.IsEnabled = false;
+            newtHomePantsStripe3Color.IsEnabled = false;
+
+            newtAwayJerseyColor.IsEnabled = false;
+            newtAwaySleeveColor.IsEnabled = false;
+            newtAwayJerseyNumberColor.IsEnabled = false;
+            newtAwayNumberOutlineColor.IsEnabled = false;
+            newtAwayShoulderStripeColor.IsEnabled = false;
+
+            newtAwayJerseySleeve1Color.IsEnabled = false;
+            newtAwayJerseySleeve2Color.IsEnabled = false;
+            newtAwayJerseySleeve3Color.IsEnabled = false;
+            newtAwayJerseySleeve4Color.IsEnabled = false;
+            newtAwayJerseySleeve5Color.IsEnabled = false;
+            newtAwayJerseySleeve6Color.IsEnabled = false;
+
+            newtAwayPantsColor.IsEnabled = false;
+            newtAwayPantsStripe1Color.IsEnabled = false;
+            newtAwayPantsStripe2Color.IsEnabled = false;
+            newtAwayPantsStripe3Color.IsEnabled = false;
         }
 
     }

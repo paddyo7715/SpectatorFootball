@@ -410,5 +410,16 @@
             <Setter Property="Foreground" Value="Black" />
             <Setter Property="Background" Value="LightGray"/>
         </Style>
+
+        <!-- Small alternating color listview -->
+        <Style TargetType="ListView" x:Key="SmallAltListViewStyle">
+            <Setter Property="Margin" Value="10" />
+            <Setter Property="FontFamily" Value="Verdana"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="Normal"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+        </Style>
     </Application.Resources>
 </Application>
