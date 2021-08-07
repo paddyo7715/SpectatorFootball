@@ -322,7 +322,7 @@ namespace SpectatorFootball.DAO
 
             using (var context = new leagueContext(con))
             {
-                r = context.Player_Ratings.Where(x => x.Season_ID == season_id && x.Player.Franchise_ID == Franchise_id).Include(x => x.Player).OrderBy(x => x.Player.Last_Name).ThenBy(x => x.Player.First_Name).ToList();
+                r = context.Player_Ratings.Where(x => x.Season_ID == season_id && x.Player.Franchise_ID == Franchise_id).Include(x => x.Player).OrderBy(x => x.Player.Pos).ThenBy(x => x.Player.Last_Name).ThenBy(x => x.Player.First_Name).ToList();
             }
             return r;
 

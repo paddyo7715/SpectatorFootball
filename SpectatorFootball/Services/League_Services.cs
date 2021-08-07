@@ -309,15 +309,14 @@ namespace SpectatorFootball
                 int training_camp_count = m[4];
                 int Unplayed_Regular_Season_Games_Count = m[5];
                 int anyPlayer_Regular_Season_Games = m[6];
-                int playoff_teams_count = m[7];
-                int Unplayed_Playoff_Games_Count = m[8];
-                int player_awards_count = m[9];
-                int teams_in_league_count = m[10];
+                int Champ_game_played = m[7];
+                int player_awards_count = m[8];
+                int teams_in_league_count = m[9];
 
-                if (draft_completed_count == draft_count)
-                    r = League_State.Draft_Completed;
-                else if (draft_count > 0 && draft_completed_count > 0)
+                if (draft_count > 0 && draft_completed_count > 0)
                     r = League_State.Draft_Started;
+                else if (draft_count == 0 && draft_completed_count > 0)
+                    r = League_State.Draft_Completed;
 
                 if (r == League_State.Season_Started || r == League_State.Draft_Started)
                     return r;
@@ -330,7 +329,7 @@ namespace SpectatorFootball
                         r = League_State.FreeAgency_Started;
                     }
 
-                if (r == League_State.FreeAgency_Started)
+                if (r != League_State.FreeAgency_Completed)
                     return r;
 
 
@@ -342,7 +341,7 @@ namespace SpectatorFootball
                         r = League_State.Training_Camp_Started;
                 }
 
-                if (r == League_State.Training_Camp_Started)
+                if (r != League_State.Training_Camp_Ended)
                     return r;
 
                 if (Unplayed_Regular_Season_Games_Count > 0)
@@ -353,16 +352,15 @@ namespace SpectatorFootball
                 else
                     r = League_State.Regular_Season_Ended;
 
-                if (r == League_State.Regular_Season_in_Progress)
+                if (r != League_State.Regular_Season_Ended)
                     return r;
 
-                if (playoff_teams_count > 0)
-                {
-                    if (Unplayed_Playoff_Games_Count > 0)
-                        r = League_State.Playoffs_In_Progress;
-                }
+                if (Champ_game_played == 0)
+                    r = League_State.Playoffs_In_Progress;
+                else
+                    r = League_State.Playoffs_Ended;
 
-                if (r == League_State.Playoffs_In_Progress)
+                if (r != League_State.Playoffs_Ended)
                     return r;
 
                 if (player_awards_count > 0)

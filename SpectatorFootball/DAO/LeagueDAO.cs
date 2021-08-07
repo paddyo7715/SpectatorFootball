@@ -311,8 +311,7 @@ namespace SpectatorFootball
             int training_camp_count = 0;
             int Unplayed_Regular_Season_Games_Count = 0;
             int anyPlayer_Regular_Season_Games = 0;
-            int Playoff_Teams = 0;
-            int Unplayed_Playoff_Games_Count = 0;
+            int Champ_game_played = 0;
             int player_awards_count = 0;
             int teams_in_league_count = 0;
 
@@ -332,13 +331,12 @@ namespace SpectatorFootball
                 else
                     anyPlayer_Regular_Season_Games = 0;
 
-                Playoff_Teams = context.Playoff_Teams_by_Season.Where(x => x.Season_ID == season_id).Count();
-                Unplayed_Playoff_Games_Count = context.Games.Where(x => x.Season_ID == season_id && x.Week >= 1000 && x.Game_Done != 1).Count();
+                Champ_game_played = context.Games.Where(x => x.Season_ID == season_id && x.Championship_Game == 1 && x.Game_Done == 1).Count();
                 player_awards_count = context.Player_Awards.Where(x => x.Season_ID == season_id).Count();
                 teams_in_league_count = context.Teams_by_Season.Where(x => x.Season_ID == season_id).Count();
             }
 
-            return new int[] { draft_count, draft_completed_count, teamsLessThanTCFull_Count, teamsnotFull_Count, training_camp_count, Unplayed_Regular_Season_Games_Count, anyPlayer_Regular_Season_Games, Playoff_Teams, Unplayed_Playoff_Games_Count , player_awards_count, teams_in_league_count };
+            return new int[] { draft_count, draft_completed_count, teamsLessThanTCFull_Count, teamsnotFull_Count, training_camp_count, Unplayed_Regular_Season_Games_Count, anyPlayer_Regular_Season_Games, Champ_game_played, player_awards_count, teams_in_league_count };
 
         }
         public List<Season> getAllSeasons(string league_filepath)
