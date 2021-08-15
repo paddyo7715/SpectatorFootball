@@ -9,6 +9,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
+        <local1:OverallConverter x:Key="OverallConverter" />
+        <local1:IsPlayertoWatchConverter x:Key="IsPlayertoWatchConverter" />
         <local1:iPosConverter x:Key="iPosConverter" />
         <local1:DoubleFormatConverter x:Key="DoubleFormatConverter" />
         <local1:ColorConverter x:Key="ColorConverter" />
@@ -840,11 +842,21 @@
                                         <Trigger Property="ItemsControl.AlternationIndex"  Value="1">
                                             <Setter Property="Background" Value="LightGray" />
                                         </Trigger>
+                                        <DataTrigger
+                                            Binding="{Binding Path=., Converter={StaticResource IsPlayertoWatchConverter}}"
+                                            Value='True'>
+                                            <Setter Property="Background" Value="Cyan" />
+                                        </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
                             </ListView.Resources>
                             <ListView.View>
-                                <GridView>
+                                <GridView AllowsColumnReorder="false">
+                                    <GridView.ColumnHeaderContainerStyle>
+                                        <Style TargetType="{x:Type GridViewColumnHeader}">
+                                            <Setter Property="IsEnabled" Value="False"/>
+                                        </Style>
+                                    </GridView.ColumnHeaderContainerStyle>
                                     <GridViewColumn Header="Num" Width="40" DisplayMemberBinding="{Binding Player.Jersey_Number}" />
                                     <GridViewColumn Header="Name">
                                         <GridViewColumn.CellTemplate>
@@ -867,7 +879,7 @@
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
-                                    <GridViewColumn Header="All" Width="50" DisplayMemberBinding="{Binding Ratings.OverAll, StringFormat='{}{0:#0.00}' }"  />
+                                    <GridViewColumn Header="All" Width="50" DisplayMemberBinding="{Binding Path=., Converter={StaticResource OverallConverter}}"  />
                                     <GridViewColumn Header="Acc" Width="30" DisplayMemberBinding="{Binding Accuracy_Rating}" />
                                     <GridViewColumn Header="Dsc" Width="30" DisplayMemberBinding="{Binding Decision_Making_Rating}" />
                                     <GridViewColumn Header="Arm" Width="40" DisplayMemberBinding="{Binding Arm_Strength_Rating}" />

@@ -4,7 +4,7 @@ using SpectatorFootball.Models;
 using SpectatorFootball.Enum;
 using log4net;
 
-namespace SpectatorFootball
+namespace SpectatorFootball.PlayerNS
 {
 
     public class Player_Helper

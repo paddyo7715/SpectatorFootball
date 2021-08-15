@@ -463,7 +463,7 @@
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Season_ID" ColumnName="Season_ID" />
           <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
-          <ScalarProperty Name="Award" ColumnName="Award" />
+          <ScalarProperty Name="Award_ID" ColumnName="Award_ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

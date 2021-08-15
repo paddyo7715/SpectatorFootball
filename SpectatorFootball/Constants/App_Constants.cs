@@ -390,6 +390,9 @@ namespace SpectatorFootball
         //Stats
         public const double MAX_QBR = 158.3;
 
+        //Roster
+        public const double PLAYER_TO_WATCH_MIN = 87.0;
+
 
     }
 }

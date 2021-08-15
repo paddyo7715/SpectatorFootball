@@ -2,6 +2,7 @@
 using SpectatorFootball.Enum;
 using SpectatorFootball.Models;
 using SpectatorFootball.Team;
+using SpectatorFootball.PlayerNS;
 using System;
 using System.Collections.Generic;
 using System.Linq;

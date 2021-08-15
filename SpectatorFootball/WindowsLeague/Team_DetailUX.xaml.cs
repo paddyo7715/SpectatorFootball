@@ -41,9 +41,12 @@ namespace SpectatorFootball.WindowsLeague
 
         public Uniform_Image Uniform_Img { get; set; }
 
+        private int Sort_Asc = 0;
         public List<WeeklyScheduleRec> Team_Sched_List { get; set; }
 
         public Team_Player_Accum_Stats Team_Stats = null;
+
+        public List<Player_Ratings> RosterList = null;
 
         private Boolean bLoadingForm = true;
         public bool Event_from_Code { get; set; } = false;
@@ -211,7 +214,7 @@ namespace SpectatorFootball.WindowsLeague
 
             List<Three_Coll_List> t_Stats_lst = ts.getTeamStats(pw.Loaded_League.season.League_Structure_by_Season[0].Short_Name,
                 pw.Loaded_League.season.ID, this_team.Franchise_ID);
-     
+
             lstTeamOppStats.ItemsSource = t_Stats_lst;
             ((GridView)lstTeamOppStats.View).Columns[0].Header = this_team.City;
 
@@ -223,7 +226,7 @@ namespace SpectatorFootball.WindowsLeague
             }
             else
             {
-                List<Player_Ratings> RosterList = ts.getTeamRoster(pw.Loaded_League.season.ID, this_team.Franchise_ID, pw.Loaded_League.season.League_Structure_by_Season[0].Short_Name);
+                RosterList = ts.getTeamRoster(pw.Loaded_League.season.ID, this_team.Franchise_ID, pw.Loaded_League.season.League_Structure_by_Season[0].Short_Name);
                 detRoster.ItemsSource = RosterList;
             }
 
@@ -1451,7 +1454,6 @@ namespace SpectatorFootball.WindowsLeague
             newtAwayPantsStripe2Color.IsEnabled = false;
             newtAwayPantsStripe3Color.IsEnabled = false;
         }
-
     }
-
 }
+ 

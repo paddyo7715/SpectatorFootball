@@ -451,7 +451,7 @@
     <Property Name="ID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Season_ID" Type="integer" Nullable="false" />
     <Property Name="Player_ID" Type="integer" Nullable="false" />
-    <Property Name="Award" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+    <Property Name="Award_ID" Type="integer" Nullable="false" />
   </EntityType>
   <EntityType Name="Player_Ratings">
     <Key>
@@ -1382,6 +1382,18 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Player_Awards_2_0">
+    <End Role="Award" Type="Self.Award" Multiplicity="1" />
+    <End Role="Player_Awards" Type="Self.Player_Awards" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Award">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Player_Awards">
+        <PropertyRef Name="Award_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Player_Ratings_0_0">
     <End Role="Season" Type="Self.Season" Multiplicity="1" />
     <End Role="Player_Ratings" Type="Self.Player_Ratings" Multiplicity="*" />
@@ -1801,6 +1813,10 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
     </AssociationSet>
     <AssociationSet Name="FK_Player_Awards_1_0" Association="Self.FK_Player_Awards_1_0">
       <End Role="Players" EntitySet="Players" />
+      <End Role="Player_Awards" EntitySet="Player_Awards" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Player_Awards_2_0" Association="Self.FK_Player_Awards_2_0">
+      <End Role="Award" EntitySet="Award" />
       <End Role="Player_Awards" EntitySet="Player_Awards" />
     </AssociationSet>
     <AssociationSet Name="FK_Player_Ratings_0_0" Association="Self.FK_Player_Ratings_0_0">

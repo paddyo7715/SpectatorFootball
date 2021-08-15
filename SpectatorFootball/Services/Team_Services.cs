@@ -8,6 +8,7 @@ using SpectatorFootball.League;
 using System.Linq;
 using System.IO;
 using SpectatorFootball.Team;
+using SpectatorFootball.PlayerNS;
 
 namespace SpectatorFootball
 {

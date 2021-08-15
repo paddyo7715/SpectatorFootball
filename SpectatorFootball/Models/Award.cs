@@ -14,8 +14,17 @@ namespace SpectatorFootball.Models
     
     public partial class Award
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Award()
+        {
+            this.Player_Awards = new HashSet<Player_Awards>();
+        }
+    
         public long ID { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Player_Awards> Player_Awards { get; set; }
     }
 }

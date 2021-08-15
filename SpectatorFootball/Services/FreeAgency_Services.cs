@@ -3,6 +3,7 @@ using SpectatorFootball.Enum;
 using SpectatorFootball.Free_AgencyNS;
 using SpectatorFootball.League;
 using SpectatorFootball.Models;
+using SpectatorFootball.PlayerNS;
 using System;
 using System.Collections.Generic;
 using System.IO;

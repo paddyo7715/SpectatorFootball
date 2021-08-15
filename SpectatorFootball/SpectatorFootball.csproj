@@ -134,7 +134,9 @@
     <Compile Include="BindingConverters\inttoWeight.cs" />
     <Compile Include="BindingConverters\iPosConverter.cs" />
     <Compile Include="BindingConverters\isNullConverter.cs" />
+    <Compile Include="BindingConverters\IsPlayertoWatchConverter.cs" />
     <Compile Include="BindingConverters\longiPosConverter.cs" />
+    <Compile Include="BindingConverters\OverallConverter.cs" />
     <Compile Include="BindingConverters\qtrConverter.cs" />
     <Compile Include="BindingConverters\SpeedInttoString.cs" />
     <Compile Include="BindingConverters\StadiumImageConverter.cs" />
@@ -177,6 +179,7 @@
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Blocking_Accum_Stats.cs" />
+    <Compile Include="Models\Blocking_Accum_Stats_by_year.cs" />
     <Compile Include="Models\BoxScore.cs" />
     <Compile Include="Models\Conference.cs">
       <DependentUpon>LeagueEDM.tt</DependentUpon>
@@ -184,6 +187,7 @@
     <Compile Include="Models\DBVersion.cs">
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Defense_Accum_Stats_by_year.cs" />
     <Compile Include="Models\Division.cs">
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
@@ -258,7 +262,9 @@
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Kicking_Accum_Stats.cs" />
+    <Compile Include="Models\Kicking_Accum_Stats_by_year.cs" />
     <Compile Include="Models\KickReturn_Accum_Stats.cs" />
+    <Compile Include="Models\KickReturn_Accum_Stats_by_year.cs" />
     <Compile Include="Models\LeagueEDM.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -279,7 +285,9 @@
     </Compile>
     <Compile Include="Models\Passing_Accum_Stats.cs" />
     <Compile Include="Models\Defense_Accum_Stats.cs" />
+    <Compile Include="Models\Passing_Accum_Stats_by_year.cs" />
     <Compile Include="Models\Pass_Defense_Accum_Stats.cs" />
+    <Compile Include="Models\Pass_Defense_Accum_Stats_by_year.cs" />
     <Compile Include="Models\Penalty.cs">
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
@@ -298,9 +306,13 @@
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Punting_Accum_Stats.cs" />
+    <Compile Include="Models\Punting_Accum_Stats_by_year.cs" />
     <Compile Include="Models\PuntReturns_Accum_Stats.cs" />
+    <Compile Include="Models\PuntReturns_Accum_Stats_by_year.cs" />
     <Compile Include="Models\Receiving_Accum_Stats.cs" />
+    <Compile Include="Models\Receiving_Accum_Stats_by_year.cs" />
     <Compile Include="Models\Rushing_Accum_Stats.cs" />
+    <Compile Include="Models\Rushing_Accum_Stats_by_year.cs" />
     <Compile Include="Models\Sched_Week_With_Name.cs" />
     <Compile Include="Models\Season.cs">
       <DependentUpon>LeagueEDM.tt</DependentUpon>
@@ -315,14 +327,18 @@
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\WeeklyScheduleRec.cs" />
+    <Compile Include="Player\Player_Card_Data.cs" />
+    <Compile Include="Player\Team_Player_Accum_Stats_by_year.cs" />
     <Compile Include="Playoffs\Playoff_Helper.cs" />
     <Compile Include="Services\FreeAgency_Services.cs" />
     <Compile Include="Draft\Draft_Need.cs" />
     <Compile Include="Services\Game_Services.cs" />
+    <Compile Include="Services\Player_Services.cs" />
     <Compile Include="Services\Schedule_Services.cs" />
     <Compile Include="Services\TrainingCamp_Services.cs" />
     <Compile Include="Team\Team_Player_Accum_Stats.cs" />
     <Compile Include="Team\Three_Coll_List.cs" />
+    <Compile Include="Team\Two_Coll_List.cs" />
     <Compile Include="Training_Camp\TrainingCamp_Helper.cs" />
     <Compile Include="WindowsLeague\BoxScore_Popup.xaml.cs">
       <DependentUpon>BoxScore_Popup.xaml</DependentUpon>

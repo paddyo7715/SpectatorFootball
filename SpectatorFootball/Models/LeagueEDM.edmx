@@ -456,7 +456,7 @@
           <Property Name="ID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Season_ID" Type="integer" Nullable="false" />
           <Property Name="Player_ID" Type="integer" Nullable="false" />
-          <Property Name="Award" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="Award_ID" Type="integer" Nullable="false" />
         </EntityType>
         <EntityType Name="Player_Ratings">
           <Key>
@@ -1387,6 +1387,18 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Player_Awards_2_0">
+          <End Role="Award" Type="Self.Award" Multiplicity="1" />
+          <End Role="Player_Awards" Type="Self.Player_Awards" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Award">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Player_Awards">
+              <PropertyRef Name="Award_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Player_Ratings_0_0">
           <End Role="Season" Type="Self.Season" Multiplicity="1" />
           <End Role="Player_Ratings" Type="Self.Player_Ratings" Multiplicity="*" />
@@ -1808,6 +1820,10 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
             <End Role="Players" EntitySet="Players" />
             <End Role="Player_Awards" EntitySet="Player_Awards" />
           </AssociationSet>
+          <AssociationSet Name="FK_Player_Awards_2_0" Association="Self.FK_Player_Awards_2_0">
+            <End Role="Award" EntitySet="Award" />
+            <End Role="Player_Awards" EntitySet="Player_Awards" />
+          </AssociationSet>
           <AssociationSet Name="FK_Player_Ratings_0_0" Association="Self.FK_Player_Ratings_0_0">
             <End Role="Season" EntitySet="Season" />
             <End Role="Player_Ratings" EntitySet="Player_Ratings" />
@@ -1861,6 +1877,7 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
           <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Player_Awards" Relationship="Self.FK_Player_Awards_2_0" FromRole="Award" ToRole="Player_Awards" />
         </EntityType>
         <EntityType Name="Conference">
           <Key>
@@ -2409,7 +2426,8 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
           <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Season_ID" Type="Int64" Nullable="false" />
           <Property Name="Player_ID" Type="Int64" Nullable="false" />
-          <Property Name="Award" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Award_ID" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Award" Relationship="Self.FK_Player_Awards_2_0" FromRole="Player_Awards" ToRole="Award" />
           <NavigationProperty Name="Season" Relationship="Self.FK_Player_Awards_0_0" FromRole="Player_Awards" ToRole="Season" />
           <NavigationProperty Name="Player" Relationship="Self.FK_Player_Awards_1_0" FromRole="Player_Awards" ToRole="Players" />
         </EntityType>
@@ -2590,6 +2608,18 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
           <NavigationProperty Name="Player" Relationship="Self.FK_Training_Camp_by_Season_2_0" FromRole="Training_Camp_by_Season" ToRole="Players" />
           <NavigationProperty Name="Season" Relationship="Self.FK_Training_Camp_by_Season_1_0" FromRole="Training_Camp_by_Season" ToRole="Season" />
         </EntityType>
+        <Association Name="FK_Player_Awards_2_0">
+          <End Role="Award" Type="Self.Award" Multiplicity="1" />
+          <End Role="Player_Awards" Type="Self.Player_Awards" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Award">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Player_Awards">
+              <PropertyRef Name="Award_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Conference_0_0">
           <End Role="Season" Type="Self.Season" Multiplicity="1" />
           <End Role="Conference" Type="Self.Conference" Multiplicity="*" />
@@ -3539,6 +3569,10 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
           <EntitySet Name="Seasons" EntityType="Self.Season" />
           <EntitySet Name="Teams_by_Season" EntityType="Self.Teams_by_Season" />
           <EntitySet Name="Training_Camp_by_Season" EntityType="Self.Training_Camp_by_Season" />
+          <AssociationSet Name="FK_Player_Awards_2_0" Association="Self.FK_Player_Awards_2_0">
+            <End Role="Award" EntitySet="Awards" />
+            <End Role="Player_Awards" EntitySet="Player_Awards" />
+          </AssociationSet>
           <AssociationSet Name="FK_Conference_0_0" Association="Self.FK_Conference_0_0">
             <End Role="Season" EntitySet="Seasons" />
             <End Role="Conference" EntitySet="Conferences" />
@@ -4312,7 +4346,7 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Season_ID" ColumnName="Season_ID" />
                 <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
-                <ScalarProperty Name="Award" ColumnName="Award" />
+                <ScalarProperty Name="Award_ID" ColumnName="Award_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

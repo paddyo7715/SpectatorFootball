@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SpectatorFootball.Models;
+using SpectatorFootball.PlayerNS;
 using SpectatorFootball.Enum;
 using log4net;
 using System.Windows.Controls;

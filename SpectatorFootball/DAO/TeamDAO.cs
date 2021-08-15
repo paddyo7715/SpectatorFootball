@@ -102,7 +102,6 @@ namespace SpectatorFootball.DAO
             List<KickReturn_Accum_Stats> KickoffReturnStats = null;
             List<PuntReturns_Accum_Stats> PuntReturnStats = null;
 
-
             string con = Common.LeageConnection.Connect(league_filepath);
 
             using (var context = new leagueContext(con))

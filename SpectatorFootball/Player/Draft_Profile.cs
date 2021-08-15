@@ -8,7 +8,7 @@ using SpectatorFootball.Enum;
 using SpectatorFootball.Models;
 using SpectatorFootball.NarrationAndText;
 
-namespace SpectatorFootball
+namespace SpectatorFootball.PlayerNS
 {
     class Draft_Profile
     {

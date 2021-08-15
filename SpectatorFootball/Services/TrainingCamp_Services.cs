@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.IO;
 using SpectatorFootball.Enum;
 using SpectatorFootball.Training_CampNS;
+using SpectatorFootball.PlayerNS;
 
 namespace SpectatorFootball.Services
 {
