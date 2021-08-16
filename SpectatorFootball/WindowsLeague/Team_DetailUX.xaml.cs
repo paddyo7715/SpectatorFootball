@@ -20,6 +20,7 @@ using System.Collections.ObjectModel;
 using SpectatorFootball.Common;
 using SpectatorFootball.Services;
 using SpectatorFootball.Team;
+using SpectatorFootball.PlayerNS;
 
 namespace SpectatorFootball.WindowsLeague
 {
@@ -230,6 +231,7 @@ namespace SpectatorFootball.WindowsLeague
                 detRoster.ItemsSource = RosterList;
             }
 
+            this.orig_this_team = this_team;
             this.pw = pw;
         }
 
@@ -1453,6 +1455,24 @@ namespace SpectatorFootball.WindowsLeague
             newtAwayPantsStripe1Color.IsEnabled = false;
             newtAwayPantsStripe2Color.IsEnabled = false;
             newtAwayPantsStripe3Color.IsEnabled = false;
+        }
+
+        private void detRoster_Click(object sender, RoutedEventArgs e)
+        {
+            if (Mouse.OverrideCursor == Cursors.Wait) return;
+
+            ListView ls = (ListView)sender;
+
+            if (ls.SelectedItems.Count > 0)
+            {
+                Player_Services ps = new Player_Services();
+
+                Player_Ratings pr = RosterList[ls.SelectedIndex];
+                Player_Card_Data pcd = ps.getPlayerCardData(this.orig_this_team, pr.Player, pw.Loaded_League);
+                PlayerCard_Popup pcp = new PlayerCard_Popup(pcd);
+                pcp.Left = (SystemParameters.PrimaryScreenWidth - pcp.Width) / 2;
+                pcp.ShowDialog();
+            }
         }
     }
 }

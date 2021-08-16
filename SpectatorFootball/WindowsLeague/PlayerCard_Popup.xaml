@@ -1,0 +1,42 @@
+﻿<Window x:Class="SpectatorFootball.WindowsLeague.PlayerCard_Popup"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local1="clr-namespace:SpectatorFootball.BindingConverters" 
+        xmlns:local="clr-namespace:SpectatorFootball"
+        mc:Ignorable="d"
+        Height ="390" Width="400" WindowStyle="none" ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True">
+    <Window.Resources>
+        <local1:DoubleFormatConverter x:Key="DoubleFormatConverter" />
+        <local1:inttoWeight x:Key="inttoWeight" />
+        <local1:longiPosConverter x:Key="longiPosConverter" />
+        <local1:handednessConverter x:Key="handednessConverter" />
+    </Window.Resources>
+    <Border Style="{StaticResource popupBD}" BorderThickness="1">
+        <StackPanel Style="{StaticResource popupSP}" Height="380" Width="390" Orientation="Vertical" >
+            <Label Style="{StaticResource popupTT}" Name="pcName" HorizontalAlignment="Center"></Label>
+            <StackPanel Style="{StaticResource popupSP}" Width="370" Height="300" Margin="5,5,5,0" Orientation="Vertical" >
+
+
+                <TabControl  Background="Transparent" Foreground="White" Height="300">
+                    <TabItem Header="Card">
+                    </TabItem>
+                    <TabItem Header="Info">
+                    </TabItem>
+                    <TabItem Header="Stats">
+                    </TabItem>
+                    <TabItem Header="Ratings">
+                    </TabItem>
+                    <TabItem Header="Awards">
+                    </TabItem>
+                    
+                </TabControl>
+
+
+
+            </StackPanel>
+            <Button Name="close_btn" Style="{StaticResource appSubmitStyle}" Click="btnclose_Click" >Close</Button>
+        </StackPanel>
+    </Border>
+</Window>

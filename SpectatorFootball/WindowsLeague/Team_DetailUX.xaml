@@ -825,7 +825,7 @@
                 </TabItem>
                 <TabItem Header="Roster" Name="tabRoster">
                     <StackPanel Orientation="Vertical"  Width="1000" Height="700">
-                        <ListView Name="detRoster" Style="{StaticResource SmallAltListViewStyle}" HorizontalContentAlignment="Center"  AlternationCount="2" Width="940" Height="650">
+                        <ListView Name="detRoster" Style="{StaticResource SmallAltListViewStyle}" HorizontalContentAlignment="Center"  AlternationCount="2" Width="940" Height="650" MouseDoubleClick="detRoster_Click">
 
                             <ListView.Resources>
                                 <Style TargetType="{x:Type GridViewColumnHeader}">
@@ -833,7 +833,6 @@
                                 </Style>
 
                                 <Style TargetType="ListViewItem">
-                                    <Setter Property="Focusable" Value="false"/>
                                     <Setter Property="HorizontalContentAlignment" Value="Center" />
                                     <Style.Triggers>
                                         <Trigger Property="ItemsControl.AlternationIndex"  Value="0">

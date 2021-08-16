@@ -438,6 +438,9 @@
     <Compile Include="WindowsLeague\LeagueStandingsUX.xaml.cs">
       <DependentUpon>LeagueStandingsUX.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WindowsLeague\PlayerCard_Popup.xaml.cs">
+      <DependentUpon>PlayerCard_Popup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WindowsLeague\ScheduleUX.xaml.cs">
       <DependentUpon>ScheduleUX.xaml</DependentUpon>
     </Compile>
@@ -554,6 +557,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="WindowsLeague\LeagueStandingsUX.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowsLeague\PlayerCard_Popup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

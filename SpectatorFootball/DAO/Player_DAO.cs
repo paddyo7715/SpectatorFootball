@@ -336,14 +336,26 @@ namespace SpectatorFootball
 
             using (var context = new leagueContext(con))
             {
-                r = context.Player_Awards.Where(x => x.Season_ID <= season_id && x.Player_ID == player_id).GroupBy(x => x.Award.ID)
+                context.Database.Log = Console.Write;
+                r = context.Player_Awards.Where(x => x.Player_ID == player_id).GroupBy(x => x.Award.Description)
                 .Select(x => new Two_Coll_List
                 {
-                    col1 = x.Key.ToString(),
-                    col2 = x.Count(c => 1 == 1).ToString()
-                }).OrderBy(x => x.col1).ToList();
+                    col1 = x.Key,
+                    col2 = x.Count().ToString()
+                 }).OrderBy(x => x.col2).ToList();
             }
+            return r;
+        }
+        public List<Player_Ratings> getPlayerRatingsAllYears(long player_id, long season_id, string league_filepath)
+        {
+            List<Player_Ratings> r = null;
 
+            string con = Common.LeageConnection.Connect(league_filepath);
+
+            using (var context = new leagueContext(con))
+            {
+                r = context.Player_Ratings.Where(x => x.Player_ID == player_id).OrderBy(x => x.Season_ID).ToList();
+            }
             return r;
         }
     }

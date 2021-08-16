@@ -37,6 +37,7 @@ namespace SpectatorFootball.Services
 
             List<Two_Coll_List> Award_List = pd.getPlayerAwards(p.ID, t.Season_ID, League_con_string);
             r.Player_Awards = Award_List;
+            r.Player_Ratings = pd.getPlayerRatingsAllYears(p.ID, t.Season_ID, League_con_string);
 
             return r;
         }
