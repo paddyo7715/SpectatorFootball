@@ -304,15 +304,11 @@ namespace SpectatorFootball
             string black = "#000000";
             string[] r = new string[3];
             string foreground = null;
-            string background = helmet;
+            string background = homejersey;
 
             r[0] = background;
 
-            if (CommonUtils.isTwoColorDifferent(background, helmet_logo))
-                foreground = helmet_logo;
-            else if (CommonUtils.isTwoColorDifferent(background, homejersey))
-                foreground = homejersey;
-            else if (CommonUtils.isTwoColorDifferent(background, homenumber))
+            if (CommonUtils.isTwoColorDifferent(background, homenumber))
                 foreground = homenumber;
             else if (CommonUtils.isTwoColorDifferent(background, homeoutline))
                 foreground = homeoutline;
@@ -330,7 +326,7 @@ namespace SpectatorFootball
                 r[2] = background;
                 if (CommonUtils.isTwoColorDifferent(background, homejersey) &&
                     CommonUtils.isTwoColorDifferent(foreground, homejersey))
-                    r[2] = homejersey;
+                    r[2] = helmet;
 
                 if (CommonUtils.isTwoColorDifferent(background, homepants) &&
                     CommonUtils.isTwoColorDifferent(foreground, homepants))

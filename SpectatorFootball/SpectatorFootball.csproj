@@ -631,6 +631,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\fplayer.jpg" />
     <Content Include="Models\LeagueEDM.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>LeagueEDM.edmx</DependentUpon>

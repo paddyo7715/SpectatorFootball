@@ -343,7 +343,12 @@
             <Setter Property="FontSize" Value="12"/>
             <Setter Property="Foreground" Value="white"/>
         </Style>
-        
+        <!-- Medium sized label -->
+        <Style TargetType="Label" x:Key="mediumLabelStyle">
+            <Setter Property="FontFamily" Value="Verdana"/>
+            <Setter Property="FontSize" Value="18"/>
+        </Style>
+
         <!-- Gridview header alignment left -->
         <Style x:Key="HeaderStyleLeft" TargetType="GridViewColumnHeader">
             <Setter Property="HorizontalContentAlignment" Value="Left"/>

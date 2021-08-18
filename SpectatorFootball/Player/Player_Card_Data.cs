@@ -11,9 +11,7 @@ namespace SpectatorFootball.PlayerNS
 {
     public class Player_Card_Data
     {
-        public string team_city { get; set; }
-        public string team_name { get; set; }
-        public BitmapImage HelmetImage { get; set; }
+        public Teams_by_Season team { get; set; }
         public Player Player { get; set; }
         public Team_Player_Accum_Stats_by_year Regular_Season_Stats { get; set; }
         public Team_Player_Accum_Stats_by_year Playoff_Stats { get; set; }

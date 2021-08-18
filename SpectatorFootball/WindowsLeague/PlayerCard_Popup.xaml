@@ -21,6 +21,15 @@
 
                 <TabControl  Background="Transparent" Foreground="White" Height="300">
                     <TabItem Header="Card">
+                        <Border Name="brdCard" BorderThickness="15">
+                            <StackPanel>
+                            <DockPanel>
+                                <Label Name="lblName" HorizontalContentAlignment="Center" Style="{StaticResource mediumLabelStyle}" DockPanel.Dock="top"></Label>
+                                <Label Name="lblTeam" HorizontalContentAlignment="Center" Style="{StaticResource mediumLabelStyle}" DockPanel.Dock="Bottom"></Label>
+                                    <Image Name="imgPlayerFace" Height="174" Width="380"></Image>
+                            </DockPanel>
+                            </StackPanel>
+                        </Border>
                     </TabItem>
                     <TabItem Header="Info">
                     </TabItem>

@@ -20,10 +20,8 @@ namespace SpectatorFootball.Services
         {
             Player_Card_Data r = new Player_Card_Data()
             {
-                team_city = t.City,
-                team_name = t.Nickname,
-                Player = p,
-                HelmetImage = lls.getHelmetImg(t.Helmet_Image_File)
+                team = t,
+                Player = p
             };
 
             string DIRPath_League = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + lls.season.League_Structure_by_Season[0].Short_Name.ToUpper();

@@ -164,6 +164,11 @@ namespace SpectatorFootball
             r = System.Windows.Media.Color.FromRgb(red, green, blue);
             return r;
         }
+        public static object getBrushfromHex(string s)
+        {
+            var bc = new BrushConverter();
+            return bc.ConvertFrom(s); 
+        }
         public static bool isAlpha(string s, bool bAllowSpace)
         {
             bool r = true;
