@@ -12,13 +12,12 @@
         <local1:inttoWeight x:Key="inttoWeight" />
         <local1:longiPosConverter x:Key="longiPosConverter" />
         <local1:handednessConverter x:Key="handednessConverter" />
+        <local1:DraftInfoConverter x:Key="DraftInfoConverter" />
     </Window.Resources>
     <Border Style="{StaticResource popupBD}" BorderThickness="1">
         <StackPanel Style="{StaticResource popupSP}" Height="380" Width="390" Orientation="Vertical" >
             <Label Style="{StaticResource popupTT}" Name="pcName" HorizontalAlignment="Center"></Label>
             <StackPanel Style="{StaticResource popupSP}" Width="370" Height="300" Margin="5,5,5,0" Orientation="Vertical" >
-
-
                 <TabControl  Background="Transparent" Foreground="White" Height="300">
                     <TabItem Header="Card">
                         <Border Name="brdCard" BorderThickness="15">
@@ -32,6 +31,44 @@
                         </Border>
                     </TabItem>
                     <TabItem Header="Info">
+                        <StackPanel Style="{StaticResource popupSP}" Width="370" Height="300" Margin="5,5,5,0" Orientation="Vertical" >
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content ="Name:" Height="30" Style="{StaticResource PopupLabel}"></Label>
+                                <TextBlock Name="txtName" Width="250"  Height="20" Style="{StaticResource PopupText}">
+                       <Run Text="{Binding Player.First_Name}" />
+                       <Run Text=" " /> <!-- space -->
+                       <Run Text="{Binding Player.Last_Name}" />
+                                </TextBlock>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content ="Position:"  Height="30" Style="{StaticResource PopupLabel}"></Label>
+                                <TextBlock Name="txtPosition" Width="230"  Height="20" Style="{StaticResource PopupText}" Text="{Binding Player.Pos, Converter={StaticResource longiPosConverter}}"></TextBlock>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content ="Age:"   Height="30" Style="{StaticResource PopupLabel}"></Label>
+                                <TextBlock Name="txtAge" Width="25"  Height="20" Style="{StaticResource PopupText}"  Text="{Binding Player.Age}"></TextBlock>
+                                <Label Content ="    "  Height="30" Style="{StaticResource PopupLabel}"></Label>
+                                <TextBlock Name="txtHandedness" Width="208"  Height="20" Style="{StaticResource PopupText}" Text="{Binding Player.Handedness, Converter={StaticResource handednessConverter}}"></TextBlock>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content ="Height:"  Height="30" Style="{StaticResource PopupLabel}"></Label>
+                                <TextBlock Name="txtHeight" Width="35"  Height="20" Style="{StaticResource PopupText}" Text="{Binding Player.Height, Converter={StaticResource  inttoWeight}}"></TextBlock>
+                                <Label Content ="Weight"   Height="30" Style="{StaticResource PopupLabel}"></Label>
+                                <TextBlock Name="txtWeight" Width="35"  Height="20" Style="{StaticResource PopupText}"  Text ="{Binding Player.Weight}"></TextBlock>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content ="Hometown:"  Height="30" Style="{StaticResource PopupLabel}"></Label>
+                                <TextBlock Name="txtHometown" Width="250"  Height="20" Style="{StaticResource PopupText}"  Text ="{Binding Player.HomeTown}"></TextBlock>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content ="Draft Grade:"  Height="30" Style="{StaticResource PopupLabel}"></Label>
+                                <TextBlock Name="txtDraftGrade" Width="50"  Height="20" Style="{StaticResource PopupText}" Text = "{Binding Path=Player.Draft_Grade, Converter={StaticResource  DoubleFormatConverter}}"></TextBlock>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content ="Draft:"  Height="30" Style="{StaticResource PopupLabel}"></Label>
+                                <TextBlock Name="txtDraftInfo" Width="270"  Height="20" Style="{StaticResource PopupText}" Text="{Binding Draft_Info, Converter={StaticResource DraftInfoConverter}}"></TextBlock>
+                            </StackPanel>
+                        </StackPanel>
                     </TabItem>
                     <TabItem Header="Stats">
                     </TabItem>

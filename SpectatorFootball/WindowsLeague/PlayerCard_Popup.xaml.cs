@@ -23,6 +23,7 @@ namespace SpectatorFootball.WindowsLeague
     /// </summary>
     public partial class PlayerCard_Popup : Window
     {
+        Player_Card_Data pcd = null;
         public PlayerCard_Popup(Player_Card_Data pcd)
         {
             InitializeComponent();
@@ -46,6 +47,9 @@ namespace SpectatorFootball.WindowsLeague
             lblTeam.Background = new SolidColorBrush(CommonUtils.getColorfromHex(m[0]));
 
             imgPlayerFace.Source = new BitmapImage(new Uri(CommonUtils.getAppPath() + "/Images/fplayer.jpg"));
+
+            this.pcd = pcd;
+            this.DataContext = this.pcd;
         }
         private void btnclose_Click(object sender, RoutedEventArgs e)
         {

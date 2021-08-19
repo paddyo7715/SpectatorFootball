@@ -6,6 +6,7 @@ using System;
 using System.Data;
 using System.Data.SQLite;
 using SpectatorFootball.Team;
+using System.Data.Entity;
 
 namespace SpectatorFootball
 {
@@ -355,6 +356,18 @@ namespace SpectatorFootball
             using (var context = new leagueContext(con))
             {
                 r = context.Player_Ratings.Where(x => x.Player_ID == player_id).OrderBy(x => x.Season_ID).ToList();
+            }
+            return r;
+        }
+        public Draft getPlayerDraftRecord(long player_id, long season_id, string league_filepath)
+        {
+            Draft r = null;
+
+            string con = Common.LeageConnection.Connect(league_filepath);
+
+            using (var context = new leagueContext(con))
+            {
+                r = context.Drafts.Where(x => x.Player_ID == player_id && x.Season_ID == season_id).Include(x => x.Season).First();
             }
             return r;
         }

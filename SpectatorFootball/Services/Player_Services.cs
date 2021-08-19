@@ -37,6 +37,7 @@ namespace SpectatorFootball.Services
             r.Player_Awards = Award_List;
             r.Player_Ratings = pd.getPlayerRatingsAllYears(p.ID, t.Season_ID, League_con_string);
 
+            r.Draft_Info = pd.getPlayerDraftRecord(p.ID, t.Season_ID, League_con_string);
             return r;
         }
     }
