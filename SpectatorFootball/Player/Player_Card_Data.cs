@@ -13,8 +13,7 @@ namespace SpectatorFootball.PlayerNS
     {
         public Teams_by_Season team { get; set; }
         public Player Player { get; set; }
-
-        public Draft Draft_Info { get; set; }
+        public string Draft_Info { get; set; }
         public Team_Player_Accum_Stats_by_year Regular_Season_Stats { get; set; }
         public Team_Player_Accum_Stats_by_year Playoff_Stats { get; set; }
         public List<Two_Coll_List> Player_Awards { get; set; }

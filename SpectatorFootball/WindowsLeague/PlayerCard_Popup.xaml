@@ -6,37 +6,36 @@
         xmlns:local1="clr-namespace:SpectatorFootball.BindingConverters" 
         xmlns:local="clr-namespace:SpectatorFootball"
         mc:Ignorable="d"
-        Height ="390" Width="400" WindowStyle="none" ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True">
+        Height ="600" Width="600" WindowStyle="none" ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True">
     <Window.Resources>
         <local1:DoubleFormatConverter x:Key="DoubleFormatConverter" />
         <local1:inttoWeight x:Key="inttoWeight" />
         <local1:longiPosConverter x:Key="longiPosConverter" />
         <local1:handednessConverter x:Key="handednessConverter" />
-        <local1:DraftInfoConverter x:Key="DraftInfoConverter" />
+        <local1:ActiveRetiredConverter x:Key="ActiveRetiredConverter" />
     </Window.Resources>
     <Border Style="{StaticResource popupBD}" BorderThickness="1">
-        <StackPanel Style="{StaticResource popupSP}" Height="380" Width="390" Orientation="Vertical" >
+        <StackPanel Style="{StaticResource popupSP}" Height="590" Width="590" Orientation="Vertical" >
             <Label Style="{StaticResource popupTT}" Name="pcName" HorizontalAlignment="Center"></Label>
-            <StackPanel Style="{StaticResource popupSP}" Width="370" Height="300" Margin="5,5,5,0" Orientation="Vertical" >
-                <TabControl  Background="Transparent" Foreground="White" Height="300">
-                    <TabItem Header="Card">
+            <StackPanel Style="{StaticResource popupSP}" Width="580" Height="510" Margin="5,5,5,0" Orientation="Vertical" >
+                <TabControl Name="tabPlayer"  Background="Transparent" Foreground="White" Height="510">
+                    <TabItem Name="tbiCard" Header="Card">
                         <Border Name="brdCard" BorderThickness="15">
                             <StackPanel>
                             <DockPanel>
                                 <Label Name="lblName" HorizontalContentAlignment="Center" Style="{StaticResource mediumLabelStyle}" DockPanel.Dock="top"></Label>
                                 <Label Name="lblTeam" HorizontalContentAlignment="Center" Style="{StaticResource mediumLabelStyle}" DockPanel.Dock="Bottom"></Label>
-                                    <Image Name="imgPlayerFace" Height="174" Width="380"></Image>
+                                    <Image Name="imgPlayerFace" Height="384" Width="380"></Image>
                             </DockPanel>
                             </StackPanel>
                         </Border>
                     </TabItem>
                     <TabItem Header="Info">
-                        <StackPanel Style="{StaticResource popupSP}" Width="370" Height="300" Margin="5,5,5,0" Orientation="Vertical" >
+                        <StackPanel Style="{StaticResource popupSP}" Width="580" Height="510" Margin="5,5,5,0" Orientation="Vertical" >
                             <StackPanel Orientation="Horizontal">
                                 <Label Content ="Name:" Height="30" Style="{StaticResource PopupLabel}"></Label>
-                                <TextBlock Name="txtName" Width="250"  Height="20" Style="{StaticResource PopupText}">
+                                <TextBlock Name="txtName" Width="300"  Height="20" Style="{StaticResource PopupText}">
                        <Run Text="{Binding Player.First_Name}" />
-                       <Run Text=" " /> <!-- space -->
                        <Run Text="{Binding Player.Last_Name}" />
                                 </TextBlock>
                             </StackPanel>
@@ -58,19 +57,556 @@
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <Label Content ="Hometown:"  Height="30" Style="{StaticResource PopupLabel}"></Label>
-                                <TextBlock Name="txtHometown" Width="250"  Height="20" Style="{StaticResource PopupText}"  Text ="{Binding Player.HomeTown}"></TextBlock>
+                                <TextBlock Name="txtHometown" Width="300"  Height="20" Style="{StaticResource PopupText}"  Text ="{Binding Player.HomeTown}"></TextBlock>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <Label Content ="Draft Grade:"  Height="30" Style="{StaticResource PopupLabel}"></Label>
                                 <TextBlock Name="txtDraftGrade" Width="50"  Height="20" Style="{StaticResource PopupText}" Text = "{Binding Path=Player.Draft_Grade, Converter={StaticResource  DoubleFormatConverter}}"></TextBlock>
                             </StackPanel>
+                            <StackPanel Orientation="Vertical">
+                                <Label Content ="Draft Scouting Report:" Height="30" Style="{StaticResource PopupLabel}"></Label>
+                                <TextBlock Name="txtScoutReport" Height="100" TextWrapping="Wrap" Style="{StaticResource PopupText}" Text ="{Binding Player.Draft_Profile}" Margin="5,5,5,0" >
+                                </TextBlock>
+                            </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <Label Content ="Draft:"  Height="30" Style="{StaticResource PopupLabel}"></Label>
-                                <TextBlock Name="txtDraftInfo" Width="270"  Height="20" Style="{StaticResource PopupText}" Text="{Binding Draft_Info, Converter={StaticResource DraftInfoConverter}}"></TextBlock>
+                                <TextBlock Name="txtDraftInfo" Width="500"  Height="20" Style="{StaticResource PopupText}" Text="{Binding Draft_Info}"></TextBlock>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content ="Status:"  Height="30" Style="{StaticResource PopupLabel}"></Label>
+                                <TextBlock Name="txtStatus" Width="70"  Height="20" Style="{StaticResource PopupText}" Text="{Binding Player.Retired, Converter={StaticResource ActiveRetiredConverter}}"></TextBlock>
                             </StackPanel>
                         </StackPanel>
                     </TabItem>
                     <TabItem Header="Stats">
+                        <ScrollViewer>
+                            <StackPanel Orientation="Vertical">
+                                <GroupBox FontSize="16" FontWeight="Bold" Style="{StaticResource StatsGroupStyle}" >
+                                <GroupBox.Header>
+                                    Regular Season:
+                                </GroupBox.Header>
+                                    <StackPanel Orientation="Vertical">
+                                        <Label Name="lblPassing" Style="{StaticResource MedLabelBlackstyle}" Content="Passing"></Label>
+                                    <ListView Name="lstPassing" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Width="580">
+                                        <ListView.ItemContainerStyle>
+                                            <Style TargetType="ListViewItem">
+                                                <Setter Property="Focusable" Value="false"/>
+                                            </Style>
+                                        </ListView.ItemContainerStyle>
+                                        <ListView.View>
+                                            <GridView AllowsColumnReorder="false">
+                                                <GridView.ColumnHeaderContainerStyle>
+                                                    <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                        <Setter Property="IsEnabled" Value="False"/>
+                                                    </Style>
+                                                </GridView.ColumnHeaderContainerStyle>
+                                                <GridViewColumn Header="Year" Width="60" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Passing_Stats.Year}" />
+                                                <GridViewColumn Header="Comps" Width="65" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Passing_Stats.Completes}" />
+                                                <GridViewColumn Header="Atts" Width="65" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Passing_Stats.Ateempts}" />
+                                                <GridViewColumn Header="Comp %" Width="75" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Passing_Stats.Comp_Percent}" />
+                                                <GridViewColumn Header="Yrds" Width="65" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Passing_Stats.Yards}" />
+                                                <GridViewColumn Header="TDs" Width="65" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Passing_Stats.TDs}" />
+                                                <GridViewColumn Header="INTs" Width="65" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Passing_Stats.Ints}" />
+                                                <GridViewColumn Header="QBR" Width="65" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Passing_Stats.QBR}" />
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
+                                        <Label Name="lblPassNoStats"  Style="{StaticResource NormallblBlackstyle}" HorizontalContentAlignment="Center" Content="No Passing Stats"></Label>
+
+                                        <Label Name="lblRushing" Style="{StaticResource MedLabelBlackstyle}" Content="Rushing"></Label>
+                                    <ListView Name="lstRushing" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Width="580">
+                                        <ListView.ItemContainerStyle>
+                                            <Style TargetType="ListViewItem">
+                                                <Setter Property="Focusable" Value="false"/>
+                                            </Style>
+                                        </ListView.ItemContainerStyle>
+                                        <ListView.View>
+                                            <GridView AllowsColumnReorder="false">
+                                                <GridView.ColumnHeaderContainerStyle>
+                                                    <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                        <Setter Property="IsEnabled" Value="False"/>
+                                                    </Style>
+                                                </GridView.ColumnHeaderContainerStyle>
+                                                <GridViewColumn Header="Year" Width="60" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Rushing_Stats.Year}" />
+                                                <GridViewColumn Header="Rushes" Width="70" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Rushing_Stats.Rushes}" />
+                                                <GridViewColumn Header="Yards" Width="70" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Rushing_Stats.Yards}" />
+                                                <GridViewColumn Header="Yrd/Carry" Width="80" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Rushing_Stats.Yards_Per_Carry}" />
+                                                <GridViewColumn Header="Yards" Width="70" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Rushing_Stats.Yards}" />
+                                                <GridViewColumn Header="TDs" Width="70" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Rushing_Stats.TDs}" />
+                                                <GridViewColumn Header="Fumbles" Width="70" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Rushing_Stats.Fumbles_Lost}" />
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
+                                        <Label Name="lblRushNoStats"  Style="{StaticResource NormallblBlackstyle}" HorizontalContentAlignment="Center" Content="No Rushing Stats"></Label>
+
+                                        <Label Name="lblReceiving" Style="{StaticResource MedLabelBlackstyle}" Content="Receiving"></Label>
+                                    <ListView Name="lstReceiving" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Width="580">
+                                        <ListView.ItemContainerStyle>
+                                            <Style TargetType="ListViewItem">
+                                                <Setter Property="Focusable" Value="false"/>
+                                            </Style>
+                                        </ListView.ItemContainerStyle>
+                                        <ListView.View>
+                                            <GridView AllowsColumnReorder="false">
+                                                <GridView.ColumnHeaderContainerStyle>
+                                                    <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                        <Setter Property="IsEnabled" Value="False"/>
+                                                    </Style>
+                                                </GridView.ColumnHeaderContainerStyle>
+                                                <GridViewColumn Header="Year" Width="60" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Receiving_Stats.Year}" />
+                                                <GridViewColumn Header="Catches" Width="70" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Receiving_Stats.Catches}" />
+                                                <GridViewColumn Header="Yards" Width="70" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Receiving_Stats.Yards}" />
+                                                <GridViewColumn Header="Yrd/Catch" Width="80" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Receiving_Stats.Yards_Per_Catch}" />
+                                                <GridViewColumn Header="Drops" Width="70" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Receiving_Stats.Drops}" />
+                                                <GridViewColumn Header="TDs" Width="70" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Receiving_Stats.TDs}" />
+                                                <GridViewColumn Header="Fumbles" Width="70" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Receiving_Stats.Fumbles_Lost}" />
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
+                                        <Label Name="lblReceiveNoStats"  Style="{StaticResource NormallblBlackstyle}" HorizontalContentAlignment="Center" Content="No Receiving Stats"></Label>
+
+                                        <Label Name="lblBlocking" Style="{StaticResource MedLabelBlackstyle}" Content="Blocking"></Label>
+                                    <ListView Name="lstBlocking" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Width="580">
+                                        <ListView.ItemContainerStyle>
+                                            <Style TargetType="ListViewItem">
+                                                <Setter Property="Focusable" Value="false"/>
+                                            </Style>
+                                        </ListView.ItemContainerStyle>
+                                        <ListView.View>
+                                            <GridView AllowsColumnReorder="false">
+                                                <GridView.ColumnHeaderContainerStyle>
+                                                    <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                        <Setter Property="IsEnabled" Value="False"/>
+                                                    </Style>
+                                                </GridView.ColumnHeaderContainerStyle>
+                                                <GridViewColumn Header="Year" Width="60" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Blocking_Stats.Year}" />
+                                                <GridViewColumn Header="Plays" Width="70" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Blocking_Stats.Plays}" />
+                                                <GridViewColumn Header="Pancakes" Width="80" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Blocking_Stats.Pancakes}" />
+                                                <GridViewColumn Header="Sacks Allowed" Width="100" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Blocking_Stats.Sacks_Allowed}" />
+                                                <GridViewColumn Header="Pressures Allowed" Width="120" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Blocking_Stats.Pressures_Allowed}" />
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
+                                        <Label Name="lblBlockNoStats" HorizontalContentAlignment="Center" Style="{StaticResource NormallblBlackstyle}" Content="No Blocking Stats"></Label>
+
+                                        <Label Name="lblDefense" Style="{StaticResource MedLabelBlackstyle}" Content="Defense"></Label>
+                                    <ListView Name="lstDefense" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Width="580">
+                                        <ListView.ItemContainerStyle>
+                                            <Style TargetType="ListViewItem">
+                                                <Setter Property="Focusable" Value="false"/>
+                                            </Style>
+                                        </ListView.ItemContainerStyle>
+                                        <ListView.View>
+                                            <GridView AllowsColumnReorder="false">
+                                                <GridView.ColumnHeaderContainerStyle>
+                                                    <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                        <Setter Property="IsEnabled" Value="False"/>
+                                                    </Style>
+                                                </GridView.ColumnHeaderContainerStyle>
+                                                <GridViewColumn Header="Year" Width="60" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Defense_Stats.Year}" />
+                                                <GridViewColumn Header="Plays" Width="60" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Defense_Stats.Plays}" />
+                                                <GridViewColumn Header="Tackles" Width="70" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Defense_Stats.Tackles}" />
+                                                <GridViewColumn Header="Sacks" Width="60" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Defense_Stats.Sacks}" />
+                                                <GridViewColumn Header="Pressures" Width="80" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Defense_Stats.Pressures}" />
+                                                <GridViewColumn Header="Runs for Loss" Width="90" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Defense_Stats.Run_for_Loss}" />
+                                                <GridViewColumn Header="Forced Fumbles" Width="120" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Defense_Stats.Forced_Fumble}" />
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
+                                        <Label Name="lblDefenseNoStats" HorizontalContentAlignment="Center" Style="{StaticResource NormallblBlackstyle}" Content="No Defense Stats"></Label>
+
+                                        <Label Name="lblPassDefense" Style="{StaticResource MedLabelBlackstyle}" Content="Pass Defense"></Label>
+                                    <ListView Name="lstPassDefense" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Width="580">
+                                        <ListView.ItemContainerStyle>
+                                            <Style TargetType="ListViewItem">
+                                                <Setter Property="Focusable" Value="false"/>
+                                            </Style>
+                                        </ListView.ItemContainerStyle>
+                                        <ListView.View>
+                                            <GridView AllowsColumnReorder="false">
+                                                <GridView.ColumnHeaderContainerStyle>
+                                                    <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                        <Setter Property="IsEnabled" Value="False"/>
+                                                    </Style>
+                                                </GridView.ColumnHeaderContainerStyle>
+                                                <GridViewColumn Header="Year" Width="60" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Pass_Defense_Stats.Year}" />
+                                                <GridViewColumn Header="Pass Defenses" Width="100" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Pass_Defense_Stats.Pass_Defenses}" />
+                                                <GridViewColumn Header="Ints" Width="70" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Pass_Defense_Stats.Ints}" />
+                                                <GridViewColumn Header="TDs Surrendered" Width="120" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Pass_Defense_Stats.TDs_Surrendered}" />
+                                                <GridViewColumn Header="Forced Fumbles" Width="120" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Pass_Defense_Stats.Forced_Fumble}" />
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
+                                        <Label Name="lblPassDefenseNoStats" HorizontalContentAlignment="Center" Style="{StaticResource NormallblBlackstyle}" Content="No Pass Defense Stats"></Label>
+
+                                        <Label Name="lblFGKicking" Style="{StaticResource MedLabelBlackstyle}" Content="FG Kicking"></Label>
+                                    <ListView Name="lstFGKicking" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Width="580">
+                                        <ListView.ItemContainerStyle>
+                                            <Style TargetType="ListViewItem">
+                                                <Setter Property="Focusable" Value="false"/>
+                                            </Style>
+                                        </ListView.ItemContainerStyle>
+                                        <ListView.View>
+                                            <GridView AllowsColumnReorder="false">
+                                                <GridView.ColumnHeaderContainerStyle>
+                                                    <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                        <Setter Property="IsEnabled" Value="False"/>
+                                                    </Style>
+                                                </GridView.ColumnHeaderContainerStyle>
+                                                <GridViewColumn Header="Year" Width="60" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Kicking_Stats.Year}" />
+                                                <GridViewColumn Header="FG Att" Width="80" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Kicking_Stats.FG_ATT}" />
+                                                <GridViewColumn Header="FG Made" Width="80" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Kicking_Stats.FG_Made}" />
+                                                <GridViewColumn Header="FG %" Width="80" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Kicking_Stats.FG_Percent}" />
+                                                <GridViewColumn Header="FG Long" Width="80" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Kicking_Stats.FG_Long}" />
+                                                <GridViewColumn Header="XP Att" Width="80" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Kicking_Stats.XP_ATT}" />
+                                                <GridViewColumn Header="XP Made" Width="80" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Kicking_Stats.XP_Made}" />
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
+                                        <Label Name="lblFGKickingNoStats" HorizontalContentAlignment="Center" Style="{StaticResource NormallblBlackstyle}" Content="No FG Kicking Stats"></Label>
+
+                                        <Label Name="lblKickoffReturns" Style="{StaticResource MedLabelBlackstyle}" Content="Kickoff Returns"></Label>
+                                    <ListView Name="lstKickoffReturns" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Width="580">
+                                        <ListView.ItemContainerStyle>
+                                            <Style TargetType="ListViewItem">
+                                                <Setter Property="Focusable" Value="false"/>
+                                            </Style>
+                                        </ListView.ItemContainerStyle>
+                                        <ListView.View>
+                                            <GridView AllowsColumnReorder="false">
+                                                <GridView.ColumnHeaderContainerStyle>
+                                                    <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                        <Setter Property="IsEnabled" Value="False"/>
+                                                    </Style>
+                                                </GridView.ColumnHeaderContainerStyle>
+                                                <GridViewColumn Header="Year" Width="60" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.KickRet_Stats.Year}" />
+                                                <GridViewColumn Header="Returns" Width="70" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.KickRet_Stats.Returns}" />
+                                                <GridViewColumn Header="Yards" Width="70" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.KickRet_Stats.Yards}" />
+                                                <GridViewColumn Header="Yards/Return" Width="80" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.KickRet_Stats.Yards_avg}" />
+                                                <GridViewColumn Header="Yards Long" Width="80" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.KickRet_Stats.Yards_Long}" />
+                                                <GridViewColumn Header="TDs" Width="70" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.KickRet_Stats.TDs}" />
+                                                <GridViewColumn Header="Fumbles" Width="80" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.KickRet_Stats.Fumbles}" />
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
+                                        <Label Name="lblKickReturnsNoStats" HorizontalContentAlignment="Center" Style="{StaticResource NormallblBlackstyle}" Content="No Kickoff Returns Stats"></Label>
+
+                                        <Label Name="lblPunting" Style="{StaticResource MedLabelBlackstyle}" Content="Punting"></Label>
+                                    <ListView Name="lstPunting" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Width="580">
+                                        <ListView.ItemContainerStyle>
+                                            <Style TargetType="ListViewItem">
+                                                <Setter Property="Focusable" Value="false"/>
+                                            </Style>
+                                        </ListView.ItemContainerStyle>
+                                        <ListView.View>
+                                            <GridView AllowsColumnReorder="false">
+                                                <GridView.ColumnHeaderContainerStyle>
+                                                    <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                        <Setter Property="IsEnabled" Value="False"/>
+                                                    </Style>
+                                                </GridView.ColumnHeaderContainerStyle>
+                                                <GridViewColumn Header="Year" Width="60" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Punting_Stats.Year}" />
+                                                <GridViewColumn Header="Punts" Width="80" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Punting_Stats.Punts}" />
+                                                <GridViewColumn Header="Yards" Width="80" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Punting_Stats.Yards}" />
+                                                <GridViewColumn Header="Punt AVG" Width="100" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Punting_Stats.Punt_AVG}" />
+                                                <GridViewColumn Header="Coffin Corners" Width="100" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Punting_Stats.Coffin_Corners}" />
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
+                                        <Label Name="lblPuntingNoStats" HorizontalContentAlignment="Center" Style="{StaticResource NormallblBlackstyle}" Content="No Punting Stats"></Label>
+
+                                        <Label Name="lblPuntReturns" Style="{StaticResource MedLabelBlackstyle}" Content="Punt Returns"></Label>
+                                    <ListView Name="lstPuntReturns" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Width="580">
+                                        <ListView.ItemContainerStyle>
+                                            <Style TargetType="ListViewItem">
+                                                <Setter Property="Focusable" Value="false"/>
+                                            </Style>
+                                        </ListView.ItemContainerStyle>
+                                        <ListView.View>
+                                            <GridView AllowsColumnReorder="false">
+                                                <GridView.ColumnHeaderContainerStyle>
+                                                    <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                        <Setter Property="IsEnabled" Value="False"/>
+                                                    </Style>
+                                                </GridView.ColumnHeaderContainerStyle>
+                                                <GridViewColumn Header="Year" Width="60" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.PuntRet_Stats.Year}" />
+                                                <GridViewColumn Header="Returns" Width="70" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.PuntRet_Stats.Returns}" />
+                                                <GridViewColumn Header="Yards" Width="70" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.PuntRet_Stats.Yards}" />
+                                                <GridViewColumn Header="Yards/Return" Width="70" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.PuntRet_Stats.Yards_avg}" />
+                                                <GridViewColumn Header="Yards Long" Width="80" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.PuntRet_Stats.Yards_Long}" />
+                                                <GridViewColumn Header="TDs" Width="70" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.PuntRet_Stats.TDs}" />
+                                                <GridViewColumn Header="Fumbles" Width="80" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.PuntRet_Stats.Fumbles}" />
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
+                                        <Label Name="lblPuntReturnsNoStats" HorizontalContentAlignment="Center" Style="{StaticResource NormallblBlackstyle}" Content="No Punt Returns Stats"></Label>
+                                    </StackPanel>
+                                </GroupBox>
+
+                                <GroupBox Name="grpPlayoffs" FontSize="16" FontWeight="Bold" Style="{StaticResource StatsGroupStyle}" >
+                                    <GroupBox.Header>
+                                        Playoffs:
+                                    </GroupBox.Header>
+                                    <StackPanel Orientation="Vertical">
+                                        <Label Name="lblPassing_po" Style="{StaticResource MedLabelBlackstyle}" Content="Passing"></Label>
+                                        <ListView Name="lstPassing_po" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Width="580">
+                                            <ListView.ItemContainerStyle>
+                                                <Style TargetType="ListViewItem">
+                                                    <Setter Property="Focusable" Value="false"/>
+                                                </Style>
+                                            </ListView.ItemContainerStyle>
+                                            <ListView.View>
+                                                <GridView AllowsColumnReorder="false">
+                                                    <GridView.ColumnHeaderContainerStyle>
+                                                        <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                            <Setter Property="IsEnabled" Value="False"/>
+                                                        </Style>
+                                                    </GridView.ColumnHeaderContainerStyle>
+                                                    <GridViewColumn Header="Year" Width="60" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Passing_Stats.Year}" />
+                                                    <GridViewColumn Header="Comps" Width="65" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Passing_Stats.Completes}" />
+                                                    <GridViewColumn Header="Atts" Width="65" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Passing_Stats.Ateempts}" />
+                                                    <GridViewColumn Header="Comp %" Width="75" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Passing_Stats.Comp_Percent}" />
+                                                    <GridViewColumn Header="Yrds" Width="65" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Passing_Stats.Yards}" />
+                                                    <GridViewColumn Header="TDs" Width="65" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Passing_Stats.TDs}" />
+                                                    <GridViewColumn Header="INTs" Width="65" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Passing_Stats.Ints}" />
+                                                    <GridViewColumn Header="QBR" Width="65" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Passing_Stats.QBR}" />
+                                                </GridView>
+                                            </ListView.View>
+                                        </ListView>
+                                        <Label Name="lblPassNoStats_po"  Style="{StaticResource NormallblBlackstyle}" HorizontalContentAlignment="Center" Content="No Passing Stats"></Label>
+
+                                        <Label Name="lblRushing_po" Style="{StaticResource MedLabelBlackstyle}" Content="Rushing"></Label>
+                                        <ListView Name="lstRushing_po" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Width="580">
+                                            <ListView.ItemContainerStyle>
+                                                <Style TargetType="ListViewItem">
+                                                    <Setter Property="Focusable" Value="false"/>
+                                                </Style>
+                                            </ListView.ItemContainerStyle>
+                                            <ListView.View>
+                                                <GridView AllowsColumnReorder="false">
+                                                    <GridView.ColumnHeaderContainerStyle>
+                                                        <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                            <Setter Property="IsEnabled" Value="False"/>
+                                                        </Style>
+                                                    </GridView.ColumnHeaderContainerStyle>
+                                                    <GridViewColumn Header="Year" Width="60" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Rushing_Stats.Year}" />
+                                                    <GridViewColumn Header="Rushes" Width="70" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Rushing_Stats.Rushes}" />
+                                                    <GridViewColumn Header="Yards" Width="70" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Rushing_Stats.Yards}" />
+                                                    <GridViewColumn Header="Yrd/Carry" Width="80" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Rushing_Stats.Yards_Per_Carry}" />
+                                                    <GridViewColumn Header="Yards" Width="70" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Rushing_Stats.Yards}" />
+                                                    <GridViewColumn Header="TDs" Width="70" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Rushing_Stats.TDs}" />
+                                                    <GridViewColumn Header="Fumbles" Width="70" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Rushing_Stats.Fumbles_Lost}" />
+                                                </GridView>
+                                            </ListView.View>
+                                        </ListView>
+                                        <Label Name="lblRushNoStats_po"  Style="{StaticResource NormallblBlackstyle}" HorizontalContentAlignment="Center" Content="No Rushing Stats"></Label>
+
+                                        <Label Name="lblReceiving_po" Style="{StaticResource MedLabelBlackstyle}" Content="Receiving"></Label>
+                                        <ListView Name="lstReceiving_po" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Width="580">
+                                            <ListView.ItemContainerStyle>
+                                                <Style TargetType="ListViewItem">
+                                                    <Setter Property="Focusable" Value="false"/>
+                                                </Style>
+                                            </ListView.ItemContainerStyle>
+                                            <ListView.View>
+                                                <GridView AllowsColumnReorder="false">
+                                                    <GridView.ColumnHeaderContainerStyle>
+                                                        <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                            <Setter Property="IsEnabled" Value="False"/>
+                                                        </Style>
+                                                    </GridView.ColumnHeaderContainerStyle>
+                                                    <GridViewColumn Header="Year" Width="60" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Receiving_Stats.Year}" />
+                                                    <GridViewColumn Header="Catches" Width="70" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Receiving_Stats.Catches}" />
+                                                    <GridViewColumn Header="Yards" Width="70" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Receiving_Stats.Yards}" />
+                                                    <GridViewColumn Header="Yrd/Catch" Width="80" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Receiving_Stats.Yards_Per_Catch}" />
+                                                    <GridViewColumn Header="Drops" Width="70" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Receiving_Stats.Drops}" />
+                                                    <GridViewColumn Header="TDs" Width="70" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Receiving_Stats.TDs}" />
+                                                    <GridViewColumn Header="Fumbles" Width="70" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Receiving_Stats.Fumbles_Lost}" />
+                                                </GridView>
+                                            </ListView.View>
+                                        </ListView>
+                                        <Label Name="lblReceiveNoStats_po"  Style="{StaticResource NormallblBlackstyle}" HorizontalContentAlignment="Center" Content="No Receiving Stats"></Label>
+
+                                        <Label Name="lblBlocking_po" Style="{StaticResource MedLabelBlackstyle}" Content="Blocking"></Label>
+                                        <ListView Name="lstBlocking_po" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Width="580">
+                                            <ListView.ItemContainerStyle>
+                                                <Style TargetType="ListViewItem">
+                                                    <Setter Property="Focusable" Value="false"/>
+                                                </Style>
+                                            </ListView.ItemContainerStyle>
+                                            <ListView.View>
+                                                <GridView AllowsColumnReorder="false">
+                                                    <GridView.ColumnHeaderContainerStyle>
+                                                        <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                            <Setter Property="IsEnabled" Value="False"/>
+                                                        </Style>
+                                                    </GridView.ColumnHeaderContainerStyle>
+                                                    <GridViewColumn Header="Year" Width="60" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Blocking_Stats.Year}" />
+                                                    <GridViewColumn Header="Plays" Width="70" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Blocking_Stats.Plays}" />
+                                                    <GridViewColumn Header="Pancakes" Width="80" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Blocking_Stats.Pancakes}" />
+                                                    <GridViewColumn Header="Sacks Allowed" Width="100" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Blocking_Stats.Sacks_Allowed}" />
+                                                    <GridViewColumn Header="Pressures Allowed" Width="120" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Blocking_Stats.Pressures_Allowed}" />
+                                                </GridView>
+                                            </ListView.View>
+                                        </ListView>
+                                        <Label Name="lblBlockNoStats_po" HorizontalContentAlignment="Center" Style="{StaticResource NormallblBlackstyle}" Content="No Blocking Stats"></Label>
+
+                                        <Label Name="lblDefense_po" Style="{StaticResource MedLabelBlackstyle}" Content="Defense"></Label>
+                                        <ListView Name="lstDefense_po" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Width="580">
+                                            <ListView.ItemContainerStyle>
+                                                <Style TargetType="ListViewItem">
+                                                    <Setter Property="Focusable" Value="false"/>
+                                                </Style>
+                                            </ListView.ItemContainerStyle>
+                                            <ListView.View>
+                                                <GridView AllowsColumnReorder="false">
+                                                    <GridView.ColumnHeaderContainerStyle>
+                                                        <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                            <Setter Property="IsEnabled" Value="False"/>
+                                                        </Style>
+                                                    </GridView.ColumnHeaderContainerStyle>
+                                                    <GridViewColumn Header="Year" Width="60" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Defense_Stats.Year}" />
+                                                    <GridViewColumn Header="Plays" Width="60" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Defense_Stats.Plays}" />
+                                                    <GridViewColumn Header="Tackles" Width="70" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Defense_Stats.Tackles}" />
+                                                    <GridViewColumn Header="Sacks" Width="60" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Defense_Stats.Sacks}" />
+                                                    <GridViewColumn Header="Pressures" Width="80" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Defense_Stats.Pressures}" />
+                                                    <GridViewColumn Header="Runs for Loss" Width="90" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Defense_Stats.Run_for_Loss}" />
+                                                    <GridViewColumn Header="Forced Fumbles" Width="120" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Defense_Stats.Forced_Fumble}" />
+                                                </GridView>
+                                            </ListView.View>
+                                        </ListView>
+                                        <Label Name="lblDefenseNoStats_po" HorizontalContentAlignment="Center" Style="{StaticResource NormallblBlackstyle}" Content="No Defense Stats"></Label>
+
+                                        <Label Name="lblPassDefense_po" Style="{StaticResource MedLabelBlackstyle}" Content="Pass Defense"></Label>
+                                        <ListView Name="lstPassDefense_po" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Width="580">
+                                            <ListView.ItemContainerStyle>
+                                                <Style TargetType="ListViewItem">
+                                                    <Setter Property="Focusable" Value="false"/>
+                                                </Style>
+                                            </ListView.ItemContainerStyle>
+                                            <ListView.View>
+                                                <GridView AllowsColumnReorder="false">
+                                                    <GridView.ColumnHeaderContainerStyle>
+                                                        <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                            <Setter Property="IsEnabled" Value="False"/>
+                                                        </Style>
+                                                    </GridView.ColumnHeaderContainerStyle>
+                                                    <GridViewColumn Header="Year" Width="60" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Pass_Defense_Stats.Year}" />
+                                                    <GridViewColumn Header="Pass Defenses" Width="100" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Pass_Defense_Stats.Pass_Defenses}" />
+                                                    <GridViewColumn Header="Ints" Width="70" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Pass_Defense_Stats.Ints}" />
+                                                    <GridViewColumn Header="TDs Surrendered" Width="120" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Pass_Defense_Stats.TDs_Surrendered}" />
+                                                    <GridViewColumn Header="Forced Fumbles" Width="120" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Pass_Defense_Stats.Forced_Fumble}" />
+                                                </GridView>
+                                            </ListView.View>
+                                        </ListView>
+                                        <Label Name="lblPassDefenseNoStats_po" HorizontalContentAlignment="Center" Style="{StaticResource NormallblBlackstyle}" Content="No Pass Defense Stats"></Label>
+
+                                        <Label Name="lblFGKicking_po" Style="{StaticResource MedLabelBlackstyle}" Content="FG Kicking"></Label>
+                                        <ListView Name="lstFGKicking_po" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Width="580">
+                                            <ListView.ItemContainerStyle>
+                                                <Style TargetType="ListViewItem">
+                                                    <Setter Property="Focusable" Value="false"/>
+                                                </Style>
+                                            </ListView.ItemContainerStyle>
+                                            <ListView.View>
+                                                <GridView AllowsColumnReorder="false">
+                                                    <GridView.ColumnHeaderContainerStyle>
+                                                        <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                            <Setter Property="IsEnabled" Value="False"/>
+                                                        </Style>
+                                                    </GridView.ColumnHeaderContainerStyle>
+                                                    <GridViewColumn Header="Year" Width="60" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Kicking_Stats.Year}" />
+                                                    <GridViewColumn Header="FG Att" Width="80" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Kicking_Stats.FG_ATT}" />
+                                                    <GridViewColumn Header="FG Made" Width="80" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Kicking_Stats.FG_Made}" />
+                                                    <GridViewColumn Header="FG %" Width="80" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Kicking_Stats.FG_Percent}" />
+                                                    <GridViewColumn Header="FG Long" Width="80" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Kicking_Stats.FG_Long}" />
+                                                    <GridViewColumn Header="XP Att" Width="80" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Kicking_Stats.XP_ATT}" />
+                                                    <GridViewColumn Header="XP Made" Width="80" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Kicking_Stats.XP_Made}" />
+                                                </GridView>
+                                            </ListView.View>
+                                        </ListView>
+                                        <Label Name="lblFGKickingNoStats_po" HorizontalContentAlignment="Center" Style="{StaticResource NormallblBlackstyle}" Content="No FG Kicking Stats"></Label>
+
+                                        <Label Name="lblKickoffReturns_po" Style="{StaticResource MedLabelBlackstyle}" Content="Kickoff Returns"></Label>
+                                        <ListView Name="lstKickoffReturns_po" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Width="580">
+                                            <ListView.ItemContainerStyle>
+                                                <Style TargetType="ListViewItem">
+                                                    <Setter Property="Focusable" Value="false"/>
+                                                </Style>
+                                            </ListView.ItemContainerStyle>
+                                            <ListView.View>
+                                                <GridView AllowsColumnReorder="false">
+                                                    <GridView.ColumnHeaderContainerStyle>
+                                                        <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                            <Setter Property="IsEnabled" Value="False"/>
+                                                        </Style>
+                                                    </GridView.ColumnHeaderContainerStyle>
+                                                    <GridViewColumn Header="Year" Width="60" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.KickRet_Stats.Year}" />
+                                                    <GridViewColumn Header="Returns" Width="70" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.KickRet_Stats.Returns}" />
+                                                    <GridViewColumn Header="Yards" Width="70" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.KickRet_Stats.Yards}" />
+                                                    <GridViewColumn Header="Yards/Return" Width="80" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.KickRet_Stats.Yards_avg}" />
+                                                    <GridViewColumn Header="Yards Long" Width="80" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.KickRet_Stats.Yards_Long}" />
+                                                    <GridViewColumn Header="TDs" Width="70" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.KickRet_Stats.TDs}" />
+                                                    <GridViewColumn Header="Fumbles" Width="80" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.KickRet_Stats.Fumbles}" />
+                                                </GridView>
+                                            </ListView.View>
+                                        </ListView>
+                                        <Label Name="lblKickReturnsNoStats_po" HorizontalContentAlignment="Center" Style="{StaticResource NormallblBlackstyle}" Content="No Kickoff Returns Stats"></Label>
+
+                                        <Label Name="lblPunting_po" Style="{StaticResource MedLabelBlackstyle}" Content="Punting"></Label>
+                                        <ListView Name="lstPunting_po" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Width="580">
+                                            <ListView.ItemContainerStyle>
+                                                <Style TargetType="ListViewItem">
+                                                    <Setter Property="Focusable" Value="false"/>
+                                                </Style>
+                                            </ListView.ItemContainerStyle>
+                                            <ListView.View>
+                                                <GridView AllowsColumnReorder="false">
+                                                    <GridView.ColumnHeaderContainerStyle>
+                                                        <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                            <Setter Property="IsEnabled" Value="False"/>
+                                                        </Style>
+                                                    </GridView.ColumnHeaderContainerStyle>
+                                                    <GridViewColumn Header="Year" Width="60" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Punting_Stats.Year}" />
+                                                    <GridViewColumn Header="Punts" Width="80" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Punting_Stats.Punts}" />
+                                                    <GridViewColumn Header="Yards" Width="80" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Punting_Stats.Yards}" />
+                                                    <GridViewColumn Header="Punt AVG" Width="100" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Punting_Stats.Punt_AVG}" />
+                                                    <GridViewColumn Header="Coffin Corners" Width="100" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Punting_Stats.Coffin_Corners}" />
+                                                </GridView>
+                                            </ListView.View>
+                                        </ListView>
+                                        <Label Name="lblPuntingNoStats_po" HorizontalContentAlignment="Center" Style="{StaticResource NormallblBlackstyle}" Content="No Punting Stats"></Label>
+
+                                        <Label Name="lblPuntReturns_po" Style="{StaticResource MedLabelBlackstyle}" Content="Punt Returns"></Label>
+                                        <ListView Name="lstPuntReturns_po" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Width="580">
+                                            <ListView.ItemContainerStyle>
+                                                <Style TargetType="ListViewItem">
+                                                    <Setter Property="Focusable" Value="false"/>
+                                                </Style>
+                                            </ListView.ItemContainerStyle>
+                                            <ListView.View>
+                                                <GridView AllowsColumnReorder="false">
+                                                    <GridView.ColumnHeaderContainerStyle>
+                                                        <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                            <Setter Property="IsEnabled" Value="False"/>
+                                                        </Style>
+                                                    </GridView.ColumnHeaderContainerStyle>
+                                                    <GridViewColumn Header="Year" Width="60" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.PuntRet_Stats.Year}" />
+                                                    <GridViewColumn Header="Returns" Width="70" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.PuntRet_Stats.Returns}" />
+                                                    <GridViewColumn Header="Yards" Width="70" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.PuntRet_Stats.Yards}" />
+                                                    <GridViewColumn Header="Yards/Return" Width="70" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.PuntRet_Stats.Yards_avg}" />
+                                                    <GridViewColumn Header="Yards Long" Width="80" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.PuntRet_Stats.Yards_Long}" />
+                                                    <GridViewColumn Header="TDs" Width="70" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.PuntRet_Stats.TDs}" />
+                                                    <GridViewColumn Header="Fumbles" Width="80" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.PuntRet_Stats.Fumbles}" />
+                                                </GridView>
+                                            </ListView.View>
+                                        </ListView>
+                                        <Label Name="lblPuntReturnsNoStats_po" HorizontalContentAlignment="Center" Style="{StaticResource NormallblBlackstyle}" Content="No Punt Returns Stats"></Label>
+                                    </StackPanel>
+                                </GroupBox>
+
+                            </StackPanel>
+                        </ScrollViewer>
                     </TabItem>
                     <TabItem Header="Ratings">
                     </TabItem>

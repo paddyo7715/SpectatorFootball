@@ -60,6 +60,19 @@ namespace SpectatorFootball.DAO
 
             return r;
         }
+        public string getTeamNamefromFranchiseID(long season_id, long franchise_id, string league_filepath)
+        {
+            string r = null;
+
+            string con = Common.LeageConnection.Connect(league_filepath);
+
+            using (var context = new leagueContext(con))
+            {
+                r = context.Teams_by_Season.Where(x => x.Franchise_ID == franchise_id && x.Season_ID == season_id).Select(x => x.Nickname).First();
+            }
+
+            return r;
+        }
 
         public List<long> getAllFranchiseIDThisSeason(long season_id, string league_filepath)
         {
@@ -325,7 +338,18 @@ namespace SpectatorFootball.DAO
             }
             return r;
 
+        }
+        public Teams_by_Season getTeamFromPlayerID(Player p, string league_filepath)
+        {
+            Teams_by_Season r = null;
 
+            string con = Common.LeageConnection.Connect(league_filepath);
+
+            using (var context = new leagueContext(con))
+            {
+                r = context.Teams_by_Season.Where(x => x.Franchise.Players.Any(c => c.ID == p.ID)).FirstOrDefault();
+            }
+            return r;
         }
     }
 }

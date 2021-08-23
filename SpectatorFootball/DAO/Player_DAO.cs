@@ -367,7 +367,7 @@ namespace SpectatorFootball
 
             using (var context = new leagueContext(con))
             {
-                r = context.Drafts.Where(x => x.Player_ID == player_id && x.Season_ID == season_id).Include(x => x.Season).First();
+                r = context.Drafts.Where(x => x.Player_ID == player_id && x.Season_ID == season_id).Include(x => x.Season).Include(x => x.Franchise).FirstOrDefault();
             }
             return r;
         }

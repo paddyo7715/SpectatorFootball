@@ -1468,7 +1468,7 @@ namespace SpectatorFootball.WindowsLeague
                 Player_Services ps = new Player_Services();
 
                 Player_Ratings pr = RosterList[ls.SelectedIndex];
-                Player_Card_Data pcd = ps.getPlayerCardData(this.orig_this_team, pr.Player, pw.Loaded_League);
+                Player_Card_Data pcd = ps.getPlayerCardData(pr.Player, pw.Loaded_League);
                 PlayerCard_Popup pcp = new PlayerCard_Popup(pcd);
                 pcp.Left = (SystemParameters.PrimaryScreenWidth - pcp.Width) / 2;
                 pcp.ShowDialog();

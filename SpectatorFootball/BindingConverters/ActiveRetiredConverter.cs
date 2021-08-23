@@ -1,5 +1,4 @@
-﻿using SpectatorFootball.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,19 +7,21 @@ using System.Windows.Data;
 
 namespace SpectatorFootball.BindingConverters
 {
-    class DraftInfoConverter : IValueConverter
+    class ActiveRetiredConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            string r = null;
+
+            string r = "";
 
             if (value != null)
             {
-                Draft d = (Draft)value;
-                r = d.Season.Year + " Round " + d.Round.ToString() + " Pick # " + d.Pick_Number.ToString();
+                string Retired = value.ToString();
+                if (Retired == "1")
+                    r = "Retired";
+                else
+                    r = "Active";
             }
-            else
-                r = "UNDRAFTED";
 
             return r;
 
@@ -36,4 +37,5 @@ namespace SpectatorFootball.BindingConverters
         }
     }
 }
+
 

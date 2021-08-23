@@ -125,10 +125,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BindingConverters\ActiveRetiredConverter.cs" />
     <Compile Include="BindingConverters\avgYardsConverter.cs" />
     <Compile Include="BindingConverters\ColorConverter.cs" />
     <Compile Include="BindingConverters\DoubleFormatConverter.cs" />
-    <Compile Include="BindingConverters\DraftInfoConverter.cs" />
     <Compile Include="BindingConverters\handednessConverter.cs" />
     <Compile Include="BindingConverters\HasAnyConverter.cs" />
     <Compile Include="BindingConverters\ImageConverter.cs" />

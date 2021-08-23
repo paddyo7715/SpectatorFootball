@@ -175,6 +175,16 @@
             <Setter Property="FontWeight" Value="Normal"/>
             <Setter Property="Foreground" Value="white"/>
         </Style>
+        <!-- Medium sized screen title label Black-->
+        <Style TargetType="Label" x:Key="MedLabelBlackstyle">
+            <Setter Property="FontFamily" Value="Verdana"/>
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="Height" Value="60"/>
+            <Setter Property="HorizontalAlignment" Value="center"/>
+            <Setter Property="VerticalContentAlignment" Value="Bottom"/>
+            <Setter Property="FontWeight" Value="Normal"/>
+            <Setter Property="Foreground" Value="Black"/>
+        </Style>
         <!-- Large Label -->
         <Style TargetType="Label" x:Key="Largelbltyle">
             <Setter Property="Height" Value="28"/>
@@ -270,11 +280,27 @@
             <Setter Property="Margin" Value="10,10,10,10"/>
         </Style>
 
+        <Style TargetType="GroupBox" x:Key="GroupBoxTransstyle">
+            <Setter Property="FontFamily" Value="Verdana"/>
+            <Setter Property="FontWeight" Value="Normal"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Background" Value="White"/>
+        </Style>
+
         <Style TargetType="GroupBox" x:Key="PopupGroupBoxstyle">
             <Setter Property="FontFamily" Value="Verdana"/>
             <Setter Property="FontWeight" Value="Normal"/>
             <Setter Property="Foreground" Value="DarkBlue"/>
             <Setter Property="Background" Value="LightBlue"/>
+        </Style>
+
+        <Style TargetType="GroupBox" x:Key="StatsGroupStyle">
+            <Setter Property="FontFamily" Value="Verdana"/>
+            <Setter Property="FontWeight" Value="Normal"/>
+            <Setter Property="Foreground" Value="DarkBlue"/>
+            <Setter Property="Background" Value="LightBlue"/>
+            <Setter Property="BorderBrush" Value="DarkBlue"/>
+            <Setter Property="BorderThickness" Value="2"/>
         </Style>
 
         <!-- Label Team STandings -->
@@ -335,6 +361,13 @@
             <Setter Property="FontFamily" Value="Verdana"/>
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Foreground" Value="white"/>
+        </Style>
+
+        <!-- Normal Label Black -->
+        <Style TargetType="Label" x:Key="NormallblBlackstyle">
+            <Setter Property="FontFamily" Value="Verdana"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="Black"/>
         </Style>
 
         <!-- Normal Smaller Label -->
