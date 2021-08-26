@@ -243,7 +243,6 @@ namespace SpectatorFootball
             List_and_Default playoff_teams_list = League_Helper.getPlayoffGamesforStructure(newl1Structure.SelectedItem.ToString());
             newl1PlayoffTeams.ItemsSource = playoff_teams_list.source_list;
             newl1PlayoffTeams.SelectedValue = playoff_teams_list.selected;
-//right here is the issue
             num_playoff_teams = int.Parse(playoff_teams_list.selected);
 
             teams_per_division = num_teams / num_divs;

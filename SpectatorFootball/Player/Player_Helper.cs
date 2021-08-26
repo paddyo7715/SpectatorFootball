@@ -754,6 +754,119 @@ namespace SpectatorFootball.PlayerNS
 
             return r;
         }
+        public static List<string> getRelaventRatingsforPos(Player_Pos pos)
+        {
+            List<string> r = new List<string>();
+
+            switch (pos)
+            {
+                case Player_Pos.QB:
+                    r.Add("Accuracy_Rating");
+                    r.Add("Decision_Making_Rating");
+                    r.Add("Arm_Strength_Rating");
+                    r.Add("Speed_Rating");
+                    r.Add("Agilty_Rating");
+                    r.Add("Ball_Safety_Rating");
+                    r.Add("Work_Ethic_Ratings");
+                    break;
+                case Player_Pos.RB:
+                    r.Add("Running_Power_Rating");
+                    r.Add("Speed_Rating");
+                    r.Add("Agilty_Rating");
+                    r.Add("Hands_Rating");
+                    r.Add("Ball_Safety_Rating");
+                    r.Add("Work_Ethic_Ratings");
+                    break;
+                case Player_Pos.WR:
+                    r.Add("Speed_Rating");
+                    r.Add("Agilty_Rating");
+                    r.Add("Hands_Rating");
+                    r.Add("Ball_Safety_Rating");
+                    r.Add("Work_Ethic_Ratings");
+                    break;
+                case Player_Pos.TE:
+                    r.Add("Speed_Rating");
+                    r.Add("Agilty_Rating");
+                    r.Add("Hands_Rating");
+                    r.Add("Pass_Block_Rating");
+                    r.Add("Run_Block_Rating");
+                    r.Add("Ball_Safety_Rating");
+                    r.Add("Work_Ethic_Ratings");
+                    break;
+                case Player_Pos.OL:
+                    r.Add("Pass_Block_Rating");
+                    r.Add("Run_Block_Rating");
+                    r.Add("Agilty_Rating");
+                    r.Add("Work_Ethic_Ratings");
+                    break;
+                case Player_Pos.DL:
+                    r.Add("Pass_Attack_Rating");
+                    r.Add("Run_Attack_Rating");
+                    r.Add("Speed_Rating");
+                    r.Add("Agilty_Rating");
+                    r.Add("Tackle_Rating");
+                    r.Add("Work_Ethic_Ratings");
+                    break;
+                case Player_Pos.LB:
+                    r.Add("Pass_Attack_Rating");
+                    r.Add("Run_Attack_Rating");
+                    r.Add("Speed_Rating");
+                    r.Add("Agilty_Rating");
+                    r.Add("Tackle_Rating");
+                    r.Add("Hands_Rating");
+                    r.Add("Work_Ethic_Ratings");
+                    break;               
+                 case Player_Pos.DB:
+                    r.Add("Speed_Rating");
+                    r.Add("Agilty_Rating");
+                    r.Add("Tackle_Rating");
+                    r.Add("Hands_Rating");
+                    r.Add("Work_Ethic_Ratings");
+                    break;
+                case Player_Pos.P:
+                case Player_Pos.K:
+                    r.Add("Kicker_Leg_Power_Rating");
+                    r.Add("Kicker_Leg_Accuracy_Rating");
+                    r.Add("Work_Ethic_Ratings");
+                    break;
+            }
+
+            return r;
+        }
+        public static string ChangeRatingtoDisplayRating(string s)
+        {
+            string r = null;
+
+            switch (s)
+            {
+                case "Accuracy_Rating":
+                    s = "Passing_Accuracy_Rating";
+                    break;
+               case "Pass_Attack_Rating":
+                    s = "Pass_Rush_Rating";
+                    break;
+                case "Run_Attack_Rating":
+                    s = "Pass_Stop_Rating";
+                    break;
+                case "Kicker_Leg_Power_Rating":
+                    s = "Leg_Power_Rating";
+                    break;
+                case "Kicker_Leg_Accuracy_Rating":
+                    s = "Leg_Accuracy_Rating";
+                    break;
+            }
+
+            r = s.Replace("_", " ");
+            return r;
+        }
+        public static long getRatingValue(Player_Ratings pr, string s)
+        {
+            long r = 0;
+
+            r = (long)pr.GetType().GetProperty(s)?.GetValue(pr, null);
+
+            return r;
+        }
 
     }
 }

@@ -609,6 +609,10 @@
                         </ScrollViewer>
                     </TabItem>
                     <TabItem Header="Ratings">
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Name="sp1" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="top" >
+                            </StackPanel>
+                        </StackPanel>
                     </TabItem>
                     <TabItem Header="Awards">
                     </TabItem>

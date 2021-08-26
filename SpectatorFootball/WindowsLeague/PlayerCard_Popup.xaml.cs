@@ -276,6 +276,37 @@ namespace SpectatorFootball.WindowsLeague
                 }
             }
 
+            Style PopupLabel = (Style)System.Windows.Application.Current.FindResource("PopupLabel");
+            Style PopupText = (Style)System.Windows.Application.Current.FindResource("PopupText");
+
+            List<string> sRatings = Player_Helper.getRelaventRatingsforPos((Player_Pos)pcd.Player.Pos);
+            foreach (string s in sRatings)
+            {
+                StackPanel sp = new StackPanel();
+                sp.Orientation = Orientation.Horizontal;                
+
+                string display_rating = Player_Helper.ChangeRatingtoDisplayRating(s);
+
+                var rating_label = new Label(); 
+                rating_label.Name = s;
+                rating_label.Width = 250;
+                rating_label.Height = 30;
+                rating_label.Style = PopupLabel;
+                rating_label.Content = display_rating;
+
+                var rating_txt_value = new TextBlock();
+                rating_txt_value.Name = "txt" + s;
+                rating_txt_value.Width = 40;
+                rating_txt_value.Height = 20;
+                rating_txt_value.Style = PopupText;
+                rating_txt_value.Text = Player_Helper.getRatingValue(pcd.Player_Ratings.Last(), s).ToString();
+
+                sp.Children.Add(rating_label);
+                sp.Children.Add(rating_txt_value);
+                sp1.Children.Add(sp);
+
+            }
+
             this.DataContext = this.pcd;
         }
         private void btnclose_Click(object sender, RoutedEventArgs e)

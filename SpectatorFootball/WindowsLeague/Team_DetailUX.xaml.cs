@@ -260,8 +260,6 @@ namespace SpectatorFootball.WindowsLeague
         {
             try
             {
-
-
                 Validate();
 
                 Team_Services ts = new Team_Services();
@@ -1461,6 +1459,8 @@ namespace SpectatorFootball.WindowsLeague
         {
             if (Mouse.OverrideCursor == Cursors.Wait) return;
 
+            try
+            { 
             ListView ls = (ListView)sender;
 
             if (ls.SelectedItems.Count > 0)
@@ -1472,6 +1472,13 @@ namespace SpectatorFootball.WindowsLeague
                 PlayerCard_Popup pcp = new PlayerCard_Popup(pcd);
                 pcp.Left = (SystemParameters.PrimaryScreenWidth - pcp.Width) / 2;
                 pcp.ShowDialog();
+            }
+            }
+            catch (Exception ex)
+            {
+                logger.Error("Error Opening Player Profile Popup");
+                logger.Error(ex);
+                MessageBox.Show(CommonUtils.substr(ex.Message, 0, 100), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }
