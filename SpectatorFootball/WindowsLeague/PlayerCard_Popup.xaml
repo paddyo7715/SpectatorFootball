@@ -3,8 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:oxy="http://oxyplot.org/wpf"
         xmlns:local1="clr-namespace:SpectatorFootball.BindingConverters" 
-        xmlns:local="clr-namespace:SpectatorFootball"
         mc:Ignorable="d"
         Height ="600" Width="600" WindowStyle="none" ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True">
     <Window.Resources>
@@ -610,7 +610,12 @@
                     </TabItem>
                     <TabItem Header="Ratings">
                         <StackPanel Orientation="Vertical">
-                            <StackPanel Name="sp1" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="top" >
+                            <StackPanel Name="sp1" Orientation="Vertical" Height="240" HorizontalAlignment="Center" VerticalAlignment="top" >
+                                <Label Style="{StaticResource PopupLabel}" HorizontalContentAlignment="Center" Content="Current"></Label>
+                            </StackPanel>
+                            <StackPanel Name="sp2" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="top" >
+                                <Label Style="{StaticResource PopupLabel}" HorizontalContentAlignment="Center" Content="Progression"></Label>
+                                <oxy:PlotView Height="200" Width="500" Model="{Binding model}"/>
                             </StackPanel>
                         </StackPanel>
                     </TabItem>

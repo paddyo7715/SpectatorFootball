@@ -78,14 +78,38 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SpectatorFootball.exe" size="14001640">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="OxyPlot.dll" size="549376">
+      <assemblyIdentity name="OxyPlot" version="2.0.0.0" publicKeyToken="638079A8F0BD61E9" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>vK0M/swEOEMAi0ryfXTkz0Zjigbl2dinsJ/6tuWCmpg=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="OxyPlot.Wpf.dll" size="160768">
+      <assemblyIdentity name="OxyPlot.Wpf" version="2.0.0.0" publicKeyToken="75E952BA404CDBB0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>ISsNz4aIwqIJLHtgXpc8mMX2dSeDKtrQruRZx50YLSs=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SpectatorFootball.exe" size="14003688">
       <assemblyIdentity name="SpectatorFootball" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>P9rM+IxVQkzcR98pBRATQmHkcfn5hcuntM0NogKieZ0=</dsig:DigestValue>
+        <dsig:DigestValue>XIOcb45EVQ68LM6hS0D8oT2KU5lMy0LpV+9j5SDR9P0=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -350,13 +374,13 @@
       <dsig:DigestValue>HL9o7LlQkPLeqgeqM6/+zGZe6rRJGu5Qg78iH6j807U=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="SpectatorFootball.exe.config" size="4614">
+  <file name="SpectatorFootball.exe.config" size="4845">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>2Tm7bbqXbeBQQhD7QQvz2bNGklRC9Bir2R9T9qpcQgA=</dsig:DigestValue>
+      <dsig:DigestValue>yUVpumKCeWRRJqgx3hcAKnhBaAFMuKm+0g0UmKGNbu0=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>

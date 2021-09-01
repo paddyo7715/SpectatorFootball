@@ -15,6 +15,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using OxyPlot;
+using OxyPlot.Series;
 
 namespace SpectatorFootball.WindowsLeague
 {
@@ -304,11 +306,49 @@ namespace SpectatorFootball.WindowsLeague
                 sp.Children.Add(rating_label);
                 sp.Children.Add(rating_txt_value);
                 sp1.Children.Add(sp);
-
             }
+
+            IList<DataPoint> Points = new List<DataPoint>
+            {
+            new DataPoint(1983, 75),
+            new DataPoint(1984, 80),
+            new DataPoint(1985, 78),
+            new DataPoint(1986, 83),
+            new DataPoint(1987, 90),
+            new DataPoint(1988, 88)
+            };
+            pcd.Points = Points;
+
+            pcd.model = new PlotModel();
+            LineSeries series1 = new LineSeries();
+            series1.Title = "Accuracy";
+            series1.MarkerType = MarkerType.Circle;
+            series1.Points.Add(new DataPoint(1983, 80));
+            series1.Points.Add(new DataPoint(1984, 78));
+            series1.Points.Add(new DataPoint(1985, 82));
+            series1.Points.Add(new DataPoint(1986, 85));
+            series1.Points.Add(new DataPoint(1987, 90));
+
+            LineSeries series2 = new LineSeries();
+            series2.Title = "Arm Strength";
+            series2.MarkerType = MarkerType.Circle;
+            series2.Points.Add(new DataPoint(1983, 60));
+            series2.Points.Add(new DataPoint(1984, 65));
+            series2.Points.Add(new DataPoint(1985, 64));
+            series2.Points.Add(new DataPoint(1986, 66));
+            series2.Points.Add(new DataPoint(1987, 70));
+
+            pcd.model.Series.Add(series1);
+            pcd.model.Series.Add(series2);
 
             this.DataContext = this.pcd;
         }
+
+        private KeyValuePair<T1, T2> newKeyValuePair<T1, T2>(T1 now, T2 v)
+        {
+            throw new NotImplementedException();
+        }
+
         private void btnclose_Click(object sender, RoutedEventArgs e)
         {
             this.Close();

@@ -1,4 +1,5 @@
-﻿using SpectatorFootball.Models;
+﻿using OxyPlot;
+using SpectatorFootball.Models;
 using SpectatorFootball.Team;
 using System;
 using System.Collections.Generic;
@@ -18,5 +19,7 @@ namespace SpectatorFootball.PlayerNS
         public Team_Player_Accum_Stats_by_year Playoff_Stats { get; set; }
         public List<Two_Coll_List> Player_Awards { get; set; }
         public List<Player_Ratings> Player_Ratings { get; set; }
+        public IList<DataPoint> Points { get; set; }
+        public PlotModel model { get; set; }
     }
 }

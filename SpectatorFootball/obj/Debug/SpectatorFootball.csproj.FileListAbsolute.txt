@@ -99,3 +99,7 @@ C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\Spec
 C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\SpectatorFootball.application
 C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\WindowsLeague\PlayerCard_Popup.g.cs
 C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\WindowsLeague\PlayerCard_Popup.baml
+C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\bin\Debug\OxyPlot.dll
+C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\bin\Debug\OxyPlot.Wpf.dll
+C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\bin\Debug\OxyPlot.xml
+C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\bin\Debug\OxyPlot.Wpf.xml
