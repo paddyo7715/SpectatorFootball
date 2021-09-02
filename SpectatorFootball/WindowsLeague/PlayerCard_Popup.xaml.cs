@@ -17,6 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using OxyPlot;
 using OxyPlot.Series;
+using OxyPlot.Axes;
 
 namespace SpectatorFootball.WindowsLeague
 {
@@ -320,7 +321,10 @@ namespace SpectatorFootball.WindowsLeague
             pcd.Points = Points;
 
             pcd.model = new PlotModel();
+            pcd.model.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Minimum = 0, Maximum = 100, Key = "Vertical" });
+
             LineSeries series1 = new LineSeries();
+
             series1.Title = "Accuracy";
             series1.MarkerType = MarkerType.Circle;
             series1.Points.Add(new DataPoint(1983, 80));
@@ -340,6 +344,8 @@ namespace SpectatorFootball.WindowsLeague
 
             pcd.model.Series.Add(series1);
             pcd.model.Series.Add(series2);
+            pcd.model.LegendPlacement = LegendPlacement.Outside;
+            pcd.model.LegendPosition = LegendPosition.RightTop;
 
             this.DataContext = this.pcd;
         }
