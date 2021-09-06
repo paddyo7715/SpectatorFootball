@@ -355,7 +355,7 @@ namespace SpectatorFootball
 
             using (var context = new leagueContext(con))
             {
-                r = context.Player_Ratings.Where(x => x.Player_ID == player_id).OrderBy(x => x.Season_ID).ToList();
+                r = context.Player_Ratings.Where(x => x.Player_ID == player_id).Include(x => x.Season).OrderBy(x => x.Season_ID).ToList();
             }
             return r;
         }

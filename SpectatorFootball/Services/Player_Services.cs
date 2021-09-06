@@ -100,14 +100,6 @@ namespace SpectatorFootball.Services
             foreach (var s in r.Playoff_Stats.PuntRet_Stats)
                 s.Yards_avg = Player_Helper.CalcYardsPerCarry_or_Catch(s.Returns, s.Yards);
 
-
-
-
-
-
-
-
-
             List<Two_Coll_List> Award_List = pd.getPlayerAwards(p.ID, t.Season_ID, League_con_string);
             r.Player_Awards = Award_List;
             r.Player_Ratings = pd.getPlayerRatingsAllYears(p.ID, t.Season_ID, League_con_string);

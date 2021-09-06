@@ -18,6 +18,7 @@ using System.Windows.Shapes;
 using OxyPlot;
 using OxyPlot.Series;
 using OxyPlot.Axes;
+using SpectatorFootball.Common;
 
 namespace SpectatorFootball.WindowsLeague
 {
@@ -309,41 +310,40 @@ namespace SpectatorFootball.WindowsLeague
                 sp1.Children.Add(sp);
             }
 
-            IList<DataPoint> Points = new List<DataPoint>
-            {
-            new DataPoint(1983, 75),
-            new DataPoint(1984, 80),
-            new DataPoint(1985, 78),
-            new DataPoint(1986, 83),
-            new DataPoint(1987, 90),
-            new DataPoint(1988, 88)
-            };
-            pcd.Points = Points;
+            //set the ratings progression chart data
+            List<Long_and_Long> rating_vals = Player_Helper.getRelaventRatingValesforPos((Player_Pos)pcd.Player.Pos, pcd.Player_Ratings);
+
+            int min_year = (int)rating_vals.Min(x => x.l1);
+            int max_year = (int)rating_vals.Max(x => x.l1);
 
             pcd.model = new PlotModel();
             pcd.model.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Minimum = 0, Maximum = 100, Key = "Vertical" });
+//            pcd.model.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Minimum= min_year, Maximum= max_year,  Key = "Horizontal", MajorStep = 1 });
+//            pcd.model.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Minimum = 2021, Maximum = 2022, Key = "Horizontal", MajorStep = 1, StartPosition = 0.025, EndPosition = 0.975 });
+//            pcd.model.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Minimum = min_year, Maximum = max_year, Key = "Horizontal", MajorStep = 1, StartPosition = 0.025, EndPosition = 0.975 });
+//if there is only 1 year then set the min 0.1 and the max + .1, otherwise use the normal one
+            pcd.model.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Minimum = 2020.9, Maximum = 2021.1, Key = "Horizontal", MajorStep = 1, StartPosition = 0.025, EndPosition = 0.975 });
 
-            LineSeries series1 = new LineSeries();
 
-            series1.Title = "Accuracy";
-            series1.MarkerType = MarkerType.Circle;
-            series1.Points.Add(new DataPoint(1983, 80));
-            series1.Points.Add(new DataPoint(1984, 78));
-            series1.Points.Add(new DataPoint(1985, 82));
-            series1.Points.Add(new DataPoint(1986, 85));
-            series1.Points.Add(new DataPoint(1987, 90));
+            int r_count = sRatings.Count();
+            int r_index = -1;
+            foreach (string s in sRatings)
+            {
+                r_index++;
+                //Since neither ball saftey or work ethic will change as a player ages,
+                //there is no need to show them in the progression chart.
+                if (s == "Ball_Safety_Rating" || s == "Work_Ethic_Ratings")
+                    continue;
 
-            LineSeries series2 = new LineSeries();
-            series2.Title = "Arm Strength";
-            series2.MarkerType = MarkerType.Circle;
-            series2.Points.Add(new DataPoint(1983, 60));
-            series2.Points.Add(new DataPoint(1984, 65));
-            series2.Points.Add(new DataPoint(1985, 64));
-            series2.Points.Add(new DataPoint(1986, 66));
-            series2.Points.Add(new DataPoint(1987, 70));
+                LineSeries series1 = new LineSeries();
+                series1.Title = s;
+                series1.MarkerType = MarkerType.Circle;
+                for (int i = r_index; i < r_count - 1; i += r_count)
+                    series1.Points.Add(new DataPoint((int)rating_vals[r_index].l1, (int)rating_vals[r_index].d1));
 
-            pcd.model.Series.Add(series1);
-            pcd.model.Series.Add(series2);
+                pcd.model.Series.Add(series1);
+            }
+
             pcd.model.LegendPlacement = LegendPlacement.Outside;
             pcd.model.LegendPosition = LegendPosition.RightTop;
 

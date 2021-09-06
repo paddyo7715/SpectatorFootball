@@ -3,6 +3,7 @@ using System;
 using SpectatorFootball.Models;
 using SpectatorFootball.Enum;
 using log4net;
+using SpectatorFootball.Common;
 
 namespace SpectatorFootball.PlayerNS
 {
@@ -868,5 +869,87 @@ namespace SpectatorFootball.PlayerNS
             return r;
         }
 
+        public static List<Long_and_Long> getRelaventRatingValesforPos(Player_Pos pos, ICollection<Player_Ratings> ratings)
+        {
+            List<Long_and_Long> r = new List<Long_and_Long>();
+
+            foreach (Player_Ratings pr in ratings)
+            {
+                switch (pos)
+                {
+                    case Player_Pos.QB:
+                        r.Add(new Long_and_Long() { l1 = pr.Season.Year,  d1 = pr.Accuracy_Rating });
+                        r.Add(new Long_and_Long() { l1 = pr.Season.Year, d1 = pr.Decision_Making_Rating });
+                        r.Add(new Long_and_Long() { l1 = pr.Season.Year, d1 = pr.Arm_Strength_Rating });
+                        r.Add(new Long_and_Long() { l1 = pr.Season.Year, d1 = pr.Speed_Rating });
+                        r.Add(new Long_and_Long() { l1 = pr.Season.Year, d1 = pr.Agilty_Rating });
+                        r.Add(new Long_and_Long() { l1 = pr.Season.Year, d1 = pr.Ball_Safety_Rating });
+                        r.Add(new Long_and_Long() { l1 = pr.Season.Year, d1 = pr.Work_Ethic_Ratings });
+                        break;
+                    case Player_Pos.RB:
+                        r.Add(new Long_and_Long() { l1 = pr.Season.Year, d1 = pr.Running_Power_Rating });
+                        r.Add(new Long_and_Long() { l1 = pr.Season.Year, d1 = pr.Speed_Rating });
+                        r.Add(new Long_and_Long() { l1 = pr.Season.Year, d1 = pr.Agilty_Rating });
+                        r.Add(new Long_and_Long() { l1 = pr.Season.Year, d1 = pr.Hands_Rating });
+                        r.Add(new Long_and_Long() { l1 = pr.Season.Year, d1 = pr.Ball_Safety_Rating });
+                        r.Add(new Long_and_Long() { l1 = pr.Season.Year, d1 = pr.Work_Ethic_Ratings });
+                        break;
+                    case Player_Pos.WR:
+                        r.Add(new Long_and_Long() { l1 = pr.Season.Year, d1 = pr.Speed_Rating });
+                        r.Add(new Long_and_Long() { l1 = pr.Season.Year, d1 = pr.Agilty_Rating });
+                        r.Add(new Long_and_Long() { l1 = pr.Season.Year, d1 = pr.Hands_Rating });
+                        r.Add(new Long_and_Long() { l1 = pr.Season.Year, d1 = pr.Ball_Safety_Rating });
+                        r.Add(new Long_and_Long() { l1 = pr.Season.Year, d1 = pr.Work_Ethic_Ratings });
+                        break;
+                    case Player_Pos.TE:
+                        r.Add(new Long_and_Long() { l1 = pr.Season.Year, d1 = pr.Speed_Rating });
+                        r.Add(new Long_and_Long() { l1 = pr.Season.Year, d1 = pr.Agilty_Rating });
+                        r.Add(new Long_and_Long() { l1 = pr.Season.Year, d1 = pr.Hands_Rating });
+                        r.Add(new Long_and_Long() { l1 = pr.Season.Year, d1 = pr.Pass_Block_Rating });
+                        r.Add(new Long_and_Long() { l1 = pr.Season.Year, d1 = pr.Run_Block_Rating });
+                        r.Add(new Long_and_Long() { l1 = pr.Season.Year, d1 = pr.Ball_Safety_Rating });
+                        r.Add(new Long_and_Long() { l1 = pr.Season.Year, d1 = pr.Work_Ethic_Ratings });
+                        break;
+                    case Player_Pos.OL:
+                        r.Add(new Long_and_Long() { l1 = pr.Season.Year, d1 = pr.Pass_Block_Rating });
+                        r.Add(new Long_and_Long() { l1 = pr.Season.Year, d1 = pr.Run_Block_Rating });
+                        r.Add(new Long_and_Long() { l1 = pr.Season.Year, d1 = pr.Agilty_Rating });
+                        r.Add(new Long_and_Long() { l1 = pr.Season.Year, d1 = pr.Work_Ethic_Ratings });
+                        break;
+                    case Player_Pos.DL:
+                        r.Add(new Long_and_Long() { l1 = pr.Season.Year, d1 = pr.Pass_Attack_Rating });
+                        r.Add(new Long_and_Long() { l1 = pr.Season.Year, d1 = pr.Run_Attack_Rating });
+                        r.Add(new Long_and_Long() { l1 = pr.Season.Year, d1 = pr.Speed_Rating });
+                        r.Add(new Long_and_Long() { l1 = pr.Season.Year, d1 = pr.Agilty_Rating });
+                        r.Add(new Long_and_Long() { l1 = pr.Season.Year, d1 = pr.Tackle_Rating });
+                        r.Add(new Long_and_Long() { l1 = pr.Season.Year, d1 = pr.Work_Ethic_Ratings });
+                        break;
+                    case Player_Pos.LB:
+                        r.Add(new Long_and_Long() { l1 = pr.Season.Year, d1 = pr.Pass_Attack_Rating });
+                        r.Add(new Long_and_Long() { l1 = pr.Season.Year, d1 = pr.Run_Attack_Rating });
+                        r.Add(new Long_and_Long() { l1 = pr.Season.Year, d1 = pr.Speed_Rating });
+                        r.Add(new Long_and_Long() { l1 = pr.Season.Year, d1 = pr.Agilty_Rating });
+                        r.Add(new Long_and_Long() { l1 = pr.Season.Year, d1 = pr.Tackle_Rating });
+                        r.Add(new Long_and_Long() { l1 = pr.Season.Year, d1 = pr.Hands_Rating });
+                        r.Add(new Long_and_Long() { l1 = pr.Season.Year, d1 = pr.Work_Ethic_Ratings });
+                        break;
+                    case Player_Pos.DB:
+                        r.Add(new Long_and_Long() { l1 = pr.Season.Year, d1 = pr.Speed_Rating });
+                        r.Add(new Long_and_Long() { l1 = pr.Season.Year, d1 = pr.Agilty_Rating });
+                        r.Add(new Long_and_Long() { l1 = pr.Season.Year, d1 = pr.Tackle_Rating });
+                        r.Add(new Long_and_Long() { l1 = pr.Season.Year, d1 = pr.Hands_Rating });
+                        r.Add(new Long_and_Long() { l1 = pr.Season.Year, d1 = pr.Work_Ethic_Ratings });
+                        break;
+                    case Player_Pos.P:
+                    case Player_Pos.K:
+                        r.Add(new Long_and_Long() { l1 = pr.Season.Year, d1 = pr.Kicker_Leg_Power_Rating });
+                        r.Add(new Long_and_Long() { l1 = pr.Season.Year, d1 = pr.Kicker_Leg_Accuracy_Rating });
+                        r.Add(new Long_and_Long() { l1 = pr.Season.Year, d1 = pr.Work_Ethic_Ratings });
+                        break;
+                }
+            }
+
+            return r;
+        }
     }
 }
