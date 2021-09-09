@@ -160,6 +160,7 @@
     <Compile Include="Common\SettingsConnection.cs" />
     <Compile Include="Common\Validator.cs" />
     <Compile Include="CustomControls\CustomTextBox.cs" />
+    <Compile Include="DAO\AwardsDAO.cs" />
     <Compile Include="DAO\DBVersionDAO.cs" />
     <Compile Include="DAO\DraftDAO.cs" />
     <Compile Include="DAO\FreeAgencyDAO.cs" />

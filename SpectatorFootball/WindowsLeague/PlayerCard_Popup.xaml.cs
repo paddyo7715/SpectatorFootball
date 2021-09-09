@@ -365,10 +365,6 @@ namespace SpectatorFootball.WindowsLeague
                         break;
                 }
 
-
-                
-
-
                 for (int i = r_index; i < r_count - 1; i += r_count)
                     series1.Points.Add(new DataPoint((int)rating_vals[r_index].l1, (int)rating_vals[r_index].d1));
 
@@ -377,6 +373,12 @@ namespace SpectatorFootball.WindowsLeague
 
             pcd.model.LegendPlacement = LegendPlacement.Outside;
             pcd.model.LegendPosition = LegendPosition.RightTop;
+
+            lstAwards.ItemsSource = pcd.Awards;
+            if (pcd.Awards == null || pcd.Awards.Count() == 0)
+                lblPassNoAwards.Visibility = Visibility.Visible;
+            else
+                lblPassNoAwards.Visibility = Visibility.Collapsed;
 
             this.DataContext = this.pcd;
         }

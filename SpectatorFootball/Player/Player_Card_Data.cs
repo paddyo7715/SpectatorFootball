@@ -20,5 +20,6 @@ namespace SpectatorFootball.PlayerNS
         public List<Two_Coll_List> Player_Awards { get; set; }
         public List<Player_Ratings> Player_Ratings { get; set; }
         public PlotModel model { get; set; }
+        public List<Two_Coll_List> Awards { get; set; }
     }
 }

@@ -620,6 +620,27 @@
                         </StackPanel>
                     </TabItem>
                     <TabItem Header="Awards">
+                        <StackPanel Orientation="Vertical">
+                            <ListView Name="lstAwards" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Width="580">
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="ListViewItem">
+                                        <Setter Property="Focusable" Value="false"/>
+                                    </Style>
+                                </ListView.ItemContainerStyle>
+                                <ListView.View>
+                                    <GridView AllowsColumnReorder="false">
+                                        <GridView.ColumnHeaderContainerStyle>
+                                            <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                            </Style>
+                                        </GridView.ColumnHeaderContainerStyle>
+                                        <GridViewColumn Header="Year" Width="70" DisplayMemberBinding="{Binding Path=col1}" />
+                                        <GridViewColumn Header="Award" Width="250" DisplayMemberBinding="{Binding Path=col2}" />
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                            <Label Name="lblPassNoAwards"  Style="{StaticResource NormallblBlackstyle}" HorizontalContentAlignment="Center" Content="No Awards"></Label>
+                        </StackPanel>
                     </TabItem>
                     
                 </TabControl>
