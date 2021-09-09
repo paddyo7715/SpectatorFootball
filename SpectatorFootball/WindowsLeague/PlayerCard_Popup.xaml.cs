@@ -321,8 +321,8 @@ namespace SpectatorFootball.WindowsLeague
 //            pcd.model.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Minimum= min_year, Maximum= max_year,  Key = "Horizontal", MajorStep = 1 });
 //            pcd.model.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Minimum = 2021, Maximum = 2022, Key = "Horizontal", MajorStep = 1, StartPosition = 0.025, EndPosition = 0.975 });
 //            pcd.model.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Minimum = min_year, Maximum = max_year, Key = "Horizontal", MajorStep = 1, StartPosition = 0.025, EndPosition = 0.975 });
-//if there is only 1 year then set the min 0.1 and the max + .1, otherwise use the normal one
-            pcd.model.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Minimum = 2020.9, Maximum = 2021.1, Key = "Horizontal", MajorStep = 1, StartPosition = 0.025, EndPosition = 0.975 });
+//            pcd.model.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Minimum = 2020.9, Maximum = 2021.1, Key = "Horizontal", MajorStep = 1, StartPosition = 0.025, EndPosition = 0.975 });
+            pcd.model.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Minimum = ((double)min_year - .1), Maximum = ((double)max_year + .1), Key = "Horizontal", MajorStep = 1, StartPosition = 0.025, EndPosition = 0.975 });
 
 
             int r_count = sRatings.Count();
@@ -337,7 +337,38 @@ namespace SpectatorFootball.WindowsLeague
 
                 LineSeries series1 = new LineSeries();
                 series1.Title = s;
-                series1.MarkerType = MarkerType.Circle;
+                switch (r_index)
+                {
+                    case 0:
+                        series1.MarkerType = MarkerType.Circle;
+                        break;
+                    case 1:
+                        series1.MarkerType = MarkerType.Circle;
+                        break;
+                    case 2:
+                        series1.MarkerType = MarkerType.Diamond;
+                        break;                 
+                    case 3:
+                        series1.MarkerType = MarkerType.Circle;
+                        break;
+                    case 4:
+                        series1.MarkerType = MarkerType.Square;
+                        break;
+                    case 5:
+                        series1.MarkerType = MarkerType.Star;
+                        break;
+                    case 6:
+                        series1.MarkerType = MarkerType.Triangle;
+                        break;
+                    default:
+                        series1.MarkerType = MarkerType.Circle;
+                        break;
+                }
+
+
+                
+
+
                 for (int i = r_index; i < r_count - 1; i += r_count)
                     series1.Points.Add(new DataPoint((int)rating_vals[r_index].l1, (int)rating_vals[r_index].d1));
 
