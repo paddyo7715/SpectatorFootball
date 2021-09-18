@@ -219,6 +219,7 @@ namespace SpectatorFootball.WindowsLeague
             lstTeamOppStats.ItemsSource = t_Stats_lst;
             ((GridView)lstTeamOppStats.View).Columns[0].Header = this_team.City;
 
+
             //if the user is viewing a previous year in this league, then do NOT show the
             //roster tab and do not allow team attributes to be altered
             if (pw.Loaded_League.LState == Enum.League_State.Previous_Year)
@@ -231,6 +232,8 @@ namespace SpectatorFootball.WindowsLeague
                 detRoster.ItemsSource = RosterList;
             }
 
+            lstHistory.ItemsSource = ts.getTeamHistory(this_team.Franchise_ID, pw.Loaded_League.season.League_Structure_by_Season[0].Short_Name);
+            lstHistory2.ItemsSource = ts.getTeamHistory(this_team.Franchise_ID, pw.Loaded_League.season.League_Structure_by_Season[0].Short_Name);
             this.orig_this_team = this_team;
             this.pw = pw;
         }
@@ -1473,6 +1476,68 @@ namespace SpectatorFootball.WindowsLeague
                 pcp.Left = (SystemParameters.PrimaryScreenWidth - pcp.Width) / 2;
                 pcp.ShowDialog();
             }
+            }
+            catch (Exception ex)
+            {
+                logger.Error("Error Opening Player Profile Popup");
+                logger.Error(ex);
+                MessageBox.Show(CommonUtils.substr(ex.Message, 0, 100), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void statlist_Click(object sender, RoutedEventArgs e)
+        {
+            if (Mouse.OverrideCursor == Cursors.Wait) return;
+
+            try
+            {
+                ListView ls = (ListView)sender;
+
+                if (ls.SelectedItems.Count > 0)
+                {
+                    Player_Services ps = new Player_Services();
+
+                    Player_Ratings pr = RosterList[ls.SelectedIndex];
+                    Player p = null;
+                    switch (ls.Name)
+                    {
+                        case "lstPassing":
+                            p = Team_Stats.Passing_Stats[ls.SelectedIndex].p;
+                            break;
+                        case "lstRushing":
+                            p = Team_Stats.Rushing_Stats[ls.SelectedIndex].p;
+                            break;
+                        case "lstReceiving":
+                            p = Team_Stats.Receiving_Stats[ls.SelectedIndex].p;
+                            break;
+                        case "lstBlocking":
+                            p = Team_Stats.Blocking_Stats[ls.SelectedIndex].p;
+                            break;
+                        case "lstDefense":
+                            p = Team_Stats.Defense_Stats[ls.SelectedIndex].p;
+                            break;
+                        case "lstPassDefense":
+                            p = Team_Stats.Pass_Defense_Stats[ls.SelectedIndex].p;
+                            break;
+                        case "lstFGKicking":
+                            p = Team_Stats.Kicking_Stats[ls.SelectedIndex].p;
+                            break;
+                        case "lstKickoffReturns":
+                            p = Team_Stats.KickRet_Stats[ls.SelectedIndex].p;
+                            break;
+                        case "lstPunting":
+                            p = Team_Stats.Punting_Stats[ls.SelectedIndex].p;
+                            break;
+                        case "lstPuntReturns":
+                            p = Team_Stats.PuntRet_Stats[ls.SelectedIndex].p;
+                            break;
+                    }
+
+                    Player_Card_Data pcd = ps.getPlayerCardData(p, pw.Loaded_League);
+                    PlayerCard_Popup pcp = new PlayerCard_Popup(pcd);
+                    pcp.Left = (SystemParameters.PrimaryScreenWidth - pcp.Width) / 2;
+                    pcp.ShowDialog();
+                }
             }
             catch (Exception ex)
             {

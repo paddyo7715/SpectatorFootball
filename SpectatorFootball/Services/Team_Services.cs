@@ -126,5 +126,39 @@ namespace SpectatorFootball
             return r;
         }
 
+        public List<Team_History_Row> getTeamHistory(long Franchise_id, string League_Shortname)
+        {
+            List<Team_History_Row> r = null;
+            string DIRPath_League = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + League_Shortname.ToUpper();
+            string League_con_string = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + League_Shortname + Path.DirectorySeparatorChar + League_Shortname + "." + app_Constants.DB_FILE_EXT;
+
+            TeamDAO td = new TeamDAO();
+
+            r = td.getTeamHistory(Franchise_id, League_con_string);
+
+//Cycle thru the team history recrds and set playoff record to blanks if the team did not 
+//make the playoffs and set champoinship result string
+            foreach (Team_History_Row h in r)
+            {
+                h.Blank = "";
+                if (h.play_wins == "0" && h.play_loses == "0")
+                {
+                    h.play_loses = "";
+                    h.play_PA = "";
+                    h.play_PF = "";
+                    h.play_wins = "";
+                }
+                if (h.champ_PF > 0 || h.champ_PA > 0)
+                {
+                    string win_or_lose = h.champ_PF > h.champ_PA ? "Won" : "Lost";
+                    h.champ_result = win_or_lose + " the game by a score of " + h.champ_PF.ToString() + "-" + h.champ_PA.ToString();
+                }
+                else
+                    h.champ_result = "";
+            }
+
+            return r;
+        }
+
         }
     }

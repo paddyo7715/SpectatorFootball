@@ -347,6 +347,7 @@
     <Compile Include="Services\Player_Services.cs" />
     <Compile Include="Services\Schedule_Services.cs" />
     <Compile Include="Services\TrainingCamp_Services.cs" />
+    <Compile Include="Team\Team_History_Row.cs" />
     <Compile Include="Team\Team_Player_Accum_Stats.cs" />
     <Compile Include="Team\Three_Coll_List.cs" />
     <Compile Include="Team\Two_Coll_List.cs" />

@@ -21,6 +21,20 @@
         <Style x:Key="myHeaderStyle" TargetType="{x:Type GridViewColumnHeader}">
             <Setter Property="Visibility" Value="Collapsed" />
         </Style>
+        <GridViewColumnCollection  x:Key="history_reg_headers">
+            <GridViewColumn Header="W" Width="30" DisplayMemberBinding="{Binding Path=reg_wins}" />
+            <GridViewColumn Header="L" Width="30" DisplayMemberBinding="{Binding Path=reg_loses}" />
+            <GridViewColumn Header="T" Width="30" DisplayMemberBinding="{Binding Path=reg_ties}" />
+            <GridViewColumn Header="PF" Width="50" DisplayMemberBinding="{Binding Path=reg_PF}" />
+            <GridViewColumn Header="PA" Width="50" DisplayMemberBinding="{Binding Path=reg_PA}" />
+        </GridViewColumnCollection>
+        <GridViewColumnCollection  x:Key="history_play_headers">
+            <GridViewColumn Header="W" Width="30" DisplayMemberBinding="{Binding Path=play_Wins}" />
+            <GridViewColumn Header="L" Width="30" DisplayMemberBinding="{Binding Path=play_loses}" />
+            <GridViewColumn Header="PF" Width="50" DisplayMemberBinding="{Binding Path=play_PF}" />
+            <GridViewColumn Header="PA" Width="50" DisplayMemberBinding="{Binding Path=play_PA}" />
+            <GridViewColumn Header="Championship Game" Width="300" DisplayMemberBinding="{Binding Path=champ_result}" />
+        </GridViewColumnCollection>
     </UserControl.Resources>
         <DockPanel Height="auto"> 
         <Grid DockPanel.Dock="Top">
@@ -898,7 +912,112 @@
                         </ListView>
                     </StackPanel>
                 </TabItem>
-
+                <TabItem Header="History">
+                    <StackPanel Orientation="Vertical" Width="1000" Height="700">
+                        <StackPanel Orientation="Horizontal" Width="900" HorizontalAlignment="Center">
+                            <Label Style="{StaticResource MedLabelstyle}" Width="300" Background="red" Content="Regular Season"></Label>
+                            <Label Style="{StaticResource MedLabelstyle}" Width="600" Background="Blue" Content="Playofs"></Label>
+                        </StackPanel>
+                        <ListView Name="lstHistory" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Width="960">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="Focusable" Value="false"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.View>
+                            <GridView AllowsColumnReorder="false">
+                                <GridView.ColumnHeaderContainerStyle>
+                                    <Style TargetType="{x:Type GridViewColumnHeader}">
+                                        <Setter Property="IsEnabled" Value="False"/>
+                                    </Style>
+                                </GridView.ColumnHeaderContainerStyle>
+                                    <GridViewColumn Header="Year" Width="50" DisplayMemberBinding="{Binding Path=Year}" />
+                                    <GridViewColumn Header="Wins" Width="50" DisplayMemberBinding="{Binding Path=reg_wins}" />
+                                    <GridViewColumn Header="Loses" Width="50" DisplayMemberBinding="{Binding Path=reg_loses}" />
+                                    <GridViewColumn Header="Ties" Width="50" DisplayMemberBinding="{Binding Path=reg_ties}" />
+                                    <GridViewColumn Header="PF" Width="50" DisplayMemberBinding="{Binding Path=reg_PF}" />
+                                    <GridViewColumn Header="PA" Width="50" DisplayMemberBinding="{Binding Path=reg_PA}" />
+                                    <GridViewColumn Header="Wins" Width="50" DisplayMemberBinding="{Binding Path=play_Wins}" />
+                                    <GridViewColumn Header="Loses" Width="50" DisplayMemberBinding="{Binding Path=play_loses}" />
+                                    <GridViewColumn Header="Championship Game" Width="200" DisplayMemberBinding="{Binding Path=champ_result}" />
+                                </GridView>
+                        </ListView.View>
+                    </ListView>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="test">
+                    <StackPanel Orientation="Vertical"  Width="1000" Height="700">
+                        <ListView Name="lstHistory2" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Width="960">
+                            <ListView.View>
+                                <GridView AllowsColumnReorder="false">
+                                    <GridView.ColumnHeaderContainerStyle>
+                                        <Style TargetType="{x:Type GridViewColumnHeader}">
+                                            <Setter Property="IsEnabled" Value="False"/>
+                                        </Style>
+                                    </GridView.ColumnHeaderContainerStyle>
+                                    <GridViewColumn Header="Year" Width="50" DisplayMemberBinding="{Binding Path=Year}" />
+                                    <GridViewColumn Header="Regular Season">
+                                        <!--HeaderTemplate-->
+                                        <GridViewColumn.HeaderTemplate>
+                                            <DataTemplate>
+                                                <Grid>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition />
+                                                        <RowDefinition />
+                                                    </Grid.RowDefinitions>
+                                                    <TextBlock Text="{Binding .}"
+                                               HorizontalAlignment="Center"
+                                               Grid.Row="0" />
+                                                    <GridViewHeaderRowPresenter
+                                        Grid.Row="1"
+                                        HorizontalAlignment="Stretch"
+                                        Columns="{StaticResource history_reg_headers}" />
+                                                </Grid>
+                                            </DataTemplate>
+                                        </GridViewColumn.HeaderTemplate>
+                                        <!--CellTemplate-->
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Grid>
+                                                    <GridViewRowPresenter Columns="{StaticResource history_reg_headers}" />
+                                                </Grid>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Header="" Width="100" DisplayMemberBinding="{Binding Path=Blank}"  />
+                                    <GridViewColumn Header="Playoffs">
+                                        <!--HeaderTemplate-->
+                                        <GridViewColumn.HeaderTemplate>
+                                            <DataTemplate>
+                                                <Grid>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition />
+                                                        <RowDefinition />
+                                                    </Grid.RowDefinitions>
+                                                    <TextBlock Text="{Binding .}"
+                                               HorizontalAlignment="Center"
+                                               Grid.Row="0" />
+                                                    <GridViewHeaderRowPresenter
+                                        Grid.Row="1"
+                                        HorizontalAlignment="Stretch"
+                                        Columns="{StaticResource history_play_headers}" />
+                                                </Grid>
+                                            </DataTemplate>
+                                        </GridViewColumn.HeaderTemplate>
+                                        <!--CellTemplate-->
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Grid>
+                                                    <GridViewRowPresenter Columns="{StaticResource history_play_headers}" />
+                                                </Grid>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </StackPanel>
+                </TabItem>
             </TabControl>
         </StackPanel>
     </DockPanel>

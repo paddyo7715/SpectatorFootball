@@ -351,5 +351,52 @@ namespace SpectatorFootball.DAO
             }
             return r;
         }
+        public List<Team_History_Row> getTeamHistory(long f_id, string league_filepath)
+        {
+            List<Team_History_Row> r = null;
+
+            string con = Common.LeageConnection.Connect(league_filepath);
+
+            using (var context = new leagueContext(con))
+            {
+                //                context.Database.Log = Console.Write;
+                string sSQL = @"
+                    select r.Year as Year, cast(sum(reg_wins) as text) as reg_wins, cast(sum(reg_loses) as text) as reg_loses, cast(sum(reg_ties) as text) as reg_ties, cast(sum(reg_PF) as text) as reg_PF, cast(sum(reg_PA) as text) as reg_PA,
+					                       cast(sum(play_wins) as text) as play_wins, cast(sum(play_loses) as text) as play_loses, cast(sum(play_PF) as text) as play_PF, cast(sum(play_PA) as text) as play_PA,
+					                       sum(champ_PF) as champ_PF, sum(champ_PA) as champ_PA, '' as champ_result
+                    from (
+                    select Year, 
+                      case when Week < @Playoff_Week and ((Home_Team_Franchise_ID = @Franchise_ID and home_score > away_score) or (Away_Team_Franchise_ID = @Franchise_ID and Away_score > home_score)) then 1 else 0 end as reg_wins,
+                      case when Week < @Playoff_Week and ((Home_Team_Franchise_ID = @Franchise_ID and home_score < away_score) or (Away_Team_Franchise_ID = @Franchise_ID and Away_score < home_score)) then 1 else 0 end as reg_loses,
+                      case when Week < @Playoff_Week and ((Home_Team_Franchise_ID = @Franchise_ID and home_score = away_score) or (Away_Team_Franchise_ID = @Franchise_ID and Away_score = home_score)) then 1 else 0 end as reg_ties,
+                      ifnull(case when Week < @Playoff_Week and Home_Team_Franchise_ID = @Franchise_ID then Home_Score 
+                           when Week < @Playoff_Week and Away_Team_Franchise_ID = @Franchise_ID then Away_Score else 0 end,0) as reg_PF,
+                      ifnull(case when Week < @Playoff_Week and Home_Team_Franchise_ID <> @Franchise_ID then Home_Score 
+                           when Week < @Playoff_Week and Away_Team_Franchise_ID <> @Franchise_ID then Away_Score else 0 end,0) as reg_PA,
+                      case when Week > @Playoff_Week and ((Home_Team_Franchise_ID = @Franchise_ID and home_score > away_score) or (Away_Team_Franchise_ID = @Franchise_ID and Away_score > home_score)) then 1 else 0 end as play_wins,
+                      case when Week > @Playoff_Week and ((Home_Team_Franchise_ID = @Franchise_ID and home_score < away_score) or (Away_Team_Franchise_ID = @Franchise_ID and Away_score < home_score)) then 1 else 0 end as play_loses,
+                      ifnull(case when Week > @Playoff_Week and Home_Team_Franchise_ID = @Franchise_ID then Home_Score 
+                           when Week > @Playoff_Week and Away_Team_Franchise_ID = @Franchise_ID then Away_Score else 0 end,0) as play_PF,
+                      ifnull(case when Week > @Playoff_Week and Home_Team_Franchise_ID <> @Franchise_ID then Home_Score 
+                           when Week > @Playoff_Week and Away_Team_Franchise_ID <> @Franchise_ID then Away_Score else 0 end,0) as play_PA,
+                      ifnull(case when Week = @Champ_Week and Home_Team_Franchise_ID = @Franchise_ID then Home_Score 
+                           when Week = @Champ_Week and Away_Team_Franchise_ID = @Franchise_ID then Away_Score else 0 end,0) as champ_PF,
+                      ifnull(case when Week = @Champ_Week and Home_Team_Franchise_ID <> @Franchise_ID then Home_Score 
+                           when Week = @Champ_Week and Away_Team_Franchise_ID <> @Franchise_ID then Away_Score else 0 end,0) as champ_PA
+                      from game g, season s where g.season_id = s.id and (Home_Team_Franchise_ID = @Franchise_ID or Away_Team_Franchise_ID = @Franchise_ID)
+                    ) as r
+                    group by r.Year;
+                ";
+                sSQL = sSQL.Replace("@Franchise_ID", f_id.ToString());
+                sSQL = sSQL.Replace("@Playoff_Week", app_Constants.PLAYOFF_WIDLCARD_WEEK_1.ToString());
+                sSQL = sSQL.Replace("@Champ_Week", app_Constants.PLAYOFF_CHAMPIONSHIP_WEEK.ToString());
+
+                context.Configuration.AutoDetectChangesEnabled = false;
+                r = context.Database.SqlQuery<Team_History_Row>(sSQL).ToList();
+            }
+            return r;
+        }
+
+
     }
 }

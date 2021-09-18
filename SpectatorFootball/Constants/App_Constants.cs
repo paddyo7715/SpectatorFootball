@@ -377,8 +377,15 @@ namespace SpectatorFootball
 
         //Schdule
         public const int PLAYOFF_WIDLCARD_WEEK_1 = 1000;
-        public const int PLAYOFF_WIDLCARD_WEEK_2 = 1300;
-        public const int PLAYOFF_WIDLCARD_WEEK_3 = 1600;
+        public const int PLAYOFF_WIDLCARD_WEEK_2 = 1100;
+        public const int PLAYOFF_WIDLCARD_WEEK_3 = 1200;
+        public const int PLAYOFF_WIDLCARD_WEEK_4 = 1300;
+        public const int PLAYOFF_WIDLCARD_WEEK_5 = 1400;
+        public const int PLAYOFF_WIDLCARD_WEEK_6 = 1500;
+        public const int PLAYOFF_WIDLCARD_WEEK_7 = 1600;
+        public const int PLAYOFF_WIDLCARD_WEEK_8 = 1700;
+        public const int PLAYOFF_WIDLCARD_WEEK_9 = 1800;
+        public const int PLAYOFF_WIDLCARD_WEEK_10 = 1900;
         public const int PLAYOFF_DIVISIONAL_WEEK = 2000;
         public const int PLAYOFF_CONFERENCE_WEEK = 3000;
         public const int PLAYOFF_CHAMPIONSHIP_WEEK = 9999;
