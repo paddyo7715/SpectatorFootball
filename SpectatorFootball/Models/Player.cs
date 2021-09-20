@@ -37,8 +37,10 @@ namespace SpectatorFootball.Models
             this.Game_Player_Rushing_Stats = new HashSet<Game_Player_Rushing_Stats>();
             this.Hall_of_Fame = new HashSet<Hall_of_Fame>();
             this.Injuries = new HashSet<Injury>();
+            this.Injury_Log = new HashSet<Injury_Log>();
             this.Player_Awards = new HashSet<Player_Awards>();
             this.Player_Ratings = new HashSet<Player_Ratings>();
+            this.Player_Retiring_Log = new HashSet<Player_Retiring_Log>();
             this.Training_Camp_by_Season = new HashSet<Training_Camp_by_Season>();
         }
     
@@ -100,9 +102,13 @@ namespace SpectatorFootball.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Injury> Injuries { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Injury_Log> Injury_Log { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Player_Awards> Player_Awards { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Player_Ratings> Player_Ratings { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Player_Retiring_Log> Player_Retiring_Log { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Training_Camp_by_Season> Training_Camp_by_Season { get; set; }
     }

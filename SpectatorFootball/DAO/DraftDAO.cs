@@ -104,6 +104,20 @@ namespace SpectatorFootball.DAO
 
             return r;
         }
+        public List<Draft> getTeamDraftPicks(long season_id,long f_id, string league_filepath)
+        {
+            List<Draft> r = null;
+
+            string con = Common.LeageConnection.Connect(league_filepath);
+
+            using (var context = new leagueContext(con))
+            {
+                r = context.Drafts.Where(x => x.Season_ID == season_id && x.Franchise_ID == f_id)
+                    .Include(x => x.Player).OrderBy(x => x.Pick_Number).ToList();
+            }
+
+            return r;
+        }
 
     }
 }

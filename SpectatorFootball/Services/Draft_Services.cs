@@ -86,5 +86,18 @@ namespace SpectatorFootball.Services
 
             return r;
         }
+        public List<Draft> getTeamDraftPicks(Loaded_League_Structure lls, long f_id)
+        {
+            List<Draft> r = null;
+            string DIRPath_League = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + lls.season.League_Structure_by_Season[0].Short_Name.ToUpper();
+
+            string League_con_string = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + lls.season.League_Structure_by_Season[0].Short_Name.ToUpper() + Path.DirectorySeparatorChar + lls.season.League_Structure_by_Season[0].Short_Name.ToUpper() + "." + app_Constants.DB_FILE_EXT;
+            DraftDAO dd = new DraftDAO();
+
+            r = dd.getTeamDraftPicks(lls.season.ID, f_id, League_con_string);
+
+            return r;
+        }
+
     }
 }

@@ -140,6 +140,7 @@
     <Compile Include="BindingConverters\handednessConverter.cs" />
     <Compile Include="BindingConverters\HasAnyConverter.cs" />
     <Compile Include="BindingConverters\ImageConverter.cs" />
+    <Compile Include="BindingConverters\InjuryStatusConverter.cs" />
     <Compile Include="BindingConverters\inttoWeight.cs" />
     <Compile Include="BindingConverters\iPosConverter.cs" />
     <Compile Include="BindingConverters\isNullConverter.cs" />
@@ -166,6 +167,7 @@
     <Compile Include="DAO\FreeAgencyDAO.cs" />
     <Compile Include="DAO\GameDAO.cs" />
     <Compile Include="DAO\HomeTownsDAO.cs" />
+    <Compile Include="DAO\InjuriesDAO.cs" />
     <Compile Include="DAO\ScheduleDAO.cs" />
     <Compile Include="DAO\TeamDAO.cs" />
     <Compile Include="DAO\TrainingCampDAO.cs" />
@@ -272,6 +274,9 @@
     <Compile Include="Models\Injury.cs">
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Injury_Log.cs">
+      <DependentUpon>LeagueEDM.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Kicking_Accum_Stats.cs" />
     <Compile Include="Models\Kicking_Accum_Stats_by_year.cs" />
     <Compile Include="Models\KickReturn_Accum_Stats.cs" />
@@ -313,6 +318,9 @@
     <Compile Include="Models\Player_Ratings.cs">
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Player_Retiring_Log.cs">
+      <DependentUpon>LeagueEDM.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Playoff_Teams_by_Season.cs">
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
@@ -344,6 +352,7 @@
     <Compile Include="Services\FreeAgency_Services.cs" />
     <Compile Include="Draft\Draft_Need.cs" />
     <Compile Include="Services\Game_Services.cs" />
+    <Compile Include="Services\Injuries_Services.cs" />
     <Compile Include="Services\Player_Services.cs" />
     <Compile Include="Services\Schedule_Services.cs" />
     <Compile Include="Services\TrainingCamp_Services.cs" />

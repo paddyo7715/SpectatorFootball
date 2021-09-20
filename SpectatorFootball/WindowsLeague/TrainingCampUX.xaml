@@ -33,7 +33,7 @@
             </StackPanel>
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
                 <Label HorizontalAlignment="Center" Style="{StaticResource Conflbltyle}">Training Camp Tracker</Label>
-                <ListView Name="lstTrainingCamp" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Height="225" Width="370" MouseDoubleClick="lstTrainingCamp_Click">
+                <ListView Name="lstTrainingCamp" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Height="600" Width="370" MouseDoubleClick="lstTrainingCamp_Click">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="{x:Type ListViewItem}">
                             <Style.Triggers>

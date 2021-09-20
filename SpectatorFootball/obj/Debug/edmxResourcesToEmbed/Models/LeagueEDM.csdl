@@ -501,9 +501,23 @@
     <Property Name="Player_ID" Type="Int64" Nullable="false" />
     <Property Name="Week" Type="Int64" Nullable="false" />
     <Property Name="Num_of_Weeks" Type="Int64" Nullable="false" />
+    <Property Name="Weeks_Remaining" Type="Int64" Nullable="false" />
     <Property Name="Career_Ending" Type="Int64" Nullable="false" />
+    <Property Name="Season_Ending" Type="Int64" Nullable="false" />
     <NavigationProperty Name="Player" Relationship="Self.FK_Injuries_0_0" FromRole="Injuries" ToRole="Players" />
     <NavigationProperty Name="Season" Relationship="Self.FK_Injuries_1_0" FromRole="Injuries" ToRole="Season" />
+  </EntityType>
+  <EntityType Name="Injury_Log">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" />
+    <Property Name="Season_ID" Type="Int64" Nullable="false" />
+    <Property Name="Player_ID" Type="Int64" Nullable="false" />
+    <Property Name="Week" Type="Int64" Nullable="false" />
+    <Property Name="Action" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="Season" Relationship="Self.FK_Injury_Log_0_0" FromRole="Injury_Log" ToRole="Season" />
+    <NavigationProperty Name="Player" Relationship="Self.FK_Injury_Log_1_0" FromRole="Injury_Log" ToRole="Players" />
   </EntityType>
   <EntityType Name="League_Structure_by_Season">
     <Key>
@@ -589,6 +603,17 @@
     <NavigationProperty Name="Season" Relationship="Self.FK_Player_Ratings_0_0" FromRole="Player_Ratings" ToRole="Season" />
     <NavigationProperty Name="Player" Relationship="Self.FK_Player_Ratings_1_0" FromRole="Player_Ratings" ToRole="Players" />
   </EntityType>
+  <EntityType Name="Player_Retiring_Log">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" />
+    <Property Name="Season_ID" Type="Int64" Nullable="false" />
+    <Property Name="Player_ID" Type="Int64" Nullable="false" />
+    <Property Name="Week" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="Season" Relationship="Self.FK_Player_Retiring_Log_0_0" FromRole="Player_Retiring_Log" ToRole="Season" />
+    <NavigationProperty Name="Player" Relationship="Self.FK_Player_Retiring_Log_1_0" FromRole="Player_Retiring_Log" ToRole="Players" />
+  </EntityType>
   <EntityType Name="Player">
     <Key>
       <PropertyRef Name="ID" />
@@ -629,8 +654,10 @@
     <NavigationProperty Name="Game_Player_Rushing_Stats" Relationship="Self.FK_Game_Player_Rushing_Stats_0_0" FromRole="Players" ToRole="Game_Player_Rushing_Stats" />
     <NavigationProperty Name="Hall_of_Fame" Relationship="Self.FK_Hall_of_Fame_1_0" FromRole="Players" ToRole="Hall_of_Fame" />
     <NavigationProperty Name="Injuries" Relationship="Self.FK_Injuries_0_0" FromRole="Players" ToRole="Injuries" />
+    <NavigationProperty Name="Injury_Log" Relationship="Self.FK_Injury_Log_1_0" FromRole="Players" ToRole="Injury_Log" />
     <NavigationProperty Name="Player_Awards" Relationship="Self.FK_Player_Awards_1_0" FromRole="Players" ToRole="Player_Awards" />
     <NavigationProperty Name="Player_Ratings" Relationship="Self.FK_Player_Ratings_1_0" FromRole="Players" ToRole="Player_Ratings" />
+    <NavigationProperty Name="Player_Retiring_Log" Relationship="Self.FK_Player_Retiring_Log_1_0" FromRole="Players" ToRole="Player_Retiring_Log" />
     <NavigationProperty Name="Training_Camp_by_Season" Relationship="Self.FK_Training_Camp_by_Season_2_0" FromRole="Players" ToRole="Training_Camp_by_Season" />
   </EntityType>
   <EntityType Name="Playoff_Teams_by_Season">
@@ -658,9 +685,11 @@
     <NavigationProperty Name="Games" Relationship="Self.FK_Game_0_0" FromRole="Season" ToRole="Game" />
     <NavigationProperty Name="Hall_of_Fame" Relationship="Self.FK_Hall_of_Fame_0_0" FromRole="Season" ToRole="Hall_of_Fame" />
     <NavigationProperty Name="Injuries" Relationship="Self.FK_Injuries_1_0" FromRole="Season" ToRole="Injuries" />
+    <NavigationProperty Name="Injury_Log" Relationship="Self.FK_Injury_Log_0_0" FromRole="Season" ToRole="Injury_Log" />
     <NavigationProperty Name="League_Structure_by_Season" Relationship="Self.FK_League_Structure_by_Season_0_0" FromRole="Season" ToRole="League_Structure_by_Season" />
     <NavigationProperty Name="Player_Awards" Relationship="Self.FK_Player_Awards_0_0" FromRole="Season" ToRole="Player_Awards" />
     <NavigationProperty Name="Player_Ratings" Relationship="Self.FK_Player_Ratings_0_0" FromRole="Season" ToRole="Player_Ratings" />
+    <NavigationProperty Name="Player_Retiring_Log" Relationship="Self.FK_Player_Retiring_Log_0_0" FromRole="Season" ToRole="Player_Retiring_Log" />
     <NavigationProperty Name="Playoff_Teams_by_Season" Relationship="Self.FK_Playoff_Teams_by_Season_1_0" FromRole="Season" ToRole="Playoff_Teams_by_Season" />
     <NavigationProperty Name="Teams_by_Season" Relationship="Self.FK_Teams_by_Season_1_0" FromRole="Season" ToRole="Teams_by_Season" />
     <NavigationProperty Name="Training_Camp_by_Season" Relationship="Self.FK_Training_Camp_by_Season_1_0" FromRole="Season" ToRole="Training_Camp_by_Season" />
@@ -1554,6 +1583,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Injury_Log_0_0">
+    <End Role="Season" Type="Self.Season" Multiplicity="1" />
+    <End Role="Injury_Log" Type="Self.Injury_Log" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Season">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Injury_Log">
+        <PropertyRef Name="Season_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Injury_Log_1_0">
+    <End Role="Players" Type="Self.Player" Multiplicity="1" />
+    <End Role="Injury_Log" Type="Self.Injury_Log" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Players">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Injury_Log">
+        <PropertyRef Name="Player_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_League_Structure_by_Season_0_0">
     <End Role="Season" Type="Self.Season" Multiplicity="1" />
     <End Role="League_Structure_by_Season" Type="Self.League_Structure_by_Season" Multiplicity="*" />
@@ -1610,6 +1663,30 @@
         <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="Player_Ratings">
+        <PropertyRef Name="Player_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Player_Retiring_Log_0_0">
+    <End Role="Season" Type="Self.Season" Multiplicity="1" />
+    <End Role="Player_Retiring_Log" Type="Self.Player_Retiring_Log" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Season">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Player_Retiring_Log">
+        <PropertyRef Name="Season_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Player_Retiring_Log_1_0">
+    <End Role="Players" Type="Self.Player" Multiplicity="1" />
+    <End Role="Player_Retiring_Log" Type="Self.Player_Retiring_Log" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Players">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Player_Retiring_Log">
         <PropertyRef Name="Player_ID" />
       </Dependent>
     </ReferentialConstraint>
@@ -1690,10 +1767,12 @@
     <EntitySet Name="Game_Scoring_Summary" EntityType="Self.Game_Scoring_Summary" />
     <EntitySet Name="Hall_of_Fame" EntityType="Self.Hall_of_Fame" />
     <EntitySet Name="Injuries" EntityType="Self.Injury" />
+    <EntitySet Name="Injury_Log" EntityType="Self.Injury_Log" />
     <EntitySet Name="League_Structure_by_Season" EntityType="Self.League_Structure_by_Season" />
     <EntitySet Name="Penalties" EntityType="Self.Penalty" />
     <EntitySet Name="Player_Awards" EntityType="Self.Player_Awards" />
     <EntitySet Name="Player_Ratings" EntityType="Self.Player_Ratings" />
+    <EntitySet Name="Player_Retiring_Log" EntityType="Self.Player_Retiring_Log" />
     <EntitySet Name="Players" EntityType="Self.Player" />
     <EntitySet Name="Playoff_Teams_by_Season" EntityType="Self.Playoff_Teams_by_Season" />
     <EntitySet Name="Seasons" EntityType="Self.Season" />
@@ -1971,6 +2050,14 @@
       <End Role="Season" EntitySet="Seasons" />
       <End Role="Injuries" EntitySet="Injuries" />
     </AssociationSet>
+    <AssociationSet Name="FK_Injury_Log_0_0" Association="Self.FK_Injury_Log_0_0">
+      <End Role="Season" EntitySet="Seasons" />
+      <End Role="Injury_Log" EntitySet="Injury_Log" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Injury_Log_1_0" Association="Self.FK_Injury_Log_1_0">
+      <End Role="Players" EntitySet="Players" />
+      <End Role="Injury_Log" EntitySet="Injury_Log" />
+    </AssociationSet>
     <AssociationSet Name="FK_League_Structure_by_Season_0_0" Association="Self.FK_League_Structure_by_Season_0_0">
       <End Role="Season" EntitySet="Seasons" />
       <End Role="League_Structure_by_Season" EntitySet="League_Structure_by_Season" />
@@ -1990,6 +2077,14 @@
     <AssociationSet Name="FK_Player_Ratings_1_0" Association="Self.FK_Player_Ratings_1_0">
       <End Role="Players" EntitySet="Players" />
       <End Role="Player_Ratings" EntitySet="Player_Ratings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Player_Retiring_Log_0_0" Association="Self.FK_Player_Retiring_Log_0_0">
+      <End Role="Season" EntitySet="Seasons" />
+      <End Role="Player_Retiring_Log" EntitySet="Player_Retiring_Log" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Player_Retiring_Log_1_0" Association="Self.FK_Player_Retiring_Log_1_0">
+      <End Role="Players" EntitySet="Players" />
+      <End Role="Player_Retiring_Log" EntitySet="Player_Retiring_Log" />
     </AssociationSet>
     <AssociationSet Name="FK_Training_Camp_by_Season_2_0" Association="Self.FK_Training_Camp_by_Season_2_0">
       <End Role="Players" EntitySet="Players" />
