@@ -18,7 +18,7 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
-                <Button Name="btnStandings" Height="25" Style="{StaticResource appSubmitStyle}" Margin="4" Click="btnStandings_Click">Back to Standings</Button>
+                <Button Name="btnStandings" Height="25" Style="{StaticResource appSubmitStyle}" Margin="4" Click="btnStandings_Click">Standings</Button>
             </StackPanel>
             <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
                 <Label Name="lblTrainingCampHeader" Style="{StaticResource MedLabelstyle}"></Label>
@@ -33,7 +33,7 @@
             </StackPanel>
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
                 <Label HorizontalAlignment="Center" Style="{StaticResource Conflbltyle}">Training Camp Tracker</Label>
-                <ListView Name="lstTrainingCamp" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Height="600" Width="370" MouseDoubleClick="lstTrainingCamp_Click">
+                <ListView Name="lstTrainingCamp" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Height="500" Width="370" MouseDoubleClick="lstTrainingCamp_Click">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="{x:Type ListViewItem}">
                             <Style.Triggers>

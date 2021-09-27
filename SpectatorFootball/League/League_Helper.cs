@@ -588,6 +588,80 @@ namespace SpectatorFootball.League
 
             return r;
         }
+        public static League_State DetermineLeagueState(bool Latest_year, int[] m)
+        {
+            League_State r;
+
+            r = League_State.Season_Started;
+
+            if (!Latest_year)
+                r = League_State.Previous_Year;
+            else
+            {
+                int draft_not_done = m[0];
+                int draft_started = m[1];
+                int free_agency_started = m[2];
+                int teams_lt_tcamp_players = m[3];
+                int teamsnotFull_Count = m[4];
+                int training_camp_Started = m[5];
+                int Regualr_Season_Started = m[6];
+                int Regualar_Season_done = m[7];
+                int Playoffs_Started = m[8];
+                int Champ_game_played = m[9];
+                int player_awards_done = m[10];
+
+                //Is Draft done?
+                if (draft_started == 1)
+                {
+                    if (draft_not_done == 1)
+                        r = League_State.Draft_Started;
+                    else
+                        r = League_State.Draft_Completed;
+                }
+
+                //What about free agency
+                if (free_agency_started == 1)
+                {
+                    if (teams_lt_tcamp_players == 0)
+                        r = League_State.FreeAgency_Completed;
+                    else
+                        r = League_State.FreeAgency_Started;
+                }
+
+                //What about training camp
+                if (training_camp_Started > 0)
+                {
+                    if (teamsnotFull_Count == 0)
+                        r = League_State.Training_Camp_Ended;
+                    else
+                        r = League_State.Training_Camp_Started;
+                }
+
+                //What about the regular season
+                if (Regualr_Season_Started > 0)
+                {
+                    if (Regualar_Season_done > 0)
+                        r = League_State.Regular_Season_Ended;
+                    else
+                        r = League_State.Regular_Season_in_Progress;
+                }
+
+                //What about playoffs
+                if (Playoffs_Started == 1)
+                {
+                    if (Champ_game_played == 0)
+                        r = League_State.Playoffs_In_Progress;
+                    else
+                        r = League_State.Playoffs_Ended;
+                }
+
+                //Has the season been ended.  Not sure if this is needed since
+                //if the season is ended, wouldn't it be a previous season?
+                if (player_awards_done > 0)
+                    r = League_State.Season_Ended;
+            }
+            return r;
+        }
     }
 }
 

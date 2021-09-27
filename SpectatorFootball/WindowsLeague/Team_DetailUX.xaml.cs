@@ -243,11 +243,16 @@ namespace SpectatorFootball.WindowsLeague
                 lstInjuries.Visibility = Visibility.Collapsed;
             else
                 lblNoInjuries.Visibility = Visibility.Collapsed;
-                            
-
-
-
             lstInjuries.ItemsSource = inj_list;
+
+            List<OneInt2Strings> lTrans = ts.getTeamTransactions(pw.Loaded_League.season.ID,this_team.Franchise_ID, pw.Loaded_League.season.League_Structure_by_Season[0].Short_Name);
+            if (lTrans != null || lTrans.Count() == 0)
+                lblNoTransactions.Visibility = Visibility.Collapsed;
+            else
+                lblNoTransactions.Visibility = Visibility.Collapsed;
+            lstTransactions.ItemsSource = lTrans;
+
+
 
 
             this.orig_this_team = this_team;

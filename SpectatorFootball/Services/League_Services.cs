@@ -290,86 +290,11 @@ namespace SpectatorFootball
 
         public League_State getSeasonState(bool Latest_year, long Season_ID, string League_Shortname)
         {
-            League_State r;
             string League_con_string = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + League_Shortname + Path.DirectorySeparatorChar + League_Shortname + "." + app_Constants.DB_FILE_EXT;
             LeagueDAO ld = new LeagueDAO();
-
-            r = League_State.Season_Started;
-
-            if (!Latest_year)
-                r = League_State.Previous_Year;
-            else
-            {
-                int[] m = ld.getSeasonTableTotals(Season_ID, League_con_string);
-
-                int draft_count = m[0];
-                int draft_completed_count = m[1];
-                int teamsLessThanTCFull_Count = m[2];
-                int teamsnotFull_Count = m[3];
-                int training_camp_count = m[4];
-                int Unplayed_Regular_Season_Games_Count = m[5];
-                int anyPlayer_Regular_Season_Games = m[6];
-                int Champ_game_played = m[7];
-                int player_awards_count = m[8];
-                int teams_in_league_count = m[9];
-
-                if (draft_count > 0 && draft_completed_count > 0)
-                    r = League_State.Draft_Started;
-                else if (draft_count == 0 && draft_completed_count > 0)
-                    r = League_State.Draft_Completed;
-
-                if (r == League_State.Season_Started || r == League_State.Draft_Started)
-                    return r;
-
-                if (teamsLessThanTCFull_Count == 0)
-                    r = League_State.FreeAgency_Completed;
-                else
-                    if (teamsLessThanTCFull_Count < teams_in_league_count)
-                    {
-                        r = League_State.FreeAgency_Started;
-                    }
-
-                if (r != League_State.FreeAgency_Completed)
-                    return r;
-
-
-                if (training_camp_count > 0)
-                {
-                    if (teamsnotFull_Count == 0)
-                        r = League_State.Training_Camp_Ended;
-                    else
-                        r = League_State.Training_Camp_Started;
-                }
-
-                if (r != League_State.Training_Camp_Ended)
-                    return r;
-
-                if (Unplayed_Regular_Season_Games_Count > 0)
-                {
-                    if (anyPlayer_Regular_Season_Games > 0)
-                        r = League_State.Regular_Season_in_Progress;
-                }
-                else
-                    r = League_State.Regular_Season_Ended;
-
-                if (r != League_State.Regular_Season_Ended)
-                    return r;
-
-                if (Champ_game_played == 0)
-                    r = League_State.Playoffs_In_Progress;
-                else
-                    r = League_State.Playoffs_Ended;
-
-                if (r != League_State.Playoffs_Ended)
-                    return r;
-
-                if (player_awards_count > 0)
-                    r = League_State.Season_Ended;
-            }
-
-                return r;
-
-            }
+            int[] m = ld.getSeasonTableTotals(Season_ID, League_con_string);
+            return League_Helper.DetermineLeagueState(Latest_year, m);
+        }
 
         public List<Standings_Row> getLeageStandings(Loaded_League_Structure lld)
         {

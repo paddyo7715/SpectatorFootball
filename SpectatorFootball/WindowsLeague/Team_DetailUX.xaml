@@ -1100,6 +1100,40 @@
                         <Label Name="lblNoInjuries" HorizontalContentAlignment="Center" Style="{StaticResource Normallbltyle}" Content="No Players Injured"></Label>
                     </StackPanel>
                 </TabItem>
+                <TabItem Header="Transactions">
+                    <StackPanel Orientation="Vertical"  Width="1000" Height="700">
+                        <ListView Name="lstTransactions" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Width="960" Height="680">
+                            <ListView.Resources>
+                                <Style TargetType="{x:Type GridViewColumnHeader}">
+                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                </Style>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                    <Style.Triggers>
+                                        <Trigger Property="ItemsControl.AlternationIndex"  Value="0">
+                                            <Setter Property="Background" Value="LightBlue" />
+                                        </Trigger>
+                                        <Trigger Property="ItemsControl.AlternationIndex"  Value="1">
+                                            <Setter Property="Background" Value="LightGray" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ListView.Resources>
+                            <ListView.View>
+                                <GridView AllowsColumnReorder="false">
+                                    <GridView.ColumnHeaderContainerStyle>
+                                        <Style TargetType="{x:Type GridViewColumnHeader}">
+                                            <Setter Property="IsEnabled" Value="False"/>
+                                        </Style>
+                                    </GridView.ColumnHeaderContainerStyle>
+                                    <GridViewColumn Header="Occurred" Width="180" DisplayMemberBinding="{Binding Path=Week}" />
+                                    <GridViewColumn Header="Transaction" Width="370" DisplayMemberBinding="{Binding Path=Event}" />
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                        <Label Name="lblNoTransactions" HorizontalContentAlignment="Center" Style="{StaticResource Normallbltyle}" Content="No Players Injured"></Label>
+                    </StackPanel>
+                </TabItem>
             </TabControl>
         </StackPanel>
     </DockPanel>

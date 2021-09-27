@@ -16,7 +16,7 @@ namespace SpectatorFootball.Models
     {
         public long ID { get; set; }
         public long Season_ID { get; set; }
-        public string Week { get; set; }
+        public long Week { get; set; }
         public long Franchise_ID { get; set; }
         public long Player_ID { get; set; }
         public long Signed { get; set; }

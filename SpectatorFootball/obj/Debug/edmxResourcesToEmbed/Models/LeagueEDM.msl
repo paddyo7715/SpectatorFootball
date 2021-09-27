@@ -422,7 +422,7 @@
           <ScalarProperty Name="Season_ID" ColumnName="Season_ID" />
           <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
           <ScalarProperty Name="Week" ColumnName="Week" />
-          <ScalarProperty Name="Action" ColumnName="Action" />
+          <ScalarProperty Name="Injured" ColumnName="Injured" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -396,7 +396,22 @@ namespace SpectatorFootball.DAO
             }
             return r;
         }
+        public List<OneInt2Strings> getTeamTransactions(long season_id, long f_id, string league_filepath)
+        {
+            List<OneInt2Strings> r = null;
 
+            string con = Common.LeageConnection.Connect(league_filepath);
+
+            using (var context = new leagueContext(con))
+            {
+                r = context.Player_Retiring_Log.Where(x => x.Player.Franchise_ID == f_id && x.Season_ID == season_id).Select(x => new OneInt2Strings { key = app_Constants.PLAYER_RETIRING_WEEK, p = x.Player, Week = "Before Season", Event = ((Player_Pos)x.Player.Pos).ToString() + " " + x.Player.First_Name + " " + x.Player.Last_Name + " has retired", round = 0 })
+                    .Union(context.Drafts.Where(x => x.Franchise_ID == f_id && x.Season_ID == season_id).Select(x => new OneInt2Strings { key = app_Constants.DRAFT_WEEK, p = x.Player, Week = "Draft", Event = ((Player_Pos)x.Player.Pos).ToString() + " " + x.Player.First_Name + " " + x.Player.Last_Name + " has been drafted in round " + x.Round.ToString(), round = x.Round }))
+                    .Union(context.Free_Agency.Where(x => x.Franchise_ID == f_id && x.Season_ID == season_id).Select(x => new OneInt2Strings { key = x.Week, p = x.Player, Week = x.Week == app_Constants.FREE_AGENCY_WEEK ? "Free Agency Week" : x.Week == app_Constants.TRAINING_CAMP_WEEK ? "Training Camp Complete" : x.Week < 0 ? "Before Regular Season" : x.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 ? "Week " + x.Week : "Playoffs", Event = ((Player_Pos)x.Player.Pos).ToString() + " " + x.Player.First_Name + " " + x.Player.Last_Name + " has been " + (x.Signed == 1 ? "signed" : "released"), round = 0 }))
+                    .Union(context.Injury_Log.Where(x => x.Player.Franchise_ID == f_id && x.Season_ID == season_id).Select(x => new OneInt2Strings { key = (int)x.Week, p = x.Player, Week = x.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 ? "Week " + x.Week : "Playoffs", Event = ((Player_Pos)x.Player.Pos).ToString() + " " + x.Player.First_Name + " " + x.Player.Last_Name + " has " + (x.Injured == 1 ? "been injured for " : "returned from injury"), round = 0 })).OrderBy(x => x.key).ThenBy(x => x.round).ToList();
+            }
+            return r;
+        }
+            
 
     }
 }

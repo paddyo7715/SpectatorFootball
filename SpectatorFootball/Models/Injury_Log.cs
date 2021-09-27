@@ -18,7 +18,7 @@ namespace SpectatorFootball.Models
         public long Season_ID { get; set; }
         public long Player_ID { get; set; }
         public long Week { get; set; }
-        public long Action { get; set; }
+        public long Injured { get; set; }
     
         public virtual Season Season { get; set; }
         public virtual Player Player { get; set; }

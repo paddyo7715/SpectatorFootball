@@ -304,39 +304,79 @@ namespace SpectatorFootball
 
         public int[] getSeasonTableTotals(long season_id, string newleague_filepath)
         {
-            int draft_count = 0;
-            int draft_completed_count = 0;
-            int teamsLessThanTCFull_Count = 0;
+            int draft_not_done = 0;
+            int draft_started = 0;
+            int free_agency_started = 0;
+            int teams_lt_tcamp_players = 0;
             int teamsnotFull_Count = 0;
-            int training_camp_count = 0;
-            int Unplayed_Regular_Season_Games_Count = 0;
-            int anyPlayer_Regular_Season_Games = 0;
+            int training_camp_Started = 0;
+            int Regualar_Season_Started = 0;
+            int Regualar_Season_done = 0;
+            int Playoffs_Started = 0;
             int Champ_game_played = 0;
-            int player_awards_count = 0;
-            int teams_in_league_count = 0;
+            int player_awards_done = 0;
 
             string con = Common.LeageConnection.Connect(newleague_filepath);
             using (var context = new leagueContext(con))
             {
-                draft_count = context.Drafts.Where(x => x.Season_ID == season_id && x.Player_ID ==  null).Count();
-                draft_completed_count = context.Drafts.Where(x => x.Season_ID == season_id && x.Player_ID != null).Count();
-                teamsLessThanTCFull_Count = context.Teams_by_Season.Where(x => x.Season_ID == season_id && x.Franchise.Players.Count() < app_Constants.TRAINING_CAMP_TEAM_PLAYER_COUNT).Count();
-                teamsnotFull_Count = context.Teams_by_Season.Where(x => x.Season_ID == season_id && x.Franchise.Players.Count() != app_Constants.REGULAR_SEASON_TEAM_PLAYER_COUNT).Count();
-                training_camp_count = context.Training_Camp_by_Season.Where(x => x.Season_ID == season_id).Count();
-                Unplayed_Regular_Season_Games_Count = context.Games.Where(x => x.Season_ID == season_id && x.Week < 1000 && x.Game_Done != 1).Count();
-
-                bool bTemp = context.Games.Any(x => x.Season_ID == season_id && x.Week < 1000 && x.Game_Done != 1);
-                if (bTemp)
-                    anyPlayer_Regular_Season_Games = 1;
+                bool bdnotdone = context.Drafts.Any(x => x.Season_ID == season_id && x.Player_ID == null);
+                if (bdnotdone)
+                    draft_not_done = 1;
                 else
-                    anyPlayer_Regular_Season_Games = 0;
+                    draft_not_done = 0;
+
+                bool bdStarted = context.Drafts.Any(x => x.Season_ID == season_id && x.Player_ID != null);
+                if (bdStarted)
+                    draft_started = 1;
+                else
+                    draft_started = 0;
+
+                bool btfa = context.Free_Agency.Any(x => x.Season_ID == season_id);
+                if (btfa)
+                    free_agency_started = 1;
+                else
+                    free_agency_started = 0;
+
+                bool batlttccount = context.Teams_by_Season.Any(x => x.Season_ID == season_id && x.Franchise.Players.Count() < app_Constants.TRAINING_CAMP_TEAM_PLAYER_COUNT);
+                if (batlttccount)
+                    teams_lt_tcamp_players = 1;
+                else
+                    teams_lt_tcamp_players = 0;
+
+                teamsnotFull_Count = context.Teams_by_Season.Where(x => x.Season_ID == season_id && x.Franchise.Players.Count() != app_Constants.REGULAR_SEASON_TEAM_PLAYER_COUNT).Count();
+                bool btcs = context.Training_Camp_by_Season.Any(x => x.Season_ID == season_id);
+                if (btcs)
+                    training_camp_Started = 1;
+                else
+                    training_camp_Started = 0;
+
+                bool bRSGP = context.Games.Any(x => x.Season_ID == season_id && x.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 && x.Game_Done == 1);
+                if (bRSGP)
+                    Regualar_Season_Started = 1;
+                else
+                    Regualar_Season_Started = 0;
+
+                bool bRSGP2 = context.Games.Any(x => x.Season_ID == season_id && x.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 && x.Game_Done != 1);
+                if (bRSGP2)
+                    Regualar_Season_done = 0;
+                else
+                    Regualar_Season_done = 1;
+
+                bool bPlayoffs = context.Games.Any(x => x.Season_ID == season_id && x.Week >= app_Constants.PLAYOFF_WIDLCARD_WEEK_1);
+                if (bPlayoffs)
+                    Playoffs_Started = 1;
+                else
+                    Playoffs_Started = 0;
 
                 Champ_game_played = context.Games.Where(x => x.Season_ID == season_id && x.Championship_Game == 1 && x.Game_Done == 1).Count();
-                player_awards_count = context.Player_Awards.Where(x => x.Season_ID == season_id).Count();
-                teams_in_league_count = context.Teams_by_Season.Where(x => x.Season_ID == season_id).Count();
+                bool bAwards = context.Player_Awards.Any(x => x.Season_ID == season_id);
+                if (bAwards)
+                    player_awards_done = 1;
+                else
+                    player_awards_done = 0;
             }
 
-            return new int[] { draft_count, draft_completed_count, teamsLessThanTCFull_Count, teamsnotFull_Count, training_camp_count, Unplayed_Regular_Season_Games_Count, anyPlayer_Regular_Season_Games, Champ_game_played, player_awards_count, teams_in_league_count };
+            return new int[] { draft_not_done, draft_started, free_agency_started, teams_lt_tcamp_players, teamsnotFull_Count, training_camp_Started, Regualar_Season_Started, Regualar_Season_done, Playoffs_Started, Champ_game_played, player_awards_done };
 
         }
         public List<Season> getAllSeasons(string league_filepath)

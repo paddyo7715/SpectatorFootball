@@ -22,7 +22,7 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
-                <Button Name="btnStandings" Height="25" Style="{StaticResource appSubmitStyle}" Margin="4" Click="btnStandings_Click">Back to Standings</Button>
+                <Button Name="btnStandings" Height="25" Style="{StaticResource appSubmitStyle}" Margin="4" Click="btnStandings_Click">Standings</Button>
             </StackPanel>
             <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
                 <Label Name="lblFreeAgencyHeader" Style="{StaticResource MedLabelstyle}"></Label>

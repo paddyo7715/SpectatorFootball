@@ -159,6 +159,17 @@ namespace SpectatorFootball
 
             return r;
         }
+        public List<OneInt2Strings> getTeamTransactions(long season_id, long Franchise_id, string League_Shortname)
+        {
+            List<OneInt2Strings> r = null;
+            string DIRPath_League = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + League_Shortname.ToUpper();
+            string League_con_string = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + League_Shortname + Path.DirectorySeparatorChar + League_Shortname + "." + app_Constants.DB_FILE_EXT;
 
+            TeamDAO td = new TeamDAO();
+
+            r = td.getTeamTransactions(season_id, Franchise_id, League_con_string);
+
+            return r;
         }
+    }
     }

@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="9e4303729eeb4e5abfd9c242812a6f1c" Name="Diagram1">
+      <Diagram DiagramId="09e2e107e182408b864605357e6c1b93" Name="Diagram1">
         <EntityTypeShape EntityType="LeagueModel.Award" Width="1.5" PointX="3" PointY="149.375" IsExpanded="true" />
         <EntityTypeShape EntityType="LeagueModel.Conference" Width="1.5" PointX="3" PointY="51.375" IsExpanded="true" />
         <EntityTypeShape EntityType="LeagueModel.DBVersion" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
@@ -49,7 +49,7 @@
         <AssociationConnector Association="LeagueModel.FK_Draft_0_0" ManuallyRouted="false" />
         <AssociationConnector Association="LeagueModel.FK_Draft_1_0" ManuallyRouted="false" />
         <AssociationConnector Association="LeagueModel.FK_Draft_2_0" ManuallyRouted="false" />
-        <AssociationConnector Association="LeagueModel.FK_Free_Agency_1_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Free_Agency_2_0" ManuallyRouted="false" />
         <AssociationConnector Association="LeagueModel.FK_Game_Player_Defense_Stats_2_0" ManuallyRouted="false" />
         <AssociationConnector Association="LeagueModel.FK_Game_Player_FG_Defense_Stats_0_0" ManuallyRouted="false" />
         <AssociationConnector Association="LeagueModel.FK_Game_Player_Kick_Returner_Stats_1_0" ManuallyRouted="false" />
@@ -71,7 +71,7 @@
         <AssociationConnector Association="LeagueModel.FK_Teams_by_Season_0_0" ManuallyRouted="false" />
         <AssociationConnector Association="LeagueModel.FK_Training_Camp_by_Season_0_0" ManuallyRouted="false" />
         <AssociationConnector Association="LeagueModel.FK_Free_Agency_0_0" ManuallyRouted="false" />
-        <AssociationConnector Association="LeagueModel.FK_Free_Agency_2_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Free_Agency_1_0" ManuallyRouted="false" />
         <AssociationConnector Association="LeagueModel.FK_Game_0_0" ManuallyRouted="false" />
         <AssociationConnector Association="LeagueModel.FK_Game_Player_Defense_Stats_0_0" ManuallyRouted="false" />
         <AssociationConnector Association="LeagueModel.FK_Game_Player_FG_Defense_Stats_2_0" ManuallyRouted="false" />

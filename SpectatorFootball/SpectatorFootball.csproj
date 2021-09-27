@@ -299,6 +299,7 @@
     <Compile Include="Models\League_Structure_by_Season.cs">
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\OneInt2Strings.cs" />
     <Compile Include="Models\Passing_Accum_Stats.cs" />
     <Compile Include="Models\Defense_Accum_Stats.cs" />
     <Compile Include="Models\Passing_Accum_Stats_by_year.cs" />

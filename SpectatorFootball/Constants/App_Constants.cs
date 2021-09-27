@@ -298,10 +298,6 @@ namespace SpectatorFootball
 
         public const int MINCOLORDIFF = 80;
 
-        //Free Agency
-        public const string FREE_AGENCY_WEEK = "Free Agency";
-        public const string TRAINING_CAMP_WEEK = "Training Camp";
-
         //Training Camp
         public const int TRAINING_CAMP_NUM_PLAYS = 100;
 
@@ -375,7 +371,12 @@ namespace SpectatorFootball
 
         public const double TRAINING_CAMP_P_COFFIN_CORNER_AWARD = 5.0;
 
-        //Schdule
+        //Week values
+        public const int PLAYER_RETIRING_WEEK = -100;
+        public const int DRAFT_WEEK = -70;
+        public const int FREE_AGENCY_WEEK = -30;
+        public const int TRAINING_CAMP_WEEK = -15;
+
         public const int PLAYOFF_WIDLCARD_WEEK_1 = 1000;
         public const int PLAYOFF_WIDLCARD_WEEK_2 = 1100;
         public const int PLAYOFF_WIDLCARD_WEEK_3 = 1200;
