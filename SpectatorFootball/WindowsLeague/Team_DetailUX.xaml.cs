@@ -237,13 +237,18 @@ namespace SpectatorFootball.WindowsLeague
             Draft_Services ds = new Draft_Services();
             lstDraft.ItemsSource = ds.getTeamDraftPicks(pw.Loaded_League, this_team.Franchise_ID);
 
-            Injuries_Services ijs = new Injuries_Services();
-            List<Injury> inj_list = ijs.GetTeamInjuredPlayers(pw.Loaded_League, this_team.Franchise_ID);
-            if (inj_list != null || inj_list.Count() == 0)
-                lstInjuries.Visibility = Visibility.Collapsed;
+            if (pw.Loaded_League.season.League_Structure_by_Season[0].Injuries == 1)
+            {
+                Injuries_Services ijs = new Injuries_Services();
+                List<Injury> inj_list = ijs.GetTeamInjuredPlayers(pw.Loaded_League, this_team.Franchise_ID);
+                if (inj_list != null || inj_list.Count() == 0)
+                    lstInjuries.Visibility = Visibility.Collapsed;
+                else
+                    lblNoInjuries.Visibility = Visibility.Collapsed;
+                lstInjuries.ItemsSource = inj_list;
+            }
             else
-                lblNoInjuries.Visibility = Visibility.Collapsed;
-            lstInjuries.ItemsSource = inj_list;
+                tbInjuries.Visibility = Visibility.Collapsed;
 
             List<OneInt2Strings> lTrans = ts.getTeamTransactions(pw.Loaded_League.season.ID,this_team.Franchise_ID, pw.Loaded_League.season.League_Structure_by_Season[0].Short_Name);
             if (lTrans != null || lTrans.Count() == 0)

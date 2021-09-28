@@ -1045,7 +1045,7 @@
                         </ListView>
                     </StackPanel>
                 </TabItem>
-                <TabItem Header="Injuries">
+                <TabItem Name="tbInjuries" Header="Injuries">
                     <StackPanel Orientation="Vertical"  Width="1000" Height="700">
                         <ListView Name="lstInjuries" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Width="960" Height="350">
                             <ListView.Resources>
