@@ -21,6 +21,7 @@ using SpectatorFootball.Common;
 using SpectatorFootball.Services;
 using SpectatorFootball.Team;
 using SpectatorFootball.PlayerNS;
+using SpectatorFootball.Help_Forms;
 
 namespace SpectatorFootball.WindowsLeague
 {
@@ -58,6 +59,7 @@ namespace SpectatorFootball.WindowsLeague
 
             binding_team = Team_Helper.Clone_Team(this_team);
             this.DataContext = binding_team;
+            binding_team.Season = null;
 
             var all_uniform_colors = new List<string>();
 
@@ -257,9 +259,6 @@ namespace SpectatorFootball.WindowsLeague
                 lblNoTransactions.Visibility = Visibility.Collapsed;
             lstTransactions.ItemsSource = lTrans;
 
-
-
-
             this.orig_this_team = this_team;
             this.pw = pw;
         }
@@ -275,7 +274,10 @@ namespace SpectatorFootball.WindowsLeague
         }
         private void help_btn_Click(object sender, RoutedEventArgs e)
         {
-
+            var help_form = new Help_TeamDetail();
+            help_form.Top = (SystemParameters.PrimaryScreenHeight - help_form.Height) / 2;
+            help_form.Left = (SystemParameters.PrimaryScreenWidth - help_form.Width) / 2;
+            help_form.ShowDialog();
         }
         private void DetCancel_Click(object sender, RoutedEventArgs e)
         {
@@ -292,12 +294,11 @@ namespace SpectatorFootball.WindowsLeague
                 Validate();
 
                 Team_Services ts = new Team_Services();
-                orig_this_team = binding_team;
                 ts.UpdateTeam(pw.Loaded_League, binding_team);
-                logger.Info("Team by Season Updated");
+                logger.Info("Team " + this.orig_this_team.City + " " + this.orig_this_team.Nickname + " Updated");
 
                 pw.bUpdateStandings = true;
-                pw.bUpdateStandings = true;
+                pw.bUpdateTeams = true;
                 Show_Standings?.Invoke(this, new EventArgs());
 
 

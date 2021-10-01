@@ -294,7 +294,10 @@ namespace SpectatorFootball
                 if (year == null)
                     s = context.Seasons.OrderByDescending(x => x.Year).Include(b => b.League_Structure_by_Season).Include(b => b.Teams_by_Season).Include(c => c.Conferences).Include(d => d.Divisions).FirstOrDefault();
                 else
-                    s = context.Seasons.Where(x => x.Year == long.Parse(year)).Include(b => b.League_Structure_by_Season).Include(b => b.Teams_by_Season).Include(c => c.Conferences).Include(d => d.Divisions).FirstOrDefault();
+                {
+                    long lYear = long.Parse(year);
+                    s = context.Seasons.Where(x => x.Year == lYear).Include(b => b.League_Structure_by_Season).Include(b => b.Teams_by_Season).Include(c => c.Conferences).Include(d => d.Divisions).FirstOrDefault();
+                }
             }
 
             logger.Info("Season Successfully Loaded.");

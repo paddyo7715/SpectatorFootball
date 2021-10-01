@@ -94,6 +94,7 @@ namespace SpectatorFootball.DAO
             string con = Common.LeageConnection.Connect(league_filepath);
             using (var context = new leagueContext(con))
             {
+                context.Database.Log = Console.Write;
                 context.Teams_by_Season.Add(t);
                 context.Entry(t).State = System.Data.Entity.EntityState.Modified;
                 context.SaveChanges();
@@ -328,7 +329,6 @@ namespace SpectatorFootball.DAO
         public List<Player_Ratings> getTeamRoster(long season_id, long Franchise_id, string league_filepath)
         {
             List<Player_Ratings> r = null;
-
 
             string con = Common.LeageConnection.Connect(league_filepath);
 

@@ -377,6 +377,13 @@ namespace SpectatorFootball
                 if (bUpdateTeams)
                 {
                     bUpdateTeams = false;
+
+                    string year = Loaded_League.Current_Year.ToString();
+                    string League_Short_Name = Loaded_League.season.League_Structure_by_Season[0].Short_Name;
+                    League_Services ls = new League_Services();
+                    Loaded_League.season = ls.LoadSeason(year, League_Short_Name);
+                    Loaded_League.Current_Year = Loaded_League.season.Year;
+
                     SetLeagueTeamsMenu(Loaded_League);
                 }
 

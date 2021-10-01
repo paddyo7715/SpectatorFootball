@@ -1,0 +1,82 @@
+﻿<Window x:Class="SpectatorFootball.Help_Forms.Help_TeamDetail"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SpectatorFootball.Help_Forms"
+        mc:Ignorable="d"
+        Height="720" Width="710" WindowStyle="none" ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True">
+    <Border Style="{StaticResource popupBD}" BorderThickness="1">
+        <StackPanel Style="{StaticResource popupSP}" Height="710" Width="700" Orientation="Vertical" >
+            <Label Style="{StaticResource popupTT}" HorizontalAlignment="Center">Team Detail Screen</Label>
+            <TextBlock Style="{StaticResource HelpTB}" TextWrapping="Wrap"   Width="680" Height="630" Margin="5,5,5,0" >
+The team detail page displays information about a particular team.<LineBreak/><LineBreak/>
+
+The top of the page will show the team and their record.  There is a Cancel button to return to the Standings page and a Save 
+button to save any information about the team that you may have updated at the bottum of the page.<LineBreak/><LineBreak/>
+
+There are also the following tabs for various types of information about the team:<LineBreak/><LineBreak/>
+
+<Bold>General</Bold><LineBreak/>
+Shows basic information, such as city, nickname etc...  Fields on this tab can be changed and then updated in the database by 
+clicking the Save button.<LineBreak/><LineBreak/>
+
+<Bold>Uniform</Bold><LineBreak/>
+Displays the team's home and away uniform, as well as their helmet image.  Either uniform can be changed by selecting a 
+different color from the various color pickers and then to make the changes permanent, click on the Save button.
+
+<LineBreak/><LineBreak/>
+
+<Bold>Schedule</Bold><LineBreak/>
+Displays the schedule for the team.  If a game has been played, you can click on the entry in the schedule to see a box score 
+for the game.<LineBreak/><LineBreak/>
+
+<Bold>Team Stats</Bold><LineBreak/>
+Shows the selected team stats versus their opponents for the regular season.<LineBreak/><LineBreak/>
+
+<Bold>Player Stats</Bold><LineBreak/>
+Shows all players regular season and playoff individual stats.<LineBreak/><LineBreak/>
+
+<Bold>Roster</Bold><LineBreak/>
+Shows all players for the team as well as their ratings, including an overall rating.  Note that exceptional players are 
+highlighted in cyan.  You can also click on a player to see his player card.<LineBreak/><LineBreak/>
+
+Ratings columns are as follows:<LineBreak/>
+    
+<Bold>All</Bold> - Overall rating  
+<Bold>Acc</Bold> - Passing accuracy  
+<Bold>Dsc</Bold> - Passing decision making rating       
+<Bold>Arm</Bold> - Passing arm strength   <LineBreak/>   
+<Bold>Rbk</Bold> - Run blocking rating      
+<Bold>Pbk</Bold> - Pass blocking rating   
+<Bold>Rpwr</Bold> - Running pwer rating       
+<Bold>Spd</Bold> - Speed rating<LineBreak/>
+<Bold>Agil</Bold> - Agility rating      
+<Bold>Hnd</Bold> - Pass catching rating
+<Bold>Patt</Bold> - Pass rush rating        
+<Bold>Ratt</Bold> - Run defense rating<LineBreak/>
+<Bold>Tack</Bold> - Tackling rating     
+<Bold>Leg S</Bold> - Kicking leg strength
+<Bold>Leg A</Bold> - Kicking leg accuracy<LineBreak/><LineBreak/>
+
+<Bold>History</Bold><LineBreak/>
+Shows the team's regular season and playoff record as well as if they played in the championship game through their years of 
+existence.<LineBreak/><LineBreak/>
+
+<Bold>Draft</Bold><LineBreak/>
+Displays the team's draft choices for the currently loaded season.  Note that you can click on a draft choice to see the 
+player's card.<LineBreak/><LineBreak/>
+
+<Bold>Injuries</Bold><LineBreak/>
+Shows any current injuries for a team.  This tab is visible only if you have elected to allow injuries in your league.  Note 
+that you can click on an injured play to see his player card.<LineBreak/><LineBreak/>
+
+<Bold>Transactions</Bold><LineBreak/>
+Shows all player transactions for the season, such as retiring, drafted, injured, signed and released players.  You can click 
+on the transaction to see the player's card.<LineBreak/><LineBreak/>
+            </TextBlock>
+            <Button Name="hlp_tc_close" Style="{StaticResource appSubmitStyle}" Click="hlp_tc_close_Click">Close</Button>
+        </StackPanel>
+    </Border>
+
+</Window>
