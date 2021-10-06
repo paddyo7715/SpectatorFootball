@@ -8,7 +8,7 @@ namespace SpectatorFootball.Models
 {
     class Player_and_Ratings_and_Draft
     {
-        public Player p { get; set; }
+        public Players_By_Team p { get; set; }
         public List<Player_Ratings> pr { get; set; }
         public bool bJust_Drafted { get; set; }
         public double Overall_Grade { get; set; }

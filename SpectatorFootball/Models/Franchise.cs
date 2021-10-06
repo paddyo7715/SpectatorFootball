@@ -35,7 +35,7 @@ namespace SpectatorFootball.Models
             this.Game_Player_Punter_Stats = new HashSet<Game_Player_Punter_Stats>();
             this.Game_Player_Receiving_Stats = new HashSet<Game_Player_Receiving_Stats>();
             this.Game_Player_Rushing_Stats = new HashSet<Game_Player_Rushing_Stats>();
-            this.Players = new HashSet<Player>();
+            this.Players_By_Team = new HashSet<Players_By_Team>();
             this.Playoff_Teams_by_Season = new HashSet<Playoff_Teams_by_Season>();
             this.Teams_by_Season = new HashSet<Teams_by_Season>();
             this.Training_Camp_by_Season = new HashSet<Training_Camp_by_Season>();
@@ -81,7 +81,7 @@ namespace SpectatorFootball.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Game_Player_Rushing_Stats> Game_Player_Rushing_Stats { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Player> Players { get; set; }
+        public virtual ICollection<Players_By_Team> Players_By_Team { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Playoff_Teams_by_Season> Playoff_Teams_by_Season { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

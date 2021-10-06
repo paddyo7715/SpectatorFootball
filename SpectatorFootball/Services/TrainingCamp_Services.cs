@@ -46,7 +46,7 @@ namespace SpectatorFootball.Services
             string DIRPath_League = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + League_Shortname.ToUpper();
             string League_con_string = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + League_Shortname + Path.DirectorySeparatorChar + League_Shortname + "." + app_Constants.DB_FILE_EXT;
 
-            List<Player> Updated_Players = new List<Player>();
+            List<Players_By_Team> Updated_Players = new List<Players_By_Team>();
             List<Free_Agency> F_Trans = new List<Free_Agency>();
             List<Training_Camp_by_Season> tc_list = new List<Training_Camp_by_Season>();
 
@@ -61,7 +61,7 @@ namespace SpectatorFootball.Services
             foreach (Player_and_Ratings_and_Draft p in prd_list)
             {
                 bool bJust_draft = p.bJust_Drafted;
-                Player player = p.p;
+                Player player = p.p.Player;
                 Player_Pos ppos = (Player_Pos)player.Pos;
                 if (!bJust_draft)
                     p.Grade = Player_Helper.Create_Overall_Rating(ppos, p.pr[0]);
@@ -127,13 +127,9 @@ namespace SpectatorFootball.Services
                 foreach (Player_and_Ratings_and_Draft p in posResultList)
                 {
 
-
                     //For testing player ratings and draft profile and training camp grade
 //                    sw.WriteLine(p.p.ID + " " + pp.ToString() +  " O: " + Player_Helper.Create_Overall_Rating(pp,p.pr.First())
 //                        + " D: " + p.p.Draft_Grade + " T: " + p.Grade + " Age: " + p.p.Age);
-
-
-
 
                     if (icount > Num_Team_Slots)
                     {
@@ -206,8 +202,6 @@ namespace SpectatorFootball.Services
                     Updated_Players.Add(p.p);
                     icount--;
                 }
-
-
 
             }
 

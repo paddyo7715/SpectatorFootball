@@ -14,20 +14,10 @@ namespace SpectatorFootball.DAO
     {
         private static ILog logger = LogManager.GetLogger("RollingFile");
 
-        public void SelectPlayer(Player p, DraftPick dp_selection, string league_filepath)
+        public void SelectPlayer(Player p, Players_By_Team pbt,  DraftPick dp_selection, Draft Draft_Rec, string league_filepath)
         {
 
             string con = Common.LeageConnection.Connect(league_filepath);
-
-            Draft d_selection = new Draft()
-            {
-                ID = dp_selection.ID,
-                Pick_Number = dp_selection.Pick_no,
-                Round = dp_selection.Round,
-                Season_ID = dp_selection.Season_ID,
-                Player_ID = p.ID,
-                Franchise_ID = (long)p.Franchise_ID
-            };
 
             using (var context = new leagueContext(con))
             {
@@ -38,9 +28,13 @@ namespace SpectatorFootball.DAO
                     context.Entry(p).State = System.Data.Entity.EntityState.Modified;
                     context.SaveChanges();
 
+                    //save the player_by_team record
+                    context.Players_By_Team.Add(pbt);
+                    context.SaveChanges();
+
                     //Save the draft record
-                    context.Drafts.Add(d_selection);
-                    context.Entry(d_selection).State = System.Data.Entity.EntityState.Modified;
+                    context.Drafts.Add(Draft_Rec);
+                    context.Entry(Draft_Rec).State = System.Data.Entity.EntityState.Modified;
                     context.SaveChanges();
 
                     dbContextTransaction.Commit();

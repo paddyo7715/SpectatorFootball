@@ -411,7 +411,7 @@ namespace SpectatorFootball.DraftsNS
             int i = 0;
             int search_limit;
 
-            List<Player> Unsolected_players = Draft_Class.Where(x => x.Franchise_ID == null).OrderByDescending(x => x.Draft_Grade).ToList();
+            List<Player> Unsolected_players = Draft_Class.Where(x => x.Eligible_for_Draft == 1 && x.Players_By_Team.Count == 0).OrderByDescending(x => x.Draft_Grade).ToList();
 
             foreach (Player_Pos pp in dn.Wanted_Positions)
             {

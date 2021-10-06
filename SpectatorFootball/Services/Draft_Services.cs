@@ -19,9 +19,9 @@ namespace SpectatorFootball.Services
     {
         //This method will assess a team's roster make a draft pick, save the draft pick to the 
         //database and then return that draft pick
-        public Player Select_Draft_Pick(string League_Shortname, List<Player> Draft_Class, DraftPick d_selection, int DraftRounds)
+        public Players_By_Team Select_Draft_Pick(string League_Shortname, List<Player> Draft_Class, DraftPick d_selection, int DraftRounds)
         {
-            Player r = null;
+            Players_By_Team r = new Players_By_Team();
 
             int Season_ID = (int)d_selection.Season_ID;
             string DIRPath_League = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + League_Shortname.ToUpper();
@@ -37,12 +37,28 @@ namespace SpectatorFootball.Services
             Draft_Need dn = dh.getDraftNeeds(Season_ID, p, draftRound, DraftRounds);
 
             //Next, make the pick
-            r = dh.MakePick(dn, Draft_Class);
+            Player pPick = dh.MakePick(dn, Draft_Class);
+            pPick.Eligible_for_Draft = 0;
+
+            //set the draft_by_player return object
             r.Franchise_ID = d_selection.Franchise_ID;
+            r.Player_ID = pPick.ID;
+            r.Season_ID = d_selection.Season_ID;
+
+            //Next create the draft record
+            Draft Draft_Rec = new Draft()
+            {
+                ID = d_selection.ID,
+                Pick_Number = d_selection.Pick_no,
+                Round = d_selection.Round,
+                Season_ID = d_selection.Season_ID,
+                Player_ID = pPick.ID,
+                Franchise_ID = (long)d_selection.Franchise_ID
+            };
 
             //Next, save the pick to the database
             DraftDAO dd = new DraftDAO();
-            dd.SelectPlayer(r, d_selection, League_con_string);
+            dd.SelectPlayer(pPick,r,d_selection, Draft_Rec, League_con_string);
 
             return r;
 

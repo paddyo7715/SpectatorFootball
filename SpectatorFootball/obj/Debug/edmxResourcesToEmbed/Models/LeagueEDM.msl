@@ -521,7 +521,6 @@
       <EntityTypeMapping TypeName="LeagueModel.Player">
         <MappingFragment StoreEntitySet="Players">
           <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="Franchise_ID" ColumnName="Franchise_ID" />
           <ScalarProperty Name="First_Name" ColumnName="First_Name" />
           <ScalarProperty Name="Last_Name" ColumnName="Last_Name" />
           <ScalarProperty Name="Age" ColumnName="Age" />
@@ -530,11 +529,21 @@
           <ScalarProperty Name="Handedness" ColumnName="Handedness" />
           <ScalarProperty Name="HomeTown" ColumnName="HomeTown" />
           <ScalarProperty Name="Pos" ColumnName="Pos" />
-          <ScalarProperty Name="Jersey_Number" ColumnName="Jersey_Number" />
           <ScalarProperty Name="Retired" ColumnName="Retired" />
           <ScalarProperty Name="Eligible_for_Draft" ColumnName="Eligible_for_Draft" />
           <ScalarProperty Name="Draft_Profile" ColumnName="Draft_Profile" />
           <ScalarProperty Name="Draft_Grade" ColumnName="Draft_Grade" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Players_By_Team">
+      <EntityTypeMapping TypeName="LeagueModel.Players_By_Team">
+        <MappingFragment StoreEntitySet="Players_By_Team">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
+          <ScalarProperty Name="Season_ID" ColumnName="Season_ID" />
+          <ScalarProperty Name="Franchise_ID" ColumnName="Franchise_ID" />
+          <ScalarProperty Name="Jersey_Number" ColumnName="Jersey_Number" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

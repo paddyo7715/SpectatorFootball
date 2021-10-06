@@ -102,10 +102,12 @@ namespace SpectatorFootball.WindowsLeague
                 int draft_rounds = Convert.ToInt32(Draft_Pick_list.Count / pw.Loaded_League.season.League_Structure_by_Season[0].Num_Teams);
                 Draft_Services ds = new Draft_Services();
                 DraftPick dp = Draft_Pick_list.Where(x => x.Pick_Pos_Name.Trim() == "").OrderBy(x => x.Pick_no).First();
-                Player p = ds.Select_Draft_Pick(pw.Loaded_League.season.League_Structure_by_Season[0].Short_Name, Draft_Players_list.ToList(), dp, draft_rounds);
+                Players_By_Team pbt = ds.Select_Draft_Pick(pw.Loaded_League.season.League_Structure_by_Season[0].Short_Name, Draft_Players_list.ToList(), dp, draft_rounds);
+                Player p = pbt.Player;
                 updatelists(dp.ID -1, p);
 
                 int pid = Draft_Players_list.IndexOf(p);
+                Draft_Players_list[pid] = p;
                 updateUI(dp, pid);
 
                 Mouse.OverrideCursor = null;
@@ -143,10 +145,12 @@ namespace SpectatorFootball.WindowsLeague
                 {
                     System.Threading.Thread.Sleep(delayMilaSeconds());
                     DraftPick dp = Draft_Pick_list.Where(x => x.Pick_Pos_Name.Trim() == "").OrderBy(x => x.Pick_no).First();
-                    Player p = ds.Select_Draft_Pick(pw.Loaded_League.season.League_Structure_by_Season[0].Short_Name, Draft_Players_list.ToList(), dp, draft_rounds);
+                    Players_By_Team pbt = ds.Select_Draft_Pick(pw.Loaded_League.season.League_Structure_by_Season[0].Short_Name, Draft_Players_list.ToList(), dp, draft_rounds);
+                    Player p = pbt.Player;
                     updatelists(dp.ID - 1, p);
 
                     int pid = Draft_Players_list.IndexOf(p);
+                    Draft_Players_list[pid] = p;
                     updateUI(dp, pid);
 
                     if (bFirst)
@@ -191,10 +195,12 @@ namespace SpectatorFootball.WindowsLeague
                 {
                     System.Threading.Thread.Sleep(delayMilaSeconds());
                     DraftPick dp = Draft_Pick_list.Where(x => x.Pick_Pos_Name.Trim() == "").OrderBy(x => x.Pick_no).First();
-                    Player p = ds.Select_Draft_Pick(pw.Loaded_League.season.League_Structure_by_Season[0].Short_Name, Draft_Players_list.ToList(), dp, draft_rounds);
+                    Players_By_Team pbt = ds.Select_Draft_Pick(pw.Loaded_League.season.League_Structure_by_Season[0].Short_Name, Draft_Players_list.ToList(), dp, draft_rounds);
+                    Player p = pbt.Player;
                     updatelists(dp.ID - 1, p);
 
                     int pid = Draft_Players_list.IndexOf(p);
+                    Draft_Players_list[pid] = p;
                     updateUI(dp,pid);
 
                     if (!Draft_Pick_list.Any(x => x.Pick_Pos_Name.Trim() == ""))

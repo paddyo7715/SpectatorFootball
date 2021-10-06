@@ -314,6 +314,9 @@
     <Compile Include="Models\Player.cs">
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Players_By_Team.cs">
+      <DependentUpon>LeagueEDM.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Player_and_Ratings.cs" />
     <Compile Include="Models\Player_and_Ratings_and_Draft.cs" />
     <Compile Include="Models\Player_Awards.cs">

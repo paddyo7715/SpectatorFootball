@@ -41,11 +41,11 @@ namespace SpectatorFootball.Models
             this.Player_Awards = new HashSet<Player_Awards>();
             this.Player_Ratings = new HashSet<Player_Ratings>();
             this.Player_Retiring_Log = new HashSet<Player_Retiring_Log>();
+            this.Players_By_Team = new HashSet<Players_By_Team>();
             this.Training_Camp_by_Season = new HashSet<Training_Camp_by_Season>();
         }
     
         public long ID { get; set; }
-        public Nullable<long> Franchise_ID { get; set; }
         public string First_Name { get; set; }
         public string Last_Name { get; set; }
         public long Age { get; set; }
@@ -54,7 +54,6 @@ namespace SpectatorFootball.Models
         public string Handedness { get; set; }
         public string HomeTown { get; set; }
         public long Pos { get; set; }
-        public Nullable<long> Jersey_Number { get; set; }
         public long Retired { get; set; }
         public long Eligible_for_Draft { get; set; }
         public string Draft_Profile { get; set; }
@@ -62,7 +61,6 @@ namespace SpectatorFootball.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Draft> Drafts { get; set; }
-        public virtual Franchise Franchise { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Free_Agency> Free_Agency { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -109,6 +107,8 @@ namespace SpectatorFootball.Models
         public virtual ICollection<Player_Ratings> Player_Ratings { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Player_Retiring_Log> Player_Retiring_Log { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Players_By_Team> Players_By_Team { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Training_Camp_by_Season> Training_Camp_by_Season { get; set; }
     }
