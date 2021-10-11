@@ -52,12 +52,14 @@ namespace SpectatorFootball.DAO
             using (var context = new leagueContext(con))
             {
                 int iFirstKicker = System.Enum.GetNames(typeof(Player_Pos)).Length - 2;
-                r = context.Players.Where(x => x.Retired == 0 && x.Franchise_ID == null)
-                    .Where(x => x.Player_Ratings.Any(i => i.Season_ID == season_id))
+
+                r = context.Players.Where(x => x.Retired == 0 &&
+                    x.Players_By_Team.Any(w => w.Season_ID == season_id && x.Players_By_Team.Any(s => x.Players_By_Team.Max(m => m.ID) == s.ID && s.Season_ID == season_id && s.Franchise_ID == null)))
                     .Select(x => new Player_and_Ratings
                     {
                         p = x,
                         pr = x.Player_Ratings.Where(w => w.Season_ID == season_id).ToList(),
+                        pbt = null,
                         Overall_Grade = 0
                     }).ToList();
             }
@@ -88,26 +90,17 @@ namespace SpectatorFootball.DAO
             return r;
 
         }
-        public void SelectPlayer(Player p, FreeAgencyTrans fa_selection, string league_filepath)
+        public void SelectPlayer(Players_By_Team pbt, FreeAgencyTrans fa_selection, Free_Agency fa_entity, string league_filepath)
         {
 
             string con = Common.LeageConnection.Connect(league_filepath);
-
-            SpectatorFootball.Models.Free_Agency fa_entity = new SpectatorFootball.Models.Free_Agency()
-            {
-                Week = app_Constants.FREE_AGENCY_WEEK,
-                Signed = 1,
-                Season_ID = fa_selection.Season_ID,
-                Player_ID = p.ID,
-                Franchise_ID = (long)p.Franchise_ID
-            };
 
             using (var context = new leagueContext(con))
             {
                 using (var dbContextTransaction = context.Database.BeginTransaction())
                 {
-                    //Save the player record
-                    context.Players.Add(p);
+                    //Save the player_by_team record
+                    context.Players_By_Team.Add(pbt);
 //                    context.Entry(p).Property(x => x.Franchise_ID).IsModified = true;
                     context.SaveChanges();
 

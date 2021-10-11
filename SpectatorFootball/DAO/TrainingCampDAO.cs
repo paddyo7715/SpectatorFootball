@@ -45,8 +45,9 @@ namespace SpectatorFootball.DAO
             using (var context = new leagueContext(con))
             {
 //                context.Database.Log = Console.Write;
+
                 r = context.Players_By_Team.Where(x => x.Franchise_ID == franchise_id &&
-                    x.Season_ID == season_id && x.ID ==
+                    x.Season_ID == season_id && x.ID == 
                     context.Players_By_Team.Where(s => x.Franchise_ID == franchise_id && s.Season_ID == season_id).Max(g => g.ID)
                     ).Include(x => x.Player)
                     .Select(x => new Player_and_Ratings_and_Draft
@@ -55,7 +56,8 @@ namespace SpectatorFootball.DAO
                         pr = x.Player.Player_Ratings.Where(w => w.Season_ID == season_id).ToList(),
                         bJust_Drafted = x.Player.Drafts.Any(u => u.Season_ID == season_id),
                         Overall_Grade = 0
-                    }).ToList();  
+                    }).ToList();
+
 
             }
 

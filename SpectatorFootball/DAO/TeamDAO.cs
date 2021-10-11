@@ -41,7 +41,8 @@ namespace SpectatorFootball.DAO
 
             using (var context = new leagueContext(con))
             {
-                r = context.Players.Where(x => x.Franchise_ID == franchise_id && x.Retired == 0).GroupBy(x => x.Pos).Select(x => new Pos_and_Count { pos = (int)x.Key, pos_count = x.Count() }).ToList();
+                r = context.Players.Where(x =>
+                x.Players_By_Team.Any(w => w.Season_ID == season_id && w.ID == x.Players_By_Team.Max(m => m.ID)) && x.Retired == 0).GroupBy(x => x.Pos).Select(x => new Pos_and_Count { pos = (int)x.Key, pos_count = x.Count() }).ToList();
             }
 
             return r;

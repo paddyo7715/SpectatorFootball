@@ -52,7 +52,6 @@ namespace SpectatorFootball.Services
 
             string League_con_string = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + lls.season.League_Structure_by_Season[0].Short_Name.ToUpper() + Path.DirectorySeparatorChar + lls.season.League_Structure_by_Season[0].Short_Name.ToUpper() + "." + app_Constants.DB_FILE_EXT;
             FreeAgencyDAO fad = new FreeAgencyDAO();
-
             r = fad.getFreeAgents(lls.season.ID, League_con_string);
 
             //Set the overall rating for each player
@@ -101,17 +100,16 @@ namespace SpectatorFootball.Services
 
                 //Now start looking at each free agent ordered by rating and select a free agent if the
                 //are in your needed position list.  If a player can not be found, create one.
-                List<Player_and_Ratings> available_free_agents = Free_Agents.Where(x => x.p.Franchise_ID == null).OrderByDescending(x => x.Overall_Grade).ToList();
+                List<Player_and_Ratings> available_free_agents = Free_Agents.Where(x => x.pbt.Franchise_ID == null).OrderByDescending(x => x.Overall_Grade).ToList();
                 foreach (Player_and_Ratings par in available_free_agents)
                 {
                     if (Needed_pos.Contains((Player_Pos)par.p.Pos))
                     {
-                        par.p.Franchise_ID = Franchise_ID;
                         r = par;
                         break;    
                     }
                 }
-                //If a player could not be found then assign a new, not very good, player
+                //If a player could not be found then assign a new not very good, player
                 if (r == null)
                 {
                     Player new_player = Player_Helper.CreatePlayer(Needed_pos[0], true,true);
@@ -128,7 +126,6 @@ namespace SpectatorFootball.Services
                     Free_Agents.Add(new Player_and_Ratings() { p = new_player, pr = new_player.Player_Ratings.ToList(), Overall_Grade = new_overall_rating });
                 }
 
-                r.p.Franchise_ID = Franchise_ID;
                 Teams_by_Season tbs = td.getTeamfromFranchiseID(Season_ID, Franchise_ID, League_con_string);
                 string helmet_filename = tbs.Helmet_Image_File;
                 BitmapImage HelmetImage = lls.getHelmetImg(tbs.Helmet_Image_File);
@@ -145,8 +142,25 @@ namespace SpectatorFootball.Services
                     Pick_Pos_Name = Pick_Pos_Name
                 };
 
+                Free_Agency fa_entity = new Free_Agency()
+                {
+                    Week = app_Constants.FREE_AGENCY_WEEK,
+                    Signed = 1,
+                    Season_ID = Season_ID,
+                    Player_ID = r.p.ID,
+                    Franchise_ID = Franchise_ID
+                };
+
+                Players_By_Team pbt_rec = new Players_By_Team()
+                {
+                    Franchise_ID = Franchise_ID,
+                    Player_ID = r.p.ID,
+                    Jersey_Number = null,
+                    Season_ID = Season_ID
+                };
+
                 FreeAgencyDAO fad = new FreeAgencyDAO();
-                fad.SelectPlayer(r.p, faTrans, League_con_string);
+                fad.SelectPlayer(pbt_rec, faTrans, fa_entity, League_con_string);
             }
 
             return r;
