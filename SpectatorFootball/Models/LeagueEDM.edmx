@@ -525,12 +525,12 @@
         </EntityType>
         <EntityType Name="Players_By_Team">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="Player_ID" />
+            <PropertyRef Name="Season_ID" />
           </Key>
-          <Property Name="ID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Player_ID" Type="integer" Nullable="false" />
           <Property Name="Season_ID" Type="integer" Nullable="false" />
-          <Property Name="Franchise_ID" Type="integer" />
+          <Property Name="Franchise_ID" Type="integer" Nullable="false" />
           <Property Name="Jersey_Number" Type="integer" />
         </EntityType>
         <EntityType Name="Playoff_Teams_by_Season">
@@ -1501,18 +1501,6 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Players_By_Team_0_0">
-          <End Role="Franchise" Type="Self.Franchise" Multiplicity="0..1" />
-          <End Role="Players_By_Team" Type="Self.Players_By_Team" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Franchise">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Players_By_Team">
-              <PropertyRef Name="Franchise_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Players_By_Team_1_0">
           <End Role="Season" Type="Self.Season" Multiplicity="1" />
           <End Role="Players_By_Team" Type="Self.Players_By_Team" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1524,7 +1512,7 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Players_By_Team_2_0">
+        <Association Name="FK_Players_By_Team_1_0">
           <End Role="Players" Type="Self.Players" Multiplicity="1" />
           <End Role="Players_By_Team" Type="Self.Players_By_Team" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1533,6 +1521,18 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
             </Principal>
             <Dependent Role="Players_By_Team">
               <PropertyRef Name="Player_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Players_By_Team_2_0">
+          <End Role="Franchise" Type="Self.Franchise" Multiplicity="1" />
+          <End Role="Players_By_Team" Type="Self.Players_By_Team" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Franchise">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Players_By_Team">
+              <PropertyRef Name="Franchise_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1953,15 +1953,15 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
             <End Role="Player_Retiring_Log" EntitySet="Player_Retiring_Log" />
           </AssociationSet>
           <AssociationSet Name="FK_Players_By_Team_0_0" Association="Self.FK_Players_By_Team_0_0">
-            <End Role="Franchise" EntitySet="Franchise" />
-            <End Role="Players_By_Team" EntitySet="Players_By_Team" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Players_By_Team_1_0" Association="Self.FK_Players_By_Team_1_0">
             <End Role="Season" EntitySet="Season" />
             <End Role="Players_By_Team" EntitySet="Players_By_Team" />
           </AssociationSet>
-          <AssociationSet Name="FK_Players_By_Team_2_0" Association="Self.FK_Players_By_Team_2_0">
+          <AssociationSet Name="FK_Players_By_Team_1_0" Association="Self.FK_Players_By_Team_1_0">
             <End Role="Players" EntitySet="Players" />
+            <End Role="Players_By_Team" EntitySet="Players_By_Team" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Players_By_Team_2_0" Association="Self.FK_Players_By_Team_2_0">
+            <End Role="Franchise" EntitySet="Franchise" />
             <End Role="Players_By_Team" EntitySet="Players_By_Team" />
           </AssociationSet>
           <AssociationSet Name="FK_Playoff_Teams_by_Season_0_0" Association="Self.FK_Playoff_Teams_by_Season_0_0">
@@ -2074,7 +2074,7 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
           <NavigationProperty Name="Game_Player_Punter_Stats" Relationship="Self.FK_Game_Player_Punter_Stats_2_0" FromRole="Franchise" ToRole="Game_Player_Punter_Stats" />
           <NavigationProperty Name="Game_Player_Receiving_Stats" Relationship="Self.FK_Game_Player_Receiving_Stats_1_0" FromRole="Franchise" ToRole="Game_Player_Receiving_Stats" />
           <NavigationProperty Name="Game_Player_Rushing_Stats" Relationship="Self.FK_Game_Player_Rushing_Stats_2_0" FromRole="Franchise" ToRole="Game_Player_Rushing_Stats" />
-          <NavigationProperty Name="Players_By_Team" Relationship="Self.FK_Players_By_Team_0_0" FromRole="Franchise" ToRole="Players_By_Team" />
+          <NavigationProperty Name="Players_By_Team" Relationship="Self.FK_Players_By_Team_2_0" FromRole="Franchise" ToRole="Players_By_Team" />
           <NavigationProperty Name="Playoff_Teams_by_Season" Relationship="Self.FK_Playoff_Teams_by_Season_0_0" FromRole="Franchise" ToRole="Playoff_Teams_by_Season" />
           <NavigationProperty Name="Teams_by_Season" Relationship="Self.FK_Teams_by_Season_0_0" FromRole="Franchise" ToRole="Teams_by_Season" />
           <NavigationProperty Name="Training_Camp_by_Season" Relationship="Self.FK_Training_Camp_by_Season_0_0" FromRole="Franchise" ToRole="Training_Camp_by_Season" />
@@ -2653,21 +2653,21 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
           <NavigationProperty Name="Player_Awards" Relationship="Self.FK_Player_Awards_1_0" FromRole="Players" ToRole="Player_Awards" />
           <NavigationProperty Name="Player_Ratings" Relationship="Self.FK_Player_Ratings_1_0" FromRole="Players" ToRole="Player_Ratings" />
           <NavigationProperty Name="Player_Retiring_Log" Relationship="Self.FK_Player_Retiring_Log_1_0" FromRole="Players" ToRole="Player_Retiring_Log" />
-          <NavigationProperty Name="Players_By_Team" Relationship="Self.FK_Players_By_Team_2_0" FromRole="Players" ToRole="Players_By_Team" />
+          <NavigationProperty Name="Players_By_Team" Relationship="Self.FK_Players_By_Team_1_0" FromRole="Players" ToRole="Players_By_Team" />
           <NavigationProperty Name="Training_Camp_by_Season" Relationship="Self.FK_Training_Camp_by_Season_2_0" FromRole="Players" ToRole="Training_Camp_by_Season" />
         </EntityType>
         <EntityType Name="Players_By_Team">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="Player_ID" />
+            <PropertyRef Name="Season_ID" />
           </Key>
-          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Player_ID" Type="Int64" Nullable="false" />
           <Property Name="Season_ID" Type="Int64" Nullable="false" />
-          <Property Name="Franchise_ID" Type="Int64" />
+          <Property Name="Franchise_ID" Type="Int64" Nullable="false" />
           <Property Name="Jersey_Number" Type="Int64" />
-          <NavigationProperty Name="Franchise" Relationship="Self.FK_Players_By_Team_0_0" FromRole="Players_By_Team" ToRole="Franchise" />
-          <NavigationProperty Name="Player" Relationship="Self.FK_Players_By_Team_2_0" FromRole="Players_By_Team" ToRole="Players" />
-          <NavigationProperty Name="Season" Relationship="Self.FK_Players_By_Team_1_0" FromRole="Players_By_Team" ToRole="Season" />
+          <NavigationProperty Name="Franchise" Relationship="Self.FK_Players_By_Team_2_0" FromRole="Players_By_Team" ToRole="Franchise" />
+          <NavigationProperty Name="Player" Relationship="Self.FK_Players_By_Team_1_0" FromRole="Players_By_Team" ToRole="Players" />
+          <NavigationProperty Name="Season" Relationship="Self.FK_Players_By_Team_0_0" FromRole="Players_By_Team" ToRole="Season" />
         </EntityType>
         <EntityType Name="Playoff_Teams_by_Season">
           <Key>
@@ -2699,7 +2699,7 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
           <NavigationProperty Name="Player_Awards" Relationship="Self.FK_Player_Awards_0_0" FromRole="Season" ToRole="Player_Awards" />
           <NavigationProperty Name="Player_Ratings" Relationship="Self.FK_Player_Ratings_0_0" FromRole="Season" ToRole="Player_Ratings" />
           <NavigationProperty Name="Player_Retiring_Log" Relationship="Self.FK_Player_Retiring_Log_0_0" FromRole="Season" ToRole="Player_Retiring_Log" />
-          <NavigationProperty Name="Players_By_Team" Relationship="Self.FK_Players_By_Team_1_0" FromRole="Season" ToRole="Players_By_Team" />
+          <NavigationProperty Name="Players_By_Team" Relationship="Self.FK_Players_By_Team_0_0" FromRole="Season" ToRole="Players_By_Team" />
           <NavigationProperty Name="Playoff_Teams_by_Season" Relationship="Self.FK_Playoff_Teams_by_Season_1_0" FromRole="Season" ToRole="Playoff_Teams_by_Season" />
           <NavigationProperty Name="Teams_by_Season" Relationship="Self.FK_Teams_by_Season_1_0" FromRole="Season" ToRole="Teams_by_Season" />
           <NavigationProperty Name="Training_Camp_by_Season" Relationship="Self.FK_Training_Camp_by_Season_1_0" FromRole="Season" ToRole="Training_Camp_by_Season" />
@@ -3053,8 +3053,8 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Players_By_Team_0_0">
-          <End Role="Franchise" Type="Self.Franchise" Multiplicity="0..1" />
+        <Association Name="FK_Players_By_Team_2_0">
+          <End Role="Franchise" Type="Self.Franchise" Multiplicity="1" />
           <End Role="Players_By_Team" Type="Self.Players_By_Team" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Franchise">
@@ -3701,7 +3701,7 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Players_By_Team_2_0">
+        <Association Name="FK_Players_By_Team_1_0">
           <End Role="Players" Type="Self.Player" Multiplicity="1" />
           <End Role="Players_By_Team" Type="Self.Players_By_Team" Multiplicity="*" />
           <ReferentialConstraint>
@@ -3725,7 +3725,7 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Players_By_Team_1_0">
+        <Association Name="FK_Players_By_Team_0_0">
           <End Role="Season" Type="Self.Season" Multiplicity="1" />
           <End Role="Players_By_Team" Type="Self.Players_By_Team" Multiplicity="*" />
           <ReferentialConstraint>
@@ -3905,7 +3905,7 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
             <End Role="Franchise" EntitySet="Franchises" />
             <End Role="Game_Player_Rushing_Stats" EntitySet="Game_Player_Rushing_Stats" />
           </AssociationSet>
-          <AssociationSet Name="FK_Players_By_Team_0_0" Association="Self.FK_Players_By_Team_0_0">
+          <AssociationSet Name="FK_Players_By_Team_2_0" Association="Self.FK_Players_By_Team_2_0">
             <End Role="Franchise" EntitySet="Franchises" />
             <End Role="Players_By_Team" EntitySet="Players_By_Team" />
           </AssociationSet>
@@ -4121,7 +4121,7 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
             <End Role="Players" EntitySet="Players" />
             <End Role="Player_Retiring_Log" EntitySet="Player_Retiring_Log" />
           </AssociationSet>
-          <AssociationSet Name="FK_Players_By_Team_2_0" Association="Self.FK_Players_By_Team_2_0">
+          <AssociationSet Name="FK_Players_By_Team_1_0" Association="Self.FK_Players_By_Team_1_0">
             <End Role="Players" EntitySet="Players" />
             <End Role="Players_By_Team" EntitySet="Players_By_Team" />
           </AssociationSet>
@@ -4129,7 +4129,7 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
             <End Role="Players" EntitySet="Players" />
             <End Role="Training_Camp_by_Season" EntitySet="Training_Camp_by_Season" />
           </AssociationSet>
-          <AssociationSet Name="FK_Players_By_Team_1_0" Association="Self.FK_Players_By_Team_1_0">
+          <AssociationSet Name="FK_Players_By_Team_0_0" Association="Self.FK_Players_By_Team_0_0">
             <End Role="Season" EntitySet="Seasons" />
             <End Role="Players_By_Team" EntitySet="Players_By_Team" />
           </AssociationSet>
@@ -4690,7 +4690,6 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
           <EntitySetMapping Name="Players_By_Team">
             <EntityTypeMapping TypeName="LeagueModel.Players_By_Team">
               <MappingFragment StoreEntitySet="Players_By_Team">
-                <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
                 <ScalarProperty Name="Season_ID" ColumnName="Season_ID" />
                 <ScalarProperty Name="Franchise_ID" ColumnName="Franchise_ID" />

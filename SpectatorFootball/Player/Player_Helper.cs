@@ -63,8 +63,6 @@ namespace SpectatorFootball.PlayerNS
 
             r.Age = age;
             r.Pos = (int)pos;
-            r.Jersey_Number = null;
-
             
             Administration_Services adms = new Administration_Services();
             string HomeTown = adms.getRandomHomeTown();
@@ -72,8 +70,6 @@ namespace SpectatorFootball.PlayerNS
             r.HomeTown = HomeTown;
 
             r.Player_Ratings.Add(ratings);
-
-            r.Franchise_ID = null;
 
             //Create draft ratings that are used to create draft profile grade and scouting report.
             Player_Ratings draft_ratings = Draft_Profile.setDraftRatings(ratings);
@@ -312,13 +308,13 @@ namespace SpectatorFootball.PlayerNS
 
             return r;
         }
-        public bool isPlayerNumber_Unique_Team_Memoory(string number, List<Player> Players)
+        public bool isPlayerNumber_Unique_Team_Memoory(string number, List<Players_By_Team> pbt)
         {
             bool r = true;
 
-            if (Players != null)
+            if (pbt != null)
             {
-                foreach (Player p in Players)
+                foreach (Players_By_Team p in pbt)
                 {
                     if (p.Jersey_Number.ToString() == number.Trim())
                     {

@@ -47,9 +47,8 @@ namespace SpectatorFootball.DAO
 //                context.Database.Log = Console.Write;
 
                 r = context.Players_By_Team.Where(x => x.Franchise_ID == franchise_id &&
-                    x.Season_ID == season_id && x.ID == 
-                    context.Players_By_Team.Where(s => x.Franchise_ID == franchise_id && s.Season_ID == season_id).Max(g => g.ID)
-                    ).Include(x => x.Player)
+                    x.Season_ID == season_id)
+                    .Include(x => x.Player)
                     .Select(x => new Player_and_Ratings_and_Draft
                     {
                         p = x,
@@ -63,22 +62,30 @@ namespace SpectatorFootball.DAO
 
             return r;
         }
-        public void updatePlayersandFreeAgency(List<Players_By_Team> pList, List<Free_Agency> faList,
+        public void updatePlayersandFreeAgency(List<Players_By_Team> make_List, List<Players_By_Team> cut_List, List<Free_Agency> faList,
             List<Training_Camp_by_Season> tc_list, string league_filepath)
         {
             string con = Common.LeageConnection.Connect(league_filepath);
-
 
             using (var context = new leagueContext(con))
             {
                 using (var dbContextTransaction = context.Database.BeginTransaction())
                 {
-                    //Save the player record
-                    foreach (Players_By_Team p in pList)
+                    //Edit the player by team record for the players that have made the team
+                    foreach (Players_By_Team p in make_List)
                     {
                         p.Player.Player_Ratings = null;
                         context.Players_By_Team.Add(p);
                         context.Entry(p).State = System.Data.Entity.EntityState.Modified;
+                    }
+                    context.SaveChanges();
+
+                    //Delete the player by team record for the players that were cut
+                    foreach (Players_By_Team p in cut_List)
+                    {
+                        p.Player.Player_Ratings = null;
+                        context.Players_By_Team.Add(p);
+                        context.Entry(p).State = System.Data.Entity.EntityState.Deleted;
                     }
                     context.SaveChanges();
 

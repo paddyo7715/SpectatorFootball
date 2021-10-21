@@ -872,43 +872,43 @@
                                             <Setter Property="IsEnabled" Value="False"/>
                                         </Style>
                                     </GridView.ColumnHeaderContainerStyle>
-                                    <GridViewColumn Header="Num" Width="40" DisplayMemberBinding="{Binding Player.Jersey_Number}" />
+                                    <GridViewColumn Header="Num" Width="40" DisplayMemberBinding="{Binding pbt.Jersey_Number}" />
                                     <GridViewColumn Header="Name">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <TextBlock Width="160">
-                                        <Run Text="{Binding Player.First_Name}" />
+                                        <Run Text="{Binding p.First_Name}" />
                                         <Run Text=" " /> <!-- space -->
-                                        <Run Text="{Binding Player.Last_Name}" />
+                                        <Run Text="{Binding p.Last_Name}" />
                                                 </TextBlock>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
-                                    <GridViewColumn Header="Age" Width="40" DisplayMemberBinding="{Binding Player.Age}"  />
+                                    <GridViewColumn Header="Age" Width="40" DisplayMemberBinding="{Binding p.Age}"  />
                                     <GridViewColumn Header="POS">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <TextBlock Width="30" TextAlignment="Center">
-                                                    <Run Text="{Binding Player.Pos, Converter={StaticResource iPosConverter}}" />
+                                                    <Run Text="{Binding p.Pos, Converter={StaticResource iPosConverter}}" />
                                                 </TextBlock>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
-                                    <GridViewColumn Header="All" Width="50" DisplayMemberBinding="{Binding Path=., Converter={StaticResource OverallConverter}}"  />
-                                    <GridViewColumn Header="Acc" Width="30" DisplayMemberBinding="{Binding Accuracy_Rating}" />
-                                    <GridViewColumn Header="Dsc" Width="30" DisplayMemberBinding="{Binding Decision_Making_Rating}" />
-                                    <GridViewColumn Header="Arm" Width="40" DisplayMemberBinding="{Binding Arm_Strength_Rating}" />
-                                    <GridViewColumn Header="PBlk" Width="40" DisplayMemberBinding="{Binding Pass_Block_Rating}" />
-                                    <GridViewColumn Header="RBlk" Width="40" DisplayMemberBinding="{Binding Run_Block_Rating}" />
-                                    <GridViewColumn Header="RPwr" Width="40" DisplayMemberBinding="{Binding Running_Power_Rating}" />
-                                    <GridViewColumn Header="Spd" Width="40" DisplayMemberBinding="{Binding Speed_Rating}" />
-                                    <GridViewColumn Header="Agil" Width="40" DisplayMemberBinding="{Binding Agilty_Rating}" />
-                                    <GridViewColumn Header="Hnd" Width="40" DisplayMemberBinding="{Binding Hands_Rating}" />
-                                    <GridViewColumn Header="Patt" Width="40" DisplayMemberBinding="{Binding Pass_Attack_Rating}" />
-                                    <GridViewColumn Header="RAtt" Width="40" DisplayMemberBinding="{Binding Run_Attack_Rating}" />
-                                    <GridViewColumn Header="Tack" Width="40" DisplayMemberBinding="{Binding Tackle_Rating}" />
-                                    <GridViewColumn Header="Leg S" Width="40" DisplayMemberBinding="{Binding Kicker_Leg_Power_Rating}" />
-                                    <GridViewColumn Header="Leg A" Width="40" DisplayMemberBinding="{Binding Kicker_Leg_Accuracy_Rating}" />
+                                    <GridViewColumn Header="All" Width="50" DisplayMemberBinding="{Binding Path=pr, Converter={StaticResource OverallConverter}}"  />
+                                    <GridViewColumn Header="Acc" Width="30" DisplayMemberBinding="{Binding pr.Accuracy_Rating}" />
+                                    <GridViewColumn Header="Dsc" Width="30" DisplayMemberBinding="{Binding pr.Decision_Making_Rating}" />
+                                    <GridViewColumn Header="Arm" Width="40" DisplayMemberBinding="{Binding pr.Arm_Strength_Rating}" />
+                                    <GridViewColumn Header="PBlk" Width="40" DisplayMemberBinding="{Binding pr.Pass_Block_Rating}" />
+                                    <GridViewColumn Header="RBlk" Width="40" DisplayMemberBinding="{Binding pr.Run_Block_Rating}" />
+                                    <GridViewColumn Header="RPwr" Width="40" DisplayMemberBinding="{Binding pr.Running_Power_Rating}" />
+                                    <GridViewColumn Header="Spd" Width="40" DisplayMemberBinding="{Binding pr.Speed_Rating}" />
+                                    <GridViewColumn Header="Agil" Width="40" DisplayMemberBinding="{Binding pr.Agilty_Rating}" />
+                                    <GridViewColumn Header="Hnd" Width="40" DisplayMemberBinding="{Binding pr.Hands_Rating}" />
+                                    <GridViewColumn Header="Patt" Width="40" DisplayMemberBinding="{Binding pr.Pass_Attack_Rating}" />
+                                    <GridViewColumn Header="RAtt" Width="40" DisplayMemberBinding="{Binding pr.Run_Attack_Rating}" />
+                                    <GridViewColumn Header="Tack" Width="40" DisplayMemberBinding="{Binding pr.Tackle_Rating}" />
+                                    <GridViewColumn Header="Leg S" Width="40" DisplayMemberBinding="{Binding pr.Kicker_Leg_Power_Rating}" />
+                                    <GridViewColumn Header="Leg A" Width="40" DisplayMemberBinding="{Binding pr.Kicker_Leg_Accuracy_Rating}" />
                                 </GridView>
                             </ListView.View>
                         </ListView>

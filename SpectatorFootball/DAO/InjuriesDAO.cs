@@ -27,7 +27,8 @@ namespace SpectatorFootball.DAO
 
             using (var context = new leagueContext(con))
             {
-                r = context.Injuries.Where(x => x.Season_ID == season_id && x.Player.Franchise_ID == franchise_id).Include(x => x.Player).ToList();
+                //                r = context.Injuries.Where(x => x.Season_ID == season_id && x.Player.Franchise_ID == franchise_id).Include(x => x.Player).ToList();
+               r = context.Injuries.Where(x => x.Season_ID == season_id && x.Player.Players_By_Team.Any(p => p.Franchise_ID == franchise_id)).Include(x => x.Player).ToList();
             }
 
             return r;

@@ -12,7 +12,7 @@ namespace SpectatorFootball.Training_CampNS
     {
         public static List<Player_and_Ratings_and_Draft> TrainingCampQB(List<Player_and_Ratings_and_Draft> pList)
         {
-            List<Player_and_Ratings_and_Draft> r = pList.Where(x => x.p.Pos == (int)Player_Pos.QB).ToList();
+            List<Player_and_Ratings_and_Draft> r = pList.Where(x => x.p.Player.Pos == (int)Player_Pos.QB).ToList();
 
             foreach (Player_and_Ratings_and_Draft p in r)
             {
@@ -136,7 +136,7 @@ namespace SpectatorFootball.Training_CampNS
 
         public static List<Player_and_Ratings_and_Draft> TrainingCampRB(List<Player_and_Ratings_and_Draft> pList)
         {
-            List<Player_and_Ratings_and_Draft> r = pList.Where(x => x.p.Pos == (int)Player_Pos.RB).ToList();
+            List<Player_and_Ratings_and_Draft> r = pList.Where(x => x.p.Player.Pos == (int)Player_Pos.RB).ToList();
 
             foreach (Player_and_Ratings_and_Draft p in r)
             {
@@ -221,7 +221,7 @@ namespace SpectatorFootball.Training_CampNS
 
         public static List<Player_and_Ratings_and_Draft> TrainingCampWR(List<Player_and_Ratings_and_Draft> pList)
         {
-            List<Player_and_Ratings_and_Draft> r = pList.Where(x => x.p.Pos == (int)Player_Pos.WR).ToList();
+            List<Player_and_Ratings_and_Draft> r = pList.Where(x => x.p.Player.Pos == (int)Player_Pos.WR).ToList();
 
             foreach (Player_and_Ratings_and_Draft p in r)
             {
@@ -292,7 +292,7 @@ namespace SpectatorFootball.Training_CampNS
 
         public static List<Player_and_Ratings_and_Draft> TrainingCampTE(List<Player_and_Ratings_and_Draft> pList)
         {
-            List<Player_and_Ratings_and_Draft> r = pList.Where(x => x.p.Pos == (int)Player_Pos.TE).ToList();
+            List<Player_and_Ratings_and_Draft> r = pList.Where(x => x.p.Player.Pos == (int)Player_Pos.TE).ToList();
 
             foreach (Player_and_Ratings_and_Draft p in r)
             {
@@ -366,7 +366,7 @@ namespace SpectatorFootball.Training_CampNS
 
         public static List<Player_and_Ratings_and_Draft> TrainingCampOL(List<Player_and_Ratings_and_Draft> pList)
         {
-            List<Player_and_Ratings_and_Draft> r = pList.Where(x => x.p.Pos == (int)Player_Pos.OL).ToList();
+            List<Player_and_Ratings_and_Draft> r = pList.Where(x => x.p.Player.Pos == (int)Player_Pos.OL).ToList();
 
             foreach (Player_and_Ratings_and_Draft p in r)
             {
@@ -403,7 +403,7 @@ namespace SpectatorFootball.Training_CampNS
 
         public static List<Player_and_Ratings_and_Draft> TrainingCampDL(List<Player_and_Ratings_and_Draft> pList)
         {
-            List<Player_and_Ratings_and_Draft> r = pList.Where(x => x.p.Pos == (int)Player_Pos.DL).ToList();
+            List<Player_and_Ratings_and_Draft> r = pList.Where(x => x.p.Player.Pos == (int)Player_Pos.DL).ToList();
 
             foreach (Player_and_Ratings_and_Draft p in r)
             {
@@ -441,7 +441,7 @@ namespace SpectatorFootball.Training_CampNS
 
         public static List<Player_and_Ratings_and_Draft> TrainingCampLB(List<Player_and_Ratings_and_Draft> pList)
         {
-            List<Player_and_Ratings_and_Draft> r = pList.Where(x => x.p.Pos == (int)Player_Pos.LB).ToList();
+            List<Player_and_Ratings_and_Draft> r = pList.Where(x => x.p.Player.Pos == (int)Player_Pos.LB).ToList();
 
             foreach (Player_and_Ratings_and_Draft p in r)
             {
@@ -513,7 +513,7 @@ namespace SpectatorFootball.Training_CampNS
 
         public static List<Player_and_Ratings_and_Draft> TrainingCampDB(List<Player_and_Ratings_and_Draft> pList)
         {
-            List<Player_and_Ratings_and_Draft> r = pList.Where(x => x.p.Pos == (int)Player_Pos.DB).ToList();
+            List<Player_and_Ratings_and_Draft> r = pList.Where(x => x.p.Player.Pos == (int)Player_Pos.DB).ToList();
 
             foreach (Player_and_Ratings_and_Draft p in r)
             {
@@ -584,7 +584,7 @@ namespace SpectatorFootball.Training_CampNS
 
         public static List<Player_and_Ratings_and_Draft> TrainingCampFG(List<Player_and_Ratings_and_Draft> pList)
         {
-            List<Player_and_Ratings_and_Draft> r = pList.Where(x => x.p.Pos == (int)Player_Pos.K).ToList();
+            List<Player_and_Ratings_and_Draft> r = pList.Where(x => x.p.Player.Pos == (int)Player_Pos.K).ToList();
 
             foreach (Player_and_Ratings_and_Draft p in r)
             {
@@ -642,7 +642,7 @@ namespace SpectatorFootball.Training_CampNS
 
         public static List<Player_and_Ratings_and_Draft> TrainingCampP(List<Player_and_Ratings_and_Draft> pList)
         {
-            List<Player_and_Ratings_and_Draft> r = pList.Where(x => x.p.Pos == (int)Player_Pos.P).ToList();
+            List<Player_and_Ratings_and_Draft> r = pList.Where(x => x.p.Player.Pos == (int)Player_Pos.P).ToList();
 
             foreach (Player_and_Ratings_and_Draft p in r)
             {
@@ -688,7 +688,7 @@ namespace SpectatorFootball.Training_CampNS
             foreach (Player_and_Ratings_and_Draft p in tcPlayers)
             {
                 Double new_grade = p.Grade;
-                new_grade -= p.p.Age - app_Constants.STARTING_ROOKIE_AGE;
+                new_grade -= p.p.Player.Age - app_Constants.STARTING_ROOKIE_AGE;
                 p.Grade = new_grade;
             }
         }

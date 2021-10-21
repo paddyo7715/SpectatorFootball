@@ -337,6 +337,7 @@
     <Compile Include="Models\PuntReturns_Accum_Stats_by_year.cs" />
     <Compile Include="Models\Receiving_Accum_Stats.cs" />
     <Compile Include="Models\Receiving_Accum_Stats_by_year.cs" />
+    <Compile Include="Models\Roster_rec.cs" />
     <Compile Include="Models\Rushing_Accum_Stats.cs" />
     <Compile Include="Models\Rushing_Accum_Stats_by_year.cs" />
     <Compile Include="Models\Sched_Week_With_Name.cs" />

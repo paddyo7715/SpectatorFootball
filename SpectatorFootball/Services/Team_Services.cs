@@ -113,9 +113,9 @@ namespace SpectatorFootball
             return r;
         }
 
-        public List<Player_Ratings> getTeamRoster(long season_id, long Franchise_id, string League_Shortname)
+        public List<Roster_rec> getTeamRoster(long season_id, long Franchise_id, string League_Shortname)
         {
-            List<Player_Ratings> r = null;
+            List<Roster_rec> r = null;
             string DIRPath_League = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + League_Shortname.ToUpper();
             string League_con_string = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + League_Shortname + Path.DirectorySeparatorChar + League_Shortname + "." + app_Constants.DB_FILE_EXT;
 

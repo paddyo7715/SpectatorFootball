@@ -54,7 +54,7 @@ namespace SpectatorFootball.DAO
                 int iFirstKicker = System.Enum.GetNames(typeof(Player_Pos)).Length - 2;
 
                 r = context.Players.Where(x => x.Retired == 0 &&
-                    x.Players_By_Team.Any(w => w.Season_ID == season_id && x.Players_By_Team.Any(s => x.Players_By_Team.Max(m => m.ID) == s.ID && s.Season_ID == season_id && s.Franchise_ID == null)))
+                    !x.Players_By_Team.Any(w => w.Season_ID == season_id))
                     .Select(x => new Player_and_Ratings
                     {
                         p = x,
@@ -76,7 +76,9 @@ namespace SpectatorFootball.DAO
             string con = Common.LeageConnection.Connect(newleague_filepath);
             using (var context = new leagueContext(con))
             {
-                teamsLessThanFull_Count = context.Teams_by_Season.Where(x => x.Season_ID == season_id && x.Franchise.Players.Count() < app_Constants.TRAINING_CAMP_TEAM_PLAYER_COUNT).Count();
+                //Note that it is not necessary to worry about mulitple player records for a team since at this point.
+                //in the season there will only be 1.
+                teamsLessThanFull_Count = context.Teams_by_Season.Where(x => x.Season_ID == season_id && x.Franchise.Players_By_Team.Count() < app_Constants.TRAINING_CAMP_TEAM_PLAYER_COUNT).Count();
                 training_camp_count = context.Training_Camp_by_Season.Where(x => x.Season_ID == season_id).Count();
             }
 

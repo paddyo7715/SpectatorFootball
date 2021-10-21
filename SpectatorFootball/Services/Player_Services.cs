@@ -24,7 +24,7 @@ namespace SpectatorFootball.Services
 
             TeamDAO td = new TeamDAO();
             AwardsDAO ad = new AwardsDAO();
-            Teams_by_Season t = td.getTeamFromPlayerID(p, League_con_string);
+            Teams_by_Season t = td.getTeamFromPlayerID(p, lls.season.ID, League_con_string);
 
             Player_Card_Data r = new Player_Card_Data()
             {

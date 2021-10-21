@@ -41,7 +41,7 @@ namespace SpectatorFootball.Services
             pPick.Eligible_for_Draft = 0;
 
             //set the draft_by_player return object
-            r.Franchise_ID = d_selection.Franchise_ID;
+            r.Franchise_ID = (long) d_selection.Franchise_ID;
             r.Player_ID = pPick.ID;
             r.Season_ID = d_selection.Season_ID;
 

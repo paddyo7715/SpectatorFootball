@@ -47,6 +47,9 @@ namespace SpectatorFootball.Services
             string League_con_string = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + League_Shortname + Path.DirectorySeparatorChar + League_Shortname + "." + app_Constants.DB_FILE_EXT;
 
             List<Players_By_Team> Updated_Players = new List<Players_By_Team>();
+            List<Players_By_Team> Made_Players = new List<Players_By_Team>();
+            List<Players_By_Team> Cut_Players = new List<Players_By_Team>();
+
             List<Free_Agency> F_Trans = new List<Free_Agency>();
             List<Training_Camp_by_Season> tc_list = new List<Training_Camp_by_Season>();
 
@@ -137,7 +140,7 @@ namespace SpectatorFootball.Services
                         Free_Agency fa = new Free_Agency()
                         {
                             Franchise_ID = franchise_id,
-                            Player_ID = p.p.ID,
+                            Player_ID = p.p.Player_ID,
                             Season_ID = season_id,
                             Signed = 0,
                             Week = app_Constants.TRAINING_CAMP_WEEK
@@ -145,14 +148,15 @@ namespace SpectatorFootball.Services
                         Training_Camp_by_Season tcamp = new Training_Camp_by_Season()
                         {
                             Franchise_ID = franchise_id,
-                            Player_ID = p.p.ID,
+                            Player_ID = p.p.Player_ID,
                             Season_ID = season_id,
                             Grade = (long)p.Grade,
                             Made_Team = 0
                         };
                         F_Trans.Add(fa);
                         tc_list.Add(tcamp);
-                        p.p.Franchise_ID = null;
+                        //in this case -1 means no team, but it doesn't matter since this will not be written to the databse this way.  This record will be deleted.
+                        p.p.Franchise_ID = -1;  
                         p.p.Jersey_Number = null;
                     }
                     else
@@ -192,7 +196,7 @@ namespace SpectatorFootball.Services
                         Training_Camp_by_Season tcamp = new Training_Camp_by_Season()
                         {
                             Franchise_ID = franchise_id,
-                            Player_ID = p.p.ID,
+                            Player_ID = p.p.Player_ID,
                             Season_ID = season_id,
                             Grade = (long)p.Grade,
                             Made_Team = 1
@@ -203,13 +207,16 @@ namespace SpectatorFootball.Services
                     icount--;
                 }
 
+                Made_Players = Updated_Players.Where(x => x.Jersey_Number != null).ToList();
+                Cut_Players =  Updated_Players.Where(x => x.Jersey_Number == null).ToList();
+
             }
 
             //For testing player ratings and draft profile and training camp grade
             //            sw.Close();
 
             TrainingCampDAO tcDAO = new TrainingCampDAO();
-            tcDAO.updatePlayersandFreeAgency(Updated_Players, F_Trans, tc_list, League_con_string);
+            tcDAO.updatePlayersandFreeAgency(Made_Players, Cut_Players, F_Trans, tc_list, League_con_string);
 
         }
         public TrainingCampResults getPlayersTrainingCampResult(long franchise_id, long season_id, string League_Shortname)

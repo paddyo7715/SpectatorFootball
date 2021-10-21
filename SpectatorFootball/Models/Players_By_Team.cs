@@ -14,10 +14,9 @@ namespace SpectatorFootball.Models
     
     public partial class Players_By_Team
     {
-        public long ID { get; set; }
         public long Player_ID { get; set; }
         public long Season_ID { get; set; }
-        public Nullable<long> Franchise_ID { get; set; }
+        public long Franchise_ID { get; set; }
         public Nullable<long> Jersey_Number { get; set; }
     
         public virtual Franchise Franchise { get; set; }

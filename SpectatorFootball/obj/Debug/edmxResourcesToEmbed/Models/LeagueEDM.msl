@@ -539,7 +539,6 @@
     <EntitySetMapping Name="Players_By_Team">
       <EntityTypeMapping TypeName="LeagueModel.Players_By_Team">
         <MappingFragment StoreEntitySet="Players_By_Team">
-          <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
           <ScalarProperty Name="Season_ID" ColumnName="Season_ID" />
           <ScalarProperty Name="Franchise_ID" ColumnName="Franchise_ID" />

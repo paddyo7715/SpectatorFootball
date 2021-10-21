@@ -340,13 +340,13 @@ namespace SpectatorFootball
                 else
                     free_agency_started = 0;
 
-                bool batlttccount = context.Teams_by_Season.Any(x => x.Season_ID == season_id && x.Franchise.Players.Count() < app_Constants.TRAINING_CAMP_TEAM_PLAYER_COUNT);
+                bool batlttccount = context.Teams_by_Season.Any(x => x.Season_ID == season_id && x.Franchise.Players_By_Team.Count() < app_Constants.TRAINING_CAMP_TEAM_PLAYER_COUNT);
                 if (batlttccount)
                     teams_lt_tcamp_players = 1;
                 else
                     teams_lt_tcamp_players = 0;
 
-                teamsnotFull_Count = context.Teams_by_Season.Where(x => x.Season_ID == season_id && x.Franchise.Players.Count() != app_Constants.REGULAR_SEASON_TEAM_PLAYER_COUNT).Count();
+                teamsnotFull_Count = context.Teams_by_Season.Where(x => x.Season_ID == season_id && x.Franchise.Players_By_Team.Count() != app_Constants.REGULAR_SEASON_TEAM_PLAYER_COUNT).Count();
                 bool btcs = context.Training_Camp_by_Season.Any(x => x.Season_ID == season_id);
                 if (btcs)
                     training_camp_Started = 1;

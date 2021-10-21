@@ -27,7 +27,7 @@ namespace SpectatorFootball.DAO
 
             using (var context = new leagueContext(con))
             {
-                r = context.Players.Where(x => x.Franchise_ID == franchise_id && x.Retired == 0).Include(x => x.Player_Ratings).Where(x => x.Player_Ratings.Any(i => i.Season_ID == season_id)).Include(x => x.Drafts).ToList();
+                r = context.Players.Where(x => x.Players_By_Team.Any(p => p.Franchise_ID == franchise_id && p.Season_ID == season_id)).Include(x => x.Player_Ratings).Where(x => x.Player_Ratings.Any(i => i.Season_ID == season_id)).Include(x => x.Drafts).ToList();
             }
 
             return r;
@@ -41,8 +41,10 @@ namespace SpectatorFootball.DAO
 
             using (var context = new leagueContext(con))
             {
-                r = context.Players.Where(x =>
-                x.Players_By_Team.Any(w => w.Season_ID == season_id && w.ID == x.Players_By_Team.Max(m => m.ID)) && x.Retired == 0).GroupBy(x => x.Pos).Select(x => new Pos_and_Count { pos = (int)x.Key, pos_count = x.Count() }).ToList();
+                r = context.Players.Where(x => x.Retired == 0 &&
+                x.Players_By_Team.Any(w => w.Season_ID == season_id && w.Franchise_ID == franchise_id))
+                .GroupBy(x => x.Pos)
+                .Select(x => new Pos_and_Count { pos = (int)x.Key, pos_count = x.Count() }).ToList();
             }
 
             return r;
@@ -122,7 +124,8 @@ namespace SpectatorFootball.DAO
             using (var context = new leagueContext(con))
             {
                 PassStats = context.Game_Player_Passing_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 &&
-                    (x.Game.Home_Team_Franchise_ID == franchise_id || x.Game.Away_Team_Franchise_ID == franchise_id)).GroupBy(x => x.Player)
+                    (x.Game.Home_Team_Franchise_ID == franchise_id || x.Game.Away_Team_Franchise_ID == franchise_id)
+                    && x.Player.Players_By_Team.Any(a => a.Franchise_ID == franchise_id && a.Season_ID == season_id)).GroupBy(x => x.Player)
                     .Select(x => new Passing_Accum_Stats
                     {
                         p = x.Key,
@@ -136,7 +139,8 @@ namespace SpectatorFootball.DAO
                     }).OrderByDescending(x => x.Yards).ThenByDescending(x => x.TDs).ToList();
 
                 RushingStats = context.Game_Player_Rushing_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 &&
-                    (x.Game.Home_Team_Franchise_ID == franchise_id || x.Game.Away_Team_Franchise_ID == franchise_id)).GroupBy(x => x.Player)
+                    (x.Game.Home_Team_Franchise_ID == franchise_id || x.Game.Away_Team_Franchise_ID == franchise_id)
+                    && x.Player.Players_By_Team.Any(a => a.Franchise_ID == franchise_id && a.Season_ID == season_id)).GroupBy(x => x.Player)
                     .Select(x => new Rushing_Accum_Stats
                     {
                         p = x.Key,
@@ -148,7 +152,8 @@ namespace SpectatorFootball.DAO
                     }).OrderByDescending(x => x.Yards).ThenByDescending(x => x.TDs).ToList();
 
                 ReceivingStats = context.Game_Player_Receiving_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 &&
-                    (x.Game.Home_Team_Franchise_ID == franchise_id || x.Game.Away_Team_Franchise_ID == franchise_id)).GroupBy(x => x.Player)
+                    (x.Game.Home_Team_Franchise_ID == franchise_id || x.Game.Away_Team_Franchise_ID == franchise_id)
+                    && x.Player.Players_By_Team.Any(a => a.Franchise_ID == franchise_id && a.Season_ID == season_id)).GroupBy(x => x.Player)
                     .Select(x => new Receiving_Accum_Stats
                     {
                         p = x.Key,
@@ -161,7 +166,8 @@ namespace SpectatorFootball.DAO
                     }).OrderByDescending(x => x.Catches).ThenByDescending(x => x.Yards).ToList();
 
                 BlockingStats = context.Game_Player_Offensive_Linemen_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 &&
-                    (x.Game.Home_Team_Franchise_ID == franchise_id || x.Game.Away_Team_Franchise_ID == franchise_id)).GroupBy(x => x.Player)
+                    (x.Game.Home_Team_Franchise_ID == franchise_id || x.Game.Away_Team_Franchise_ID == franchise_id)
+                    && x.Player.Players_By_Team.Any(a => a.Franchise_ID == franchise_id && a.Season_ID == season_id)).GroupBy(x => x.Player)
                     .Select(x => new Blocking_Accum_Stats
                     {
                         p = x.Key,
@@ -172,7 +178,8 @@ namespace SpectatorFootball.DAO
                     }).OrderByDescending(x => x.Pancakes).ThenByDescending(x => x.Plays).ToList();
 
                 DefenseStats = context.Game_Player_Defense_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 &&
-                    (x.Game.Home_Team_Franchise_ID == franchise_id || x.Game.Away_Team_Franchise_ID == franchise_id)).GroupBy(x => x.Player)
+                    (x.Game.Home_Team_Franchise_ID == franchise_id || x.Game.Away_Team_Franchise_ID == franchise_id)
+                    && x.Player.Players_By_Team.Any(a => a.Franchise_ID == franchise_id && a.Season_ID == season_id)).GroupBy(x => x.Player)
                     .Select(x => new Defense_Accum_Stats
                     {
                         p = x.Key,
@@ -185,7 +192,8 @@ namespace SpectatorFootball.DAO
                     }).OrderByDescending(x => x.Tackles).ThenByDescending(x => x.Sacks).ThenByDescending(x => x.Run_for_Loss).ToList();
 
                 PassDefenseStats = context.Game_Player_Pass_Defense_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 &&
-                    (x.Game.Home_Team_Franchise_ID == franchise_id || x.Game.Away_Team_Franchise_ID == franchise_id)).GroupBy(x => x.Player)
+                    (x.Game.Home_Team_Franchise_ID == franchise_id || x.Game.Away_Team_Franchise_ID == franchise_id)
+                    && x.Player.Players_By_Team.Any(a => a.Franchise_ID == franchise_id && a.Season_ID == season_id)).GroupBy(x => x.Player)
                     .Select(x => new Pass_Defense_Accum_Stats
                     {
                         p = x.Key,
@@ -196,7 +204,8 @@ namespace SpectatorFootball.DAO
                     }).OrderByDescending(x => x.Ints).ThenByDescending(x => x.Pass_Defenses).ToList();
 
                 KickerStats = context.Game_Player_Kicker_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 &&
-                    (x.Game.Home_Team_Franchise_ID == franchise_id || x.Game.Away_Team_Franchise_ID == franchise_id)).GroupBy(x => x.Player)
+                    (x.Game.Home_Team_Franchise_ID == franchise_id || x.Game.Away_Team_Franchise_ID == franchise_id)
+                    && x.Player.Players_By_Team.Any(a => a.Franchise_ID == franchise_id && a.Season_ID == season_id)).GroupBy(x => x.Player)
                     .Select(x => new Kicking_Accum_Stats
                     {
                         p = x.Key,
@@ -208,7 +217,8 @@ namespace SpectatorFootball.DAO
                     }).OrderByDescending(x => x.FG_Made).ToList();
 
                 PunterStats = context.Game_Player_Punter_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 &&
-                    (x.Game.Home_Team_Franchise_ID == franchise_id || x.Game.Away_Team_Franchise_ID == franchise_id)).GroupBy(x => x.Player)
+                    (x.Game.Home_Team_Franchise_ID == franchise_id || x.Game.Away_Team_Franchise_ID == franchise_id)
+                    && x.Player.Players_By_Team.Any(a => a.Franchise_ID == franchise_id && a.Season_ID == season_id)).GroupBy(x => x.Player)
                     .Select(x => new Punting_Accum_Stats
                     {
                         p = x.Key,
@@ -218,7 +228,8 @@ namespace SpectatorFootball.DAO
                     }).OrderByDescending(x => x.Punts).ToList();
 
                 KickoffReturnStats = context.Game_Player_Kick_Returner_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 &&
-                    (x.Game.Home_Team_Franchise_ID == franchise_id || x.Game.Away_Team_Franchise_ID == franchise_id)).GroupBy(x => x.Player)
+                    (x.Game.Home_Team_Franchise_ID == franchise_id || x.Game.Away_Team_Franchise_ID == franchise_id)
+                    && x.Player.Players_By_Team.Any(a => a.Franchise_ID == franchise_id && a.Season_ID == season_id)).GroupBy(x => x.Player)
                     .Select(x => new KickReturn_Accum_Stats
                     {
                         p = x.Key,
@@ -230,7 +241,8 @@ namespace SpectatorFootball.DAO
                     }).OrderByDescending(x => x.Returns).ToList();
 
                 PuntReturnStats = context.Game_Player_Punt_Returner_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 &&
-                    (x.Game.Home_Team_Franchise_ID == franchise_id || x.Game.Away_Team_Franchise_ID == franchise_id)).GroupBy(x => x.Player)
+                    (x.Game.Home_Team_Franchise_ID == franchise_id || x.Game.Away_Team_Franchise_ID == franchise_id)
+                    && x.Player.Players_By_Team.Any(a => a.Franchise_ID == franchise_id && a.Season_ID == season_id)).GroupBy(x => x.Player)
                     .Select(x => new PuntReturns_Accum_Stats
                     {
                         p = x.Key,
@@ -327,20 +339,27 @@ namespace SpectatorFootball.DAO
 
             return r;
         }
-        public List<Player_Ratings> getTeamRoster(long season_id, long Franchise_id, string league_filepath)
+        public List<Roster_rec> getTeamRoster(long season_id, long Franchise_id, string league_filepath)
         {
-            List<Player_Ratings> r = null;
+            List<Roster_rec> r = null;
 
             string con = Common.LeageConnection.Connect(league_filepath);
 
             using (var context = new leagueContext(con))
             {
-                r = context.Player_Ratings.Where(x => x.Season_ID == season_id && x.Player.Franchise_ID == Franchise_id).Include(x => x.Player).OrderBy(x => x.Player.Pos).ThenBy(x => x.Player.Last_Name).ThenBy(x => x.Player.First_Name).ToList();
+                r = context.Players.Where(x => x.Retired == 0 &&
+                    !x.Players_By_Team.Any(y => y.Season_ID == season_id && y.Franchise_ID == Franchise_id))
+                    .Select(x => new Roster_rec
+                    {
+                        p = x,
+                        pr = x.Player_Ratings.Where(w => w.Season_ID == season_id).FirstOrDefault(),
+                        pbt = x.Players_By_Team.Where(h => h.Season_ID == season_id).FirstOrDefault()
+                    }).ToList();
             }
             return r;
 
         }
-        public Teams_by_Season getTeamFromPlayerID(Player p, string league_filepath)
+        public Teams_by_Season getTeamFromPlayerID(Player p,long season_id, string league_filepath)
         {
             Teams_by_Season r = null;
 
@@ -348,7 +367,7 @@ namespace SpectatorFootball.DAO
 
             using (var context = new leagueContext(con))
             {
-                r = context.Teams_by_Season.Where(x => x.Franchise.Players.Any(c => c.ID == p.ID)).FirstOrDefault();
+                r = context.Teams_by_Season.Where(x => x.Franchise.Players_By_Team.Any(c => c.Franchise_ID == x.Franchise_ID && c.Season_ID == season_id)).FirstOrDefault();
             }
             return r;
         }
@@ -405,10 +424,10 @@ namespace SpectatorFootball.DAO
 
             using (var context = new leagueContext(con))
             {
-                r = context.Player_Retiring_Log.Where(x => x.Player.Franchise_ID == f_id && x.Season_ID == season_id).Select(x => new OneInt2Strings { key = app_Constants.PLAYER_RETIRING_WEEK, p = x.Player, Week = "Before Season", Event = ((Player_Pos)x.Player.Pos).ToString() + " " + x.Player.First_Name + " " + x.Player.Last_Name + " has retired", round = 0 })
+                r = context.Player_Retiring_Log.Where(x => x.Season_ID == season_id && x.Player.Players_By_Team.Any(a => a.Franchise_ID == f_id && a.Season_ID == season_id)).Select(x => new OneInt2Strings { key = app_Constants.PLAYER_RETIRING_WEEK, p = x.Player, Week = "Before Season", Event = ((Player_Pos)x.Player.Pos).ToString() + " " + x.Player.First_Name + " " + x.Player.Last_Name + " has retired", round = 0 })
                     .Union(context.Drafts.Where(x => x.Franchise_ID == f_id && x.Season_ID == season_id).Select(x => new OneInt2Strings { key = app_Constants.DRAFT_WEEK, p = x.Player, Week = "Draft", Event = ((Player_Pos)x.Player.Pos).ToString() + " " + x.Player.First_Name + " " + x.Player.Last_Name + " has been drafted in round " + x.Round.ToString(), round = x.Round }))
                     .Union(context.Free_Agency.Where(x => x.Franchise_ID == f_id && x.Season_ID == season_id).Select(x => new OneInt2Strings { key = x.Week, p = x.Player, Week = x.Week == app_Constants.FREE_AGENCY_WEEK ? "Free Agency Week" : x.Week == app_Constants.TRAINING_CAMP_WEEK ? "Training Camp Complete" : x.Week < 0 ? "Before Regular Season" : x.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 ? "Week " + x.Week : "Playoffs", Event = ((Player_Pos)x.Player.Pos).ToString() + " " + x.Player.First_Name + " " + x.Player.Last_Name + " has been " + (x.Signed == 1 ? "signed" : "released"), round = 0 }))
-                    .Union(context.Injury_Log.Where(x => x.Player.Franchise_ID == f_id && x.Season_ID == season_id).Select(x => new OneInt2Strings { key = (int)x.Week, p = x.Player, Week = x.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 ? "Week " + x.Week : "Playoffs", Event = ((Player_Pos)x.Player.Pos).ToString() + " " + x.Player.First_Name + " " + x.Player.Last_Name + " has " + (x.Injured == 1 ? "been injured for " : "returned from injury"), round = 0 })).OrderBy(x => x.key).ThenBy(x => x.round).ToList();
+                    .Union(context.Injury_Log.Where(x => x.Season_ID == season_id && x.Player.Players_By_Team.Any(b => b.Franchise_ID == f_id && b.Season_ID == season_id)).Select(x => new OneInt2Strings { key = (int)x.Week, p = x.Player, Week = x.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 ? "Week " + x.Week : "Playoffs", Event = ((Player_Pos)x.Player.Pos).ToString() + " " + x.Player.First_Name + " " + x.Player.Last_Name + " has " + (x.Injured == 1 ? "been injured for " : "returned from injury"), round = 0 })).OrderBy(x => x.key).ThenBy(x => x.round).ToList();
             }
             return r;
         }

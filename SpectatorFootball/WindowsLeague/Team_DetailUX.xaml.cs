@@ -48,7 +48,7 @@ namespace SpectatorFootball.WindowsLeague
 
         public Team_Player_Accum_Stats Team_Stats = null;
 
-        public List<Player_Ratings> RosterList = null;
+        public List<Roster_rec> RosterList = null;
 
         private Boolean bLoadingForm = true;
         public bool Event_from_Code { get; set; } = false;
@@ -1497,8 +1497,8 @@ namespace SpectatorFootball.WindowsLeague
             {
                 Player_Services ps = new Player_Services();
 
-                Player_Ratings pr = RosterList[ls.SelectedIndex];
-                Player_Card_Data pcd = ps.getPlayerCardData(pr.Player, pw.Loaded_League);
+                Roster_rec pr = RosterList[ls.SelectedIndex];
+                Player_Card_Data pcd = ps.getPlayerCardData(pr.p, pw.Loaded_League);
                 PlayerCard_Popup pcp = new PlayerCard_Popup(pcd);
                 pcp.Left = (SystemParameters.PrimaryScreenWidth - pcp.Width) / 2;
                 pcp.ShowDialog();
@@ -1524,7 +1524,7 @@ namespace SpectatorFootball.WindowsLeague
                 {
                     Player_Services ps = new Player_Services();
 
-                    Player_Ratings pr = RosterList[ls.SelectedIndex];
+                    Roster_rec pr = RosterList[ls.SelectedIndex];
                     Player p = null;
                     switch (ls.Name)
                     {
