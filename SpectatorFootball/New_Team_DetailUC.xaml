@@ -154,7 +154,7 @@
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" >
                                             <Label Width="110" Style="{StaticResource Normsmllbltyle}">Shoulder Loop:</Label>
-                                            <xctk:ColorPicker Name="newtHomeShoulderStripeColor"  SelectedColor="{Binding Home_Jersey_Shoulder_Stripe, Converter={StaticResource ColorConverter}}" DropDownBackground="White" MaxDropDownWidth="400" RecentColorsHeader="Team Colors"  ShowRecentColors="true"  SelectedColorChanged="newtHomeShoulderStripeColor_SelectedColorChanged"  Height="20"  Width="40" />
+                                            <xctk:ColorPicker Name="newtHomeShoulderStripeColor" SelectedColor="{Binding Home_Jersey_Shoulder_Stripe, Converter={StaticResource ColorConverter}}" DropDownBackground="White" MaxDropDownWidth="400" RecentColorsHeader="Team Colors"  ShowRecentColors="true"  SelectedColorChanged="newtHomeShoulderStripeColor_SelectedColorChanged"  Height="20"  Width="40" />
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" >
                                             <Label Width="150" Style="{StaticResource Normsmllbltyle}">Sleeve Stripe Colors:</Label>

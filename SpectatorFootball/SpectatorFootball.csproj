@@ -158,6 +158,7 @@
     <Compile Include="Common\List_and_Default.cs" />
     <Compile Include="Common\LoadLeagueEventArgs.cs" />
     <Compile Include="Common\Long_and_Long.cs" />
+    <Compile Include="Common\Long_and_String.cs" />
     <Compile Include="Common\SettingsConnection.cs" />
     <Compile Include="Common\Validator.cs" />
     <Compile Include="CustomControls\CustomTextBox.cs" />

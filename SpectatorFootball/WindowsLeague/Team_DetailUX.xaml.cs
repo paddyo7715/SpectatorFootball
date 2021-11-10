@@ -114,6 +114,109 @@ namespace SpectatorFootball.WindowsLeague
                 }
             }
 
+            // Create the standard color list and exclude the transparent color, since is causes problems
+            foreach (var sc in newtHelmentColor.StandardColors)
+            {
+                if (sc.Name == "Transparent")
+                    continue;
+                Standard_ColorList.Add(new Xceed.Wpf.Toolkit.ColorItem(sc.Color, sc.Name));
+            }
+
+
+            // Set the transparent less coloritem array to the stand color for each color picker
+            newtHelmentColor.StandardColors = Standard_ColorList;
+            newtHelmentLogoColor.StandardColors = Standard_ColorList;
+            newtFacemaskColor.StandardColors = Standard_ColorList;
+            newtSockColor.StandardColors = Standard_ColorList;
+            newtCleatsColor.StandardColors = Standard_ColorList;
+
+            newtHomeJerseyColor.StandardColors = Standard_ColorList;
+            newtHomeSleeveColor.StandardColors = Standard_ColorList;
+
+            newtHomeJerseyNumberColor.StandardColors = Standard_ColorList;
+            newtHomeNumberOutlineColor.StandardColors = Standard_ColorList;
+
+            newtHomeShoulderStripeColor.StandardColors = Standard_ColorList;
+
+            newtHomeJerseySleeve1Color.StandardColors = Standard_ColorList;
+            newtHomeJerseySleeve2Color.StandardColors = Standard_ColorList;
+            newtHomeJerseySleeve3Color.StandardColors = Standard_ColorList;
+            newtHomeJerseySleeve4Color.StandardColors = Standard_ColorList;
+            newtHomeJerseySleeve5Color.StandardColors = Standard_ColorList;
+            newtHomeJerseySleeve6Color.StandardColors = Standard_ColorList;
+
+            newtHomePantsColor.StandardColors = Standard_ColorList;
+            newtHomePantsStripe1Color.StandardColors = Standard_ColorList;
+            newtHomePantsStripe2Color.StandardColors = Standard_ColorList;
+            newtHomePantsStripe3Color.StandardColors = Standard_ColorList;
+
+            newtAwayJerseyColor.StandardColors = Standard_ColorList;
+            newtAwaySleeveColor.StandardColors = Standard_ColorList;
+
+            newtAwayJerseyNumberColor.StandardColors = Standard_ColorList;
+            newtAwayNumberOutlineColor.StandardColors = Standard_ColorList;
+
+            newtAwayShoulderStripeColor.StandardColors = Standard_ColorList;
+
+            newtAwayJerseySleeve1Color.StandardColors = Standard_ColorList;
+            newtAwayJerseySleeve2Color.StandardColors = Standard_ColorList;
+            newtAwayJerseySleeve3Color.StandardColors = Standard_ColorList;
+            newtAwayJerseySleeve4Color.StandardColors = Standard_ColorList;
+            newtAwayJerseySleeve5Color.StandardColors = Standard_ColorList;
+            newtAwayJerseySleeve6Color.StandardColors = Standard_ColorList;
+
+            newtAwayPantsColor.StandardColors = Standard_ColorList;
+            newtAwayPantsStripe1Color.StandardColors = Standard_ColorList;
+            newtAwayPantsStripe2Color.StandardColors = Standard_ColorList;
+            newtAwayPantsStripe3Color.StandardColors = Standard_ColorList;
+
+            // For some reason, I couldn't set the recentcolors in xaml
+            newtHelmentColor.RecentColors = Recent_ColorList;
+            newtHelmentLogoColor.RecentColors = Recent_ColorList;
+            newtFacemaskColor.RecentColors = Recent_ColorList;
+            newtSockColor.RecentColors = Recent_ColorList;
+            newtCleatsColor.RecentColors = Recent_ColorList;
+
+            newtHomeJerseyColor.RecentColors = Recent_ColorList;
+            newtHomeSleeveColor.RecentColors = Recent_ColorList;
+
+            newtHomeJerseyNumberColor.RecentColors = Recent_ColorList;
+            newtHomeNumberOutlineColor.RecentColors = Recent_ColorList;
+
+            newtHomeShoulderStripeColor.RecentColors = Recent_ColorList;
+
+            newtHomeJerseySleeve1Color.RecentColors = Recent_ColorList;
+            newtHomeJerseySleeve2Color.RecentColors = Recent_ColorList;
+            newtHomeJerseySleeve3Color.RecentColors = Recent_ColorList;
+            newtHomeJerseySleeve4Color.RecentColors = Recent_ColorList;
+            newtHomeJerseySleeve5Color.RecentColors = Recent_ColorList;
+            newtHomeJerseySleeve6Color.RecentColors = Recent_ColorList;
+
+            newtHomePantsColor.RecentColors = Recent_ColorList;
+            newtHomePantsStripe1Color.RecentColors = Recent_ColorList;
+            newtHomePantsStripe2Color.RecentColors = Recent_ColorList;
+            newtHomePantsStripe3Color.RecentColors = Recent_ColorList;
+
+            newtAwayJerseyColor.RecentColors = Recent_ColorList;
+            newtAwaySleeveColor.RecentColors = Recent_ColorList;
+
+            newtAwayJerseyNumberColor.RecentColors = Recent_ColorList;
+            newtAwayNumberOutlineColor.RecentColors = Recent_ColorList;
+
+            newtAwayShoulderStripeColor.RecentColors = Recent_ColorList;
+
+            newtAwayJerseySleeve1Color.RecentColors = Recent_ColorList;
+            newtAwayJerseySleeve2Color.RecentColors = Recent_ColorList;
+            newtAwayJerseySleeve3Color.RecentColors = Recent_ColorList;
+            newtAwayJerseySleeve4Color.RecentColors = Recent_ColorList;
+            newtAwayJerseySleeve5Color.RecentColors = Recent_ColorList;
+            newtAwayJerseySleeve6Color.RecentColors = Recent_ColorList;
+
+            newtAwayPantsColor.RecentColors = Recent_ColorList;
+            newtAwayPantsStripe1Color.RecentColors = Recent_ColorList;
+            newtAwayPantsStripe2Color.RecentColors = Recent_ColorList;
+            newtAwayPantsStripe3Color.RecentColors = Recent_ColorList;
+
             string teamName = this_team.City + " " + this_team.Nickname;
             string teamRecord = "(" + pw.Loaded_League.getTeamStandings(teamName) + ")";
             lblBanner.Content = teamName + " " + teamRecord;
@@ -1125,119 +1228,188 @@ namespace SpectatorFootball.WindowsLeague
             System.Drawing.Color AwayPants_Stripe_2 = default(System.Drawing.Color);
             System.Drawing.Color AwayPants_Stripe_3 = default(System.Drawing.Color);
 
-            mc = new SolidColorBrush((Color)newtHelmentColor.SelectedColor).Color;
-            helmetColor = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
-
-            mc = new SolidColorBrush((Color)newtHelmentLogoColor.SelectedColor).Color;
-            helmetLogoColor = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
-
-            mc = new SolidColorBrush((Color)newtFacemaskColor.SelectedColor).Color;
-            helmetFacemaskColor = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
-
-            mc = new SolidColorBrush((Color)newtSockColor.SelectedColor).Color;
-            SocksColor = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
-
-            mc = new SolidColorBrush((Color)newtCleatsColor.SelectedColor).Color;
-            CleatsColor = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
-
-            mc = new SolidColorBrush((Color)newtHomeJerseyColor.SelectedColor).Color;
-            HomeJerseyColor = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
-
-            mc = new SolidColorBrush((Color)newtHomeSleeveColor.SelectedColor).Color;
-            HomeJerseySleeveColor = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
-
-            mc = new SolidColorBrush((Color)newtHomeShoulderStripeColor.SelectedColor).Color;
-            HomeJerseyShoulderLoopColor = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
-
-            mc = new SolidColorBrush((Color)newtHomeJerseyNumberColor.SelectedColor).Color;
-            HomeJerseyNumberColor = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
-
-            mc = new SolidColorBrush((Color)newtHomeNumberOutlineColor.SelectedColor).Color;
-            HomeJerseyNumberOutlineColor = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
-
-            mc = new SolidColorBrush((Color)newtHomeJerseySleeve1Color.SelectedColor).Color;
-            HomeJerseyStripe_1 = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
-
-            mc = new SolidColorBrush((Color)newtHomeJerseySleeve2Color.SelectedColor).Color;
-            HomeJerseyStripe_2 = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
-
-            mc = new SolidColorBrush((Color)newtHomeJerseySleeve3Color.SelectedColor).Color;
-            HomeJerseyStripe_3 = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
-
-            mc = new SolidColorBrush((Color)newtHomeJerseySleeve4Color.SelectedColor).Color;
-            HomeJerseyStripe_4 = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
-
-            mc = new SolidColorBrush((Color)newtHomeJerseySleeve5Color.SelectedColor).Color;
-            HomeJerseyStripe_5 = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
-
-            mc = new SolidColorBrush((Color)newtHomeJerseySleeve6Color.SelectedColor).Color;
-            HomeJerseyStripe_6 = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
-
-            mc = new SolidColorBrush((Color)newtHomePantsColor.SelectedColor).Color;
-            HomePantsColor = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
-
-            mc = new SolidColorBrush((Color)newtHomePantsStripe1Color.SelectedColor).Color;
-            HomePants_Stripe_1 = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
-
-            mc = new SolidColorBrush((Color)newtHomePantsStripe2Color.SelectedColor).Color;
-            HomePants_Stripe_2 = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
-
-            mc = new SolidColorBrush((Color)newtHomePantsStripe3Color.SelectedColor).Color;
-            HomePants_Stripe_3 = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
+            if (newtHelmentColor.SelectedColor != null)
+            {
+                mc = new SolidColorBrush((Color)newtHelmentColor.SelectedColor).Color;
+                helmetColor = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
+            }
+            if (newtHelmentLogoColor.SelectedColor != null)
+            {
+                mc = new SolidColorBrush((Color)newtHelmentLogoColor.SelectedColor).Color;
+                helmetLogoColor = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
+            }
+            if (newtFacemaskColor.SelectedColor != null)
+            {
+                mc = new SolidColorBrush((Color)newtFacemaskColor.SelectedColor).Color;
+                helmetFacemaskColor = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
+            }
+            if (newtSockColor.SelectedColor != null)
+            {
+                mc = new SolidColorBrush((Color)newtSockColor.SelectedColor).Color;
+                SocksColor = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
+            }
+            if (newtCleatsColor.SelectedColor != null)
+            {
+                mc = new SolidColorBrush((Color)newtCleatsColor.SelectedColor).Color;
+                CleatsColor = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
+            }
+            if (newtHomeJerseyColor.SelectedColor != null)
+            {
+                mc = new SolidColorBrush((Color)newtHomeJerseyColor.SelectedColor).Color;
+                HomeJerseyColor = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
+            }
+            if (newtHomeSleeveColor.SelectedColor != null)
+            {
+                mc = new SolidColorBrush((Color)newtHomeSleeveColor.SelectedColor).Color;
+                HomeJerseySleeveColor = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
+            }
+            if (newtHomeShoulderStripeColor.SelectedColor != null)
+            {
+                mc = new SolidColorBrush((Color)newtHomeShoulderStripeColor.SelectedColor).Color;
+                HomeJerseyShoulderLoopColor = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
+            }
+            if (newtHomeJerseyNumberColor.SelectedColor != null)
+            {
+                mc = new SolidColorBrush((Color)newtHomeJerseyNumberColor.SelectedColor).Color;
+                HomeJerseyNumberColor = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
+            }
+            if (newtHomeNumberOutlineColor.SelectedColor != null)
+            {
+                mc = new SolidColorBrush((Color)newtHomeNumberOutlineColor.SelectedColor).Color;
+                HomeJerseyNumberOutlineColor = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
+            }
+            if (newtHomeJerseySleeve1Color.SelectedColor != null)
+            {
+                mc = new SolidColorBrush((Color)newtHomeJerseySleeve1Color.SelectedColor).Color;
+                HomeJerseyStripe_1 = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
+            }
+            if (newtHomeJerseySleeve2Color.SelectedColor != null)
+            {
+                mc = new SolidColorBrush((Color)newtHomeJerseySleeve2Color.SelectedColor).Color;
+                HomeJerseyStripe_2 = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
+            }
+            if (newtHomeJerseySleeve3Color.SelectedColor != null)
+            {
+                mc = new SolidColorBrush((Color)newtHomeJerseySleeve3Color.SelectedColor).Color;
+                HomeJerseyStripe_3 = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
+            }
+            if (newtHomeJerseySleeve4Color.SelectedColor != null)
+            {
+                mc = new SolidColorBrush((Color)newtHomeJerseySleeve4Color.SelectedColor).Color;
+                HomeJerseyStripe_4 = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
+            }
+            if (newtHomeJerseySleeve5Color.SelectedColor != null)
+            {
+                mc = new SolidColorBrush((Color)newtHomeJerseySleeve5Color.SelectedColor).Color;
+                HomeJerseyStripe_5 = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
+            }
+            if (newtHomeJerseySleeve6Color.SelectedColor != null)
+            {
+                mc = new SolidColorBrush((Color)newtHomeJerseySleeve6Color.SelectedColor).Color;
+                HomeJerseyStripe_6 = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
+            }
+            if (newtHomePantsColor.SelectedColor != null)
+            {
+                mc = new SolidColorBrush((Color)newtHomePantsColor.SelectedColor).Color;
+                HomePantsColor = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
+            }
+            if (newtHomePantsStripe1Color.SelectedColor != null)
+            {
+                mc = new SolidColorBrush((Color)newtHomePantsStripe1Color.SelectedColor).Color;
+                HomePants_Stripe_1 = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
+            }
+            if (newtHomePantsStripe2Color.SelectedColor != null)
+            {
+                mc = new SolidColorBrush((Color)newtHomePantsStripe2Color.SelectedColor).Color;
+                HomePants_Stripe_2 = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
+            }
+            if (newtHomePantsStripe3Color.SelectedColor != null)
+            {
+                mc = new SolidColorBrush((Color)newtHomePantsStripe3Color.SelectedColor).Color;
+                HomePants_Stripe_3 = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
+            }
 
             Uniform_Img.Flip_All_Colors(true, helmetColor, helmetFacemaskColor, helmetLogoColor, HomeJerseyColor, HomeJerseyNumberColor, HomeJerseyNumberOutlineColor, HomeJerseySleeveColor, HomeJerseyShoulderLoopColor, HomeJerseyStripe_1, HomeJerseyStripe_2, HomeJerseyStripe_3, HomeJerseyStripe_4, HomeJerseyStripe_5, HomeJerseyStripe_6, HomePantsColor, HomePants_Stripe_1, HomePants_Stripe_2, HomePants_Stripe_3, SocksColor, CleatsColor);
 
-            mc = new SolidColorBrush((Color)newtAwayJerseyColor.SelectedColor).Color;
-            AwayJerseyColor = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
-
-            mc = new SolidColorBrush((Color)newtAwaySleeveColor.SelectedColor).Color;
-            AwayJerseySleeveColor = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
-
-            mc = new SolidColorBrush((Color)newtAwayShoulderStripeColor.SelectedColor).Color;
-            AwayJerseyShoulderLoopColor = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
-
-            mc = new SolidColorBrush((Color)newtAwayJerseyNumberColor.SelectedColor).Color;
-            AwayJerseyNumberColor = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
-
-            mc = new SolidColorBrush((Color)newtAwayNumberOutlineColor.SelectedColor).Color;
-            AwayJerseyNumberOutlineColor = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
-
-            mc = new SolidColorBrush((Color)newtAwayJerseySleeve1Color.SelectedColor).Color;
-            AwayJerseyStripe_1 = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
-
-            mc = new SolidColorBrush((Color)newtAwayJerseySleeve2Color.SelectedColor).Color;
-            AwayJerseyStripe_2 = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
-
-            mc = new SolidColorBrush((Color)newtAwayJerseySleeve3Color.SelectedColor).Color;
-            AwayJerseyStripe_3 = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
-
-            mc = new SolidColorBrush((Color)newtAwayJerseySleeve4Color.SelectedColor).Color;
-            AwayJerseyStripe_4 = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
-
-            mc = new SolidColorBrush((Color)newtAwayJerseySleeve5Color.SelectedColor).Color;
-            AwayJerseyStripe_5 = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
-
-            mc = new SolidColorBrush((Color)newtAwayJerseySleeve6Color.SelectedColor).Color;
-            AwayJerseyStripe_6 = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
-
-            mc = new SolidColorBrush((Color)newtAwayPantsColor.SelectedColor).Color;
-            AwayPantsColor = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
-
-            mc = new SolidColorBrush((Color)newtAwayPantsStripe1Color.SelectedColor).Color;
-            AwayPants_Stripe_1 = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
-
-            mc = new SolidColorBrush((Color)newtAwayPantsStripe2Color.SelectedColor).Color;
-            AwayPants_Stripe_2 = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
-
-            mc = new SolidColorBrush((Color)newtAwayPantsStripe3Color.SelectedColor).Color;
-            AwayPants_Stripe_3 = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
-
+            if (newtAwayJerseyColor.SelectedColor != null)
+            {
+                mc = new SolidColorBrush((Color)newtAwayJerseyColor.SelectedColor).Color;
+                AwayJerseyColor = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
+            }
+            if (newtAwaySleeveColor.SelectedColor != null)
+            {
+                mc = new SolidColorBrush((Color)newtAwaySleeveColor.SelectedColor).Color;
+                AwayJerseySleeveColor = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
+            }
+            if (newtAwayShoulderStripeColor.SelectedColor != null)
+            {
+                mc = new SolidColorBrush((Color)newtAwayShoulderStripeColor.SelectedColor).Color;
+                AwayJerseyShoulderLoopColor = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
+            }
+            if (newtAwayJerseyNumberColor.SelectedColor != null)
+            {
+                mc = new SolidColorBrush((Color)newtAwayJerseyNumberColor.SelectedColor).Color;
+                AwayJerseyNumberColor = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
+            }
+            if (newtAwayNumberOutlineColor.SelectedColor != null)
+            {
+                mc = new SolidColorBrush((Color)newtAwayNumberOutlineColor.SelectedColor).Color;
+                AwayJerseyNumberOutlineColor = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
+            }
+            if (newtAwayJerseySleeve1Color.SelectedColor != null)
+            {
+                mc = new SolidColorBrush((Color)newtAwayJerseySleeve1Color.SelectedColor).Color;
+                AwayJerseyStripe_1 = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
+            }
+            if (newtAwayJerseySleeve2Color.SelectedColor != null)
+            {
+                mc = new SolidColorBrush((Color)newtAwayJerseySleeve2Color.SelectedColor).Color;
+                AwayJerseyStripe_2 = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
+            }
+            if (newtAwayJerseySleeve3Color.SelectedColor != null)
+            {
+                mc = new SolidColorBrush((Color)newtAwayJerseySleeve3Color.SelectedColor).Color;
+                AwayJerseyStripe_3 = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
+            }
+            if (newtAwayJerseySleeve4Color.SelectedColor != null)
+            {
+                mc = new SolidColorBrush((Color)newtAwayJerseySleeve4Color.SelectedColor).Color;
+                AwayJerseyStripe_4 = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
+            }
+            if (newtAwayJerseySleeve5Color.SelectedColor != null)
+            {
+                mc = new SolidColorBrush((Color)newtAwayJerseySleeve5Color.SelectedColor).Color;
+                AwayJerseyStripe_5 = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
+            }
+            if (newtAwayJerseySleeve6Color.SelectedColor != null)
+            {
+                mc = new SolidColorBrush((Color)newtAwayJerseySleeve6Color.SelectedColor).Color;
+                AwayJerseyStripe_6 = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
+            }
+            if (newtAwayPantsColor.SelectedColor != null)
+            {
+                mc = new SolidColorBrush((Color)newtAwayPantsColor.SelectedColor).Color;
+                AwayPantsColor = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
+            }
+            if (newtAwayPantsStripe1Color.SelectedColor != null)
+            {
+                mc = new SolidColorBrush((Color)newtAwayPantsStripe1Color.SelectedColor).Color;
+                AwayPants_Stripe_1 = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
+            }
+            if (newtAwayPantsStripe2Color.SelectedColor != null)
+            {
+                mc = new SolidColorBrush((Color)newtAwayPantsStripe2Color.SelectedColor).Color;
+                AwayPants_Stripe_2 = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
+            }
+            if (newtAwayPantsStripe3Color.SelectedColor != null)
+            {
+                mc = new SolidColorBrush((Color)newtAwayPantsStripe3Color.SelectedColor).Color;
+                AwayPants_Stripe_3 = System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
+            }
             Uniform_Img.Flip_All_Colors(false, helmetColor, helmetFacemaskColor, helmetLogoColor, AwayJerseyColor, AwayJerseyNumberColor, AwayJerseyNumberOutlineColor, AwayJerseySleeveColor, AwayJerseyShoulderLoopColor, AwayJerseyStripe_1, AwayJerseyStripe_2, AwayJerseyStripe_3, AwayJerseyStripe_4, AwayJerseyStripe_5, AwayJerseyStripe_6, AwayPantsColor, AwayPants_Stripe_1, AwayPants_Stripe_2, AwayPants_Stripe_3, SocksColor, CleatsColor);
 
             newtHomeUniform.Source = Uniform_Img.getHomeUniform_Image();
             newtAwayUniform.Source = Uniform_Img.GetAwayUniform_Image();
-
-
         }
         private void Validate()
         {

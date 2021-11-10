@@ -9,6 +9,7 @@ namespace SpectatorFootball.Models
     public class Receiving_Accum_Stats_by_year
     {
         public long Year { get; set; }
+        public string Team { get; set; }
         public long Catches { get; set; }
         public long Yards { get; set; }
         public long Drops { get; set; }

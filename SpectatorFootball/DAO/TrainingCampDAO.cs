@@ -53,6 +53,7 @@ namespace SpectatorFootball.DAO
                     {
                         p = x,
                         pr = x.Player.Player_Ratings.Where(w => w.Season_ID == season_id).ToList(),
+                        player = x.Player,
                         bJust_Drafted = x.Player.Drafts.Any(u => u.Season_ID == season_id),
                         Overall_Grade = 0
                     }).ToList();
@@ -71,10 +72,12 @@ namespace SpectatorFootball.DAO
             {
                 using (var dbContextTransaction = context.Database.BeginTransaction())
                 {
+                    context.Database.Log = Console.Write;
                     //Edit the player by team record for the players that have made the team
                     foreach (Players_By_Team p in make_List)
                     {
                         p.Player.Player_Ratings = null;
+                        p.Player = null;
                         context.Players_By_Team.Add(p);
                         context.Entry(p).State = System.Data.Entity.EntityState.Modified;
                     }
@@ -84,6 +87,7 @@ namespace SpectatorFootball.DAO
                     foreach (Players_By_Team p in cut_List)
                     {
                         p.Player.Player_Ratings = null;
+                        p.Player = null;
                         context.Players_By_Team.Add(p);
                         context.Entry(p).State = System.Data.Entity.EntityState.Deleted;
                     }

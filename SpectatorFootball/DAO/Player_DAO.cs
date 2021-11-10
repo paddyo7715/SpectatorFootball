@@ -7,6 +7,7 @@ using System.Data;
 using System.Data.SQLite;
 using SpectatorFootball.Team;
 using System.Data.Entity;
+using SpectatorFootball.Common;
 
 namespace SpectatorFootball
 {
@@ -23,6 +24,29 @@ namespace SpectatorFootball
                 context.Players.Add(p);
                 context.SaveChanges();
             }
+
+            return r;
+        }
+        public List<Long_and_String> getPlayerTeamsbyYear(long player_id, string league_filepath)
+        {
+            List<Long_and_String> r = null;
+
+            string con = Common.LeageConnection.Connect(league_filepath);
+
+            using (var context = new leagueContext(con))
+            {
+                r = (from p in context.Players_By_Team
+                     join t in context.Teams_by_Season
+                     on p.Franchise_ID equals t.Franchise_ID
+                     where p.Player_ID == player_id
+                     orderby p.Season_ID
+                     select new Long_and_String
+                     {
+                         l1 = p.Season.Year,
+                         s1 = t.City_Abr
+                     }).ToList();
+            }
+
 
             return r;
         }
@@ -337,7 +361,7 @@ namespace SpectatorFootball
 
             using (var context = new leagueContext(con))
             {
-                context.Database.Log = Console.Write;
+//                context.Database.Log = Console.Write;
                 r = context.Player_Awards.Where(x => x.Player_ID == player_id).GroupBy(x => x.Award.Description)
                 .Select(x => new Two_Coll_List
                 {

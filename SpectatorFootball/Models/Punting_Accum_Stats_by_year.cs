@@ -9,6 +9,7 @@ namespace SpectatorFootball.Models
     public class Punting_Accum_Stats_by_year
     {
         public long Year { get; set; }
+        public string Team { get; set; }
         public long Punts { get; set; }
         public long Yards { get; set; }
         public string Punt_AVG { get; set; }

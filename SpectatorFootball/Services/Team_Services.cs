@@ -3,6 +3,7 @@ using SpectatorFootball.Models;
 using SpectatorFootball.Enum;
 using SpectatorFootball.DAO;
 using System;
+using log4net;
 using SpectatorFootball.DraftNS;
 using SpectatorFootball.League;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace SpectatorFootball
 {
     public class Team_Services
     {
-
+        private static ILog logger = LogManager.GetLogger("RollingFile");
         public string FirstDuplicateTeam(List<Teams_by_Season> Team_List)
         {
             string r = null;
@@ -41,6 +42,13 @@ namespace SpectatorFootball
             string DIRPath_League = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + League_Shortname.ToUpper();
             string League_con_string = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + League_Shortname + Path.DirectorySeparatorChar + League_Shortname + "." + app_Constants.DB_FILE_EXT;
 
+            //Copy and update if it is there the helmet and stadium images
+            logger.Debug("Copying " + t.Helmet_img_path);
+            File.Copy(t.Helmet_img_path, DIRPath_League + Path.DirectorySeparatorChar + app_Constants.LEAGUE_HELMETS_SUBFOLDER + Path.DirectorySeparatorChar + Path.GetFileName(t.Helmet_img_path), true);
+            logger.Debug("Copying " + t.Stadium_Img_Path);
+            File.Copy(t.Stadium_Img_Path, DIRPath_League + Path.DirectorySeparatorChar + app_Constants.LEAGUE_STADIUM_SUBFOLDER + Path.DirectorySeparatorChar + Path.GetFileName(t.Stadium_Img_Path), true);
+
+            //Update database with new team details
             TeamDAO tDAO = new TeamDAO();
             tDAO.UpdateTeam(t, League_con_string);
         }

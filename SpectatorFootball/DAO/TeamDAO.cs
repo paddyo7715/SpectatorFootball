@@ -97,7 +97,7 @@ namespace SpectatorFootball.DAO
             string con = Common.LeageConnection.Connect(league_filepath);
             using (var context = new leagueContext(con))
             {
-                context.Database.Log = Console.Write;
+//                context.Database.Log = Console.Write;
                 context.Teams_by_Season.Add(t);
                 context.Entry(t).State = System.Data.Entity.EntityState.Modified;
                 context.SaveChanges();
@@ -341,20 +341,41 @@ namespace SpectatorFootball.DAO
         }
         public List<Roster_rec> getTeamRoster(long season_id, long Franchise_id, string league_filepath)
         {
-            List<Roster_rec> r = null;
+            List<Roster_rec> r = new List<Roster_rec>();
+            List<Players_By_Team> pbt_list = null;
+            List<Player_Ratings> pr_list = null;
 
             string con = Common.LeageConnection.Connect(league_filepath);
 
             using (var context = new leagueContext(con))
             {
-                r = context.Players.Where(x => x.Retired == 0 &&
-                    !x.Players_By_Team.Any(y => y.Season_ID == season_id && y.Franchise_ID == Franchise_id))
-                    .Select(x => new Roster_rec
+                //Special Note
+                //Because of a strange issue in sqlite (APPLY joins are not supported)
+                //So I had to break it into two queries and then put them together.
+                //If I ever update the version of sqlite, I might want to try if I
+                //can do this in one query.  To do this, I would get the player, player_ratings 
+                //and player_by_team all in the select of one query.
+
+                //                context.Database.Log = Console.Write;
+                pbt_list = context.Players_By_Team.Where(x => x.Franchise_ID == Franchise_id && x.Season_ID == season_id).Include(x => x.Player).OrderBy(x => x.Player.Pos).ThenBy(x => x.Player.Last_Name).ThenBy(x => x.Player.First_Name).ToList();
+                pr_list = context.Player_Ratings.Where(x => x.Season_ID == season_id && x.Player.Players_By_Team.Any(a => a.Franchise_ID == Franchise_id && a.Season_ID == season_id)).Include(x => x.Player).ToList();
+
+                foreach (Players_By_Team pbt in pbt_list)
+                {
+                    Player p = pbt.Player;
+                    Players_By_Team pt = pbt;
+                    Player_Ratings pr = pr_list.Where(x => x.Player_ID == pbt.Player.ID).First();
+
+                    pbt.Player = null;
+
+                    r.Add(new Roster_rec()
                     {
-                        p = x,
-                        pr = x.Player_Ratings.Where(w => w.Season_ID == season_id).FirstOrDefault(),
-                        pbt = x.Players_By_Team.Where(h => h.Season_ID == season_id).FirstOrDefault()
-                    }).ToList();
+                        p = p,
+                        pbt = pt,
+                        pr = pr
+                    }
+                    );
+                }
             }
             return r;
 
@@ -367,7 +388,8 @@ namespace SpectatorFootball.DAO
 
             using (var context = new leagueContext(con))
             {
-                r = context.Teams_by_Season.Where(x => x.Franchise.Players_By_Team.Any(c => c.Franchise_ID == x.Franchise_ID && c.Season_ID == season_id)).FirstOrDefault();
+//                r = context.Teams_by_Season.Where(x => x.Franchise.Players_By_Team.Any(c => c.Franchise_ID == x.Franchise_ID && c.Season_ID == season_id)).FirstOrDefault();
+                r = context.Teams_by_Season.Where(x => x.Season_ID == season_id && x.Franchise.Players_By_Team.Any(a => a.Player_ID == p.ID && a.Season_ID == season_id) ).FirstOrDefault();
             }
             return r;
         }

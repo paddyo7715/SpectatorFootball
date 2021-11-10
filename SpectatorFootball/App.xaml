@@ -398,6 +398,16 @@
             <Setter Property="BorderBrush" Value="Black"/>
         </Style>
 
+        <!-- Player card stats histroy grids -->
+        <Style TargetType="ListView" x:Key="PlayerStatHistoryGridStyle">
+            <Setter Property="FontFamily" Value="Verdana"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="FontWeight" Value="Normal"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+        </Style>
+
         <!-- Sliders -->
         <Style TargetType="Slider" x:Key="GeneralSlider">
             <Setter Property="FontFamily" Value="Verdana"/>

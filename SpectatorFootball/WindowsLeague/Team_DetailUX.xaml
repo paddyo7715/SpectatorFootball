@@ -858,7 +858,7 @@
                                             <Setter Property="Background" Value="LightGray" />
                                         </Trigger>
                                         <DataTrigger
-                                            Binding="{Binding Path=., Converter={StaticResource IsPlayertoWatchConverter}}"
+                                            Binding="{Binding Path=pr, Converter={StaticResource IsPlayertoWatchConverter}}"
                                             Value='True'>
                                             <Setter Property="Background" Value="Cyan" />
                                         </DataTrigger>

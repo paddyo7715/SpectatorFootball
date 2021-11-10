@@ -94,8 +94,7 @@ namespace SpectatorFootball.League
 
                 logger.Debug("i=" + i + " Pos=" + Pos.ToString());
 
-                Player p = Player_Helper.CreatePlayer(Pos, true,false);
-
+                Player p = Player_Helper.CreatePlayer(Pos, true,false,true);
                 r.Add(p);
             }
 

@@ -90,6 +90,7 @@ namespace SpectatorFootball.WindowsLeague
                     for (int i = 0; i < fa_order.Count; i++)
                     {
                         FreeAgencyTrans fatrans = null;
+//                        Player_and_Ratings p = fas.Select_Free_Agent(pw.Loaded_League, fa_order[i], FreeAgency_Players_list.ToList(), ref fatrans);
                         Player_and_Ratings p = fas.Select_Free_Agent(pw.Loaded_League, fa_order[i], FreeAgency_Players_list.ToList(), ref fatrans);
                         if (p == null)
                         {

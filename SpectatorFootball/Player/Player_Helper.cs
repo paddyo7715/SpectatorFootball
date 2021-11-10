@@ -11,7 +11,7 @@ namespace SpectatorFootball.PlayerNS
     public class Player_Helper
     {
         private static ILog logger = LogManager.GetLogger("RollingFile");
-        public static Player CreatePlayer(Player_Pos pos, Boolean bNewLeage,bool bCrappify)
+        public static Player CreatePlayer(Player_Pos pos, Boolean bNewLeage,bool bCrappify,bool bDraftable)
         {
             Player r = new Player();
 
@@ -75,6 +75,10 @@ namespace SpectatorFootball.PlayerNS
             Player_Ratings draft_ratings = Draft_Profile.setDraftRatings(ratings);
             r.Draft_Grade = Player_Helper.Create_Overall_Rating(pos, draft_ratings);
             r.Draft_Profile = Draft_Profile.Create_Draft_Scoutingrpt(pos, draft_ratings);
+            if (bDraftable)
+                r.Eligible_for_Draft = 1;
+            else
+                r.Eligible_for_Draft = 0;
 
             logger.Debug("Finished");
             return r;

@@ -100,7 +100,8 @@ namespace SpectatorFootball.Services
 
                 //Now start looking at each free agent ordered by rating and select a free agent if the
                 //are in your needed position list.  If a player can not be found, create one.
-                List<Player_and_Ratings> available_free_agents = Free_Agents.Where(x => x.pbt.Franchise_ID == null).OrderByDescending(x => x.Overall_Grade).ToList();
+//                List<Player_and_Ratings> available_free_agents = Free_Agents.Where(x => x.pbt.Franchise_ID == null).OrderByDescending(x => x.Overall_Grade).ToList();
+                List<Player_and_Ratings> available_free_agents = Free_Agents.Where(x => x.pbt == null).OrderByDescending(x => x.Overall_Grade).ToList();
                 foreach (Player_and_Ratings par in available_free_agents)
                 {
                     if (Needed_pos.Contains((Player_Pos)par.p.Pos))
@@ -112,7 +113,7 @@ namespace SpectatorFootball.Services
                 //If a player could not be found then assign a new not very good, player
                 if (r == null)
                 {
-                    Player new_player = Player_Helper.CreatePlayer(Needed_pos[0], true,true);
+                    Player new_player = Player_Helper.CreatePlayer(Needed_pos[0], true,true,false);
                     //Set the season id on the player_rating, since it is not
                     //set from the method
                     Player_Ratings pr = new_player.Player_Ratings.First();

@@ -9,6 +9,7 @@ namespace SpectatorFootball.Models
     public class Kicking_Accum_Stats_by_year
     {
         public long Year { get; set; }
+        public string Team { get; set; }
         public long FG_ATT { get; set; }
         public long FG_Made { get; set; }
         public string FG_Percent { get; set; }

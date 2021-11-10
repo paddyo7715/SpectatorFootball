@@ -1,4 +1,5 @@
 ﻿using OxyPlot;
+using SpectatorFootball.Common;
 using SpectatorFootball.Models;
 using SpectatorFootball.Team;
 using System;
@@ -21,5 +22,6 @@ namespace SpectatorFootball.PlayerNS
         public List<Player_Ratings> Player_Ratings { get; set; }
         public PlotModel model { get; set; }
         public List<Two_Coll_List> Awards { get; set; }
+        public List<Long_and_String> Teams { get; set; }
     }
 }

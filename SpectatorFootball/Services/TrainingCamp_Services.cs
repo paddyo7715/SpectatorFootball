@@ -64,7 +64,7 @@ namespace SpectatorFootball.Services
             foreach (Player_and_Ratings_and_Draft p in prd_list)
             {
                 bool bJust_draft = p.bJust_Drafted;
-                Player player = p.p.Player;
+                Player player = p.player;
                 Player_Pos ppos = (Player_Pos)player.Pos;
                 if (!bJust_draft)
                     p.Grade = Player_Helper.Create_Overall_Rating(ppos, p.pr[0]);
