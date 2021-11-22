@@ -126,7 +126,7 @@
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal">
                                         <Label Width="100" Style="{StaticResource Normsmllbltyle}">Helmet Image:</Label>
-                                        <TextBox Name="newtHelmetImgPath" IsReadOnly="True" Text="{Binding Helmet_img_path, Converter={StaticResource StockHelmetConverter}, FallbackValue=''}" FontSize="12" Width="170" Height="20" Foreground="Black" Background="white"  />
+                                        <TextBox Name="newtHelmetImgPath" IsReadOnly="True" FontSize="12" Width="170" Height="20" Foreground="Black" Background="white"  />
                                         <Button Name="newtbtnHelmetImgPath" FontSize="12" Width="80" Height="20" Click="newtbtnHelmetImgPath_Click">Select File</Button>
                                     </StackPanel>
                                 </StackPanel>

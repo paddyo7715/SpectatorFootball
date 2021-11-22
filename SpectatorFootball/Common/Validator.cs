@@ -15,7 +15,7 @@ namespace SpectatorFootball.Common
 
             if (c == null)
                 r = false;
-            else if (c.Length != 7)
+            else if (c.Length != 9 && c.Length != 7)
                 r = false;
             else if (!c.StartsWith("#"))
                 r = false;

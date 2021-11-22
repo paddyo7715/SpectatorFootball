@@ -803,6 +803,9 @@ namespace SpectatorFootball
                 Validate();
                 logger.Debug("Stock Team validated");
 
+                //Need to fix issue where hex colors include the two alpha characters in the hex color code by removing them.
+                Team_Helper.FixStock_TeamColors(binding_stock_team);
+
                 StockTeams_Services st = new StockTeams_Services();
                 if (bnew_team)
                     st.AddStockTeam(binding_stock_team);

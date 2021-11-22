@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 using SpectatorFootball.DAO;
 using SpectatorFootball.Enum;
 using SpectatorFootball.League;
@@ -239,6 +240,51 @@ namespace SpectatorFootball
             return r;
         }
 
+        public static void FixStock_TeamColors(Stock_Teams st)
+        {
+            // Create a pattern for a word that starts with letter "M"  
+            string pattern = @"^#([A-Fa-f0-9]{8}$";
+            // Create a Regex  
+            Regex rg = new Regex(pattern);
 
+            var TeamProperties = st.GetType().GetProperties();
+
+            foreach (var tProperty in TeamProperties)
+            {
+                if (tProperty.PropertyType != typeof(string)) continue;
+
+                if (rg.IsMatch(tProperty.GetValue(st,null).ToString()))
+                {
+                    string s = tProperty.GetValue(st).ToString();
+                    s = "#" + s.Substring(3);
+                    tProperty.SetValue(st, s);
+                }
+            }
+
+        }
+        public static void FixTeamColors(Teams_by_Season t)
+        {
+            // Create a pattern for a word that starts with letter "M"  
+            //            string pattern = @"^#([A-Fa-f0-9]{8}$";
+            string pattern = "^#([A-Fa-f0-9]{8})$";
+            // Create a Regex  
+            Regex rg = new Regex(pattern);
+
+            var TeamProperties = t.GetType().GetProperties();
+
+            foreach (var tProperty in TeamProperties)
+            {
+                if (tProperty.PropertyType != typeof(string)) continue;
+
+                string prop_val = tProperty.GetValue(t, null).ToString();
+                if (rg.IsMatch(prop_val))
+                {
+                    string s = tProperty.GetValue(t).ToString();
+                    s = "#" + s.Substring(3);
+                    tProperty.SetValue(t, s);
+                }
+            }
+
+        }
     }
 }

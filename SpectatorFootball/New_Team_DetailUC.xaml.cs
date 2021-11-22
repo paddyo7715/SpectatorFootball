@@ -858,10 +858,12 @@ namespace SpectatorFootball
 
                 logger.Debug("Just before team validation");
                 Validate();
-                logger.Debug("Stock Team validated");
+                logger.Debug("Team validated");
 
                 if (bNewLeague)
                 {
+                    //Need to fix issue where hex colors include the two alpha characters in the hex color code by removing them.
+                    Team_Helper.FixTeamColors(binding_team);
                     Team_Helper.CopyTeamValues(binding_team, this.orig_this_team);
                     backtoNewLeague?.Invoke(this, new TeamUpdatedEventArgs(true));
                 }

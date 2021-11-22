@@ -239,9 +239,12 @@ namespace SpectatorFootball
 
             try
             {
-                Uri imgurl = new Uri(filename_path);
-                var helmetIMG_source = new BitmapImage(imgurl);
-                r = new BitmapImage(imgurl);
+
+                r.BeginInit();
+                r.CacheOption = BitmapCacheOption.OnLoad;
+                r.UriSource = new Uri(filename_path);
+
+                r.EndInit();
             }
             catch (Exception) { }
 

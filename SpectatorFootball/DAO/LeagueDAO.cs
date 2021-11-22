@@ -36,6 +36,7 @@ namespace SpectatorFootball
               logger.Info("League successfuly saved to database.");
         }
 
+
         public List<int> GetTeamRankings_byID(long year, string league_filepath)
         {
             List<int> r = null;

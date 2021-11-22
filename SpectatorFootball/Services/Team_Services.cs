@@ -36,21 +36,46 @@ namespace SpectatorFootball
             return r;
         }
 
-        public void UpdateTeam(Loaded_League_Structure lls, Teams_by_Season t)
+        public void UpdateTeam(Loaded_League_Structure lls, Teams_by_Season t, 
+            string sNewHelmetPath, string sNewFieldPath)
         {
             string League_Shortname = lls.season.League_Structure_by_Season.First().Short_Name;
             string DIRPath_League = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + League_Shortname.ToUpper();
             string League_con_string = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + League_Shortname + Path.DirectorySeparatorChar + League_Shortname + "." + app_Constants.DB_FILE_EXT;
+            string helment_img_path = DIRPath_League + Path.DirectorySeparatorChar + app_Constants.LEAGUE_HELMETS_SUBFOLDER;
+
+            string old_helment_filename = t.Helmet_Image_File;
+            string new_helment_filename = Path.GetFileName(sNewHelmetPath);
+            bool bHemetImageChanged = false;
+
+
 
             //Copy and update if it is there the helmet and stadium images
-            logger.Debug("Copying " + t.Helmet_img_path);
-            File.Copy(t.Helmet_img_path, DIRPath_League + Path.DirectorySeparatorChar + app_Constants.LEAGUE_HELMETS_SUBFOLDER + Path.DirectorySeparatorChar + Path.GetFileName(t.Helmet_img_path), true);
-            logger.Debug("Copying " + t.Stadium_Img_Path);
-            File.Copy(t.Stadium_Img_Path, DIRPath_League + Path.DirectorySeparatorChar + app_Constants.LEAGUE_STADIUM_SUBFOLDER + Path.DirectorySeparatorChar + Path.GetFileName(t.Stadium_Img_Path), true);
-
+            if (sNewHelmetPath != DIRPath_League + Path.DirectorySeparatorChar + app_Constants.LEAGUE_HELMETS_SUBFOLDER + Path.DirectorySeparatorChar + Path.GetFileName(t.Helmet_img_path))
+            {
+                logger.Debug("Copying " + sNewFieldPath);
+                t.Helmet_Image_File = new_helment_filename;
+                File.Copy(t.Helmet_img_path, DIRPath_League + Path.DirectorySeparatorChar + app_Constants.LEAGUE_HELMETS_SUBFOLDER + Path.DirectorySeparatorChar + Path.GetFileName(sNewHelmetPath), true);
+                bHemetImageChanged = true;
+            }
+            if (sNewFieldPath != DIRPath_League + Path.DirectorySeparatorChar + app_Constants.LEAGUE_STADIUM_SUBFOLDER + Path.DirectorySeparatorChar + Path.GetFileName(t.Stadium_Img_Path))
+            {
+                logger.Debug("Copying " + sNewFieldPath);
+                t.Stadium_Image_File = Path.GetFileName(sNewFieldPath); ;
+                File.Copy(t.Stadium_Img_Path, DIRPath_League + Path.DirectorySeparatorChar + app_Constants.LEAGUE_STADIUM_SUBFOLDER + Path.DirectorySeparatorChar + Path.GetFileName(sNewFieldPath), true);
+            }
             //Update database with new team details
             TeamDAO tDAO = new TeamDAO();
             tDAO.UpdateTeam(t, League_con_string);
+
+            //Update the internal list that holds the league helmets only if the filename has changed
+            if (bHemetImageChanged)
+            {
+                League_Helmet lHelmet = lls.Team_Helmets.Where(x => x.Helmet_File == old_helment_filename).FirstOrDefault();
+                lHelmet.Helmet_File = new_helment_filename;
+                lHelmet.Image = CommonUtils.getImageorBlank(helment_img_path + Path.DirectorySeparatorChar + new_helment_filename);
+            }
+
         }
 
         public Team_Player_Accum_Stats getTeamSeasonStats(string League_Shortname, long season_id, long Franchise_id)

@@ -362,6 +362,9 @@ namespace SpectatorFootball.WindowsLeague
                 lblNoTransactions.Visibility = Visibility.Collapsed;
             lstTransactions.ItemsSource = lTrans;
 
+            string sHelmetPath = pw.Loaded_League.getHelmetImg(this_team.Helmet_Image_File).UriSource.ToString();
+            newtHelmetImgPath.Text = sHelmetPath;
+
             this.orig_this_team = this_team;
             this.pw = pw;
         }
@@ -396,8 +399,11 @@ namespace SpectatorFootball.WindowsLeague
             {
                 Validate();
 
+                //Need to fix issue where hex colors include the two alpha characters in the hex color code by removing them.
+                Team_Helper.FixTeamColors(binding_team);
+
                 Team_Services ts = new Team_Services();
-                ts.UpdateTeam(pw.Loaded_League, binding_team);
+                ts.UpdateTeam(pw.Loaded_League, binding_team, newtHelmetImgPath.Text, newtStadiumPath.Text);
                 logger.Info("Team " + this.orig_this_team.City + " " + this.orig_this_team.Nickname + " Updated");
 
                 pw.bUpdateStandings = true;
@@ -1413,6 +1419,8 @@ namespace SpectatorFootball.WindowsLeague
         }
         private void Validate()
         {
+            string League_Shortname = pw.Loaded_League.season.League_Structure_by_Season.First().Short_Name;
+            string DIRPath_League = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + League_Shortname.ToUpper();
 
             if (CommonUtils.isBlank(binding_team.City_Abr))
                 throw new Exception("City Abbriviation must have a value");
@@ -1453,6 +1461,9 @@ namespace SpectatorFootball.WindowsLeague
             if (CommonUtils.isBlank(binding_team.Stadium_Img_Path))
                 throw new Exception("Image of team stadium must be supplied");
 
+            if (newtStadiumPath.Text.StartsWith(DIRPath_League))
+                throw new Exception("Updated image of team stadium can not be from the league data folder");
+
             if (!Validator.isValidateColorString(binding_team.Helmet_Color))
                 throw new Exception("A helmet color must be selected");
 
@@ -1464,6 +1475,9 @@ namespace SpectatorFootball.WindowsLeague
 
             if (CommonUtils.isBlank(binding_team.Helmet_img_path))
                 throw new Exception("Helmet image path must have a value");
+
+            if (newtHelmetImgPath.Text.StartsWith(DIRPath_League))
+                throw new Exception("Updated image of team helmet can not be from the league data folder");
 
             if (!Validator.isValidateColorString(binding_team.Socks_Color))
                 throw new Exception("Sock color must have a value");
@@ -1561,6 +1575,9 @@ namespace SpectatorFootball.WindowsLeague
             if (!Validator.isValidateColorString(binding_team.Away_Pants_Stripe_Color_3))
                 throw new Exception("Away pants stripe 3 color must have a value");
 
+//Make sure that the city and nickname is still unique in the league
+            if (pw.Loaded_League.season.Teams_by_Season.Any(x => x.City.ToUpper() == binding_team.City.ToUpper() && x.Nickname.ToUpper() == binding_team.Nickname.ToUpper() && x.ID != binding_team.ID))
+                throw new Exception("Team city/nickname " + binding_team.City + " " + binding_team.Nickname + " already exists in this league!  No duplicate teams!");
         }
 
         private void lstGames_Click(object sender, RoutedEventArgs e)
