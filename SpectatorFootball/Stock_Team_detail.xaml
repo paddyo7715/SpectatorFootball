@@ -94,7 +94,7 @@
                                 <StackPanel Orientation="Vertical">
                                     <StackPanel Orientation="Horizontal" >
                                         <Label Width="70" Style="{StaticResource Normsmllbltyle}">Helmet:</Label>
-                                        <xctk:ColorPicker Name="newtHelmentColor" SelectedColor="{Binding Helmet_Color, Converter={StaticResource ColorConverter}}" DropDownBackground="White" MaxDropDownWidth="400" RecentColorsHeader="Team Colors"  ShowRecentColors="true" SelectedColorChanged="newtHelmentColor_SelectedColorChanged"  Height="20"  Width="40" />
+                                        <xctk:ColorPicker Name="newtHelmentColor" SelectedColor="{Binding Helmet_Color, Converter={StaticResource ColorConverter}}" DropDownBackground="White" MaxDropDownWidth="400" RecentColorsHeader="Team Colors"  ShowRecentColors="true" SelectedColorChanged="newtHelmentColor_SelectedColorChanged"    Height="20"  Width="40" />
                                         <Label Width="50" Style="{StaticResource Normsmllbltyle}">Logo:</Label>
                                         <xctk:ColorPicker Name="newtHelmentLogoColor" SelectedColor="{Binding Helmet_Logo_Color, Converter={StaticResource ColorConverter}}" DropDownBackground="White" MaxDropDownWidth="400" RecentColorsHeader="Team Colors"  ShowRecentColors="true" SelectedColorChanged="newtHelmentLogoColor_SelectedColorChanged"  Height="20"  Width="40" />
                                         <Label Width="82" Style="{StaticResource Normsmllbltyle}">Facemask:</Label>

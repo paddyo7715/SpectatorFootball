@@ -243,7 +243,7 @@ namespace SpectatorFootball
         public static void FixStock_TeamColors(Stock_Teams st)
         {
             // Create a pattern for a word that starts with letter "M"  
-            string pattern = @"^#([A-Fa-f0-9]{8}$";
+            string pattern = "^#([A-Fa-f0-9]{8})$";
             // Create a Regex  
             Regex rg = new Regex(pattern);
 
