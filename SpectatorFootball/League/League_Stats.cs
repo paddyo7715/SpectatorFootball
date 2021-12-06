@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SpectatorFootball.League
 {
-    class League_Stats
+    public class League_Stats
     {
        public List<Passing_Accum_Stats_by_year> Passing_Stats { get; set; }
         public List<Rushing_Accum_Stats_by_year> Rushing_Stats { get; set; }

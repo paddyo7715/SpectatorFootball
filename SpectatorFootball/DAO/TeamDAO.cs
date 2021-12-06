@@ -453,7 +453,19 @@ namespace SpectatorFootball.DAO
             }
             return r;
         }
-            
+        public List<Teams_by_Season> getAllTeamsSeason(long season_id, string league_filepath)
+        {
+            List<Teams_by_Season> r = null;
+
+            string con = Common.LeageConnection.Connect(league_filepath);
+
+            using (var context = new leagueContext(con))
+            {
+                r = context.Teams_by_Season.Where(x => x.Season_ID == season_id).ToList();
+            }
+
+            return r;
+        }
 
     }
 }

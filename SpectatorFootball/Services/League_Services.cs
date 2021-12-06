@@ -13,6 +13,7 @@ using SpectatorFootball.Versioning;
 using SpectatorFootball.Enum;
 using System.Security.AccessControl;
 using System.Security.Principal;
+using SpectatorFootball.PlayerNS;
 
 namespace SpectatorFootball
 {
@@ -345,6 +346,40 @@ namespace SpectatorFootball
             LeagueDAO ld = new LeagueDAO();
 
             r = ld.getAllSeasons(League_con_string);
+
+            return r;
+        }
+
+        public League_Stats getSeasonStats(Loaded_League_Structure lls,  League_Stats lStats, Stat_Type st, string sort_field, bool sort_desc, long season_id,  string League_Shortname)
+        {
+            string DIRPath_League = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + lls.season.League_Structure_by_Season[0].Short_Name.ToUpper();
+            string helment_img_path = DIRPath_League + Path.DirectorySeparatorChar + app_Constants.LEAGUE_HELMETS_SUBFOLDER;
+            League_Stats r = lStats;
+            string League_con_string = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + lls.season.League_Structure_by_Season[0].Short_Name.ToUpper() + Path.DirectorySeparatorChar + lls.season.League_Structure_by_Season[0].Short_Name.ToUpper() + "." + app_Constants.DB_FILE_EXT;
+
+            switch (st)
+            {
+                case Stat_Type.PASSING:
+                    if (lStats.Passing_Stats == null)
+                    {
+                        TeamDAO td = new TeamDAO();
+                        List<Teams_by_Season> team_list = td.getAllTeamsSeason(season_id, League_con_string);
+                       LeagueDAO ld = new LeagueDAO();
+                        lStats.Passing_Stats = ld.getLeagueSeasonPassingStats(season_id, League_con_string);
+                        foreach (Passing_Accum_Stats_by_year s in lStats.Passing_Stats)
+                        {
+                            Teams_by_Season t = team_list.Where(x => x.Franchise_ID == s.f_id).First();
+                            s.HelmetImage = lls.getHelmetImg(t.Helmet_Image_File);
+                            s.City_Abbr = t.City_Abr;
+                            s.Comp_Percent = Player_Helper.FormatCompPercent(s.Completes, s.Ateempts);
+                            s.QBR = Player_Helper.CalculateQBR(p.Completes, s.Ateempts, s.Yards, s.TDs, s.Ints);
+                        }
+                        //now sort the passing list of stats
+                    }
+                    break;
+            }
+
+//            r = ld.getAllSeasons(League_con_string);
 
             return r;
         }

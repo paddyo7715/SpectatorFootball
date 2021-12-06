@@ -396,6 +396,235 @@ namespace SpectatorFootball
             return r;
         }
 
+        public List<Passing_Accum_Stats_by_year> getLeagueSeasonPassingStats(long season_id, string league_filepath)
+        {
+            List<Passing_Accum_Stats_by_year> r = new List<Passing_Accum_Stats_by_year>();
+
+            string con = Common.LeageConnection.Connect(league_filepath);
+            using (var context = new leagueContext(con))
+            {
+                r = context.Game_Player_Passing_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1).GroupBy(x => x.Player)
+                .Select(x => new Passing_Accum_Stats_by_year
+                {
+                    p = x.Key,
+                    f_id = x.Key.Players_By_Team.Where(t => t.Season_ID == season_id).Select(t => t.Franchise_ID).First(),
+                    Completes = x.Sum(s => s.Pass_Comp),
+                    Ateempts = x.Sum(s => s.Pass_Att),
+                    Yards = x.Sum(s => s.Pass_Yards),
+                    TDs = x.Sum(s => s.Pass_TDs),
+                    Ints = x.Sum(s => s.Pass_Ints),
+                    Fumbles = x.Sum(s => s.Fumbles),
+                    Fumbles_Lost = x.Sum(s => s.Fumbles_Lost),
+                }).ToList();
+            }
+
+            return r;
+        }
+
+        public List<Rushing_Accum_Stats_by_year> getLeagueSeasonRushingStats(long season_id, string league_filepath)
+        {
+            List<Rushing_Accum_Stats_by_year> r = new List<Rushing_Accum_Stats_by_year>();
+
+            string con = Common.LeageConnection.Connect(league_filepath);
+            using (var context = new leagueContext(con))
+            {
+                r = context.Game_Player_Rushing_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1).GroupBy(x => x.Player)
+                    .Select(x => new Rushing_Accum_Stats_by_year
+                    {
+                        p = x.Key,
+                        f_id = x.Key.Players_By_Team.Where(t => t.Season_ID == season_id).Select(t => t.Franchise_ID).First(),
+                        Rushes = x.Sum(s => s.Rush_Att),
+                        Yards = x.Sum(s => s.Rush_Yards),
+                        TDs = x.Sum(s => s.Rush_TDs),
+                        Fumbles = x.Sum(s => s.Fumbles),
+                        Fumbles_Lost = x.Sum(s => s.Fumbles_Lost)
+                    }).ToList();
+            }
+
+            return r;
+        }
+
+        public List<Receiving_Accum_Stats_by_year> getLeagueSeasonReceivingStats(long season_id, string league_filepath)
+        {
+            List<Receiving_Accum_Stats_by_year> r = new List<Receiving_Accum_Stats_by_year>();
+
+            string con = Common.LeageConnection.Connect(league_filepath);
+            using (var context = new leagueContext(con))
+            {
+                r = context.Game_Player_Receiving_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1).GroupBy(x => x.Player)
+                    .Select(x => new Receiving_Accum_Stats_by_year
+                    {
+                        p = x.Key,
+                        f_id = x.Key.Players_By_Team.Where(t => t.Season_ID == season_id).Select(t => t.Franchise_ID).First(),
+                        Catches = x.Sum(s => s.Rec_Catches),
+                        Yards = x.Sum(s => s.Rec_Yards),
+                        TDs = x.Sum(s => s.Rec_TDs),
+                        Drops = x.Sum(s => s.Rec_Drops),
+                        Fumbles = x.Sum(s => s.Fumbles),
+                        Fumbles_Lost = x.Sum(s => s.Fumbles_Lost)
+                    }).ToList();
+            }
+
+            return r;
+        }
+
+        public List<Blocking_Accum_Stats_by_year> getLeagueSeasonBlockingStats(long season_id, string league_filepath)
+        {
+            List<Blocking_Accum_Stats_by_year> r = new List<Blocking_Accum_Stats_by_year>();
+
+            string con = Common.LeageConnection.Connect(league_filepath);
+            using (var context = new leagueContext(con))
+            {
+                r = context.Game_Player_Offensive_Linemen_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1).GroupBy(x => x.Player)
+                    .Select(x => new Blocking_Accum_Stats_by_year
+                    {
+                        p = x.Key,
+                        f_id = x.Key.Players_By_Team.Where(t => t.Season_ID == season_id).Select(t => t.Franchise_ID).First(),
+                        Plays = x.Sum(s => s.Oline_Plays),
+                        Pancakes = x.Sum(s => s.OLine_Pancakes),
+                        Sacks_Allowed = x.Sum(s => s.OLine_Sacks_Allowed),
+                        Pressures_Allowed = x.Sum(s => s.QB_Pressures_Allowed)
+                    }).ToList();
+            }
+
+            return r;
+        }
+
+        public List<Defense_Accum_Stats_by_year> getLeagueSeasonDefenseStats(long season_id, string league_filepath)
+        {
+            List<Defense_Accum_Stats_by_year> r = new List<Defense_Accum_Stats_by_year>();
+
+            string con = Common.LeageConnection.Connect(league_filepath);
+            using (var context = new leagueContext(con))
+            {
+                r = context.Game_Player_Defense_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1).GroupBy(x => x.Player)
+                    .Select(x => new Defense_Accum_Stats_by_year
+                    {
+                        p = x.Key,
+                        f_id = x.Key.Players_By_Team.Where(t => t.Season_ID == season_id).Select(t => t.Franchise_ID).First(),
+                        Plays = x.Sum(s => s.Pass_Rushes + s.Pass_Blocks),
+                        Tackles = x.Sum(s => s.Def_Tackles),
+                        Sacks = x.Sum(s => s.Def_Sacks),
+                        Pressures = x.Sum(s => s.QB_Pressures),
+                        Run_for_Loss = x.Sum(s => s.Def_Rushing_Loss),
+                        Forced_Fumble = x.Sum(s => s.Forced_Fumbles)
+                    }).ToList();
+            }
+
+            return r;
+        }
+
+        public List<Pass_Defense_Accum_Stats_by_year> getLeagueSeasonPassDefenseStats(long season_id, string league_filepath)
+        {
+            List<Pass_Defense_Accum_Stats_by_year> r = new List<Pass_Defense_Accum_Stats_by_year>();
+
+            string con = Common.LeageConnection.Connect(league_filepath);
+            using (var context = new leagueContext(con))
+            {
+                r = context.Game_Player_Pass_Defense_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1).GroupBy(x => x.Player)
+                    .Select(x => new Pass_Defense_Accum_Stats_by_year
+                    {
+                        p = x.Key,
+                        f_id = x.Key.Players_By_Team.Where(t => t.Season_ID == season_id).Select(t => t.Franchise_ID).First(),
+                        Pass_Defenses = x.Sum(s => s.Def_Pass_Defenses),
+                        Ints = x.Sum(s => s.Ints),
+                        TDs_Surrendered = x.Sum(s => s.Touchdowns_Surrendered),
+                        Forced_Fumble = x.Sum(s => s.Forced_Fumbles)
+                    }).ToList();
+            }
+
+            return r;
+        }
+
+        public List<Kicking_Accum_Stats_by_year> getLeagueSeasonKickerStats(long season_id, string league_filepath)
+        {
+            List<Kicking_Accum_Stats_by_year> r = new List<Kicking_Accum_Stats_by_year>();
+
+            string con = Common.LeageConnection.Connect(league_filepath);
+            using (var context = new leagueContext(con))
+            {
+                r = context.Game_Player_Kicker_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1).GroupBy(x => x.Player)
+                    .Select(x => new Kicking_Accum_Stats_by_year
+                    {
+                        p = x.Key,
+                        f_id = x.Key.Players_By_Team.Where(t => t.Season_ID == season_id).Select(t => t.Franchise_ID).First(),
+                        FG_ATT = x.Sum(s => s.FG_Att),
+                        FG_Made = x.Sum(s => s.FG_Made),
+                        FG_Long = x.Max(s => s.FG_Long),
+                        XP_ATT = x.Sum(s => s.XP_Att),
+                        XP_Made = x.Sum(s => s.XP_Made)
+                    }).ToList();
+            }
+
+            return r;
+        }
+
+        public List<Punting_Accum_Stats_by_year> getLeagueSeasonPunterStats(long season_id, string league_filepath)
+        {
+            List<Punting_Accum_Stats_by_year> r = new List<Punting_Accum_Stats_by_year>();
+
+            string con = Common.LeageConnection.Connect(league_filepath);
+            using (var context = new leagueContext(con))
+            {
+                r = context.Game_Player_Punter_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1).GroupBy(x => x.Player)
+                    .Select(x => new Punting_Accum_Stats_by_year
+                    {
+                        p = x.Key,
+                        f_id = x.Key.Players_By_Team.Where(t => t.Season_ID == season_id).Select(t => t.Franchise_ID).First(),
+                        Punts = x.Sum(s => s.num_punts),
+                        Yards = x.Sum(s => s.Punt_yards),
+                        Coffin_Corners = x.Sum(s => s.Punt_killed_num)
+                    }).ToList();
+            }
+
+            return r;
+        }
+
+        public List<KickReturn_Accum_Stats_by_year> getLeagueSeasonKickReturnStats(long season_id, string league_filepath)
+        {
+            List<KickReturn_Accum_Stats_by_year> r = new List<KickReturn_Accum_Stats_by_year>();
+
+            string con = Common.LeageConnection.Connect(league_filepath);
+            using (var context = new leagueContext(con))
+            {
+                r = context.Game_Player_Kick_Returner_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1).GroupBy(x => x.Player)
+                    .Select(x => new KickReturn_Accum_Stats_by_year
+                    {
+                        p = x.Key,
+                        f_id = x.Key.Players_By_Team.Where(t => t.Season_ID == season_id).Select(t => t.Franchise_ID).First(),
+                        Returns = x.Sum(s => s.Kickoffs_Returned),
+                        Yards = x.Sum(s => s.Kickoffs_Returned_Yards),
+                        Yards_Long = x.Max(s => s.Kickoff_Return_Yards_Long),
+                        TDs = x.Sum(s => s.Kickoffs_Returned_TDs),
+                        Fumbles = x.Sum(s => s.Kickoffs_Returned_Fumbles)
+                    }).ToList();
+            }
+
+            return r;
+        }
+
+        public List<PuntReturns_Accum_Stats_by_year> getLeagueSeasonPUntReturnStats(long season_id, string league_filepath)
+        {
+            List<PuntReturns_Accum_Stats_by_year> r = new List<PuntReturns_Accum_Stats_by_year>();
+
+            string con = Common.LeageConnection.Connect(league_filepath);
+            using (var context = new leagueContext(con))
+            {
+                r = context.Game_Player_Punt_Returner_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1).GroupBy(x => x.Player)
+                    .Select(x => new PuntReturns_Accum_Stats_by_year
+                    {
+                        p = x.Key,
+                        f_id = x.Key.Players_By_Team.Where(t => t.Season_ID == season_id).Select(t => t.Franchise_ID).First(),
+                        Returns = x.Sum(s => s.Punts_Returned),
+                        Yards = x.Sum(s => s.Punts_Returned_Yards),
+                        Yards_Long = x.Max(s => s.Punt_Returned_Yards_Long),
+                        TDs = x.Sum(s => s.Punts_Returned_TDs),
+                        Fumbles = x.Sum(s => s.Punts_Returned_Fumbles)
+                    }).ToList();
+            }
+
+            return r;
+        }
     }
 }
 
