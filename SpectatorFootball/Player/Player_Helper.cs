@@ -702,7 +702,7 @@ namespace SpectatorFootball.PlayerNS
             if (comp > 0)
             {
                 double tmp = ((double)att / (double)comp) * 100.0;
-                r = tmp.ToString("0.0");
+                r = tmp.ToString("00.00");
             }
             else
                 r = "0.0";
@@ -739,7 +739,7 @@ namespace SpectatorFootball.PlayerNS
             if (dTemp > app_Constants.MAX_QBR)
                 dTemp = app_Constants.MAX_QBR;
 
-            r = dTemp.ToString("0.0");
+            r = dTemp.ToString("000.0");
             return r;
         }
         public static string CalcYardsPerCarry_or_Catch(long count, long Yards)
