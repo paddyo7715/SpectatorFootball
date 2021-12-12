@@ -669,13 +669,224 @@ namespace SpectatorFootball
                     }
                     break;
 
+                case Stat_Type.KICKING:
+                    if (lStats.Kicking_Stats == null)
+                    {
+                        TeamDAO td = new TeamDAO();
+                        List<Teams_by_Season> team_list = td.getAllTeamsSeason(season_id, League_con_string);
+                        LeagueDAO ld = new LeagueDAO();
+                        lStats.Kicking_Stats = ld.getLeagueSeasonKickerStats (season_id, League_con_string);
+                        foreach (Kicking_Accum_Stats_by_year s in lStats.Kicking_Stats)
+                        {
+                            Teams_by_Season t = team_list.Where(x => x.Franchise_ID == s.f_id).First();
+                            s.HelmetImage = lls.getHelmetImg(t.Helmet_Image_File);
+                            s.City_Abbr = t.City_Abr;
+                            s.FG_Percent = Player_Helper.CalcYardsPerCarry_or_Catch(s.FG_Made, s.FG_ATT);
+                        }
+                    }
+                    switch (sort_field)
+                    {
+                        case "Name":
+                        case "City_Abbr":
+                        case "FG_Percent":
+                            if (sort_desc == false)
+                                lStats.Kicking_Stats = lStats.Kicking_Stats.OrderBy(x =>
+                                sort_field == "Name" ? x.p.Last_Name + x.p.First_Name :
+                                sort_field == "FG_Percent" ? x.FG_Percent :
+                                sort_field == "City_Abbr" ? x.City_Abbr : x.City_Abbr).ToList();
+                            else
+                                lStats.Kicking_Stats = lStats.Kicking_Stats.OrderByDescending(x =>
+                                sort_field == "Name" ? x.p.Last_Name + x.p.First_Name :
+                                sort_field == "FG_Percent" ? x.FG_Percent :
+                                sort_field == "City_Abbr" ? x.City_Abbr : x.City_Abbr).ToList();
+                            break;
+                        case "FG_ATT":
+                        case "FG_Made":
+                        case "FG_Long":
+                        case "XP_ATT":
+                        case "XP_Made":
+                            if (sort_desc == false)
+                                lStats.Kicking_Stats = lStats.Kicking_Stats.OrderBy(x =>
+                                    sort_field == "FG_ATT" ? x.FG_ATT :
+                                    sort_field == "FG_Made" ? x.FG_Made :
+                                    sort_field == "FG_Long" ? x.FG_Long :
+                                    sort_field == "XP_ATT" ? x.XP_ATT :
+                                    sort_field == "XP_Made" ? x.XP_Made : x.FG_Made).ToList();
+                            else
+                                lStats.Kicking_Stats = lStats.Kicking_Stats.OrderByDescending(x =>
+                                    sort_field == "FG_ATT" ? x.FG_ATT :
+                                    sort_field == "FG_Made" ? x.FG_Made :
+                                    sort_field == "FG_Long" ? x.FG_Long :
+                                    sort_field == "XP_ATT" ? x.XP_ATT :
+                                    sort_field == "XP_Made" ? x.XP_Made : x.FG_Made).ToList();
+                            break;
+                    }
+                    break;
 
 
+                case Stat_Type.PUNTING:
+                    if (lStats.Punting_Stats == null)
+                    {
+                        TeamDAO td = new TeamDAO();
+                        List<Teams_by_Season> team_list = td.getAllTeamsSeason(season_id, League_con_string);
+                        LeagueDAO ld = new LeagueDAO();
+                        lStats.Punting_Stats = ld.getLeagueSeasonPunterStats(season_id, League_con_string);
+                        foreach (Punting_Accum_Stats_by_year s in lStats.Punting_Stats)
+                        {
+                            Teams_by_Season t = team_list.Where(x => x.Franchise_ID == s.f_id).First();
+                            s.HelmetImage = lls.getHelmetImg(t.Helmet_Image_File);
+                            s.City_Abbr = t.City_Abr;
+                            s.Punt_AVG = Player_Helper.CalcYardsPerCarry_or_Catch(s.Punts, s.Yards);
+                        }
+                    }
+                    switch (sort_field)
+                    {
+                        case "Name":
+                        case "City_Abbr":
+                        case "Punt_AVG":
+                            if (sort_desc == false)
+                                lStats.Punting_Stats = lStats.Punting_Stats.OrderBy(x =>
+                                sort_field == "Name" ? x.p.Last_Name + x.p.First_Name :
+                                sort_field == "Punt_AVG" ? x.Punt_AVG :
+                                sort_field == "City_Abbr" ? x.City_Abbr : x.City_Abbr).ToList();
+                            else
+                                lStats.Punting_Stats = lStats.Punting_Stats.OrderByDescending(x =>
+                                sort_field == "Name" ? x.p.Last_Name + x.p.First_Name :
+                                sort_field == "Punt_AVG" ? x.Punt_AVG :
+                                sort_field == "City_Abbr" ? x.City_Abbr : x.City_Abbr).ToList();
+                            break;
+                        case "Punts":
+                        case "Yards":
+                        case "Coffin_Corners":
+                            if (sort_desc == false)
+                                lStats.Punting_Stats = lStats.Punting_Stats.OrderBy(x =>
+                                    sort_field == "Punts" ? x.Punts :
+                                    sort_field == "Yards" ? x.Yards :
+                                    sort_field == "Coffin_Corners" ? x.Coffin_Corners : x.Yards).ToList();
+                            else
+                                lStats.Punting_Stats = lStats.Punting_Stats.OrderByDescending(x =>
+                                    sort_field == "Punts" ? x.Punts :
+                                    sort_field == "Yards" ? x.Yards :
+                                    sort_field == "Coffin_Corners" ? x.Coffin_Corners : x.Yards).ToList();
+                            break;
+                    }
+                    break;
+
+                case Stat_Type.KICK_RETURNS:
+                    if (lStats.KickRet_Stats == null)
+                    {
+                        TeamDAO td = new TeamDAO();
+                        List<Teams_by_Season> team_list = td.getAllTeamsSeason(season_id, League_con_string);
+                        LeagueDAO ld = new LeagueDAO();
+                        lStats.KickRet_Stats = ld.getLeagueSeasonKickReturnStats(season_id, League_con_string);
+                        foreach (KickReturn_Accum_Stats_by_year s in lStats.KickRet_Stats)
+                        {
+                            Teams_by_Season t = team_list.Where(x => x.Franchise_ID == s.f_id).First();
+                            s.HelmetImage = lls.getHelmetImg(t.Helmet_Image_File);
+                            s.City_Abbr = t.City_Abr;
+                            s.Yards_avg = Player_Helper.CalcYardsPerCarry_or_Catch(s.Returns, s.Yards);
+                        }
+                    }
+                    switch (sort_field)
+                    {
+                        case "Name":
+                        case "City_Abbr":
+                        case "Yards_avg":
+                            if (sort_desc == false)
+                                lStats.KickRet_Stats = lStats.KickRet_Stats.OrderBy(x =>
+                                sort_field == "Name" ? x.p.Last_Name + x.p.First_Name :
+                                sort_field == "Yards_avg" ? x.Yards_avg :
+                                sort_field == "City_Abbr" ? x.City_Abbr : x.City_Abbr).ToList();
+                            else
+                                lStats.KickRet_Stats = lStats.KickRet_Stats.OrderByDescending(x =>
+                                sort_field == "Name" ? x.p.Last_Name + x.p.First_Name :
+                                sort_field == "Yards_avg" ? x.Yards_avg :
+                                sort_field == "City_Abbr" ? x.City_Abbr : x.City_Abbr).ToList();
+                            break;
+                        case "Returns":
+                        case "Yards":
+                        case "Yards_Long":
+                        case "TDs":
+                        case "Fumbles":
+                            if (sort_desc == false)
+                                lStats.KickRet_Stats = lStats.KickRet_Stats.OrderBy(x =>
+                                    sort_field == "Returns" ? x.Returns :
+                                    sort_field == "Yards" ? x.Yards :
+                                    sort_field == "Yards_Long" ? x.Yards_Long :
+                                    sort_field == "TDs" ? x.TDs :
+                                    sort_field == "Fumbles" ? x.Fumbles : x.Yards).ToList();
+                            else
+                                lStats.KickRet_Stats = lStats.KickRet_Stats.OrderByDescending(x =>
+                                    sort_field == "Returns" ? x.Returns :
+                                    sort_field == "Yards" ? x.Yards :
+                                    sort_field == "Yards_Long" ? x.Yards_Long :
+                                    sort_field == "TDs" ? x.TDs :
+                                    sort_field == "Fumbles" ? x.Fumbles : x.Yards).ToList();
+                            break;
+                    }
+                    break;
+
+                case Stat_Type.PUNT_RETURNS:
+                    if (lStats.PuntRet_Stats == null)
+                    {
+                        TeamDAO td = new TeamDAO();
+                        List<Teams_by_Season> team_list = td.getAllTeamsSeason(season_id, League_con_string);
+                        LeagueDAO ld = new LeagueDAO();
+                        lStats.PuntRet_Stats = ld.getLeagueSeasonPUntReturnStats(season_id, League_con_string);
+                        foreach (PuntReturns_Accum_Stats_by_year s in lStats.PuntRet_Stats)
+                        {
+                            Teams_by_Season t = team_list.Where(x => x.Franchise_ID == s.f_id).First();
+                            s.HelmetImage = lls.getHelmetImg(t.Helmet_Image_File);
+                            s.City_Abbr = t.City_Abr;
+                            s.Yards_avg = Player_Helper.CalcYardsPerCarry_or_Catch(s.Returns, s.Yards);
+                        }
+                    }
+                    switch (sort_field)
+                    {
+                        case "Name":
+                        case "City_Abbr":
+                        case "Yards_avg":
+                            if (sort_desc == false)
+                                lStats.PuntRet_Stats = lStats.PuntRet_Stats.OrderBy(x =>
+                                sort_field == "Name" ? x.p.Last_Name + x.p.First_Name :
+                                sort_field == "Yards_avg" ? x.Yards_avg :
+                                sort_field == "City_Abbr" ? x.City_Abbr : x.City_Abbr).ToList();
+                            else
+                                lStats.PuntRet_Stats = lStats.PuntRet_Stats.OrderByDescending(x =>
+                                sort_field == "Name" ? x.p.Last_Name + x.p.First_Name :
+                                sort_field == "Yards_avg" ? x.Yards_avg :
+                                sort_field == "City_Abbr" ? x.City_Abbr : x.City_Abbr).ToList();
+                            break;
+                        case "Returns":
+                        case "Yards":
+                        case "Yards_Long":
+                        case "TDs":
+                        case "Fumbles":
+                            if (sort_desc == false)
+                                lStats.PuntRet_Stats = lStats.PuntRet_Stats.OrderBy(x =>
+                                    sort_field == "Returns" ? x.Returns :
+                                    sort_field == "Yards" ? x.Yards :
+                                    sort_field == "Yards_Long" ? x.Yards_Long :
+                                    sort_field == "TDs" ? x.TDs :
+                                    sort_field == "Fumbles" ? x.Fumbles : x.Yards).ToList();
+                            else
+                                lStats.PuntRet_Stats = lStats.PuntRet_Stats.OrderByDescending(x =>
+                                    sort_field == "Returns" ? x.Returns :
+                                    sort_field == "Yards" ? x.Yards :
+                                    sort_field == "Yards_Long" ? x.Yards_Long :
+                                    sort_field == "TDs" ? x.TDs :
+                                    sort_field == "Fumbles" ? x.Fumbles : x.Yards).ToList();
+                            break;
+                    }
+                    break;
             }
 
             //            r = ld.getAllSeasons(League_con_string);
 
+
             return r;
+
+
         }
 
     }
