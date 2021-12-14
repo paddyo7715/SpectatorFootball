@@ -1,0 +1,74 @@
+﻿<UserControl x:Class="SpectatorFootball.WindowsLeague.StatsUX"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SpectatorFootball.WindowsLeague"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <DockPanel Height="730">
+        <Grid DockPanel.Dock="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                <Button Name="btnStandings" Height="25" Style="{StaticResource appSubmitStyle}" Margin="4" Click="btnStandings_Click">Standings</Button>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Label Name="lblTrainingCampHeader" Style="{StaticResource MedLabelstyle}"></Label>
+            </StackPanel>
+            <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="right">
+                <Button Name="help_btn" Focusable="false" Style="{StaticResource appHelpBTN}" Click="help_btn_Click">Help ?</Button>
+            </StackPanel>
+        </Grid>
+        <StackPanel Orientation="Vertical">
+            <TabControl TabStripPlacement="Left"  Background="DarkGreen" Foreground="White">
+                <TabItem Header="Passing">
+                    <StackPanel Orientation="Vertical" Width="1000" Height="600">
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Rushing">
+                    <StackPanel Orientation="Vertical" Width="1000" Height="600">
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Receiving">
+                    <StackPanel Orientation="Vertical" Width="1000" Height="600">
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Blocking">
+                    <StackPanel Orientation="Vertical" Width="1000" Height="600">
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Defense">
+                    <StackPanel Orientation="Vertical" Width="1000" Height="600">
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Pass Defense">
+                    <StackPanel Orientation="Vertical" Width="1000" Height="600">
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="FG Kicking">
+                    <StackPanel Orientation="Vertical" Width="1000" Height="600">
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Punting">
+                    <StackPanel Orientation="Vertical" Width="1000" Height="600">
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Kickoff Return">
+                    <StackPanel Orientation="Vertical" Width="1000" Height="700">
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Punt Return">
+                    <StackPanel Orientation="Vertical" Width="1000" Height="700">
+                    </StackPanel>
+                </TabItem>
+            </TabControl>
+
+
+        </StackPanel>
+
+    </DockPanel>
+</UserControl>

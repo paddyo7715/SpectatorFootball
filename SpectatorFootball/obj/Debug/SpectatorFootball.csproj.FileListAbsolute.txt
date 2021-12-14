@@ -105,3 +105,5 @@ C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\bin\Debug\OxyP
 C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\bin\Debug\OxyPlot.Wpf.xml
 C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\Help_Forms\Help_TeamDetail.g.cs
 C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\Help_Forms\Help_TeamDetail.baml
+C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\WindowsLeague\StatsUX.g.cs
+C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\WindowsLeague\StatsUX.baml
