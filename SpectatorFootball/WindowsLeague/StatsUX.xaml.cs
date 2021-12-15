@@ -1,4 +1,5 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,10 +21,17 @@ namespace SpectatorFootball.WindowsLeague
     /// </summary>
     public partial class StatsUX : UserControl
     {
+        private static ILog logger = LogManager.GetLogger("RollingFile");
+
+        // pw is the parent window mainwindow
+        private MainWindow pw;
+
         public event EventHandler Show_Standings;
         public StatsUX(MainWindow pw)
         {
             InitializeComponent();
+            this.pw = pw;
+            lblStatsHeader.Content = "Player Status " + pw.Loaded_League.season.Year;
         }
 
         private void btnStandings_Click(object sender, RoutedEventArgs e)
