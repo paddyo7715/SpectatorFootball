@@ -197,7 +197,6 @@
     <Compile Include="Models\Award.cs">
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Blocking_Accum_Stats.cs" />
     <Compile Include="Models\Blocking_Accum_Stats_by_year.cs" />
     <Compile Include="Models\BoxScore.cs" />
     <Compile Include="Models\Conference.cs">
@@ -283,9 +282,7 @@
     <Compile Include="Models\Injury_Log.cs">
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Kicking_Accum_Stats.cs" />
     <Compile Include="Models\Kicking_Accum_Stats_by_year.cs" />
-    <Compile Include="Models\KickReturn_Accum_Stats.cs" />
     <Compile Include="Models\KickReturn_Accum_Stats_by_year.cs" />
     <Compile Include="Models\LeagueEDM.Context.cs">
       <AutoGen>True</AutoGen>
@@ -306,10 +303,7 @@
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\OneInt2Strings.cs" />
-    <Compile Include="Models\Passing_Accum_Stats.cs" />
-    <Compile Include="Models\Defense_Accum_Stats.cs" />
     <Compile Include="Models\Passing_Accum_Stats_by_year.cs" />
-    <Compile Include="Models\Pass_Defense_Accum_Stats.cs" />
     <Compile Include="Models\Pass_Defense_Accum_Stats_by_year.cs" />
     <Compile Include="Models\Penalty.cs">
       <DependentUpon>LeagueEDM.tt</DependentUpon>
@@ -334,14 +328,10 @@
     <Compile Include="Models\Playoff_Teams_by_Season.cs">
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Punting_Accum_Stats.cs" />
     <Compile Include="Models\Punting_Accum_Stats_by_year.cs" />
-    <Compile Include="Models\PuntReturns_Accum_Stats.cs" />
     <Compile Include="Models\PuntReturns_Accum_Stats_by_year.cs" />
-    <Compile Include="Models\Receiving_Accum_Stats.cs" />
     <Compile Include="Models\Receiving_Accum_Stats_by_year.cs" />
     <Compile Include="Models\Roster_rec.cs" />
-    <Compile Include="Models\Rushing_Accum_Stats.cs" />
     <Compile Include="Models\Rushing_Accum_Stats_by_year.cs" />
     <Compile Include="Models\Sched_Week_With_Name.cs" />
     <Compile Include="Models\Season.cs">

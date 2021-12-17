@@ -108,16 +108,16 @@ namespace SpectatorFootball.DAO
         {
             Team_Player_Accum_Stats r = new Team_Player_Accum_Stats();
 
-            List<Passing_Accum_Stats> PassStats = null;
-            List<Rushing_Accum_Stats> RushingStats = null;
-            List<Receiving_Accum_Stats> ReceivingStats = null;
-            List<Blocking_Accum_Stats> BlockingStats = null;
-            List<Defense_Accum_Stats> DefenseStats = null;
-            List<Pass_Defense_Accum_Stats> PassDefenseStats = null;
-            List<Kicking_Accum_Stats> KickerStats = null;
-            List<Punting_Accum_Stats> PunterStats = null;
-            List<KickReturn_Accum_Stats> KickoffReturnStats = null;
-            List<PuntReturns_Accum_Stats> PuntReturnStats = null;
+            List<Passing_Accum_Stats_by_year> PassStats = null;
+            List<Rushing_Accum_Stats_by_year> RushingStats = null;
+            List<Receiving_Accum_Stats_by_year> ReceivingStats = null;
+            List<Blocking_Accum_Stats_by_year> BlockingStats = null;
+            List<Defense_Accum_Stats_by_year> DefenseStats = null;
+            List<Pass_Defense_Accum_Stats_by_year> PassDefenseStats = null;
+            List<Kicking_Accum_Stats_by_year> KickerStats = null;
+            List<Punting_Accum_Stats_by_year> PunterStats = null;
+            List<KickReturn_Accum_Stats_by_year> KickoffReturnStats = null;
+            List<PuntReturns_Accum_Stats_by_year> PuntReturnStats = null;
 
             string con = Common.LeageConnection.Connect(league_filepath);
 
@@ -126,7 +126,7 @@ namespace SpectatorFootball.DAO
                 PassStats = context.Game_Player_Passing_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 &&
                     (x.Game.Home_Team_Franchise_ID == franchise_id || x.Game.Away_Team_Franchise_ID == franchise_id)
                     && x.Player.Players_By_Team.Any(a => a.Franchise_ID == franchise_id && a.Season_ID == season_id)).GroupBy(x => x.Player)
-                    .Select(x => new Passing_Accum_Stats
+                    .Select(x => new Passing_Accum_Stats_by_year
                     {
                         p = x.Key,
                         Completes = x.Sum(s => s.Pass_Comp),
@@ -141,7 +141,7 @@ namespace SpectatorFootball.DAO
                 RushingStats = context.Game_Player_Rushing_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 &&
                     (x.Game.Home_Team_Franchise_ID == franchise_id || x.Game.Away_Team_Franchise_ID == franchise_id)
                     && x.Player.Players_By_Team.Any(a => a.Franchise_ID == franchise_id && a.Season_ID == season_id)).GroupBy(x => x.Player)
-                    .Select(x => new Rushing_Accum_Stats
+                    .Select(x => new Rushing_Accum_Stats_by_year
                     {
                         p = x.Key,
                         Rushes = x.Sum(s => s.Rush_Att),
@@ -154,7 +154,7 @@ namespace SpectatorFootball.DAO
                 ReceivingStats = context.Game_Player_Receiving_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 &&
                     (x.Game.Home_Team_Franchise_ID == franchise_id || x.Game.Away_Team_Franchise_ID == franchise_id)
                     && x.Player.Players_By_Team.Any(a => a.Franchise_ID == franchise_id && a.Season_ID == season_id)).GroupBy(x => x.Player)
-                    .Select(x => new Receiving_Accum_Stats
+                    .Select(x => new Receiving_Accum_Stats_by_year
                     {
                         p = x.Key,
                         Catches = x.Sum(s => s.Rec_Catches),
@@ -168,7 +168,7 @@ namespace SpectatorFootball.DAO
                 BlockingStats = context.Game_Player_Offensive_Linemen_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 &&
                     (x.Game.Home_Team_Franchise_ID == franchise_id || x.Game.Away_Team_Franchise_ID == franchise_id)
                     && x.Player.Players_By_Team.Any(a => a.Franchise_ID == franchise_id && a.Season_ID == season_id)).GroupBy(x => x.Player)
-                    .Select(x => new Blocking_Accum_Stats
+                    .Select(x => new Blocking_Accum_Stats_by_year
                     {
                         p = x.Key,
                         Plays = x.Sum(s => s.Oline_Plays),
@@ -180,7 +180,7 @@ namespace SpectatorFootball.DAO
                 DefenseStats = context.Game_Player_Defense_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 &&
                     (x.Game.Home_Team_Franchise_ID == franchise_id || x.Game.Away_Team_Franchise_ID == franchise_id)
                     && x.Player.Players_By_Team.Any(a => a.Franchise_ID == franchise_id && a.Season_ID == season_id)).GroupBy(x => x.Player)
-                    .Select(x => new Defense_Accum_Stats
+                    .Select(x => new Defense_Accum_Stats_by_year
                     {
                         p = x.Key,
                         Plays = x.Sum(s => s.Pass_Rushes + s.Pass_Blocks),
@@ -194,7 +194,7 @@ namespace SpectatorFootball.DAO
                 PassDefenseStats = context.Game_Player_Pass_Defense_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 &&
                     (x.Game.Home_Team_Franchise_ID == franchise_id || x.Game.Away_Team_Franchise_ID == franchise_id)
                     && x.Player.Players_By_Team.Any(a => a.Franchise_ID == franchise_id && a.Season_ID == season_id)).GroupBy(x => x.Player)
-                    .Select(x => new Pass_Defense_Accum_Stats
+                    .Select(x => new Pass_Defense_Accum_Stats_by_year
                     {
                         p = x.Key,
                         Pass_Defenses = x.Sum(s => s.Def_Pass_Defenses),
@@ -206,7 +206,7 @@ namespace SpectatorFootball.DAO
                 KickerStats = context.Game_Player_Kicker_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 &&
                     (x.Game.Home_Team_Franchise_ID == franchise_id || x.Game.Away_Team_Franchise_ID == franchise_id)
                     && x.Player.Players_By_Team.Any(a => a.Franchise_ID == franchise_id && a.Season_ID == season_id)).GroupBy(x => x.Player)
-                    .Select(x => new Kicking_Accum_Stats
+                    .Select(x => new Kicking_Accum_Stats_by_year
                     {
                         p = x.Key,
                         FG_ATT = x.Sum(s => s.FG_Att),
@@ -219,7 +219,7 @@ namespace SpectatorFootball.DAO
                 PunterStats = context.Game_Player_Punter_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 &&
                     (x.Game.Home_Team_Franchise_ID == franchise_id || x.Game.Away_Team_Franchise_ID == franchise_id)
                     && x.Player.Players_By_Team.Any(a => a.Franchise_ID == franchise_id && a.Season_ID == season_id)).GroupBy(x => x.Player)
-                    .Select(x => new Punting_Accum_Stats
+                    .Select(x => new Punting_Accum_Stats_by_year
                     {
                         p = x.Key,
                         Punts = x.Sum(s => s.num_punts),
@@ -230,7 +230,7 @@ namespace SpectatorFootball.DAO
                 KickoffReturnStats = context.Game_Player_Kick_Returner_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 &&
                     (x.Game.Home_Team_Franchise_ID == franchise_id || x.Game.Away_Team_Franchise_ID == franchise_id)
                     && x.Player.Players_By_Team.Any(a => a.Franchise_ID == franchise_id && a.Season_ID == season_id)).GroupBy(x => x.Player)
-                    .Select(x => new KickReturn_Accum_Stats
+                    .Select(x => new KickReturn_Accum_Stats_by_year
                     {
                         p = x.Key,
                         Returns = x.Sum(s => s.Kickoffs_Returned),
@@ -243,7 +243,7 @@ namespace SpectatorFootball.DAO
                 PuntReturnStats = context.Game_Player_Punt_Returner_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 &&
                     (x.Game.Home_Team_Franchise_ID == franchise_id || x.Game.Away_Team_Franchise_ID == franchise_id)
                     && x.Player.Players_By_Team.Any(a => a.Franchise_ID == franchise_id && a.Season_ID == season_id)).GroupBy(x => x.Player)
-                    .Select(x => new PuntReturns_Accum_Stats
+                    .Select(x => new PuntReturns_Accum_Stats_by_year
                     {
                         p = x.Key,
                         Returns = x.Sum(s => s.Punts_Returned),
