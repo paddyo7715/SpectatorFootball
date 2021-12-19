@@ -350,12 +350,13 @@ namespace SpectatorFootball
             return r;
         }
 
-        public League_Stats getSeasonStats(Loaded_League_Structure lls,  League_Stats lStats, Stat_Type st, string sort_field, bool sort_desc, long season_id,  string League_Shortname)
+        public League_Stats getSeasonStats(Loaded_League_Structure lls,  League_Stats lStats, Stat_Type st, string sort_field, bool sort_desc)
         {
             string DIRPath_League = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + lls.season.League_Structure_by_Season[0].Short_Name.ToUpper();
             string helment_img_path = DIRPath_League + Path.DirectorySeparatorChar + app_Constants.LEAGUE_HELMETS_SUBFOLDER;
             League_Stats r = lStats;
             string League_con_string = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + lls.season.League_Structure_by_Season[0].Short_Name.ToUpper() + Path.DirectorySeparatorChar + lls.season.League_Structure_by_Season[0].Short_Name.ToUpper() + "." + app_Constants.DB_FILE_EXT;
+            long season_id = lls.season.ID;
 
             switch (st)
             {
