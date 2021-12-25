@@ -407,7 +407,7 @@ namespace SpectatorFootball
                 .Select(x => new Passing_Accum_Stats_by_year
                 {
                     p = x.Key,
-                    f_id = x.Key.Players_By_Team.Where(t => t.Season_ID == season_id).Select(t => t.Franchise_ID).First(),
+                    f_id = x.Key.Players_By_Team.Where(t => t.Season_ID == season_id).Select(t => t.Franchise_ID).Max(),
                     Completes = x.Sum(s => s.Pass_Comp),
                     Ateempts = x.Sum(s => s.Pass_Att),
                     Yards = x.Sum(s => s.Pass_Yards),
@@ -432,7 +432,7 @@ namespace SpectatorFootball
                     .Select(x => new Rushing_Accum_Stats_by_year
                     {
                         p = x.Key,
-                        f_id = x.Key.Players_By_Team.Where(t => t.Season_ID == season_id).Select(t => t.Franchise_ID).First(),
+                        f_id = x.Key.Players_By_Team.Where(t => t.Season_ID == season_id).Select(t => t.Franchise_ID).Max(),
                         Rushes = x.Sum(s => s.Rush_Att),
                         Yards = x.Sum(s => s.Rush_Yards),
                         TDs = x.Sum(s => s.Rush_TDs),
@@ -455,7 +455,7 @@ namespace SpectatorFootball
                     .Select(x => new Receiving_Accum_Stats_by_year
                     {
                         p = x.Key,
-                        f_id = x.Key.Players_By_Team.Where(t => t.Season_ID == season_id).Select(t => t.Franchise_ID).First(),
+                        f_id = x.Key.Players_By_Team.Where(t => t.Season_ID == season_id).Select(t => t.Franchise_ID).Max(),
                         Catches = x.Sum(s => s.Rec_Catches),
                         Yards = x.Sum(s => s.Rec_Yards),
                         TDs = x.Sum(s => s.Rec_TDs),
@@ -479,7 +479,7 @@ namespace SpectatorFootball
                     .Select(x => new Blocking_Accum_Stats_by_year
                     {
                         p = x.Key,
-                        f_id = x.Key.Players_By_Team.Where(t => t.Season_ID == season_id).Select(t => t.Franchise_ID).First(),
+                        f_id = x.Key.Players_By_Team.Where(t => t.Season_ID == season_id).Select(t => t.Franchise_ID).Max(),
                         Plays = x.Sum(s => s.Oline_Plays),
                         Pancakes = x.Sum(s => s.OLine_Pancakes),
                         Sacks_Allowed = x.Sum(s => s.OLine_Sacks_Allowed),
@@ -501,7 +501,7 @@ namespace SpectatorFootball
                     .Select(x => new Defense_Accum_Stats_by_year
                     {
                         p = x.Key,
-                        f_id = x.Key.Players_By_Team.Where(t => t.Season_ID == season_id).Select(t => t.Franchise_ID).First(),
+                        f_id = x.Key.Players_By_Team.Where(t => t.Season_ID == season_id).Select(t => t.Franchise_ID).Max(),
                         Plays = x.Sum(s => s.Pass_Rushes + s.Pass_Blocks),
                         Tackles = x.Sum(s => s.Def_Tackles),
                         Sacks = x.Sum(s => s.Def_Sacks),
@@ -525,7 +525,7 @@ namespace SpectatorFootball
                     .Select(x => new Pass_Defense_Accum_Stats_by_year
                     {
                         p = x.Key,
-                        f_id = x.Key.Players_By_Team.Where(t => t.Season_ID == season_id).Select(t => t.Franchise_ID).First(),
+                        f_id = x.Key.Players_By_Team.Where(t => t.Season_ID == season_id).Select(t => t.Franchise_ID).Max(),
                         Pass_Defenses = x.Sum(s => s.Def_Pass_Defenses),
                         Ints = x.Sum(s => s.Ints),
                         TDs_Surrendered = x.Sum(s => s.Touchdowns_Surrendered),
@@ -547,7 +547,7 @@ namespace SpectatorFootball
                     .Select(x => new Kicking_Accum_Stats_by_year
                     {
                         p = x.Key,
-                        f_id = x.Key.Players_By_Team.Where(t => t.Season_ID == season_id).Select(t => t.Franchise_ID).First(),
+                        f_id = x.Key.Players_By_Team.Where(t => t.Season_ID == season_id).Select(t => t.Franchise_ID).Max(),
                         FG_ATT = x.Sum(s => s.FG_Att),
                         FG_Made = x.Sum(s => s.FG_Made),
                         FG_Long = x.Max(s => s.FG_Long),
@@ -570,7 +570,7 @@ namespace SpectatorFootball
                     .Select(x => new Punting_Accum_Stats_by_year
                     {
                         p = x.Key,
-                        f_id = x.Key.Players_By_Team.Where(t => t.Season_ID == season_id).Select(t => t.Franchise_ID).First(),
+                        f_id = x.Key.Players_By_Team.Where(t => t.Season_ID == season_id).Select(t => t.Franchise_ID).Max(),
                         Punts = x.Sum(s => s.num_punts),
                         Yards = x.Sum(s => s.Punt_yards),
                         Coffin_Corners = x.Sum(s => s.Punt_killed_num)
@@ -591,7 +591,7 @@ namespace SpectatorFootball
                     .Select(x => new KickReturn_Accum_Stats_by_year
                     {
                         p = x.Key,
-                        f_id = x.Key.Players_By_Team.Where(t => t.Season_ID == season_id).Select(t => t.Franchise_ID).First(),
+                        f_id = x.Key.Players_By_Team.Where(t => t.Season_ID == season_id).Select(t => t.Franchise_ID).Max(),
                         Returns = x.Sum(s => s.Kickoffs_Returned),
                         Yards = x.Sum(s => s.Kickoffs_Returned_Yards),
                         Yards_Long = x.Max(s => s.Kickoff_Return_Yards_Long),
@@ -614,7 +614,7 @@ namespace SpectatorFootball
                     .Select(x => new PuntReturns_Accum_Stats_by_year
                     {
                         p = x.Key,
-                        f_id = x.Key.Players_By_Team.Where(t => t.Season_ID == season_id).Select(t => t.Franchise_ID).First(),
+                        f_id = x.Key.Players_By_Team.Where(t => t.Season_ID == season_id).Select(t => t.Franchise_ID).Max(),
                         Returns = x.Sum(s => s.Punts_Returned),
                         Yards = x.Sum(s => s.Punts_Returned_Yards),
                         Yards_Long = x.Max(s => s.Punt_Returned_Yards_Long),

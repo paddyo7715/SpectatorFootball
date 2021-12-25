@@ -28,7 +28,8 @@
                 <TabItem Header="Passing" Name="tabPassing">
                     <StackPanel Orientation="Vertical" Width="1000" Height="600">
                         <Label Style="{StaticResource MedLabelstyle}" Content="Passing"></Label>
-                        <ListView Name="lstPassing" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Width="960">
+                        <ListView Name="lstPassing"  Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Width="960"
+                                  GridViewColumnHeader.Click="ListViewHeader_Click">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="ListViewItem">
                                     <Setter Property="Focusable" Value="false"/>
@@ -38,7 +39,7 @@
                                 <GridView AllowsColumnReorder="false">
                                     <GridView.ColumnHeaderContainerStyle>
                                         <Style TargetType="{x:Type GridViewColumnHeader}">
-                                            <Setter Property="IsEnabled" Value="False"/>
+                                            <Setter Property="IsEnabled" Value="True"/>
                                         </Style>
                                     </GridView.ColumnHeaderContainerStyle>
                                     <GridViewColumn Header="Player"  Width="270">
@@ -80,7 +81,8 @@
                 <TabItem Header="Rushing" Name="tabRushing">
                     <StackPanel Orientation="Vertical" Width="1000" Height="600">
                         <Label Style="{StaticResource MedLabelstyle}" Content="Rushing"></Label>
-                        <ListView Name="lstRushing" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Width="960">
+                        <ListView Name="lstRushing" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Width="960"
+                                  GridViewColumnHeader.Click="ListViewHeader_Click">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="ListViewItem">
                                     <Setter Property="Focusable" Value="false"/>
@@ -90,7 +92,7 @@
                                 <GridView AllowsColumnReorder="false">
                                     <GridView.ColumnHeaderContainerStyle>
                                         <Style TargetType="{x:Type GridViewColumnHeader}">
-                                            <Setter Property="IsEnabled" Value="False"/>
+                                            <Setter Property="IsEnabled" Value="True"/>
                                         </Style>
                                     </GridView.ColumnHeaderContainerStyle>
                                     <GridViewColumn Header="Player"  Width="270">
@@ -121,7 +123,6 @@
                                     <GridViewColumn Header="Yards/Carry" Width="80" DisplayMemberBinding="{Binding Path=Yards_Per_Carry}" />
                                     <GridViewColumn Header="Yards" Width="80" DisplayMemberBinding="{Binding Path=Yards}" />
                                     <GridViewColumn Header="TDs" Width="80" DisplayMemberBinding="{Binding Path=TDs}" />
-                                    <GridViewColumn Header="INTs" Width="80" DisplayMemberBinding="{Binding Path=Ints}" />
                                     <GridViewColumn Header="Fumbles Lost" Width="90" DisplayMemberBinding="{Binding Path=Fumbles_Lost}" />
                                 </GridView>
                             </ListView.View>
@@ -132,7 +133,8 @@
                 <TabItem Header="Receiving" Name="tabReceiving">
                     <StackPanel Orientation="Vertical" Width="1000" Height="600">
                         <Label Style="{StaticResource MedLabelstyle}" Content="Receiving"></Label>
-                        <ListView Name="lstReceiving" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Width="960">
+                        <ListView Name="lstReceiving" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Width="960"
+                                  GridViewColumnHeader.Click="ListViewHeader_Click">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="ListViewItem">
                                     <Setter Property="Focusable" Value="false"/>
@@ -142,7 +144,7 @@
                                 <GridView AllowsColumnReorder="false">
                                     <GridView.ColumnHeaderContainerStyle>
                                         <Style TargetType="{x:Type GridViewColumnHeader}">
-                                            <Setter Property="IsEnabled" Value="False"/>
+                                            <Setter Property="IsEnabled" Value="True"/>
                                         </Style>
                                     </GridView.ColumnHeaderContainerStyle>
                                     <GridViewColumn Header="Player"  Width="270">
@@ -183,7 +185,8 @@
                 <TabItem Header="Blocking" Name="tabBlocking">
                     <StackPanel Orientation="Vertical" Width="1000" Height="600">
                         <Label Style="{StaticResource MedLabelstyle}" Content="Blocking"></Label>
-                        <ListView Name="lstBlocking" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Width="960">
+                        <ListView Name="lstBlocking" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Width="960"
+                                  GridViewColumnHeader.Click="ListViewHeader_Click">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="ListViewItem">
                                     <Setter Property="Focusable" Value="false"/>
@@ -193,7 +196,7 @@
                                 <GridView AllowsColumnReorder="false">
                                     <GridView.ColumnHeaderContainerStyle>
                                         <Style TargetType="{x:Type GridViewColumnHeader}">
-                                            <Setter Property="IsEnabled" Value="False"/>
+                                            <Setter Property="IsEnabled" Value="True"/>
                                         </Style>
                                     </GridView.ColumnHeaderContainerStyle>
                                     <GridViewColumn Header="Player"  Width="270">
@@ -232,7 +235,8 @@
                 <TabItem Header="Defense" Name="tabDefense">
                     <StackPanel Orientation="Vertical" Width="1000" Height="600">
                         <Label Style="{StaticResource MedLabelstyle}" Content="Defense"></Label>
-                        <ListView Name="lstDefense" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Width="960">
+                        <ListView Name="lstDefense" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Width="960"
+                                  GridViewColumnHeader.Click="ListViewHeader_Click">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="ListViewItem">
                                     <Setter Property="Focusable" Value="false"/>
@@ -242,7 +246,7 @@
                                 <GridView AllowsColumnReorder="false">
                                     <GridView.ColumnHeaderContainerStyle>
                                         <Style TargetType="{x:Type GridViewColumnHeader}">
-                                            <Setter Property="IsEnabled" Value="False"/>
+                                            <Setter Property="IsEnabled" Value="True"/>
                                         </Style>
                                     </GridView.ColumnHeaderContainerStyle>
                                     <GridViewColumn Header="Player"  Width="270">
@@ -283,7 +287,8 @@
                 <TabItem Header="Pass Defense" Name="tabPassDefense">
                     <StackPanel Orientation="Vertical" Width="1000" Height="600">
                         <Label Style="{StaticResource MedLabelstyle}" Content="Pass Defense"></Label>
-                        <ListView Name="lstPassDefense" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Width="960">
+                        <ListView Name="lstPassDefense" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Width="960"
+                                  GridViewColumnHeader.Click="ListViewHeader_Click">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="ListViewItem">
                                     <Setter Property="Focusable" Value="false"/>
@@ -293,7 +298,7 @@
                                 <GridView AllowsColumnReorder="false">
                                     <GridView.ColumnHeaderContainerStyle>
                                         <Style TargetType="{x:Type GridViewColumnHeader}">
-                                            <Setter Property="IsEnabled" Value="False"/>
+                                            <Setter Property="IsEnabled" Value="True"/>
                                         </Style>
                                     </GridView.ColumnHeaderContainerStyle>
                                     <GridViewColumn Header="Player"  Width="270">
@@ -332,7 +337,8 @@
                 <TabItem Header="FG Kicking" Name="tabKicking">
                     <StackPanel Orientation="Vertical" Width="1000" Height="600">
                         <Label Style="{StaticResource MedLabelstyle}" Content="FG Kicking"></Label>
-                        <ListView Name="lstFGKicking" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Width="960">
+                        <ListView Name="lstFGKicking" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Width="960"
+                                  GridViewColumnHeader.Click="ListViewHeader_Click">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="ListViewItem">
                                     <Setter Property="Focusable" Value="false"/>
@@ -342,7 +348,7 @@
                                 <GridView AllowsColumnReorder="false">
                                     <GridView.ColumnHeaderContainerStyle>
                                         <Style TargetType="{x:Type GridViewColumnHeader}">
-                                            <Setter Property="IsEnabled" Value="False"/>
+                                            <Setter Property="IsEnabled" Value="True"/>
                                         </Style>
                                     </GridView.ColumnHeaderContainerStyle>
                                     <GridViewColumn Header="Player"  Width="270">
@@ -383,7 +389,8 @@
                 <TabItem Header="Punting" Name="tabPunting">
                     <StackPanel Orientation="Vertical" Width="1000" Height="600">
                         <Label Style="{StaticResource MedLabelstyle}" Content="Punting"></Label>
-                        <ListView Name="lstPunting" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Width="960">
+                        <ListView Name="lstPunting" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Width="960"
+                                  GridViewColumnHeader.Click="ListViewHeader_Click">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="ListViewItem">
                                     <Setter Property="Focusable" Value="false"/>
@@ -393,7 +400,7 @@
                                 <GridView AllowsColumnReorder="false">
                                     <GridView.ColumnHeaderContainerStyle>
                                         <Style TargetType="{x:Type GridViewColumnHeader}">
-                                            <Setter Property="IsEnabled" Value="False"/>
+                                            <Setter Property="IsEnabled" Value="True"/>
                                         </Style>
                                     </GridView.ColumnHeaderContainerStyle>
                                     <GridViewColumn Header="Player"  Width="270">
@@ -432,7 +439,8 @@
                 <TabItem Header="Kickoff Return" Name="tabKickReturn">
                     <StackPanel Orientation="Vertical" Width="1000" Height="700">
                         <Label Style="{StaticResource MedLabelstyle}" Content="Kickoff Returns"></Label>
-                        <ListView Name="lstKickoffReturns" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Width="960">
+                        <ListView Name="lstKickoffReturns" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Width="960"
+                                  GridViewColumnHeader.Click="ListViewHeader_Click">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="ListViewItem">
                                     <Setter Property="Focusable" Value="false"/>
@@ -442,7 +450,7 @@
                                 <GridView AllowsColumnReorder="false">
                                     <GridView.ColumnHeaderContainerStyle>
                                         <Style TargetType="{x:Type GridViewColumnHeader}">
-                                            <Setter Property="IsEnabled" Value="False"/>
+                                            <Setter Property="IsEnabled" Value="True"/>
                                         </Style>
                                     </GridView.ColumnHeaderContainerStyle>
                                     <GridViewColumn Header="Player"  Width="270">
@@ -483,7 +491,8 @@
                 <TabItem Header="Punt Return" Name="tabPuntReturn">
                     <StackPanel Orientation="Vertical" Width="1000" Height="700">
                         <Label Style="{StaticResource MedLabelstyle}" Content="Punt Returns"></Label>
-                        <ListView Name="lstPuntReturns" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Width="960">
+                        <ListView Name="lstPuntReturns" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Width="960"
+                                  GridViewColumnHeader.Click="ListViewHeader_Click">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="ListViewItem">
                                     <Setter Property="Focusable" Value="false"/>
@@ -493,7 +502,7 @@
                                 <GridView AllowsColumnReorder="false">
                                     <GridView.ColumnHeaderContainerStyle>
                                         <Style TargetType="{x:Type GridViewColumnHeader}">
-                                            <Setter Property="IsEnabled" Value="False"/>
+                                            <Setter Property="IsEnabled" Value="True"/>
                                         </Style>
                                     </GridView.ColumnHeaderContainerStyle>
                                     <GridViewColumn Header="Player"  Width="270">

@@ -378,20 +378,24 @@ namespace SpectatorFootball
                     }
                     switch (sort_field)
                     {
-                        case "Name":
-                        case "City_Abbr":
-                        case "Comp_Percent":
+                        case "Player":
+                            if (sort_desc == false)
+                                lStats.Passing_Stats = lStats.Passing_Stats.OrderBy(x =>
+                                x.p.Last_Name).ThenBy(x => x.p.First_Name).ToList();
+                            else
+                                lStats.Passing_Stats = lStats.Passing_Stats.OrderByDescending(x =>
+                                x.p.Last_Name).ThenByDescending(x => x.p.First_Name).ToList();
+                            break;
+                        case "Comp %":
                         case "QBR":
                             if (sort_desc == false)
                                 lStats.Passing_Stats = lStats.Passing_Stats.OrderBy(x =>
                                 sort_field == "Name" ? x.p.Last_Name + x.p.First_Name :
-                                sort_field == "City_Abbr" ? x.City_Abbr :
                                 sort_field == "Comp_Percent" ? x.Comp_Percent :
                                 sort_field == "QBR" ? x.QBR : x.QBR).ToList();
                             else
                                 lStats.Passing_Stats = lStats.Passing_Stats.OrderByDescending(x =>
                                 sort_field == "Name" ? x.p.Last_Name + x.p.First_Name :
-                                sort_field == "City_Abbr" ? x.City_Abbr :
                                 sort_field == "Comp_Percent" ? x.Comp_Percent :
                                 sort_field == "QBR" ? x.QBR : x.QBR).ToList();
                             break;
@@ -400,7 +404,6 @@ namespace SpectatorFootball
                         case "Yards":
                         case "TDs":
                         case "Ints":
-                        case "Fumbles_Lost":
                             if (sort_desc == false)
                                 lStats.Passing_Stats = lStats.Passing_Stats.OrderBy(x =>
                                     sort_field == "Completes" ? x.Completes :
@@ -437,24 +440,28 @@ namespace SpectatorFootball
                     }
                     switch (sort_field)
                     {
-                        case "Name":
-                        case "City_Abbr":
-                        case "Yards_Per_Carry":
+                        case "Player":
+                            if (sort_desc == false)
+                                lStats.Rushing_Stats = lStats.Rushing_Stats.OrderBy(x =>
+                                x.p.Last_Name).ThenBy(x => x.p.First_Name).ToList();
+                            else
+                                lStats.Rushing_Stats = lStats.Rushing_Stats.OrderByDescending(x =>
+                                x.p.Last_Name).ThenByDescending(x => x.p.First_Name).ToList();
+                            break;
+                        case "Yards/Carry":
                             if (sort_desc == false)
                                 lStats.Rushing_Stats = lStats.Rushing_Stats.OrderBy(x =>
                                 sort_field == "Name" ? x.p.Last_Name + x.p.First_Name :
-                                sort_field == "City_Abbr" ? x.City_Abbr :
                                 sort_field == "Yards_Per_Carry" ? x.Yards_Per_Carry : x.Yards_Per_Carry).ToList();
                             else
                                 lStats.Rushing_Stats = lStats.Rushing_Stats.OrderByDescending(x =>
                                 sort_field == "Name" ? x.p.Last_Name + x.p.First_Name :
-                                sort_field == "City_Abbr" ? x.City_Abbr :
                                 sort_field == "Yards_Per_Carry" ? x.Yards_Per_Carry : x.Yards_Per_Carry).ToList();
                             break;
                         case "Rushes":
                         case "Yards":
                         case "TDs":
-                        case "Fumbles_Lost":
+                        case "Fumbles Lost":
                             if (sort_desc == false)
                                 lStats.Rushing_Stats = lStats.Rushing_Stats.OrderBy(x =>
                                     sort_field == "Rushes" ? x.Rushes :
@@ -487,25 +494,29 @@ namespace SpectatorFootball
                     }
                     switch (sort_field)
                     {
-                        case "Name":
-                        case "City_Abbr":
-                        case "Yards_Per_Catch":
+                        case "Player":
+                            if (sort_desc == false)
+                                lStats.Receiving_Stats = lStats.Receiving_Stats.OrderBy(x =>
+                                x.p.Last_Name).ThenBy(x => x.p.First_Name).ToList();
+                            else
+                                lStats.Receiving_Stats = lStats.Receiving_Stats.OrderByDescending(x =>
+                                x.p.Last_Name).ThenByDescending(x => x.p.First_Name).ToList();
+                            break;
+                          case "Yards/Catch":
                             if (sort_desc == false)
                                 lStats.Receiving_Stats = lStats.Receiving_Stats.OrderBy(x =>
                                 sort_field == "Name" ? x.p.Last_Name + x.p.First_Name :
-                                sort_field == "City_Abbr" ? x.City_Abbr :
                                 sort_field == "Yards_Per_Catch" ? x.Yards_Per_Catch : x.Yards_Per_Catch).ToList();
                             else
                                 lStats.Receiving_Stats = lStats.Receiving_Stats.OrderByDescending(x =>
                                 sort_field == "Name" ? x.p.Last_Name + x.p.First_Name :
-                                sort_field == "City_Abbr" ? x.City_Abbr :
                                 sort_field == "Yards_Per_Catch" ? x.Yards_Per_Catch : x.Yards_Per_Catch).ToList();
                             break;
                         case "Catches":
                         case "Yards":
                         case "TDs":       
                         case "Drops":
-                        case "Fumbles_Lost":
+                        case "Fumbles Lost":
                             if (sort_desc == false)
                                 lStats.Receiving_Stats = lStats.Receiving_Stats.OrderBy(x =>
                                     sort_field == "Catches" ? x.Catches :
@@ -540,21 +551,18 @@ namespace SpectatorFootball
                     }
                     switch (sort_field)
                     {
-                        case "Name":
-                        case "City_Abbr":
+                        case "Player":
                             if (sort_desc == false)
                                 lStats.Blocking_Stats = lStats.Blocking_Stats.OrderBy(x =>
-                                sort_field == "Name" ? x.p.Last_Name + x.p.First_Name :
-                                sort_field == "City_Abbr" ? x.City_Abbr : x.City_Abbr).ToList();
+                                x.p.Last_Name).ThenBy(x => x.p.First_Name).ToList();
                             else
                                 lStats.Blocking_Stats = lStats.Blocking_Stats.OrderByDescending(x =>
-                                sort_field == "Name" ? x.p.Last_Name + x.p.First_Name :
-                                sort_field == "City_Abbr" ? x.City_Abbr : x.City_Abbr).ToList();
+                                x.p.Last_Name).ThenByDescending(x => x.p.First_Name).ToList();
                             break;
                         case "Plays":
                         case "Pancakes":
-                        case "Sacks_Allowed":
-                        case "Pressures_Allowed":
+                        case "Sacks Allowed":
+                        case "Pressures Allowed":
                             if (sort_desc == false)
                                 lStats.Blocking_Stats = lStats.Blocking_Stats.OrderBy(x =>
                                     sort_field == "Plays" ? x.Plays :
@@ -587,23 +595,20 @@ namespace SpectatorFootball
                     }
                     switch (sort_field)
                     {
-                        case "Name":
-                        case "City_Abbr":
+                        case "Player":
                             if (sort_desc == false)
                                 lStats.Defense_Stats = lStats.Defense_Stats.OrderBy(x =>
-                                sort_field == "Name" ? x.p.Last_Name + x.p.First_Name :
-                                sort_field == "City_Abbr" ? x.City_Abbr : x.City_Abbr).ToList();
+                                x.p.Last_Name).ThenBy(x => x.p.First_Name).ToList();
                             else
                                 lStats.Defense_Stats = lStats.Defense_Stats.OrderByDescending(x =>
-                                sort_field == "Name" ? x.p.Last_Name + x.p.First_Name :
-                                sort_field == "City_Abbr" ? x.City_Abbr : x.City_Abbr).ToList();
+                                x.p.Last_Name).ThenByDescending(x => x.p.First_Name).ToList();
                             break;
                         case "Plays":
                         case "Tackles":
                         case "Sacks":
                         case "Pressures":
-                        case "Run_for_Loss":
-                        case "Forced_Fumble":
+                        case "Run for Loss":
+                        case "Forced Fumble":
                             if (sort_desc == false)
                                 lStats.Defense_Stats = lStats.Defense_Stats.OrderBy(x =>
                                     sort_field == "Plays" ? x.Plays :
@@ -639,21 +644,18 @@ namespace SpectatorFootball
                     }
                     switch (sort_field)
                     {
-                        case "Name":
-                        case "City_Abbr":
+                        case "Player":
                             if (sort_desc == false)
                                 lStats.Pass_Defense_Stats = lStats.Pass_Defense_Stats.OrderBy(x =>
-                                sort_field == "Name" ? x.p.Last_Name + x.p.First_Name :
-                                sort_field == "City_Abbr" ? x.City_Abbr : x.City_Abbr).ToList();
+                                x.p.Last_Name).ThenBy(x => x.p.First_Name).ToList();
                             else
                                 lStats.Pass_Defense_Stats = lStats.Pass_Defense_Stats.OrderByDescending(x =>
-                                sort_field == "Name" ? x.p.Last_Name + x.p.First_Name :
-                                sort_field == "City_Abbr" ? x.City_Abbr : x.City_Abbr).ToList();
+                                x.p.Last_Name).ThenByDescending(x => x.p.First_Name).ToList();
                             break;
-                        case "Pass_Defenses":
+                        case "Pass Defenses":
                         case "Ints":
-                        case "TDs_Surrendered":
-                        case "Forced_Fumble":
+                        case "TDs Surrendered":
+                        case "Forced Fumble":
                             if (sort_desc == false)
                                 lStats.Pass_Defense_Stats = lStats.Pass_Defense_Stats.OrderBy(x =>
                                     sort_field == "Pass_Defenses" ? x.Pass_Defenses :
@@ -687,9 +689,15 @@ namespace SpectatorFootball
                     }
                     switch (sort_field)
                     {
-                        case "Name":
-                        case "City_Abbr":
-                        case "FG_Percent":
+                        case "Player":
+                            if (sort_desc == false)
+                                lStats.Kicking_Stats = lStats.Kicking_Stats.OrderBy(x =>
+                                x.p.Last_Name).ThenBy(x => x.p.First_Name).ToList();
+                            else
+                                lStats.Kicking_Stats = lStats.Kicking_Stats.OrderByDescending(x =>
+                                x.p.Last_Name).ThenByDescending(x => x.p.First_Name).ToList();
+                            break;
+                        case "FG %":
                             if (sort_desc == false)
                                 lStats.Kicking_Stats = lStats.Kicking_Stats.OrderBy(x =>
                                 sort_field == "Name" ? x.p.Last_Name + x.p.First_Name :
@@ -701,11 +709,11 @@ namespace SpectatorFootball
                                 sort_field == "FG_Percent" ? x.FG_Percent :
                                 sort_field == "City_Abbr" ? x.City_Abbr : x.City_Abbr).ToList();
                             break;
-                        case "FG_ATT":
-                        case "FG_Made":
-                        case "FG_Long":
-                        case "XP_ATT":
-                        case "XP_Made":
+                        case "FG ATT":
+                        case "FG Made":
+                        case "FG Long":
+                        case "XP ATT":
+                        case "XP Made":
                             if (sort_desc == false)
                                 lStats.Kicking_Stats = lStats.Kicking_Stats.OrderBy(x =>
                                     sort_field == "FG_ATT" ? x.FG_ATT :
@@ -742,9 +750,15 @@ namespace SpectatorFootball
                     }
                     switch (sort_field)
                     {
-                        case "Name":
-                        case "City_Abbr":
-                        case "Punt_AVG":
+                        case "Player":
+                            if (sort_desc == false)
+                                lStats.Punting_Stats = lStats.Punting_Stats.OrderBy(x =>
+                                x.p.Last_Name).ThenBy(x => x.p.First_Name).ToList();
+                            else
+                                lStats.Punting_Stats = lStats.Punting_Stats.OrderByDescending(x =>
+                                x.p.Last_Name).ThenByDescending(x => x.p.First_Name).ToList();
+                            break;
+                        case "Punt AVG":
                             if (sort_desc == false)
                                 lStats.Punting_Stats = lStats.Punting_Stats.OrderBy(x =>
                                 sort_field == "Name" ? x.p.Last_Name + x.p.First_Name :
@@ -758,7 +772,7 @@ namespace SpectatorFootball
                             break;
                         case "Punts":
                         case "Yards":
-                        case "Coffin_Corners":
+                        case "Coffin Corners":
                             if (sort_desc == false)
                                 lStats.Punting_Stats = lStats.Punting_Stats.OrderBy(x =>
                                     sort_field == "Punts" ? x.Punts :
@@ -790,9 +804,15 @@ namespace SpectatorFootball
                     }
                     switch (sort_field)
                     {
-                        case "Name":
-                        case "City_Abbr":
-                        case "Yards_avg":
+                        case "Player":
+                            if (sort_desc == false)
+                                lStats.KickRet_Stats = lStats.KickRet_Stats.OrderBy(x =>
+                                x.p.Last_Name).ThenBy(x => x.p.First_Name).ToList();
+                            else
+                                lStats.KickRet_Stats = lStats.KickRet_Stats.OrderByDescending(x =>
+                                x.p.Last_Name).ThenByDescending(x => x.p.First_Name).ToList();
+                            break;
+                       case "Yards/Return":
                             if (sort_desc == false)
                                 lStats.KickRet_Stats = lStats.KickRet_Stats.OrderBy(x =>
                                 sort_field == "Name" ? x.p.Last_Name + x.p.First_Name :
@@ -806,7 +826,7 @@ namespace SpectatorFootball
                             break;
                         case "Returns":
                         case "Yards":
-                        case "Yards_Long":
+                        case "Yards Long":
                         case "TDs":
                         case "Fumbles":
                             if (sort_desc == false)
@@ -844,9 +864,15 @@ namespace SpectatorFootball
                     }
                     switch (sort_field)
                     {
-                        case "Name":
-                        case "City_Abbr":
-                        case "Yards_avg":
+                        case "Player":
+                            if (sort_desc == false)
+                                lStats.PuntRet_Stats = lStats.PuntRet_Stats.OrderBy(x =>
+                                x.p.Last_Name).ThenBy(x => x.p.First_Name).ToList();
+                            else
+                                lStats.PuntRet_Stats = lStats.PuntRet_Stats.OrderByDescending(x =>
+                                x.p.Last_Name).ThenByDescending(x => x.p.First_Name).ToList();
+                            break;
+                        case "Yards/Return":
                             if (sort_desc == false)
                                 lStats.PuntRet_Stats = lStats.PuntRet_Stats.OrderBy(x =>
                                 sort_field == "Name" ? x.p.Last_Name + x.p.First_Name :
@@ -860,7 +886,7 @@ namespace SpectatorFootball
                             break;
                         case "Returns":
                         case "Yards":
-                        case "Yards_Long":
+                        case "Yards Long":
                         case "TDs":
                         case "Fumbles":
                             if (sort_desc == false)
