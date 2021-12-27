@@ -303,8 +303,7 @@ namespace SpectatorFootball
 
             return r;
         }
-
-        
+       
     }
 
 }

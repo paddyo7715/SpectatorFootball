@@ -9,6 +9,7 @@
         Height ="600" Width="600" WindowStyle="none" ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True">
     <Window.Resources>
         <local1:DoubleFormatConverter x:Key="DoubleFormatConverter" />
+        <local1:DoubleFormatConverter x:Key="DoubleFormatConverter1d" />
         <local1:inttoWeight x:Key="inttoWeight" />
         <local1:longiPosConverter x:Key="longiPosConverter" />
         <local1:handednessConverter x:Key="handednessConverter" />
@@ -104,7 +105,7 @@
                                                 <GridViewColumn Header="Team" Width="55" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Passing_Stats.Team}" />
                                                 <GridViewColumn Header="Comps" Width="60" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Passing_Stats.Completes}" />
                                                 <GridViewColumn Header="Atts" Width="60" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Passing_Stats.Ateempts}" />
-                                                <GridViewColumn Header="Comp %" Width="70" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Passing_Stats.Comp_Percent}" />
+                                                <GridViewColumn Header="Comp %" Width="70" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Passing_Stats.Comp_Percent,Converter={StaticResource  DoubleFormatConverter1d}}" />
                                                 <GridViewColumn Header="Yrds" Width="60" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Passing_Stats.Yards}" />
                                                 <GridViewColumn Header="TDs" Width="60" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Passing_Stats.TDs}" />
                                                 <GridViewColumn Header="INTs" Width="60" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Passing_Stats.Ints}" />
@@ -132,7 +133,7 @@
                                                 <GridViewColumn Header="Team" Width="55" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Passing_Stats.Team}" />
                                                 <GridViewColumn Header="Rushes" Width="65" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Rushing_Stats.Rushes}" />
                                                 <GridViewColumn Header="Yards" Width="65" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Rushing_Stats.Yards}" />
-                                                <GridViewColumn Header="Yrd/Carry" Width="75" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Rushing_Stats.Yards_Per_Carry}" />
+                                                <GridViewColumn Header="Yrd/Carry" Width="75" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Rushing_Stats.Yards_Per_Carry,Converter={StaticResource  DoubleFormatConverter1d}}" />
                                                 <GridViewColumn Header="Yards" Width="65" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Rushing_Stats.Yards}" />
                                                 <GridViewColumn Header="TDs" Width="65" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Rushing_Stats.TDs}" />
                                                 <GridViewColumn Header="Fumbles" Width="65" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Rushing_Stats.Fumbles_Lost}" />
@@ -159,7 +160,7 @@
                                                 <GridViewColumn Header="Team" Width="55" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Passing_Stats.Team}" />
                                                 <GridViewColumn Header="Catches" Width="65" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Receiving_Stats.Catches}" />
                                                 <GridViewColumn Header="Yards" Width="65" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Receiving_Stats.Yards}" />
-                                                <GridViewColumn Header="Yrd/Catch" Width="75" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Receiving_Stats.Yards_Per_Catch}" />
+                                                <GridViewColumn Header="Yrd/Catch" Width="75" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Receiving_Stats.Yards_Per_Catch,Converter={StaticResource  DoubleFormatConverter1d}}" />
                                                 <GridViewColumn Header="Drops" Width="65" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Receiving_Stats.Drops}" />
                                                 <GridViewColumn Header="TDs" Width="65" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Receiving_Stats.TDs}" />
                                                 <GridViewColumn Header="Fumbles" Width="65" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Receiving_Stats.Fumbles_Lost}" />
@@ -263,7 +264,7 @@
                                                 <GridViewColumn Header="Team" Width="55" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Passing_Stats.Team}" />
                                                 <GridViewColumn Header="FG Att" Width="75" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Kicking_Stats.FG_ATT}" />
                                                 <GridViewColumn Header="FG Made" Width="75" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Kicking_Stats.FG_Made}" />
-                                                <GridViewColumn Header="FG %" Width="75" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Kicking_Stats.FG_Percent}" />
+                                                <GridViewColumn Header="FG %" Width="75" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Kicking_Stats.FG_Percent,Converter={StaticResource  DoubleFormatConverter1d}}" />
                                                 <GridViewColumn Header="FG Long" Width="75" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Kicking_Stats.FG_Long}" />
                                                 <GridViewColumn Header="XP Att" Width="75" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Kicking_Stats.XP_ATT}" />
                                                 <GridViewColumn Header="XP Made" Width="75" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Kicking_Stats.XP_Made}" />
@@ -290,7 +291,7 @@
                                                 <GridViewColumn Header="Team" Width="55" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Passing_Stats.Team}" />
                                                 <GridViewColumn Header="Returns" Width="65" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.KickRet_Stats.Returns}" />
                                                 <GridViewColumn Header="Yards" Width="65" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.KickRet_Stats.Yards}" />
-                                                <GridViewColumn Header="Yards/Return" Width="75" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.KickRet_Stats.Yards_avg}" />
+                                                <GridViewColumn Header="Yards/Return" Width="75" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.KickRet_Stats.Yards_avg,Converter={StaticResource  DoubleFormatConverter1d}}" />
                                                 <GridViewColumn Header="Yards Long" Width="75" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.KickRet_Stats.Yards_Long}" />
                                                 <GridViewColumn Header="TDs" Width="65" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.KickRet_Stats.TDs}" />
                                                 <GridViewColumn Header="Fumbles" Width="75" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.KickRet_Stats.Fumbles}" />
@@ -317,7 +318,7 @@
                                                 <GridViewColumn Header="Team" Width="55" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Passing_Stats.Team}" />
                                                 <GridViewColumn Header="Punts" Width="75" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Punting_Stats.Punts}" />
                                                 <GridViewColumn Header="Yards" Width="75" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Punting_Stats.Yards}" />
-                                                <GridViewColumn Header="Punt AVG" Width="95" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Punting_Stats.Punt_AVG}" />
+                                                <GridViewColumn Header="Punt AVG" Width="95" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Punting_Stats.Punt_AVG,Converter={StaticResource  DoubleFormatConverter1d}}" />
                                                 <GridViewColumn Header="Coffin Corners" Width="95" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Punting_Stats.Coffin_Corners}" />
                                             </GridView>
                                         </ListView.View>
@@ -340,9 +341,9 @@
                                                 </GridView.ColumnHeaderContainerStyle>
                                                 <GridViewColumn Header="Year" Width="55" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.PuntRet_Stats.Year}" />
                                                 <GridViewColumn Header="Team" Width="55" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.Passing_Stats.Team}" />
-                                                 <GridViewColumn Header="Returns" Width="65" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.PuntRet_Stats.Returns}" />
+                                                <GridViewColumn Header="Returns" Width="65" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.PuntRet_Stats.Returns}" />
                                                 <GridViewColumn Header="Yards" Width="65" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.PuntRet_Stats.Yards}" />
-                                                <GridViewColumn Header="Yards/Return" Width="65" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.PuntRet_Stats.Yards_avg}" />
+                                                <GridViewColumn Header="Yards/Return" Width="65" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.PuntRet_Stats.Yards_avg,Converter={StaticResource  DoubleFormatConverter1d}}" />
                                                 <GridViewColumn Header="Yards Long" Width="75" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.PuntRet_Stats.Yards_Long}" />
                                                 <GridViewColumn Header="TDs" Width="65" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.PuntRet_Stats.TDs}" />
                                                 <GridViewColumn Header="Fumbles" Width="70" DisplayMemberBinding="{Binding Path=Regular_Season_Stats.PuntRet_Stats.Fumbles}" />
@@ -376,7 +377,7 @@
                                                     <GridViewColumn Header="Team" Width="55" DisplayMemberBinding="{Binding Path=Playoff_Stats.Passing_Stats.Team}" />
                                                     <GridViewColumn Header="Comps" Width="60" DisplayMemberBinding="{Binding Path=Playoff_Stats.Passing_Stats.Completes}" />
                                                     <GridViewColumn Header="Atts" Width="60" DisplayMemberBinding="{Binding Path=Playoff_Stats.Passing_Stats.Ateempts}" />
-                                                    <GridViewColumn Header="Comp %" Width="70" DisplayMemberBinding="{Binding Path=Playoff_Stats.Passing_Stats.Comp_Percent}" />
+                                                    <GridViewColumn Header="Comp %" Width="70" DisplayMemberBinding="{Binding Path=Playoff_Stats.Passing_Stats.Comp_Percent,Converter={StaticResource  DoubleFormatConverter1d}}" />
                                                     <GridViewColumn Header="Yrds" Width="60" DisplayMemberBinding="{Binding Path=Playoff_Stats.Passing_Stats.Yards}" />
                                                     <GridViewColumn Header="TDs" Width="60" DisplayMemberBinding="{Binding Path=Playoff_Stats.Passing_Stats.TDs}" />
                                                     <GridViewColumn Header="INTs" Width="60" DisplayMemberBinding="{Binding Path=Playoff_Stats.Passing_Stats.Ints}" />
@@ -404,7 +405,7 @@
                                                     <GridViewColumn Header="Team" Width="55" DisplayMemberBinding="{Binding Path=Playoff_Stats.Passing_Stats.Team}" />
                                                     <GridViewColumn Header="Rushes" Width="65" DisplayMemberBinding="{Binding Path=Playoff_Stats.Rushing_Stats.Rushes}" />
                                                     <GridViewColumn Header="Yards" Width="65" DisplayMemberBinding="{Binding Path=Playoff_Stats.Rushing_Stats.Yards}" />
-                                                    <GridViewColumn Header="Yrd/Carry" Width="75" DisplayMemberBinding="{Binding Path=Playoff_Stats.Rushing_Stats.Yards_Per_Carry}" />
+                                                    <GridViewColumn Header="Yrd/Carry" Width="75" DisplayMemberBinding="{Binding Path=Playoff_Stats.Rushing_Stats.Yards_Per_Carry,Converter={StaticResource  DoubleFormatConverter1d}}" />
                                                     <GridViewColumn Header="Yards" Width="65" DisplayMemberBinding="{Binding Path=Playoff_Stats.Rushing_Stats.Yards}" />
                                                     <GridViewColumn Header="TDs" Width="65" DisplayMemberBinding="{Binding Path=Playoff_Stats.Rushing_Stats.TDs}" />
                                                     <GridViewColumn Header="Fumbles" Width="65" DisplayMemberBinding="{Binding Path=Playoff_Stats.Rushing_Stats.Fumbles_Lost}" />
@@ -431,7 +432,7 @@
                                                     <GridViewColumn Header="Team" Width="55" DisplayMemberBinding="{Binding Path=Playoff_Stats.Passing_Stats.Team}" />
                                                     <GridViewColumn Header="Catches" Width="65" DisplayMemberBinding="{Binding Path=Playoff_Stats.Receiving_Stats.Catches}" />
                                                     <GridViewColumn Header="Yards" Width="65" DisplayMemberBinding="{Binding Path=Playoff_Stats.Receiving_Stats.Yards}" />
-                                                    <GridViewColumn Header="Yrd/Catch" Width="75" DisplayMemberBinding="{Binding Path=Playoff_Stats.Receiving_Stats.Yards_Per_Catch}" />
+                                                    <GridViewColumn Header="Yrd/Catch" Width="75" DisplayMemberBinding="{Binding Path=Playoff_Stats.Receiving_Stats.Yards_Per_Catch,Converter={StaticResource  DoubleFormatConverter1d}}" />
                                                     <GridViewColumn Header="Drops" Width="65" DisplayMemberBinding="{Binding Path=Playoff_Stats.Receiving_Stats.Drops}" />
                                                     <GridViewColumn Header="TDs" Width="65" DisplayMemberBinding="{Binding Path=Playoff_Stats.Receiving_Stats.TDs}" />
                                                     <GridViewColumn Header="Fumbles" Width="65" DisplayMemberBinding="{Binding Path=Playoff_Stats.Receiving_Stats.Fumbles_Lost}" />
@@ -535,7 +536,7 @@
                                                     <GridViewColumn Header="Team" Width="55" DisplayMemberBinding="{Binding Path=Playoff_Stats.Passing_Stats.Team}" />
                                                     <GridViewColumn Header="FG Att" Width="75" DisplayMemberBinding="{Binding Path=Playoff_Stats.Kicking_Stats.FG_ATT}" />
                                                     <GridViewColumn Header="FG Made" Width="75" DisplayMemberBinding="{Binding Path=Playoff_Stats.Kicking_Stats.FG_Made}" />
-                                                    <GridViewColumn Header="FG %" Width="75" DisplayMemberBinding="{Binding Path=Playoff_Stats.Kicking_Stats.FG_Percent}" />
+                                                    <GridViewColumn Header="FG %" Width="75" DisplayMemberBinding="{Binding Path=Playoff_Stats.Kicking_Stats.FG_Percent,Converter={StaticResource  DoubleFormatConverter1d}}" />
                                                     <GridViewColumn Header="FG Long" Width="75" DisplayMemberBinding="{Binding Path=Playoff_Stats.Kicking_Stats.FG_Long}" />
                                                     <GridViewColumn Header="XP Att" Width="75" DisplayMemberBinding="{Binding Path=Playoff_Stats.Kicking_Stats.XP_ATT}" />
                                                     <GridViewColumn Header="XP Made" Width="75" DisplayMemberBinding="{Binding Path=Playoff_Stats.Kicking_Stats.XP_Made}" />
@@ -562,7 +563,7 @@
                                                     <GridViewColumn Header="Team" Width="55" DisplayMemberBinding="{Binding Path=Playoff_Stats.Passing_Stats.Team}" />
                                                     <GridViewColumn Header="Returns" Width="65" DisplayMemberBinding="{Binding Path=Playoff_Stats.KickRet_Stats.Returns}" />
                                                     <GridViewColumn Header="Yards" Width="65" DisplayMemberBinding="{Binding Path=Playoff_Stats.KickRet_Stats.Yards}" />
-                                                    <GridViewColumn Header="Yards/Return" Width="75" DisplayMemberBinding="{Binding Path=Playoff_Stats.KickRet_Stats.Yards_avg}" />
+                                                    <GridViewColumn Header="Yards/Return" Width="75" DisplayMemberBinding="{Binding Path=Playoff_Stats.KickRet_Stats.Yards_avg,Converter={StaticResource  DoubleFormatConverter1d}}" />
                                                     <GridViewColumn Header="Yards Long" Width="75" DisplayMemberBinding="{Binding Path=Playoff_Stats.KickRet_Stats.Yards_Long}" />
                                                     <GridViewColumn Header="TDs" Width="65" DisplayMemberBinding="{Binding Path=Playoff_Stats.KickRet_Stats.TDs}" />
                                                     <GridViewColumn Header="Fumbles" Width="75" DisplayMemberBinding="{Binding Path=Playoff_Stats.KickRet_Stats.Fumbles}" />
@@ -589,7 +590,7 @@
                                                     <GridViewColumn Header="Team" Width="55" DisplayMemberBinding="{Binding Path=Playoff_Stats.Passing_Stats.Team}" />
                                                     <GridViewColumn Header="Punts" Width="75" DisplayMemberBinding="{Binding Path=Playoff_Stats.Punting_Stats.Punts}" />
                                                     <GridViewColumn Header="Yards" Width="75" DisplayMemberBinding="{Binding Path=Playoff_Stats.Punting_Stats.Yards}" />
-                                                    <GridViewColumn Header="Punt AVG" Width="95" DisplayMemberBinding="{Binding Path=Playoff_Stats.Punting_Stats.Punt_AVG}" />
+                                                    <GridViewColumn Header="Punt AVG" Width="95" DisplayMemberBinding="{Binding Path=Playoff_Stats.Punting_Stats.Punt_AVG,Converter={StaticResource  DoubleFormatConverter1d}}" />
                                                     <GridViewColumn Header="Coffin Corners" Width="95" DisplayMemberBinding="{Binding Path=Playoff_Stats.Punting_Stats.Coffin_Corners}" />
                                                 </GridView>
                                             </ListView.View>
@@ -615,7 +616,7 @@
                                                     <GridViewColumn Header="Returns" Width="65" DisplayMemberBinding="{Binding Path=Playoff_Stats.PuntRet_Stats.Returns}" />
                                                     <GridViewColumn Header="Yards" Width="65" DisplayMemberBinding="{Binding Path=Playoff_Stats.PuntRet_Stats.Yards}" />
                                                     <GridViewColumn Header="Yards/Return" Width="65" DisplayMemberBinding="{Binding Path=Playoff_Stats.PuntRet_Stats.Yards_avg}" />
-                                                    <GridViewColumn Header="Yards Long" Width="75" DisplayMemberBinding="{Binding Path=Playoff_Stats.PuntRet_Stats.Yards_Long}" />
+                                                    <GridViewColumn Header="Yards Long" Width="75" DisplayMemberBinding="{Binding Path=Playoff_Stats.PuntRet_Stats.Yards_Long,Converter={StaticResource  DoubleFormatConverter1d}}" />
                                                     <GridViewColumn Header="TDs" Width="65" DisplayMemberBinding="{Binding Path=Playoff_Stats.PuntRet_Stats.TDs}" />
                                                     <GridViewColumn Header="Fumbles" Width="75" DisplayMemberBinding="{Binding Path=Playoff_Stats.PuntRet_Stats.Fumbles}" />
                                                 </GridView>

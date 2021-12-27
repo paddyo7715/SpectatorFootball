@@ -136,6 +136,7 @@
     <Compile Include="BindingConverters\ActiveRetiredConverter.cs" />
     <Compile Include="BindingConverters\avgYardsConverter.cs" />
     <Compile Include="BindingConverters\ColorConverter.cs" />
+    <Compile Include="BindingConverters\DoubleConverter1d.cs" />
     <Compile Include="BindingConverters\DoubleFormatConverter.cs" />
     <Compile Include="BindingConverters\handednessConverter.cs" />
     <Compile Include="BindingConverters\HasAnyConverter.cs" />

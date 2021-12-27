@@ -44,8 +44,7 @@ namespace SpectatorFootball.WindowsLeague
             sType = Stat_Type.PASSING;
             last_sort_stat = "QBR";
             Stat_Descend = true;
-            LeagueStats = lServices.getSeasonStats(pw.Loaded_League, LeagueStats,Stat_Type.PASSING , last_sort_stat, Stat_Descend);
-            setStatsList();
+//            setStatsList();
         }
 
         private void btnStandings_Click(object sender, RoutedEventArgs e)
@@ -83,8 +82,14 @@ namespace SpectatorFootball.WindowsLeague
 
         private void setStatsList()
         {
-            switch (sType)
+            try
             {
+                Mouse.OverrideCursor = Cursors.Wait;
+
+                LeagueStats = lServices.getSeasonStats(pw.Loaded_League, LeagueStats, sType, last_sort_stat, Stat_Descend);
+
+                switch (sType)
+                {
                 case Stat_Type.PASSING:
                     lstPassing.ItemsSource = LeagueStats.Passing_Stats;
                     if (LeagueStats.Passing_Stats == null || LeagueStats.Passing_Stats.Count() == 0)
@@ -155,6 +160,15 @@ namespace SpectatorFootball.WindowsLeague
                     else
                         lblPuntReturnsNoStats.Visibility = Visibility.Collapsed;
                     break;
+                }
+                Mouse.OverrideCursor = null;
+            }
+            catch (Exception ex)
+            {
+                Mouse.OverrideCursor = null;
+                logger.Error("Error Getting Player Stats");
+                logger.Error(ex);
+                MessageBox.Show(CommonUtils.substr(ex.Message, 0, 100), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -165,7 +179,7 @@ namespace SpectatorFootball.WindowsLeague
                 sType = Stat_Type.PASSING;
                 last_sort_stat = "QBR";
                 Stat_Descend = true;
-                LeagueStats = lServices.getSeasonStats(pw.Loaded_League, LeagueStats, Stat_Type.PASSING, last_sort_stat, Stat_Descend);
+//                LeagueStats = lServices.getSeasonStats(pw.Loaded_League, LeagueStats, Stat_Type.PASSING, last_sort_stat, Stat_Descend);
                 setStatsList();
             }
             else if (tabRushing.IsSelected)
@@ -173,7 +187,7 @@ namespace SpectatorFootball.WindowsLeague
                 sType = Stat_Type.RUSHING;
                 last_sort_stat = "Yards";
                 Stat_Descend = true;
-                LeagueStats = lServices.getSeasonStats(pw.Loaded_League, LeagueStats, Stat_Type.RUSHING, last_sort_stat, Stat_Descend);
+//                LeagueStats = lServices.getSeasonStats(pw.Loaded_League, LeagueStats, Stat_Type.RUSHING, last_sort_stat, Stat_Descend);
                 setStatsList();
             }
             else if (tabReceiving.IsSelected)
@@ -181,7 +195,7 @@ namespace SpectatorFootball.WindowsLeague
                 sType = Stat_Type.RECEIVING;
                 last_sort_stat = "Catches";
                 Stat_Descend = true;
-                LeagueStats = lServices.getSeasonStats(pw.Loaded_League, LeagueStats, Stat_Type.RECEIVING, last_sort_stat, Stat_Descend);
+//                LeagueStats = lServices.getSeasonStats(pw.Loaded_League, LeagueStats, Stat_Type.RECEIVING, last_sort_stat, Stat_Descend);
                 setStatsList();
             }
             else if (tabBlocking.IsSelected)
@@ -189,7 +203,7 @@ namespace SpectatorFootball.WindowsLeague
                 sType = Stat_Type.BLOCKING;
                 last_sort_stat = "Pancakes";
                 Stat_Descend = true;
-                LeagueStats = lServices.getSeasonStats(pw.Loaded_League, LeagueStats, Stat_Type.BLOCKING, last_sort_stat, Stat_Descend);
+//                LeagueStats = lServices.getSeasonStats(pw.Loaded_League, LeagueStats, Stat_Type.BLOCKING, last_sort_stat, Stat_Descend);
                 setStatsList();
             }
             else if (tabDefense.IsSelected)
@@ -197,7 +211,7 @@ namespace SpectatorFootball.WindowsLeague
                 sType = Stat_Type.DEFENSE;
                 last_sort_stat = "Sacks";
                 Stat_Descend = true;
-                LeagueStats = lServices.getSeasonStats(pw.Loaded_League, LeagueStats, Stat_Type.DEFENSE, last_sort_stat, Stat_Descend);
+//                LeagueStats = lServices.getSeasonStats(pw.Loaded_League, LeagueStats, Stat_Type.DEFENSE, last_sort_stat, Stat_Descend);
                 setStatsList();
             }
             else if (tabPassDefense.IsSelected)
@@ -205,7 +219,7 @@ namespace SpectatorFootball.WindowsLeague
                 sType = Stat_Type.PASS_DEFENSE;
                 last_sort_stat = "Ints";
                 Stat_Descend = true;
-                LeagueStats = lServices.getSeasonStats(pw.Loaded_League, LeagueStats, Stat_Type.PASS_DEFENSE, last_sort_stat, Stat_Descend);
+//                LeagueStats = lServices.getSeasonStats(pw.Loaded_League, LeagueStats, Stat_Type.PASS_DEFENSE, last_sort_stat, Stat_Descend);
                 setStatsList();
             }
             else if (tabKicking.IsSelected)
@@ -213,7 +227,7 @@ namespace SpectatorFootball.WindowsLeague
                 sType = Stat_Type.KICKING;
                 last_sort_stat = "FG_Made";
                 Stat_Descend = true;
-                LeagueStats = lServices.getSeasonStats(pw.Loaded_League, LeagueStats, Stat_Type.KICKING, last_sort_stat, Stat_Descend);
+//                LeagueStats = lServices.getSeasonStats(pw.Loaded_League, LeagueStats, Stat_Type.KICKING, last_sort_stat, Stat_Descend);
                 setStatsList();
             }
             else if (tabPunting.IsSelected)
@@ -221,7 +235,7 @@ namespace SpectatorFootball.WindowsLeague
                 sType = Stat_Type.PUNTING;
                 last_sort_stat = "Punt_AVG";
                 Stat_Descend = true;
-                LeagueStats = lServices.getSeasonStats(pw.Loaded_League, LeagueStats, Stat_Type.PUNTING, last_sort_stat, Stat_Descend);
+//                LeagueStats = lServices.getSeasonStats(pw.Loaded_League, LeagueStats, Stat_Type.PUNTING, last_sort_stat, Stat_Descend);
                 setStatsList();
             }
             else if (tabKickReturn.IsSelected)
@@ -229,7 +243,7 @@ namespace SpectatorFootball.WindowsLeague
                 sType = Stat_Type.KICK_RETURNS;
                 last_sort_stat = "Yards_avg";
                 Stat_Descend = true;
-                LeagueStats = lServices.getSeasonStats(pw.Loaded_League, LeagueStats, Stat_Type.KICK_RETURNS, last_sort_stat, Stat_Descend);
+//                LeagueStats = lServices.getSeasonStats(pw.Loaded_League, LeagueStats, Stat_Type.KICK_RETURNS, last_sort_stat, Stat_Descend);
                 setStatsList();
             }
             else if (tabPuntReturn.IsSelected)
@@ -237,7 +251,7 @@ namespace SpectatorFootball.WindowsLeague
                 sType = Stat_Type.PUNT_RETURNS;
                 last_sort_stat = "Yards_avg";
                 Stat_Descend = true;
-                LeagueStats = lServices.getSeasonStats(pw.Loaded_League, LeagueStats, Stat_Type.PUNT_RETURNS, last_sort_stat, Stat_Descend);
+//                LeagueStats = lServices.getSeasonStats(pw.Loaded_League, LeagueStats, Stat_Type.PUNT_RETURNS, last_sort_stat, Stat_Descend);
                 setStatsList();
             }
 

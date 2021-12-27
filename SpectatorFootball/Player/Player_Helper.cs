@@ -707,6 +707,7 @@ namespace SpectatorFootball.PlayerNS
             else
                 r = "0.0";
 
+            r = r.PadLeft(10, '0');
             return r;
         }
         public static string CalculateQBR(long comp, long att, long yards, long TDs, long ints)
@@ -753,6 +754,7 @@ namespace SpectatorFootball.PlayerNS
             else
                 r = "0.0";
 
+            r = r.PadLeft(10, '0');
             return r;
         }
         public static List<string> getRelaventRatingsforPos(Player_Pos pos)

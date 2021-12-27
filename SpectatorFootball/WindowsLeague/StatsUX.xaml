@@ -3,9 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:SpectatorFootball.WindowsLeague"
+             xmlns:local1="clr-namespace:SpectatorFootball.BindingConverters"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <local1:DoubleFormatConverter x:Key="DoubleFormatConverter1d" />
+    </UserControl.Resources>
     <DockPanel Height="730">
         <Grid DockPanel.Dock="Top">
             <Grid.ColumnDefinitions>
@@ -67,7 +70,7 @@
                                     </GridViewColumn>
                                     <GridViewColumn Header="Completes" Width="80" DisplayMemberBinding="{Binding Path=Completes}" />
                                     <GridViewColumn Header="Attempts" Width="80" DisplayMemberBinding="{Binding Path=Ateempts}" />
-                                    <GridViewColumn Header="Comp %" Width="80" DisplayMemberBinding="{Binding Path=Comp_Percent}" />
+                                    <GridViewColumn Header="Comp %" Width="80" DisplayMemberBinding="{Binding Path=Comp_Percent,Converter={StaticResource  DoubleFormatConverter1d}}" />
                                     <GridViewColumn Header="Yards" Width="80" DisplayMemberBinding="{Binding Path=Yards}" />
                                     <GridViewColumn Header="TDs" Width="80" DisplayMemberBinding="{Binding Path=TDs}" />
                                     <GridViewColumn Header="INTs" Width="80" DisplayMemberBinding="{Binding Path=Ints}" />
@@ -120,7 +123,7 @@
                                     </GridViewColumn>
                                     <GridViewColumn Header="Rushes" Width="80" DisplayMemberBinding="{Binding Path=Rushes}" />
                                     <GridViewColumn Header="Yards" Width="80" DisplayMemberBinding="{Binding Path=Yards}" />
-                                    <GridViewColumn Header="Yards/Carry" Width="80" DisplayMemberBinding="{Binding Path=Yards_Per_Carry}" />
+                                    <GridViewColumn Header="Yards/Carry" Width="80" DisplayMemberBinding="{Binding Path=Yards_Per_Carry,Converter={StaticResource  DoubleFormatConverter1d}}" />
                                     <GridViewColumn Header="Yards" Width="80" DisplayMemberBinding="{Binding Path=Yards}" />
                                     <GridViewColumn Header="TDs" Width="80" DisplayMemberBinding="{Binding Path=TDs}" />
                                     <GridViewColumn Header="Fumbles Lost" Width="90" DisplayMemberBinding="{Binding Path=Fumbles_Lost}" />
@@ -172,7 +175,7 @@
                                     </GridViewColumn>
                                     <GridViewColumn Header="Catches" Width="80" DisplayMemberBinding="{Binding Path=Catches}" />
                                     <GridViewColumn Header="Yards" Width="80" DisplayMemberBinding="{Binding Path=Yards}" />
-                                    <GridViewColumn Header="Yards/Catch" Width="80" DisplayMemberBinding="{Binding Path=Yards_Per_Catch}" />
+                                    <GridViewColumn Header="Yards/Catch" Width="80" DisplayMemberBinding="{Binding Path=Yards_Per_Catch,Converter={StaticResource  DoubleFormatConverter1d}}" />
                                     <GridViewColumn Header="Drops" Width="80" DisplayMemberBinding="{Binding Path=Drops}" />
                                     <GridViewColumn Header="TDs" Width="80" DisplayMemberBinding="{Binding Path=TDs}" />
                                     <GridViewColumn Header="Fumbles Lost" Width="90" DisplayMemberBinding="{Binding Path=Fumbles_Lost}" />
@@ -376,7 +379,7 @@
                                     </GridViewColumn>
                                     <GridViewColumn Header="FG Att" Width="100" DisplayMemberBinding="{Binding Path=FG_ATT}" />
                                     <GridViewColumn Header="FG Made" Width="100" DisplayMemberBinding="{Binding Path=FG_Made}" />
-                                    <GridViewColumn Header="FG %" Width="100" DisplayMemberBinding="{Binding Path=FG_Percent}" />
+                                    <GridViewColumn Header="FG %" Width="100" DisplayMemberBinding="{Binding Path=FG_Percent,Converter={StaticResource  DoubleFormatConverter1d}}" />
                                     <GridViewColumn Header="FG Long" Width="100" DisplayMemberBinding="{Binding Path=FG_Long}" />
                                     <GridViewColumn Header="XP Att" Width="100" DisplayMemberBinding="{Binding Path=XP_ATT}" />
                                     <GridViewColumn Header="XP Made" Width="100" DisplayMemberBinding="{Binding Path=XP_Made}" />
@@ -428,7 +431,7 @@
                                     </GridViewColumn>
                                     <GridViewColumn Header="Punts" Width="80" DisplayMemberBinding="{Binding Path=Punts}" />
                                     <GridViewColumn Header="Yards" Width="80" DisplayMemberBinding="{Binding Path=Yards}" />
-                                    <GridViewColumn Header="Punt AVG" Width="100" DisplayMemberBinding="{Binding Path=Punt_AVG}" />
+                                    <GridViewColumn Header="Punt AVG" Width="100" DisplayMemberBinding="{Binding Path=Punt_AVG,Converter={StaticResource  DoubleFormatConverter1d}}" />
                                     <GridViewColumn Header="Coffin Corners" Width="100" DisplayMemberBinding="{Binding Path=Coffin_Corners}" />
                                 </GridView>
                             </ListView.View>
@@ -478,7 +481,7 @@
                                     </GridViewColumn>
                                     <GridViewColumn Header="Returns" Width="80" DisplayMemberBinding="{Binding Path=Returns}" />
                                     <GridViewColumn Header="Yards" Width="80" DisplayMemberBinding="{Binding Path=Yards}" />
-                                    <GridViewColumn Header="Yards/Return" Width="80" DisplayMemberBinding="{Binding Path=Yards_avg}" />
+                                    <GridViewColumn Header="Yards/Return" Width="80" DisplayMemberBinding="{Binding Path=Yards_avg,Converter={StaticResource  DoubleFormatConverter1d}}" />
                                     <GridViewColumn Header="Yards Long" Width="100" DisplayMemberBinding="{Binding Path=Yards_Long}" />
                                     <GridViewColumn Header="TDs" Width="80" DisplayMemberBinding="{Binding Path=TDs}" />
                                     <GridViewColumn Header="Fumbles" Width="80" DisplayMemberBinding="{Binding Path=Fumbles}" />
@@ -530,7 +533,7 @@
                                     </GridViewColumn>
                                     <GridViewColumn Header="Returns" Width="80" DisplayMemberBinding="{Binding Path=Returns}" />
                                     <GridViewColumn Header="Yards" Width="80" DisplayMemberBinding="{Binding Path=Yards}" />
-                                    <GridViewColumn Header="Yards/Return" Width="80" DisplayMemberBinding="{Binding Path=Yards_avg}" />
+                                    <GridViewColumn Header="Yards/Return" Width="80" DisplayMemberBinding="{Binding Path=Yards_avg,Converter={StaticResource  DoubleFormatConverter1d}}" />
                                     <GridViewColumn Header="Yards Long" Width="100" DisplayMemberBinding="{Binding Path=Yards_Long}" />
                                     <GridViewColumn Header="TDs" Width="80" DisplayMemberBinding="{Binding Path=TDs}" />
                                     <GridViewColumn Header="Fumbles" Width="80" DisplayMemberBinding="{Binding Path=Fumbles}" />
