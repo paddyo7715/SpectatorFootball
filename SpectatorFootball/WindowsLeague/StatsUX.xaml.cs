@@ -1,5 +1,6 @@
 ﻿using log4net;
 using SpectatorFootball.Enum;
+using SpectatorFootball.Help_Forms;
 using SpectatorFootball.League;
 using System;
 using System.Collections.Generic;
@@ -261,6 +262,10 @@ namespace SpectatorFootball.WindowsLeague
 
         private void help_btn_Click(object sender, RoutedEventArgs e)
         {
+            var help_form = new Help_PlayerStats();
+            help_form.Top = (SystemParameters.PrimaryScreenHeight - help_form.Height) / 2;
+            help_form.Left = (SystemParameters.PrimaryScreenWidth - help_form.Width) / 2;
+            help_form.ShowDialog();
 
         }
     }

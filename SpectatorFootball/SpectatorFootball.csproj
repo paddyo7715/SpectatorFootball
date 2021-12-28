@@ -185,6 +185,9 @@
     <Compile Include="Help_Forms\Help_FreeAgency.xaml.cs">
       <DependentUpon>Help_FreeAgency.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Help_Forms\Help_PlayerStats.xaml.cs">
+      <DependentUpon>Help_PlayerStats.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Help_Forms\Help_Schedule.xaml.cs">
       <DependentUpon>Help_Schedule.xaml</DependentUpon>
     </Compile>
@@ -484,6 +487,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Help_Forms\Help_FreeAgency.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Help_Forms\Help_PlayerStats.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -629,7 +629,7 @@ namespace SpectatorFootball
                     }
                     break;
                 case Stat_Type.PASS_DEFENSE:
-                    if (lStats.Defense_Stats == null)
+                    if (lStats.Pass_Defense_Stats == null)
                     {
                         TeamDAO td = new TeamDAO();
                         List<Teams_by_Season> team_list = td.getAllTeamsSeason(season_id, League_con_string);
