@@ -119,6 +119,12 @@
           <Property Name="Playoff_Game" Type="integer" />
           <Property Name="Championship_Game" Type="integer" />
           <Property Name="Game_Done" Type="integer" />
+          <Property Name="Home_Passing_Yards" Type="integer" />
+          <Property Name="Away_Passing_Yards" Type="integer" />
+          <Property Name="Home_Rushing_Yards" Type="integer" />
+          <Property Name="Away_Rushing_Yards" Type="integer" />
+          <Property Name="Home_Turnovers" Type="integer" />
+          <Property Name="Away_Turnovers" Type="integer" />
         </EntityType>
         <EntityType Name="Game_Player_Defense_Stats">
           <Key>
@@ -714,7 +720,13 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Game_0_0">
+        <!--Errors Found During Generation:
+warning 6035: The relationship 'FK_Game_0_0' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="FK_Game_0_0" />-->
+        <!--Errors Found During Generation:
+warning 6035: The relationship 'FK_Game_1_0' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="FK_Game_1_0" />-->
+        <Association Name="FK_Game_2_0">
           <End Role="Season" Type="Self.Season" Multiplicity="1" />
           <End Role="Game" Type="Self.Game" Multiplicity="*" />
           <ReferentialConstraint>
@@ -726,12 +738,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-warning 6035: The relationship 'FK_Game_1_0' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-        <Association Name="FK_Game_1_0" />-->
-        <!--Errors Found During Generation:
-warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-        <Association Name="FK_Game_2_0" />-->
         <Association Name="FK_Game_Player_Defense_Stats_0_0">
           <End Role="Game" Type="Self.Game" Multiplicity="1" />
           <End Role="Game_Player_Defense_Stats" Type="Self.Game_Player_Defense_Stats" Multiplicity="*" />
@@ -1692,7 +1698,7 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
             <End Role="Franchise" EntitySet="Franchise" />
             <End Role="Free_Agency" EntitySet="Free_Agency" />
           </AssociationSet>
-          <AssociationSet Name="FK_Game_0_0" Association="Self.FK_Game_0_0">
+          <AssociationSet Name="FK_Game_2_0" Association="Self.FK_Game_2_0">
             <End Role="Season" EntitySet="Season" />
             <End Role="Game" EntitySet="Game" />
           </AssociationSet>
@@ -2143,7 +2149,13 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
           <Property Name="Playoff_Game" Type="Int64" />
           <Property Name="Championship_Game" Type="Int64" />
           <Property Name="Game_Done" Type="Int64" />
-          <NavigationProperty Name="Season" Relationship="Self.FK_Game_0_0" FromRole="Game" ToRole="Season" />
+          <Property Name="Home_Passing_Yards" Type="Int64" />
+          <Property Name="Away_Passing_Yards" Type="Int64" />
+          <Property Name="Home_Rushing_Yards" Type="Int64" />
+          <Property Name="Away_Rushing_Yards" Type="Int64" />
+          <Property Name="Home_Turnovers" Type="Int64" />
+          <Property Name="Away_Turnovers" Type="Int64" />
+          <NavigationProperty Name="Season" Relationship="Self.FK_Game_2_0" FromRole="Game" ToRole="Season" />
           <NavigationProperty Name="Game_Player_Defense_Stats" Relationship="Self.FK_Game_Player_Defense_Stats_0_0" FromRole="Game" ToRole="Game_Player_Defense_Stats" />
           <NavigationProperty Name="Game_Player_FG_Defense_Stats" Relationship="Self.FK_Game_Player_FG_Defense_Stats_2_0" FromRole="Game" ToRole="Game_Player_FG_Defense_Stats" />
           <NavigationProperty Name="Game_Player_Kick_Returner_Stats" Relationship="Self.FK_Game_Player_Kick_Returner_Stats_0_0" FromRole="Game" ToRole="Game_Player_Kick_Returner_Stats" />
@@ -2691,7 +2703,7 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
           <NavigationProperty Name="Divisions" Relationship="Self.FK_Division_0_0" FromRole="Season" ToRole="Division" />
           <NavigationProperty Name="Drafts" Relationship="Self.FK_Draft_0_0" FromRole="Season" ToRole="Draft" />
           <NavigationProperty Name="Free_Agency" Relationship="Self.FK_Free_Agency_0_0" FromRole="Season" ToRole="Free_Agency" />
-          <NavigationProperty Name="Games" Relationship="Self.FK_Game_0_0" FromRole="Season" ToRole="Game" />
+          <NavigationProperty Name="Games" Relationship="Self.FK_Game_2_0" FromRole="Season" ToRole="Game" />
           <NavigationProperty Name="Hall_of_Fame" Relationship="Self.FK_Hall_of_Fame_0_0" FromRole="Season" ToRole="Hall_of_Fame" />
           <NavigationProperty Name="Injuries" Relationship="Self.FK_Injuries_1_0" FromRole="Season" ToRole="Injuries" />
           <NavigationProperty Name="Injury_Log" Relationship="Self.FK_Injury_Log_0_0" FromRole="Season" ToRole="Injury_Log" />
@@ -3125,7 +3137,7 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Game_0_0">
+        <Association Name="FK_Game_2_0">
           <End Role="Season" Type="Self.Season" Multiplicity="1" />
           <End Role="Game" Type="Self.Game" Multiplicity="*" />
           <ReferentialConstraint>
@@ -3929,7 +3941,7 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
             <End Role="Players" EntitySet="Players" />
             <End Role="Free_Agency" EntitySet="Free_Agency" />
           </AssociationSet>
-          <AssociationSet Name="FK_Game_0_0" Association="Self.FK_Game_0_0">
+          <AssociationSet Name="FK_Game_2_0" Association="Self.FK_Game_2_0">
             <End Role="Season" EntitySet="Seasons" />
             <End Role="Game" EntitySet="Games" />
           </AssociationSet>
@@ -4272,6 +4284,12 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
                 <ScalarProperty Name="Playoff_Game" ColumnName="Playoff_Game" />
                 <ScalarProperty Name="Championship_Game" ColumnName="Championship_Game" />
                 <ScalarProperty Name="Game_Done" ColumnName="Game_Done" />
+                <ScalarProperty Name="Home_Passing_Yards" ColumnName="Home_Passing_Yards" />
+                <ScalarProperty Name="Away_Passing_Yards" ColumnName="Away_Passing_Yards" />
+                <ScalarProperty Name="Home_Rushing_Yards" ColumnName="Home_Rushing_Yards" />
+                <ScalarProperty Name="Away_Rushing_Yards" ColumnName="Away_Rushing_Yards" />
+                <ScalarProperty Name="Home_Turnovers" ColumnName="Home_Turnovers" />
+                <ScalarProperty Name="Away_Turnovers" ColumnName="Away_Turnovers" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -345,6 +345,7 @@
     <Compile Include="Models\Teams_by_Season.cs">
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Team_Stat_Rec.cs" />
     <Compile Include="Models\TrainingCampResults.cs" />
     <Compile Include="Models\TrainingCampStatus.cs" />
     <Compile Include="Models\Training_Camp_by_Season.cs">

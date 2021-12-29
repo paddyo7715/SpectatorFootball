@@ -121,6 +121,12 @@
           <ScalarProperty Name="Playoff_Game" ColumnName="Playoff_Game" />
           <ScalarProperty Name="Championship_Game" ColumnName="Championship_Game" />
           <ScalarProperty Name="Game_Done" ColumnName="Game_Done" />
+          <ScalarProperty Name="Home_Passing_Yards" ColumnName="Home_Passing_Yards" />
+          <ScalarProperty Name="Away_Passing_Yards" ColumnName="Away_Passing_Yards" />
+          <ScalarProperty Name="Home_Rushing_Yards" ColumnName="Home_Rushing_Yards" />
+          <ScalarProperty Name="Away_Rushing_Yards" ColumnName="Away_Rushing_Yards" />
+          <ScalarProperty Name="Home_Turnovers" ColumnName="Home_Turnovers" />
+          <ScalarProperty Name="Away_Turnovers" ColumnName="Away_Turnovers" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
