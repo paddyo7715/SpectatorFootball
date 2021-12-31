@@ -27,12 +27,17 @@ namespace SpectatorFootball.Models
         public long Total_Yards_Against { get; set; }
         public long Turnovers_Comm { get; set; }
         public long Turnovers_Recv { get; set; }
-        public long Third_Down_String { get; set; }
+        public string Third_Down_String { get; set; }
+        public string Third_Down_Display_String { get; set; }
         public long Third_Down_Conversions { get; set; }
         public long Third_Down_Conversions_Att { get; set; }
-        public long Fourth_Down_String { get; set; }
+        public string Fourth_Down_String { get; set; }
+        public string Fourth_Down_Display_String { get; set; }
         public long Fourth_Down_Conversions { get; set; }
         public long Fourth_Down_Conversions_Att { get; set; }
+        public long Sacks_For { get; set; }
+        public long Sacks_Against { get; set; }
+        public long Power_Ranking { get; set; }
 
     }
 }

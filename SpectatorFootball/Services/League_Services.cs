@@ -908,12 +908,205 @@ namespace SpectatorFootball
                     break;
             }
 
-            //            r = ld.getAllSeasons(League_con_string);
-
-
             return r;
+        }
 
+        public List<Team_Stat_Rec> getLeagueStats(Loaded_League_Structure lld, List<Team_Stat_Rec> Final_stats, string sortfield, bool isdecending)
+        {
+            string DIRPath_League = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + lld.season.League_Structure_by_Season[0].Short_Name.ToUpper();
+            string helment_img_path = DIRPath_League + Path.DirectorySeparatorChar + app_Constants.LEAGUE_HELMETS_SUBFOLDER;
+            string League_con_string = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + lld.season.League_Structure_by_Season[0].Short_Name.ToUpper() + Path.DirectorySeparatorChar + lld.season.League_Structure_by_Season[0].Short_Name.ToUpper() + "." + app_Constants.DB_FILE_EXT;
+            LeagueDAO ld = new LeagueDAO();
 
+            if (Final_stats == null)
+            {
+                List<Team_Stat_Rec> TeamBlankStats = new List<Team_Stat_Rec>();
+
+                //First set a blank team stat record for each team, so that each team has a record
+                //even if they haven't played a game.
+                foreach (Teams_by_Season t in lld.season.Teams_by_Season)
+                    TeamBlankStats.Add(new Team_Stat_Rec() { f_id = t.Franchise_ID });
+
+                //Next, get the home and away team stats
+                List<Team_Stat_Rec>[] haStats = ld.getLeagueStatsHomeAway(lld.season.ID, League_con_string);
+
+                //now merge that data from the blank stats, home and away stat recs
+                var combined_Stats =
+                    TeamBlankStats.Concat(haStats[0]).Concat(haStats[1]);
+
+                //Now group the stats by franchise id to ge tthe final list
+                Final_stats = combined_Stats.GroupBy(x => x.f_id)
+                    .Select(x => new Team_Stat_Rec
+                    {
+                        f_id = x.Key,
+                        Passing_Yards_For = (long)x.Sum(s => s.Passing_Yards_For),
+                        Passing_Yards_Against = (long)x.Sum(s => s.Passing_Yards_Against),
+                        Rushing_Yards_For = (long)x.Sum(s => s.Rushing_Yards_For),
+                        Rushing_Yards_Against = (long)x.Sum(s => s.Rushing_Yards_Against),
+                        Turnovers_Comm = (long)x.Sum(s => s.Turnovers_Comm),
+                        Turnovers_Recv = (long)x.Sum(s => s.Turnovers_Recv),
+                        Third_Down_Conversions = (long)x.Sum(s => s.Third_Down_Conversions),
+                        Third_Down_Conversions_Att = (long)x.Sum(s => s.Third_Down_Conversions_Att),
+                        Fourth_Down_Conversions = (long)x.Sum(s => s.Fourth_Down_Conversions),
+                        Fourth_Down_Conversions_Att = (long)x.Sum(s => s.Fourth_Down_Conversions_Att)
+                    }).ToList();
+
+                //Now do all the calculations and set the helmet for each team record
+                List<Standings_Row> Standings = lld.Standings;
+                foreach (Team_Stat_Rec s in Final_stats)
+                {
+                    Teams_by_Season t = lld.season.Teams_by_Season.Where(x => x.Franchise_ID == s.f_id).First();
+                    s.Team_Name = t.City + " " + t.Nickname;
+                    s.HelmetImage = lld.getHelmetImg(t.Helmet_Image_File);
+                    s.Wins = Standings.Where(x => x.Team_ID == t.ID).Select(x => x.wins).First();
+                    s.Loses = Standings.Where(x => x.Team_ID == t.ID).Select(x => x.loses).First();
+                    s.Ties = Standings.Where(x => x.Team_ID == t.ID).Select(x => x.ties).First();
+                    s.PF = Standings.Where(x => x.Team_ID == t.ID).Select(x => x.pointsfor).First();
+                    s.PA = Standings.Where(x => x.Team_ID == t.ID).Select(x => x.pointagainst).First();
+                    s.PPG_For = Player_Helper.CalcYardsPerCarry_or_Catch(s.Wins + s.Loses + s.Ties, s.PF);
+                    s.PPG_Against = Player_Helper.CalcYardsPerCarry_or_Catch(s.Wins + s.Loses + s.Ties, s.PA);
+                    s.Total_Yards_For = s.Passing_Yards_For + s.Rushing_Yards_For;
+                    s.Total_Yards_Against = s.Passing_Yards_Against + s.Rushing_Yards_Against;
+                    s.Third_Down_String = Player_Helper.FormatCompPercent(s.Third_Down_Conversions, s.Third_Down_Conversions_Att);
+                    s.Third_Down_Display_String = s.Third_Down_Conversions + "-" + s.Third_Down_Conversions_Att + " (" + String.Format("{0:0.0}", s.Third_Down_String) + "%)";
+                    s.Fourth_Down_String = Player_Helper.FormatCompPercent(s.Fourth_Down_Conversions, s.Fourth_Down_Conversions_Att);
+                    s.Fourth_Down_Display_String = s.Fourth_Down_Conversions + "-" + s.Fourth_Down_Conversions_Att + " (" + String.Format("{0:0.0}", s.Fourth_Down_String) + "%)";
+                    s.Power_Ranking = Team_Helper.calcTeam_PowerRating(s.Wins, s.Loses, s.PF, s.PA);
+                }
+            }
+
+            //Finally sort the team standings
+            switch(sortfield)
+            {
+                case "Team":
+                    if (isdecending)
+                        Final_stats = Final_stats.OrderByDescending(x => x.Team_Name).ToList();
+                    else
+                        Final_stats = Final_stats.OrderBy(x => x.Team_Name).ToList();
+                    break;
+                case "Wins":
+                    if (isdecending)
+                        Final_stats = Final_stats.OrderByDescending(x => x.Wins).ToList();
+                    else
+                        Final_stats = Final_stats.OrderBy(x => x.Wins).ToList();
+                    break;
+                case "Loses":
+                    if (isdecending)
+                        Final_stats = Final_stats.OrderByDescending(x => x.Loses).ToList();
+                    else
+                        Final_stats = Final_stats.OrderBy(x => x.Loses).ToList();
+                    break;
+                case "Ties":
+                    if (isdecending)
+                        Final_stats = Final_stats.OrderByDescending(x => x.Ties).ToList();
+                    else
+                        Final_stats = Final_stats.OrderBy(x => x.Ties).ToList();
+                    break;
+                case "Points For":
+                    if (isdecending)
+                        Final_stats = Final_stats.OrderByDescending(x => x.PF).ToList();
+                    else
+                        Final_stats = Final_stats.OrderBy(x => x.PF).ToList();
+                    break;
+                case "Points Against":
+                    if (isdecending)
+                        Final_stats = Final_stats.OrderByDescending(x => x.PA).ToList();
+                    else
+                        Final_stats = Final_stats.OrderBy(x => x.PA).ToList();
+                    break;
+                case "PPG For":
+                    if (isdecending)
+                        Final_stats = Final_stats.OrderByDescending(x => x.PPG_For).ToList();
+                    else
+                        Final_stats = Final_stats.OrderBy(x => x.PPG_For).ToList();
+                    break;
+                case "PPG Against":
+                    if (isdecending)
+                        Final_stats = Final_stats.OrderByDescending(x => x.PPG_Against).ToList();
+                    else
+                        Final_stats = Final_stats.OrderBy(x => x.PPG_Against).ToList();
+                    break;
+                case "Pass Yards For":
+                    if (isdecending)
+                        Final_stats = Final_stats.OrderByDescending(x => x.Passing_Yards_For).ToList();
+                    else
+                        Final_stats = Final_stats.OrderBy(x => x.Passing_Yards_For).ToList();
+                    break;
+                case "Pass Yards Against":
+                    if (isdecending)
+                        Final_stats = Final_stats.OrderByDescending(x => x.Passing_Yards_Against).ToList();
+                    else
+                        Final_stats = Final_stats.OrderBy(x => x.Passing_Yards_Against).ToList();
+                    break;
+                case "Rush Yards For":
+                    if (isdecending)
+                        Final_stats = Final_stats.OrderByDescending(x => x.Rushing_Yards_For).ToList();
+                    else
+                        Final_stats = Final_stats.OrderBy(x => x.Rushing_Yards_For).ToList();
+                    break;
+                case "Rush Yards Against":
+                    if (isdecending)
+                        Final_stats = Final_stats.OrderByDescending(x => x.Rushing_Yards_Against).ToList();
+                    else
+                        Final_stats = Final_stats.OrderBy(x => x.Rushing_Yards_Against).ToList();
+                    break;
+                case "Total Yards For":
+                    if (isdecending)
+                        Final_stats = Final_stats.OrderByDescending(x => x.Total_Yards_For).ToList();
+                    else
+                        Final_stats = Final_stats.OrderBy(x => x.Total_Yards_For).ToList();
+                    break;
+                case "Total Yards Against":
+                    if (isdecending)
+                        Final_stats = Final_stats.OrderByDescending(x => x.Total_Yards_Against).ToList();
+                    else
+                        Final_stats = Final_stats.OrderBy(x => x.Total_Yards_Against).ToList();
+                    break;
+                case "Turnovers For":
+                    if (isdecending)
+                        Final_stats = Final_stats.OrderByDescending(x => x.Turnovers_Recv).ToList();
+                    else
+                        Final_stats = Final_stats.OrderBy(x => x.Turnovers_Recv).ToList();
+                    break;
+                case "Turnovers Against":
+                    if (isdecending)
+                        Final_stats = Final_stats.OrderByDescending(x => x.Turnovers_Comm).ToList();
+                    else
+                        Final_stats = Final_stats.OrderBy(x => x.Turnovers_Comm).ToList();
+                    break;
+                case "Third Downs":
+                    if (isdecending)
+                        Final_stats = Final_stats.OrderByDescending(x => x.Third_Down_String).ToList();
+                    else
+                        Final_stats = Final_stats.OrderBy(x => x.Third_Down_String).ToList();
+                    break;
+                case "Fourth Downs":
+                    if (isdecending)
+                        Final_stats = Final_stats.OrderByDescending(x => x.Fourth_Down_String).ToList();
+                    else
+                        Final_stats = Final_stats.OrderBy(x => x.Fourth_Down_String).ToList();
+                    break;
+                case "Sacks For":
+                    if (isdecending)
+                        Final_stats = Final_stats.OrderByDescending(x => x.Sacks_For).ToList();
+                    else
+                        Final_stats = Final_stats.OrderBy(x => x.Sacks_For).ToList();
+                    break;
+                case "Sacks Against":
+                    if (isdecending)
+                        Final_stats = Final_stats.OrderByDescending(x => x.Sacks_Against).ToList();
+                    else
+                        Final_stats = Final_stats.OrderBy(x => x.Sacks_Against).ToList();
+                    break;
+                case "Power Ranking":
+                    if (isdecending)
+                        Final_stats = Final_stats.OrderByDescending(x => x.Power_Ranking).ToList();
+                    else
+                        Final_stats = Final_stats.OrderBy(x => x.Power_Ranking).ToList();
+                    break;
+            }
+
+            return Final_stats;
         }
 
     }

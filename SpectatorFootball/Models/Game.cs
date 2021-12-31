@@ -88,6 +88,8 @@ namespace SpectatorFootball.Models
         public Nullable<long> Away_Rushing_Yards { get; set; }
         public Nullable<long> Home_Turnovers { get; set; }
         public Nullable<long> Away_Turnovers { get; set; }
+        public Nullable<long> Home_Sacks { get; set; }
+        public Nullable<long> Away_Sacks { get; set; }
     
         public virtual Season Season { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -120,6 +120,8 @@
     <Property Name="Away_Rushing_Yards" Type="integer" />
     <Property Name="Home_Turnovers" Type="integer" />
     <Property Name="Away_Turnovers" Type="integer" />
+    <Property Name="Home_Sacks" Type="integer" />
+    <Property Name="Away_Sacks" Type="integer" />
   </EntityType>
   <EntityType Name="Game_Player_Defense_Stats">
     <Key>

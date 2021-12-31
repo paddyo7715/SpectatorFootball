@@ -625,6 +625,55 @@ namespace SpectatorFootball
 
             return r;
         }
+
+        public List<Team_Stat_Rec>[] getLeagueStatsHomeAway(long season_id, string league_filepath)
+        {
+            List<Team_Stat_Rec>[] r = null;  
+
+            string con = Common.LeageConnection.Connect(league_filepath);
+            using (var context = new leagueContext(con))
+            {
+                //Get Home Team Stats
+                r[0] = context.Games.Where(x => x.Season_ID == season_id && x.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 && x.Game_Done == 1).GroupBy(x => x.Home_Team_Franchise_ID)
+                    .Select(x => new Team_Stat_Rec
+                    {
+                        f_id = x.Key,
+                        Passing_Yards_For = (long)x.Sum(s => s.Home_Passing_Yards),
+                        Passing_Yards_Against = (long)x.Sum(s => s.Away_Passing_Yards),
+                        Rushing_Yards_For = (long)x.Sum(s => s.Home_Rushing_Yards),
+                        Rushing_Yards_Against = (long)x.Sum(s => s.Away_Rushing_Yards),
+                        Turnovers_Comm = (long)x.Sum(s => s.Home_Turnovers),
+                        Turnovers_Recv = (long)x.Sum(s => s.Away_Turnovers),
+                        Third_Down_Conversions = (long)x.Sum(s => s.Home_ThirdDown_Conversions),
+                        Third_Down_Conversions_Att = (long)x.Sum(s => s.Home_ThirdDowns),
+                        Fourth_Down_Conversions = (long)x.Sum(s => s.Home_FourthDown_Conversions),
+                        Fourth_Down_Conversions_Att = (long)x.Sum(s => s.Home_FourthDowns),
+                        Sacks_For = (long)x.Sum(s => s.Home_Sacks),
+                        Sacks_Against = (long)x.Sum(s => s.Away_Sacks)
+                    }).ToList();
+
+                //Get Away Team Stats
+                r[1] = context.Games.Where(x => x.Season_ID == season_id && x.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 && x.Game_Done == 1).GroupBy(x => x.Home_Team_Franchise_ID)
+                    .Select(x => new Team_Stat_Rec
+                    {
+                        f_id = x.Key,
+                        Passing_Yards_For = (long)x.Sum(s => s.Away_Passing_Yards),
+                        Passing_Yards_Against = (long)x.Sum(s => s.Home_Passing_Yards),
+                        Rushing_Yards_For = (long)x.Sum(s => s.Away_Rushing_Yards),
+                        Rushing_Yards_Against = (long)x.Sum(s => s.Home_Rushing_Yards),
+                        Turnovers_Comm = (long)x.Sum(s => s.Away_Turnovers),
+                        Turnovers_Recv = (long)x.Sum(s => s.Home_Turnovers),
+                        Third_Down_Conversions = (long)x.Sum(s => s.Away_ThirdDown_Conversions),
+                        Third_Down_Conversions_Att = (long)x.Sum(s => s.Away_ThirdDowns),
+                        Fourth_Down_Conversions = (long)x.Sum(s => s.Away_FourthDown_Conversions),
+                        Fourth_Down_Conversions_Att = (long)x.Sum(s => s.Away_FourthDowns),
+                        Sacks_For = (long)x.Sum(s => s.Away_Sacks),
+                        Sacks_Against = (long)x.Sum(s => s.Home_Sacks)
+                    }).ToList();
+            }
+
+            return r;
+        }
     }
 }
 

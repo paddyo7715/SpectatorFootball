@@ -286,5 +286,9 @@ namespace SpectatorFootball
             }
 
         }
+        public static long calcTeam_PowerRating(long wins, long loses, long pf, long pa)
+        {
+            return (pf - pa) + ((wins - loses) * 10);
+        }
     }
 }

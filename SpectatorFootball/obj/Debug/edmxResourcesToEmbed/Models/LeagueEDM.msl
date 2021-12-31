@@ -127,6 +127,8 @@
           <ScalarProperty Name="Away_Rushing_Yards" ColumnName="Away_Rushing_Yards" />
           <ScalarProperty Name="Home_Turnovers" ColumnName="Home_Turnovers" />
           <ScalarProperty Name="Away_Turnovers" ColumnName="Away_Turnovers" />
+          <ScalarProperty Name="Home_Sacks" ColumnName="Home_Sacks" />
+          <ScalarProperty Name="Away_Sacks" ColumnName="Away_Sacks" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

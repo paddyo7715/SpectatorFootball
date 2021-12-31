@@ -151,6 +151,8 @@
     <Property Name="Away_Rushing_Yards" Type="Int64" />
     <Property Name="Home_Turnovers" Type="Int64" />
     <Property Name="Away_Turnovers" Type="Int64" />
+    <Property Name="Home_Sacks" Type="Int64" />
+    <Property Name="Away_Sacks" Type="Int64" />
     <NavigationProperty Name="Season" Relationship="Self.FK_Game_2_0" FromRole="Game" ToRole="Season" />
     <NavigationProperty Name="Game_Player_Defense_Stats" Relationship="Self.FK_Game_Player_Defense_Stats_0_0" FromRole="Game" ToRole="Game_Player_Defense_Stats" />
     <NavigationProperty Name="Game_Player_FG_Defense_Stats" Relationship="Self.FK_Game_Player_FG_Defense_Stats_2_0" FromRole="Game" ToRole="Game_Player_FG_Defense_Stats" />
