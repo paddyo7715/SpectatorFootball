@@ -1002,103 +1002,103 @@ namespace SpectatorFootball
                     else
                         Final_stats = Final_stats.OrderBy(x => x.Ties).ToList();
                     break;
-                case "Points For":
+                case "PF":
                     if (isdecending)
                         Final_stats = Final_stats.OrderByDescending(x => x.PF).ToList();
                     else
                         Final_stats = Final_stats.OrderBy(x => x.PF).ToList();
                     break;
-                case "Points Against":
+                case "PA":
                     if (isdecending)
                         Final_stats = Final_stats.OrderByDescending(x => x.PA).ToList();
                     else
                         Final_stats = Final_stats.OrderBy(x => x.PA).ToList();
                     break;
-                case "PPG For":
+                case "PPG F":
                     if (isdecending)
                         Final_stats = Final_stats.OrderByDescending(x => x.PPG_For).ToList();
                     else
                         Final_stats = Final_stats.OrderBy(x => x.PPG_For).ToList();
                     break;
-                case "PPG Against":
+                case "PPG A":
                     if (isdecending)
                         Final_stats = Final_stats.OrderByDescending(x => x.PPG_Against).ToList();
                     else
                         Final_stats = Final_stats.OrderBy(x => x.PPG_Against).ToList();
                     break;
-                case "Pass Yards For":
+                case "Pass Yards F":
                     if (isdecending)
                         Final_stats = Final_stats.OrderByDescending(x => x.Passing_Yards_For).ToList();
                     else
                         Final_stats = Final_stats.OrderBy(x => x.Passing_Yards_For).ToList();
                     break;
-                case "Pass Yards Against":
+                case "Pass Yards A":
                     if (isdecending)
                         Final_stats = Final_stats.OrderByDescending(x => x.Passing_Yards_Against).ToList();
                     else
                         Final_stats = Final_stats.OrderBy(x => x.Passing_Yards_Against).ToList();
                     break;
-                case "Rush Yards For":
+                case "Rush Yards F":
                     if (isdecending)
                         Final_stats = Final_stats.OrderByDescending(x => x.Rushing_Yards_For).ToList();
                     else
                         Final_stats = Final_stats.OrderBy(x => x.Rushing_Yards_For).ToList();
                     break;
-                case "Rush Yards Against":
+                case "Rush Yards A":
                     if (isdecending)
                         Final_stats = Final_stats.OrderByDescending(x => x.Rushing_Yards_Against).ToList();
                     else
                         Final_stats = Final_stats.OrderBy(x => x.Rushing_Yards_Against).ToList();
                     break;
-                case "Total Yards For":
+                case "Total Yards F":
                     if (isdecending)
                         Final_stats = Final_stats.OrderByDescending(x => x.Total_Yards_For).ToList();
                     else
                         Final_stats = Final_stats.OrderBy(x => x.Total_Yards_For).ToList();
                     break;
-                case "Total Yards Against":
+                case "Total Yards A":
                     if (isdecending)
                         Final_stats = Final_stats.OrderByDescending(x => x.Total_Yards_Against).ToList();
                     else
                         Final_stats = Final_stats.OrderBy(x => x.Total_Yards_Against).ToList();
                     break;
-                case "Turnovers For":
+                case "Turn F":
                     if (isdecending)
                         Final_stats = Final_stats.OrderByDescending(x => x.Turnovers_Recv).ToList();
                     else
                         Final_stats = Final_stats.OrderBy(x => x.Turnovers_Recv).ToList();
                     break;
-                case "Turnovers Against":
+                case "Turn A":
                     if (isdecending)
                         Final_stats = Final_stats.OrderByDescending(x => x.Turnovers_Comm).ToList();
                     else
                         Final_stats = Final_stats.OrderBy(x => x.Turnovers_Comm).ToList();
                     break;
-                case "Third Downs":
+                case "3rd Downs":
                     if (isdecending)
                         Final_stats = Final_stats.OrderByDescending(x => x.Third_Down_String).ToList();
                     else
                         Final_stats = Final_stats.OrderBy(x => x.Third_Down_String).ToList();
                     break;
-                case "Fourth Downs":
+                case "4th Downs":
                     if (isdecending)
                         Final_stats = Final_stats.OrderByDescending(x => x.Fourth_Down_String).ToList();
                     else
                         Final_stats = Final_stats.OrderBy(x => x.Fourth_Down_String).ToList();
                     break;
-                case "Sacks For":
+                case "Sacks F":
                     if (isdecending)
                         Final_stats = Final_stats.OrderByDescending(x => x.Sacks_For).ToList();
                     else
                         Final_stats = Final_stats.OrderBy(x => x.Sacks_For).ToList();
                     break;
-                case "Sacks Against":
+                case "Sacks A":
                     if (isdecending)
                         Final_stats = Final_stats.OrderByDescending(x => x.Sacks_Against).ToList();
                     else
                         Final_stats = Final_stats.OrderBy(x => x.Sacks_Against).ToList();
                     break;
-                case "Power Ranking":
+                case "Rating":
                     if (isdecending)
                         Final_stats = Final_stats.OrderByDescending(x => x.Power_Ranking).ToList();
                     else

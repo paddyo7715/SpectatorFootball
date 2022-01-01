@@ -628,7 +628,7 @@ namespace SpectatorFootball
 
         public List<Team_Stat_Rec>[] getLeagueStatsHomeAway(long season_id, string league_filepath)
         {
-            List<Team_Stat_Rec>[] r = null;  
+            List<Team_Stat_Rec>[] r = new List<Team_Stat_Rec>[2];
 
             string con = Common.LeageConnection.Connect(league_filepath);
             using (var context = new leagueContext(con))

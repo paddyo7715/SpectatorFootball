@@ -49,6 +49,8 @@ namespace SpectatorFootball
         private TrainingCampUX LTrainingCampUX = null;
         private ScheduleUX SchedUX = null;
         private StatsUX StatsUX = null;
+        private TeamStatusUX TeamStatusUX = null;
+
 
         private static ILog logger = LogManager.GetLogger("RollingFile");
 
@@ -535,6 +537,30 @@ namespace SpectatorFootball
                 sp_uc.Children.Clear();
                 sp_uc.Children.Add(StatsUX);
                 StatsUX.Show_Standings += Show_LeagueStandings;
+
+                Mouse.OverrideCursor = null;
+            }
+            catch (Exception ex)
+            {
+                Mouse.OverrideCursor = null;
+                logger.Error("Error Creating the League Stats form");
+                logger.Error(ex);
+                MessageBox.Show(CommonUtils.substr(ex.Message, 0, 100), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+        }
+
+        private void Show_LeagueTeamStats(object sender, EventArgs e)
+        {
+            if (Mouse.OverrideCursor == Cursors.Wait) return;
+
+            try
+            {
+                Mouse.OverrideCursor = Cursors.Wait;
+                TeamStatusUX = new TeamStatusUX(this);
+                sp_uc.Children.Clear();
+                sp_uc.Children.Add(TeamStatusUX);
+                TeamStatusUX.Show_Standings += Show_LeagueStandings;
 
                 Mouse.OverrideCursor = null;
             }

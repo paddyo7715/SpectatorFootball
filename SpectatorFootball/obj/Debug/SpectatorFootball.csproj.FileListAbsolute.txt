@@ -109,3 +109,5 @@ C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\Wind
 C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\WindowsLeague\StatsUX.baml
 C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\Help_Forms\Help_PlayerStats.g.cs
 C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\Help_Forms\Help_PlayerStats.baml
+C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\WindowsLeague\TeamStatsUX.g.cs
+C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\WindowsLeague\TeamStatsUX.baml
