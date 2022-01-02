@@ -35,6 +35,8 @@
             <MenuItem Name="MenuStats" Header="Stats">
                 <MenuItem Name="MenuPlayerStats" Header="Player Stats" Click= "Show_LeagueStats" />
                 <MenuItem Name="MenuTeamStats" Header="Team Stats" Click= "Show_LeagueTeamStats" />
+            </MenuItem>
+            <MenuItem Name="MenuHistory" Header="History">
                 <MenuItem Name="MenuChampions" Header="Champions" />
             </MenuItem>
             <MenuItem Name="MenuTasks" Header="Tasks">

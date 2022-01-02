@@ -968,9 +968,9 @@ namespace SpectatorFootball
                     s.Total_Yards_For = s.Passing_Yards_For + s.Rushing_Yards_For;
                     s.Total_Yards_Against = s.Passing_Yards_Against + s.Rushing_Yards_Against;
                     s.Third_Down_String = Player_Helper.FormatCompPercent(s.Third_Down_Conversions, s.Third_Down_Conversions_Att);
-                    s.Third_Down_Display_String = s.Third_Down_Conversions + "-" + s.Third_Down_Conversions_Att + " (" + String.Format("{0:0.0}", s.Third_Down_String) + "%)";
+                    s.Third_Down_Display_String = s.Third_Down_Conversions + "-" + s.Third_Down_Conversions_Att + " (" + String.Format("{0:0.0}", double.Parse(s.Third_Down_String)) + "%)";
                     s.Fourth_Down_String = Player_Helper.FormatCompPercent(s.Fourth_Down_Conversions, s.Fourth_Down_Conversions_Att);
-                    s.Fourth_Down_Display_String = s.Fourth_Down_Conversions + "-" + s.Fourth_Down_Conversions_Att + " (" + String.Format("{0:0.0}", s.Fourth_Down_String) + "%)";
+                    s.Fourth_Down_Display_String = s.Fourth_Down_Conversions + "-" + s.Fourth_Down_Conversions_Att + " (" + String.Format("{0:0.0}", double.Parse(s.Fourth_Down_String)) + "%)";
                     s.Power_Ranking = Team_Helper.calcTeam_PowerRating(s.Wins, s.Loses, s.PF, s.PA);
                 }
             }
@@ -1026,25 +1026,25 @@ namespace SpectatorFootball
                     else
                         Final_stats = Final_stats.OrderBy(x => x.PPG_Against).ToList();
                     break;
-                case "Pass Yards F":
+                case "PYF":
                     if (isdecending)
                         Final_stats = Final_stats.OrderByDescending(x => x.Passing_Yards_For).ToList();
                     else
                         Final_stats = Final_stats.OrderBy(x => x.Passing_Yards_For).ToList();
                     break;
-                case "Pass Yards A":
+                case "PYA":
                     if (isdecending)
                         Final_stats = Final_stats.OrderByDescending(x => x.Passing_Yards_Against).ToList();
                     else
                         Final_stats = Final_stats.OrderBy(x => x.Passing_Yards_Against).ToList();
                     break;
-                case "Rush Yards F":
+                case "RYF":
                     if (isdecending)
                         Final_stats = Final_stats.OrderByDescending(x => x.Rushing_Yards_For).ToList();
                     else
                         Final_stats = Final_stats.OrderBy(x => x.Rushing_Yards_For).ToList();
                     break;
-                case "Rush Yards A":
+                case "RYA":
                     if (isdecending)
                         Final_stats = Final_stats.OrderByDescending(x => x.Rushing_Yards_Against).ToList();
                     else
@@ -1062,13 +1062,13 @@ namespace SpectatorFootball
                     else
                         Final_stats = Final_stats.OrderBy(x => x.Total_Yards_Against).ToList();
                     break;
-                case "Turn F":
+                case "TOF":
                     if (isdecending)
                         Final_stats = Final_stats.OrderByDescending(x => x.Turnovers_Recv).ToList();
                     else
                         Final_stats = Final_stats.OrderBy(x => x.Turnovers_Recv).ToList();
                     break;
-                case "Turn A":
+                case "TOA":
                     if (isdecending)
                         Final_stats = Final_stats.OrderByDescending(x => x.Turnovers_Comm).ToList();
                     else
@@ -1086,13 +1086,13 @@ namespace SpectatorFootball
                     else
                         Final_stats = Final_stats.OrderBy(x => x.Fourth_Down_String).ToList();
                     break;
-                case "Sacks F":
+                case "Sck F":
                     if (isdecending)
                         Final_stats = Final_stats.OrderByDescending(x => x.Sacks_For).ToList();
                     else
                         Final_stats = Final_stats.OrderBy(x => x.Sacks_For).ToList();
                     break;
-                case "Sacks A":
+                case "Sck A":
                     if (isdecending)
                         Final_stats = Final_stats.OrderByDescending(x => x.Sacks_Against).ToList();
                     else

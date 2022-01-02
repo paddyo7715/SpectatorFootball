@@ -7,11 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
-        <local1:iPosConverter x:Key="iPosConverter" />
-        <local1:DoubleFormatConverter x:Key="DoubleFormatConverter" />
-        <local1:inttoWeight x:Key="inttoWeight" />
-        <local1:SpeedInttoString x:Key="SpeedInttoString" />
-        <local1:isNullConverter x:Key="isNullConverter" />
+        <local1:DoubleConverter1d x:Key="DoubleConverter1d" />
     </UserControl.Resources>
     <DockPanel Height="730">
         <Grid DockPanel.Dock="Top">
@@ -33,12 +29,18 @@
         <StackPanel Orientation="Vertical">
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
                 <Label HorizontalAlignment="Center" Style="{StaticResource Conflbltyle}">Team Stats</Label>
-                <ListView Name="lstTeamStats" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Height="200" Width="1200">
+                <ListView Name="lstTeamStats" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Height="500" Width="1200"
+                          GridViewColumnHeader.Click="ListViewHeader_Click">
+                    <ListView.Resources>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Right" />
+                        </Style>
+                    </ListView.Resources>
                     <ListView.View>
                         <GridView AllowsColumnReorder="false">
                             <GridView.ColumnHeaderContainerStyle>
                                 <Style TargetType="{x:Type GridViewColumnHeader}">
-                                    <Setter Property="IsEnabled" Value="False"/>
+                                    <Setter Property="IsEnabled" Value="True"/>
                                 </Style>
                             </GridView.ColumnHeaderContainerStyle>
                             <GridViewColumn Header="">
@@ -48,23 +50,31 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Header="Team" Width="180" DisplayMemberBinding="{Binding Path=Team_Name}" />
+                            <GridViewColumn Header="Team">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Width="180">
+                                        <Run Text="{Binding Team_Name}" />
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
                             <GridViewColumn Header="Wins" Width="40" DisplayMemberBinding="{Binding Path=Wins}" />
                             <GridViewColumn Header="Loses" Width="40" DisplayMemberBinding="{Binding Path=Loses}" />
                             <GridViewColumn Header="Ties" Width="40" DisplayMemberBinding="{Binding Path=Ties}" />
-                            <GridViewColumn Header="PPG F" Width="50" DisplayMemberBinding="{Binding Path=PPG_For}" />
-                            <GridViewColumn Header="PPG A" Width="50" DisplayMemberBinding="{Binding Path=PPG_Against}" />
-                            <GridViewColumn Header="Pass Yards F" Width="90" DisplayMemberBinding="{Binding Path=Passing_Yards_For}" />
-                            <GridViewColumn Header="Pass Yards A" Width="90" DisplayMemberBinding="{Binding Path=Passing_Yards_Against}" />
-                            <GridViewColumn Header="Rush Yards F" Width="90" DisplayMemberBinding="{Binding Path=Rushing_Yards_For}" />
-                            <GridViewColumn Header="Rush Yards A" Width="90" DisplayMemberBinding="{Binding Path=Rushing_Yards_Against}" />
-                            <GridViewColumn Header="Turn F" Width="50" DisplayMemberBinding="{Binding Path=Turnovers_Comm}" />
-                            <GridViewColumn Header="Turn A" Width="50" DisplayMemberBinding="{Binding Path=Turnovers_Recv}" />
-                            <GridViewColumn Header="3rd Downs" Width="80" DisplayMemberBinding="{Binding Path=Third_Down_Display_String}" />
-                            <GridViewColumn Header="4th Downs" Width="80" DisplayMemberBinding="{Binding Path=Fourth_Down_Display_String}" />
-                            <GridViewColumn Header="Sacks F" Width="60" DisplayMemberBinding="{Binding Path=Sacks_For}" />
-                            <GridViewColumn Header="Sacks A" Width="60" DisplayMemberBinding="{Binding Path=Sacks_Against}" />
-                            <GridViewColumn Header="Rating" Width="50" DisplayMemberBinding="{Binding Path=Power_Ranking}" />
+                            <GridViewColumn Header="PPG F" Width="50" DisplayMemberBinding="{Binding Path=PPG_For,Converter={StaticResource  DoubleConverter1d}}" />
+                            <GridViewColumn Header="PPG A" Width="50" DisplayMemberBinding="{Binding Path=PPG_Against,Converter={StaticResource  DoubleConverter1d}}" />
+                            <GridViewColumn Header="PYF" Width="70" DisplayMemberBinding="{Binding Path=Passing_Yards_For}" />
+                            <GridViewColumn Header="PYA" Width="70" DisplayMemberBinding="{Binding Path=Passing_Yards_Against}" />
+                            <GridViewColumn Header="RYF" Width="70" DisplayMemberBinding="{Binding Path=Rushing_Yards_For}" />
+                            <GridViewColumn Header="RYA" Width="70" DisplayMemberBinding="{Binding Path=Rushing_Yards_Against}" />
+                            <GridViewColumn Header="TOF" Width="40" DisplayMemberBinding="{Binding Path=Turnovers_Comm}" />
+                            <GridViewColumn Header="TOA" Width="40" DisplayMemberBinding="{Binding Path=Turnovers_Recv}" />
+                            <GridViewColumn Header="3rd Downs" Width="120" DisplayMemberBinding="{Binding Path=Third_Down_Display_String}" />
+                            <GridViewColumn Header="4th Downs" Width="120" DisplayMemberBinding="{Binding Path=Fourth_Down_Display_String}" />
+                            <GridViewColumn Header="Sck F" Width="40" DisplayMemberBinding="{Binding Path=Sacks_For}" />
+                            <GridViewColumn Header="Sck A" Width="40" DisplayMemberBinding="{Binding Path=Sacks_Against}" />
+                            <GridViewColumn Header="Rating" Width="60" DisplayMemberBinding="{Binding Path=Power_Ranking,Converter={StaticResource  DoubleConverter1d}}" />
                         </GridView>
                     </ListView.View>
                 </ListView>

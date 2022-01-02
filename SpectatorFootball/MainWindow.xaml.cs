@@ -645,6 +645,7 @@ namespace SpectatorFootball
             MenuLeague.IsEnabled = false;
             MenuTeams.IsEnabled = false;
             MenuStats.IsEnabled = false;
+            MenuHistory.IsEnabled = false;
             MenuTasks.IsEnabled = false;
         }
         public void setMenuonState(League_State ls)
@@ -659,6 +660,10 @@ namespace SpectatorFootball
 
             MenuStats.IsEnabled = true;
             foreach (MenuItem m in MenuStats.Items)
+                m.IsEnabled = true;
+
+            MenuHistory.IsEnabled = true;
+            foreach (MenuItem m in MenuHistory.Items)
                 m.IsEnabled = true;
 
             MenuTasks.IsEnabled = true;

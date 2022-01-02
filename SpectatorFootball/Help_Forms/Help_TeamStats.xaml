@@ -1,0 +1,57 @@
+﻿<Window x:Class="SpectatorFootball.Help_Forms.Help_TeamStats"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SpectatorFootball.Help_Forms"
+        mc:Ignorable="d"
+        Height="450" Width="750" WindowStyle="none" ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True">
+    <Border Style="{StaticResource popupBD}" BorderThickness="1">
+        <StackPanel Style="{StaticResource popupSP}" Height="440" Width="740" Orientation="Vertical" >
+            <Label Style="{StaticResource popupTT}" HorizontalAlignment="Center">Team Stats Screen</Label>
+            <TextBlock Style="{StaticResource HelpTB}" Width="720" Height="360" Margin="5,5,5,0" TextWrapping="Wrap" >
+The team stats screen shows all all team stats for the currently selected year.  
+<LineBreak/>
+<LineBreak/>
+<Bold>W L T:</Bold><LineBreak/>
+These fields are the wins, loses and ties for the team.
+<LineBreak/>
+<LineBreak/>
+<Bold>PPG F PPG A:</Bold><LineBreak/>
+PPG F stands for the average points per game scored by this team, and PPG A is the average piont per game score against this team.
+<LineBreak/>
+<LineBreak/>
+<Bold>PYF and PYA:</Bold><LineBreak/>
+PYF is the total passing yards for this team, and PYA is the total passing yards this team has given up for the season.
+<LineBreak/>
+<LineBreak/>
+<Bold>RYF and RYA:</Bold><LineBreak/>
+RYF is the total rushing yards for this team, and RYA is the total rushing yards this team has given up for the season.
+<LineBreak/>
+<LineBreak/>                
+<Bold>TOF and TOA:</Bold><LineBreak/>
+TOF is the total turnovers that this team has recovered and TOA is the total number of turnovers that this team has committed.
+<LineBreak/>
+<LineBreak/>
+<Bold>3rd Downs and 4th Downs:</Bold><LineBreak/>
+These stats are the total number of conversions versus attempts and percentage of 3rd and 4th downs respectively.
+<LineBreak/>
+<LineBreak/>
+<Bold>Sck F and Sck A:</Bold><LineBreak/>
+These two stats are the total number of sacks for and against a team.
+<LineBreak/>
+<LineBreak/>
+<Bold>Rating:</Bold><LineBreak/>
+This is the power rating for the team. 
+<LineBreak/>
+<LineBreak/>
+To sort the teams by any of the stats just click the header for that stat.
+
+
+            </TextBlock>
+            <Button Name="hlp_nl_close" Style="{StaticResource appSubmitStyle}" Click="hlp_nl_close_Click">Close</Button>
+        </StackPanel>
+    </Border>
+
+</Window>
+

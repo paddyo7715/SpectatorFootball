@@ -16,7 +16,7 @@ namespace SpectatorFootball.BindingConverters
 
             if (value != null)
             {
-                r = String.Format("{0:0.0}", value);
+                r = String.Format("{0:0.0}", double.Parse(value.ToString()));
             }
 
             return r;
