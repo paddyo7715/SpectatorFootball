@@ -1,0 +1,22 @@
+﻿<Window x:Class="SpectatorFootball.Help_Forms.Help_Champions"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SpectatorFootball.Help_Forms"
+        mc:Ignorable="d"
+        Height="170" Width="610" WindowStyle="none" ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True">
+    <Border Style="{StaticResource popupBD}" BorderThickness="1">
+        <StackPanel Style="{StaticResource popupSP}" Width="600" Orientation="Vertical" Margin="4" >
+            <Label Style="{StaticResource popupTT}" HorizontalAlignment="Center">Championship Games Screen</Label>
+            <TextBlock Style="{StaticResource HelpTB}" Width="580" Height="80" Margin="5,5,5,0" >
+The championship game screen allows you to view the previous championship games played in your league.<LineBreak/><LineBreak/>
+
+You can click on the championship game to view the box score.
+<LineBreak/>
+            </TextBlock>
+            <Button Name="hlp_tc_close" Style="{StaticResource appSubmitStyle}" Click="hlp_tc_close_Click">Close</Button>
+        </StackPanel>
+    </Border>
+
+</Window>

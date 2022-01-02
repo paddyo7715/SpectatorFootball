@@ -169,7 +169,7 @@ namespace SpectatorFootball.WindowsLeague
                 catch (Exception ex)
                 {
                     Mouse.OverrideCursor = null;
-                    logger.Error("Error Saving Game");
+                    logger.Error("Error Loading Game Box Score");
                     logger.Error(ex);
                     MessageBox.Show(CommonUtils.substr(ex.Message, 0, 100), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 

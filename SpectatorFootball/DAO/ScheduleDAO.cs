@@ -112,5 +112,43 @@ namespace SpectatorFootball.DAO
             return r;
         }
 
+        public List<WeeklyScheduleRec> getAlChampionshipGames(string league_filepath)
+        {
+
+            List<WeeklyScheduleRec> r;
+
+            string con = Common.LeageConnection.Connect(league_filepath);
+
+            using (var context = new leagueContext(con))
+            {
+                r = (from g in context.Games
+                     join at in context.Teams_by_Season
+                     on g.Away_Team_Franchise_ID equals at.Franchise.ID
+                     join ht in context.Teams_by_Season
+                     on g.Home_Team_Franchise_ID equals ht.Franchise_ID
+                     where at.Season_ID == g.Season_ID
+                     && ht.Season_ID == g.Season_ID && g.Week == app_Constants.PLAYOFF_CHAMPIONSHIP_WEEK
+                     orderby g.ID
+                     select new WeeklyScheduleRec
+                     {
+                         Game_ID = g.ID,
+                         Game_Complete = g.Game_Done == 1 ? true : false,
+                         Away_Team_Name = at.City + " " + at.Nickname,
+                         Away_helmet_filename = at.Helmet_Image_File,
+                         Away_Score = g.Away_Score != null ? g.Away_Score.ToString() : "",
+                         Home_Score = g.Home_Score != null ? g.Home_Score.ToString() : "",
+                         Home_helmet_filename = ht.Helmet_Image_File,
+                         Home_Team_Name = ht.City + " " + ht.Nickname,
+                         QTR = g.Quarter,
+                         QTR_Time = g.Time,
+                         iYear = g.Season.Year
+                     }).ToList();
+
+            }
+
+            return r;
+        }
+
+
     }
 }

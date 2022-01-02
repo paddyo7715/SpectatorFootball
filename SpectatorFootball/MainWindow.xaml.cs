@@ -50,6 +50,7 @@ namespace SpectatorFootball
         private ScheduleUX SchedUX = null;
         private StatsUX StatsUX = null;
         private TeamStatusUX TeamStatusUX = null;
+        private ChampionsUX ChampionsUX = null;
 
 
         private static ILog logger = LogManager.GetLogger("RollingFile");
@@ -573,6 +574,32 @@ namespace SpectatorFootball
             }
 
         }
+
+        private void Show_LeagueChampions(object sender, EventArgs e)
+        {
+            if (Mouse.OverrideCursor == Cursors.Wait) return;
+
+            try
+            {
+                Mouse.OverrideCursor = Cursors.Wait;
+                ChampionsUX = new ChampionsUX(this);
+                sp_uc.Children.Clear();
+                sp_uc.Children.Add(ChampionsUX);
+                ChampionsUX.Show_Standings += Show_LeagueStandings;
+
+                Mouse.OverrideCursor = null;
+            }
+            catch (Exception ex)
+            {
+                Mouse.OverrideCursor = null;
+                logger.Error("Error Creating the League Champions form");
+                logger.Error(ex);
+                MessageBox.Show(CommonUtils.substr(ex.Message, 0, 100), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+        }
+
+
 
         //When the user clicks a team in the teams menu
         private void MenuTeam_Click(object sender, System.EventArgs e)

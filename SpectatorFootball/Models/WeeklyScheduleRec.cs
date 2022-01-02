@@ -11,6 +11,7 @@ namespace SpectatorFootball.Models
     {
 
         public long Game_ID { get; set; }
+        public long iYear { get; set; }
         public string Status { get; set; }
         public bool Game_Complete { get; set; }
         public string Away_Team_Name { get; set; }

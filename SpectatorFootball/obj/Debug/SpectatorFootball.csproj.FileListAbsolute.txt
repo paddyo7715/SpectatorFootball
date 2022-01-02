@@ -113,3 +113,7 @@ C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\Wind
 C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\SpectatorFootball.csprojAssemblyReference.cache
 C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\Help_Forms\Help_TeamStats.g.cs
 C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\Help_Forms\Help_TeamStats.baml
+C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\WindowsLeague\ChampionsUX.g.cs
+C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\WindowsLeague\ChampionsUX.baml
+C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\Help_Forms\Help_Champions.g.cs
+C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\Help_Forms\Help_Champions.baml

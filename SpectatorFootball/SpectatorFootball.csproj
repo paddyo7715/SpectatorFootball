@@ -179,6 +179,9 @@
     <Compile Include="Free_Agency\FreeAgency_Helper.cs" />
     <Compile Include="Free_Agency\Pos_and_Count.cs" />
     <Compile Include="Game\Game_Helper.cs" />
+    <Compile Include="Help_Forms\Help_Champions.xaml.cs">
+      <DependentUpon>Help_Champions.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Help_Forms\Help_Draft.xaml.cs">
       <DependentUpon>Help_Draft.xaml</DependentUpon>
     </Compile>
@@ -373,6 +376,9 @@
     <Compile Include="WindowsLeague\BoxScore_Popup.xaml.cs">
       <DependentUpon>BoxScore_Popup.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WindowsLeague\ChampionsUX.xaml.cs">
+      <DependentUpon>ChampionsUX.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WindowsLeague\Draft_Profile_Popup.xaml.cs">
       <DependentUpon>Draft_Profile_Popup.xaml</DependentUpon>
     </Compile>
@@ -489,6 +495,10 @@
     <Compile Include="WindowsLeague\TrainingCamp_Results_Popup.xaml.cs">
       <DependentUpon>TrainingCamp_Results_Popup.xaml</DependentUpon>
     </Compile>
+    <Page Include="Help_Forms\Help_Champions.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Help_Forms\Help_Draft.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -518,6 +528,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="WindowsLeague\BoxScore_Popup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowsLeague\ChampionsUX.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

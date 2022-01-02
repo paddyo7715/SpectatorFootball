@@ -93,11 +93,14 @@ namespace SpectatorFootball.Services
                     }
                 }
 
+                string awayScore = srec.Away_Score;
+                string homeScore = srec.Home_Score;
+
                 string sAwayRecord = "(" + lls.getTeamStandings(srec.Away_Team_Name) + ")";
                 string sHomeRecord = "(" +lls.getTeamStandings(srec.Home_Team_Name) + ")";
 
-                srec.Away_Team_Name = sAwayRecord + " " + srec.Away_Team_Name;
-                srec.Home_Team_Name += " " + sHomeRecord;
+                srec.Away_Team_Name = sAwayRecord + " " + srec.Away_Team_Name + " " + awayScore;
+                srec.Home_Team_Name = homeScore + " " + srec.Home_Team_Name + " " + sHomeRecord;
 
                 srec.Away_HelmetImage = lls.getHelmetImg(srec.Away_helmet_filename);
                 srec.Home_HelmetImage = lls.getHelmetImg(srec.Home_helmet_filename);
@@ -143,11 +146,45 @@ namespace SpectatorFootball.Services
                     }
                 }
 
+                string awayScore = srec.Away_Score;
+                string homeScore = srec.Home_Score;
+
                 string sAwayRecord = "(" + lls.getTeamStandings(srec.Away_Team_Name) + ")";
                 string sHomeRecord = "(" + lls.getTeamStandings(srec.Home_Team_Name) + ")";
 
-                srec.Away_Team_Name = sAwayRecord + " " + srec.Away_Team_Name;
-                srec.Home_Team_Name += " " + sHomeRecord;
+                srec.Away_Team_Name = sAwayRecord + " " + srec.Away_Team_Name + " " + awayScore;
+                srec.Home_Team_Name = homeScore + " " + srec.Home_Team_Name + " " + sHomeRecord;
+
+                srec.Away_HelmetImage = lls.getHelmetImg(srec.Away_helmet_filename);
+                srec.Home_HelmetImage = lls.getHelmetImg(srec.Home_helmet_filename);
+            }
+
+
+            return r;
+        }
+
+        public List<WeeklyScheduleRec> getAlChampionshipGames(Loaded_League_Structure lls)
+        {
+            string League_Shortname = lls.season.League_Structure_by_Season.First().Short_Name;
+            string DIRPath_League = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + League_Shortname.ToUpper();
+            string League_con_string = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + League_Shortname + Path.DirectorySeparatorChar + League_Shortname + "." + app_Constants.DB_FILE_EXT;
+
+            ScheduleDAO sDAO = new ScheduleDAO();
+            List<WeeklyScheduleRec> r = sDAO.getAlChampionshipGames(League_con_string);
+
+            foreach (WeeklyScheduleRec srec in r)
+            {
+                srec.Status = "FINAL";
+                if (srec.QTR > app_Constants.QTRS_IN_REGULATION)
+                    srec.Status += " (OT)";
+
+                srec.Action = "Game Summary";
+
+                string awayScore = srec.Away_Score;
+                string homeScore = srec.Home_Score;
+
+                srec.Away_Team_Name = awayScore + " " + srec.Away_Team_Name;
+                srec.Home_Team_Name += " " + homeScore;
 
                 srec.Away_HelmetImage = lls.getHelmetImg(srec.Away_helmet_filename);
                 srec.Home_HelmetImage = lls.getHelmetImg(srec.Home_helmet_filename);
