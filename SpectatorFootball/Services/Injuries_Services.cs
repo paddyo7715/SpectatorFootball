@@ -29,5 +29,24 @@ namespace SpectatorFootball.Services
 
             return r;
         }
+
+        public List<League_Injuries> GetLeagueInjuredPlayers(Loaded_League_Structure lls)
+        {
+            List<League_Injuries> r = null;
+            string DIRPath_League = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + lls.season.League_Structure_by_Season[0].Short_Name.ToUpper();
+
+            string League_con_string = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + lls.season.League_Structure_by_Season[0].Short_Name.ToUpper() + Path.DirectorySeparatorChar + lls.season.League_Structure_by_Season[0].Short_Name.ToUpper() + "." + app_Constants.DB_FILE_EXT;
+            InjuriesDAO id = new InjuriesDAO();
+
+            r = id.GetLeagueInjuredPlayers(lls.season.ID, League_con_string);
+
+            foreach (League_Injuries d in r)
+            {
+                string helmet_filename = d.helmet_filename;
+                d.HelmetImage = lls.getHelmetImg(helmet_filename);
+            }
+
+            return r;
+        }
     }
 }

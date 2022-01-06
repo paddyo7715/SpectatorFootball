@@ -414,6 +414,7 @@
       <EntityTypeMapping TypeName="LeagueModel.Injury">
         <MappingFragment StoreEntitySet="Injuries">
           <ScalarProperty Name="Season_ID" ColumnName="Season_ID" />
+          <ScalarProperty Name="Franchise_ID" ColumnName="Franchise_ID" />
           <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
           <ScalarProperty Name="Week" ColumnName="Week" />
           <ScalarProperty Name="Num_of_Weeks" ColumnName="Num_of_Weeks" />

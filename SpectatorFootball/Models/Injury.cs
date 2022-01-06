@@ -15,6 +15,7 @@ namespace SpectatorFootball.Models
     public partial class Injury
     {
         public long Season_ID { get; set; }
+        public long Franchise_ID { get; set; }
         public long Player_ID { get; set; }
         public long Week { get; set; }
         public long Num_of_Weeks { get; set; }
@@ -22,6 +23,7 @@ namespace SpectatorFootball.Models
         public long Career_Ending { get; set; }
         public long Season_Ending { get; set; }
     
+        public virtual Franchise Franchise { get; set; }
         public virtual Player Player { get; set; }
         public virtual Season Season { get; set; }
     }

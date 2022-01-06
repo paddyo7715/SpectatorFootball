@@ -309,6 +309,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>LeagueEDM.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\League_Injuries.cs" />
     <Compile Include="Models\League_Structure_by_Season.cs">
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
