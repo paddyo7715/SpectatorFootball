@@ -17,7 +17,7 @@ using SpectatorFootball.PlayerNS;
 
 namespace SpectatorFootball
 {
-    public class League_Services
+    public class Injury_Services
     {
         private static ILog logger = LogManager.GetLogger("RollingFile");
 

@@ -472,6 +472,9 @@
     <Compile Include="WindowsLeague\LeagueFreeAgencyUX.xaml.cs">
       <DependentUpon>LeagueFreeAgencyUX.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WindowsLeague\LeagueInjuriesUX.xaml.cs">
+      <DependentUpon>LeagueInjuriesUX.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WindowsLeague\LeagueStandingsUX.xaml.cs">
       <DependentUpon>LeagueStandingsUX.xaml</DependentUpon>
     </Compile>
@@ -616,6 +619,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="WindowsLeague\LeagueFreeAgencyUX.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowsLeague\LeagueInjuriesUX.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

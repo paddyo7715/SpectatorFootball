@@ -771,7 +771,7 @@ namespace SpectatorFootball
         {
            New_League_Structure nlg = (New_League_Structure)e.Argument;
 
-            var s = new League_Services();
+            var s = new Injury_Services();
             s.CreateNewLeague(nlg, bw);
         }
         private void bw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)

@@ -34,7 +34,7 @@ namespace SpectatorFootball.WindowsLeague
         private Stat_Type sType_sorted;
         string last_sort_stat = "";
         bool Stat_Descend = true;
-        private League_Services lServices = new League_Services();
+        private Injury_Services lServices = new Injury_Services();
 
         public event EventHandler Show_Standings;
         public StatsUX(MainWindow pw)
@@ -45,7 +45,6 @@ namespace SpectatorFootball.WindowsLeague
             sType = Stat_Type.PASSING;
             last_sort_stat = "QBR";
             Stat_Descend = true;
-//            setStatsList();
         }
 
         private void btnStandings_Click(object sender, RoutedEventArgs e)

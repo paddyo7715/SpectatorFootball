@@ -51,7 +51,7 @@ namespace SpectatorFootball
         private StatsUX StatsUX = null;
         private TeamStatusUX TeamStatusUX = null;
         private ChampionsUX ChampionsUX = null;
-
+        private LeagueInjuriesUX LeagueInjuriesUX = null;
 
         private static ILog logger = LogManager.GetLogger("RollingFile");
 
@@ -303,7 +303,7 @@ namespace SpectatorFootball
 
                 Loaded_League = new Loaded_League_Structure();
 
-                League_Services ls = new League_Services();
+                Injury_Services ls = new Injury_Services();
                 string[] r = ls.CheckDBVersion((string)e.League_Short_Name);
 
                 int r_code = int.Parse(r[0]);
@@ -384,7 +384,7 @@ namespace SpectatorFootball
 
                     string year = Loaded_League.Current_Year.ToString();
                     string League_Short_Name = Loaded_League.season.League_Structure_by_Season[0].Short_Name;
-                    League_Services ls = new League_Services();
+                    Injury_Services ls = new Injury_Services();
                     Loaded_League.season = ls.LoadSeason(year, League_Short_Name);
                     Loaded_League.Current_Year = Loaded_League.season.Year;
 
@@ -395,7 +395,7 @@ namespace SpectatorFootball
                 if (bUpdateStandings)
                 {
                     bUpdateStandings = false;
-                    League_Services ls = new League_Services();
+                    Injury_Services ls = new Injury_Services();
                     string league_shortname = Loaded_League.season.League_Structure_by_Season[0].Short_Name;
 
                     //Set league state
@@ -586,6 +586,30 @@ namespace SpectatorFootball
                 sp_uc.Children.Clear();
                 sp_uc.Children.Add(ChampionsUX);
                 ChampionsUX.Show_Standings += Show_LeagueStandings;
+
+                Mouse.OverrideCursor = null;
+            }
+            catch (Exception ex)
+            {
+                Mouse.OverrideCursor = null;
+                logger.Error("Error Creating the League Champions form");
+                logger.Error(ex);
+                MessageBox.Show(CommonUtils.substr(ex.Message, 0, 100), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+        }
+
+        private void Show_LeagueInjuries(object sender, EventArgs e)
+        {
+            if (Mouse.OverrideCursor == Cursors.Wait) return;
+
+            try
+            {
+                Mouse.OverrideCursor = Cursors.Wait;
+                LeagueInjuriesUX = new LeagueInjuriesUX(this);
+                sp_uc.Children.Clear();
+                sp_uc.Children.Add(LeagueInjuriesUX);
+                LeagueInjuriesUX.Show_Standings += Show_LeagueStandings;
 
                 Mouse.OverrideCursor = null;
             }
