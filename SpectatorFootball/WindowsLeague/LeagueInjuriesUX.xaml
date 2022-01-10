@@ -30,7 +30,7 @@
         <StackPanel Orientation="Vertical">
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
                 <Label HorizontalAlignment="Center" Style="{StaticResource Conflbltyle}">Injuries</Label>
-                <ListView Name="lstInjuries" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Height="500" Width="920">
+                <ListView Name="lstInjuries" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Height="500" Width="920"  MouseDoubleClick="lstInjuries_Click">
                     <ListView.Resources>
                         <Style TargetType="ListViewItem">
                             <Setter Property="HorizontalContentAlignment" Value="Right" />

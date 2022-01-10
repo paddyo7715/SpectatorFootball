@@ -469,5 +469,15 @@
             <Setter Property="Background" Value="White"/>
             <Setter Property="BorderBrush" Value="Black"/>
         </Style>
+
+        <Style TargetType="Label" x:Key="GameIntro_LeagueName">
+            <Setter Property="FontFamily" Value="Verdana"/>
+            <Setter Property="FontSize" Value="30" />
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="FontWeight" Value="UltraBold"/>
+            <Setter Property="Foreground" Value="Blue"/>
+            <Setter Property="Background" Value="Transparent"/>
+        </Style>
     </Application.Resources>
 </Application>

@@ -44,6 +44,13 @@ namespace SpectatorFootball.Services
             {
                 string helmet_filename = d.helmet_filename;
                 d.HelmetImage = lls.getHelmetImg(helmet_filename);
+
+                d.Pick_Pos_Name = d.p.Pos + " " + d.p.First_Name + " " + d.p.Last_Name;
+                string[] m = d.Pick_Pos_Name.Split(' ');
+                int ipos = int.Parse(m[0]);
+                Player_Pos ppos = (Player_Pos)ipos;
+                string pick_name = d.Pick_Pos_Name.Substring(1);
+                d.Pick_Pos_Name = ppos.ToString() + " " + pick_name;
             }
 
             return r;

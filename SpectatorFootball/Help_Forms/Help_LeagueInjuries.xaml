@@ -1,0 +1,23 @@
+﻿<Window x:Class="SpectatorFootball.Help_Forms.Help_LeagueInjuries"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SpectatorFootball.Help_Forms"
+        mc:Ignorable="d"
+        Height="240" Width="300" WindowStyle="none" ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True">
+    <Border Style="{StaticResource popupBD}" BorderThickness="1">
+        <StackPanel Style="{StaticResource popupSP}" Height="230" Width="290" Orientation="Vertical" >
+            <Label Style="{StaticResource popupTT}" HorizontalAlignment="Center">League Injuries</Label>
+            <TextBlock Style="{StaticResource HelpTB}" Name="txtNextContent" TextWrapping="Wrap" Width="270" Height="150" Margin="5,5,5,0" >
+                On the League Injuries form, you can see all players that are currently injured sorted by team.<LineBreak/>
+                Note that only currently injured players will show up on this form, not players that have recovered from injuries and already returned to action.<LineBreak/>
+                <LineBreak/><LineBreak/>
+                You can also click on a player to see their player card.
+            
+            </TextBlock>
+            <Button Name="close_close" Style="{StaticResource appSubmitStyle}" Click="close_Click" >Close</Button>
+        </StackPanel>
+    </Border>
+
+</Window>

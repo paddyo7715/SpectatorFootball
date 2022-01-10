@@ -458,7 +458,7 @@ namespace SpectatorFootball.WindowsLeague
                 pw.Loaded_League.LState = ls.getSeasonState(Latest_year, pw.Loaded_League.season.ID, short_name);
 
                 //Set top menu based on league state
-                pw.setMenuonState(pw.Loaded_League.LState);
+                pw.setMenuonState(pw.Loaded_League.LState, pw.Loaded_League);
 
                 //Load the league standings
                 pw.Loaded_League.Standings = ls.getLeageStandings(pw.Loaded_League);

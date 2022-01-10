@@ -188,6 +188,9 @@
     <Compile Include="Help_Forms\Help_FreeAgency.xaml.cs">
       <DependentUpon>Help_FreeAgency.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Help_Forms\Help_LeagueInjuries.xaml.cs">
+      <DependentUpon>Help_LeagueInjuries.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Help_Forms\Help_PlayerStats.xaml.cs">
       <DependentUpon>Help_PlayerStats.xaml</DependentUpon>
     </Compile>
@@ -466,6 +469,9 @@
     <Compile Include="Team\Uniform.cs" />
     <Compile Include="Team\Uniform_Image.cs" />
     <Compile Include="Versioning\App_Version.cs" />
+    <Compile Include="WindowsLeague\Game_Window.xaml.cs">
+      <DependentUpon>Game_Window.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WindowsLeague\LeagueDraftUX.xaml.cs">
       <DependentUpon>LeagueDraftUX.xaml</DependentUpon>
     </Compile>
@@ -508,6 +514,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Help_Forms\Help_FreeAgency.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Help_Forms\Help_LeagueInjuries.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -614,6 +624,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="WindowsLeague\Game_Window.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="WindowsLeague\LeagueDraftUX.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -712,6 +726,7 @@
     <Resource Include="Images\fplayer.jpg" />
     <Resource Include="Images\Helmets\st_Turbos.png" />
     <Resource Include="Images\Stadiums\st_Detroit.jpg" />
+    <Resource Include="Images\Game_Intro_Background.jpg" />
     <Content Include="Models\LeagueEDM.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>LeagueEDM.edmx</DependentUpon>

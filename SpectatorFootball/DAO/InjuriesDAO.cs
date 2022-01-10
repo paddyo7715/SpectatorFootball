@@ -53,8 +53,7 @@ namespace SpectatorFootball.DAO
                      {
                          helmet_filename = t.Helmet_Image_File,
                          Team_Name = t.City + " " + t.Nickname,
-                         Pick_Pos_Name = (pn.Pos + " " + pn.First_Name + " " + pn.Last_Name).Trim(),
-                         Player_ID = pn.ID,
+                         p = pn,
                          Injury = i
                      }).ToList();
             }

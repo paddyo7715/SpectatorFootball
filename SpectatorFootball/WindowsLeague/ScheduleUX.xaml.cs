@@ -152,11 +152,13 @@ namespace SpectatorFootball.WindowsLeague
             {
                 try
                 {
-                    Mouse.OverrideCursor = Cursors.Wait;
+//                    Mouse.OverrideCursor = Cursors.Wait;
                     if (wsr.Action == "Play")
                     {
-                        //pass the game object to a popup modal that plays the game and updates
-                        //the passed in game object.
+                        var Game_Window = new Game_Window(pw);
+                        Game_Window.Top = (SystemParameters.PrimaryScreenHeight - Game_Window.Height) / 2;
+                        Game_Window.Left = (SystemParameters.PrimaryScreenWidth - Game_Window.Width) / 2;
+                        Game_Window.ShowDialog();
                     }
                     else //Resume
                     {
@@ -164,7 +166,7 @@ namespace SpectatorFootball.WindowsLeague
                         //but I will need the game_id.  I think maybe store the serialized game
                         //object in the database on a key of game id
                     }
-                    gs.SaveGame(g, pw.Loaded_League);
+//                    gs.SaveGame(g, pw.Loaded_League);
                 }
                 catch (Exception ex)
                 {

@@ -332,7 +332,7 @@ namespace SpectatorFootball
                 Loaded_League.LState = ls.getSeasonState(true, Loaded_League.season.ID, (string)e.League_Short_Name);
 
                 //Set top menu based on league state
-                setMenuonState(Loaded_League.LState);
+                setMenuonState(Loaded_League.LState, Loaded_League);
 
                 //Load all team Helmet images for efficiency
                 League_Helper lh = new League_Helper();
@@ -402,7 +402,7 @@ namespace SpectatorFootball
                     Loaded_League.LState = ls.getSeasonState(true, Loaded_League.season.ID, league_shortname);
 
                     //Set top menu based on league state
-                    setMenuonState(Loaded_League.LState);
+                    setMenuonState(Loaded_League.LState, Loaded_League);
 
                     //Load the league standings
                     Loaded_League.Standings = ls.getLeageStandings(Loaded_League);
@@ -426,7 +426,7 @@ namespace SpectatorFootball
         private void Set_TopMenu(object sender, EventArgs e)
         {
             //Set top menu based on league state
-            setMenuonState(Loaded_League.LState);
+            setMenuonState(Loaded_League.LState, Loaded_League);
         }
 
 
@@ -699,8 +699,10 @@ namespace SpectatorFootball
             MenuHistory.IsEnabled = false;
             MenuTasks.IsEnabled = false;
         }
-        public void setMenuonState(League_State ls)
+        public void setMenuonState(League_State ls, Loaded_League_Structure load_league)
         {
+            bool bInjuries = Loaded_League.season.League_Structure_by_Season[0].Injuries ==1 ? true : false;
+
             MenuLeague.IsEnabled = true;
             foreach (MenuItem m in MenuLeague.Items)
                 m.IsEnabled = true;
@@ -720,6 +722,11 @@ namespace SpectatorFootball
             MenuTasks.IsEnabled = true;
             foreach (MenuItem m in MenuTasks.Items)
                 m.IsEnabled = true;
+
+            if (bInjuries)
+                MenuInjuries.IsEnabled = true;
+            else
+                MenuInjuries.IsEnabled = false;
 
             switch (ls)
             {
@@ -789,6 +796,7 @@ namespace SpectatorFootball
                         break;
                     }
             }
+
         }
 
     }

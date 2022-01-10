@@ -1,12 +1,16 @@
 ﻿
 FC:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\App.xaml;;
+FC:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\Help_Forms\Help_Champions.xaml;;
 FC:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\Help_Forms\Help_Draft.xaml;;
 FC:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\Help_Forms\Help_FreeAgency.xaml;;
+FC:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\Help_Forms\Help_LeagueInjuries.xaml;;
 FC:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\Help_Forms\Help_PlayerStats.xaml;;
 FC:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\Help_Forms\Help_Schedule.xaml;;
 FC:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\Help_Forms\Help_TeamDetail.xaml;;
+FC:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\Help_Forms\Help_TeamStats.xaml;;
 FC:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\Help_Forms\Help_TrainingCamp.xaml;;
 FC:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\WindowsLeague\BoxScore_Popup.xaml;;
+FC:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\WindowsLeague\ChampionsUX.xaml;;
 FC:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\WindowsLeague\Draft_Profile_Popup.xaml;;
 FC:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\Help_Forms\Help_LeagueStandings.xaml;;
 FC:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\Help_Forms\Help_NewLeague.xaml;;
@@ -21,8 +25,10 @@ FC:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\PlayerNamesUC
 FC:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\Progress_Dialog.xaml;;
 FC:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\StockTeamsUC.xaml;;
 FC:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\Stock_Team_detail.xaml;;
+FC:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\WindowsLeague\Game_Window.xaml;;
 FC:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\WindowsLeague\LeagueDraftUX.xaml;;
 FC:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\WindowsLeague\LeagueFreeAgencyUX.xaml;;
+FC:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\WindowsLeague\LeagueInjuriesUX.xaml;;
 FC:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\WindowsLeague\LeagueStandingsUX.xaml;;
 FC:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\WindowsLeague\PlayerCard_Popup.xaml;;
 FC:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\WindowsLeague\ScheduleUX.xaml;;
@@ -31,8 +37,4 @@ FC:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\WindowsLeague
 FC:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\WindowsLeague\Team_DetailUX.xaml;;
 FC:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\WindowsLeague\TrainingCampUX.xaml;;
 FC:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\WindowsLeague\TrainingCamp_Results_Popup.xaml;;
-FC:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\Help_Forms\Help_TeamStats.xaml;;
-FC:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\WindowsLeague\ChampionsUX.xaml;;
-FC:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\Help_Forms\Help_Champions.xaml;;
-FC:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\WindowsLeague\LeagueInjuriesUX.xaml;;
 
