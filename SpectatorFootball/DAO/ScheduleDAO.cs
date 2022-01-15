@@ -61,10 +61,12 @@ namespace SpectatorFootball.DAO
                      {
                          Game_ID = g.ID,
                          Game_Complete = g.Game_Done == 1 ? true : false,
+                         Away_Franchise_id = at.Franchise_ID,
                          Away_Team_Name = at.City + " " + at.Nickname,
                          Away_helmet_filename = at.Helmet_Image_File,
                          Away_Score = g.Away_Score != null ? g.Away_Score.ToString() : "",
                          Home_Score = g.Home_Score != null ? g.Home_Score.ToString() : "",
+                         Home_Franchise_id = ht.Franchise_ID,
                          Home_helmet_filename = ht.Helmet_Image_File,
                          Home_Team_Name = ht.City + " " + ht.Nickname,
                          QTR = g.Quarter,

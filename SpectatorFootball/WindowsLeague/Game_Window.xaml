@@ -20,7 +20,66 @@
                 <Label.Effect>
                     <DropShadowEffect Color="red"  ShadowDepth="3" Opacity=".75" />
                 </Label.Effect>
+            </Label>
+            <StackPanel Orientation="Horizontal" Margin="70,20,0,0">
+                    <Image Name="Away_Helmet" Height="200" Width="200"></Image>
+                    <StackPanel Orientation="Vertical">
+                        <Label Name="AwayCity" Height="95" Style="{StaticResource styleNameIntro}">
+                            <Label.Effect>
+                                <DropShadowEffect Color="Black" Direction="320" ShadowDepth="3" Opacity="1" />
+                            </Label.Effect>
+                        </Label>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Name="AwayName" Height="95" Style="{StaticResource styleNameIntro}">
+                                <Label.Effect>
+                                    <DropShadowEffect Color="Black" Direction="320" ShadowDepth="3" Opacity="1" />
+                                </Label.Effect>
+                            </Label>
+                            <Label Name="AwayRecord" Height="95" Style="{StaticResource styleRecordIntro}">
+                                <Label.Effect>
+                                    <DropShadowEffect Color="Black" Direction="320" ShadowDepth="3" Opacity="1" />
+                                </Label.Effect>
+                            </Label>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+            <Label  Style="{StaticResource styleatIntro}" HorizontalAlignment="Center">- AT -
+                <Label.Effect>
+                    <DropShadowEffect Color="Black" Direction="320" ShadowDepth="3" Opacity="1" />
+                </Label.Effect>
+            </Label>
 
+            <StackPanel Orientation="Horizontal" Margin="70,0,0,0">
+                <Image Name="Home_Helmet" Height="200" Width="200"></Image>
+                <StackPanel Orientation="Vertical">
+                    <Label Name="HomeCity" Height="95" Style="{StaticResource styleNameIntro}">
+                        <Label.Effect>
+                            <DropShadowEffect Color="Black" Direction="320" ShadowDepth="3" Opacity="1" />
+                        </Label.Effect>
+                    </Label>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Name="HomeName" Height="95" Style="{StaticResource styleNameIntro}">
+                            <Label.Effect>
+                                <DropShadowEffect Color="Black" Direction="320" ShadowDepth="3" Opacity="1" />
+                            </Label.Effect>
+                        </Label>
+                        <Label Name="HomeRecord" Height="95" Style="{StaticResource styleRecordIntro}">
+                            <Label.Effect>
+                                <DropShadowEffect Color="Black" Direction="320" ShadowDepth="3" Opacity="1" />
+                            </Label.Effect>
+                        </Label>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+            <Label Height="7" Width="1210" Background="White"  Margin="0,20,0,0">
+                <Label.Effect>
+                    <DropShadowEffect Color="red"  ShadowDepth="3" Opacity=".75" />
+                </Label.Effect>
+            </Label>
+            <Label Name="lblCity" Style="{StaticResource styleCityIntro}" HorizontalAlignment="Right" Margin="0,0,6,0">
+                <Label.Effect>
+                    <DropShadowEffect Color="White" Direction="320" ShadowDepth="3" Opacity="1" />
+                </Label.Effect>
             </Label>
             <Button Name="game_close" Style="{StaticResource appSubmitStyle}" Click="hlp_nl_close_Click_1" >Close</Button>
         </StackPanel>

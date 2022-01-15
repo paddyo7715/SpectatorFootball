@@ -479,5 +479,32 @@
             <Setter Property="Foreground" Value="Blue"/>
             <Setter Property="Background" Value="Transparent"/>
         </Style>
+
+        <!-- Intro Team Name and Record -->
+        <Style TargetType="Label" x:Key="styleNameIntro">
+            <Setter Property="FontFamily" Value="Verdana"/>
+            <Setter Property="FontSize" Value="70"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="Yellow"/>
+        </Style>
+        <!-- Intro Team Name and Record -->
+        <Style TargetType="Label" x:Key="styleRecordIntro">
+            <Setter Property="FontFamily" Value="Verdana"/>
+            <Setter Property="FontSize" Value="70"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+        <Style TargetType="Label" x:Key="styleatIntro">
+            <Setter Property="FontFamily" Value="Verdana"/>
+            <Setter Property="FontSize" Value="50"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+        <Style TargetType="Label" x:Key="styleCityIntro">
+            <Setter Property="FontFamily" Value="Verdana"/>
+            <Setter Property="FontSize" Value="30"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="Blue"/>
+        </Style>
     </Application.Resources>
 </Application>

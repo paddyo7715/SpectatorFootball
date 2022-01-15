@@ -44,9 +44,9 @@
                                     <Label Width="95" Style="{StaticResource Normallbltyle}">City Abbr:</Label>
                                     <TextBox Name="newtCityAbb" Text="{Binding City_Abr, FallbackValue='', Converter={StaticResource TextConverter}}" FontSize="12" Width="40" Height="22" Foreground="Black" Background="white" MaxLength="6" />
                                     <Label Width="50" Style="{StaticResource Normallbltyle}">City:</Label>
-                                    <TextBox Name="newtCity" Text="{Binding City, FallbackValue='', Converter={StaticResource TextConverter}}" FontSize="12" Width="110" Height="22" Foreground="Black" Background="white" MaxLength="16" />
+                                    <TextBox Name="newtCity" Text="{Binding City, FallbackValue='', Converter={StaticResource TextConverter}}" FontSize="12" Width="110" Height="22" Foreground="Black" Background="white" MaxLength="14" />
                                     <Label Width="95" Style="{StaticResource Normallbltyle}">Nickname:</Label>
-                                    <TextBox Name="newtNickname" Text="{Binding Nickname, FallbackValue='', Converter={StaticResource TextConverter}}" FontSize="12" Width="120" Height="22" Foreground="Black" Background="white" MaxLength="14" />
+                                    <TextBox Name="newtNickname" Text="{Binding Nickname, FallbackValue='', Converter={StaticResource TextConverter}}" FontSize="12" Width="120" Height="22" Foreground="Black" Background="white" MaxLength="12" />
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <Label Width="80" Style="{StaticResource Normallbltyle}">Stadium:</Label>
