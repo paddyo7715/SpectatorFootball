@@ -262,7 +262,6 @@ namespace SpectatorFootball.DraftsNS
         {
             Draft_Need r = new Draft_Need();
 
-            //           List<Pos_Starter_Tot> r = new List<Pos_Starter_Tot>();
             double percent_complete = (draftRound / DraftRounds) * 100.0;
 
             //First decide which positions that the team does NOT want to draft

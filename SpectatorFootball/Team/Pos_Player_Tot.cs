@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace SpectatorFootball.Team
 {
-    class Pos_Starter_Tot
+    class Pos_Player_Tot
     {
         public Player_Pos Pos { get; set; }
-        public int num_possible_starters { get; set; }
+        public int num_players { get; set; }
     }
 }

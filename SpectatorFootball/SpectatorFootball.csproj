@@ -464,7 +464,7 @@
     <Compile Include="Stock_Team_detail.xaml.cs">
       <DependentUpon>Stock_Team_detail.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Team\Pos_Starter_Tot.cs" />
+    <Compile Include="Team\Pos_Player_Tot.cs" />
     <Compile Include="Team\Team_Helper.cs" />
     <Compile Include="Team\Uniform.cs" />
     <Compile Include="Team\Uniform_Image.cs" />

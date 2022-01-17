@@ -116,5 +116,29 @@ namespace SpectatorFootball.DAO
 
             return;
         }
+        public List<Player_and_Ratings> getBestFreeAgentbyPos(long season_id, Player_Pos pp, string league_filepath)
+        {
+            List<Player_and_Ratings> r = null;
+
+
+            string con = Common.LeageConnection.Connect(league_filepath);
+
+            using (var context = new leagueContext(con))
+            {
+                int iFirstKicker = System.Enum.GetNames(typeof(Player_Pos)).Length - 2;
+
+                r = context.Players.Where(x => x.Retired == 0 && x.Pos == (long)pp &&
+                    !x.Players_By_Team.Any(w => w.Season_ID == season_id))
+                    .Select(x => new Player_and_Ratings
+                    {
+                        p = x,
+                        pr = x.Player_Ratings.Where(w => w.Season_ID == season_id).ToList(),
+                        pbt = null,
+                        Overall_Grade = 0
+                    }).ToList();
+            }
+
+            return r;
+        }
     }
 }

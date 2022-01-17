@@ -72,7 +72,7 @@ namespace SpectatorFootball.DAO
             {
                 using (var dbContextTransaction = context.Database.BeginTransaction())
                 {
-                    context.Database.Log = Console.Write;
+//                    context.Database.Log = Console.Write;
                     //Edit the player by team record for the players that have made the team
                     foreach (Players_By_Team p in make_List)
                     {

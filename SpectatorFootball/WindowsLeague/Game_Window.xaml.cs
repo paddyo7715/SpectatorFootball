@@ -30,23 +30,40 @@ namespace SpectatorFootball.WindowsLeague
         public Game_Window(MainWindow pw, WeeklyScheduleRec sched_rec)
         {
             InitializeComponent();
-            lblLeague.Content = pw.Loaded_League.season.League_Structure_by_Season[0].Long_Name;
-            at = pw.Loaded_League.season.Teams_by_Season.Where(x => x.Franchise_ID == sched_rec.Away_Franchise_id).First();
-            ht = pw.Loaded_League.season.Teams_by_Season.Where(x => x.Franchise_ID == sched_rec.Home_Franchise_id).First();
-            string away_record = pw.Loaded_League.getTeamStandings(at.City + " " + at.Nickname);
-            string home_record = pw.Loaded_League.getTeamStandings(ht.City + " " + ht.Nickname);
 
-            Away_Helmet.Source = pw.Loaded_League.getHelmetImg(at.Helmet_Image_File);
-            AwayCity.Content = at.City;
-            AwayName.Content = at.Nickname;
-            AwayRecord.Content = "(" + away_record + ")";
+            try
+            {
+                lblLeague.Content = pw.Loaded_League.season.League_Structure_by_Season[0].Long_Name;
+                at = pw.Loaded_League.season.Teams_by_Season.Where(x => x.Franchise_ID == sched_rec.Away_Franchise_id).First();
+                ht = pw.Loaded_League.season.Teams_by_Season.Where(x => x.Franchise_ID == sched_rec.Home_Franchise_id).First();
+                string away_record = pw.Loaded_League.getTeamStandings(at.City + " " + at.Nickname);
+                string home_record = pw.Loaded_League.getTeamStandings(ht.City + " " + ht.Nickname);
 
-            Home_Helmet.Source = pw.Loaded_League.getHelmetImg(ht.Helmet_Image_File);
-            HomeCity.Content = ht.City;
-            HomeName.Content = ht.Nickname;
-            HomeRecord.Content = "(" + home_record + ")";
+                Away_Helmet.Source = pw.Loaded_League.getHelmetImg(at.Helmet_Image_File);
+                AwayCity.Content = at.City;
+                AwayName.Content = at.Nickname;
+                AwayRecord.Content = "(" + away_record + ")";
 
-            lblCity.Content = ht.Stadium_Location;
+                Home_Helmet.Source = pw.Loaded_League.getHelmetImg(ht.Helmet_Image_File);
+                HomeCity.Content = ht.City;
+                HomeName.Content = ht.Nickname;
+                HomeRecord.Content = "(" + home_record + ")";
+
+                lblCity.Content = ht.Stadium_Location;
+
+                long season_id = pw.Loaded_League.season.ID;
+
+
+            }
+            catch (Exception e)
+            {
+                Mouse.OverrideCursor = null;
+                string err = "Error Loading Data to Start Game!";
+                logger.Error(err);
+                logger.Error(e);
+                MessageBox.Show(CommonUtils.substr(err, 0, 100), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+            }
 
         }
 
