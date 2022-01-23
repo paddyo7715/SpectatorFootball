@@ -50,12 +50,12 @@ namespace SpectatorFootball.Services
             return r;
         }
 
-        public List<Player> GetTeamPlayersForGame(long f_id, Loaded_League_Structure lls)
+        public List<Player_and_Ratings> GetTeamPlayersForGame(long f_id, long Week, Loaded_League_Structure lls)
         {
             //This method will return the players ready for a game sorted in the order of the depth
             //chart.  Due to injuries, if the team does not have enought or too many plaers at a 
             //position then the roster will be adjusted to have the correct number of players.
-            List<Player> r = null;
+            List<Player_and_Ratings> r = null;
 //            List<Player_and_Ratings> add_players = new List<Player_and_Ratings>();
 //            List<Player_and_Ratings> cut_players = new List<Player_and_Ratings>();
             TeamDAO tdao = new TeamDAO();
@@ -117,7 +117,7 @@ namespace SpectatorFootball.Services
 
                     Free_Agency fa_entity = new Free_Agency()
                     {
-                        Week = app_Constants.FREE_AGENCY_WEEK,
+                        Week = Week,
                         Signed = 1,
                         Season_ID = lls.season.ID,
                         Player_ID = new_player.p.ID,
@@ -130,22 +130,51 @@ namespace SpectatorFootball.Services
                 }
 
                 while (actual_pos_num_players > required_pos_num_players) {
+                    List<Player_and_Ratings> pos_players = tdao.getPosPlayers(lls.season.ID, f_id, (int)pp, League_con_string);
 
+                    //Set the overall rating for each player
+                    foreach (Player_and_Ratings pr in pos_players)
+                    {
+                        pr.Overall_Grade = Player_Helper.Create_Overall_Rating((Player_Pos)pr.p.Pos, pr.pr[0]);
+                    }
+                    //sort the pos_players by overall grade descending
+                    pos_players = pos_players.OrderByDescending(x => x.Overall_Grade).ToList();
+
+                    //Now cycle all the players on the team for this position and remove
+                    //the bottom players that don't make the cut.
+                    int i = 0;
+                    foreach(Player_and_Ratings pr in pos_players)
+                    {
+                        if (i < actual_pos_num_players)
+                            continue;
+                        else
+                        {
+                            //remove this player from the team
+                            Free_Agency fa_entity = new Free_Agency()
+                            {
+                                Week = Week,
+                                Signed = 0,
+                                Season_ID = lls.season.ID,
+                                Player_ID = pr.p.ID,
+                                Franchise_ID = f_id
+                            };
+
+                            fdao.ReleasePlayersandFreeAgency(pr.pbt, fa_entity, League_con_string);
+                        }
+
+                        i++;
+                    }
                 }
-                //if there are add players or cut players then I will need
-                //to update the database and do the following two statements
-                //Get the current players for this team
-//                List<Roster_rec> curr_players = tdao.getTeamRoster(lls.season.ID, f_id, League_con_string);
-                //get the count per position, so that we can determine if players need to be dropped or singed.
-//                List<Pos_Player_Tot> ppt = curr_players.GroupBy(x => x.p.Pos).Select(x =>
-//                   new Pos_Player_Tot
-//                   {
-//                       Pos = (Player_Pos)x.Key,
-//                       num_players = x.Count()
-//                   }).ToList();
-
-
             }
+
+            r = tdao.getTeamPlayers(lls.season.ID, f_id, League_con_string);
+            //Set the overall ratings for players and now sort the players in the order of position and rating
+            //for roster depth
+            foreach (Player_and_Ratings pr in r)
+            {
+                pr.Overall_Grade = Player_Helper.Create_Overall_Rating((Player_Pos)pr.p.Pos, pr.pr[0]);
+            }
+            r = r.OrderByDescending(x => x.p.Pos).ThenByDescending(x => x.Overall_Grade).ToList();
 
             return r;
         }

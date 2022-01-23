@@ -140,5 +140,30 @@ namespace SpectatorFootball.DAO
 
             return r;
         }
+
+        public void ReleasePlayersandFreeAgency(Players_By_Team cut_player, Free_Agency farec, string league_filepath)
+        {
+            string con = Common.LeageConnection.Connect(league_filepath);
+
+            using (var context = new leagueContext(con))
+            {
+                using (var dbContextTransaction = context.Database.BeginTransaction())
+                {
+
+                    //Delete the player by team record for the players that were cut
+                    cut_player.Player.Player_Ratings = null;
+                    cut_player.Player = null;
+                    context.Players_By_Team.Add(cut_player);
+                    context.Entry(cut_player).State = System.Data.Entity.EntityState.Deleted;
+                    context.SaveChanges();
+
+                    //Save the free agency records
+                    context.Free_Agency.Add(farec);
+                    context.SaveChanges();
+
+                    dbContextTransaction.Commit();
+                }
+            }
+        }
     }
 }

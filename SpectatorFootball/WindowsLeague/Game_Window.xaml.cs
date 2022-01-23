@@ -1,5 +1,6 @@
 ﻿using log4net;
 using SpectatorFootball.Models;
+using SpectatorFootball.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,9 +28,14 @@ namespace SpectatorFootball.WindowsLeague
         private Teams_by_Season at = null;
         private Teams_by_Season ht = null;
 
+        private List<Player_and_Ratings> Away_Players = null;
+        private List<Player_and_Ratings> Home_Players = null;
+
         public Game_Window(MainWindow pw, WeeklyScheduleRec sched_rec)
         {
             InitializeComponent();
+            Game_Services gs = new Game_Services();
+
 
             try
             {
@@ -52,6 +58,9 @@ namespace SpectatorFootball.WindowsLeague
                 lblCity.Content = ht.Stadium_Location;
 
                 long season_id = pw.Loaded_League.season.ID;
+
+                Away_Players = gs.GetTeamPlayersForGame(at.Franchise_ID, sched_rec.iWeek, pw.Loaded_League);
+                Home_Players = gs.GetTeamPlayersForGame(ht.Franchise_ID, sched_rec.iWeek, pw.Loaded_League);
 
 
             }
