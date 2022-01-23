@@ -92,7 +92,7 @@ namespace SpectatorFootball.DAO
             return r;
 
         }
-        public void SelectPlayer(Players_By_Team pbt, FreeAgencyTrans fa_selection, Free_Agency fa_entity, string league_filepath)
+        public void SelectPlayer(Players_By_Team pbt, Free_Agency fa_entity, string league_filepath)
         {
 
             string con = Common.LeageConnection.Connect(league_filepath);

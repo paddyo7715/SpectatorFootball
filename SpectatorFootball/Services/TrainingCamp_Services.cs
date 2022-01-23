@@ -164,9 +164,10 @@ namespace SpectatorFootball.Services
                         //The player has made the team
                         if (p.p.Jersey_Number == null)
                         {
-                            int j_number;
+                            p.p.Jersey_Number = Team_Helper.getFreePlayerNumber(Updated_Players, pp);
 
-                            for (int jj = 0; jj < 20; jj++)
+/*
+                            for (int jj = 0; jj < 50; jj++)
                             {
                                 j_number = Player_Helper.getPlayerNumber(pp);
                                 if (!Updated_Players.Any(x => x.Jersey_Number == j_number))
@@ -181,7 +182,7 @@ namespace SpectatorFootball.Services
                             //There will always be a number free.
                             if (p.p.Jersey_Number == null)
                             {
-                                for (int jj = 1; jj < 100; jj++)
+                                for (int jj = 1; jj < 1000; jj++)
                                 {
                                     if (!Updated_Players.Any(x => x.Jersey_Number == jj))
                                     {
@@ -191,6 +192,7 @@ namespace SpectatorFootball.Services
 
                                 }
                             }
+*/
 
                         }
                         Training_Camp_by_Season tcamp = new Training_Camp_by_Season()

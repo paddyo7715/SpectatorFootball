@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using SpectatorFootball.DAO;
 using SpectatorFootball.Enum;
 using SpectatorFootball.League;
 using SpectatorFootball.Models;
+using SpectatorFootball.PlayerNS;
 
 namespace SpectatorFootball
 {
@@ -289,6 +291,40 @@ namespace SpectatorFootball
         public static long calcTeam_PowerRating(long wins, long loses, long pf, long pa)
         {
             return (pf - pa) + ((wins - loses) * 10);
+        }
+
+        public static int getFreePlayerNumber(List<Players_By_Team> pbt, Player_Pos pp)
+        {
+            int r = -1;
+            int j_number = 0;
+
+            for (int jj = 0; jj < 50; jj++)
+            {
+                j_number = Player_Helper.getPlayerNumber(pp);
+                if (!pbt.Any(x => x.Jersey_Number == j_number))
+                {
+                    r = j_number;
+                    break;
+                }
+            }
+
+            //if we still couldn't find a number for this player then search other positions
+            //since I intend to cap the number of injuries to about 40 per team per year
+            //There will always be a number free.
+            if (r == -1)
+            {
+                for (int jj = 1; jj < 1000; jj++)
+                {
+                    if (!pbt.Any(x => x.Jersey_Number == jj))
+                    {
+                        r = jj;
+                        break;
+                    }
+
+                }
+            }
+
+            return r;
         }
     }
 }

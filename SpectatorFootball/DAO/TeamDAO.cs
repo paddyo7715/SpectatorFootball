@@ -50,6 +50,22 @@ namespace SpectatorFootball.DAO
             return r;
         }
 
+        public int GetTeamPosCount(long season_id, long? franchise_id,long Pos, string league_filepath)
+        {
+            int r = 0;
+
+            string con = Common.LeageConnection.Connect(league_filepath);
+
+            using (var context = new leagueContext(con))
+            {
+                r = context.Players.Where(x => x.Retired == 0 && x.Pos == (int)Pos &&
+                x.Players_By_Team.Any(w => w.Season_ID == season_id && w.Franchise_ID == franchise_id))
+                .Count();
+            }
+
+            return r;
+        }
+
         public Teams_by_Season getTeamfromFranchiseID(long season_id, long franchise_id, string league_filepath)
         {
             Teams_by_Season r = null;
@@ -466,6 +482,21 @@ namespace SpectatorFootball.DAO
 
             return r;
         }
+
+        public List<Players_By_Team> getTeamPlayersbyTeam(long season_id, long Franchise_id, string league_filepath)
+        {
+            List<Players_By_Team> r = new List<Players_By_Team>();
+
+            string con = Common.LeageConnection.Connect(league_filepath);
+
+            using (var context = new leagueContext(con))
+            {
+                r = context.Players_By_Team.Where(x => x.Franchise_ID == Franchise_id && x.Season_ID == season_id).Include(x => x.Player).OrderBy(x => x.Player.Pos).ThenBy(x => x.Player.Last_Name).ThenBy(x => x.Player.First_Name).ToList();
+            }
+            return r;
+
+        }
+
 
     }
 }

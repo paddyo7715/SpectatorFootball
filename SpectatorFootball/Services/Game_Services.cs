@@ -1,5 +1,6 @@
 ﻿using SpectatorFootball.DAO;
 using SpectatorFootball.Enum;
+using SpectatorFootball.Free_AgencyNS;
 using SpectatorFootball.League;
 using SpectatorFootball.Models;
 using SpectatorFootball.PlayerNS;
@@ -55,35 +56,28 @@ namespace SpectatorFootball.Services
             //chart.  Due to injuries, if the team does not have enought or too many plaers at a 
             //position then the roster will be adjusted to have the correct number of players.
             List<Player> r = null;
-            List<Player> add_players = new List<Player>();
-            List<long> cut_players = new List<long>();
+//            List<Player_and_Ratings> add_players = new List<Player_and_Ratings>();
+//            List<Player_and_Ratings> cut_players = new List<Player_and_Ratings>();
             TeamDAO tdao = new TeamDAO();
+            FreeAgencyDAO fdao = new FreeAgencyDAO();
 
             string DIRPath_League = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + lls.season.League_Structure_by_Season[0].Short_Name.ToUpper();
             string League_con_string = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + lls.season.League_Structure_by_Season[0].Short_Name.ToUpper() + Path.DirectorySeparatorChar + lls.season.League_Structure_by_Season[0].Short_Name.ToUpper() + "." + app_Constants.DB_FILE_EXT;
 
+//            List<Pos_and_Count> ppt = tdao.GetTeamPlayerPosCounts(lls.season.ID, f_id, League_con_string);
 
-            //Get the current players for this team
-            List<Roster_rec> curr_players = tdao.getTeamRoster(lls.season.ID, f_id, League_con_string);
-            //get the count per position, so that we can determine if players need to be dropped or singed.
-            List<Pos_Player_Tot> ppt = curr_players.GroupBy(x => x.p.Pos).Select(x =>
-               new Pos_Player_Tot
-               {
-                   Pos = (Player_Pos)x.Key,
-                   num_players = x.Count()
-               }).ToList();
             //next cycle thru each of the positions and decide if we need to add or cut players
             //at each position
             foreach (Player_Pos pp in System.Enum.GetValues(typeof(Player_Pos)))
             {
                 int required_pos_num_players = Team_Helper.getNumPlayersByPosition(pp);
-                int actual_pos_num_players = ppt.Where(x => x.Pos == pp).Select(x => x.num_players).First();
+                int actual_pos_num_players = tdao.GetTeamPosCount(lls.season.ID, f_id, (long)pp, League_con_string);
+                //                int actual_pos_num_players = ppt.Where(x => x.pos == (int)pp).Select(x => x.pos_count).First();
                 //if the number of players at the position is less then what it need to be,
                 //because of an injury then the team needs to sign free agent(s) for this position.
-                if (actual_pos_num_players < required_pos_num_players)
+                while (actual_pos_num_players < required_pos_num_players)
                 {
                     Player_and_Ratings new_player = null;
-                    FreeAgencyDAO fdao = new FreeAgencyDAO();
                     List<Player_and_Ratings> pos_players = fdao.getBestFreeAgentbyPos(lls.season.ID, pp, League_con_string);
 
                     if (pos_players != null && pos_players.Count() > 0)
@@ -100,16 +94,60 @@ namespace SpectatorFootball.Services
                     }
                     else
                     {
-                        //stopped here. since no available free agents at the position requested could be found, we need to create a crappy player.
-                        //and create a player_and_rating object for it.
+                        Player created_player = Player_Helper.CreatePlayer(pp, true, true, false);
+                        //Set the season id on the player_rating, since it is not
+                        //set from the method
+                        List<Player_Ratings> plr = created_player.Player_Ratings.ToList();
+                        plr[0].Season_ID = lls.season.ID;
+
+                        Player_DAO pda = new Player_DAO();
+                        pda.AddSinglePlayer(created_player, League_con_string);
+
+                        new_player = new Player_and_Ratings()
+                        { p = created_player, pr = plr };
                     }
-                    //then I need to assign a new number for the player
-                    //then create all the objects for the database
+                    //Get a unique number on the team for a player
+                    List<Players_By_Team> pbt = tdao.getTeamPlayersbyTeam(lls.season.ID, f_id, League_con_string);
+                    int jersey_number = Team_Helper.getFreePlayerNumber(pbt, pp);
+
+                    //Add the player_by_team record to the new player object
+                    Players_By_Team pt = new Players_By_Team()
+                    { Franchise_ID = f_id, Season_ID = lls.season.ID, Jersey_Number = jersey_number };
+                    new_player.pbt = pt;
+
+                    Free_Agency fa_entity = new Free_Agency()
+                    {
+                        Week = app_Constants.FREE_AGENCY_WEEK,
+                        Signed = 1,
+                        Season_ID = lls.season.ID,
+                        Player_ID = new_player.p.ID,
+                        Franchise_ID = f_id
+                    };
+
+                    fdao.SelectPlayer(pt, fa_entity, League_con_string);
+
+                    actual_pos_num_players = tdao.GetTeamPosCount(lls.season.ID, f_id, (long)pp, League_con_string);
                 }
-                //don't forget that I also need to check if we have too many players at a position.
+
+                while (actual_pos_num_players > required_pos_num_players) {
+
+                }
+                //if there are add players or cut players then I will need
+                //to update the database and do the following two statements
+                //Get the current players for this team
+//                List<Roster_rec> curr_players = tdao.getTeamRoster(lls.season.ID, f_id, League_con_string);
+                //get the count per position, so that we can determine if players need to be dropped or singed.
+//                List<Pos_Player_Tot> ppt = curr_players.GroupBy(x => x.p.Pos).Select(x =>
+//                   new Pos_Player_Tot
+//                   {
+//                       Pos = (Player_Pos)x.Key,
+//                       num_players = x.Count()
+//                   }).ToList();
+
+
             }
 
-                return r;
+            return r;
         }
     }
 }

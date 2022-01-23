@@ -161,7 +161,7 @@ namespace SpectatorFootball.Services
                 };
 
                 FreeAgencyDAO fad = new FreeAgencyDAO();
-                fad.SelectPlayer(pbt_rec, faTrans, fa_entity, League_con_string);
+                fad.SelectPlayer(pbt_rec, fa_entity, League_con_string);
             }
 
             return r;
