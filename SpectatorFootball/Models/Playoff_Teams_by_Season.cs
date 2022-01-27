@@ -19,7 +19,9 @@ namespace SpectatorFootball.Models
         public long Season_ID { get; set; }
         public long Rank { get; set; }
         public long Eliminated { get; set; }
+        public long Conf_ID { get; set; }
     
+        public virtual Conference Conference { get; set; }
         public virtual Franchise Franchise { get; set; }
         public virtual Season Season { get; set; }
     }

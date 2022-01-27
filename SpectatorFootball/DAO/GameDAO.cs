@@ -66,7 +66,7 @@ namespace SpectatorFootball.DAO
 
             return r;
         }
-        public void SaveGame(Game g, string league_filepath)
+        public void SaveGame(Game g,List<Injury> lInj, string league_filepath)
         {
             string con = Common.LeageConnection.Connect(league_filepath);
 
@@ -79,11 +79,48 @@ namespace SpectatorFootball.DAO
                     context.Entry(g).State = System.Data.Entity.EntityState.Modified;
                     context.SaveChanges();
 
+                    if (lInj != null && lInj.Count() > 0)
+                    {
+                        context.Injuries.AddRange(lInj);
+                        context.SaveChanges();
+                    }
+
+
+
                     dbContextTransaction.Commit();
                 }
             }
 
             return;
+        }
+
+        public int NumUnplayedRegGames(long season_id, string league_filepath)
+        {
+            int r = 0;
+
+            string con = Common.LeageConnection.Connect(league_filepath);
+
+            using (var context = new leagueContext(con))
+            {
+                r = context.Games.Where(x => x.Season_ID == season_id &&
+                x.Game_Done == null && x.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1).Count();
+            }
+
+            return r;
+        }
+
+        public bool isGamePlayed(long g_id, string league_filepath)
+        {
+            bool r = false;
+
+            string con = Common.LeageConnection.Connect(league_filepath);
+
+            using (var context = new leagueContext(con))
+            {
+                r = context.Games.Any(x => x.ID == g_id && x.Game_Done == 1);
+            }
+
+            return r;
         }
     }
 }

@@ -546,6 +546,7 @@
     <Property Name="Season_ID" Type="integer" Nullable="false" />
     <Property Name="Rank" Type="integer" Nullable="false" />
     <Property Name="Eliminated" Type="integer" Nullable="false" />
+    <Property Name="Conf_ID" Type="integer" Nullable="false" />
   </EntityType>
   <EntityType Name="Season">
     <Key>
@@ -1553,18 +1554,6 @@ warning 6035: The relationship 'FK_Game_1_0' has columns that are not part of th
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Playoff_Teams_by_Season_0_0">
-    <End Role="Franchise" Type="Self.Franchise" Multiplicity="1" />
-    <End Role="Playoff_Teams_by_Season" Type="Self.Playoff_Teams_by_Season" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Franchise">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Playoff_Teams_by_Season">
-        <PropertyRef Name="Franchise_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Playoff_Teams_by_Season_1_0">
     <End Role="Season" Type="Self.Season" Multiplicity="1" />
     <End Role="Playoff_Teams_by_Season" Type="Self.Playoff_Teams_by_Season" Multiplicity="*" />
     <ReferentialConstraint>
@@ -1573,6 +1562,30 @@ warning 6035: The relationship 'FK_Game_1_0' has columns that are not part of th
       </Principal>
       <Dependent Role="Playoff_Teams_by_Season">
         <PropertyRef Name="Season_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Playoff_Teams_by_Season_1_0">
+    <End Role="Conference" Type="Self.Conference" Multiplicity="1" />
+    <End Role="Playoff_Teams_by_Season" Type="Self.Playoff_Teams_by_Season" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Conference">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Playoff_Teams_by_Season">
+        <PropertyRef Name="Conf_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Playoff_Teams_by_Season_2_0">
+    <End Role="Franchise" Type="Self.Franchise" Multiplicity="1" />
+    <End Role="Playoff_Teams_by_Season" Type="Self.Playoff_Teams_by_Season" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Franchise">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Playoff_Teams_by_Season">
+        <PropertyRef Name="Franchise_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1985,11 +1998,15 @@ warning 6035: The relationship 'FK_Game_1_0' has columns that are not part of th
       <End Role="Players_By_Team" EntitySet="Players_By_Team" />
     </AssociationSet>
     <AssociationSet Name="FK_Playoff_Teams_by_Season_0_0" Association="Self.FK_Playoff_Teams_by_Season_0_0">
-      <End Role="Franchise" EntitySet="Franchise" />
+      <End Role="Season" EntitySet="Season" />
       <End Role="Playoff_Teams_by_Season" EntitySet="Playoff_Teams_by_Season" />
     </AssociationSet>
     <AssociationSet Name="FK_Playoff_Teams_by_Season_1_0" Association="Self.FK_Playoff_Teams_by_Season_1_0">
-      <End Role="Season" EntitySet="Season" />
+      <End Role="Conference" EntitySet="Conference" />
+      <End Role="Playoff_Teams_by_Season" EntitySet="Playoff_Teams_by_Season" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Playoff_Teams_by_Season_2_0" Association="Self.FK_Playoff_Teams_by_Season_2_0">
+      <End Role="Franchise" EntitySet="Franchise" />
       <End Role="Playoff_Teams_by_Season" EntitySet="Playoff_Teams_by_Season" />
     </AssociationSet>
     <AssociationSet Name="FK_Teams_by_Season_0_0" Association="Self.FK_Teams_by_Season_0_0">

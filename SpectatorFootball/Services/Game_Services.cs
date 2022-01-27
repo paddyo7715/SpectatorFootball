@@ -28,14 +28,41 @@ namespace SpectatorFootball.Services
 
             return r;
         }
-        public void SaveGame(Game g, Loaded_League_Structure lls)
+        public void SaveGame(Game g, List<Injury> lInj , Loaded_League_Structure lls)
         {
             string DIRPath_League = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + lls.season.League_Structure_by_Season[0].Short_Name.ToUpper();
             string League_con_string = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + lls.season.League_Structure_by_Season[0].Short_Name.ToUpper() + Path.DirectorySeparatorChar + lls.season.League_Structure_by_Season[0].Short_Name.ToUpper() + "." + app_Constants.DB_FILE_EXT;
+            GameDAO gdao = new GameDAO();
 
-            GameDAO gd = new GameDAO();
-            gd.SaveGame(g, League_con_string);
-            return;
+            //We must determine one of the following to see what else needs to be done when this game
+            //is saved:
+            //*  If this is the last game in the regualr season then the playoff teams will need to be
+            //   seeded/written and the first playoff week schedule will need to be written.
+            //*  if this is the last playoff game in the week then next week's playoff games will need
+            //   to be created.
+            //*  if this is a regular season game but not the last one or the championship game then
+            //   nothing need to be done.
+            switch (lls.LState)
+            {
+                case League_State.Regular_Season_in_Progress:
+                    int Reg_Games_Left = gdao.NumUnplayedRegGames(lls.season.ID, League_con_string);
+                    if (Reg_Games_Left == 1)
+                    {
+                        bool bGame_Played = gdao.isGamePlayed(g.ID, League_con_string);
+                        if (!bGame_Played)
+                        {
+                            //now I must continue to build the new team win loses rec list and then
+                            //update the home and away teams record and points and then
+                            //sort to pick the playoff teams
+                        }
+                    }
+                    break;
+                case League_State.Playoffs_In_Progress:
+                    break;
+            }
+
+
+            gdao.SaveGame(g, lInj, League_con_string);
         }
         public BoxScore getGameandStatsfromID(long game_id, Loaded_League_Structure lls)
         {

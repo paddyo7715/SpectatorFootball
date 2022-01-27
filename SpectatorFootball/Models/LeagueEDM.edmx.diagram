@@ -4,11 +4,11 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="5a8fe7363b1b4ae8a0d3647fb25e82e0" Name="Diagram1">
+      <Diagram DiagramId="307115927b9e402fa8e7a891cd0f774e" Name="Diagram1">
         <EntityTypeShape EntityType="LeagueModel.Award" Width="1.5" PointX="12.75" PointY="44" IsExpanded="true" />
-        <EntityTypeShape EntityType="LeagueModel.Conference" Width="1.5" PointX="9" PointY="29.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="LeagueModel.Conference" Width="1.5" PointX="6.75" PointY="25.5" IsExpanded="true" />
         <EntityTypeShape EntityType="LeagueModel.DBVersion" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="LeagueModel.Division" Width="1.5" PointX="9" PointY="32" IsExpanded="true" />
+        <EntityTypeShape EntityType="LeagueModel.Division" Width="1.5" PointX="9" PointY="30.625" IsExpanded="true" />
         <EntityTypeShape EntityType="LeagueModel.Draft" Width="1.5" PointX="3" PointY="56.5" IsExpanded="true" />
         <EntityTypeShape EntityType="LeagueModel.Franchise" Width="1.5" PointX="6.75" PointY="39.375" IsExpanded="true" />
         <EntityTypeShape EntityType="LeagueModel.Free_Agency" Width="1.5" PointX="6" PointY="56.5" IsExpanded="true" />
@@ -33,19 +33,20 @@
         <EntityTypeShape EntityType="LeagueModel.Hall_of_Fame" Width="1.5" PointX="6" PointY="65.875" IsExpanded="true" />
         <EntityTypeShape EntityType="LeagueModel.Injury" Width="1.5" PointX="9" PointY="66.25" IsExpanded="true" />
         <EntityTypeShape EntityType="LeagueModel.Injury_Log" Width="1.5" PointX="6" PointY="68.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="LeagueModel.League_Structure_by_Season" Width="1.5" PointX="9" PointY="22.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LeagueModel.League_Structure_by_Season" Width="1.5" PointX="9" PointY="24.375" IsExpanded="true" />
         <EntityTypeShape EntityType="LeagueModel.Penalty" Width="1.5" PointX="6.75" PointY="29.25" IsExpanded="true" />
         <EntityTypeShape EntityType="LeagueModel.Player_Awards" Width="1.5" PointX="15" PointY="56.625" IsExpanded="true" />
         <EntityTypeShape EntityType="LeagueModel.Player_Ratings" Width="1.5" PointX="15" PointY="60.125" IsExpanded="true" />
         <EntityTypeShape EntityType="LeagueModel.Player_Retiring_Log" Width="1.5" PointX="15" PointY="53.75" IsExpanded="true" />
         <EntityTypeShape EntityType="LeagueModel.Player" Width="1.5" PointX="0.75" PointY="53.625" IsExpanded="true" />
         <EntityTypeShape EntityType="LeagueModel.Players_By_Team" Width="1.5" PointX="9" PointY="44.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="LeagueModel.Playoff_Teams_by_Season" Width="1.5" PointX="9" PointY="38.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="LeagueModel.Playoff_Teams_by_Season" Width="1.5" PointX="9" PointY="38.125" IsExpanded="true" />
         <EntityTypeShape EntityType="LeagueModel.Season" Width="1.5" PointX="6.75" PointY="33.875" IsExpanded="true" />
         <EntityTypeShape EntityType="LeagueModel.Teams_by_Season" Width="1.5" PointX="12" PointY="31.875" IsExpanded="true" />
         <EntityTypeShape EntityType="LeagueModel.Training_Camp_by_Season" Width="1.5" PointX="15" PointY="49.5" IsExpanded="true" />
         <AssociationConnector Association="LeagueModel.FK_Player_Awards_2_0" ManuallyRouted="false" />
         <AssociationConnector Association="LeagueModel.FK_Conference_0_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Playoff_Teams_by_Season_1_0" ManuallyRouted="false" />
         <AssociationConnector Association="LeagueModel.FK_Division_0_0" ManuallyRouted="false" />
         <AssociationConnector Association="LeagueModel.FK_Draft_0_0" ManuallyRouted="false" />
         <AssociationConnector Association="LeagueModel.FK_Draft_1_0" ManuallyRouted="false" />
@@ -69,7 +70,7 @@
         <AssociationConnector Association="LeagueModel.FK_Game_Player_Rushing_Stats_2_0" ManuallyRouted="false" />
         <AssociationConnector Association="LeagueModel.FK_Injuries_2_0" ManuallyRouted="false" />
         <AssociationConnector Association="LeagueModel.FK_Players_By_Team_2_0" ManuallyRouted="false" />
-        <AssociationConnector Association="LeagueModel.FK_Playoff_Teams_by_Season_0_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Playoff_Teams_by_Season_2_0" ManuallyRouted="false" />
         <AssociationConnector Association="LeagueModel.FK_Teams_by_Season_0_0" ManuallyRouted="false" />
         <AssociationConnector Association="LeagueModel.FK_Training_Camp_by_Season_0_0" ManuallyRouted="false" />
         <AssociationConnector Association="LeagueModel.FK_Free_Agency_0_0" ManuallyRouted="false" />
@@ -125,7 +126,7 @@
         <AssociationConnector Association="LeagueModel.FK_Players_By_Team_1_0" ManuallyRouted="false" />
         <AssociationConnector Association="LeagueModel.FK_Training_Camp_by_Season_2_0" ManuallyRouted="false" />
         <AssociationConnector Association="LeagueModel.FK_Players_By_Team_0_0" ManuallyRouted="false" />
-        <AssociationConnector Association="LeagueModel.FK_Playoff_Teams_by_Season_1_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Playoff_Teams_by_Season_0_0" ManuallyRouted="false" />
         <AssociationConnector Association="LeagueModel.FK_Teams_by_Season_1_0" ManuallyRouted="false" />
         <AssociationConnector Association="LeagueModel.FK_Training_Camp_by_Season_1_0" ManuallyRouted="false" />
       </Diagram>

@@ -207,6 +207,7 @@
       <DependentUpon>Help_TrainingCamp.xaml</DependentUpon>
     </Compile>
     <Compile Include="League\League_Stats.cs" />
+    <Compile Include="League\Team_Wins_Loses_rec.cs" />
     <Compile Include="Models\Award.cs">
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>

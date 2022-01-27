@@ -18,6 +18,7 @@
     <Property Name="Season_ID" Type="Int64" Nullable="false" />
     <Property Name="Conf_Name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
     <NavigationProperty Name="Season" Relationship="Self.FK_Conference_0_0" FromRole="Conference" ToRole="Season" />
+    <NavigationProperty Name="Playoff_Teams_by_Season" Relationship="Self.FK_Playoff_Teams_by_Season_1_0" FromRole="Conference" ToRole="Playoff_Teams_by_Season" />
   </EntityType>
   <EntityType Name="DBVersion">
     <Key>
@@ -78,7 +79,7 @@
     <NavigationProperty Name="Game_Player_Rushing_Stats" Relationship="Self.FK_Game_Player_Rushing_Stats_2_0" FromRole="Franchise" ToRole="Game_Player_Rushing_Stats" />
     <NavigationProperty Name="Injuries" Relationship="Self.FK_Injuries_2_0" FromRole="Franchise" ToRole="Injuries" />
     <NavigationProperty Name="Players_By_Team" Relationship="Self.FK_Players_By_Team_2_0" FromRole="Franchise" ToRole="Players_By_Team" />
-    <NavigationProperty Name="Playoff_Teams_by_Season" Relationship="Self.FK_Playoff_Teams_by_Season_0_0" FromRole="Franchise" ToRole="Playoff_Teams_by_Season" />
+    <NavigationProperty Name="Playoff_Teams_by_Season" Relationship="Self.FK_Playoff_Teams_by_Season_2_0" FromRole="Franchise" ToRole="Playoff_Teams_by_Season" />
     <NavigationProperty Name="Teams_by_Season" Relationship="Self.FK_Teams_by_Season_0_0" FromRole="Franchise" ToRole="Teams_by_Season" />
     <NavigationProperty Name="Training_Camp_by_Season" Relationship="Self.FK_Training_Camp_by_Season_0_0" FromRole="Franchise" ToRole="Training_Camp_by_Season" />
   </EntityType>
@@ -691,8 +692,10 @@
     <Property Name="Season_ID" Type="Int64" Nullable="false" />
     <Property Name="Rank" Type="Int64" Nullable="false" />
     <Property Name="Eliminated" Type="Int64" Nullable="false" />
-    <NavigationProperty Name="Franchise" Relationship="Self.FK_Playoff_Teams_by_Season_0_0" FromRole="Playoff_Teams_by_Season" ToRole="Franchise" />
-    <NavigationProperty Name="Season" Relationship="Self.FK_Playoff_Teams_by_Season_1_0" FromRole="Playoff_Teams_by_Season" ToRole="Season" />
+    <Property Name="Conf_ID" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="Conference" Relationship="Self.FK_Playoff_Teams_by_Season_1_0" FromRole="Playoff_Teams_by_Season" ToRole="Conference" />
+    <NavigationProperty Name="Franchise" Relationship="Self.FK_Playoff_Teams_by_Season_2_0" FromRole="Playoff_Teams_by_Season" ToRole="Franchise" />
+    <NavigationProperty Name="Season" Relationship="Self.FK_Playoff_Teams_by_Season_0_0" FromRole="Playoff_Teams_by_Season" ToRole="Season" />
   </EntityType>
   <EntityType Name="Season">
     <Key>
@@ -713,7 +716,7 @@
     <NavigationProperty Name="Player_Ratings" Relationship="Self.FK_Player_Ratings_0_0" FromRole="Season" ToRole="Player_Ratings" />
     <NavigationProperty Name="Player_Retiring_Log" Relationship="Self.FK_Player_Retiring_Log_0_0" FromRole="Season" ToRole="Player_Retiring_Log" />
     <NavigationProperty Name="Players_By_Team" Relationship="Self.FK_Players_By_Team_0_0" FromRole="Season" ToRole="Players_By_Team" />
-    <NavigationProperty Name="Playoff_Teams_by_Season" Relationship="Self.FK_Playoff_Teams_by_Season_1_0" FromRole="Season" ToRole="Playoff_Teams_by_Season" />
+    <NavigationProperty Name="Playoff_Teams_by_Season" Relationship="Self.FK_Playoff_Teams_by_Season_0_0" FromRole="Season" ToRole="Playoff_Teams_by_Season" />
     <NavigationProperty Name="Teams_by_Season" Relationship="Self.FK_Teams_by_Season_1_0" FromRole="Season" ToRole="Teams_by_Season" />
     <NavigationProperty Name="Training_Camp_by_Season" Relationship="Self.FK_Training_Camp_by_Season_1_0" FromRole="Season" ToRole="Training_Camp_by_Season" />
   </EntityType>
@@ -811,6 +814,18 @@
       </Principal>
       <Dependent Role="Conference">
         <PropertyRef Name="Season_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Playoff_Teams_by_Season_1_0">
+    <End Role="Conference" Type="Self.Conference" Multiplicity="1" />
+    <End Role="Playoff_Teams_by_Season" Type="Self.Playoff_Teams_by_Season" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Conference">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Playoff_Teams_by_Season">
+        <PropertyRef Name="Conf_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1090,7 +1105,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Playoff_Teams_by_Season_0_0">
+  <Association Name="FK_Playoff_Teams_by_Season_2_0">
     <End Role="Franchise" Type="Self.Franchise" Multiplicity="1" />
     <End Role="Playoff_Teams_by_Season" Type="Self.Playoff_Teams_by_Season" Multiplicity="*" />
     <ReferentialConstraint>
@@ -1762,7 +1777,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Playoff_Teams_by_Season_1_0">
+  <Association Name="FK_Playoff_Teams_by_Season_0_0">
     <End Role="Season" Type="Self.Season" Multiplicity="1" />
     <End Role="Playoff_Teams_by_Season" Type="Self.Playoff_Teams_by_Season" Multiplicity="*" />
     <ReferentialConstraint>
@@ -1845,6 +1860,10 @@
     <AssociationSet Name="FK_Conference_0_0" Association="Self.FK_Conference_0_0">
       <End Role="Season" EntitySet="Seasons" />
       <End Role="Conference" EntitySet="Conferences" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Playoff_Teams_by_Season_1_0" Association="Self.FK_Playoff_Teams_by_Season_1_0">
+      <End Role="Conference" EntitySet="Conferences" />
+      <End Role="Playoff_Teams_by_Season" EntitySet="Playoff_Teams_by_Season" />
     </AssociationSet>
     <AssociationSet Name="FK_Division_0_0" Association="Self.FK_Division_0_0">
       <End Role="Season" EntitySet="Seasons" />
@@ -1938,7 +1957,7 @@
       <End Role="Franchise" EntitySet="Franchises" />
       <End Role="Players_By_Team" EntitySet="Players_By_Team" />
     </AssociationSet>
-    <AssociationSet Name="FK_Playoff_Teams_by_Season_0_0" Association="Self.FK_Playoff_Teams_by_Season_0_0">
+    <AssociationSet Name="FK_Playoff_Teams_by_Season_2_0" Association="Self.FK_Playoff_Teams_by_Season_2_0">
       <End Role="Franchise" EntitySet="Franchises" />
       <End Role="Playoff_Teams_by_Season" EntitySet="Playoff_Teams_by_Season" />
     </AssociationSet>
@@ -2162,7 +2181,7 @@
       <End Role="Season" EntitySet="Seasons" />
       <End Role="Players_By_Team" EntitySet="Players_By_Team" />
     </AssociationSet>
-    <AssociationSet Name="FK_Playoff_Teams_by_Season_1_0" Association="Self.FK_Playoff_Teams_by_Season_1_0">
+    <AssociationSet Name="FK_Playoff_Teams_by_Season_0_0" Association="Self.FK_Playoff_Teams_by_Season_0_0">
       <End Role="Season" EntitySet="Seasons" />
       <End Role="Playoff_Teams_by_Season" EntitySet="Playoff_Teams_by_Season" />
     </AssociationSet>
