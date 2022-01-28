@@ -661,6 +661,40 @@ namespace SpectatorFootball.League
             }
             return r;
         }
+
+        public static List<Team_Wins_Loses_rec> getFinalRegSeasonRecords(List<Standings_Row> Standings, Game g, long num_conf, long num_teams)
+        {
+            List<Team_Wins_Loses_rec> r = new List<Team_Wins_Loses_rec>();
+
+            int i = 1;
+            long team_midpoint = num_teams / num_conf;
+            foreach (Standings_Row sr in Standings)
+            {
+                Team_Wins_Loses_rec w = new Team_Wins_Loses_rec()
+                {
+                    Conf_Num = i <= team_midpoint ? 1 : 2,
+                    Div_Num = sr.Div_Num,
+                    Franchise_ID = sr.Franchise_ID,
+                    wins = sr.wins,
+                    loses = sr.loses,
+                    ties = sr.ties,
+                    pointsfor = sr.pointsfor,
+                    pointagainst = sr.pointagainst,
+                    Team_Name = sr.Team_Name,
+                    winlossRating = (sr.wins * 2) + (sr.ties) - (sr.loses * 2),
+                    Random_Number = CommonUtils.getRandomNum(1, 10000)
+                };
+
+                i++;
+            }
+
+            r = r.OrderBy(x => num_conf).OrderBy(x => x.Div_Num)
+            .OrderByDescending(x => x.winlossRating)
+            .OrderByDescending(x => x.pointsfor - x.pointagainst)
+            .ThenByDescending(x => x.Random_Number).ToList();
+
+            return r;
+        }
     }
 }
 

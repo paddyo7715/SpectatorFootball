@@ -135,7 +135,7 @@ namespace SpectatorFootball
             //for .net.
             //I need to add the streak char to the list of standing_row objects in another method.
 
-            string sSQL = @"select ((T.Team_Slot-1) / (LS.num_teams / LS.Number_of_Divisions)) + 1 as Div_Num, T.id as Team_ID,
+            string sSQL = @"select ((T.Team_Slot-1) / (LS.num_teams / LS.Number_of_Divisions)) + 1 as Div_Num, T.id as Team_ID, T.Franchise_ID as Franchise_ID,
                             T.Helmet_Image_File as Helmet_img, T.City || ' ' || T.Nickname as Team_Name,
                             case when clinch = 2 then 'x' when clinch = 1 then 'y' else ' ' end as clinch_char,
                             wins, loses, ties, 
@@ -213,7 +213,7 @@ namespace SpectatorFootball
                             where A.franchise_id = T.franchise_id and
                                   T.season_id = LS.season_id and
 	                              T.season_id = @Season_ID 
-                            order by Div_Num,winpct desc, wins-loses, random();";
+                            order by Div_Num,(wins*2) + ties - (loses*2) desc,pointsfor-pointagainst  desc,random() desc;";
 
             sSQL = sSQL.Replace("@Season_ID", season_id + "");
 

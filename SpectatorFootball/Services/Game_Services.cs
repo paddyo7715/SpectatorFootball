@@ -33,6 +33,7 @@ namespace SpectatorFootball.Services
             string DIRPath_League = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + lls.season.League_Structure_by_Season[0].Short_Name.ToUpper();
             string League_con_string = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + lls.season.League_Structure_by_Season[0].Short_Name.ToUpper() + Path.DirectorySeparatorChar + lls.season.League_Structure_by_Season[0].Short_Name.ToUpper() + "." + app_Constants.DB_FILE_EXT;
             GameDAO gdao = new GameDAO();
+            List<Playoff_Teams_by_Season> ptbs = new List<Playoff_Teams_by_Season>();
 
             //We must determine one of the following to see what else needs to be done when this game
             //is saved:
@@ -51,9 +52,14 @@ namespace SpectatorFootball.Services
                         bool bGame_Played = gdao.isGamePlayed(g.ID, League_con_string);
                         if (!bGame_Played)
                         {
-                            //now I must continue to build the new team win loses rec list and then
-                            //update the home and away teams record and points and then
-                            //sort to pick the playoff teams
+                            //If we get here then this is the last game of the season to  be saved,
+                            //so it is necessary to pick the playoff teams and then write the first
+                            //week of playoff games.
+                            List<Team_Wins_Loses_rec> w_recs = League_Helper.getFinalRegSeasonRecords(
+                                lls.Standings, g,
+                                lls.season.League_Structure_by_Season[0].Number_of_Conferences,
+                                lls.season.League_Structure_by_Season[0].Number_of_Divisions);
+
                         }
                     }
                     break;

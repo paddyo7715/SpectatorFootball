@@ -15,7 +15,7 @@ namespace SpectatorFootball.League
         public long wins { get; set; }
         public long loses { get; set; }
         public long ties { get; set; }
-        public long winpct { get; set; }
+        public long winlossRating { get; set; }
         public long pointsfor { get; set; }
         public long pointagainst { get; set; }
         public long Random_Number { get; set; }

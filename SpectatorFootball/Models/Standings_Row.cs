@@ -12,6 +12,7 @@ namespace SpectatorFootball.League
     {
         public long Div_Num { get; set; }
         public long Team_ID { get; set; }
+        public long Franchise_ID { get; set; }
         public string Helmet_img { get; set; }
         public BitmapImage HelmetImage { get; set; }
         public string Team_Name { get; set; }
