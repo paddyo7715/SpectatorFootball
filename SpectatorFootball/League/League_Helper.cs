@@ -667,9 +667,38 @@ namespace SpectatorFootball.League
             List<Team_Wins_Loses_rec> r = new List<Team_Wins_Loses_rec>();
 
             int i = 1;
+            if (num_conf == 0)
+                num_conf = 1;
+
             long team_midpoint = num_teams / num_conf;
             foreach (Standings_Row sr in Standings)
             {
+
+                if (sr.Franchise_ID == g.Away_Team_Franchise_ID)
+                {
+                    if (g.Away_Score > g.Home_Score)
+                        sr.wins += 1;
+                    else if (g.Away_Score < g.Home_Score)
+                        sr.loses += 1;
+                    else
+                        sr.ties += 1;
+
+                    sr.pointsfor += (long) g.Away_Score;
+                    sr.pointagainst += (long)g.Home_Score;
+                }
+                else if (sr.Franchise_ID == g.Home_Team_Franchise_ID)
+                {
+                    if (g.Home_Score > g.Away_Score)
+                        sr.wins += 1;
+                    else if (g.Home_Score < g.Away_Score)
+                        sr.loses += 1;
+                    else
+                        sr.ties += 1;
+
+                    sr.pointsfor += (long)g.Home_Score;
+                    sr.pointagainst += (long)g.Away_Score;
+                }
+
                 Team_Wins_Loses_rec w = new Team_Wins_Loses_rec()
                 {
                     Conf_Num = i <= team_midpoint ? 1 : 2,

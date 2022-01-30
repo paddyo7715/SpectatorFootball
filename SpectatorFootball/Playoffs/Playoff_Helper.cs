@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SpectatorFootball.League;
+using SpectatorFootball.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -57,6 +59,85 @@ namespace SpectatorFootball.Playoffs
             }
             else
                 r = champGame;
+
+            return r;
+        }
+
+        public static List<Playoff_Teams_by_Season> getConferencePlayoffTeams(
+            long season_id, long conf_num, List<Team_Wins_Loses_rec> team_wl_recs,
+            long playoff_temas_per_conference)
+        {
+            List<Playoff_Teams_by_Season> r = new List<Playoff_Teams_by_Season>();
+            List<Team_Wins_Loses_rec> Div_Winners = new List<Team_Wins_Loses_rec>();
+            List<Team_Wins_Loses_rec> All_Other_teams = new List<Team_Wins_Loses_rec>();
+
+            var testvar = team_wl_recs.Where(x => x.Conf_Num == conf_num)
+             .OrderByDescending(x => x.winlossRating)
+             .ThenByDescending(x => x.pointsfor - x.pointagainst)
+             .ThenByDescending(x => x.Random_Number)
+             .GroupBy(x => x.Div_Num)
+             .OrderBy(x => x.Key);
+
+            foreach (var k in testvar)
+            {
+                int i = 0;
+                foreach (var rec in k)
+                {
+                    if (i == 0)
+                        Div_Winners.Add(rec);
+                    else
+                        All_Other_teams.Add(rec);
+                    i++;
+                }
+            }
+
+            //sort the div winners list
+            Div_Winners = Div_Winners
+              .OrderByDescending(x => x.winlossRating)
+             .ThenByDescending(x => x.pointsfor - x.pointagainst)
+             .ThenByDescending(x => x.Random_Number).ToList();
+
+            //sort all the other conference teams
+            All_Other_teams = All_Other_teams
+              .OrderByDescending(x => x.winlossRating)
+             .ThenByDescending(x => x.pointsfor - x.pointagainst)
+             .ThenByDescending(x => x.Random_Number).ToList();
+
+            //Add the division winners as playoff teams.  They will always make the playoffs
+            int added_playoff_teams = 0;
+            foreach (Team_Wins_Loses_rec t in Div_Winners)
+            {
+                r.Add(new Playoff_Teams_by_Season()
+                {
+                    Conf_ID = t.Conf_Num,
+                    Franchise_ID = t.Franchise_ID,
+                    Rank = added_playoff_teams + 1,
+                    Eliminated = 0,
+                     Season_ID = season_id
+                }
+                    );
+                added_playoff_teams++;
+            }
+
+            //now add the wildcard teams, if any
+            foreach (Team_Wins_Loses_rec t in All_Other_teams)
+            {
+                if (added_playoff_teams < playoff_temas_per_conference)
+                {
+                    r.Add(new Playoff_Teams_by_Season()
+                    {
+                        Conf_ID = t.Conf_Num,
+                        Franchise_ID = t.Franchise_ID,
+                        Rank = added_playoff_teams + 1,
+                        Eliminated = 0,
+                        Season_ID = season_id
+                    });
+                }
+                else
+                    break;
+
+                added_playoff_teams++;
+            }
 
             return r;
         }

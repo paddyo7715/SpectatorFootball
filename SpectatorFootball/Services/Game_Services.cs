@@ -4,6 +4,7 @@ using SpectatorFootball.Free_AgencyNS;
 using SpectatorFootball.League;
 using SpectatorFootball.Models;
 using SpectatorFootball.PlayerNS;
+using SpectatorFootball.Playoffs;
 using SpectatorFootball.Team;
 using System;
 using System.Collections.Generic;
@@ -33,7 +34,7 @@ namespace SpectatorFootball.Services
             string DIRPath_League = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + lls.season.League_Structure_by_Season[0].Short_Name.ToUpper();
             string League_con_string = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + lls.season.League_Structure_by_Season[0].Short_Name.ToUpper() + Path.DirectorySeparatorChar + lls.season.League_Structure_by_Season[0].Short_Name.ToUpper() + "." + app_Constants.DB_FILE_EXT;
             GameDAO gdao = new GameDAO();
-            List<Playoff_Teams_by_Season> ptbs = new List<Playoff_Teams_by_Season>();
+            List<Playoff_Teams_by_Season> Playoff_Teams = new List<Playoff_Teams_by_Season>();
 
             //We must determine one of the following to see what else needs to be done when this game
             //is saved:
@@ -55,11 +56,33 @@ namespace SpectatorFootball.Services
                             //If we get here then this is the last game of the season to  be saved,
                             //so it is necessary to pick the playoff teams and then write the first
                             //week of playoff games.
-                            List<Team_Wins_Loses_rec> w_recs = League_Helper.getFinalRegSeasonRecords(
-                                lls.Standings, g,
-                                lls.season.League_Structure_by_Season[0].Number_of_Conferences,
-                                lls.season.League_Structure_by_Season[0].Number_of_Divisions);
+                            long num_divs = lls.season.League_Structure_by_Season[0].Number_of_Divisions;
+                            long num_confs = lls.season.League_Structure_by_Season[0].Number_of_Conferences;
+                            long playoff_teams = lls.season.League_Structure_by_Season[0].Num_Playoff_Teams;
+                            long Playoff_teams_per_Conf = num_confs == 2 ? playoff_teams / num_confs : playoff_teams;
 
+                            List <Team_Wins_Loses_rec> w_recs = League_Helper.getFinalRegSeasonRecords(
+                                lls.Standings, g,
+                                num_confs,
+                                num_divs);
+
+                            if (num_confs == 2)
+                            {
+                                List<Playoff_Teams_by_Season> Playoff_Teams1 =
+                                    Playoff_Helper.getConferencePlayoffTeams(
+                                    lls.season.ID, 1, w_recs, Playoff_teams_per_Conf);
+                                List<Playoff_Teams_by_Season> Playoff_Teams2 =
+                                    Playoff_Helper.getConferencePlayoffTeams(
+                                    lls.season.ID, 2, w_recs, Playoff_teams_per_Conf);
+                                Playoff_Teams.AddRange(Playoff_Teams1);
+                                Playoff_Teams.AddRange(Playoff_Teams2);
+
+                            }
+                            else
+                            {
+                                Playoff_Teams = Playoff_Helper.getConferencePlayoffTeams(
+                                    lls.season.ID, 1, w_recs, Playoff_teams_per_Conf);
+                            }
                         }
                     }
                     break;
