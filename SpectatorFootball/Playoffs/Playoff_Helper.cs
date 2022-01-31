@@ -142,6 +142,60 @@ namespace SpectatorFootball.Playoffs
             return r;
         }
 
+        public static List<string> CreateWeeklyPlayoffSchedule(
+            List<Playoff_Teams_by_Season> Playoff_Teams,
+            long lastWeekVal, long num_divs)
+        {
+            List<string> r = new List<string>();
+            long divs_per_conf = 0;
+            long num_confs = 0;
+            long teams_still_active = 0;
+            List<Playoff_Teams_by_Season> Acive_Teams = null;
+
+
+            //get number of conferences
+            num_confs = Playoff_Teams.Select(x => x.Conf_ID).Distinct().Count();
+
+            //Get number of div per conference
+            divs_per_conf = num_divs / num_confs;
+
+            //Get Teams that have not been eliminated in the playoffs
+            Acive_Teams = Playoff_Teams.Where(x => x.Eliminated == 0).ToList();
+
+            //Get teams still active in the playoffs
+            teams_still_active = Acive_Teams.Count();
+
+            //Is this the championship game?
+            if (teams_still_active == 2)
+            {
+                int rNum = CommonUtils.getRandomNum(1, 2);
+                string ht, at = null;
+                if (rNum == 1)
+                {
+                    at = Acive_Teams[0].Franchise_ID.ToString();
+                    ht = Acive_Teams[1].Franchise_ID.ToString();
+                }
+                else
+                {
+                    at = Acive_Teams[1].Franchise_ID.ToString();
+                    ht = Acive_Teams[0].Franchise_ID.ToString();
+                }
+
+                string s = app_Constants.PLAYOFF_CHAMPIONSHIP_WEEK + "," + at + "," + ht;
+                r.Add(s);
+            }
+            else
+            {
+
+            }
+            
+
+
+            return r;
+        }
 
     }
+
+
+
 }
