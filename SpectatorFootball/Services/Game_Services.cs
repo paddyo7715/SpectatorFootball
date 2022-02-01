@@ -35,6 +35,7 @@ namespace SpectatorFootball.Services
             string League_con_string = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + lls.season.League_Structure_by_Season[0].Short_Name.ToUpper() + Path.DirectorySeparatorChar + lls.season.League_Structure_by_Season[0].Short_Name.ToUpper() + "." + app_Constants.DB_FILE_EXT;
             GameDAO gdao = new GameDAO();
             List<Playoff_Teams_by_Season> Playoff_Teams = new List<Playoff_Teams_by_Season>();
+            List<Game> Playoff_Schedule = new List<Game>();
 
             //We must determine one of the following to see what else needs to be done when this game
             //is saved:
@@ -82,6 +83,27 @@ namespace SpectatorFootball.Services
                             {
                                 Playoff_Teams = Playoff_Helper.getConferencePlayoffTeams(
                                     lls.season.ID, 1, w_recs, Playoff_teams_per_Conf);
+                            }
+
+                            List<string> sched = Playoff_Helper.CreateWeeklyPlayoffSchedule(
+                                Playoff_Teams, g.Week, num_divs);
+
+                            foreach (string line in sched)
+                            {
+                                string[] m = line.Split(',');
+                                string sWeek = m[0];
+                                string ht = m[1];
+                                string at = m[2];
+
+                                Game pg = new Game()
+                                {
+                                    Week = long.Parse(sWeek),
+                                    Away_Team_Franchise_ID = int.Parse(at),
+                                    Home_Team_Franchise_ID = int.Parse(ht)
+                                };
+
+                                Playoff_Schedule.Add(pg);
+
                             }
                         }
                     }

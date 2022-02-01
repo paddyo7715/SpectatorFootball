@@ -152,22 +152,20 @@ namespace SpectatorFootball.Playoffs
             long teams_still_active = 0;
             List<Playoff_Teams_by_Season> Acive_Teams = null;
 
-
             //get number of conferences
             num_confs = Playoff_Teams.Select(x => x.Conf_ID).Distinct().Count();
 
             //Get number of div per conference
             divs_per_conf = num_divs / num_confs;
 
-            //Get Teams that have not been eliminated in the playoffs
-            Acive_Teams = Playoff_Teams.Where(x => x.Eliminated == 0).ToList();
-
             //Get teams still active in the playoffs
-            teams_still_active = Acive_Teams.Count();
+            teams_still_active = Playoff_Teams.Where(x => x.Eliminated == 0).Count();
 
             //Is this the championship game?
             if (teams_still_active == 2)
             {
+                //Get Teams that have not been eliminated in the playoffs any conference
+                Acive_Teams = Playoff_Teams.Where(x => x.Eliminated == 0).ToList();
                 int rNum = CommonUtils.getRandomNum(1, 2);
                 string ht, at = null;
                 if (rNum == 1)
@@ -186,11 +184,33 @@ namespace SpectatorFootball.Playoffs
             }
             else
             {
+                //do the scheduing for each conference
+                for (int cn = 1; cn <= num_confs; cn++)
+                {
+                    List<Playoff_Teams_by_Season> Active_Teams_conf = Playoff_Teams.Where(x => x.Eliminated == 0 && x.Conf_ID == cn).OrderByDescending(x => x.Rank).ToList();
+                    bool even_num_teams = teams_still_active % 2 == 0 ? true : false;
+                    string sWeek = null;
+                    string ht, at;
 
+                    if (teams_still_active == 2)
+                        sWeek = app_Constants.PLAYOFF_CONFERENCE_WEEK.ToString();
+                    else if (teams_still_active == num_divs)
+                        sWeek = app_Constants.PLAYOFF_DIVISIONAL_WEEK.ToString();
+                    else
+                        sWeek = (lastWeekVal + 1).ToString();
+
+                    int start_team = even_num_teams ? 0 : 1;
+                    for (int fac = start_team; fac < Active_Teams_conf.Count(); fac++)
+                    {
+                        ht = Active_Teams_conf[fac].Franchise_ID.ToString();
+                        at = Active_Teams_conf[Active_Teams_conf.Count() - 1 - fac].Franchise_ID.ToString();
+                        string s = sWeek + "," + at + "," + ht;
+                        r.Add(s);
+                    }
+                    
+                }
             }
-            
-
-
+ 
             return r;
         }
 
