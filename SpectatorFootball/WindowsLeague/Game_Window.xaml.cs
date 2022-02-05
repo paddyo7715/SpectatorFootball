@@ -24,6 +24,8 @@ namespace SpectatorFootball.WindowsLeague
     {
         private static ILog logger = LogManager.GetLogger("RollingFile");
 
+        public event EventHandler Set_TopMenu;
+
         private MainWindow pw;
         private Teams_by_Season at = null;
         private Teams_by_Season ht = null;
@@ -35,7 +37,6 @@ namespace SpectatorFootball.WindowsLeague
         {
             InitializeComponent();
             Game_Services gs = new Game_Services();
-
 
             try
             {
@@ -61,6 +62,15 @@ namespace SpectatorFootball.WindowsLeague
 
                 Away_Players = gs.GetTeamPlayersForGame(at.Franchise_ID, sched_rec.iWeek, pw.Loaded_League);
                 Home_Players = gs.GetTeamPlayersForGame(ht.Franchise_ID, sched_rec.iWeek, pw.Loaded_League);
+
+                Game g = new Game();
+
+                //End of game not sure where this should go
+                //gs.SaveGame(g, g.injuries, pw.Loaded_League);
+                //Game done see if the state of the league has changed
+                //Set_TopMenu?.Invoke(this, new EventArgs());
+                //this.Close();
+
 
 
             }

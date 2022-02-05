@@ -156,6 +156,7 @@ namespace SpectatorFootball.WindowsLeague
                     if (wsr.Action == "Play")
                     {
                         var Game_Window = new Game_Window(pw, wsr);
+                        Game_Window.Set_TopMenu += Set_TopMenu;
                         Game_Window.Top = (SystemParameters.PrimaryScreenHeight - Game_Window.Height) / 2;
                         Game_Window.Left = (SystemParameters.PrimaryScreenWidth - Game_Window.Width) / 2;
                         Game_Window.ShowDialog();

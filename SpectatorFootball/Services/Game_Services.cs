@@ -36,6 +36,7 @@ namespace SpectatorFootball.Services
             GameDAO gdao = new GameDAO();
             List<Playoff_Teams_by_Season> Playoff_Teams = new List<Playoff_Teams_by_Season>();
             List<Game> Playoff_Schedule = new List<Game>();
+            long num_divs = lls.season.League_Structure_by_Season[0].Number_of_Divisions;
 
             //We must determine one of the following to see what else needs to be done when this game
             //is saved:
@@ -57,7 +58,6 @@ namespace SpectatorFootball.Services
                             //If we get here then this is the last game of the season to  be saved,
                             //so it is necessary to pick the playoff teams and then write the first
                             //week of playoff games.
-                            long num_divs = lls.season.League_Structure_by_Season[0].Number_of_Divisions;
                             long num_confs = lls.season.League_Structure_by_Season[0].Number_of_Conferences;
                             long playoff_teams = lls.season.League_Structure_by_Season[0].Num_Playoff_Teams;
                             long Playoff_teams_per_Conf = num_confs == 2 ? playoff_teams / num_confs : playoff_teams;
@@ -109,11 +109,58 @@ namespace SpectatorFootball.Services
                     }
                     break;
                 case League_State.Playoffs_In_Progress:
+                    PlayoffsDAO poDAO = new PlayoffsDAO();
+                    List<Playoff_Teams_by_Season> ptList =
+                        poDAO.getNonEliminatedPlayoffsTeams(lls.season.ID, League_con_string);
+                    int Playoff_Games_Left = gdao.NumUnplayedPlayoffGames(lls.season.ID, League_con_string);
+
+                    long losing_playoff_team = g.Home_Team_Franchise_ID > g.Away_Team_Franchise_ID ? g.Away_Team_Franchise_ID : g.Home_Team_Franchise_ID;
+                    Playoff_Teams_by_Season elim_playoff_team = ptList.Where(x => x.Franchise_ID == losing_playoff_team).First();
+                    elim_playoff_team.Eliminated = 1;
+                    //if there is just 1 playoff team then in the dao method, I will know to edit it and not add.
+                    Playoff_Teams.Add(elim_playoff_team);
+
+                    //If we need to create a new playoff week schedule  
+                    if (Playoff_Games_Left == 1 && g.Week != app_Constants.PLAYOFF_CHAMPIONSHIP_WEEK)
+                    {
+                        List<string> sched = Playoff_Helper.CreateWeeklyPlayoffSchedule(
+                        Playoff_Teams, g.Week, num_divs);
+
+                        foreach (string line in sched)
+                        {
+                            string[] m = line.Split(',');
+                            string sWeek = m[0];
+                            string ht = m[1];
+                            string at = m[2];
+
+                            Game pg = new Game()
+                            {
+                                Week = long.Parse(sWeek),
+                                Away_Team_Franchise_ID = int.Parse(at),
+                                Home_Team_Franchise_ID = int.Parse(ht)
+                            };
+
+                            Playoff_Schedule.Add(pg);
+
+                        }
+                    }
+
+                    //decide which team lost and their playoff teams by season record must be updated.
+                    //note that we will know that the playoff team by season needs to be updated is if there
+                    //is only 1 record and if there is more than 1 then they have to be added.
+                    long losing_f_id = g.Home_Score > g.Away_Score ? g.Away_Team_Franchise_ID : g.Home_Team_Franchise_ID;
+                    Playoff_Teams_by_Season Losing_Playoff_Team = ptList.Where(x => x.Franchise_ID == losing_f_id).First();
+                    Losing_Playoff_Team.Eliminated = 1;
+                    Playoff_Teams.Add(Losing_Playoff_Team);
                     break;
             }
 
+            //if there were injuries in the game then create the injury log records
+            List<Injury_Log> inj_log = new List<Injury_Log>();
+            foreach (Injury ij in lInj)
+                inj_log.Add(new Injury_Log() { Injured = 1, Season_ID = lls.season.ID, Player_ID = ij.Player_ID, Week = g.Week });
 
-            gdao.SaveGame(g, lInj, League_con_string);
+            gdao.SaveGame(g, lInj, inj_log, Playoff_Teams, Playoff_Schedule, League_con_string);
         }
         public BoxScore getGameandStatsfromID(long game_id, Loaded_League_Structure lls)
         {

@@ -66,7 +66,7 @@ namespace SpectatorFootball.DAO
 
             return r;
         }
-        public void SaveGame(Game g,List<Injury> lInj, string league_filepath)
+        public void SaveGame(Game g,List<Injury> lInj, List<Injury_Log> inj_log, List<Playoff_Teams_by_Season> Playoff_Teams, List<Game> Playoff_Schedule, string league_filepath)
         {
             string con = Common.LeageConnection.Connect(league_filepath);
 
@@ -83,7 +83,28 @@ namespace SpectatorFootball.DAO
                     {
                         context.Injuries.AddRange(lInj);
                         context.SaveChanges();
+                        context.Injury_Log.AddRange(inj_log);
+                        context.SaveChanges();
                     }
+
+                    if (Playoff_Teams != null && Playoff_Teams.Count() > 0)
+                    {
+                        context.Playoff_Teams_by_Season.AddRange(Playoff_Teams);
+                        //if there is only 1 playoff team record, it means that this team lost a game
+                        //and the record should be updated in the database.
+                        if (Playoff_Teams.Count() == 1)
+                            context.Entry(g).State = System.Data.Entity.EntityState.Modified;
+
+                        context.SaveChanges();
+                    }
+
+                    if (Playoff_Schedule != null && Playoff_Schedule.Count() > 0)
+                    {
+                        context.Games.AddRange(Playoff_Schedule);
+                        context.SaveChanges();
+                    }
+
+                    
 
 
 
@@ -118,6 +139,20 @@ namespace SpectatorFootball.DAO
             using (var context = new leagueContext(con))
             {
                 r = context.Games.Any(x => x.ID == g_id && x.Game_Done == 1);
+            }
+
+            return r;
+        }
+        public int NumUnplayedPlayoffGames(long season_id, string league_filepath)
+        {
+            int r = 0;
+
+            string con = Common.LeageConnection.Connect(league_filepath);
+
+            using (var context = new leagueContext(con))
+            {
+                r = context.Games.Where(x => x.Season_ID == season_id &&
+                x.Game_Done == null && x.Week >= app_Constants.PLAYOFF_WIDLCARD_WEEK_1).Count();
             }
 
             return r;

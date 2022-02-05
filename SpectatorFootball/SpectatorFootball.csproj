@@ -170,6 +170,7 @@
     <Compile Include="DAO\GameDAO.cs" />
     <Compile Include="DAO\HomeTownsDAO.cs" />
     <Compile Include="DAO\InjuriesDAO.cs" />
+    <Compile Include="DAO\PlayoffsDAO.cs" />
     <Compile Include="DAO\ScheduleDAO.cs" />
     <Compile Include="DAO\TeamDAO.cs" />
     <Compile Include="DAO\TrainingCampDAO.cs" />
