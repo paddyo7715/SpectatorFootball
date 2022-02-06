@@ -59,7 +59,8 @@ namespace SpectatorFootball.DAO
             using (var context = new leagueContext(con))
             {
                 r = context.Players.Where(x => x.Retired == 0 && x.Pos == (int)Pos &&
-                x.Players_By_Team.Any(w => w.Season_ID == season_id && w.Franchise_ID == franchise_id))
+                x.Players_By_Team.Any(w => w.Season_ID == season_id && w.Franchise_ID == franchise_id) &&
+                !x.Injuries.Any(z => z.Player_ID == x.ID))
                 .Count();
             }
 
@@ -462,7 +463,7 @@ namespace SpectatorFootball.DAO
 
             using (var context = new leagueContext(con))
             {
-                r = context.Player_Retiring_Log.Where(x => x.Season_ID == season_id && x.Player.Players_By_Team.Any(a => a.Franchise_ID == f_id && a.Season_ID == season_id)).Select(x => new OneInt2Strings { key = app_Constants.PLAYER_RETIRING_WEEK, p = x.Player, Week = "Before Season", Event = ((Player_Pos)x.Player.Pos).ToString() + " " + x.Player.First_Name + " " + x.Player.Last_Name + " has retired", round = 0 })
+                r = context.Player_Retiring_Log.Where(x => x.Season_ID == season_id && x.Player.Players_By_Team.Any(a => a.Franchise_ID == f_id && a.Season_ID == season_id)).Select(x => new OneInt2Strings { key = app_Constants.PLAYER_RETIRING_RETURNING_WEEK, p = x.Player, Week = "Before Season", Event = ((Player_Pos)x.Player.Pos).ToString() + " " + x.Player.First_Name + " " + x.Player.Last_Name + " has retired", round = 0 })
                     .Union(context.Drafts.Where(x => x.Franchise_ID == f_id && x.Season_ID == season_id).Select(x => new OneInt2Strings { key = app_Constants.DRAFT_WEEK, p = x.Player, Week = "Draft", Event = ((Player_Pos)x.Player.Pos).ToString() + " " + x.Player.First_Name + " " + x.Player.Last_Name + " has been drafted in round " + x.Round.ToString(), round = x.Round }))
                     .Union(context.Free_Agency.Where(x => x.Franchise_ID == f_id && x.Season_ID == season_id).Select(x => new OneInt2Strings { key = x.Week, p = x.Player, Week = x.Week == app_Constants.FREE_AGENCY_WEEK ? "Free Agency Week" : x.Week == app_Constants.TRAINING_CAMP_WEEK ? "Training Camp Complete" : x.Week < 0 ? "Before Regular Season" : x.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 ? "Week " + x.Week : "Playoffs", Event = ((Player_Pos)x.Player.Pos).ToString() + " " + x.Player.First_Name + " " + x.Player.Last_Name + " has been " + (x.Signed == 1 ? "signed" : "released"), round = 0 }))
                     .Union(context.Injury_Log.Where(x => x.Season_ID == season_id && x.Player.Players_By_Team.Any(b => b.Franchise_ID == f_id && b.Season_ID == season_id)).Select(x => new OneInt2Strings { key = (int)x.Week, p = x.Player, Week = x.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 ? "Week " + x.Week : "Playoffs", Event = ((Player_Pos)x.Player.Pos).ToString() + " " + x.Player.First_Name + " " + x.Player.Last_Name + " has " + (x.Injured == 1 ? "been injured for " : "returned from injury"), round = 0 })).OrderBy(x => x.key).ThenBy(x => x.round).ToList();

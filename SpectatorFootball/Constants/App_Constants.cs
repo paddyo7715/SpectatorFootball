@@ -372,7 +372,7 @@ namespace SpectatorFootball
         public const double TRAINING_CAMP_P_COFFIN_CORNER_AWARD = 5.0;
 
         //Week values
-        public const int PLAYER_RETIRING_WEEK = -100;
+        public const int PLAYER_RETIRING_RETURNING_WEEK = -100;
         public const int DRAFT_WEEK = -70;
         public const int FREE_AGENCY_WEEK = -30;
         public const int TRAINING_CAMP_WEEK = -15;

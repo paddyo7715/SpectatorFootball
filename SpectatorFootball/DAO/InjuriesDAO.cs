@@ -61,6 +61,47 @@ namespace SpectatorFootball.DAO
             return r;
         }
 
+        public void ReturnPlayersFromInjury(List<Injury> delInj, List<Injury_Log> injLog, string league_filepath)
+        {
+            string con = Common.LeageConnection.Connect(league_filepath);
 
+            using (var context = new leagueContext(con))
+            {
+                using (var dbContextTransaction = context.Database.BeginTransaction())
+                {
+                    //                    context.Database.Log = Console.Write;
+
+                    //Delete the player's injury record
+                    foreach (Injury i in delInj)
+                    {
+                        i.Player = null;
+                        i.Season = null;
+                        i.Franchise = null;
+                        context.Injuries.Add(i);
+                        context.Entry(i).State = System.Data.Entity.EntityState.Deleted;
+                    }
+                    context.SaveChanges();
+
+                    context.Injury_Log.AddRange(injLog);
+                    context.SaveChanges();
+
+                    dbContextTransaction.Commit();
+                }
+            }
+        }
+
+        public List<Injury> getLeagueInjuredPlayers(long season_id, string league_filepath)
+        {
+            List<Injury> r = null;
+
+            string con = Common.LeageConnection.Connect(league_filepath);
+
+            using (var context = new leagueContext(con))
+            {
+                r = context.Injuries.Where(x => x.Season_ID == season_id).ToList();
+            }
+
+            return r;
+        }
     }
 }

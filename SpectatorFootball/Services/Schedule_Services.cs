@@ -26,7 +26,7 @@ namespace SpectatorFootball.Services
 
             //First get the weeks in the schedule
             ScheduleDAO schedDAO = new ScheduleDAO();
-            List<long> yearList = schedDAO.getYearinSched(Season_ID, League_con_string);
+            List<long> yearList = schedDAO.getWeeksinSched(Season_ID, League_con_string);
 
             //Next get a structure of wanted positions, in order, and unwanted positions for the team
             foreach (long i in yearList)

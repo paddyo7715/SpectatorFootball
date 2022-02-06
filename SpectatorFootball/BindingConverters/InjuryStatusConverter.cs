@@ -26,9 +26,8 @@ namespace SpectatorFootball.BindingConverters
                     r = "Career ending injury, he will never play again.";
                 else
                 {
-                    long weeks_to_go = iv.Num_of_Weeks - iv.Weeks_Remaining;
                     string injured_week = iv.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 ? "Week " + iv.Week.ToString() : "the Playoffs";
-                    r = "Injured in " + injured_week + " with " + weeks_to_go.ToString() + " weeks to go before returning";
+                    r = "Injured in " + injured_week + " for " + iv.Num_of_Weeks + " weeks";
                 }
             }
 

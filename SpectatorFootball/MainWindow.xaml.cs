@@ -53,6 +53,10 @@ namespace SpectatorFootball
         private ChampionsUX ChampionsUX = null;
         private LeagueInjuriesUX LeagueInjuriesUX = null;
 
+        //End of seasonx
+        public BackgroundWorker bw = null;
+        private Progress_Dialog_Season_End pop = null;
+
         private static ILog logger = LogManager.GetLogger("RollingFile");
 
         public MainWindow()
@@ -303,7 +307,7 @@ namespace SpectatorFootball
 
                 Loaded_League = new Loaded_League_Structure();
 
-                Injury_Services ls = new Injury_Services();
+                League_Services ls = new League_Services();
                 string[] r = ls.CheckDBVersion((string)e.League_Short_Name);
 
                 int r_code = int.Parse(r[0]);
@@ -384,7 +388,7 @@ namespace SpectatorFootball
 
                     string year = Loaded_League.Current_Year.ToString();
                     string League_Short_Name = Loaded_League.season.League_Structure_by_Season[0].Short_Name;
-                    Injury_Services ls = new Injury_Services();
+                    League_Services ls = new League_Services();
                     Loaded_League.season = ls.LoadSeason(year, League_Short_Name);
                     Loaded_League.Current_Year = Loaded_League.season.Year;
 
@@ -395,7 +399,7 @@ namespace SpectatorFootball
                 if (bUpdateStandings)
                 {
                     bUpdateStandings = false;
-                    Injury_Services ls = new Injury_Services();
+                    League_Services ls = new League_Services();
                     string league_shortname = Loaded_League.season.League_Structure_by_Season[0].Short_Name;
 
                     //Set league state
@@ -659,6 +663,85 @@ namespace SpectatorFootball
                 MessageBox.Show(CommonUtils.substr(ex.Message, 0, 100), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+        //Tasks
+        //*******************  End Season  *********************
+        private void EndSeasonTask(object sender, EventArgs e)
+        {
+            if (Mouse.OverrideCursor == Cursors.Wait) return;
+
+            try
+            {
+                Mouse.OverrideCursor = Cursors.Wait;
+
+                // Background Worker code for popup
+                pop = new Progress_Dialog_Season_End();
+                pop.SeasonEnded += SeasonEnded;
+                bw = new BackgroundWorker();
+
+                // Add any initialization after the InitializeComponent() call.
+                bw.DoWork += bw_DoWork;
+                bw.ProgressChanged += bw_ProgressChanged;
+                bw.RunWorkerCompleted += bw_RunWorkerCompleted;
+
+
+                bw.WorkerReportsProgress = true;
+                bw.RunWorkerAsync(Loaded_League);
+
+                // Progress Bar Window
+                pop.ShowDialog();
+
+                Mouse.OverrideCursor = null;
+            }
+            catch (Exception ex)
+            {
+                Mouse.OverrideCursor = null;
+                logger.Error("Error Ending the Season");
+                logger.Error(ex);
+                MessageBox.Show(CommonUtils.substr(ex.Message, 0, 100), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+        }
+        private void bw_DoWork(object sender, DoWorkEventArgs e)
+        {
+            Loaded_League_Structure lls = (Loaded_League_Structure)e.Argument;
+
+            var s = new League_Services();
+            s.EndSeason(lls, bw);
+        }
+        private void bw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            Style lableError = (Style)System.Windows.Application.Current.FindResource("LabelError");
+            pop.btnclose.IsEnabled = true;
+
+            // Progress Bar Window close
+            if (pop.prgTest.Foreground == Brushes.Red)
+            {
+                pop.statuslbl.Style = lableError;
+                pop.statuslbl.Content = "Error!  Season Not Ended!";
+            }
+            else
+                pop.statuslbl.Content = "Season Ended Successfully!";
+
+            Mouse.OverrideCursor = null;
+        }
+        private void SeasonEnded(object sender, EventArgs e)
+        {
+//            Show_MainMenu?.Invoke(this, new EventArgs());
+        }
+        private void bw_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            string user_state_Struct = e.UserState.ToString();
+            string[] user_stats = user_state_Struct.Split('|');
+
+            pop.Title = user_stats[0];
+            pop.prgTest.Value = e.ProgressPercentage;
+            pop.prglbl.Content = user_stats[1];
+
+            if (user_stats[0] == "Error")
+                pop.prgTest.Foreground = Brushes.Red;
+        }
+        //************************************************************************
+
         //*********************  General Methods  *******************************
         public void SetLeagueTeamsMenu(Loaded_League_Structure lls)
         {

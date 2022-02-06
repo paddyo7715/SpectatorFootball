@@ -181,15 +181,44 @@ namespace SpectatorFootball.Services
             //chart.  Due to injuries, if the team does not have enought or too many plaers at a 
             //position then the roster will be adjusted to have the correct number of players.
             List<Player_and_Ratings> r = null;
-//            List<Player_and_Ratings> add_players = new List<Player_and_Ratings>();
-//            List<Player_and_Ratings> cut_players = new List<Player_and_Ratings>();
+            List<Injury> del_Injuries = new List<Injury>();
+            List<Injury_Log> injLog = new List<Injury_Log>();
+
             TeamDAO tdao = new TeamDAO();
             FreeAgencyDAO fdao = new FreeAgencyDAO();
+            InjuriesDAO injDAO = new InjuriesDAO();
+            ScheduleDAO schDAO = new ScheduleDAO();
 
             string DIRPath_League = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + lls.season.League_Structure_by_Season[0].Short_Name.ToUpper();
             string League_con_string = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + lls.season.League_Structure_by_Season[0].Short_Name.ToUpper() + Path.DirectorySeparatorChar + lls.season.League_Structure_by_Season[0].Short_Name.ToUpper() + "." + app_Constants.DB_FILE_EXT;
 
-//            List<Pos_and_Count> ppt = tdao.GetTeamPlayerPosCounts(lls.season.ID, f_id, League_con_string);
+            //Get the injuries for this team to see if any of the players return this week
+            //Only if this team has injuries do we need to calculate weeks in schedule to see
+            //if they might return this week
+            List<Injury> TInj = injDAO.GetTeamInjuredPlayers(lls.season.ID, f_id, League_con_string);
+            if (TInj != null && TInj.Count > 0)
+            {
+                List<long> schedWeeks = schDAO.getWeeksinSched(lls.season.ID, League_con_string);
+                int CurrentWeekIndex = schedWeeks.IndexOf(Week);
+                foreach (Injury inj in TInj)
+                {
+                    if (inj.Season_Ending == 1 || inj.Career_Ending == 1)
+                        continue;
+
+                    int injuryIndex = schedWeeks.IndexOf(inj.Week);
+                    int Length_of_injury = (int) inj.Num_of_Weeks;
+
+                    //Check to see if the injured player's injury is over and if so
+                    //then remove his injury, so that he is active again.
+                    if ((CurrentWeekIndex- injuryIndex) >= Length_of_injury)
+                    {
+                        del_Injuries.Add(inj);
+                        injLog.Add(new Injury_Log()
+                        { Injured = 0, Player_ID = inj.Player_ID, Season_ID = lls.season.ID, Week = Week });
+                    }
+                }
+                injDAO.ReturnPlayersFromInjury(del_Injuries, injLog, League_con_string);
+            }
 
             //next cycle thru each of the positions and decide if we need to add or cut players
             //at each position

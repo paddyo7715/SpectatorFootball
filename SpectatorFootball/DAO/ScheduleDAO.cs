@@ -10,7 +10,7 @@ namespace SpectatorFootball.DAO
 {
     class ScheduleDAO
     {
-        public List<long> getYearinSched(long season_id, string league_filepath)
+        public List<long> getWeeksinSched(long season_id, string league_filepath)
         {
 
             List<long> r = null;

@@ -107,7 +107,7 @@ namespace SpectatorFootball.WindowsLeague
                     }
                 }
                 btnFreeAgency.IsEnabled = false;
-                Injury_Services ls = new Injury_Services();
+                League_Services ls = new League_Services();
 
                 pw.Loaded_League.LState = ls.getSeasonState(true,
                      pw.Loaded_League.season.ID, pw.Loaded_League.season.League_Structure_by_Season[0].Short_Name);

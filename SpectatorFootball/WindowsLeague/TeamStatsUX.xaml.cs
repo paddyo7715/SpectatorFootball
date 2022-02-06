@@ -32,7 +32,7 @@ namespace SpectatorFootball.WindowsLeague
         string last_sort_stat = "";
         private bool bDescending = false;
 
-        private Injury_Services lServices = new Injury_Services();
+        private League_Services lServices = new League_Services();
 
         public event EventHandler Show_Standings;
         public TeamStatusUX(MainWindow pw)
@@ -42,7 +42,7 @@ namespace SpectatorFootball.WindowsLeague
             lblHeader.Content = "Team Status " + pw.Loaded_League.season.Year;
             sorted_field = "Rating";
             bDescending = true;
-            Injury_Services ls = new Injury_Services();
+            League_Services ls = new League_Services();
             teamStatsList = ls.getLeagueStats(pw.Loaded_League, teamStatsList, sorted_field, bDescending);
             lstTeamStats.ItemsSource = teamStatsList;
 
@@ -81,7 +81,7 @@ namespace SpectatorFootball.WindowsLeague
                         bDescending = true;
                     }
                 }
-                Injury_Services ls = new Injury_Services();
+                League_Services ls = new League_Services();
                 teamStatsList = ls.getLeagueStats(pw.Loaded_League, teamStatsList, sorted_field, bDescending);
                 lstTeamStats.ItemsSource = teamStatsList;
                 last_sort_stat = sorted_field;

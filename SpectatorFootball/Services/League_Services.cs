@@ -17,7 +17,7 @@ using SpectatorFootball.PlayerNS;
 
 namespace SpectatorFootball
 {
-    public class Injury_Services
+    public class League_Services
     {
         private static ILog logger = LogManager.GetLogger("RollingFile");
 
@@ -174,6 +174,7 @@ namespace SpectatorFootball
                 string backed_up_file = DIRPath_League + Path.DirectorySeparatorChar + app_Constants.BACKUP_FOLDER + Path.DirectorySeparatorChar + nls.Season.Year + "_SeasonStarted_" + New_League_File;
                 File.Copy(ddf, backed_up_file);
 
+                logger.Info("CreateNewLeague Ended Successfully");
                 // Update the progress bar
                 i = 100;
                 process_state = "";
@@ -1109,5 +1110,59 @@ namespace SpectatorFootball
             return Final_stats;
         }
 
-    }
+        public void EndSeason(Loaded_League_Structure lls, BackgroundWorker bw)
+        {
+            string League_con_string = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + lls.season.League_Structure_by_Season[0].Short_Name.ToUpper() + Path.DirectorySeparatorChar + lls.season.League_Structure_by_Season[0].Short_Name.ToUpper() + "." + app_Constants.DB_FILE_EXT;
+            string process_state = "Processing...";
+            string state_struct = null;
+            logger.Info("EndSeason Started");
+            long Next_Season_ID;
+            InjuriesDAO injDAO = new InjuriesDAO();
+
+            List<Injury> del_InjuriesList = new List<Injury>();
+            List<Injury_Log> Inj_Log = new List<Injury_Log>();
+
+            int i = default(int);
+            try
+            {
+                Next_Season_ID = lls.season.ID + 1;
+
+                // Update the progress bar
+                i = 5;
+                process_state = "Processing Injured Players 1 of 5";
+                state_struct = "Processing..." + "|" + process_state + "|" + "";
+                bw.ReportProgress(i, state_struct);
+                //get all injured players for this season.  All of these records be deleted
+                del_InjuriesList = injDAO.getLeagueInjuredPlayers(lls.season.ID, League_con_string);
+                //for all injured players, except ones with career ending injuries, write an injury
+                //log entry for the next season indicating that the player has returned from injury.
+                foreach (Injury inj in del_InjuriesList)
+                {
+                    Inj_Log.Add(new Injury_Log()
+                    { Season_ID = Next_Season_ID, Injured = 0,
+                     Player_ID = inj.Player_ID, Week = app_Constants.PLAYER_RETIRING_RETURNING_WEEK
+                    });
+                }
+                // Update the progress bar
+                i = 10;
+                process_state = "Creating League Folder Strucuture 1 of 5";
+                state_struct = "Processing..." + "|" + process_state + "|" + "";
+                bw.ReportProgress(i, state_struct);
+
+            }
+            catch (Exception ex)
+            {
+                state_struct = "Error" + "|" + process_state + "|" + "Failed to end season";
+                bw.ReportProgress(i, state_struct);
+
+                logger.Error("Create league service failed");
+                if (ex.InnerException != null)
+                    logger.Error("Inner Exception: " + ex.InnerException.ToString());
+                logger.Error(ex);
+            }
+
+            logger.Info("EndSeason Ended Successfully");
+        }
+
+        }
 }

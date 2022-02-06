@@ -34,7 +34,7 @@ namespace SpectatorFootball.WindowsLeague
         private Stat_Type sType_sorted;
         string last_sort_stat = "";
         bool Stat_Descend = true;
-        private Injury_Services lServices = new Injury_Services();
+        private League_Services lServices = new League_Services();
 
         public event EventHandler Show_Standings;
         public StatsUX(MainWindow pw)

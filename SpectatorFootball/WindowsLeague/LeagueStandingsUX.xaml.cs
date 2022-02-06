@@ -450,7 +450,7 @@ namespace SpectatorFootball.WindowsLeague
 
                 //Load the league season.  Null for year parameter mean load the latest year
                 string short_name = pw.Loaded_League.season.League_Structure_by_Season[0].Short_Name;
-                Injury_Services ls = new Injury_Services();
+                League_Services ls = new League_Services();
                 pw.Loaded_League.season = ls.LoadSeason(sYear, short_name);
                 pw.Loaded_League.Current_Year = (long)standingsSeasonsdb.SelectedValue;
 

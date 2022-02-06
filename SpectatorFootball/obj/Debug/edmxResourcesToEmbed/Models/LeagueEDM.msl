@@ -418,7 +418,6 @@
           <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
           <ScalarProperty Name="Week" ColumnName="Week" />
           <ScalarProperty Name="Num_of_Weeks" ColumnName="Num_of_Weeks" />
-          <ScalarProperty Name="Weeks_Remaining" ColumnName="Weeks_Remaining" />
           <ScalarProperty Name="Career_Ending" ColumnName="Career_Ending" />
           <ScalarProperty Name="Season_Ending" ColumnName="Season_Ending" />
         </MappingFragment>

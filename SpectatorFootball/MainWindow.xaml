@@ -40,7 +40,7 @@
                 <MenuItem Name="MenuChampions" Header="Champions" Click= "Show_LeagueChampions"/>
             </MenuItem>
             <MenuItem Name="MenuTasks" Header="Tasks">
-                <MenuItem  Name="MenuEndSeason" Header="End Season" />
+                <MenuItem  Name="MenuEndSeason" Header="End Season" Click="EndSeasonTask" />
             </MenuItem>
             <MenuItem Header="Help">
                 <MenuItem Header="Education" />
