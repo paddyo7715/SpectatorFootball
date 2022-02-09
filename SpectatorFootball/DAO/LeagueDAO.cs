@@ -407,6 +407,7 @@ namespace SpectatorFootball
                 .Select(x => new Passing_Accum_Stats_by_year
                 {
                     p = x.Key,
+                    isRookie = !x.Key.Player_Ratings.Any(y => y.Season_ID == 1),
                     f_id = x.Key.Players_By_Team.Where(t => t.Season_ID == season_id).Select(t => t.Franchise_ID).Max(),
                     Completes = x.Sum(s => s.Pass_Comp),
                     Ateempts = x.Sum(s => s.Pass_Att),
@@ -432,6 +433,7 @@ namespace SpectatorFootball
                     .Select(x => new Rushing_Accum_Stats_by_year
                     {
                         p = x.Key,
+                        isRookie = !x.Key.Player_Ratings.Any(y => y.Season_ID == 1),
                         f_id = x.Key.Players_By_Team.Where(t => t.Season_ID == season_id).Select(t => t.Franchise_ID).Max(),
                         Rushes = x.Sum(s => s.Rush_Att),
                         Yards = x.Sum(s => s.Rush_Yards),
@@ -455,6 +457,7 @@ namespace SpectatorFootball
                     .Select(x => new Receiving_Accum_Stats_by_year
                     {
                         p = x.Key,
+                        isRookie = !x.Key.Player_Ratings.Any(y => y.Season_ID == 1),
                         f_id = x.Key.Players_By_Team.Where(t => t.Season_ID == season_id).Select(t => t.Franchise_ID).Max(),
                         Catches = x.Sum(s => s.Rec_Catches),
                         Yards = x.Sum(s => s.Rec_Yards),
@@ -479,11 +482,13 @@ namespace SpectatorFootball
                     .Select(x => new Blocking_Accum_Stats_by_year
                     {
                         p = x.Key,
+                        isRookie = !x.Key.Player_Ratings.Any(y => y.Season_ID == 1),
                         f_id = x.Key.Players_By_Team.Where(t => t.Season_ID == season_id).Select(t => t.Franchise_ID).Max(),
                         Plays = x.Sum(s => s.Oline_Plays),
                         Pancakes = x.Sum(s => s.OLine_Pancakes),
                         Sacks_Allowed = x.Sum(s => s.OLine_Sacks_Allowed),
-                        Pressures_Allowed = x.Sum(s => s.QB_Pressures_Allowed)
+                        Pressures_Allowed = x.Sum(s => s.QB_Pressures_Allowed),
+                        Rushing_Loss_Allowed = x.Sum(s => s.OLine_Rushing_Loss_Allowed)
                     }).ToList();
             }
 
@@ -501,13 +506,18 @@ namespace SpectatorFootball
                     .Select(x => new Defense_Accum_Stats_by_year
                     {
                         p = x.Key,
+                        isRookie = !x.Key.Player_Ratings.Any(y => y.Season_ID == 1),
                         f_id = x.Key.Players_By_Team.Where(t => t.Season_ID == season_id).Select(t => t.Franchise_ID).Max(),
                         Plays = x.Sum(s => s.Pass_Rushes + s.Pass_Blocks),
                         Tackles = x.Sum(s => s.Def_Tackles),
                         Sacks = x.Sum(s => s.Def_Sacks),
                         Pressures = x.Sum(s => s.QB_Pressures),
                         Run_for_Loss = x.Sum(s => s.Def_Rushing_Loss),
-                        Forced_Fumble = x.Sum(s => s.Forced_Fumbles)
+                        Forced_Fumble = x.Sum(s => s.Forced_Fumbles),
+                        Missed_Tackles = x.Sum(s => s.Def_Missed_Tackles),
+                        Def_Safety = x.Sum(s => s.Def_Safety),
+                        Def_TDs = x.Sum(s => s.Def_TDs)
+
                     }).ToList();
             }
 
@@ -525,11 +535,15 @@ namespace SpectatorFootball
                     .Select(x => new Pass_Defense_Accum_Stats_by_year
                     {
                         p = x.Key,
+                        isRookie = !x.Key.Player_Ratings.Any(y => y.Season_ID == 1),
                         f_id = x.Key.Players_By_Team.Where(t => t.Season_ID == season_id).Select(t => t.Franchise_ID).Max(),
                         Pass_Defenses = x.Sum(s => s.Def_Pass_Defenses),
                         Ints = x.Sum(s => s.Ints),
                         TDs_Surrendered = x.Sum(s => s.Touchdowns_Surrendered),
-                        Forced_Fumble = x.Sum(s => s.Forced_Fumbles)
+                        Forced_Fumble = x.Sum(s => s.Forced_Fumbles),
+                        Def_int_TDs = x.Sum(s => s.Def_int_TDs),
+                        Tackles = x.Sum(s => s.Tackles),
+                        Missed_Tackles = x.Sum(s => s.Def_Missed_Tackles)
                     }).ToList();
             }
 
@@ -547,6 +561,7 @@ namespace SpectatorFootball
                     .Select(x => new Kicking_Accum_Stats_by_year
                     {
                         p = x.Key,
+                        isRookie = !x.Key.Player_Ratings.Any(y => y.Season_ID == 1),
                         f_id = x.Key.Players_By_Team.Where(t => t.Season_ID == season_id).Select(t => t.Franchise_ID).Max(),
                         FG_ATT = x.Sum(s => s.FG_Att),
                         FG_Made = x.Sum(s => s.FG_Made),
@@ -570,10 +585,13 @@ namespace SpectatorFootball
                     .Select(x => new Punting_Accum_Stats_by_year
                     {
                         p = x.Key,
+                        isRookie = !x.Key.Player_Ratings.Any(y => y.Season_ID == 1),
                         f_id = x.Key.Players_By_Team.Where(t => t.Season_ID == season_id).Select(t => t.Franchise_ID).Max(),
                         Punts = x.Sum(s => s.num_punts),
                         Yards = x.Sum(s => s.Punt_yards),
-                        Coffin_Corners = x.Sum(s => s.Punt_killed_num)
+                        Coffin_Corners = x.Sum(s => s.Punt_killed_num),
+                        Fumbles_Lost = x.Sum(s => s.Fumbles_Lost),
+                        Blocked_Punts = x.Sum(s => s.Blocked_Punts)
                     }).ToList();
             }
 
@@ -591,6 +609,7 @@ namespace SpectatorFootball
                     .Select(x => new KickReturn_Accum_Stats_by_year
                     {
                         p = x.Key,
+                        isRookie = !x.Key.Player_Ratings.Any(y => y.Season_ID == 1),
                         f_id = x.Key.Players_By_Team.Where(t => t.Season_ID == season_id).Select(t => t.Franchise_ID).Max(),
                         Returns = x.Sum(s => s.Kickoffs_Returned),
                         Yards = x.Sum(s => s.Kickoffs_Returned_Yards),
@@ -614,6 +633,7 @@ namespace SpectatorFootball
                     .Select(x => new PuntReturns_Accum_Stats_by_year
                     {
                         p = x.Key,
+                        isRookie = !x.Key.Player_Ratings.Any(y => y.Season_ID == 1),
                         f_id = x.Key.Players_By_Team.Where(t => t.Season_ID == season_id).Select(t => t.Franchise_ID).Max(),
                         Returns = x.Sum(s => s.Punts_Returned),
                         Yards = x.Sum(s => s.Punts_Returned_Yards),

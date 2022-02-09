@@ -10,6 +10,7 @@ namespace SpectatorFootball.Models
     public class Defense_Accum_Stats_by_year
     {
         public Player p { get; set; }
+        public bool isRookie { get; set; }
         public long f_id { get; set; }
         public string City_Abbr { get; set; }
         public BitmapImage HelmetImage { get; set; }
@@ -22,5 +23,8 @@ namespace SpectatorFootball.Models
         public long Pressures { get; set; }
         public long Run_for_Loss { get; set; }
         public long Forced_Fumble { get; set; }
+        public long Missed_Tackles { get; set; }
+        public long Def_Safety { get; set; }
+        public long Def_TDs { get; set; }
     }
 }

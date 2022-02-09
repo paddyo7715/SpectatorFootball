@@ -10,6 +10,7 @@ namespace SpectatorFootball.Models
     public class PuntReturns_Accum_Stats_by_year
     {
         public Player p { get; set; }
+        public bool isRookie { get; set; }
         public long f_id { get; set; }
         public string City_Abbr { get; set; }
         public BitmapImage HelmetImage { get; set; }

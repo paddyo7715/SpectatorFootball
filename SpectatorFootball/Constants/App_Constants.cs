@@ -401,6 +401,57 @@ namespace SpectatorFootball
         //Roster
         public const double PLAYER_TO_WATCH_MIN = 87.0;
 
+        //Awards
+        public const double PASSING_YARDS_AWARD_MULTIPLYER = 0.4;
+        public const int    PASSING_TD_AWARD_MULTIPLYER = 50;
+        public const int    PASSING_INT_AWARD_MULTIPLYER = 50;
+        public const int    PASSING_FUMBLE_AWARD_MULTIPLYER = 50;
+
+        public const double RUSHING_YARDS_AWARD_MULTIPLYER = 1.5;
+        public const int RUSHING_TD_AWARD_MULTIPLYER = 140;
+        public const int RUSHING_FUMBLE_AWARD_MULTIPLYER = 100;
+
+        public const double RECEIVING_YARDS_AWARD_MULTIPLYER = 1.5;
+        public const int RECEIVING_TD_AWARD_MULTIPLYER = 140;
+        public const int RECEIVING_FUMBLE_AWARD_MULTIPLYER = 100;
+
+        public const int BLOCKING_PANCAKES_MULTIPLYER = 150;
+        public const int BLOCKING_SACKS_ALLOWED_MULTIPLYER = 50;
+        public const int BLOCKING_RUSHING_LOSS_MULTIPLYER = 20;
+        public const int BLOCKING_QB_PRESSURES_MULTIPLYER = 10;
+
+        public const int FG_MADE_MULTIPLYER = 60;
+        public const int FG_MISSED_MULTIPLYER = 60;
+        public const int XP_MADE_MULTIPLYER = 5;
+        public const int XP_MISSED_MULTIPLYER = 5;
+
+        public const double PUNTING_AVG_MULTIPLYER = 50;
+        public const int PUNTING_FUMBLES_MULTIPLYER = 50;
+        public const int PUNTING_BLOCKED_PUNTS_MULTIPLYER = 250;
+        public const int PUNTING_COFFIN_CORNERS_MULTIPLYER = 50;
+
+        public const int DEFENSE_TACKLES_MULTIPLYER = 5;
+        public const int DEFENSE_SACKS_MULTIPLYER = 150;
+        public const int DEFENSE_RUSH_LOSS_MULTIPLYER = 50;
+        public const int DEFENSE_MISSED_TACKLES_MULTIPLYER = 25;
+        public const int DEFENSE_SAFETY_MULTIPLYER = 250;
+        public const int DEFENSE_TD_MULTIPLYER = 400;
+        public const int DEFENSE_FUMBLE_MULTIPLYER = 50;
+        public const int DEFENSE_QB_PRESSURES_MULTIPLYER = 50;
+
+        public const int DEFENSE_PASS_INTS_MULTIPLYER = 150;
+        public const int DEFENSE_PASS_TDS_MULTIPLYER = 250;
+        public const int DEFENSE_PASS_DEFENSES_MULTIPLYER = 20;
+        public const int DEFENSE_PASS_TACKLES_MULTIPLYER = 5;
+        public const int DEFENSE_PASS_MISSED_TACKLES_MULTIPLYER = 5;
+        public const int DEFENSE_PASS_TDS_SURRENDERED_MULTIPLYER = 100;
+        public const int DEFENSE_PASS_FORCED_FUMBLE_MULTIPLYER = 100;
+
+
+
+
+
+
 
     }
 }

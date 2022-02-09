@@ -133,6 +133,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Awards\Award_Helper.cs" />
+    <Compile Include="Awards\Award_Rating_Rec.cs" />
     <Compile Include="BindingConverters\ActiveRetiredConverter.cs" />
     <Compile Include="BindingConverters\avgYardsConverter.cs" />
     <Compile Include="BindingConverters\ColorConverter.cs" />
@@ -875,6 +877,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

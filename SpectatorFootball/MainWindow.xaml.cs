@@ -726,7 +726,9 @@ namespace SpectatorFootball
         }
         private void SeasonEnded(object sender, EventArgs e)
         {
-//            Show_MainMenu?.Invoke(this, new EventArgs());
+
+            string league_short_name = Loaded_League.season.League_Structure_by_Season[0].Short_Name;
+            Load_League(null, new LoadLeagueEventArgs(league_short_name));
         }
         private void bw_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {

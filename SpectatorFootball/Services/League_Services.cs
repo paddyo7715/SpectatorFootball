@@ -1118,6 +1118,7 @@ namespace SpectatorFootball
             logger.Info("EndSeason Started");
             long Next_Season_ID;
             InjuriesDAO injDAO = new InjuriesDAO();
+            LeagueDAO ld = new LeagueDAO();
 
             List<Injury> del_InjuriesList = new List<Injury>();
             List<Injury_Log> Inj_Log = new List<Injury_Log>();
@@ -1145,9 +1146,21 @@ namespace SpectatorFootball
                 }
                 // Update the progress bar
                 i = 10;
-                process_state = "Creating League Folder Strucuture 1 of 5";
+                process_state = "Assigning Player Awards 2 of 5";
                 state_struct = "Processing..." + "|" + process_state + "|" + "";
                 bw.ReportProgress(i, state_struct);
+
+                League_Stats lStats = new League_Stats();
+                lStats.Passing_Stats = ld.getLeagueSeasonPassingStats(lls.season.ID, League_con_string);
+                lStats.Rushing_Stats = ld.getLeagueSeasonRushingStats(lls.season.ID, League_con_string);
+                lStats.Receiving_Stats = ld.getLeagueSeasonReceivingStats(lls.season.ID, League_con_string);
+                lStats.Blocking_Stats = ld.getLeagueSeasonBlockingStats(lls.season.ID, League_con_string);
+                lStats.Defense_Stats = ld.getLeagueSeasonDefenseStats(lls.season.ID, League_con_string);
+                lStats.Pass_Defense_Stats = ld.getLeagueSeasonPassDefenseStats(lls.season.ID, League_con_string);
+                lStats.Kicking_Stats = ld.getLeagueSeasonKickerStats(lls.season.ID, League_con_string);
+                lStats.Punting_Stats = ld.getLeagueSeasonPunterStats(lls.season.ID, League_con_string);
+
+
 
             }
             catch (Exception ex)
