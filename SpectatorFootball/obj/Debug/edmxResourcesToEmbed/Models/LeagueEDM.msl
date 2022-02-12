@@ -4,7 +4,7 @@
     <EntitySetMapping Name="Awards">
       <EntityTypeMapping TypeName="LeagueModel.Award">
         <MappingFragment StoreEntitySet="Award">
-          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Description" ColumnName="Description" />
         </MappingFragment>
@@ -484,7 +484,7 @@
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Season_ID" ColumnName="Season_ID" />
           <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
-          <ScalarProperty Name="Award_ID" ColumnName="Award_ID" />
+          <ScalarProperty Name="Award_Code" ColumnName="Award_Code" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

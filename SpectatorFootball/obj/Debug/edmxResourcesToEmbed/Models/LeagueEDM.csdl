@@ -2,9 +2,9 @@
 <Schema Namespace="LeagueModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
   <EntityType Name="Award">
     <Key>
-      <PropertyRef Name="ID" />
+      <PropertyRef Name="Code" />
     </Key>
-    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Code" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Description" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
     <NavigationProperty Name="Player_Awards" Relationship="Self.FK_Player_Awards_2_0" FromRole="Award" ToRole="Player_Awards" />
@@ -581,10 +581,10 @@
     <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Season_ID" Type="Int64" Nullable="false" />
     <Property Name="Player_ID" Type="Int64" Nullable="false" />
-    <Property Name="Award_ID" Type="Int64" Nullable="false" />
+    <Property Name="Award_Code" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
     <NavigationProperty Name="Award" Relationship="Self.FK_Player_Awards_2_0" FromRole="Player_Awards" ToRole="Award" />
-    <NavigationProperty Name="Season" Relationship="Self.FK_Player_Awards_0_0" FromRole="Player_Awards" ToRole="Season" />
-    <NavigationProperty Name="Player" Relationship="Self.FK_Player_Awards_1_0" FromRole="Player_Awards" ToRole="Players" />
+    <NavigationProperty Name="Player" Relationship="Self.FK_Player_Awards_0_0" FromRole="Player_Awards" ToRole="Players" />
+    <NavigationProperty Name="Season" Relationship="Self.FK_Player_Awards_1_0" FromRole="Player_Awards" ToRole="Season" />
   </EntityType>
   <EntityType Name="Player_Ratings">
     <Key>
@@ -663,7 +663,7 @@
     <NavigationProperty Name="Hall_of_Fame" Relationship="Self.FK_Hall_of_Fame_1_0" FromRole="Players" ToRole="Hall_of_Fame" />
     <NavigationProperty Name="Injuries" Relationship="Self.FK_Injuries_1_0" FromRole="Players" ToRole="Injuries" />
     <NavigationProperty Name="Injury_Log" Relationship="Self.FK_Injury_Log_1_0" FromRole="Players" ToRole="Injury_Log" />
-    <NavigationProperty Name="Player_Awards" Relationship="Self.FK_Player_Awards_1_0" FromRole="Players" ToRole="Player_Awards" />
+    <NavigationProperty Name="Player_Awards" Relationship="Self.FK_Player_Awards_0_0" FromRole="Players" ToRole="Player_Awards" />
     <NavigationProperty Name="Player_Ratings" Relationship="Self.FK_Player_Ratings_1_0" FromRole="Players" ToRole="Player_Ratings" />
     <NavigationProperty Name="Player_Retiring_Log" Relationship="Self.FK_Player_Retiring_Log_1_0" FromRole="Players" ToRole="Player_Retiring_Log" />
     <NavigationProperty Name="Players_By_Team" Relationship="Self.FK_Players_By_Team_1_0" FromRole="Players" ToRole="Players_By_Team" />
@@ -711,7 +711,7 @@
     <NavigationProperty Name="Injuries" Relationship="Self.FK_Injuries_0_0" FromRole="Season" ToRole="Injuries" />
     <NavigationProperty Name="Injury_Log" Relationship="Self.FK_Injury_Log_0_0" FromRole="Season" ToRole="Injury_Log" />
     <NavigationProperty Name="League_Structure_by_Season" Relationship="Self.FK_League_Structure_by_Season_0_0" FromRole="Season" ToRole="League_Structure_by_Season" />
-    <NavigationProperty Name="Player_Awards" Relationship="Self.FK_Player_Awards_0_0" FromRole="Season" ToRole="Player_Awards" />
+    <NavigationProperty Name="Player_Awards" Relationship="Self.FK_Player_Awards_1_0" FromRole="Season" ToRole="Player_Awards" />
     <NavigationProperty Name="Player_Ratings" Relationship="Self.FK_Player_Ratings_0_0" FromRole="Season" ToRole="Player_Ratings" />
     <NavigationProperty Name="Player_Retiring_Log" Relationship="Self.FK_Player_Retiring_Log_0_0" FromRole="Season" ToRole="Player_Retiring_Log" />
     <NavigationProperty Name="Players_By_Team" Relationship="Self.FK_Players_By_Team_0_0" FromRole="Season" ToRole="Players_By_Team" />
@@ -797,10 +797,10 @@
     <End Role="Player_Awards" Type="Self.Player_Awards" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Award">
-        <PropertyRef Name="ID" />
+        <PropertyRef Name="Code" />
       </Principal>
       <Dependent Role="Player_Awards">
-        <PropertyRef Name="Award_ID" />
+        <PropertyRef Name="Award_Code" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1669,18 +1669,6 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Player_Awards_0_0">
-    <End Role="Season" Type="Self.Season" Multiplicity="1" />
-    <End Role="Player_Awards" Type="Self.Player_Awards" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Season">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Player_Awards">
-        <PropertyRef Name="Season_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Player_Awards_1_0">
     <End Role="Players" Type="Self.Player" Multiplicity="1" />
     <End Role="Player_Awards" Type="Self.Player_Awards" Multiplicity="*" />
     <ReferentialConstraint>
@@ -1689,6 +1677,18 @@
       </Principal>
       <Dependent Role="Player_Awards">
         <PropertyRef Name="Player_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Player_Awards_1_0">
+    <End Role="Season" Type="Self.Season" Multiplicity="1" />
+    <End Role="Player_Awards" Type="Self.Player_Awards" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Season">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Player_Awards">
+        <PropertyRef Name="Season_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -2145,11 +2145,11 @@
       <End Role="League_Structure_by_Season" EntitySet="League_Structure_by_Season" />
     </AssociationSet>
     <AssociationSet Name="FK_Player_Awards_0_0" Association="Self.FK_Player_Awards_0_0">
-      <End Role="Season" EntitySet="Seasons" />
+      <End Role="Players" EntitySet="Players" />
       <End Role="Player_Awards" EntitySet="Player_Awards" />
     </AssociationSet>
     <AssociationSet Name="FK_Player_Awards_1_0" Association="Self.FK_Player_Awards_1_0">
-      <End Role="Players" EntitySet="Players" />
+      <End Role="Season" EntitySet="Seasons" />
       <End Role="Player_Awards" EntitySet="Player_Awards" />
     </AssociationSet>
     <AssociationSet Name="FK_Player_Ratings_0_0" Association="Self.FK_Player_Ratings_0_0">

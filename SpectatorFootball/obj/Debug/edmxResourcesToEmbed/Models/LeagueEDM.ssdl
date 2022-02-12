@@ -2,9 +2,9 @@
 <Schema Namespace="LeagueModel.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="data source=C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\Database\BlankDB.db" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="Award">
     <Key>
-      <PropertyRef Name="ID" />
+      <PropertyRef Name="Code" />
     </Key>
-    <Property Name="ID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
     <Property Name="Description" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
   </EntityType>
@@ -471,7 +471,7 @@
     <Property Name="ID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Season_ID" Type="integer" Nullable="false" />
     <Property Name="Player_ID" Type="integer" Nullable="false" />
-    <Property Name="Award_ID" Type="integer" Nullable="false" />
+    <Property Name="Award_Code" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
   </EntityType>
   <EntityType Name="Player_Ratings">
     <Key>
@@ -1433,18 +1433,6 @@ warning 6035: The relationship 'FK_Game_1_0' has columns that are not part of th
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Player_Awards_0_0">
-    <End Role="Season" Type="Self.Season" Multiplicity="1" />
-    <End Role="Player_Awards" Type="Self.Player_Awards" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Season">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Player_Awards">
-        <PropertyRef Name="Season_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Player_Awards_1_0">
     <End Role="Players" Type="Self.Players" Multiplicity="1" />
     <End Role="Player_Awards" Type="Self.Player_Awards" Multiplicity="*" />
     <ReferentialConstraint>
@@ -1456,15 +1444,27 @@ warning 6035: The relationship 'FK_Game_1_0' has columns that are not part of th
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Player_Awards_1_0">
+    <End Role="Season" Type="Self.Season" Multiplicity="1" />
+    <End Role="Player_Awards" Type="Self.Player_Awards" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Season">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Player_Awards">
+        <PropertyRef Name="Season_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Player_Awards_2_0">
     <End Role="Award" Type="Self.Award" Multiplicity="1" />
     <End Role="Player_Awards" Type="Self.Player_Awards" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Award">
-        <PropertyRef Name="ID" />
+        <PropertyRef Name="Code" />
       </Principal>
       <Dependent Role="Player_Awards">
-        <PropertyRef Name="Award_ID" />
+        <PropertyRef Name="Award_Code" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1957,11 +1957,11 @@ warning 6035: The relationship 'FK_Game_1_0' has columns that are not part of th
       <End Role="League_Structure_by_Season" EntitySet="League_Structure_by_Season" />
     </AssociationSet>
     <AssociationSet Name="FK_Player_Awards_0_0" Association="Self.FK_Player_Awards_0_0">
-      <End Role="Season" EntitySet="Season" />
+      <End Role="Players" EntitySet="Players" />
       <End Role="Player_Awards" EntitySet="Player_Awards" />
     </AssociationSet>
     <AssociationSet Name="FK_Player_Awards_1_0" Association="Self.FK_Player_Awards_1_0">
-      <End Role="Players" EntitySet="Players" />
+      <End Role="Season" EntitySet="Season" />
       <End Role="Player_Awards" EntitySet="Player_Awards" />
     </AssociationSet>
     <AssociationSet Name="FK_Player_Awards_2_0" Association="Self.FK_Player_Awards_2_0">

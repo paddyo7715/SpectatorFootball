@@ -1,4 +1,5 @@
-﻿using SpectatorFootball.DAO;
+﻿using SpectatorFootball.Awards;
+using SpectatorFootball.DAO;
 using SpectatorFootball.Enum;
 using SpectatorFootball.Free_AgencyNS;
 using SpectatorFootball.League;
@@ -36,6 +37,7 @@ namespace SpectatorFootball.Services
             GameDAO gdao = new GameDAO();
             List<Playoff_Teams_by_Season> Playoff_Teams = new List<Playoff_Teams_by_Season>();
             List<Game> Playoff_Schedule = new List<Game>();
+            Player_Awards Championship_MVP = null;
             long num_divs = lls.season.League_Structure_by_Season[0].Number_of_Divisions;
 
             //We must determine one of the following to see what else needs to be done when this game
@@ -144,6 +146,20 @@ namespace SpectatorFootball.Services
 
                         }
                     }
+                    //if this is the championship game then we have to assign a MVP for the game
+                    //and assign this award to the player
+                    else if (g.Week == app_Constants.PLAYOFF_CHAMPIONSHIP_WEEK)
+                    {
+                        League_Stats lstats = new League_Stats();
+                        lstats = Award_Helper.setLState_from_Game_stats(g);
+                        List<Award_Rating_Rec> award_recs_list = Award_Helper.setPlayersMasterList(lstats);
+                        Award_Rating_Rec ar = award_recs_list.OrderByDescending(x => x.Grade).First();
+                        Championship_MVP = new Player_Awards();
+                        Championship_MVP.Award_Code = app_Constants.CHAMPIONSHIP_MVP;
+                        Championship_MVP.Season_ID = lls.season.ID;
+                        Championship_MVP.Player_ID = ar.p.ID;
+                    }
+                    
 
                     //decide which team lost and their playoff teams by season record must be updated.
                     //note that we will know that the playoff team by season needs to be updated is if there
@@ -160,7 +176,7 @@ namespace SpectatorFootball.Services
             foreach (Injury ij in lInj)
                 inj_log.Add(new Injury_Log() { Injured = 1, Season_ID = lls.season.ID, Player_ID = ij.Player_ID, Week = g.Week });
 
-            gdao.SaveGame(g, lInj, inj_log, Playoff_Teams, Playoff_Schedule, League_con_string);
+            gdao.SaveGame(g, lInj, inj_log, Playoff_Teams, Playoff_Schedule, Championship_MVP, League_con_string);
         }
         public BoxScore getGameandStatsfromID(long game_id, Loaded_League_Structure lls)
         {

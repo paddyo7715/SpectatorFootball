@@ -17,10 +17,10 @@ namespace SpectatorFootball.Models
         public long ID { get; set; }
         public long Season_ID { get; set; }
         public long Player_ID { get; set; }
-        public long Award_ID { get; set; }
+        public string Award_Code { get; set; }
     
         public virtual Award Award { get; set; }
-        public virtual Season Season { get; set; }
         public virtual Player Player { get; set; }
+        public virtual Season Season { get; set; }
     }
 }

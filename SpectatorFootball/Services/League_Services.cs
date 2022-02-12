@@ -1161,7 +1161,6 @@ namespace SpectatorFootball
                 lStats.Punting_Stats = ld.getLeagueSeasonPunterStats(lls.season.ID, League_con_string);
 
 
-
             }
             catch (Exception ex)
             {

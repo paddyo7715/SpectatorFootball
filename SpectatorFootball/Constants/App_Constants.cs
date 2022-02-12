@@ -414,6 +414,9 @@ namespace SpectatorFootball
         public const double RECEIVING_YARDS_AWARD_MULTIPLYER = 1.5;
         public const int RECEIVING_TD_AWARD_MULTIPLYER = 140;
         public const int RECEIVING_FUMBLE_AWARD_MULTIPLYER = 100;
+        public const int RECEIVING_DROPS_AWARD_MULTIPLYER = 5;        
+        public const int RECEIVING_CATCHES_AWARD_MULTIPLYER = 5;
+
 
         public const int BLOCKING_PANCAKES_MULTIPLYER = 150;
         public const int BLOCKING_SACKS_ALLOWED_MULTIPLYER = 50;
@@ -447,6 +450,12 @@ namespace SpectatorFootball
         public const int DEFENSE_PASS_TDS_SURRENDERED_MULTIPLYER = 100;
         public const int DEFENSE_PASS_FORCED_FUMBLE_MULTIPLYER = 100;
 
+        //Award Codes
+        public const string ROCKIE_OF_THE_YEAR_OFF = "ROYO";
+        public const string ROCKIE_OF_THE_YEAR_DEF = "ROYD";
+        public const string PLAYER_OF_THE_YEAR_OFF = "POYO";
+        public const string PLAYER_OF_THE_YEAR_DEF = "POYD";
+        public const string CHAMPIONSHIP_MVP = "CMVP";
 
 
 

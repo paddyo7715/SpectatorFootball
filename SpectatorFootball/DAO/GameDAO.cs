@@ -66,7 +66,8 @@ namespace SpectatorFootball.DAO
 
             return r;
         }
-        public void SaveGame(Game g,List<Injury> lInj, List<Injury_Log> inj_log, List<Playoff_Teams_by_Season> Playoff_Teams, List<Game> Playoff_Schedule, string league_filepath)
+        public void SaveGame(Game g,List<Injury> lInj, List<Injury_Log> inj_log, List<Playoff_Teams_by_Season> Playoff_Teams, List<Game> Playoff_Schedule, 
+            Player_Awards pa, string league_filepath)
         {
             string con = Common.LeageConnection.Connect(league_filepath);
 
@@ -104,7 +105,11 @@ namespace SpectatorFootball.DAO
                         context.SaveChanges();
                     }
 
-                    
+                    if (pa != null)
+                    {
+                        context.Player_Awards.Add(pa);
+                        context.SaveChanges();
+                    }
 
 
 
