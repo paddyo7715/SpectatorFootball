@@ -455,8 +455,10 @@ namespace SpectatorFootball
         public const string ROCKIE_OF_THE_YEAR_DEF = "ROYD";
         public const string PLAYER_OF_THE_YEAR_OFF = "POYO";
         public const string PLAYER_OF_THE_YEAR_DEF = "POYD";
+        public const string ALL_PRO = "APRO";
         public const string CHAMPIONSHIP_MVP = "CMVP";
 
+        public const double ALL_PRO_PERCENT = 0.10;
 
 
 

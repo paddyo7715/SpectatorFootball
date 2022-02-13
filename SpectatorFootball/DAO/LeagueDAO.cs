@@ -403,7 +403,7 @@ namespace SpectatorFootball
             string con = Common.LeageConnection.Connect(league_filepath);
             using (var context = new leagueContext(con))
             {
-                r = context.Game_Player_Passing_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1).GroupBy(x => x.Player)
+                r = context.Game_Player_Passing_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 && x.Pass_Att > 0).GroupBy(x => x.Player)
                 .Select(x => new Passing_Accum_Stats_by_year
                 {
                     p = x.Key,
@@ -429,7 +429,7 @@ namespace SpectatorFootball
             string con = Common.LeageConnection.Connect(league_filepath);
             using (var context = new leagueContext(con))
             {
-                r = context.Game_Player_Rushing_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1).GroupBy(x => x.Player)
+                r = context.Game_Player_Rushing_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 && x.Rush_Att > 0).GroupBy(x => x.Player)
                     .Select(x => new Rushing_Accum_Stats_by_year
                     {
                         p = x.Key,
@@ -453,7 +453,7 @@ namespace SpectatorFootball
             string con = Common.LeageConnection.Connect(league_filepath);
             using (var context = new leagueContext(con))
             {
-                r = context.Game_Player_Receiving_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1).GroupBy(x => x.Player)
+                r = context.Game_Player_Receiving_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 && x.Rec_Catches > 0).GroupBy(x => x.Player)
                     .Select(x => new Receiving_Accum_Stats_by_year
                     {
                         p = x.Key,
@@ -478,7 +478,7 @@ namespace SpectatorFootball
             string con = Common.LeageConnection.Connect(league_filepath);
             using (var context = new leagueContext(con))
             {
-                r = context.Game_Player_Offensive_Linemen_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1).GroupBy(x => x.Player)
+                r = context.Game_Player_Offensive_Linemen_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 && x.Oline_Plays > 0).GroupBy(x => x.Player)
                     .Select(x => new Blocking_Accum_Stats_by_year
                     {
                         p = x.Key,

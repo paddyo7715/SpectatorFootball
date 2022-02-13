@@ -1,4 +1,5 @@
-﻿using SpectatorFootball.League;
+﻿using SpectatorFootball.Enum;
+using SpectatorFootball.League;
 using SpectatorFootball.Models;
 using System;
 using System.Collections.Generic;
@@ -343,6 +344,95 @@ namespace SpectatorFootball.Awards
             }
 
                 return r;
+        }
+        public static int getAllProNum(Player_Pos pos, long num_teams)
+        {
+            int r = 0;
+
+            switch (pos)
+            {
+                case Player_Pos.QB:
+                    {
+                        double t = (double)num_teams * (double)app_Constants.ALL_PRO_PERCENT
+                            * app_Constants.STARTER_QB_PER_TEAM;
+                        r =  (int)(t + 0.5);
+                        break;
+                    }
+
+                case Player_Pos.RB:
+                    {
+                        double t = (double)num_teams * (double)app_Constants.ALL_PRO_PERCENT
+                            * app_Constants.STARTER_RB_PER_TEAM;
+                        r = (int)(t + 0.5); 
+                        break;
+                    }
+
+                case Player_Pos.WR:
+                    {
+                        double t = (double)num_teams * (double)app_Constants.ALL_PRO_PERCENT
+                            * app_Constants.STARTER_WR_PER_TEAM; 
+                        r = (int)(t + 0.5); 
+                        break;
+                    }
+
+                case Player_Pos.TE:
+                    {
+                        double t = (double)num_teams * (double)app_Constants.ALL_PRO_PERCENT
+                            * app_Constants.STARTER_TE_PER_TEAM;
+                        r = (int)(t + 0.5); 
+                        break;
+                    }
+
+                case Player_Pos.OL:
+                    {
+                        double t = (double)num_teams * (double)app_Constants.ALL_PRO_PERCENT
+                            * app_Constants.STARTER_OL_PER_TEAM;
+                        r = (int)(t + 0.5);
+                        break;
+                    }
+
+                case Player_Pos.DL:
+                    {
+                        double t = (double)num_teams * (double)app_Constants.ALL_PRO_PERCENT
+                            * app_Constants.STARTER_DL_PER_TEAM;
+                        r = (int)(t + 0.5);
+                        break;
+                    }
+
+                case Player_Pos.DB:
+                    {
+                        double t = (double)num_teams * (double)app_Constants.ALL_PRO_PERCENT
+                            * app_Constants.STARTER_DB_PER_TEAM;
+                        r = (int)(t + 0.5);
+                        break;
+                    }
+
+                case Player_Pos.LB:
+                    {
+                        double t = (double)num_teams * (double)app_Constants.ALL_PRO_PERCENT
+                            * app_Constants.STARTER_LB_PER_TEAM;
+                        r = (int)(t + 0.5);
+                        break;
+                    }
+
+                case Player_Pos.K:
+                    {
+                        double t = (double)num_teams * (double)app_Constants.ALL_PRO_PERCENT
+                            * app_Constants.STARTER_K_PER_TEAM;
+                        r = (int)(t + 0.5);
+                        break;
+                    }
+                case Player_Pos.P:
+                    {
+                        double t = (double)num_teams * (double)app_Constants.ALL_PRO_PERCENT
+                            * app_Constants.STARTER_P_PER_TEAM;
+                        r = (int)(t + 0.5);
+                        break;
+                    }
+            }
+
+            if (r == 0) r = 1;
+            return r;
         }
     }
 }

@@ -14,6 +14,7 @@ using SpectatorFootball.Enum;
 using System.Security.AccessControl;
 using System.Security.Principal;
 using SpectatorFootball.PlayerNS;
+using SpectatorFootball.Awards;
 
 namespace SpectatorFootball
 {
@@ -1122,6 +1123,7 @@ namespace SpectatorFootball
 
             List<Injury> del_InjuriesList = new List<Injury>();
             List<Injury_Log> Inj_Log = new List<Injury_Log>();
+            List<Player_Awards> Player_Awards = new List<Player_Awards>();
 
             int i = default(int);
             try
@@ -1159,6 +1161,59 @@ namespace SpectatorFootball
                 lStats.Pass_Defense_Stats = ld.getLeagueSeasonPassDefenseStats(lls.season.ID, League_con_string);
                 lStats.Kicking_Stats = ld.getLeagueSeasonKickerStats(lls.season.ID, League_con_string);
                 lStats.Punting_Stats = ld.getLeagueSeasonPunterStats(lls.season.ID, League_con_string);
+                List<Award_Rating_Rec> award_recs_list = Award_Helper.setPlayersMasterList(lStats);
+
+                //Determine Off and Deff Rocking of the year awards
+                Award_Rating_Rec off_roy_rec = award_recs_list.Where(x => x.isRookie && Player_Helper.isOffense(x.p.Pos)).OrderByDescending(x => x.Grade).First();
+                Player_Awards.Add(new Player_Awards()
+                {
+                    Award_Code = app_Constants.ROCKIE_OF_THE_YEAR_OFF,
+                    Player_ID = off_roy_rec.p.ID,
+                    Season_ID = lls.season.ID
+                });
+
+                Award_Rating_Rec def_roy_rec = award_recs_list.Where(x => x.isRookie && !Player_Helper.isOffense(x.p.Pos)).OrderByDescending(x => x.Grade).First();
+                Player_Awards.Add(new Player_Awards()
+                {
+                    Award_Code = app_Constants.ROCKIE_OF_THE_YEAR_DEF,
+                    Player_ID = off_roy_rec.p.ID,
+                    Season_ID = lls.season.ID
+                });
+
+                //Determine Off and Deff player of the year awards
+                Award_Rating_Rec off_poy_rec = award_recs_list.Where(x => Player_Helper.isOffense(x.p.Pos)).OrderByDescending(x => x.Grade).First();
+                Player_Awards.Add(new Player_Awards()
+                {
+                    Award_Code = app_Constants.PLAYER_OF_THE_YEAR_OFF,
+                    Player_ID = off_roy_rec.p.ID,
+                    Season_ID = lls.season.ID
+                });
+
+                Award_Rating_Rec def_poy_rec = award_recs_list.Where(x => !Player_Helper.isOffense(x.p.Pos)).OrderByDescending(x => x.Grade).First();
+                Player_Awards.Add(new Player_Awards()
+                {
+                    Award_Code = app_Constants.PLAYER_OF_THE_YEAR_DEF,
+                    Player_ID = off_roy_rec.p.ID,
+                    Season_ID = lls.season.ID
+                });
+
+                //Set all pros for all positions
+                foreach (Player_Pos pp in System.Enum.GetValues(typeof(Player_Pos)))
+                {
+                    int num_all_pros = Award_Helper.getAllProNum(pp, lls.season.League_Structure_by_Season[0].Num_Teams);
+                    List<Award_Rating_Rec> all_pro_list = award_recs_list
+                        .Where(x => x.p.Pos == (int)pp).OrderByDescending(x => x.Grade).Take(num_all_pros).ToList();
+                    foreach (Award_Rating_Rec a in all_pro_list)
+                    {
+                        Player_Awards.Add(new Player_Awards()
+                        {
+                            Award_Code = app_Constants.ALL_PRO,
+                            Player_ID = a.p.ID,
+                            Season_ID = lls.season.ID
+                        });
+                    }
+                }
+
 
 
             }
