@@ -36,6 +36,7 @@ namespace SpectatorFootball
             string process_state = "Processing...";
             string state_struct = null;
             int i = default(int);
+            long starting_season_id = 1;
             try
             {
                 // Update the progress bar
@@ -100,6 +101,7 @@ namespace SpectatorFootball
 
                 // Update the progress bar
                 i = 20;
+                logger.Info("Creating Players for Draft");
                 process_state = "Create Players for Draft 2 of 5";
                 state_struct = "Processing..." + "|" + process_state + "|" + "";
                 bw.ReportProgress(i, state_struct);
@@ -107,24 +109,23 @@ namespace SpectatorFootball
                 //Create players for draft
                 int num_players = (int)(((app_Constants.QB_PER_TEAM + app_Constants.RB_PER_TEAM + app_Constants.WR_PER_TEAM + app_Constants.TE_PER_TEAM + app_Constants.OL_PER_TEAM + app_Constants.DL_PER_TEAM + app_Constants.LB_PER_TEAM + app_Constants.DB_PER_TEAM + app_Constants.K_PER_TEAM + app_Constants.P_PER_TEAM) * nls.Season.League_Structure_by_Season[0].Num_Teams ) * app_Constants.DRAFT_MULTIPLIER);
 
-                List<Player> new_player_list = League_Helper.Create_New_Players(num_players);
+                List<Player> new_player_list = League_Helper.Create_New_Players(num_players, true, starting_season_id);
 
                 nls.Players = new List<Player>();
                 foreach (Player p in new_player_list)
                 {
                     nls.Players.Add(p);
-//                    nls.Season.Player_Ratings.Add(p.Player_Ratings.First());
                 }
 
                 i = 50;
-                process_state = "Create Players for Draft 3 of 5";
+                process_state = "Create Draft 3 of 5";
                 state_struct = "Processing..." + "|" + process_state + "|" + "";
                 bw.ReportProgress(i, state_struct);
 
                 //Create Draft
                 int draft_rounds = (app_Constants.QB_PER_TEAM + app_Constants.RB_PER_TEAM + app_Constants.WR_PER_TEAM + app_Constants.TE_PER_TEAM + app_Constants.OL_PER_TEAM + app_Constants.DL_PER_TEAM + app_Constants.LB_PER_TEAM + app_Constants.DB_PER_TEAM + app_Constants.K_PER_TEAM + app_Constants.P_PER_TEAM);
                 Draft_Helper DH = new Draft_Helper();
-                List<Draft> Draft_List = DH.Create_Draft(nls.Season.Year-1,nls.Season.League_Structure_by_Season[0].Draft_Type_Code, draft_rounds, nls.Franchises ,null);
+                List<Draft> Draft_List = DH.Create_Draft(nls.Season.Year-1,nls.Season.League_Structure_by_Season[0].Draft_Type_Code, draft_rounds, nls.Franchises, starting_season_id, null);
                 foreach (Draft d in Draft_List)
                 {
                     nls.Season.Drafts.Add(d);
@@ -152,6 +153,7 @@ namespace SpectatorFootball
 
                     Game g = new Game()
                     {
+                        Season_ID = starting_season_id,
                         Week = long.Parse(sWeek),
                         Home_Team_Franchise_ID = nls.Season.Teams_by_Season.Where(x => x.Team_Slot == long.Parse(ht)).First().Franchise_ID,
                         Away_Team_Franchise_ID = nls.Season.Teams_by_Season.Where(x => x.Team_Slot == long.Parse(at)).First().Franchise_ID
@@ -1120,10 +1122,18 @@ namespace SpectatorFootball
             long Next_Season_ID;
             InjuriesDAO injDAO = new InjuriesDAO();
             LeagueDAO ld = new LeagueDAO();
+            TeamDAO tDAO = new TeamDAO();
 
+            //Update in db
             List<Injury> del_InjuriesList = new List<Injury>();
-            List<Injury_Log> Inj_Log = new List<Injury_Log>();
+            List<Player> new_players = new List<Player>();
+            List<Player> Update_Players = new List<Player>();
+            //++++++++++++++
             List<Player_Awards> Player_Awards = new List<Player_Awards>();
+            List<Player_Ratings> new_Player_Ratings = new List<Player_Ratings>();
+            List<Injury_Log> Inj_Log = new List<Injury_Log>();
+            List<Players_By_Team> new_Players_by_team = new List<Players_By_Team>();
+            List<Player_Retiring_Log> new_Player_Retiring_Log = new List<Player_Retiring_Log>();
 
             int i = default(int);
             try
@@ -1132,23 +1142,17 @@ namespace SpectatorFootball
 
                 // Update the progress bar
                 i = 5;
-                process_state = "Processing Injured Players 1 of 5";
+                process_state = "Processing Injured Players 1 of 7";
+                logger.Info(process_state);
                 state_struct = "Processing..." + "|" + process_state + "|" + "";
                 bw.ReportProgress(i, state_struct);
                 //get all injured players for this season.  All of these records be deleted
                 del_InjuriesList = injDAO.getLeagueInjuredPlayers(lls.season.ID, League_con_string);
-                //for all injured players, except ones with career ending injuries, write an injury
-                //log entry for the next season indicating that the player has returned from injury.
-                foreach (Injury inj in del_InjuriesList)
-                {
-                    Inj_Log.Add(new Injury_Log()
-                    { Season_ID = Next_Season_ID, Injured = 0,
-                     Player_ID = inj.Player_ID, Week = app_Constants.PLAYER_RETIRING_RETURNING_WEEK
-                    });
-                }
+
                 // Update the progress bar
                 i = 10;
-                process_state = "Assigning Player Awards 2 of 5";
+                process_state = "Assigning Player Awards 2 of 7";
+                logger.Info(process_state);
                 state_struct = "Processing..." + "|" + process_state + "|" + "";
                 bw.ReportProgress(i, state_struct);
 
@@ -1214,8 +1218,296 @@ namespace SpectatorFootball
                     }
                 }
 
+                i = 25;
+                process_state = "Aging Players 3 of 7";
+                logger.Info(process_state);
+                state_struct = "Processing..." + "|" + process_state + "|" + "";
+                bw.ReportProgress(i, state_struct);
+                List<Player_and_Ratings> all_players_list = ld.getAllActivePlayers(lls.season.ID, League_con_string);
+                foreach (Player_and_Ratings pr in all_players_list)
+                {
+                    bool bPlayertoRetire = false;
+                    //First check if the player has a career ending injury and if so then retire him
+                    bool bCareerEndingInj = false;
+                    Injury player_injury = del_InjuriesList.Where(x => x.Player_ID == pr.p.ID).FirstOrDefault();
+                    if (player_injury != null && player_injury.Career_Ending == 1)
+                        bCareerEndingInj = true;
 
+                    if (!bCareerEndingInj)
+                    {
+                        bPlayertoRetire = Player_Helper.WillPlayerRetire(pr.p.Age);
+                        if (!bPlayertoRetire)
+                        {
+                            //If the player had an injury indicate that the player is returning from their injury.
+                            if (player_injury != null)
+                            {
+                                Inj_Log.Add(new Injury_Log()
+                                {
+                                    Season_ID = Next_Season_ID,
+                                    Injured = 0,
+                                    Player_ID = pr.p.ID,
+                                    Week = app_Constants.PLAYER_RETIRING_RETURNING_WEEK
+                                });
+                            }
 
+                            //adjust player ratings
+                            Player_Ratings new_pr = new Player_Ratings()
+                            {
+                                Season_ID = Next_Season_ID,
+                                Player_ID = pr.pr[0].Player_ID,
+                                Accuracy_Rating = pr.pr[0].Accuracy_Rating,
+                                Agilty_Rating = pr.pr[0].Agilty_Rating,
+                                Arm_Strength_Rating = pr.pr[0].Arm_Strength_Rating,
+                                Ball_Safety_Rating = pr.pr[0].Ball_Safety_Rating,
+                                Decision_Making_Rating = pr.pr[0].Decision_Making_Rating,
+                                Hands_Rating = pr.pr[0].Hands_Rating,
+                                Kicker_Leg_Accuracy_Rating = pr.pr[0].Kicker_Leg_Accuracy_Rating,
+                                Kicker_Leg_Power_Rating = pr.pr[0].Kicker_Leg_Power_Rating,
+                                Pass_Attack_Rating = pr.pr[0].Pass_Attack_Rating,
+                                Pass_Block_Rating = pr.pr[0].Pass_Block_Rating,
+                                Running_Power_Rating = pr.pr[0].Running_Power_Rating,
+                                Run_Attack_Rating = pr.pr[0].Run_Attack_Rating,
+                                Run_Block_Rating = pr.pr[0].Run_Block_Rating,
+                                Speed_Rating = pr.pr[0].Speed_Rating,
+                                Sportsmanship_Ratings = pr.pr[0].Sportsmanship_Ratings,
+                                Tackle_Rating = pr.pr[0].Tackle_Rating,
+                                Toughness_Ratings = pr.pr[0].Toughness_Ratings,
+                                Work_Ethic_Ratings = pr.pr[0].Work_Ethic_Ratings
+                            };
+                            new_pr = Player_Helper.adjust_ratings(pr.p.Age, new_pr, (Player_Pos)pr.p.Pos);
+                            new_Player_Ratings.Add(new_pr);
+
+                            //Update Player record by incrementing age
+                            pr.p.Age += 1;
+                            Update_Players.Add(pr.p);
+
+                            //If the player was on a team last year, then Write next year's player_by_team record
+                            if (pr.pbt != null)
+                            {
+                                Players_By_Team new_pbt = new Players_By_Team()
+                                {
+                                    Season_ID = Next_Season_ID,
+                                    Player_ID = pr.pbt.Player_ID,
+                                    Franchise_ID = pr.pbt.Franchise_ID,
+                                    Jersey_Number = pr.pbt.Jersey_Number
+                                };
+                                new_Players_by_team.Add(new_pbt);
+                            }
+
+                        }
+                    }
+
+                    if (bPlayertoRetire || bCareerEndingInj)
+                    {
+                        //the player is to retire
+                        Player_Retiring_Log new_prl = new Player_Retiring_Log()
+                        {
+                            Player_ID = pr.p.ID,
+                            Season_ID = Next_Season_ID,
+                            Week = app_Constants.PLAYER_RETIRING_RETURNING_WEEK
+                        };
+                        new_Player_Retiring_Log.Add(new_prl);
+
+                        pr.p.Retired = 1;
+                        Update_Players.Add(pr.p);
+                    }
+                }
+
+                i = 50;
+                process_state = "Processing New Season Objects 4 of 7";
+                logger.Info(process_state);
+                state_struct = "Processing..." + "|" + process_state + "|" + "";
+
+                League_Structure_by_Season old_ls = lls.season.League_Structure_by_Season[0];
+                League_Structure_by_Season new_league_structure = new League_Structure_by_Season()
+                {
+                    Season_ID = Next_Season_ID,
+                    Championship_Game_Name = old_ls.Championship_Game_Name,
+                    Draft_Type_Code = old_ls.Draft_Type_Code,
+                    Extra_Point = old_ls.Extra_Point,
+                    Home_Advantage = old_ls.Home_Advantage,
+                    Injuries = old_ls.Injuries,
+                    Kickoff_Type = old_ls.Kickoff_Type,
+                    League_Logo_File = old_ls.League_Logo_File,
+                    League_Logo_Filepath = old_ls.League_Logo_Filepath,
+                    Long_Name = old_ls.Long_Name,
+                    Number_of_Conferences = old_ls.Number_of_Conferences,
+                    Number_of_Divisions = old_ls.Number_of_Divisions,
+                    Number_of_Games = old_ls.Number_of_Games,
+                    Number_of_weeks = old_ls.Number_of_weeks,
+                    Num_Playoff_Teams = old_ls.Num_Playoff_Teams,
+                    Num_Teams = old_ls.Num_Teams,
+                    Onside_Kick = old_ls.Onside_Kick,
+                    Penalties = old_ls.Penalties,
+                    Short_Name = old_ls.Short_Name,
+                    Three_Point_Conversion = old_ls.Three_Point_Conversion,
+                    Two_Point_Conversion = old_ls.Two_Point_Conversion
+                };
+
+                List<League_Structure_by_Season> new_ls_list = new List<League_Structure_by_Season>();
+                new_ls_list.Add(new_league_structure);
+
+                List<Conference> conf_list = new List<Conference>();
+                foreach (Conference c in lls.season.Conferences)
+                {
+                    conf_list.Add(new Conference()
+                    {
+                        Season_ID = Next_Season_ID,
+                        Conf_Name = c.Conf_Name,
+                        Ordinal = c.Ordinal
+                    });
+                }
+
+                List<Division> div_list = new List<Division>();
+                foreach (Division d in lls.season.Divisions)
+                {
+                    div_list.Add(new Division()
+                    {
+                        Season_ID = Next_Season_ID,
+                        Name = d.Name,
+                        Ordinal = d.Ordinal
+                    });
+                }
+
+                //Create new teams for next season
+                List<Teams_by_Season> new_teams = new List<Teams_by_Season>();
+                foreach (Teams_by_Season t in lls.season.Teams_by_Season)
+                {
+                    new_teams.Add(new Teams_by_Season()
+                    {
+                        Season_ID = Next_Season_ID,
+                        Nickname = t.Nickname,
+                        Home_jersey_Color = t.Home_jersey_Color,
+                        Home_Jersey_Number_Outline_Color = t.Home_Jersey_Number_Outline_Color,
+                        Home_Jersey_Number_Color = t.Home_Jersey_Number_Color,
+                        Home_Jersey_Shoulder_Stripe = t.Home_Jersey_Shoulder_Stripe,
+                        Home_Jersey_Sleeve_Stripe_Color_1 = t.Home_Jersey_Sleeve_Stripe_Color_1,
+                        Home_Jersey_Sleeve_Stripe_Color_2 = t.Home_Jersey_Sleeve_Stripe_Color_2,
+                        Home_Jersey_Sleeve_Stripe_Color_3 = t.Home_Jersey_Sleeve_Stripe_Color_3,
+                        Home_Jersey_Sleeve_Stripe_Color_4 = t.Home_Jersey_Sleeve_Stripe_Color_4,
+                        Home_Jersey_Sleeve_Stripe_Color_5 = t.Home_Jersey_Sleeve_Stripe_Color_5,
+                        Home_Jersey_Sleeve_Stripe_Color_6 = t.Home_Jersey_Sleeve_Stripe_Color_6,
+                        Home_Sleeve_Color = t.Home_Sleeve_Color,
+                        Home_Pants_Color = t.Home_Pants_Color,
+                        Home_Pants_Stripe_Color_1 = t.Home_Pants_Stripe_Color_1,
+                        Home_Pants_Stripe_Color_2 = t.Home_Pants_Stripe_Color_2,
+                        Home_Pants_Stripe_Color_3 = t.Home_Pants_Stripe_Color_3,
+                        Away_jersey_Color = t.Away_jersey_Color,
+                        Away_Jersey_Number_Outline_Color = t.Away_Jersey_Number_Outline_Color,
+                        Away_Jersey_Number_Color = t.Away_Jersey_Number_Color,
+                        Away_Jersey_Shoulder_Stripe = t.Away_Jersey_Shoulder_Stripe,
+                        Away_Jersey_Sleeve_Stripe_Color_1 = t.Away_Jersey_Sleeve_Stripe_Color_1,
+                        Away_Jersey_Sleeve_Stripe_Color_2 = t.Away_Jersey_Sleeve_Stripe_Color_2,
+                        Away_Jersey_Sleeve_Stripe_Color_3 = t.Away_Jersey_Sleeve_Stripe_Color_3,
+                        Away_Jersey_Sleeve_Stripe_Color_4 = t.Away_Jersey_Sleeve_Stripe_Color_4,
+                        Away_Jersey_Sleeve_Stripe_Color_5 = t.Away_Jersey_Sleeve_Stripe_Color_5,
+                        Away_Jersey_Sleeve_Stripe_Color_6 = t.Away_Jersey_Sleeve_Stripe_Color_6,
+                        Away_Sleeve_Color = t.Away_Sleeve_Color,
+                        Away_Pants_Color = t.Away_Pants_Color,
+                        Away_Pants_Stripe_Color_1 = t.Away_Pants_Stripe_Color_1,
+                        Away_Pants_Stripe_Color_2 = t.Away_Pants_Stripe_Color_2,
+                        Away_Pants_Stripe_Color_3 = t.Away_Pants_Stripe_Color_3,
+                        City = t.City,
+                        City_Abr = t.City_Abr,
+                        Cleats_Color = t.Cleats_Color,
+                        Franchise_ID = t.Franchise_ID,
+                        Helmet_Color = t.Helmet_Color,
+                        Helmet_Facemask_Color = t.Helmet_Facemask_Color,
+                        Helmet_Image_File = t.Helmet_Image_File,
+                        Helmet_img_path = t.Helmet_img_path,
+                        Helmet_Logo_Color = t.Helmet_Logo_Color,
+                        Owner = t.Owner,
+                        Socks_Color = t.Socks_Color,
+                        Stadium_Capacity = t.Stadium_Capacity,
+                        Stadium_Field_Color = t.Stadium_Field_Color,
+                        Stadium_Field_Type = t.Stadium_Field_Type,
+                        Stadium_Image_File = t.Stadium_Image_File,
+                        Stadium_Img_Path = t.Stadium_Img_Path,
+                        Stadium_Location = t.Stadium_Location,
+                        Stadium_Name = t.Stadium_Name,
+                        Team_Slot = t.Team_Slot
+                    });
+
+                    
+                }
+
+                // Update the progress bar
+                i = 60;
+                process_state = "Create Players for Draft 5 of 7";
+                logger.Info(process_state);
+                state_struct = "Processing..." + "|" + process_state + "|" + "";
+                bw.ReportProgress(i, state_struct);
+
+                //Create players for draft
+                int num_players = (int)((app_Constants.NORMAL_DRAFT_ROUNDS * lls.season.League_Structure_by_Season[0].Num_Teams) * app_Constants.DRAFT_MULTIPLIER);
+                List<Player> new_player_list = League_Helper.Create_New_Players(num_players, false, Next_Season_ID);
+
+                i = 70;
+                process_state = "Create Draft 6 of 7";
+                logger.Info(process_state);
+                state_struct = "Processing..." + "|" + process_state + "|" + "";
+                bw.ReportProgress(i, state_struct);
+
+                //Get Franchises to be used for draft.
+                List<Franchise> fran_list = tDAO.getAllFranchises(League_con_string);
+
+                //Create Draft
+                int draft_rounds = app_Constants.NORMAL_DRAFT_ROUNDS;
+                Draft_Helper DH = new Draft_Helper();
+                List<Draft> Draft_List = DH.Create_Draft(lls.season.Year, new_league_structure.Draft_Type_Code, draft_rounds, fran_list, Next_Season_ID, League_con_string);
+
+                i = 85;
+                process_state = "Processing Creating Schedule for Next Season  7 of 7";
+                logger.Info(process_state);
+                state_struct = "Processing..." + "|" + process_state + "|" + "";
+                bw.ReportProgress(i, state_struct);
+                // Creating schedule
+                logger.Info("Creating schedule");
+                List<string> sched = create_schedule(new_league_structure.Short_Name, (int)new_league_structure.Num_Teams, div_list.Count, conf_list.Count, (int)new_league_structure.Number_of_Games, (int)new_league_structure.Number_of_weeks);
+                List<Game> new_games = new List<Game>();
+                foreach (string line in sched)
+                {
+                    string[] m = line.Split(',');
+                    string sWeek = m[0];
+                    string ht = m[1];
+                    string at = m[2];
+
+                    if (sWeek.StartsWith("Week"))
+                        continue;
+
+                    Game g = new Game()
+                    {
+                        Season_ID = Next_Season_ID, 
+                        Week = long.Parse(sWeek),
+                        Home_Team_Franchise_ID = new_teams.Where(x => x.Team_Slot == long.Parse(ht)).First().Franchise_ID,
+                        Away_Team_Franchise_ID = new_teams.Where(x => x.Team_Slot == long.Parse(at)).First().Franchise_ID
+                    };
+
+                    new_games.Add(g);
+
+                }
+
+                Season New_Season = new Season()
+                {
+                    ID = Next_Season_ID,
+                    Year = lls.season.Year++,
+                    League_Structure_by_Season = new_ls_list,
+                    Conferences = conf_list,
+                    Divisions = div_list,
+                    Drafts = Draft_List,
+                    Teams_by_Season = new_teams,
+                    Games = new_games,
+                    Player_Ratings = new_Player_Ratings,
+                    Players_By_Team = new_Players_by_team
+                };
+
+                //call dao end of season method
+                logger.Info("EndSeason Ended Successfully");
+                // Update the progress bar
+                i = 100;
+                process_state = "";
+                state_struct = "Complete" + "|" + process_state + "|" + "League Completed Successfully!";
+                bw.ReportProgress(i, state_struct);
             }
             catch (Exception ex)
             {

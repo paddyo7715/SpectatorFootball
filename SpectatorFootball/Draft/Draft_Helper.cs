@@ -13,7 +13,7 @@ namespace SpectatorFootball.DraftsNS
 {
     public class Draft_Helper
     {
-        public List<Draft> Create_Draft(long year, string draft_Type, int Draft_Rounds, List<Franchise> this_year_franchises, string league_filepath)
+        public List<Draft> Create_Draft(long year, string draft_Type, int Draft_Rounds, List<Franchise> this_year_franchises, long season_id, string league_filepath)
         {
             //if league_filepath is null then this is a new league.
 
@@ -57,9 +57,10 @@ namespace SpectatorFootball.DraftsNS
                     {
                         foreach (Franchise f in Round_order)
                         {
-                            r.Add(new Draft() { Franchise_ID = f.ID, Pick_Number = p_num, Round = rd });
+                            r.Add(new Draft() { Season_ID = season_id, Franchise_ID = f.ID, Pick_Number = p_num, Round = rd });
                             p_num++;
                         }
+                        
                     }
 
                     break;

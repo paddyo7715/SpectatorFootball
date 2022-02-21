@@ -264,7 +264,7 @@ namespace SpectatorFootball.Services
                     }
                     else
                     {
-                        Player created_player = Player_Helper.CreatePlayer(pp, true, true, false);
+                        Player created_player = Player_Helper.CreatePlayer(pp, true, true, false, lls.season.ID);
                         //Set the season id on the player_rating, since it is not
                         //set from the method
                         List<Player_Ratings> plr = created_player.Player_Ratings.ToList();

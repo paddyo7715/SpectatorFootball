@@ -544,5 +544,19 @@ namespace SpectatorFootball.DAO
 
             return r;
         }
+
+        public List<Franchise> getAllFranchises(string league_filepath)
+        {
+            List<Franchise> r = null;
+
+            string con = Common.LeageConnection.Connect(league_filepath);
+
+            using (var context = new leagueContext(con))
+            {
+                r = context.Franchises.OrderBy(x => x.ID).ToList();
+            }
+
+            return r;
+        }
     }
 }

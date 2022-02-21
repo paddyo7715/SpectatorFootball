@@ -78,7 +78,7 @@ namespace SpectatorFootball.League
 
             return r;
         }
-        public static List<Player> Create_New_Players(int num_players)
+        public static List<Player> Create_New_Players(int num_players, Boolean bNewLeage, long season_id)
         {
 
             List<Player> r = new List<Player>();
@@ -86,15 +86,13 @@ namespace SpectatorFootball.League
 
             for (int i = 0; i < num_players; i++)
             {
-
-//                int int_pos_num = CommonUtils.getRandomNum(0, iTotal_Player_Positions - 1);
                 int int_pos_num = getRandomPos();
 
                 Player_Pos Pos = (Player_Pos)int_pos_num;
 
                 logger.Debug("i=" + i + " Pos=" + Pos.ToString());
 
-                Player p = Player_Helper.CreatePlayer(Pos, true,false,true);
+                Player p = Player_Helper.CreatePlayer(Pos, bNewLeage, false,true, season_id);
                 r.Add(p);
             }
 

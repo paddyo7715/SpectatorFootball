@@ -12,5 +12,6 @@ namespace SpectatorFootball.Models
         public List<Player_Ratings> pr { get; set; }
         public Players_By_Team pbt { get; set; }
         public double Overall_Grade { get; set; }
+        public bool bLastYear_FreeAgent { get; set; }
     }
 }

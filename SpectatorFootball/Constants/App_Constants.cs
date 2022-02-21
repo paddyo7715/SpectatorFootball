@@ -236,6 +236,12 @@ namespace SpectatorFootball
         public const double K_KICK_ACC = 0.65;
         public const double K_LEG_STRENGTH = 0.35;
 
+        //Yearly rating adjustment constants
+        public const long PEEK_PHYSICAL_AGE = 29;
+        public const long WORK_ETHIC_UNIT_IMPORTANCE = 7;
+        public const long AVG_ABILITY_RATING = 70;
+        public const long CHANCE_RATING_ADJUSTED = 500;
+        public const int MAX_SINGLE_ADJUSTMENT = 3;
 
         // Stock Uniform Colors
         public static Color STOCK_GREY_COLOR = Color.FromArgb(40, 40, 40);

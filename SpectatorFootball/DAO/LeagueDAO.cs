@@ -417,6 +417,7 @@ namespace SpectatorFootball
                     Fumbles = x.Sum(s => s.Fumbles),
                     Fumbles_Lost = x.Sum(s => s.Fumbles_Lost),
                 }).ToList();
+
             }
 
             return r;
@@ -691,6 +692,36 @@ namespace SpectatorFootball
                         Sacks_Against = (long)x.Sum(s => s.Home_Sacks)
                     }).ToList();
             }
+
+            return r;
+        }
+
+        public List<Player_and_Ratings> getAllActivePlayers(long season_id, string league_filepath)
+        {
+            List<Player_and_Ratings> r = null;
+
+            string con = Common.LeageConnection.Connect(league_filepath);
+            List<Players_By_Team> pbtList = new List<Players_By_Team>();
+
+            using (var context = new leagueContext(con))
+            {
+                r = context.Players.Where(x => x.Retired == 0)
+                    .Select(x => new Player_and_Ratings
+                    {
+                        p = x,
+                        pr = x.Player_Ratings.Where(w => w.Season_ID == season_id).ToList(),
+                        pbt = null,
+                        Overall_Grade = 0,
+                        bLastYear_FreeAgent = x.Players_By_Team.Any(p => p.Season_ID == season_id)
+                    }).ToList();
+
+                pbtList = context.Players_By_Team.Where(x => x.Season_ID == season_id).ToList();
+            }
+            foreach (Player_and_Ratings pr in r)
+            {
+                pr.pbt = pbtList.Where(x => x.Player_ID == pr.p.ID).FirstOrDefault();
+            }
+          
 
             return r;
         }

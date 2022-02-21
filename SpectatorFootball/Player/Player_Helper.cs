@@ -11,7 +11,7 @@ namespace SpectatorFootball.PlayerNS
     public class Player_Helper
     {
         private static ILog logger = LogManager.GetLogger("RollingFile");
-        public static Player CreatePlayer(Player_Pos pos, Boolean bNewLeage,bool bCrappify,bool bDraftable)
+        public static Player CreatePlayer(Player_Pos pos, Boolean bNewLeage,bool bCrappify,bool bDraftable, long season_id)
         {
             Player r = new Player();
 
@@ -33,7 +33,7 @@ namespace SpectatorFootball.PlayerNS
             int age = generate_Player_Age(bNewLeage);
 
             Player_Ratings ratings = Create_Player_Ratings(pos);
-
+            ratings.Season_ID = season_id;
             //if the player is younger than 28 then there is a chance that
             //their ratings should be lessened based on their age.
             if (age < app_Constants.PLAYER_ABILITY_PEAK_AGE)
@@ -950,6 +950,149 @@ namespace SpectatorFootball.PlayerNS
                         break;
                 }
             }
+
+            return r;
+        } 
+        public static bool WillPlayerRetire(long age)
+        {
+            bool r = false;
+
+            int retire_chance = 0;
+
+            if (age <= 23)
+                retire_chance = 5;
+            else if (age <= 25)
+                retire_chance = 8;
+            else if (age == 26)
+                retire_chance = 10;
+            else if (age <= 28)
+                retire_chance = 15;
+            else if (age <= 32)
+                retire_chance = 50;
+            else if (age == 33)
+                retire_chance = 60;
+            else if (age == 34)
+                retire_chance = 70;
+            else if (age == 35)
+                retire_chance = 80;
+            else if (age == 36)
+                retire_chance = 100;
+            else if (age <= 39)
+                retire_chance = 333;
+            else
+                retire_chance = 750;
+
+            int i = CommonUtils.getRandomNum(1, 1000);
+
+            if (i <= retire_chance)
+                r = true;
+
+            return r;
+        }
+        public static Player_Ratings adjust_ratings(long age, Player_Ratings pr, Player_Pos pos)
+        {
+            Player_Ratings r = null;
+
+            //Player's age in relation to peek pleyer age
+            long player_peek_delta = (app_Constants.PEEK_PHYSICAL_AGE - age) * 100;
+            //Player's work ethic effects this number too
+            long work_ethic_delta = (pr.Work_Ethic_Ratings - app_Constants.AVG_ABILITY_RATING) * 100;
+            //if this number is less than 1000 then the player's rating is adjusted
+            long adjust_chance_val = player_peek_delta + work_ethic_delta;
+
+            int rnd = CommonUtils.getRandomNum(1, 1000);
+
+            //Adjust player's rating
+            if (adjust_chance_val <= rnd)
+            {
+                switch (pos)
+                {
+                    case Player_Pos.QB:
+                        pr.Accuracy_Rating = RatingKeepinRange(pr.Accuracy_Rating + getAdjustment());
+                        pr.Decision_Making_Rating = RatingKeepinRange(pr.Decision_Making_Rating + getAdjustment());
+                        pr.Arm_Strength_Rating = RatingKeepinRange(pr.Arm_Strength_Rating + getAdjustment());
+                        pr.Speed_Rating = RatingKeepinRange(pr.Speed_Rating + getAdjustment());
+                        pr.Agilty_Rating = RatingKeepinRange(pr.Agilty_Rating + getAdjustment());
+                        pr.Ball_Safety_Rating = RatingKeepinRange(pr.Ball_Safety_Rating + getAdjustment());
+                        break;
+                    case Player_Pos.RB:
+                        pr.Running_Power_Rating = RatingKeepinRange(pr.Running_Power_Rating + getAdjustment());
+                        pr.Speed_Rating = RatingKeepinRange(pr.Speed_Rating + getAdjustment());
+                        pr.Agilty_Rating = RatingKeepinRange(pr.Agilty_Rating + getAdjustment());
+                        pr.Hands_Rating = RatingKeepinRange(pr.Hands_Rating + getAdjustment());
+                        pr.Ball_Safety_Rating = RatingKeepinRange(pr.Ball_Safety_Rating + getAdjustment());
+                        break;
+                    case Player_Pos.WR:
+                        pr.Speed_Rating = RatingKeepinRange(pr.Speed_Rating + getAdjustment());
+                        pr.Agilty_Rating = RatingKeepinRange(pr.Agilty_Rating + getAdjustment());
+                        pr.Hands_Rating = RatingKeepinRange(pr.Hands_Rating + getAdjustment());
+                        pr.Ball_Safety_Rating = RatingKeepinRange(pr.Ball_Safety_Rating + getAdjustment());
+                        break;
+                    case Player_Pos.TE:
+                        pr.Speed_Rating = RatingKeepinRange(pr.Speed_Rating + getAdjustment());
+                        pr.Agilty_Rating = RatingKeepinRange(pr.Agilty_Rating + getAdjustment());
+                        pr.Hands_Rating = RatingKeepinRange(pr.Hands_Rating + getAdjustment());
+                        pr.Pass_Block_Rating = RatingKeepinRange(pr.Pass_Block_Rating + getAdjustment());
+                        pr.Run_Block_Rating = RatingKeepinRange(pr.Run_Block_Rating + getAdjustment());
+                        pr.Ball_Safety_Rating = RatingKeepinRange(pr.Ball_Safety_Rating + getAdjustment());
+                        break;
+                    case Player_Pos.OL:
+                        pr.Pass_Block_Rating = RatingKeepinRange(pr.Pass_Block_Rating + getAdjustment());
+                        pr.Run_Block_Rating = RatingKeepinRange(pr.Run_Block_Rating + getAdjustment());
+                        pr.Agilty_Rating = RatingKeepinRange(pr.Agilty_Rating + getAdjustment());
+                        break;
+                    case Player_Pos.DL:
+                        pr.Pass_Attack_Rating = RatingKeepinRange(pr.Pass_Attack_Rating + getAdjustment());
+                        pr.Run_Attack_Rating = RatingKeepinRange(pr.Run_Attack_Rating + getAdjustment());
+                        pr.Speed_Rating = RatingKeepinRange(pr.Speed_Rating + getAdjustment());
+                        pr.Agilty_Rating = RatingKeepinRange(pr.Agilty_Rating + getAdjustment());
+                        pr.Tackle_Rating = RatingKeepinRange(pr.Tackle_Rating + getAdjustment());
+                        break;
+                    case Player_Pos.LB:
+                        pr.Pass_Attack_Rating = RatingKeepinRange(pr.Pass_Attack_Rating + getAdjustment());
+                        pr.Run_Attack_Rating = RatingKeepinRange(pr.Run_Attack_Rating + getAdjustment());
+                        pr.Speed_Rating = RatingKeepinRange(pr.Speed_Rating + getAdjustment());
+                        pr.Agilty_Rating = RatingKeepinRange(pr.Agilty_Rating + getAdjustment());
+                        pr.Tackle_Rating = RatingKeepinRange(pr.Tackle_Rating + getAdjustment());
+                        pr.Hands_Rating = RatingKeepinRange(pr.Hands_Rating + getAdjustment());
+                        break;
+                    case Player_Pos.DB:
+                        pr.Speed_Rating = RatingKeepinRange(pr.Speed_Rating + getAdjustment());
+                        pr.Agilty_Rating = RatingKeepinRange(pr.Agilty_Rating + getAdjustment());
+                        pr.Tackle_Rating = RatingKeepinRange(pr.Tackle_Rating + getAdjustment());
+                        pr.Hands_Rating = RatingKeepinRange(pr.Hands_Rating + getAdjustment());
+                        break;
+                    case Player_Pos.P:
+                    case Player_Pos.K:
+                        pr.Kicker_Leg_Power_Rating = RatingKeepinRange(pr.Kicker_Leg_Power_Rating + getAdjustment());
+                        pr.Kicker_Leg_Accuracy_Rating = RatingKeepinRange(pr.Kicker_Leg_Accuracy_Rating + getAdjustment());
+                        break;
+                }
+            }
+
+            return r;
+        }
+        private static long getAdjustment()
+        {
+            long r = 0;
+
+            int rnd = CommonUtils.getRandomNum(1, 1000);
+            if (rnd < app_Constants.CHANCE_RATING_ADJUSTED)
+                r = CommonUtils.getRandomNum(1, app_Constants.MAX_SINGLE_ADJUSTMENT);
+            else
+                r = 0;
+
+            return r;
+        }
+
+        private static long RatingKeepinRange(long l)
+        {
+            long r = l;
+
+            if (r < 1)
+                r = 1;
+            else if (r > 100)
+                r = 100;
 
             return r;
         }
