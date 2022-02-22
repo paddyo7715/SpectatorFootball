@@ -30,8 +30,7 @@ namespace SpectatorFootball.WindowsLeague
 
             if (statuslbl.Content.ToString() == "Season Ended Successfully!")
             {
-
- //               leagueCreated?.Invoke(this, new EventArgs());
+                SeasonEnded?.Invoke(this, new EventArgs());
             }
 
 

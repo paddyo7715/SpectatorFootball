@@ -725,6 +725,74 @@ namespace SpectatorFootball
 
             return r;
         }
+
+        public void EndSeason(List<Injury> del_lInj, List<Player> new_players,
+            List<Player> Update_Players, List<Player_Awards> Player_Awards, string league_filepath)
+        {
+            string con = Common.LeageConnection.Connect(league_filepath);
+
+            using (var context = new leagueContext(con))
+            {
+                using (var dbContextTransaction = context.Database.BeginTransaction())
+                {
+                    //Delete the player's injury record
+                    foreach (Injury i in del_lInj)
+                    {
+                        i.Player = null;
+                        i.Season = null;
+                        i.Franchise = null;
+                        context.Injuries.Add(i);
+                        context.Entry(i).State = System.Data.Entity.EntityState.Deleted;
+                    }
+
+                    context.SaveChanges();
+
+                    context.Players.AddRange(new_players);
+
+                    //Update the players 
+                    foreach (Player p in Update_Players)
+                    {
+                        p.Drafts = null;
+                        p.Free_Agency = null;
+                        p.Game_Player_Defense_Stats = null;
+                        p.Game_Player_FG_Defense_Stats = null;
+                        p.Game_Player_Kick_Returner_Stats = null;
+                        p.Game_Player_Kicker_Stats = null;
+                        p.Game_Player_Kickoff_Defenders = null;
+                        p.Game_Player_Kickoff_Receiver_Stats = null;
+                        p.Game_Player_Offensive_Linemen_Stats = null;
+                        p.Game_Player_Pass_Defense_Stats = null;
+                        p.Game_Player_Passing_Stats = null;
+                        p.Game_Player_Penalty_Stats = null;
+                        p.Game_Player_Punt_Defenders = null;
+                        p.Game_Player_Punt_Receiver_Stats = null;
+                        p.Game_Player_Punt_Returner_Stats = null;
+                        p.Game_Player_Punter_Stats = null;
+                        p.Game_Player_Receiving_Stats = null;
+                        p.Game_Player_Rushing_Stats = null;
+                        p.Hall_of_Fame = null;
+                        p.Injuries = null;
+                        p.Injury_Log = null;
+                        p.Player_Awards = null;
+                        p.Player_Ratings = null;
+                        p.Player_Retiring_Log = null;
+                        p.Players_By_Team = null;
+                        p.Training_Camp_by_Season = null;
+                        context.Players.Add(p);
+                        context.Entry(p).State = System.Data.Entity.EntityState.Modified;
+                    }
+
+                    context.SaveChanges();
+
+                    context.Player_Awards.AddRange(Player_Awards);
+                    context.SaveChanges();
+
+                    dbContextTransaction.Commit();
+                }
+            }
+
+            return;
+        }
     }
 }
 

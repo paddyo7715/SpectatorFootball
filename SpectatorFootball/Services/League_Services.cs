@@ -1124,16 +1124,23 @@ namespace SpectatorFootball
             LeagueDAO ld = new LeagueDAO();
             TeamDAO tDAO = new TeamDAO();
 
-            //Update in db
+            //Current Season Lists
             List<Injury> del_InjuriesList = new List<Injury>();
-            List<Player> new_players = new List<Player>();
+            List<Player> new_player_list = new List<Player>();
             List<Player> Update_Players = new List<Player>();
-            //++++++++++++++
             List<Player_Awards> Player_Awards = new List<Player_Awards>();
+
+            //New Season Lists
             List<Player_Ratings> new_Player_Ratings = new List<Player_Ratings>();
             List<Injury_Log> Inj_Log = new List<Injury_Log>();
             List<Players_By_Team> new_Players_by_team = new List<Players_By_Team>();
             List<Player_Retiring_Log> new_Player_Retiring_Log = new List<Player_Retiring_Log>();
+            List<League_Structure_by_Season> new_ls_list = new List<League_Structure_by_Season>();
+            List<Conference> conf_list = new List<Conference>();
+            List<Division> div_list = new List<Division>();
+            List<Teams_by_Season> new_teams = new List<Teams_by_Season>();
+            List<Draft> Draft_List = new List<Draft>();
+            List<Game> new_games = new List<Game>();
 
             int i = default(int);
             try
@@ -1344,10 +1351,7 @@ namespace SpectatorFootball
                     Two_Point_Conversion = old_ls.Two_Point_Conversion
                 };
 
-                List<League_Structure_by_Season> new_ls_list = new List<League_Structure_by_Season>();
                 new_ls_list.Add(new_league_structure);
-
-                List<Conference> conf_list = new List<Conference>();
                 foreach (Conference c in lls.season.Conferences)
                 {
                     conf_list.Add(new Conference()
@@ -1358,7 +1362,6 @@ namespace SpectatorFootball
                     });
                 }
 
-                List<Division> div_list = new List<Division>();
                 foreach (Division d in lls.season.Divisions)
                 {
                     div_list.Add(new Division()
@@ -1370,7 +1373,6 @@ namespace SpectatorFootball
                 }
 
                 //Create new teams for next season
-                List<Teams_by_Season> new_teams = new List<Teams_by_Season>();
                 foreach (Teams_by_Season t in lls.season.Teams_by_Season)
                 {
                     new_teams.Add(new Teams_by_Season()
@@ -1440,7 +1442,7 @@ namespace SpectatorFootball
 
                 //Create players for draft
                 int num_players = (int)((app_Constants.NORMAL_DRAFT_ROUNDS * lls.season.League_Structure_by_Season[0].Num_Teams) * app_Constants.DRAFT_MULTIPLIER);
-                List<Player> new_player_list = League_Helper.Create_New_Players(num_players, false, Next_Season_ID);
+                new_player_list = League_Helper.Create_New_Players(num_players, false, Next_Season_ID);
 
                 i = 70;
                 process_state = "Create Draft 6 of 7";
@@ -1454,7 +1456,7 @@ namespace SpectatorFootball
                 //Create Draft
                 int draft_rounds = app_Constants.NORMAL_DRAFT_ROUNDS;
                 Draft_Helper DH = new Draft_Helper();
-                List<Draft> Draft_List = DH.Create_Draft(lls.season.Year, new_league_structure.Draft_Type_Code, draft_rounds, fran_list, Next_Season_ID, League_con_string);
+                Draft_List = DH.Create_Draft(lls.season.Year, new_league_structure.Draft_Type_Code, draft_rounds, fran_list, Next_Season_ID, League_con_string);
 
                 i = 85;
                 process_state = "Processing Creating Schedule for Next Season  7 of 7";
@@ -1464,7 +1466,6 @@ namespace SpectatorFootball
                 // Creating schedule
                 logger.Info("Creating schedule");
                 List<string> sched = create_schedule(new_league_structure.Short_Name, (int)new_league_structure.Num_Teams, div_list.Count, conf_list.Count, (int)new_league_structure.Number_of_Games, (int)new_league_structure.Number_of_weeks);
-                List<Game> new_games = new List<Game>();
                 foreach (string line in sched)
                 {
                     string[] m = line.Split(',');
@@ -1498,8 +1499,12 @@ namespace SpectatorFootball
                     Teams_by_Season = new_teams,
                     Games = new_games,
                     Player_Ratings = new_Player_Ratings,
-                    Players_By_Team = new_Players_by_team
+                    Players_By_Team = new_Players_by_team,
+                    Injury_Log = Inj_Log,
+                    Player_Retiring_Log = new_Player_Retiring_Log
                 };
+
+                ld.EndSeason(del_InjuriesList, new_player_list, Update_Players, Player_Awards, League_con_string);
 
                 //call dao end of season method
                 logger.Info("EndSeason Ended Successfully");
