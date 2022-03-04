@@ -22,7 +22,7 @@ namespace SpectatorFootball.Services
             string DIRPath_League = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + League_Shortname.ToUpper();
             string League_con_string = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + League_Shortname + Path.DirectorySeparatorChar + League_Shortname + "." + app_Constants.DB_FILE_EXT;
             //get number of possible playoffs weeks
-            int playoffs_week = Playoff_Helper.NumPlayoffWeeks(PlayoffTeams);
+            int playoffs_week = Playoff_Helper.PlayoffGamesPerWeek(PlayoffTeams).Count();
 
             //First get the weeks in the schedule
             ScheduleDAO schedDAO = new ScheduleDAO();

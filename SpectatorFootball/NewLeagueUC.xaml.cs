@@ -564,7 +564,7 @@ namespace SpectatorFootball
             {
                 this.UnregisterName(s);
             }
-            catch (Exception IG)
+            catch (Exception)
             {
             }
         }

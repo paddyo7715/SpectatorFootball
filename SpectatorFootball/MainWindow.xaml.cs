@@ -52,6 +52,8 @@ namespace SpectatorFootball
         private TeamStatusUX TeamStatusUX = null;
         private ChampionsUX ChampionsUX = null;
         private LeagueInjuriesUX LeagueInjuriesUX = null;
+        private PlayoffsUX PlayoffsUX = null;
+
 
         //End of seasonx
         public BackgroundWorker bw = null;
@@ -627,6 +629,30 @@ namespace SpectatorFootball
 
         }
 
+        private void Show_Playoffs(object sender, EventArgs e)
+        {
+            if (Mouse.OverrideCursor == Cursors.Wait) return;
+
+            try
+            {
+                Mouse.OverrideCursor = Cursors.Wait;
+                PlayoffsUX = new PlayoffsUX(this);
+                sp_uc.Children.Clear();
+                sp_uc.Children.Add(PlayoffsUX);
+                PlayoffsUX.Show_Standings += Show_LeagueStandings;
+
+                Mouse.OverrideCursor = null;
+            }
+            catch (Exception ex)
+            {
+                Mouse.OverrideCursor = null;
+                logger.Error("Error Creating the League Champions form");
+                logger.Error(ex);
+                MessageBox.Show(CommonUtils.substr(ex.Message, 0, 100), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+        }
+
 
 
         //When the user clicks a team in the teams menu
@@ -881,6 +907,9 @@ namespace SpectatorFootball
                         break;
                     }
             }
+
+            //bpo for testing allow playoffs to be enabled so I can test the form
+            MenuPlayoffs.IsEnabled = true;
 
         }
 

@@ -25,7 +25,7 @@ namespace SpectatorFootball.WindowsLeague
     {
         public BoxScore bs_rec { get; set; }
         Style popupTC = (Style)System.Windows.Application.Current.FindResource("popupTC");
-        private bool bPenalties;
+        private bool bPenalties = false;
 
         private Style aDivGridHeader_Style = (Style)System.Windows.Application.Current.FindResource("aBoxGridHDRStyle");
         private Style hDivGridHeader_Style = (Style)System.Windows.Application.Current.FindResource("hBoxGridHDRStyle");
@@ -34,6 +34,7 @@ namespace SpectatorFootball.WindowsLeague
         public BoxScore_Popup(BoxScore bs_rec, bool bPenalties)
         {
             InitializeComponent();
+            this.bPenalties = bPenalties;
             this.bs_rec = bs_rec;
             DataContext = this;
             string[] s1 = Uniform.getTeamDispColors(bs_rec.aTeam.Home_jersey_Color,

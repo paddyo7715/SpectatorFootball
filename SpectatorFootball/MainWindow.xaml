@@ -27,7 +27,7 @@
                 <MenuItem Name="MenuFreeAgency" Header="Free Agency" Click= "Show_FreeAgency" />
                 <MenuItem Name="MenuTrainingCamp" Header="Training Camp" Click= "Show_TrainingCamp" />
                 <MenuItem Name="MenuInjuries" Header="Injuries" Click= "Show_LeagueInjuries" />
-                <MenuItem Name="MenuPlayoffs" Header="Playoffs" />
+                <MenuItem Name="MenuPlayoffs" Header="Playoffs" Click= "Show_Playoffs" />
                 <MenuItem Name="MenuLeagueInfo" Header="League Info" />
             </MenuItem>
             <MenuItem Name="MenuTeams" Header="Teams">

@@ -491,6 +491,9 @@
     <Compile Include="WindowsLeague\PlayerCard_Popup.xaml.cs">
       <DependentUpon>PlayerCard_Popup.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WindowsLeague\PlayoffsUX.xaml.cs">
+      <DependentUpon>PlayoffsUX.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WindowsLeague\Progress_Dialog_Season_End.xaml.cs">
       <DependentUpon>Progress_Dialog_Season_End.xaml</DependentUpon>
     </Compile>
@@ -652,6 +655,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="WindowsLeague\PlayerCard_Popup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowsLeague\PlayoffsUX.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

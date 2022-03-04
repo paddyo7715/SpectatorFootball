@@ -43,7 +43,6 @@ namespace SpectatorFootball.WindowsLeague
 
         public Uniform_Image Uniform_Img { get; set; }
 
-        private int Sort_Asc = 0;
         public List<WeeklyScheduleRec> Team_Sched_List { get; set; }
 
         public Team_Player_Accum_Stats Team_Stats = null;

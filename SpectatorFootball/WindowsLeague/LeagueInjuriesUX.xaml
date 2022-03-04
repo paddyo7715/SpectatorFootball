@@ -27,7 +27,7 @@
                 <Button Name="help_btn" Focusable="false" Style="{StaticResource appHelpBTN}" Click="help_btn_Click">Help ?</Button>
             </StackPanel>
         </Grid>
-        <StackPanel Orientation="Vertical">
+        <StackPanel Orientation="Vertical" Width="1000">
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
                 <Label HorizontalAlignment="Center" Style="{StaticResource Conflbltyle}">Injuries</Label>
                 <ListView Name="lstInjuries" Style="{StaticResource StandingsGridStyle}" SelectionMode="Single" Height="500" Width="920"  MouseDoubleClick="lstInjuries_Click">

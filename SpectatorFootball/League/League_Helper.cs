@@ -339,168 +339,113 @@ namespace SpectatorFootball.League
             {
                 case "8 teams 2 divisions 0 conferences":
                     r.source_list.Add("2");
-                    r.source_list.Add("3"); 
                     r.source_list.Add("4"); 
-                    r.source_list.Add("6"); 
 
                     r.selected = "4";
                     break;
                 case "10 teams 2 divisions 0 conferences":
                     r.source_list.Add("2");
-                    r.source_list.Add("3");
                     r.source_list.Add("4");
-                    r.source_list.Add("6");
                     r.source_list.Add("8");
 
                     r.selected = "4";
                     break;
                 case "12 teams 2 divisions 0 conferences":
                     r.source_list.Add("2");
-                    r.source_list.Add("3");
                     r.source_list.Add("4");
-                    r.source_list.Add("6");
                     r.source_list.Add("8");
-                    r.source_list.Add("10");
 
                     r.selected = "4";
                     break;
                 case "12 teams 3 divisions 0 conferences":
-                    r.source_list.Add("3");
                     r.source_list.Add("4");
-                    r.source_list.Add("5");
-                    r.source_list.Add("6");
                     r.source_list.Add("8");
-                    r.source_list.Add("10");
 
                     r.selected = "4";
                     break;
                 case "14 teams 2 divisions 0 conferences":
                     r.source_list.Add("2");
-                    r.source_list.Add("3");
                     r.source_list.Add("4");
-                    r.source_list.Add("6");
                     r.source_list.Add("8");
-                    r.source_list.Add("10");
-                    r.source_list.Add("12");
-
+ 
                     r.selected = "4";
                     break;
                 case "16 teams 4 divisions 2 conferences":
                     r.source_list.Add("4");
-                    r.source_list.Add("6");
                     r.source_list.Add("8");
                     r.source_list.Add("10");
-                    r.source_list.Add("12");
-                    r.source_list.Add("14");
 
-                    r.selected = "6";
+                    r.selected = "4";
                     break;
                 case "16 teams 2 divisions 0 conferences":
                     r.source_list.Add("2");
-                    r.source_list.Add("3");
                     r.source_list.Add("4");
-                    r.source_list.Add("6");
-                    r.source_list.Add("8");
-                    r.source_list.Add("10");
-                    r.source_list.Add("12");
-                    r.source_list.Add("14");
-
-                    r.selected = "6";
-                    break;
-                case "18 teams 3 divisions 0 conferences":
-                    r.source_list.Add("3");
-                    r.source_list.Add("4");
-                    r.source_list.Add("5");
-                    r.source_list.Add("6");
-                    r.source_list.Add("8");
-                    r.source_list.Add("10");
-                    r.source_list.Add("12");
-                    r.source_list.Add("14");
-                    r.source_list.Add("16");
+                     r.source_list.Add("8");
 
                     r.selected = "4";
+                    break;
+                case "18 teams 3 divisions 0 conferences":
+                    r.source_list.Add("4");
+                    r.source_list.Add("8");
+
+                    r.selected = "8";
                     break;
                 case "20 teams 4 divisions 2 conferences":
                     r.source_list.Add("4");
-                    r.source_list.Add("6");
                     r.source_list.Add("8");
                     r.source_list.Add("10");
                     r.source_list.Add("12");
                     r.source_list.Add("14");
                     r.source_list.Add("16");
-                    r.source_list.Add("18");
 
-                    r.selected = "4";
+                    r.selected = "8";
                     break;
                 case "20 teams 2 divisions 2 conferences":
                     r.source_list.Add("2");
                     r.source_list.Add("4");
-                    r.source_list.Add("6");
                     r.source_list.Add("8");
                     r.source_list.Add("10");
                     r.source_list.Add("12");
                     r.source_list.Add("14");
                     r.source_list.Add("16");
-                    r.source_list.Add("18");
 
-                    r.selected = "4";
+                    r.selected = "8";
                     break;
                 case "24 teams 4 divisions 2 conferences":
                     r.source_list.Add("4");
-                    r.source_list.Add("6");
                     r.source_list.Add("8");
                     r.source_list.Add("10");
                     r.source_list.Add("12");
                     r.source_list.Add("14");
                     r.source_list.Add("16");
-                    r.source_list.Add("18");
-                    r.source_list.Add("20");
-                    r.source_list.Add("22");
 
-                    r.selected = "6";
+                    r.selected = "8";
                     break;
                 case "24 teams 6 divisions 2 conferences":
-                    r.source_list.Add("6");
                     r.source_list.Add("8");
                     r.source_list.Add("10");
                     r.source_list.Add("12");
                     r.source_list.Add("14");
                     r.source_list.Add("16");
-                    r.source_list.Add("18");
-                    r.source_list.Add("20");
-                    r.source_list.Add("22");
 
                     r.selected = "8";
                     break;
                 case "28 teams 4 divisions 2 conferences":
                     r.source_list.Add("4");
-                    r.source_list.Add("6");
                     r.source_list.Add("8");
                     r.source_list.Add("10");
                     r.source_list.Add("12");
                     r.source_list.Add("14");
                     r.source_list.Add("16");
-                    r.source_list.Add("18");
-                    r.source_list.Add("20");
-                    r.source_list.Add("22");
-                    r.source_list.Add("24");
-                    r.source_list.Add("26");
 
-                    r.selected = "6";
+                    r.selected = "8";
                     break;
                 case "30 teams 6 divisions 2 conferences":
-                    r.source_list.Add("6");
                     r.source_list.Add("8");
                     r.source_list.Add("10");
                     r.source_list.Add("12");
                     r.source_list.Add("14");
                     r.source_list.Add("16");
-                    r.source_list.Add("18");
-                    r.source_list.Add("20");
-                    r.source_list.Add("22");
-                    r.source_list.Add("24");
-                    r.source_list.Add("26");
-                    r.source_list.Add("28");
 
                     r.selected = "10";
                     break;
@@ -510,34 +455,17 @@ namespace SpectatorFootball.League
                     r.source_list.Add("12");
                     r.source_list.Add("14");
                     r.source_list.Add("16");
-                    r.source_list.Add("18");
-                    r.source_list.Add("20");
-                    r.source_list.Add("22");
-                    r.source_list.Add("24");
-                    r.source_list.Add("26");
-                    r.source_list.Add("28");
-                    r.source_list.Add("30");
 
-                    r.selected = "14";
+                    r.selected = "10";
                     break;
                 case "36 teams 6 divisions 2 conferences":
-                    r.source_list.Add("6");
                     r.source_list.Add("8");
                     r.source_list.Add("10");
                     r.source_list.Add("12");
                     r.source_list.Add("14");
                     r.source_list.Add("16");
-                    r.source_list.Add("18");
-                    r.source_list.Add("20");
-                    r.source_list.Add("22");
-                    r.source_list.Add("24");
-                    r.source_list.Add("26");
-                    r.source_list.Add("28");
-                    r.source_list.Add("30");
-                    r.source_list.Add("32");
-                    r.source_list.Add("34");
 
-                    r.selected = "14";
+                    r.selected = "10";
                     break;
                 case "40 teams 8 divisions 2 conferences":
                     r.source_list.Add("8");
@@ -545,39 +473,16 @@ namespace SpectatorFootball.League
                     r.source_list.Add("12");
                     r.source_list.Add("14");
                     r.source_list.Add("16");
-                    r.source_list.Add("18");
-                    r.source_list.Add("20");
-                    r.source_list.Add("22");
-                    r.source_list.Add("24");
-                    r.source_list.Add("26");
-                    r.source_list.Add("28");
-                    r.source_list.Add("30");
-                    r.source_list.Add("32");
-                    r.source_list.Add("34");
-                    r.source_list.Add("36");
-                    r.source_list.Add("38");
 
                     r.selected = "14";
                     break;
                 case "40 teams 4 divisions 2 conferences":
                     r.source_list.Add("4");
-                    r.source_list.Add("6");
                     r.source_list.Add("8");
                     r.source_list.Add("10");
                     r.source_list.Add("12");
                     r.source_list.Add("14");
                     r.source_list.Add("16");
-                    r.source_list.Add("18");
-                    r.source_list.Add("20");
-                    r.source_list.Add("22");
-                    r.source_list.Add("24");
-                    r.source_list.Add("26");
-                    r.source_list.Add("28");
-                    r.source_list.Add("30");
-                    r.source_list.Add("32");
-                    r.source_list.Add("34");
-                    r.source_list.Add("36");
-                    r.source_list.Add("38");
 
                     r.selected = "14";
                     break;

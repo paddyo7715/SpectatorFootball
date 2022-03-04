@@ -32,7 +32,7 @@
                 <Button Name="help_btn" Focusable="false" Style="{StaticResource appHelpBTN}" Click="help_btn_Click">Help ?</Button>
             </StackPanel>
         </Grid>
-        <StackPanel Orientation="Vertical">
+        <StackPanel Orientation="Vertical" Width="1000">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="top" >
                 <Button Name="NextPick" Style="{StaticResource appHelpBTN}" Click="NextPick_Click">Make Next Pick</Button>
                 <Button Name="simRound" Style="{StaticResource appHelpBTN}" Click="simRound_Click">Sim Round</Button>

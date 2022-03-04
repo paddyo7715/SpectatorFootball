@@ -29,7 +29,6 @@ namespace SpectatorFootball.WindowsLeague
         private MainWindow pw;
 
         public event EventHandler Show_Standings;
-        public event EventHandler Set_TopMenu;
 
         public List<WeeklyScheduleRec> Champ_Game_List { get; set; }
 

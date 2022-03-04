@@ -10,29 +10,52 @@ namespace SpectatorFootball.Playoffs
 {
     class Playoff_Helper
     {
-        public static int NumPlayoffWeeks(long playoffTeams)
+        public static List<int> PlayoffGamesPerWeek(long num_playoffTeams)
         {
-            int r = 0;
+            List<int> r = new List<int>();
 
-            if (playoffTeams < 2 || playoffTeams > app_Constants.MAX_PLAYOFF_TEAMS)
-                throw new Exception("Invalid Number of Playoff Teams");
-
-            if (playoffTeams == 2)
-                r = 1;
-            else if (playoffTeams <= 4)
-                r = 2;
-            else if (playoffTeams <= 8)
-                r = 3;
-            else if (playoffTeams <= 16)
-                r = 4;
-            else if (playoffTeams <= 32)
-                r = 5;
-            else if (playoffTeams <= 64)
-                r = 6;
+            switch (num_playoffTeams)
+            {
+                case 2:
+                    r.Add(1);
+                    break;
+                case 4:
+                    r.Add(2);
+                    r.Add(1);
+                    break;
+                case 8:
+                    r.Add(4);
+                    r.Add(2);
+                    r.Add(1);
+                    break;
+                case 10:
+                    r.Add(1);
+                    r.Add(4);
+                    r.Add(2);
+                    r.Add(1);
+                    break;
+                case 12:
+                    r.Add(4);
+                    r.Add(4);
+                    r.Add(2);
+                    r.Add(1);
+                    break;
+                case 14:
+                    r.Add(6);
+                    r.Add(4);
+                    r.Add(2);
+                    r.Add(1);
+                    break;
+                case 16:
+                    r.Add(8);
+                    r.Add(4);
+                    r.Add(2);
+                    r.Add(1);
+                    break;
+            }
 
             return r;
         }
-
         public static string GetPlayoffGameName(long Week, long conferences, int Num_Full_Playoff_Weeks, string champGame)
         {
             string r = null;
@@ -188,7 +211,7 @@ namespace SpectatorFootball.Playoffs
                 for (int cn = 1; cn <= num_confs; cn++)
                 {
                     List<Playoff_Teams_by_Season> Active_Teams_conf = Playoff_Teams.Where(x => x.Eliminated == 0 && x.Conf_ID == cn).OrderByDescending(x => x.Rank).ToList();
-                    bool even_num_teams = teams_still_active % 2 == 0 ? true : false;
+                    bool even_num_teams = Active_Teams_conf.Count() % 2 == 0 ? true : false;
                     string sWeek = null;
                     string ht, at;
 
@@ -199,13 +222,28 @@ namespace SpectatorFootball.Playoffs
                     else
                         sWeek = (lastWeekVal + 1).ToString();
 
-                    int start_team = even_num_teams ? 0 : 1;
-                    for (int fac = start_team; fac < Active_Teams_conf.Count(); fac++)
+                    if (Active_Teams_conf.Count() == 5)
                     {
-                        ht = Active_Teams_conf[fac].Franchise_ID.ToString();
-                        at = Active_Teams_conf[Active_Teams_conf.Count() - 1 - fac].Franchise_ID.ToString();
+                        ht = Active_Teams_conf[4].Franchise_ID.ToString();
+                        at = Active_Teams_conf[5].Franchise_ID.ToString();
                         string s = sWeek + "," + at + "," + ht;
                         r.Add(s);
+                    }
+                    else
+                    {
+                        int start_team = 0;
+                        if (Active_Teams_conf.Count() == 6)
+                            start_team = 2;
+                        else
+                            start_team = even_num_teams ? 0 : 1;
+
+                        for (int fac = start_team; fac < Active_Teams_conf.Count(); fac++)
+                        {
+                            ht = Active_Teams_conf[fac].Franchise_ID.ToString();
+                            at = Active_Teams_conf[Active_Teams_conf.Count() - 1 - fac].Franchise_ID.ToString();
+                            string s = sWeek + "," + at + "," + ht;
+                            r.Add(s);
+                        }
                     }
                     
                 }
