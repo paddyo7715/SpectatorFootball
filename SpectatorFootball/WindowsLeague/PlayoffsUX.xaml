@@ -24,8 +24,8 @@
             <Button Name="help_btn" Focusable="false" Style="{StaticResource appHelpBTN}" Click="help_btn_Click">Help ?</Button>
         </StackPanel>
     </Grid>
-        <StackPanel Height="550" HorizontalAlignment="Center" VerticalAlignment="top">
-            <Canvas Name="cnvPlayoffBrackets" Width="1000" Height="500" Background="Gray"></Canvas>
+        <StackPanel Height="700" HorizontalAlignment="Center" VerticalAlignment="top">
+            <Canvas Name="cnvPlayoffBrackets" Width="1200" Height="650" Background="Gray"></Canvas>
         </StackPanel>
     </DockPanel>
 </UserControl>

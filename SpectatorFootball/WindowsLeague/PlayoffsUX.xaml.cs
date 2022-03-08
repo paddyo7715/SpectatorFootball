@@ -24,10 +24,14 @@ namespace SpectatorFootball.WindowsLeague
         private MainWindow pw;
         private List<int> WeeklyGameSlots = null;
         private long num_playoffteams;
-        private const double GAMESLOT_LENGTH = 170;
-        private const double GAMESLOT_HEIGHT = 60;
-        private const double HORIZONTAL_ADJ = 30.0;
+        private const double GAMESLOT_LENGTH = 150;
+        private const double GAMESLOT_HEIGHT = 80;
+        private const double HORIZONTAL_ADJ = 80.0;
         private const double VERTICAL_ADJ = 30;
+        private const double CHAMP_GAME_TOP = 75;
+        private const double HELMET_WIDTH_MULT = 0.266;
+        private const double CITY_WIDTH_MULT = 0.533;
+        private const double SCORE_WIDTH_NULT = 0.20;
         private double Canvas_width;
         private double Canvas_height;
 
@@ -53,40 +57,56 @@ namespace SpectatorFootball.WindowsLeague
         private void setGameSlots()
         {
             int weeks = WeeklyGameSlots.Count;
+            int weeksLeft = weeks;
             double h_value = 0.0;
-            long gslot_id = 1;
+            long gslot_id = 0;
+
+            Canvas_height = cnvPlayoffBrackets.Height;
+            Canvas_width = cnvPlayoffBrackets.Width;
+
+            double gs_Left;
+            //set the horizontal space inbetween weekly games on left and right
+            double temp = (GAMESLOT_LENGTH * weeksLeft) + (HORIZONTAL_ADJ * (weeksLeft));
+            gs_Left = (Canvas_width - temp) / 2;
 
             foreach (int i in WeeklyGameSlots)
             {
-                double gs_Left;
+
                 int num_games = i;
-                double week_game_height = (GAMESLOT_HEIGHT * num_games) + ((VERTICAL_ADJ) * (num_games-1)) ;
+
+                double week_game_height = (GAMESLOT_HEIGHT * (num_games/2)) + ((VERTICAL_ADJ) * (num_games-1)) ;
                 double gs_running_top = (Canvas_height - week_game_height) / 2;
 
-                double temp = (GAMESLOT_LENGTH * weeks) - HORIZONTAL_ADJ;
-                gs_Left = (Canvas_width - temp) / 2;
-
-                for (int j = 1; j < num_games; j++)
+                for (int j = 1; j <= num_games / 2; j++)
                 {
 
                     string gs_name = gs_name = "gw" + i.ToString() + "_" + j.ToString();
 
-                    StackPanel sp = new StackPanel();
-                    sp.Name = "gsSlot_" + gslot_id.ToString();
-                    sp.Background = Brushes.White;
-                    sp.Height = GAMESLOT_HEIGHT;
-                    sp.Width = GAMESLOT_LENGTH;
-
-                    cnvPlayoffBrackets.Children.Add(sp);
-                    Canvas.SetTop(sp,gs_running_top);
-                    Canvas.SetLeft(sp, gs_Left);
+                    gslot_id++;
+                    CreateGameSlot(gslot_id, gs_running_top, gs_Left - GAMESLOT_LENGTH);
 
                     gslot_id++;
+                    CreateGameSlot(gslot_id, gs_running_top, Canvas_width - gs_Left);
+
                     gs_running_top += GAMESLOT_HEIGHT + VERTICAL_ADJ;
                 }
 
+                weeksLeft--;
                 gs_Left += GAMESLOT_LENGTH + HORIZONTAL_ADJ;
             }
+
+            //The championship game and label
+            gslot_id++;
+
+            Label lblChamp = new Label();
+            lblChamp.Width = GAMESLOT_LENGTH;
+            lblChamp.HorizontalContentAlignment = HorizontalAlignment.Center;
+            lblChamp.Content = pw.Loaded_League.season.League_Structure_by_Season[0].Championship_Game_Name + " " + pw.Loaded_League.Current_Year;
+            cnvPlayoffBrackets.Children.Add(lblChamp);
+            Canvas.SetTop(lblChamp, CHAMP_GAME_TOP - 30);
+            Canvas.SetLeft(lblChamp, (Canvas_width - GAMESLOT_LENGTH) / 2);
+
+            CreateGameSlot(gslot_id, CHAMP_GAME_TOP, (Canvas_width - GAMESLOT_LENGTH) / 2);
         }
         private void help_btn_Click(object sender, RoutedEventArgs e)
         {
@@ -96,6 +116,71 @@ namespace SpectatorFootball.WindowsLeague
         {
             if (Mouse.OverrideCursor == Cursors.Wait) return;
             Show_Standings?.Invoke(this, new EventArgs());
+        }
+
+        private void CreateGameSlot(long gslot_id, double pTop, double pLeft)
+        {
+            StackPanel AwaySP = new StackPanel();
+            AwaySP.Height = GAMESLOT_HEIGHT / 2;
+            AwaySP.Width = GAMESLOT_LENGTH;
+            AwaySP.Orientation = Orientation.Horizontal;
+
+            var Away_helmet_img = new Image();
+            Away_helmet_img.Width = GAMESLOT_LENGTH * HELMET_WIDTH_MULT;
+            Away_helmet_img.Height = GAMESLOT_HEIGHT / 2;
+
+            Label AwayCity = new Label();
+            AwayCity.HorizontalContentAlignment = HorizontalAlignment.Left;
+            AwayCity.Height = GAMESLOT_HEIGHT / 2;
+            AwayCity.Width = GAMESLOT_LENGTH * CITY_WIDTH_MULT;
+
+            Label AwayScore = new Label();
+            AwayScore.Content = "";
+            AwayScore.HorizontalContentAlignment = HorizontalAlignment.Right;
+            AwayScore.Height = GAMESLOT_HEIGHT / 2;
+            AwayScore.Width = GAMESLOT_LENGTH * SCORE_WIDTH_NULT;
+
+            AwaySP.Children.Add(Away_helmet_img);
+            AwaySP.Children.Add(AwayCity);
+            AwaySP.Children.Add(AwayScore);
+
+            StackPanel HomeSP = new StackPanel();
+            HomeSP.Height = GAMESLOT_HEIGHT / 2;
+            HomeSP.Width = GAMESLOT_LENGTH;
+            HomeSP.Orientation = Orientation.Horizontal;
+
+            var Home_helmet_img = new Image();
+            Home_helmet_img.Width = GAMESLOT_LENGTH * HELMET_WIDTH_MULT;
+            Home_helmet_img.Height = GAMESLOT_HEIGHT / 2;
+
+            Label HomeCity = new Label();
+            HomeCity.HorizontalContentAlignment = HorizontalAlignment.Left;
+            HomeCity.Height = GAMESLOT_HEIGHT / 2;
+            HomeCity.Width = GAMESLOT_LENGTH * CITY_WIDTH_MULT;
+
+            Label HomeScore = new Label();
+            HomeScore.Content = "";
+            HomeScore.HorizontalContentAlignment = HorizontalAlignment.Right;
+            HomeScore.Height = GAMESLOT_HEIGHT / 2;
+            HomeScore.Width = GAMESLOT_LENGTH * SCORE_WIDTH_NULT;
+
+            HomeSP.Children.Add(Home_helmet_img);
+            HomeSP.Children.Add(HomeCity);
+            HomeSP.Children.Add(HomeScore);
+
+            StackPanel sp = new StackPanel();
+            sp.Orientation = Orientation.Vertical;
+            sp.Name = "gsSlot_" + gslot_id.ToString();
+            sp.Background = Brushes.White;
+            sp.Height = GAMESLOT_HEIGHT;
+            sp.Width = GAMESLOT_LENGTH;
+
+            sp.Children.Add(AwaySP);
+            sp.Children.Add(HomeSP);
+
+            cnvPlayoffBrackets.Children.Add(sp);
+            Canvas.SetTop(sp, pTop);
+            Canvas.SetLeft(sp, pLeft);
         }
     }
 
