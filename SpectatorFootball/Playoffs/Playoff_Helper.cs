@@ -132,7 +132,7 @@ namespace SpectatorFootball.Playoffs
             {
                 r.Add(new Playoff_Teams_by_Season()
                 {
-                    Conf_ID = t.Conf_Num,
+                    conf_side_id = t.Conf_Num,
                     Franchise_ID = t.Franchise_ID,
                     Rank = added_playoff_teams + 1,
                     Eliminated = 0,
@@ -149,7 +149,7 @@ namespace SpectatorFootball.Playoffs
                 {
                     r.Add(new Playoff_Teams_by_Season()
                     {
-                        Conf_ID = t.Conf_Num,
+                        conf_side_id = t.Conf_Num,
                         Franchise_ID = t.Franchise_ID,
                         Rank = added_playoff_teams + 1,
                         Eliminated = 0,
@@ -176,7 +176,7 @@ namespace SpectatorFootball.Playoffs
             List<Playoff_Teams_by_Season> Acive_Teams = null;
 
             //get number of conferences
-            num_confs = Playoff_Teams.Select(x => x.Conf_ID).Distinct().Count();
+            num_confs = Playoff_Teams.Select(x => x.conf_side_id).Distinct().Count();
 
             //Get number of div per conference
             divs_per_conf = num_divs / num_confs;
@@ -210,7 +210,7 @@ namespace SpectatorFootball.Playoffs
                 //do the scheduing for each conference
                 for (int cn = 1; cn <= num_confs; cn++)
                 {
-                    List<Playoff_Teams_by_Season> Active_Teams_conf = Playoff_Teams.Where(x => x.Eliminated == 0 && x.Conf_ID == cn).OrderByDescending(x => x.Rank).ToList();
+                    List<Playoff_Teams_by_Season> Active_Teams_conf = Playoff_Teams.Where(x => x.Eliminated == 0 && x.conf_side_id == cn).OrderByDescending(x => x.Rank).ToList();
                     bool even_num_teams = Active_Teams_conf.Count() % 2 == 0 ? true : false;
                     string sWeek = null;
                     string ht, at;

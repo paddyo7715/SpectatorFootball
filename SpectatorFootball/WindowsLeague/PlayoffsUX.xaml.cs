@@ -1,4 +1,5 @@
 ﻿using SpectatorFootball.Playoffs;
+using SpectatorFootball.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,14 +27,16 @@ namespace SpectatorFootball.WindowsLeague
         private long num_playoffteams;
         private const double GAMESLOT_LENGTH = 150;
         private const double GAMESLOT_HEIGHT = 80;
-        private const double HORIZONTAL_ADJ = 80.0;
-        private const double VERTICAL_ADJ = 30;
+        private double HORIZONTAL_ADJ = 50.0;
+        private double VERTICAL_ADJ = 30;
         private const double CHAMP_GAME_TOP = 75;
         private const double HELMET_WIDTH_MULT = 0.266;
         private const double CITY_WIDTH_MULT = 0.533;
         private const double SCORE_WIDTH_NULT = 0.20;
         private double Canvas_width;
         private double Canvas_height;
+        private double width_adjustment = 0.0;
+        List<Playoff_Bracket_rec> BracketsData = null;
 
         public event EventHandler Show_Standings;
         public PlayoffsUX(MainWindow pw)
@@ -46,10 +49,17 @@ namespace SpectatorFootball.WindowsLeague
 
             Canvas_width = cnvPlayoffBrackets.Width;
 
-
             num_playoffteams = pw.Loaded_League.season.League_Structure_by_Season[0].Num_Playoff_Teams;
 
             WeeklyGameSlots = Playoff_Helper.PlayoffGamesPerWeek(num_playoffteams);
+
+            if (WeeklyGameSlots.Count > 3)
+            {
+                HORIZONTAL_ADJ = 30.0;
+                width_adjustment = 100.0;
+            }
+            else
+                HORIZONTAL_ADJ = 80.0;
 
             setGameSlots();
         }
@@ -60,13 +70,15 @@ namespace SpectatorFootball.WindowsLeague
             int weeksLeft = weeks;
             double h_value = 0.0;
             long gslot_id = 0;
+            Playoff_Services ploff_services = new Playoff_Services();
+            BracketsData = ploff_services.getPlayoffGames(pw.Loaded_League);
 
             Canvas_height = cnvPlayoffBrackets.Height;
             Canvas_width = cnvPlayoffBrackets.Width;
 
             double gs_Left;
             //set the horizontal space inbetween weekly games on left and right
-            double temp = (GAMESLOT_LENGTH * weeksLeft) + (HORIZONTAL_ADJ * (weeksLeft));
+            double temp = (GAMESLOT_LENGTH * weeksLeft) + (HORIZONTAL_ADJ * (weeksLeft)) + width_adjustment;
             gs_Left = (Canvas_width - temp) / 2;
 
             foreach (int i in WeeklyGameSlots)
@@ -120,6 +132,8 @@ namespace SpectatorFootball.WindowsLeague
 
         private void CreateGameSlot(long gslot_id, double pTop, double pLeft)
         {
+            Boolean bGameAvailable = gslot_id <= BracketsData.Count ? true : false;
+
             StackPanel AwaySP = new StackPanel();
             AwaySP.Height = GAMESLOT_HEIGHT / 2;
             AwaySP.Width = GAMESLOT_LENGTH;
@@ -128,17 +142,23 @@ namespace SpectatorFootball.WindowsLeague
             var Away_helmet_img = new Image();
             Away_helmet_img.Width = GAMESLOT_LENGTH * HELMET_WIDTH_MULT;
             Away_helmet_img.Height = GAMESLOT_HEIGHT / 2;
+            if (bGameAvailable)
+                Away_helmet_img.Source = BracketsData[(int)gslot_id - 1].Away_HelmetImage;
 
             Label AwayCity = new Label();
             AwayCity.HorizontalContentAlignment = HorizontalAlignment.Left;
             AwayCity.Height = GAMESLOT_HEIGHT / 2;
             AwayCity.Width = GAMESLOT_LENGTH * CITY_WIDTH_MULT;
+            if (bGameAvailable)
+                AwayCity.Content = BracketsData[(int)gslot_id - 1].Away_city;
 
-            Label AwayScore = new Label();
+                Label AwayScore = new Label();
             AwayScore.Content = "";
             AwayScore.HorizontalContentAlignment = HorizontalAlignment.Right;
             AwayScore.Height = GAMESLOT_HEIGHT / 2;
             AwayScore.Width = GAMESLOT_LENGTH * SCORE_WIDTH_NULT;
+            if (bGameAvailable)
+                AwayScore.Content = BracketsData[(int)gslot_id - 1].Away_Score;
 
             AwaySP.Children.Add(Away_helmet_img);
             AwaySP.Children.Add(AwayCity);
@@ -152,17 +172,23 @@ namespace SpectatorFootball.WindowsLeague
             var Home_helmet_img = new Image();
             Home_helmet_img.Width = GAMESLOT_LENGTH * HELMET_WIDTH_MULT;
             Home_helmet_img.Height = GAMESLOT_HEIGHT / 2;
+            if (bGameAvailable)
+                Home_helmet_img.Source = BracketsData[(int)gslot_id - 1].Home_HelmetImage;
 
             Label HomeCity = new Label();
             HomeCity.HorizontalContentAlignment = HorizontalAlignment.Left;
             HomeCity.Height = GAMESLOT_HEIGHT / 2;
             HomeCity.Width = GAMESLOT_LENGTH * CITY_WIDTH_MULT;
+            if (bGameAvailable)
+                HomeCity.Content = BracketsData[(int)gslot_id - 1].Home_city;
 
             Label HomeScore = new Label();
             HomeScore.Content = "";
             HomeScore.HorizontalContentAlignment = HorizontalAlignment.Right;
             HomeScore.Height = GAMESLOT_HEIGHT / 2;
             HomeScore.Width = GAMESLOT_LENGTH * SCORE_WIDTH_NULT;
+            if (bGameAvailable)
+                HomeScore.Content = BracketsData[(int)gslot_id - 1].Home_Score;
 
             HomeSP.Children.Add(Home_helmet_img);
             HomeSP.Children.Add(HomeCity);
@@ -178,11 +204,24 @@ namespace SpectatorFootball.WindowsLeague
             sp.Children.Add(AwaySP);
             sp.Children.Add(HomeSP);
 
+            if (bGameAvailable)
+            {
+                sp.MouseDown += bracket_mouseDown;
+                BracketsData[(int)gslot_id - 1].Panel_name = sp.Name;
+            }
+
             cnvPlayoffBrackets.Children.Add(sp);
             Canvas.SetTop(sp, pTop);
             Canvas.SetLeft(sp, pLeft);
         }
-    }
+
+        private void bracket_mouseDown(object sender, RoutedEventArgs e)
+        {
+            StackPanel sp = (StackPanel)sender;
+            long game_id = BracketsData.Where(x => x.Panel_name == sp.Name).Select(x => x.game_id).First();
+ 
+        }
+        }
 
 
 }

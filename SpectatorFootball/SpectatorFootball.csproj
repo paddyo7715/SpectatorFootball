@@ -368,12 +368,14 @@
     <Compile Include="Models\WeeklyScheduleRec.cs" />
     <Compile Include="Player\Player_Card_Data.cs" />
     <Compile Include="Player\Team_Player_Accum_Stats_by_year.cs" />
+    <Compile Include="Playoffs\Playoff_Bracket_rec.cs" />
     <Compile Include="Playoffs\Playoff_Helper.cs" />
     <Compile Include="Services\FreeAgency_Services.cs" />
     <Compile Include="Draft\Draft_Need.cs" />
     <Compile Include="Services\Game_Services.cs" />
     <Compile Include="Services\Injuries_Services.cs" />
     <Compile Include="Services\Player_Services.cs" />
+    <Compile Include="Services\Playoff_Services.cs" />
     <Compile Include="Services\Schedule_Services.cs" />
     <Compile Include="Services\TrainingCamp_Services.cs" />
     <Compile Include="Team\Team_History_Row.cs" />

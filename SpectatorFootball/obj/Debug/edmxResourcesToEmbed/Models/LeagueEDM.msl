@@ -562,7 +562,7 @@
           <ScalarProperty Name="Season_ID" ColumnName="Season_ID" />
           <ScalarProperty Name="Rank" ColumnName="Rank" />
           <ScalarProperty Name="Eliminated" ColumnName="Eliminated" />
-          <ScalarProperty Name="Conf_ID" ColumnName="Conf_ID" />
+          <ScalarProperty Name="conf_side_id" ColumnName="conf_side_id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

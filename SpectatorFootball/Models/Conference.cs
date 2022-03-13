@@ -14,19 +14,11 @@ namespace SpectatorFootball.Models
     
     public partial class Conference
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Conference()
-        {
-            this.Playoff_Teams_by_Season = new HashSet<Playoff_Teams_by_Season>();
-        }
-    
         public long ID { get; set; }
         public long Ordinal { get; set; }
         public long Season_ID { get; set; }
         public string Conf_Name { get; set; }
     
         public virtual Season Season { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Playoff_Teams_by_Season> Playoff_Teams_by_Season { get; set; }
     }
 }

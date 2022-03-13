@@ -41,16 +41,16 @@ namespace SpectatorFootball
         public const int DRAFT_QB_CHOICE_PICK_DEPTH = 10;
         public const int DRAFT_OTHER_CHOICE_PICK_DEPTH = 5;
         public const int DRAFT_PERCENT_CRAPPIFY = 75;
-
+        
         // Players On a team - 53 total
         public const int QB_PER_TEAM = 3;
         public const int RB_PER_TEAM = 4;
-        public const int WR_PER_TEAM = 6;
+        public const int WR_PER_TEAM = 5;
         public const int TE_PER_TEAM = 3;
-        public const int OL_PER_TEAM = 10;
+        public const int OL_PER_TEAM = 8;
 
-        public const int DL_PER_TEAM = 9;
-        public const int LB_PER_TEAM = 8;
+        public const int DL_PER_TEAM = 8;
+        public const int LB_PER_TEAM = 7;
         public const int DB_PER_TEAM = 8;
 
         public const int K_PER_TEAM = 1;
@@ -300,7 +300,7 @@ namespace SpectatorFootball
         // Teams
         public const string EMPTY_TEAM_SLOT = "Empty Team Slot";
         public const int TRAINING_CAMP_TEAM_PLAYER_COUNT = 86;
-        public const int REGULAR_SEASON_TEAM_PLAYER_COUNT = 53;
+        public const int REGULAR_SEASON_TEAM_PLAYER_COUNT = 48;
 
         public const int MINCOLORDIFF = 80;
 
