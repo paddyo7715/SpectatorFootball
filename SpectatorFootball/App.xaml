@@ -506,5 +506,37 @@
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="Foreground" Value="Blue"/>
         </Style>
+        <Style TargetType="StackPanel" x:Key="GameScoreBoard">
+            <Setter Property="Background" Value="Gray"/>
+        </Style>
+        <!-- Close Game Window Button -->
+        <Style TargetType="Button" x:Key="CloseGame">
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="FontFamily" Value="Verdana"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="DarkGreen"/>
+            <Setter Property="Background" Value="LightGray"/>
+        </Style>
+        <Style TargetType="Label" x:Key="GameBarSpeed">
+            <Setter Property="FontFamily" Value="Verdana"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="normal"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Background" Value="LightGray"/>
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="BorderBrush" Value="Black" />
+        </Style>
+        <Style TargetType="Label" x:Key="GameBarFonts">
+            <Setter Property="FontFamily" Value="Verdana"/>
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="FontWeight" Value="normal"/>
+        </Style>
+        <Style TargetType="Label" x:Key="GameBar2Fonts">
+            <Setter Property="FontFamily" Value="Verdana"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="normal"/>
+        </Style>
     </Application.Resources>
 </Application>

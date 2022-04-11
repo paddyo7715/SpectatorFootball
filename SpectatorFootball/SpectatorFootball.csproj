@@ -180,6 +180,7 @@
     <Compile Include="Draft\Draft_Pos_Importance.cs" />
     <Compile Include="Enum\Stat_Type.cs" />
     <Compile Include="Free_Agency\FreeAgency_Helper.cs" />
+    <Compile Include="Game\Game.cs" />
     <Compile Include="Free_Agency\Pos_and_Count.cs" />
     <Compile Include="Game\Game_Helper.cs" />
     <Compile Include="Help_Forms\Help_Champions.xaml.cs">

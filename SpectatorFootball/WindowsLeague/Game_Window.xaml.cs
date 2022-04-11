@@ -4,6 +4,7 @@ using SpectatorFootball.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -14,6 +15,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Timers;
+using System.Windows.Threading;
 
 namespace SpectatorFootball.WindowsLeague
 {
@@ -33,9 +36,14 @@ namespace SpectatorFootball.WindowsLeague
         private List<Player_and_Ratings> Away_Players = null;
         private List<Player_and_Ratings> Home_Players = null;
 
+        DispatcherTimer dispatcherTimer = new DispatcherTimer();
+
         public Game_Window(MainWindow pw, WeeklyScheduleRec sched_rec)
         {
             InitializeComponent();
+
+            Gamepnl.Visibility = Visibility.Collapsed;
+
             Game_Services gs = new Game_Services();
 
             try
@@ -63,6 +71,14 @@ namespace SpectatorFootball.WindowsLeague
                 Away_Players = gs.GetTeamPlayersForGame(at.Franchise_ID, sched_rec.iWeek, pw.Loaded_League);
                 Home_Players = gs.GetTeamPlayersForGame(ht.Franchise_ID, sched_rec.iWeek, pw.Loaded_League);
 
+                dispatcherTimer.Tick += CloseGameInfo;
+                dispatcherTimer.Interval = new TimeSpan(0, 0, 5);
+                dispatcherTimer.Start();
+
+                //use a wpf timer and after 9 seconds make the panel invisible
+
+                //                Game_intro_pnl.Visibility = Visibility.Collapsed;
+
                 Game g = new Game();
 
                 //End of game not sure where this should go
@@ -86,9 +102,28 @@ namespace SpectatorFootball.WindowsLeague
 
         }
 
-        private void hlp_nl_close_Click_1(object sender, RoutedEventArgs e)
+        private void Game_close(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void CloseGameInfo(object sender, EventArgs e)
+        {
+            dispatcherTimer.Stop();
+            Game_intro_pnl.Visibility = Visibility.Collapsed;
+            Gamepnl.Visibility = Visibility.Visible;
+        }
+        private void btnSpeedSlower_click(object sender, EventArgs e)
+        {
+
+        }
+        private void btnSpeedFaster_click(object sender, EventArgs e)
+        {
+
+        }
+        private void btnPauseResume_click(object sender, EventArgs e)
+        {
+
         }
     }
 }

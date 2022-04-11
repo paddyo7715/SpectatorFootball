@@ -5,12 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SpectatorFootball.WindowsLeague"
         mc:Ignorable="d"
-        Height="710" Width="1220" WindowStyle="none" ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True">
+        Height="780" Width="1220" WindowStyle="none" ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True">
     <Border Style="{StaticResource popupBD}" BorderThickness="5">
-        <StackPanel Name="Game_intro_pnl" Style="{StaticResource popupSP}" Height="700" Width="1210" Orientation="Vertical" >
+        <StackPanel Orientation="Vertical">
+        <StackPanel Name="Game_intro_pnl" Style="{StaticResource popupSP}" Height="770" Width="1210" Orientation="Vertical" >
             <StackPanel.Background>
                 <ImageBrush ImageSource="..\Images\Game_Intro_Background.jpg" />
             </StackPanel.Background>
+            <Label Style="{StaticResource GameIntro_LeagueName}" Height="50" Width="1210" />
             <Label Name="lblLeague" Style="{StaticResource GameIntro_LeagueName}" Height="60" Width="1210" >
                 <Label.Effect>
                     <DropShadowEffect Color="White" Direction="320" ShadowDepth="3" Opacity="1" />
@@ -81,7 +83,49 @@
                     <DropShadowEffect Color="White" Direction="320" ShadowDepth="3" Opacity="1" />
                 </Label.Effect>
             </Label>
-            <Button Name="game_close" Style="{StaticResource appSubmitStyle}" Click="hlp_nl_close_Click_1" >Close</Button>
+            </StackPanel>
+            <StackPanel Name="Gamepnl" Visibility="Collapsed" Orientation="Vertical">
+                <Grid Height="60" Background="DarkOliveGreen">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="120" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="110" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                        <Button Name="btnSpeedSlower" Click="btnSpeedSlower_click" Height="40" Style="{StaticResource CloseGame}"  Margin="5,0,0,0">-</Button>
+                        <Label Name="GameSpeed" Width="80" Height="40" Style="{StaticResource GameBarSpeed}" />
+                        <Button Name="btnSpeedFaster" Height="40" Click="btnSpeedFaster_click" Style="{StaticResource CloseGame}">+</Button>
+                        <Label Width="8" Height="40"></Label>
+                        <Button Name="btnPauseResume" Height="40" Click="btnPauseResume_click" Style="{StaticResource CloseGame}">Pause</Button>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal">
+                                <Label Name="lblAwayTeam" Background="White" Height="40" Width="310" HorizontalContentAlignment="Right" Style="{StaticResource GameBarFonts}">Bullies</Label>
+                                <Label Name="lblAwayScore" Height="40" Width="50" Style="{StaticResource GameBarFonts}" Background="DarkOliveGreen">14</Label>
+                                <Label Width="10" />
+                                <Label Name="lblClock" Height="40" Width="85" Style="{StaticResource GameBarFonts}" BorderBrush="Black" BorderThickness="1">11:23</Label>
+                                <Label Name="lblQTR" Height="40" Width="120" Style="{StaticResource GameBarFonts}">2nd QTR</Label>
+                                <Label Width="10" />
+                                <Label Name="lblHomeScore" Height="40" Width="50" Style="{StaticResource GameBarFonts}" Background="DarkOliveGreen">17</Label>
+                                <Label Name="lblHomeTeam"  Background="White" Height="40" Width="310" HorizontalContentAlignment="Left" Style="{StaticResource GameBarFonts}">Legends</Label>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Name="lblAwayTimeouts" Height="40" Width="310" HorizontalContentAlignment="Right" Style="{StaticResource GameBar2Fonts}">Timeouts: 3</Label>
+                                <Label Height="20" Width="50" /> 
+                                <Label Width="10" />
+                                <Label Name="lblDown" Height="40" Width="205" HorizontalContentAlignment="Center" Style="{StaticResource GameBar2Fonts}">1st and 10</Label>
+                                <Label Width="10" />
+                                <Label Height="20" Width="50" />
+                                <Label Name="lblHomeTimeouts" Height="40" Width="310" HorizontalContentAlignment="left" Style="{StaticResource GameBar2Fonts}">Timeouts: 3</Label>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2" Orientation="Horizontal" >
+                        <Button Name="Game_Close" Click="Game_close" Height="40" Width="110" Margin="0,0,5,0" Style="{StaticResource CloseGame}">Exit Game</Button>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
         </StackPanel>
     </Border>
 
