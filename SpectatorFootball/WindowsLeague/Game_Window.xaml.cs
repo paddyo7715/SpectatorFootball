@@ -36,7 +36,19 @@ namespace SpectatorFootball.WindowsLeague
         private List<Player_and_Ratings> Away_Players = null;
         private List<Player_and_Ratings> Home_Players = null;
 
-        DispatcherTimer dispatcherTimer = new DispatcherTimer();
+        private DispatcherTimer dispatcherTimer = new DispatcherTimer();
+        private DispatcherTimer GameTimer = new DispatcherTimer();
+
+        private string Field_File = "";
+
+        private int Can_Width;
+        private int Can_Height;
+
+        private int back_width = 2480;
+        private int back_height = 1240;
+
+        private int Width_dir = -1;
+        private int Height_dir = -1;
 
         public Game_Window(MainWindow pw, WeeklyScheduleRec sched_rec)
         {
@@ -71,13 +83,12 @@ namespace SpectatorFootball.WindowsLeague
                 Away_Players = gs.GetTeamPlayersForGame(at.Franchise_ID, sched_rec.iWeek, pw.Loaded_League);
                 Home_Players = gs.GetTeamPlayersForGame(ht.Franchise_ID, sched_rec.iWeek, pw.Loaded_League);
 
+                Can_Width = (int) MyCanvas.Width;
+                Can_Height = (int) MyCanvas.Height;
+
                 dispatcherTimer.Tick += CloseGameInfo;
                 dispatcherTimer.Interval = new TimeSpan(0, 0, 5);
                 dispatcherTimer.Start();
-
-                //use a wpf timer and after 9 seconds make the panel invisible
-
-                //                Game_intro_pnl.Visibility = Visibility.Collapsed;
 
                 Game g = new Game();
 
@@ -112,6 +123,39 @@ namespace SpectatorFootball.WindowsLeague
             dispatcherTimer.Stop();
             Game_intro_pnl.Visibility = Visibility.Collapsed;
             Gamepnl.Visibility = Visibility.Visible;
+
+            //set away team
+            lblAwayTeam.Content = at.Nickname;
+            string[] m1 = Uniform.getTeamDispColors(at.Home_jersey_Color,
+                at.Home_Jersey_Number_Color,
+                at.Home_Jersey_Number_Outline_Color,
+                at.Helmet_Color,
+                at.Helmet_Logo_Color,
+                at.Home_Pants_Color);
+
+            lblAwayTeam.Foreground = new SolidColorBrush(CommonUtils.getColorfromHex(m1[1]));
+            lblAwayTeam.Background = new SolidColorBrush(CommonUtils.getColorfromHex(m1[0]));
+
+            lblHomeTeam.Content = ht.Nickname;
+            string[] m2 = Uniform.getTeamDispColors(ht.Home_jersey_Color,
+                ht.Home_Jersey_Number_Color,
+                ht.Home_Jersey_Number_Outline_Color,
+                ht.Helmet_Color,
+                ht.Helmet_Logo_Color,
+                ht.Home_Pants_Color);
+
+            lblHomeTeam.Foreground = new SolidColorBrush(CommonUtils.getColorfromHex(m2[1]));
+            lblHomeTeam.Background = new SolidColorBrush(CommonUtils.getColorfromHex(m2[0]));
+            
+            ImageBrush backgroundField = new ImageBrush();
+            backgroundField.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images/Stadiums/GenericGrass.png"));
+         
+            background.Fill = backgroundField;
+
+            GameTimer.Tick += ShowFrame;
+            GameTimer.Interval = TimeSpan.FromMilliseconds(20);
+            GameTimer.Start();
+
         }
         private void btnSpeedSlower_click(object sender, EventArgs e)
         {
@@ -123,6 +167,29 @@ namespace SpectatorFootball.WindowsLeague
         }
         private void btnPauseResume_click(object sender, EventArgs e)
         {
+
+        }
+
+        private void ShowFrame(object sender, EventArgs e)
+        {
+            int current_left = (int) Canvas.GetLeft(background);
+//            int current_Top = (int)Canvas.GetTop(background);
+
+            if ((current_left + (Can_Width + 60)) <= 0)
+                Width_dir = 1;
+
+            if (current_left >= 0)
+                Width_dir = -1;
+
+//            if ((current_Top + (Can_Height + 60)) <= 0)
+//                Height_dir = 1;
+
+//            if (current_Top >= 0)
+//                Height_dir = -1;
+
+            Canvas.SetLeft(background, current_left + (3 * Width_dir));
+//            Canvas.SetTop(background, current_Top + (3 * Height_dir));
+
 
         }
     }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SpectatorFootball.GameNS
 {
-    class Game_Helper
+    public class Game_Helper
     {
         public static string getTimestringFromSeconds(long? sec)
         {

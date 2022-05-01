@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SpectatorFootball.WindowsLeague"
         mc:Ignorable="d"
-        Height="780" Width="1220" WindowStyle="none" ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True">
-    <Border Style="{StaticResource popupBD}" BorderThickness="5">
+        Height="780" Width="1220" WindowStyle="ToolWindow"  ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True">
+    <!--     <Border Style="{StaticResource popupBD}" BorderThickness="5"> -->
         <StackPanel Orientation="Vertical">
         <StackPanel Name="Game_intro_pnl" Style="{StaticResource popupSP}" Height="770" Width="1210" Orientation="Vertical" >
             <StackPanel.Background>
@@ -84,8 +84,8 @@
                 </Label.Effect>
             </Label>
             </StackPanel>
-            <StackPanel Name="Gamepnl" Visibility="Collapsed" Orientation="Vertical">
-                <Grid Height="60" Background="DarkOliveGreen">
+            <StackPanel Name="Gamepnl" Visibility="Collapsed" Orientation="Vertical" Height="770" Width="1210">
+                <Grid Height="60" Background="#424242" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="120" />
                         <ColumnDefinition Width="*" />
@@ -101,23 +101,19 @@
                     <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal">
-                                <Label Name="lblAwayTeam" Background="White" Height="40" Width="310" HorizontalContentAlignment="Right" Style="{StaticResource GameBarFonts}">Bullies</Label>
-                                <Label Name="lblAwayScore" Height="40" Width="50" Style="{StaticResource GameBarFonts}" Background="DarkOliveGreen">14</Label>
+                                <Label Name="lblAwayTeam" Height="40" Width="420" HorizontalContentAlignment="Right" Style="{StaticResource GameBarFonts}">Bullies</Label>
+                                <Label Name="lblAwayScore" Height="40" Width="40" Style="{StaticResource GameBarFonts}" >14</Label>
                                 <Label Width="10" />
                                 <Label Name="lblClock" Height="40" Width="85" Style="{StaticResource GameBarFonts}" BorderBrush="Black" BorderThickness="1">11:23</Label>
-                                <Label Name="lblQTR" Height="40" Width="120" Style="{StaticResource GameBarFonts}">2nd QTR</Label>
+                                <Label Name="lblQTR" Height="40" Width="120" Style="{StaticResource GameBarFonts}" BorderBrush="Black" BorderThickness="1">2nd QTR</Label>
                                 <Label Width="10" />
-                                <Label Name="lblHomeScore" Height="40" Width="50" Style="{StaticResource GameBarFonts}" Background="DarkOliveGreen">17</Label>
-                                <Label Name="lblHomeTeam"  Background="White" Height="40" Width="310" HorizontalContentAlignment="Left" Style="{StaticResource GameBarFonts}">Legends</Label>
+                                <Label Name="lblHomeScore" Height="40" Width="40" Style="{StaticResource GameBarFonts}" >17</Label>
+                                <Label Name="lblHomeTeam" Height="40" Width="420" HorizontalContentAlignment="Left" Style="{StaticResource GameBarFonts}">Legends</Label>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
-                                <Label Name="lblAwayTimeouts" Height="40" Width="310" HorizontalContentAlignment="Right" Style="{StaticResource GameBar2Fonts}">Timeouts: 3</Label>
-                                <Label Height="20" Width="50" /> 
-                                <Label Width="10" />
-                                <Label Name="lblDown" Height="40" Width="205" HorizontalContentAlignment="Center" Style="{StaticResource GameBar2Fonts}">1st and 10</Label>
-                                <Label Width="10" />
-                                <Label Height="20" Width="50" />
-                                <Label Name="lblHomeTimeouts" Height="40" Width="310" HorizontalContentAlignment="left" Style="{StaticResource GameBar2Fonts}">Timeouts: 3</Label>
+                                <Label Name="lblAwayTimeouts" Height="40" Width="420" HorizontalContentAlignment="Right" Style="{StaticResource GameBar2Fonts}">Timeouts: 3</Label>
+                                <Label Name="lblDown" Height="40" Width="300" HorizontalContentAlignment="Center" Style="{StaticResource GameBar2Fonts}"    >1st and 10</Label>
+                                <Label Name="lblHomeTimeouts"  Height="40" Width="420" HorizontalContentAlignment="Left"  Style="{StaticResource GameBar2Fonts}">Timeouts: 3</Label>
                             </StackPanel>
                         </StackPanel>
                     </StackPanel>
@@ -125,8 +121,13 @@
                         <Button Name="Game_Close" Click="Game_close" Height="40" Width="110" Margin="0,0,5,0" Style="{StaticResource CloseGame}">Exit Game</Button>
                     </StackPanel>
                 </Grid>
+                <StackPanel>
+                    <Canvas Name="MyCanvas"  Focusable="True" Background="LightBlue" Height="710" Width="1210">
+                        <Rectangle Name="background" Height="680" Width="2480" Stretch="Fill" Canvas.Top="0"  Canvas.Left="0" />
+                    </Canvas>
+                </StackPanel>
             </StackPanel>
         </StackPanel>
-    </Border>
+<!--    </Border> -->
 
 </Window>

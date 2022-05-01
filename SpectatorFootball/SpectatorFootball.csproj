@@ -183,6 +183,7 @@
     <Compile Include="Game\Game.cs" />
     <Compile Include="Free_Agency\Pos_and_Count.cs" />
     <Compile Include="Game\Game_Helper.cs" />
+    <Compile Include="Game\Play.cs" />
     <Compile Include="Help_Forms\Help_Champions.xaml.cs">
       <DependentUpon>Help_Champions.xaml</DependentUpon>
     </Compile>
@@ -725,6 +726,7 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>LeagueEDM.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="Images\Source\Field_Templates\Template.xcf" />
     <None Include="Models\LeagueEDM.edmx.diagram">
       <DependentUpon>LeagueEDM.edmx</DependentUpon>
     </None>
@@ -748,6 +750,8 @@
     <Resource Include="Images\Helmets\st_Turbos.png" />
     <Resource Include="Images\Stadiums\st_Detroit.jpg" />
     <Resource Include="Images\Game_Intro_Background.jpg" />
+    <Resource Include="Images\Stadiums\GenericGrass.png" />
+    <Resource Include="Images\Stadiums\Field__Template.png" />
     <Content Include="Models\LeagueEDM.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>LeagueEDM.edmx</DependentUpon>

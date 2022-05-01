@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace SpectatorFootball.GameNS
 {
-  
 
-    class Game
+    public class Game
     {
         private long Game_id;
 
