@@ -17,6 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Timers;
 using System.Windows.Threading;
+using SpectatorFootball.GameNS;
 
 namespace SpectatorFootball.WindowsLeague
 {
@@ -50,9 +51,13 @@ namespace SpectatorFootball.WindowsLeague
         private int Width_dir = -1;
         private int Height_dir = -1;
 
-        public Game_Window(MainWindow pw, WeeklyScheduleRec sched_rec)
+        private Game g = null;
+
+        public Game_Window(MainWindow pw, Game g)
         {
             InitializeComponent();
+            this.pw = pw;
+            this.g = g;
 
             Gamepnl.Visibility = Visibility.Collapsed;
 
@@ -61,8 +66,8 @@ namespace SpectatorFootball.WindowsLeague
             try
             {
                 lblLeague.Content = pw.Loaded_League.season.League_Structure_by_Season[0].Long_Name;
-                at = pw.Loaded_League.season.Teams_by_Season.Where(x => x.Franchise_ID == sched_rec.Away_Franchise_id).First();
-                ht = pw.Loaded_League.season.Teams_by_Season.Where(x => x.Franchise_ID == sched_rec.Home_Franchise_id).First();
+                at = pw.Loaded_League.season.Teams_by_Season.Where(x => x.Franchise_ID == g.Away_Team_Franchise_ID).First();
+                ht = pw.Loaded_League.season.Teams_by_Season.Where(x => x.Franchise_ID == g.Home_Team_Franchise_ID).First();
                 string away_record = pw.Loaded_League.getTeamStandings(at.City + " " + at.Nickname);
                 string home_record = pw.Loaded_League.getTeamStandings(ht.City + " " + ht.Nickname);
 
@@ -80,8 +85,8 @@ namespace SpectatorFootball.WindowsLeague
 
                 long season_id = pw.Loaded_League.season.ID;
 
-                Away_Players = gs.GetTeamPlayersForGame(at.Franchise_ID, sched_rec.iWeek, pw.Loaded_League);
-                Home_Players = gs.GetTeamPlayersForGame(ht.Franchise_ID, sched_rec.iWeek, pw.Loaded_League);
+                Away_Players = gs.GetTeamPlayersForGame(at.Franchise_ID, g.Week, pw.Loaded_League);
+                Home_Players = gs.GetTeamPlayersForGame(ht.Franchise_ID, g.Week, pw.Loaded_League);
 
                 Can_Width = (int) MyCanvas.Width;
                 Can_Height = (int) MyCanvas.Height;
@@ -90,7 +95,8 @@ namespace SpectatorFootball.WindowsLeague
                 dispatcherTimer.Interval = new TimeSpan(0, 0, 5);
                 dispatcherTimer.Start();
 
-                Game g = new Game();
+                GameEngine ge = new GameEngine(g, (Teams_by_Season)at, (List<Player_and_Ratings>)Away_Players,
+(Teams_by_Season)ht, (List<Player_and_Ratings>)Home_Players);
 
                 //End of game not sure where this should go
                 //gs.SaveGame(g, g.injuries, pw.Loaded_League);

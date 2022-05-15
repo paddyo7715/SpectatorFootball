@@ -27,7 +27,8 @@ namespace SpectatorFootball.DAO
 
             using (var context = new leagueContext(con))
             {
-                r = context.Players.Where(x => x.Players_By_Team.Any(p => p.Franchise_ID == franchise_id && p.Season_ID == season_id)).Include(x => x.Player_Ratings).Where(x => x.Player_Ratings.Any(i => i.Season_ID == season_id)).Include(x => x.Drafts).ToList();
+                r = context.Players.Where(x => x.Players_By_Team.Any(p => p.Franchise_ID == franchise_id &&
+                                     x.Retired == 0 && !x.Injuries.Any(z => z.Player_ID == x.ID) && p.Season_ID == season_id)).Include(x => x.Player_Ratings).Where(x => x.Player_Ratings.Any(i => i.Season_ID == season_id)).Include(x => x.Drafts).ToList();
             }
 
             return r;
@@ -41,7 +42,7 @@ namespace SpectatorFootball.DAO
 
             using (var context = new leagueContext(con))
             {
-                r = context.Players.Where(x => x.Retired == 0 &&
+                r = context.Players.Where(x => x.Retired == 0 && !x.Injuries.Any(z => z.Player_ID == x.ID) &&
                 x.Players_By_Team.Any(w => w.Season_ID == season_id && w.Franchise_ID == franchise_id))
                 .GroupBy(x => x.Pos)
                 .Select(x => new Pos_and_Count { pos = (int)x.Key, pos_count = x.Count() }).ToList();
@@ -492,7 +493,7 @@ namespace SpectatorFootball.DAO
 
             using (var context = new leagueContext(con))
             {
-                r = context.Players_By_Team.Where(x => x.Franchise_ID == Franchise_id && x.Season_ID == season_id).Include(x => x.Player).OrderBy(x => x.Player.Pos).ThenBy(x => x.Player.Last_Name).ThenBy(x => x.Player.First_Name).ToList();
+                r = context.Players_By_Team.Where(x => x.Player.Retired == 0 && !x.Player.Injuries.Any(z => z.Player_ID == x.Player.ID) && x.Franchise_ID == Franchise_id && x.Season_ID == season_id).Include(x => x.Player).OrderBy(x => x.Player.Pos).ThenBy(x => x.Player.Last_Name).ThenBy(x => x.Player.First_Name).ToList();
             }
             return r;
 
@@ -508,7 +509,7 @@ namespace SpectatorFootball.DAO
             {
                 int iFirstKicker = System.Enum.GetNames(typeof(Player_Pos)).Length - 2;
 
-                r = context.Players.Where(x => x.Retired == 0 && x.Pos == pp &&
+                r = context.Players.Where(x => x.Retired == 0 && x.Pos == pp && !x.Injuries.Any(z => z.Player_ID == x.ID) &&
                     x.Players_By_Team.Any(w => w.Season_ID == season_id && w.Franchise_ID == f_id))
                     .Select(x => new Player_and_Ratings
                     {
@@ -521,7 +522,7 @@ namespace SpectatorFootball.DAO
 
             return r;
         }
-        public List<Player_and_Ratings> getTeamPlayers(long season_id, long f_id, string league_filepath)
+        public List<Player_and_Ratings> getTeamPlayersforGame(long season_id, long f_id, string league_filepath)
         {
             List<Player_and_Ratings> r = null;
 
@@ -532,7 +533,8 @@ namespace SpectatorFootball.DAO
                 int iFirstKicker = System.Enum.GetNames(typeof(Player_Pos)).Length - 2;
 
                 r = context.Players.Where(x => x.Retired == 0 &&
-                    x.Players_By_Team.Any(w => w.Season_ID == season_id && w.Franchise_ID == f_id))
+                    x.Players_By_Team.Any(w => w.Season_ID == season_id && w.Franchise_ID == f_id) &&
+                    !x.Injuries.Any(z => z.Player_ID == x.ID))
                     .Select(x => new Player_and_Ratings
                     {
                         p = x,

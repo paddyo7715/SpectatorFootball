@@ -129,6 +129,7 @@
           <ScalarProperty Name="Away_Turnovers" ColumnName="Away_Turnovers" />
           <ScalarProperty Name="Home_Sacks" ColumnName="Home_Sacks" />
           <ScalarProperty Name="Away_Sacks" ColumnName="Away_Sacks" />
+          <ScalarProperty Name="Forfeited_Game" ColumnName="Forfeited_Game" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

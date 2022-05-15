@@ -90,6 +90,7 @@ namespace SpectatorFootball.Models
         public Nullable<long> Away_Turnovers { get; set; }
         public Nullable<long> Home_Sacks { get; set; }
         public Nullable<long> Away_Sacks { get; set; }
+        public Nullable<long> Forfeited_Game { get; set; }
     
         public virtual Season Season { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -122,6 +122,7 @@
     <Property Name="Away_Turnovers" Type="integer" />
     <Property Name="Home_Sacks" Type="integer" />
     <Property Name="Away_Sacks" Type="integer" />
+    <Property Name="Forfeited_Game" Type="integer" />
   </EntityType>
   <EntityType Name="Game_Player_Defense_Stats">
     <Key>
@@ -718,13 +719,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <!--Errors Found During Generation:
-warning 6035: The relationship 'FK_Game_0_0' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-        <Association Name="FK_Game_0_0" />-->
-  <!--Errors Found During Generation:
-warning 6035: The relationship 'FK_Game_1_0' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-        <Association Name="FK_Game_1_0" />-->
-  <Association Name="FK_Game_2_0">
+  <Association Name="FK_Game_0_0">
     <End Role="Season" Type="Self.Season" Multiplicity="1" />
     <End Role="Game" Type="Self.Game" Multiplicity="*" />
     <ReferentialConstraint>
@@ -736,6 +731,12 @@ warning 6035: The relationship 'FK_Game_1_0' has columns that are not part of th
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <!--Errors Found During Generation:
+warning 6035: The relationship 'FK_Game_1_0' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="FK_Game_1_0" />-->
+  <!--Errors Found During Generation:
+warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="FK_Game_2_0" />-->
   <Association Name="FK_Game_Player_Defense_Stats_0_0">
     <End Role="Game" Type="Self.Game" Multiplicity="1" />
     <End Role="Game_Player_Defense_Stats" Type="Self.Game_Player_Defense_Stats" Multiplicity="*" />
@@ -1708,7 +1709,7 @@ warning 6035: The relationship 'FK_Game_1_0' has columns that are not part of th
       <End Role="Franchise" EntitySet="Franchise" />
       <End Role="Free_Agency" EntitySet="Free_Agency" />
     </AssociationSet>
-    <AssociationSet Name="FK_Game_2_0" Association="Self.FK_Game_2_0">
+    <AssociationSet Name="FK_Game_0_0" Association="Self.FK_Game_0_0">
       <End Role="Season" EntitySet="Season" />
       <End Role="Game" EntitySet="Game" />
     </AssociationSet>

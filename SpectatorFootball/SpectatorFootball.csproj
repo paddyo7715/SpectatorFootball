@@ -85,6 +85,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
+    <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.SQLite, Version=1.0.113.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Data.SQLite.Core.1.0.113.1\lib\net46\System.Data.SQLite.dll</HintPath>
@@ -96,6 +97,7 @@
       <HintPath>..\packages\System.Data.SQLite.Linq.1.0.113.0\lib\net46\System.Data.SQLite.Linq.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Printing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -178,9 +180,14 @@
     <Compile Include="DAO\TrainingCampDAO.cs" />
     <Compile Include="Draft\Draft_Helper.cs" />
     <Compile Include="Draft\Draft_Pos_Importance.cs" />
+    <Compile Include="Enum\Formations_Enum.cs" />
+    <Compile Include="Enum\Game_Urgency.cs" />
     <Compile Include="Enum\Stat_Type.cs" />
     <Compile Include="Free_Agency\FreeAgency_Helper.cs" />
-    <Compile Include="Game\Game.cs" />
+    <Compile Include="Game\Coach.cs" />
+    <Compile Include="Game\Formations.cs" />
+    <Compile Include="Game\Formation_Rec.cs" />
+    <Compile Include="Game\GameEngine.cs" />
     <Compile Include="Free_Agency\Pos_and_Count.cs" />
     <Compile Include="Game\Game_Helper.cs" />
     <Compile Include="Game\Play.cs" />
@@ -722,11 +729,11 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>SettingsEDM.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="Images\Source\Field_Templates\Template.xcf" />
     <EntityDeploy Include="Models\LeagueEDM.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>LeagueEDM.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="Images\Source\Field_Templates\Template.xcf" />
     <None Include="Models\LeagueEDM.edmx.diagram">
       <DependentUpon>LeagueEDM.edmx</DependentUpon>
     </None>

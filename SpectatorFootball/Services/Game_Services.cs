@@ -337,7 +337,7 @@ namespace SpectatorFootball.Services
                 }
             }
 
-            r = tdao.getTeamPlayers(lls.season.ID, f_id, League_con_string);
+            r = tdao.getTeamPlayersforGame(lls.season.ID, f_id, League_con_string);
             //Set the overall ratings for players and now sort the players in the order of position and rating
             //for roster depth
             foreach (Player_and_Ratings pr in r)

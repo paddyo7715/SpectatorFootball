@@ -154,7 +154,8 @@
     <Property Name="Away_Turnovers" Type="Int64" />
     <Property Name="Home_Sacks" Type="Int64" />
     <Property Name="Away_Sacks" Type="Int64" />
-    <NavigationProperty Name="Season" Relationship="Self.FK_Game_2_0" FromRole="Game" ToRole="Season" />
+    <Property Name="Forfeited_Game" Type="Int64" />
+    <NavigationProperty Name="Season" Relationship="Self.FK_Game_0_0" FromRole="Game" ToRole="Season" />
     <NavigationProperty Name="Game_Player_Defense_Stats" Relationship="Self.FK_Game_Player_Defense_Stats_0_0" FromRole="Game" ToRole="Game_Player_Defense_Stats" />
     <NavigationProperty Name="Game_Player_FG_Defense_Stats" Relationship="Self.FK_Game_Player_FG_Defense_Stats_2_0" FromRole="Game" ToRole="Game_Player_FG_Defense_Stats" />
     <NavigationProperty Name="Game_Player_Kick_Returner_Stats" Relationship="Self.FK_Game_Player_Kick_Returner_Stats_0_0" FromRole="Game" ToRole="Game_Player_Kick_Returner_Stats" />
@@ -704,7 +705,7 @@
     <NavigationProperty Name="Divisions" Relationship="Self.FK_Division_0_0" FromRole="Season" ToRole="Division" />
     <NavigationProperty Name="Drafts" Relationship="Self.FK_Draft_0_0" FromRole="Season" ToRole="Draft" />
     <NavigationProperty Name="Free_Agency" Relationship="Self.FK_Free_Agency_0_0" FromRole="Season" ToRole="Free_Agency" />
-    <NavigationProperty Name="Games" Relationship="Self.FK_Game_2_0" FromRole="Season" ToRole="Game" />
+    <NavigationProperty Name="Games" Relationship="Self.FK_Game_0_0" FromRole="Season" ToRole="Game" />
     <NavigationProperty Name="Hall_of_Fame" Relationship="Self.FK_Hall_of_Fame_0_0" FromRole="Season" ToRole="Hall_of_Fame" />
     <NavigationProperty Name="Injuries" Relationship="Self.FK_Injuries_0_0" FromRole="Season" ToRole="Injuries" />
     <NavigationProperty Name="Injury_Log" Relationship="Self.FK_Injury_Log_0_0" FromRole="Season" ToRole="Injury_Log" />
@@ -1150,7 +1151,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Game_2_0">
+  <Association Name="FK_Game_0_0">
     <End Role="Season" Type="Self.Season" Multiplicity="1" />
     <End Role="Game" Type="Self.Game" Multiplicity="*" />
     <ReferentialConstraint>
@@ -1958,7 +1959,7 @@
       <End Role="Players" EntitySet="Players" />
       <End Role="Free_Agency" EntitySet="Free_Agency" />
     </AssociationSet>
-    <AssociationSet Name="FK_Game_2_0" Association="Self.FK_Game_2_0">
+    <AssociationSet Name="FK_Game_0_0" Association="Self.FK_Game_0_0">
       <End Role="Season" EntitySet="Seasons" />
       <End Role="Game" EntitySet="Games" />
     </AssociationSet>
