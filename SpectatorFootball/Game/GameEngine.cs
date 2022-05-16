@@ -19,7 +19,14 @@ namespace SpectatorFootball.GameNS
         private Game g = null;
         private List<Injury> lInj = null;
 
-        private Play play;
+        private Play play; 
+
+        private long Fid_first_posession;
+        private long fid_posession;
+
+        private Coach Away_Coach = null;
+        private Coach Home_Coach = null;
+
 
         public GameEngine(Game g, Teams_by_Season at, List<Player_and_Ratings> Away_Players,
             Teams_by_Season ht, List<Player_and_Ratings> Home_Players)
@@ -101,8 +108,17 @@ namespace SpectatorFootball.GameNS
             //initialize the injuries list
             lInj = new List<Injury>();
 
+            //create the two coaching objects
+            Away_Coach = new Coach(at.Franchise_ID, g);
+            Home_Coach = new Coach(ht.Franchise_ID, g);
+        }
+        private bool ExecutePlay()
+        {
+            bool bEndofGame = false;
 
 
-    }
+
+            return bEndofGame;
+        }
     }
 }

@@ -181,7 +181,7 @@
     <Compile Include="Draft\Draft_Helper.cs" />
     <Compile Include="Draft\Draft_Pos_Importance.cs" />
     <Compile Include="Enum\Formations_Enum.cs" />
-    <Compile Include="Enum\Game_Urgency.cs" />
+    <Compile Include="Enum\Play_Enum.cs" />
     <Compile Include="Enum\Stat_Type.cs" />
     <Compile Include="Free_Agency\FreeAgency_Helper.cs" />
     <Compile Include="Game\Coach.cs" />
@@ -191,6 +191,7 @@
     <Compile Include="Free_Agency\Pos_and_Count.cs" />
     <Compile Include="Game\Game_Helper.cs" />
     <Compile Include="Game\Play.cs" />
+    <Compile Include="Game\Play_Package.cs" />
     <Compile Include="Help_Forms\Help_Champions.xaml.cs">
       <DependentUpon>Help_Champions.xaml</DependentUpon>
     </Compile>

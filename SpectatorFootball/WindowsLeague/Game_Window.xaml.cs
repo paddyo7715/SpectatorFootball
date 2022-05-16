@@ -53,6 +53,8 @@ namespace SpectatorFootball.WindowsLeague
 
         private Game g = null;
 
+
+
         public Game_Window(MainWindow pw, Game g)
         {
             InitializeComponent();
@@ -158,11 +160,19 @@ namespace SpectatorFootball.WindowsLeague
          
             background.Fill = backgroundField;
 
-            GameTimer.Tick += ShowFrame;
-            GameTimer.Interval = TimeSpan.FromMilliseconds(20);
-            GameTimer.Start();
+            //This causes the field to move
+            //            GameTimer.Tick += ShowFrame;
+            //            GameTimer.Interval = TimeSpan.FromMilliseconds(20);
+            //            GameTimer.Start();
+
+
+            //just call one play for now but this should be in a loop till the return is true;
+            ExecutePlay();
 
         }
+
+
+
         private void btnSpeedSlower_click(object sender, EventArgs e)
         {
 
