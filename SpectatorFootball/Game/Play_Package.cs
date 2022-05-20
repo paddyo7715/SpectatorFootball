@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 
 namespace SpectatorFootball.GameNS
 {
-    class Play_Package
+    public class Play_Package
     {
-        public Formations_Enum Formation { get; set; }
+        public List<Formation_Rec> Formation { get; set; }
+        public Formations_Enum Formation_Name { get; set; }
         public Play_Enum  Play { get; set; }
     }
 }

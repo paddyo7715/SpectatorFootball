@@ -51,9 +51,11 @@ namespace SpectatorFootball.WindowsLeague
         private int Width_dir = -1;
         private int Height_dir = -1;
 
+        //this is the model 
         private Game g = null;
 
-
+        //This is the game engine where the game is played.
+        GameEngine ge = null;
 
         public Game_Window(MainWindow pw, Game g)
         {
@@ -97,8 +99,8 @@ namespace SpectatorFootball.WindowsLeague
                 dispatcherTimer.Interval = new TimeSpan(0, 0, 5);
                 dispatcherTimer.Start();
 
-                GameEngine ge = new GameEngine(g, (Teams_by_Season)at, (List<Player_and_Ratings>)Away_Players,
-(Teams_by_Season)ht, (List<Player_and_Ratings>)Home_Players);
+                ge = new GameEngine(g, (Teams_by_Season)at, (List<Player_and_Ratings>)Away_Players,
+                    (Teams_by_Season)ht, (List<Player_and_Ratings>)Home_Players);
 
                 //End of game not sure where this should go
                 //gs.SaveGame(g, g.injuries, pw.Loaded_League);
@@ -167,7 +169,7 @@ namespace SpectatorFootball.WindowsLeague
 
 
             //just call one play for now but this should be in a loop till the return is true;
-            ExecutePlay();
+            ge.ExecutePlay();
 
         }
 

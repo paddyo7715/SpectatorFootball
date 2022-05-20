@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SpectatorFootball.Enum;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SpectatorFootball.GameNS
 {
-    public class Play
+    public class Play_Struct
     {
         public int Away_Score;
         public int Home_Score;
@@ -19,6 +20,9 @@ namespace SpectatorFootball.GameNS
 
         public string Short_Message;
         public string Long_Message;
+
+        public Play_Package Offensive_Package = null;
+        public Formations_Enum Defensive_Formation;
 
         List<string> Player_Movements = null;
 /*      Player Movements Structure

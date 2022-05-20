@@ -190,7 +190,7 @@
     <Compile Include="Game\GameEngine.cs" />
     <Compile Include="Free_Agency\Pos_and_Count.cs" />
     <Compile Include="Game\Game_Helper.cs" />
-    <Compile Include="Game\Play.cs" />
+    <Compile Include="Game\Play_Struct.cs" />
     <Compile Include="Game\Play_Package.cs" />
     <Compile Include="Help_Forms\Help_Champions.xaml.cs">
       <DependentUpon>Help_Champions.xaml</DependentUpon>

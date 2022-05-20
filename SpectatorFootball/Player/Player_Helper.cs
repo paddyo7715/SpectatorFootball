@@ -551,20 +551,19 @@ namespace SpectatorFootball.PlayerNS
                         r.Kicker_Leg_Accuracy_Rating = CommonUtils.getRandomNum(app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING);
                         r.Kicker_Leg_Power_Rating = CommonUtils.getRandomNum(app_Constants.PRIMARY_ABILITY_LOW_RATING, app_Constants.PRIMARY_ABILITY_HIGH_RATING);
 
-                        r.Pass_Block_Rating = CommonUtils.getRandomNum(app_Constants.TERTIARY_ABILITY_LOW_RATING, app_Constants.TERTIARY_ABILITY_HIGH_RATING);
-                        r.Run_Block_Rating = CommonUtils.getRandomNum(Math.Max(app_Constants.TERTIARY_ABILITY_LOW_RATING, (int)r.Pass_Block_Rating - app_Constants.OL_RUN_PASS_BLOCK_DELTA), Math.Min(app_Constants.TERTIARY_ABILITY_HIGH_RATING, (int)r.Pass_Block_Rating + app_Constants.OL_RUN_PASS_BLOCK_DELTA));
+                        r.Pass_Block_Rating = CommonUtils.getRandomNum(app_Constants.NO_SKILL_ABILITY_LOW, app_Constants.NO_SKILL_ABILITY_HIGH);
+                        r.Run_Block_Rating = CommonUtils.getRandomNum(app_Constants.NO_SKILL_ABILITY_LOW, app_Constants.NO_SKILL_ABILITY_HIGH);
                         r.Accuracy_Rating = CommonUtils.getRandomNum(app_Constants.TERTIARY_ABILITY_LOW_RATING, app_Constants.TERTIARY_ABILITY_HIGH_RATING);
                         r.Decision_Making_Rating = CommonUtils.getRandomNum(app_Constants.TERTIARY_ABILITY_LOW_RATING, app_Constants.TERTIARY_ABILITY_HIGH_RATING);
                         r.Arm_Strength_Rating = CommonUtils.getRandomNum(app_Constants.TERTIARY_ABILITY_LOW_RATING, app_Constants.TERTIARY_ABILITY_HIGH_RATING);
                         r.Ball_Safety_Rating = CommonUtils.getRandomNum(app_Constants.TERTIARY_ABILITY_LOW_RATING, app_Constants.TERTIARY_ABILITY_HIGH_RATING);
                         r.Agilty_Rating = CommonUtils.getRandomNum(app_Constants.TERTIARY_ABILITY_LOW_RATING, app_Constants.TERTIARY_ABILITY_HIGH_RATING);
                         r.Hands_Rating = CommonUtils.getRandomNum(app_Constants.TERTIARY_ABILITY_LOW_RATING, app_Constants.TERTIARY_ABILITY_HIGH_RATING);
-                        r.Pass_Attack_Rating = CommonUtils.getRandomNum(app_Constants.TERTIARY_ABILITY_LOW_RATING, app_Constants.TERTIARY_ABILITY_HIGH_RATING);
-                        r.Running_Power_Rating = CommonUtils.getRandomNum(app_Constants.TERTIARY_ABILITY_LOW_RATING, app_Constants.TERTIARY_ABILITY_HIGH_RATING);
-                        r.Run_Attack_Rating = CommonUtils.getRandomNum(app_Constants.TERTIARY_ABILITY_LOW_RATING, app_Constants.TERTIARY_ABILITY_HIGH_RATING);
+                        r.Pass_Attack_Rating = CommonUtils.getRandomNum(app_Constants.NO_SKILL_ABILITY_LOW, app_Constants.NO_SKILL_ABILITY_HIGH);
+                        r.Running_Power_Rating = CommonUtils.getRandomNum(app_Constants.NO_SKILL_ABILITY_LOW, app_Constants.NO_SKILL_ABILITY_HIGH);
                         r.Speed_Rating = CommonUtils.getRandomNum(app_Constants.TERTIARY_ABILITY_LOW_RATING, app_Constants.TERTIARY_ABILITY_HIGH_RATING);
-                        r.Run_Attack_Rating = CommonUtils.getRandomNum(app_Constants.TERTIARY_ABILITY_LOW_RATING, app_Constants.TERTIARY_ABILITY_HIGH_RATING);
-                        r.Tackle_Rating = CommonUtils.getRandomNum(app_Constants.TERTIARY_ABILITY_LOW_RATING, app_Constants.TERTIARY_ABILITY_HIGH_RATING);
+                        r.Run_Attack_Rating = CommonUtils.getRandomNum(app_Constants.NO_SKILL_ABILITY_LOW, app_Constants.NO_SKILL_ABILITY_HIGH);
+                        r.Tackle_Rating = CommonUtils.getRandomNum(app_Constants.NO_SKILL_ABILITY_LOW, app_Constants.NO_SKILL_ABILITY_HIGH);
 
 //                        r.OverAll = Convert.ToSingle(r.Kicking_Accuracy * app_Constants.K_KICK_ACC + r.Leg_Strength * app_Constants.K_LEG_STRENGTH);
                         break;

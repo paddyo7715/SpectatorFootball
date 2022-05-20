@@ -19,13 +19,16 @@ namespace SpectatorFootball.GameNS
         private Game g = null;
         private List<Injury> lInj = null;
 
-        private Play play; 
+        private Play_Struct play; 
 
         private long Fid_first_posession;
         private long fid_posession;
 
         private Coach Away_Coach = null;
         private Coach Home_Coach = null;
+
+        private bool bKickoff = false;
+
 
 
         public GameEngine(Game g, Teams_by_Season at, List<Player_and_Ratings> Away_Players,
@@ -111,10 +114,37 @@ namespace SpectatorFootball.GameNS
             //create the two coaching objects
             Away_Coach = new Coach(at.Franchise_ID, g);
             Home_Coach = new Coach(ht.Franchise_ID, g);
+
+            //The first play needs to be a kickoff
+            bKickoff = true;
         }
         private bool ExecutePlay()
         {
             bool bEndofGame = false;
+            Play_Package Offensive_Package = null;
+            List<Formation_Rec> DEF_Formation = null;
+
+            //call the offensive and defensive plays
+            if (fid_posession == at.Franchise_ID)
+            {
+                Offensive_Package = Away_Coach.Call_Off_PlayFormation(bKickoff);
+                DEF_Formation = Home_Coach.Call_Def_Formation(Offensive_Package);
+            }
+            else
+            {
+                Offensive_Package = Home_Coach.Call_Off_PlayFormation(bKickoff);
+                DEF_Formation = Away_Coach.Call_Def_Formation(Offensive_Package);
+            }
+
+           
+
+
+            //put players in both formations
+            //execute the play
+            //accume stats
+            //return structure of play for game window 
+            //sleep based on a global variable tied to the game speed
+
 
 
 

@@ -23,6 +23,7 @@ namespace SpectatorFootball.GameNS
         {
             Formations_Enum f;
             Play_Enum p;
+            List<Formation_Rec> fList = null;
 
             long ourScore;
             long theirScore;
@@ -73,12 +74,15 @@ namespace SpectatorFootball.GameNS
                 p = Play_Enum.KICKOFF_NORMAL;
             }
 
-            return new Play_Package() { Formation = f, Play = p } ;
+            fList = Formations.getFormation(f);
+
+            return new Play_Package() { Formation = fList, Formation_Name = f, Play = p } ;
         }
 
-        public Formations_Enum Call_Def_Formation(Play_Package pp)
+        public List<Formation_Rec> Call_Def_Formation(Play_Package pp)
         {
             Formations_Enum r;
+            List<Formation_Rec> fList = null;
 
             long ourScore;
             long theirScore;
@@ -99,15 +103,15 @@ namespace SpectatorFootball.GameNS
             long QTR = (long)g.Quarter;
             long time = (long)g.Time;
 
-            if (pp.Formation == Formations_Enum.KICKOFF_ONSIDE_KICK)
+            if (pp.Formation_Name == Formations_Enum.KICKOFF_ONSIDE_KICK)
                 r = Formations_Enum.KICKOFF_ONSIDE_RECEIVE;
-            else if (pp.Formation == Formations_Enum.KICKOFF_REGULAR_KICK)
+            else if (pp.Formation_Name == Formations_Enum.KICKOFF_REGULAR_KICK)
                 r = Formations_Enum.KICKOFF_REGULAR_RECEIVE;
-            else if (pp.Formation == Formations_Enum.FIELD_GOAL)
+            else if (pp.Formation_Name == Formations_Enum.FIELD_GOAL)
                 r = Formations_Enum.KICKOFF_REGULAR_RECEIVE;
-            else if (pp.Formation == Formations_Enum.PUNT)
+            else if (pp.Formation_Name == Formations_Enum.PUNT)
                 r = Formations_Enum.KICKOFF_REGULAR_RECEIVE;
-            else if (pp.Formation == Formations_Enum.EXTRA_POINT)
+            else if (pp.Formation_Name == Formations_Enum.EXTRA_POINT)
                 r = Formations_Enum.KICKOFF_REGULAR_RECEIVE;
             else
             {
@@ -117,8 +121,9 @@ namespace SpectatorFootball.GameNS
                 r = Formations_Enum.KICKOFF_REGULAR_RECEIVE;
             }
 
+            fList = Formations.getFormation(r);
 
-            return r;
+            return fList;
         }
     }
 }

@@ -297,6 +297,9 @@ namespace SpectatorFootball
         public const int NON_ATHLETIC_ABILITY_LOW = 1;
         public const int NON_ATHLETIC_ABILITY_HIGH = 100;
 
+        public const int NO_SKILL_ABILITY_LOW = 10;
+        public const int NO_SKILL_ABILITY_HIGH = 20;
+
         // Teams
         public const string EMPTY_TEAM_SLOT = "Empty Team Slot";
         public const int TRAINING_CAMP_TEAM_PLAYER_COUNT = 86;
