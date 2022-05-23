@@ -185,7 +185,7 @@
     <Compile Include="Enum\Stat_Type.cs" />
     <Compile Include="Free_Agency\FreeAgency_Helper.cs" />
     <Compile Include="Game\Coach.cs" />
-    <Compile Include="Game\Formations.cs" />
+    <Compile Include="Game\Formation.cs" />
     <Compile Include="Game\Formation_Rec.cs" />
     <Compile Include="Game\GameEngine.cs" />
     <Compile Include="Free_Agency\Pos_and_Count.cs" />

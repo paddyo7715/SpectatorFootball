@@ -11,6 +11,7 @@ namespace SpectatorFootball.GameNS
     [Serializable]
     public class GameEngine
     {
+        private MainWindow pw = null;
         private bool bSureGame;
         private Teams_by_Season at = null;
         private List<Player_and_Ratings> Away_Players = null;
@@ -29,11 +30,14 @@ namespace SpectatorFootball.GameNS
 
         private bool bKickoff = false;
 
+        private long Max_TD_Points = 7;
 
 
-        public GameEngine(Game g, Teams_by_Season at, List<Player_and_Ratings> Away_Players,
+
+        public GameEngine(MainWindow pw, Game g, Teams_by_Season at, List<Player_and_Ratings> Away_Players,
             Teams_by_Season ht, List<Player_and_Ratings> Home_Players)
         {
+            this.pw = pw;
             this.at = at;
             this.Away_Players = Away_Players;
             this.ht = ht;
@@ -111,32 +115,77 @@ namespace SpectatorFootball.GameNS
             //initialize the injuries list
             lInj = new List<Injury>();
 
+            //set max possible point for 1 touchdown
+            if (pw.Loaded_League.season.League_Structure_by_Season[0].Two_Point_Conversion == 1)
+                Max_TD_Points = 8;
+
+            if (pw.Loaded_League.season.League_Structure_by_Season[0].Three_Point_Conversion == 1)
+                Max_TD_Points = 9;
+
             //create the two coaching objects
-            Away_Coach = new Coach(at.Franchise_ID, g);
-            Home_Coach = new Coach(ht.Franchise_ID, g);
+            Away_Coach = new Coach(at.Franchise_ID, g, Max_TD_Points);
+            Home_Coach = new Coach(ht.Franchise_ID, g, Max_TD_Points);
 
             //The first play needs to be a kickoff
             bKickoff = true;
+
+            fid_posession = CoinToss();
+            Fid_first_posession = fid_posession;
         }
-        private bool ExecutePlay()
+
+        private long CoinToss()
+        {
+            long r = 0;
+            int i = CommonUtils.getRandomNum(1, 100);
+            if (i <= 50)
+                r = ht.Franchise_ID;
+            else
+                r = at.Franchise_ID;
+
+            return r;
+        }
+
+        public bool ExecutePlay()
         {
             bool bEndofGame = false;
             Play_Package Offensive_Package = null;
-            List<Formation_Rec> DEF_Formation = null;
+            Formation DEF_Formation = null;
+            Coach Offensive_Coach = null;
+            Coach Defensive_Coach = null;
 
             //call the offensive and defensive plays
             if (fid_posession == at.Franchise_ID)
             {
-                Offensive_Package = Away_Coach.Call_Off_PlayFormation(bKickoff);
-                DEF_Formation = Home_Coach.Call_Def_Formation(Offensive_Package);
+                Offensive_Coach = Away_Coach;
+                Defensive_Coach = Home_Coach;
             }
             else
             {
-                Offensive_Package = Home_Coach.Call_Off_PlayFormation(bKickoff);
-                DEF_Formation = Away_Coach.Call_Def_Formation(Offensive_Package);
+                Offensive_Coach = Home_Coach;
+                Defensive_Coach = Away_Coach;
             }
 
-           
+            Offensive_Package = Offensive_Coach.Call_Off_PlayFormation(bKickoff);
+            DEF_Formation = Defensive_Coach.Call_Def_Formation(Offensive_Package);
+
+
+            //You could get the allow substitutions from either coach
+            bool bAllowSubs = Home_Coach.AllowSubstitutions();
+
+            Offensive_Package.Formation.Player_list = Offensive_Coach.Populate_Formation(
+                Offensive_Package.Formation.Player_list,
+                bAllowSubs, Offensive_Package.Formation.bSpecialTeams);
+            if (Offensive_Package.Formation.Player_list == null)
+            {
+                //the offense has to forfeit the game
+            }
+            DEF_Formation.Player_list = Defensive_Coach.Populate_Formation(
+                DEF_Formation.Player_list,
+                 bAllowSubs, DEF_Formation.bSpecialTeams);
+            if (DEF_Formation.Player_list == null)
+            {
+                //the defense has to forfeit the game
+            }
 
 
             //put players in both formations

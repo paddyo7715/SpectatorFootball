@@ -42,7 +42,7 @@ namespace SpectatorFootball
         public const int DRAFT_OTHER_CHOICE_PICK_DEPTH = 5;
         public const int DRAFT_PERCENT_CRAPPIFY = 75;
         
-        // Players On a team - 53 total
+        // Players On a team - 48 total
         public const int QB_PER_TEAM = 3;
         public const int RB_PER_TEAM = 4;
         public const int WR_PER_TEAM = 5;
@@ -403,6 +403,13 @@ namespace SpectatorFootball
         //Game
         public const int GAME_QUARTER_SECONDS = 900;
         public const int QTRS_IN_REGULATION = 4;
+        public const int STARTER_RB_SUB_PERCENT = 10;
+        public const int STARTER_WR_SUB_PERCENT = 20;
+        public const int STARTER_TE_SUB_PERCENT = 25;
+        public const int STARTER_OL_SUB_PERCENT = 7;
+        public const int STARTER_DL_SUB_PERCENT = 10;
+        public const int STARTER_LB_SUB_PERCENT = 20;
+        public const int STARTER_DB_SUB_PERCENT = 10;
 
         //Stats
         public const double MAX_QBR = 158.3;

@@ -162,5 +162,48 @@ namespace SpectatorFootball.GameNS
 
             return r;
         }
+        public static Formation getFormation(Formations_Enum fe)
+        {
+            List<Formation_Rec> r = new List<Formation_Rec>();
+            Formation f = new Formation();
+            f.Player_list = new List<Formation_Rec>();
+
+            switch (fe)
+            {
+                case Formations_Enum.KICKOFF_REGULAR_KICK:
+                    f.Name = "Kickoff";
+                    f.f_enum = fe;
+                    f.bSpecialTeams = true;
+                    f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.DB, YardLine = -1, Vertical_Percent_Pos = 8, bSpecialTeams = true });
+                    f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.WR, YardLine = -1, Vertical_Percent_Pos = 16, bSpecialTeams = true });
+                    f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.DB, YardLine = -1, Vertical_Percent_Pos = 24, bSpecialTeams = true });
+                    f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.TE, YardLine = -1, Vertical_Percent_Pos = 32, bSpecialTeams = true });
+                    f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.LB, YardLine = -1, Vertical_Percent_Pos = 40, bSpecialTeams = true });
+                    f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.K, YardLine = -7, Vertical_Percent_Pos = 48, bSpecialTeams = true });
+                    f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.LB, YardLine = -1, Vertical_Percent_Pos = 56, bSpecialTeams = true });
+                    f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.DB, YardLine = -1, Vertical_Percent_Pos = 64, bSpecialTeams = true });
+                    f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.LB, YardLine = -1, Vertical_Percent_Pos = 72, bSpecialTeams = true });
+                    f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.WR, YardLine = -1, Vertical_Percent_Pos = 80, bSpecialTeams = true });
+                    f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.DB, YardLine = -1, Vertical_Percent_Pos = 88, bSpecialTeams = true });
+                    break;
+                case Formations_Enum.KICKOFF_REGULAR_RECEIVE:
+                    f.Name = "Onside Kick";
+                    f.f_enum = fe;
+                    f.bSpecialTeams = true;
+                    f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.DB, YardLine = 15, Vertical_Percent_Pos = 8, bSpecialTeams = true });
+                    f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.RB, YardLine = 25, Vertical_Percent_Pos = 16, bSpecialTeams = true });
+                    f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.LB, YardLine = 15, Vertical_Percent_Pos = 24, bSpecialTeams = true });
+                    f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.RB, YardLine = 25, Vertical_Percent_Pos = 32, bSpecialTeams = true });
+                    f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.LB, YardLine = 15, Vertical_Percent_Pos = 40, bSpecialTeams = true });
+                    f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.WR, YardLine = 60, Vertical_Percent_Pos = 48, bSpecialTeams = true });
+                    f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.LB, YardLine = 15, Vertical_Percent_Pos = 56, bSpecialTeams = true });
+                    f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.TE, YardLine = 25, Vertical_Percent_Pos = 64, bSpecialTeams = true });
+                    f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.RB, YardLine = 15, Vertical_Percent_Pos = 72, bSpecialTeams = true });
+                    f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.TE, YardLine = 25, Vertical_Percent_Pos = 80, bSpecialTeams = true });
+                    f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.DB, YardLine = 15, Vertical_Percent_Pos = 88, bSpecialTeams = true });
+                    break;
+            }
+            return f;
+        }
     }
 }

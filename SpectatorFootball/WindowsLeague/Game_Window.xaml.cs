@@ -99,7 +99,7 @@ namespace SpectatorFootball.WindowsLeague
                 dispatcherTimer.Interval = new TimeSpan(0, 0, 5);
                 dispatcherTimer.Start();
 
-                ge = new GameEngine(g, (Teams_by_Season)at, (List<Player_and_Ratings>)Away_Players,
+                ge = new GameEngine(pw, g, (Teams_by_Season)at, (List<Player_and_Ratings>)Away_Players,
                     (Teams_by_Season)ht, (List<Player_and_Ratings>)Home_Players);
 
                 //End of game not sure where this should go
