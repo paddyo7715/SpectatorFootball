@@ -19,14 +19,17 @@ namespace SpectatorFootball.GameNS
         private long Max_TD_Points;
 
         private List<Player_and_Ratings> Our_Players = null;
+        private List<Injury> lInj = null;
 
         public Coach(long Franchise_id, Game g, long Max_TD_Points,
             List<Player_and_Ratings> Home_Player,
-            List<Player_and_Ratings> Away_Player)
+            List<Player_and_Ratings> Away_Player,
+            List<Injury> lInj)
         {
             this.Franchise_id = Franchise_id;
             this.g = g;
             this.Max_TD_Points = Max_TD_Points;
+            this.lInj = lInj;
 
             if (Franchise_id == g.Away_Team_Franchise_ID)
                 Our_Players = Away_Player;
@@ -162,17 +165,48 @@ namespace SpectatorFootball.GameNS
 
             foreach (Formation_Rec f in fList)
             {
-                bool bSlotSubstitution = SlotSubstitute(f.Pos);
+                bool bSlotSubstitution = false;
+                Player_and_Ratings Player_rating = null;
 
+                if (bAllowSubstitutions)
+                    bSlotSubstitution = SlotSubstitute(f.Pos);
+
+                //try to get a player at the need position either a starter or sub
+                Player_rating = PlayerSamePOS(f.Pos, bSpecialTeams, fList);
+
+                //if a player at the request position could not be found then we need to try to 
+                //get a player at an alternate position
+                if (Player_rating == null)
+                    Player_rating = getPlayerSubstitutes(f.Pos, fList);
+
+                //if no other player could be found then the team will have to forfeit the game
             }
 
             return fList;
         }
-        private long? PlayerSamePOS(Player_Pos pp, bool bSubstitue)
+        private Player_and_Ratings PlayerSamePOS(Player_Pos pp, bool bSubstitue, List<Formation_Rec> fList)
         {
-            long? r = null;
+            Player_and_Ratings r = null;
 
-            List<long> Available_Players = 
+            List<Player_and_Ratings> Available_Players = Our_Players.Where(x => x.p.Pos == (int)pp &&
+                !(fList.Any(f => f.p_and_r.p.ID == x.p.ID) && !(lInj.Any(j => j.Player_ID == x.p.ID))))
+                .OrderByDescending(o => o.Overall_Grade).ToList();
+
+            if (!bSubstitue)
+                r = Available_Players.FirstOrDefault();
+            else
+            {
+                int num_starters = Team_Helper.getNumStartingPlayersByPosition(pp);
+                if (Available_Players.Count() <= num_starters)
+                    r = Available_Players.FirstOrDefault();
+                else
+                {
+                    int indexes = Available_Players.Count() - num_starters;
+                    int ind = CommonUtils.getRandomIndex(indexes);
+                    ind += (num_starters - 1);
+                    r = r = Available_Players[ind];
+                }
+            }
 
             return r;
         }
@@ -263,7 +297,90 @@ namespace SpectatorFootball.GameNS
             }
 
             return r;
+        }
+        //This method is called during a game and a player for a specific position can not be found,
+        //so a player at another position must be chosen to take his place.  Example:  All 3 QBs
+        //go down to injury
+        private Player_and_Ratings getPlayerSubstitutes(Player_Pos pos,
+            List<Formation_Rec> fList)
+        {
+            Player_and_Ratings r = null;
+            List<Player_Pos> pp = new List<Player_Pos>();
 
+            switch (pos)
+            {
+                case Player_Pos.QB:
+                    {
+                        r = Our_Players.Where(x => !(fList.Any(f => f.p_and_r.p.ID == x.p.ID) && !(lInj.Any(j => j.Player_ID == x.p.ID))))
+                            .OrderByDescending(x => x.pr.First().Accuracy_Rating).FirstOrDefault();
+                        break;
+                    }
+
+                case Player_Pos.RB:
+                    {
+                        r = Our_Players.Where(x => !(fList.Any(f => f.p_and_r.p.ID == x.p.ID) && !(lInj.Any(j => j.Player_ID == x.p.ID))))
+                            .OrderByDescending(x => x.pr.First().Running_Power_Rating).FirstOrDefault();
+                        break;
+                    }
+
+                case Player_Pos.WR:
+                    {
+                        r = Our_Players.Where(x => !(fList.Any(f => f.p_and_r.p.ID == x.p.ID) && !(lInj.Any(j => j.Player_ID == x.p.ID))))
+                            .OrderByDescending(x => x.pr.First().Hands_Rating).FirstOrDefault();
+                        break;
+                    }
+
+                case Player_Pos.TE:
+                    {
+                        r = Our_Players.Where(x => !(fList.Any(f => f.p_and_r.p.ID == x.p.ID) && !(lInj.Any(j => j.Player_ID == x.p.ID))))
+                            .OrderByDescending(x => x.pr.First().Hands_Rating).FirstOrDefault();
+                        break;
+                    }
+
+                case Player_Pos.OL:
+                    {
+                        r = Our_Players.Where(x => !(fList.Any(f => f.p_and_r.p.ID == x.p.ID) && !(lInj.Any(j => j.Player_ID == x.p.ID))))
+                            .OrderByDescending(x => x.pr.First().Pass_Block_Rating).FirstOrDefault();
+                        break;
+                    }
+
+                case Player_Pos.DL:
+                    {
+                        r = Our_Players.Where(x => !(fList.Any(f => f.p_and_r.p.ID == x.p.ID) && !(lInj.Any(j => j.Player_ID == x.p.ID))))
+                            .OrderByDescending(x => x.pr.First().Pass_Attack_Rating).FirstOrDefault();
+                        break;
+                    }
+
+                case Player_Pos.LB:
+                    {
+                        r = Our_Players.Where(x => !(fList.Any(f => f.p_and_r.p.ID == x.p.ID) && !(lInj.Any(j => j.Player_ID == x.p.ID))))
+                            .OrderByDescending(x => x.pr.First().Pass_Attack_Rating).FirstOrDefault();
+                        break;
+                    }
+
+                case Player_Pos.DB:
+                    {
+                        r = Our_Players.Where(x => !(fList.Any(f => f.p_and_r.p.ID == x.p.ID) && !(lInj.Any(j => j.Player_ID == x.p.ID))))
+                           .OrderByDescending(x => x.pr.First().Speed_Rating).FirstOrDefault();
+                        break;
+                    }
+
+                case Player_Pos.K:
+                    {
+                        r = Our_Players.Where(x => !(fList.Any(f => f.p_and_r.p.ID == x.p.ID) && !(lInj.Any(j => j.Player_ID == x.p.ID))))
+                            .OrderByDescending(x => x.pr.First().Kicker_Leg_Accuracy_Rating).FirstOrDefault();
+                        break;
+                    }
+
+                case Player_Pos.P:
+                    {
+                        r = Our_Players.Where(x => !(fList.Any(f => f.p_and_r.p.ID == x.p.ID) && !(lInj.Any(j => j.Player_ID == x.p.ID))))
+                            .OrderByDescending(x => x.pr.First().Kicker_Leg_Power_Rating).FirstOrDefault();
+                        break;
+                    }
+            }
+
+            return r;
         }
     }
 }

@@ -123,8 +123,8 @@ namespace SpectatorFootball.GameNS
                 Max_TD_Points = 9;
 
             //create the two coaching objects
-            Away_Coach = new Coach(at.Franchise_ID, g, Max_TD_Points);
-            Home_Coach = new Coach(ht.Franchise_ID, g, Max_TD_Points);
+            Away_Coach = new Coach(at.Franchise_ID, g, Max_TD_Points, Home_Players, Away_Players, lInj);
+            Home_Coach = new Coach(ht.Franchise_ID, g, Max_TD_Points, Home_Players, Away_Players, lInj);
 
             //The first play needs to be a kickoff
             bKickoff = true;

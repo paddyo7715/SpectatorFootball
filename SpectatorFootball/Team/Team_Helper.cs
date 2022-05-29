@@ -229,6 +229,48 @@ namespace SpectatorFootball
             return r;
         }
 
+        public static int getNumStartingPlayersByPosition(Player_Pos p)
+        {
+            int r = 0;
+
+            switch (p)
+            {
+                case Player_Pos.QB:
+                    r = app_Constants.STARTER_QB_PER_TEAM;
+                    break;
+                case Player_Pos.RB:
+                    r = app_Constants.STARTER_RB_PER_TEAM;
+                    break;
+                case Player_Pos.WR:
+                    r = app_Constants.STARTER_WR_PER_TEAM;
+                    break;
+                case Player_Pos.TE:
+                    r = app_Constants.STARTER_TE_PER_TEAM;
+                    break;
+                case Player_Pos.OL:
+                    r = app_Constants.STARTER_OL_PER_TEAM;
+                    break;
+                case Player_Pos.DL:
+                    r = app_Constants.STARTER_DL_PER_TEAM;
+                    break;
+                case Player_Pos.LB:
+                    r = app_Constants.STARTER_LB_PER_TEAM;
+                    break;
+                case Player_Pos.DB:
+                    r = app_Constants.STARTER_DB_PER_TEAM;
+                    break;
+                case Player_Pos.K:
+                    r = app_Constants.STARTER_K_PER_TEAM;
+                    break;
+                case Player_Pos.P:
+                    r = app_Constants.STARTER_P_PER_TEAM;
+                    break;
+            }
+
+            return r;
+        }
+
+
 
         public static List<long> getAllFranchiseIDThisSeason(Loaded_League_Structure lls)
         {

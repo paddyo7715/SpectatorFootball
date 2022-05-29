@@ -81,7 +81,9 @@ namespace SpectatorFootball.Services
                         if (srec.QTR == null)
                         {
                             srec.Status = "";
-                            srec.Action = "Play";
+                            if (lls.LState == Enum.League_State.Regular_Season_in_Progress ||
+                                lls.LState == Enum.League_State.Playoffs_In_Progress)
+                                srec.Action = "Play";
                         }
                         else
                         {
@@ -135,7 +137,9 @@ namespace SpectatorFootball.Services
                     if (srec.QTR == null)
                     {
                         srec.Status = "";
-                        srec.Action = "Play";
+                        if (lls.LState == Enum.League_State.Regular_Season_in_Progress ||
+                            lls.LState == Enum.League_State.Playoffs_In_Progress)
+                            srec.Action = "Play";
                     }
                     else
                     {

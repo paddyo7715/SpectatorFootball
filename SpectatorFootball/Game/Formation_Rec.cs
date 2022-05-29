@@ -1,4 +1,5 @@
 ﻿using SpectatorFootball.Enum;
+using SpectatorFootball.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace SpectatorFootball.GameNS
         public int YardLine { get; set; }
         public int Vertical_Percent_Pos { get; set; }
         public bool bSpecialTeams { get; set; }
-        public long player_id { get; set; }
+        public Player_and_Ratings p_and_r { get; set; }
 
     }
 }

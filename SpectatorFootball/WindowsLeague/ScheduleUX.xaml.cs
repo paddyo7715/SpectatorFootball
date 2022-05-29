@@ -132,21 +132,42 @@ namespace SpectatorFootball.WindowsLeague
             if (wsr.Action == "") return;
 
             Game g = null;
-            g = gs.geGamefromID(wsr.Game_ID, pw.Loaded_League);
+            try
+            {
+                g = gs.geGamefromID(wsr.Game_ID, pw.Loaded_League);
+            }
+            catch (Exception ex)
+            {
+                Mouse.OverrideCursor = null;
+                logger.Error("Error Loading Game from ID");
+                logger.Error(ex);
+                MessageBox.Show(CommonUtils.substr(ex.Message, 0, 100), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
 
             if (wsr.Action == "Game Summary")
             {
-                WeeklyScheduleRec wsched = Weekly_Sched_List[lstGames.SelectedIndex];
-                BoxScore bs_rec = gs.getGameandStatsfromID(wsched.Game_ID, pw.Loaded_League);
+                try
+                {
 
-                bool bPenalties = false;
-                long cur_season_id = pw.Loaded_League.AllSeasons.Where(x => x.Year == pw.Loaded_League.Current_Year).Select(x => x.Year).First();
-                long l = pw.Loaded_League.season.League_Structure_by_Season.Where(x => x.Season_ID == cur_season_id).Select(x => x.Penalties).First();
-                bPenalties = l == 1 ? true : false;
+                    WeeklyScheduleRec wsched = Weekly_Sched_List[lstGames.SelectedIndex];
+                    BoxScore bs_rec = gs.getGameandStatsfromID(wsched.Game_ID, pw.Loaded_League);
 
-                BoxScore_Popup dpp = new BoxScore_Popup(bs_rec, bPenalties);
-                dpp.Left = (SystemParameters.PrimaryScreenWidth - dpp.Width) / 2;
-                dpp.ShowDialog();
+                    bool bPenalties = false;
+                    long cur_season_id = pw.Loaded_League.AllSeasons.Where(x => x.Year == pw.Loaded_League.Current_Year).Select(x => x.Year).First();
+                    long l = pw.Loaded_League.season.League_Structure_by_Season.Where(x => x.Season_ID == cur_season_id).Select(x => x.Penalties).First();
+                    bPenalties = l == 1 ? true : false;
+
+                    BoxScore_Popup dpp = new BoxScore_Popup(bs_rec, bPenalties);
+                    dpp.Left = (SystemParameters.PrimaryScreenWidth - dpp.Width) / 2;
+                    dpp.ShowDialog();
+                }
+                catch (Exception ex)
+                {
+                    Mouse.OverrideCursor = null;
+                    logger.Error("Error Loading Game Box Score");
+                    logger.Error(ex);
+                    MessageBox.Show(CommonUtils.substr(ex.Message, 0, 100), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
             else
             {
@@ -172,7 +193,7 @@ namespace SpectatorFootball.WindowsLeague
                 catch (Exception ex)
                 {
                     Mouse.OverrideCursor = null;
-                    logger.Error("Error Loading Game Box Score");
+                    logger.Error("Error Loading/Playing Game");
                     logger.Error(ex);
                     MessageBox.Show(CommonUtils.substr(ex.Message, 0, 100), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 
