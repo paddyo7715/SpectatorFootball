@@ -82,6 +82,7 @@ namespace SpectatorFootball.Services
                         {
                             srec.Status = "";
                             if (lls.LState == Enum.League_State.Regular_Season_in_Progress ||
+                                lls.LState == Enum.League_State.Training_Camp_Ended ||
                                 lls.LState == Enum.League_State.Playoffs_In_Progress)
                                 srec.Action = "Play";
                         }
@@ -138,6 +139,7 @@ namespace SpectatorFootball.Services
                     {
                         srec.Status = "";
                         if (lls.LState == Enum.League_State.Regular_Season_in_Progress ||
+                            lls.LState == Enum.League_State.Training_Camp_Ended ||
                             lls.LState == Enum.League_State.Playoffs_In_Progress)
                             srec.Action = "Play";
                     }

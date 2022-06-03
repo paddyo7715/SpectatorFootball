@@ -49,6 +49,48 @@ namespace SpectatorFootball.GameNS
             return r;
         }
 
+        public static string getDownAndYardString(int Down, int YardstoGo, int BallYardline, bool bLefttoRight)
+        {
+            string r = "";
+
+            switch(Down)
+            {
+                case 1:
+                    r = "1st";
+                    break;
+                case 2:
+                    r = "2nd";
+                    break;
+                case 3:
+                    r = "3rd";
+                    break;
+                case 4:
+                    r = "4th";
+                    break;
+                default:
+                    r = "";
+                    break;
+            }
+
+            if (r != "")
+            {
+                r += " and ";
+
+                string toGo = "";
+
+                if (bLefttoRight && (100 - BallYardline) <= YardstoGo)
+                    toGo = "Goal";
+                else if (!bLefttoRight && BallYardline <= YardstoGo)
+                    toGo = "Goal";
+                else
+                    toGo = YardstoGo.ToString();
+
+                r += toGo;
+            }
+
+            return r;
+        }
+
         private static Player_and_Ratings getUninjuredPlayer(List<Player_Pos> posList,
             List<Player_and_Ratings> Players,
             List<Injury> lInj,

@@ -12,7 +12,6 @@ namespace SpectatorFootball.GameNS
     public class GameEngine
     {
         private MainWindow pw = null;
-        private bool bSureGame;
         private Teams_by_Season at = null;
         private List<Player_and_Ratings> Away_Players = null;
         private Teams_by_Season ht = null;
@@ -22,17 +21,25 @@ namespace SpectatorFootball.GameNS
 
         private Play_Struct play; 
 
-        private long Fid_first_posession;
-        private long fid_posession;
+
 
         private Coach Away_Coach = null;
         private Coach Home_Coach = null;
 
-        private bool bKickoff = false;
+
 
         private long Max_TD_Points = 7;
 
-
+        //Game State that are not in the Game model
+        private long Fid_first_posession;
+        private long fid_posession;
+        private bool bKickoff = false;
+        private int Down;
+        private int Yards_to_go;
+        private int Ball_Yardline;
+        private int Away_timeouts = 3;
+        private int Home_timeouts = 3;
+        private bool bSureGame;
 
         public GameEngine(MainWindow pw, Game g, Teams_by_Season at, List<Player_and_Ratings> Away_Players,
             Teams_by_Season ht, List<Player_and_Ratings> Home_Players)
@@ -45,6 +52,8 @@ namespace SpectatorFootball.GameNS
             this.g = g;
 
             //Initialize the game object
+            g.Home_Score = 0;
+            g.Away_Score = 0;
             g.Home_FirstDowns = 0;
             g.Home_ThirdDown_Conversions = 0;
             g.Home_ThirdDowns = 0;
@@ -145,9 +154,9 @@ namespace SpectatorFootball.GameNS
             return r;
         }
 
-        public bool ExecutePlay()
+        public Play_Struct ExecutePlay()
         {
-            bool bEndofGame = false;
+            Play_Struct r = new Play_Struct();
             Play_Package Offensive_Package = null;
             Formation DEF_Formation = null;
             Coach Offensive_Coach = null;
@@ -188,16 +197,37 @@ namespace SpectatorFootball.GameNS
             }
 
 
-            //put players in both formations
             //execute the play
             //accume stats
-            //return structure of play for game window 
-            //sleep based on a global variable tied to the game speed
+
+            r.Away_Score = (long) g.Away_Score;
+            r.Home_Score = (long)g.Home_Score;
+
+            bool bLefttoRight;
+            if (at.Franchise_ID == fid_posession)
+                bLefttoRight = true;
+            else
+                bLefttoRight = false;
+
+            r.Down_and_Yards = Game_Helper.getDownAndYardString(Down, Yards_to_go, Ball_Yardline, bLefttoRight);
+            r.Away_Timeouts = Away_timeouts;
+            r.Home_Timeouts = Home_timeouts;
 
 
 
 
-            return bEndofGame;
+//After the play is complete and everything is updated.
+            r.Away_Score = (long) g.Away_Score;
+            r.Home_Score = (long) g.Home_Score;
+            r.Away_Timeouts = Away_timeouts;
+            r.Home_Timeouts = Home_timeouts;
+
+            r.Offensive_Package = Offensive_Package;
+            r.Defensive_Formation = DEF_Formation;
+
+            //set all the other things such as if end of game and down and yardage.
+
+            return r;
         }
     }
 }

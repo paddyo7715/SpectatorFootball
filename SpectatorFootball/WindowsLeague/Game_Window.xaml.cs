@@ -163,16 +163,40 @@ namespace SpectatorFootball.WindowsLeague
             background.Fill = backgroundField;
 
             //This causes the field to move
-            //            GameTimer.Tick += ShowFrame;
-            //            GameTimer.Interval = TimeSpan.FromMilliseconds(20);
-            //            GameTimer.Start();
+            //                       GameTimer.Tick += ShowFrame;
+            //                       GameTimer.Interval = TimeSpan.FromMilliseconds(20);
+            //                       GameTimer.Start();
+
+            bool bGameEneded = false;
+            while (!bGameEneded)
+            {
+                Play_Struct Play = ge.ExecutePlay();
+
+                lblAwayScore.Content = Play.Away_Score;
+                lblHomeScore.Content = Play.Home_Score;
+
+                bGameEneded = Play.bGameOver;
+                //just to test one play take this out.
+                bGameEneded = true;
+            }
 
 
-            //just call one play for now but this should be in a loop till the return is true;
-            ge.ExecutePlay();
+
+
 
         }
-
+        private void Show_Play()
+        {
+            Rectangle OPlayer1 = new Rectangle();
+            OPlayer1.Width = 25;
+            OPlayer1.Height = 25;
+            OPlayer1.Fill = System.Windows.Media.Brushes.Blue;
+            OPlayer1.Stroke = System.Windows.Media.Brushes.Black;
+            //            OPlayer1.StrokeThickness = 2;
+            Canvas.SetTop(OPlayer1, 400);
+            Canvas.SetLeft(OPlayer1, 250);
+            MyCanvas.Children.Add(OPlayer1);
+        }
 
 
         private void btnSpeedSlower_click(object sender, EventArgs e)
@@ -191,6 +215,7 @@ namespace SpectatorFootball.WindowsLeague
         private void ShowFrame(object sender, EventArgs e)
         {
             int current_left = (int) Canvas.GetLeft(background);
+
 //            int current_Top = (int)Canvas.GetTop(background);
 
             if ((current_left + (Can_Width + 60)) <= 0)
@@ -198,12 +223,13 @@ namespace SpectatorFootball.WindowsLeague
 
             if (current_left >= 0)
                 Width_dir = -1;
+ /*
+            if ((current_Top + (Can_Height + 60)) <= 0)
+                Height_dir = 1;
 
-//            if ((current_Top + (Can_Height + 60)) <= 0)
-//                Height_dir = 1;
-
-//            if (current_Top >= 0)
-//                Height_dir = -1;
+            if (current_Top >= 0)
+                Height_dir = -1;
+ */
 
             Canvas.SetLeft(background, current_left + (3 * Width_dir));
 //            Canvas.SetTop(background, current_Top + (3 * Height_dir));

@@ -181,6 +181,8 @@ namespace SpectatorFootball.WindowsLeague
                         Game_Window.Top = (SystemParameters.PrimaryScreenHeight - Game_Window.Height) / 2;
                         Game_Window.Left = (SystemParameters.PrimaryScreenWidth - Game_Window.Width) / 2;
                         Game_Window.ShowDialog();
+
+
                     }
                     else //Resume
                     {

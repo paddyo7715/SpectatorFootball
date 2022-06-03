@@ -13,8 +13,8 @@ namespace SpectatorFootball.GameNS
         private long Franchise_id { get; set; }
         private Game g;
 
-        private long ourScore;
-        private long theirScore;
+        private long ourScore = 0;
+        private long theirScore = 0;
 
         private long Max_TD_Points;
 
@@ -189,7 +189,7 @@ namespace SpectatorFootball.GameNS
             Player_and_Ratings r = null;
 
             List<Player_and_Ratings> Available_Players = Our_Players.Where(x => x.p.Pos == (int)pp &&
-                !(fList.Any(f => f.p_and_r.p.ID == x.p.ID) && !(lInj.Any(j => j.Player_ID == x.p.ID))))
+                !(fList.Any(f => f.p_and_r != null && f.p_and_r.p.ID == x.p.ID) && !(lInj.Any(j => j.Player_ID == x.p.ID))))
                 .OrderByDescending(o => o.Overall_Grade).ToList();
 
             if (!bSubstitue)

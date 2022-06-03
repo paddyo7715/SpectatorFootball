@@ -9,10 +9,14 @@ namespace SpectatorFootball.GameNS
 {
     public class Play_Struct
     {
-        public int Away_Score;
-        public int Home_Score;
+        public long Away_Score;
+        public long Home_Score;
         public string Display_QTR;
         public string Display_Time;
+        public string Down_and_Yards;
+        public int Away_Timeouts;
+        public int Home_Timeouts;
+        public bool bGameOver;
 
         //Second to delay before the next play.  Used to show things such as
         //stats inbetween halves.
@@ -22,14 +26,8 @@ namespace SpectatorFootball.GameNS
         public string Long_Message;
 
         public Play_Package Offensive_Package = null;
-        public Formations_Enum Defensive_Formation;
+        public Formation Defensive_Formation;
 
         List<string> Player_Movements = null;
-/*      Player Movements Structure
-        if it is null then there are mo player movements, example beginning of game or half
-
-
-    */
-
     }
 }
