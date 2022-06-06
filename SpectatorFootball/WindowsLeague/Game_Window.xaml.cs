@@ -46,7 +46,10 @@ namespace SpectatorFootball.WindowsLeague
         private int Can_Height;
 
         private int back_width = 2480;
-        private int back_height = 1240;
+        private int back_height = 680;
+        private int Field_Border = 40;
+        private int EndZonePixels = 200;
+        private int Pixels_per_yard = 20;
 
         private int Width_dir = -1;
         private int Height_dir = -1;
@@ -56,6 +59,8 @@ namespace SpectatorFootball.WindowsLeague
 
         //This is the game engine where the game is played.
         GameEngine ge = null;
+
+        Rectangle Ball = new Rectangle();
 
         public Game_Window(MainWindow pw, Game g)
         {
@@ -101,6 +106,9 @@ namespace SpectatorFootball.WindowsLeague
 
                 ge = new GameEngine(pw, g, (Teams_by_Season)at, (List<Player_and_Ratings>)Away_Players,
                     (Teams_by_Season)ht, (List<Player_and_Ratings>)Home_Players);
+
+                Ball.Width = 8;
+                Ball.Height = 8;
 
                 //End of game not sure where this should go
                 //gs.SaveGame(g, g.injuries, pw.Loaded_League);
@@ -170,14 +178,26 @@ namespace SpectatorFootball.WindowsLeague
             bool bGameEneded = false;
             while (!bGameEneded)
             {
+
                 Play_Struct Play = ge.ExecutePlay();
 
+                //Place the ball on the field
+                setBAll(Play);
+
+
+                //Set the scoreboard after the play
                 lblAwayScore.Content = Play.Away_Score;
                 lblHomeScore.Content = Play.Home_Score;
 
+                lblClock.Content = Play.Display_Time;
+                lblQTR.Content = Play.Display_QTR;
+
+                lblAwayTimeouts.Content = Play.Away_Timeouts;
+                lblHomeTimeouts.Content = Play.Home_Timeouts;
+
+
                 bGameEneded = Play.bGameOver;
                 //just to test one play take this out.
-                bGameEneded = true;
             }
 
 
@@ -185,6 +205,19 @@ namespace SpectatorFootball.WindowsLeague
 
 
         }
+        private void setBAll(Play_Struct Play)
+        {
+            int H_Pixel = Yardline_to_Pixel(Play.Line_of_Scimmage);
+            double v_Pixel = VertPercent_to_Pixel(Play.Vertical_Ball_Placement);
+
+            Ball.Fill = System.Windows.Media.Brushes.Brown;
+            Ball.Stroke = System.Windows.Media.Brushes.Black;
+            Canvas.SetTop(Ball, v_Pixel);
+            Canvas.SetLeft(Ball, H_Pixel);
+            if (!MyCanvas.Children.Contains(Ball))
+                MyCanvas.Children.Add(Ball);
+        }
+
         private void Show_Play()
         {
             Rectangle OPlayer1 = new Rectangle();
@@ -195,6 +228,7 @@ namespace SpectatorFootball.WindowsLeague
             //            OPlayer1.StrokeThickness = 2;
             Canvas.SetTop(OPlayer1, 400);
             Canvas.SetLeft(OPlayer1, 250);
+
             MyCanvas.Children.Add(OPlayer1);
         }
 
@@ -235,6 +269,25 @@ namespace SpectatorFootball.WindowsLeague
 //            Canvas.SetTop(background, current_Top + (3 * Height_dir));
 
 
+        }
+
+        private int Yardline_to_Pixel(double y)
+        {
+            int r = 0;
+
+            r = Field_Border + EndZonePixels + (int)(y * Pixels_per_yard) - (int) (Ball.Width /2);
+
+            return r;
+        }
+
+        private double VertPercent_to_Pixel(int v)
+        {
+            double r = 0.0;
+
+            int verical_field_pixels = back_height - (int) Ball.Height - (Field_Border*2);
+            r = (verical_field_pixels * (v / 100.0)) + Field_Border;
+
+            return r;
         }
     }
 }

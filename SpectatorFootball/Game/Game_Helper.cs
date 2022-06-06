@@ -49,7 +49,7 @@ namespace SpectatorFootball.GameNS
             return r;
         }
 
-        public static string getDownAndYardString(int Down, int YardstoGo, int BallYardline, bool bLefttoRight)
+        public static string getDownAndYardString(int Down, int YardstoGo, double BallYardline, bool bLefttoRight)
         {
             string r = "";
 
@@ -78,9 +78,9 @@ namespace SpectatorFootball.GameNS
 
                 string toGo = "";
 
-                if (bLefttoRight && (100 - BallYardline) <= YardstoGo)
+                if (bLefttoRight && (100 - (int) BallYardline) <= YardstoGo)
                     toGo = "Goal";
-                else if (!bLefttoRight && BallYardline <= YardstoGo)
+                else if (!bLefttoRight && (int) BallYardline <= YardstoGo)
                     toGo = "Goal";
                 else
                     toGo = YardstoGo.ToString();

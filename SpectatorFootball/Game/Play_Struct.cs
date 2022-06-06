@@ -16,6 +16,7 @@ namespace SpectatorFootball.GameNS
         public string Down_and_Yards;
         public int Away_Timeouts;
         public int Home_Timeouts;
+        public bool bStartQTR;
         public bool bGameOver;
 
         //Second to delay before the next play.  Used to show things such as
@@ -24,6 +25,9 @@ namespace SpectatorFootball.GameNS
 
         public string Short_Message;
         public string Long_Message;
+
+        public Double Line_of_Scimmage;
+        public int Vertical_Ball_Placement;
 
         public Play_Package Offensive_Package = null;
         public Formation Defensive_Formation;
