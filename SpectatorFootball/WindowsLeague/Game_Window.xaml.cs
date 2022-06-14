@@ -14,10 +14,10 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Timers;
 using System.Windows.Threading;
 using SpectatorFootball.GameNS;
+using System.Windows.Shapes;
 
 namespace SpectatorFootball.WindowsLeague
 {
@@ -60,7 +60,9 @@ namespace SpectatorFootball.WindowsLeague
         //This is the game engine where the game is played.
         GameEngine ge = null;
 
-        Rectangle Ball = new Rectangle();
+
+        Game_Ball Game_Ball = new Game_Ball();
+        public Rectangle Ball = new Rectangle();
 
         public Game_Window(MainWindow pw, Game g)
         {
@@ -176,10 +178,11 @@ namespace SpectatorFootball.WindowsLeague
             //                       GameTimer.Start();
 
             bool bGameEneded = false;
+            Play_Struct Play = null;
             while (!bGameEneded)
             {
 
-                Play_Struct Play = ge.ExecutePlay();
+                Play = ge.ExecutePlay();
 
                 //Place the ball on the field
                 setBAll(Play);
@@ -199,14 +202,17 @@ namespace SpectatorFootball.WindowsLeague
                 bGameEneded = Play.bGameOver;
                 //just to test one play take this out.
             }
-
-
-
-
+            //Set this in case a team scores on the last play of the game
+            lblAwayScore.Content = Play.After_Away_Score;
+            lblHomeScore.Content = Play.After_Home_Score;
+            lblClock.Content = Play.After_Display_Time;
 
         }
         private void setBAll(Play_Struct Play)
         {
+
+            Game_Ball.setGraphicsProps(Play.Initial_Ball_State, Play.Line_of_Scimmage, Play.Vertical_Ball_Placement);
+
             int H_Pixel = Yardline_to_Pixel(Play.Line_of_Scimmage);
             double v_Pixel = VertPercent_to_Pixel(Play.Vertical_Ball_Placement);
 

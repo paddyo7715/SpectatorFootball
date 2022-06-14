@@ -1,4 +1,5 @@
-﻿using SpectatorFootball.Models;
+﻿using SpectatorFootball.Enum;
+using SpectatorFootball.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,24 +29,23 @@ namespace SpectatorFootball.GameNS
 
         //Game State that are not in the Game model
         private long Fid_first_posession;
-        private long fid_posession;
 
-        private int Down;
-        private int Yards_to_go;
-        private Double Line_of_Scrimmage;
-        public int Vertical_Ball_Placement;
-
-        private int Away_timeouts = 3;
-        private int Home_timeouts = 3;
-
-        private bool bStartQTR = true;
-        private bool bKickoff = false;
-        private bool bGameOver = false;
+        //Global state variables
+        private long g_fid_posession;
+        private int g_Down;
+        private int g_Yards_to_go;
+        private Double g_Line_of_Scrimmage;
+        public int g_Vertical_Ball_Placement;
+        private int g_Away_timeouts = 3;
+        private int g_Home_timeouts = 3;
+        private bool g_bKickoff = true;
+        private bool g_bGameOver = false;
 
         //Just for testing
         private int Execut_Play_Num = 0;
 
         private bool bSureGame;
+
 
         public GameEngine(MainWindow pw, Game g, Teams_by_Season at, List<Player_and_Ratings> Away_Players,
             Teams_by_Season ht, List<Player_and_Ratings> Home_Players)
@@ -94,8 +94,8 @@ namespace SpectatorFootball.GameNS
             g.Away_Score_Q4 = 0;
             g.Home_Score_OT = 0;
             g.Away_Score_OT = 0;
-            g.Quarter = 0;
-            g.Time = 0;
+            g.Quarter = 1;
+            g.Time = app_Constants.GAME_QUARTER_SECONDS;
             g.Playoff_Game = 0;
             g.Championship_Game = 0;
             g.Game_Done = 0;
@@ -141,11 +141,8 @@ namespace SpectatorFootball.GameNS
             Away_Coach = new Coach(at.Franchise_ID, g, Max_TD_Points, Home_Players, Away_Players, lInj);
             Home_Coach = new Coach(ht.Franchise_ID, g, Max_TD_Points, Home_Players, Away_Players, lInj);
 
-            //The first play needs to be a kickoff
-            bKickoff = true;
-
-            fid_posession = CoinToss();
-            Fid_first_posession = fid_posession;
+            g_fid_posession = CoinToss();
+            Fid_first_posession = g_fid_posession;
         }
 
         private long CoinToss()
@@ -170,6 +167,21 @@ namespace SpectatorFootball.GameNS
             int Delay_Seconds = 0;
             string Down_and_Yards = "";
 
+            //Local Game vairalbes just for this play
+            long Away_Score = (long) g.Away_Score;
+            long Home_Score = (long)g.Home_Score;
+            long Quarter = (long) g.Quarter;
+            long Time = (long) g.Time;
+            long fid_posession = this.g_fid_posession;
+            int Down = this.g_Down;
+            int Yards_to_go = this.g_Yards_to_go;
+            Double Line_of_Scrimmage = this.g_Line_of_Scrimmage;
+            int Vertical_Ball_Placement = this.g_Vertical_Ball_Placement;
+            int Away_timeouts = this.g_Away_timeouts;
+            int Home_timeouts = this.g_Home_timeouts;
+            bool bKickoff = this.g_bKickoff;
+            bool bGameOver = this.g_bGameOver;
+
             //call the offensive and defensive plays
             bool bLefttoRight;
 
@@ -186,9 +198,19 @@ namespace SpectatorFootball.GameNS
                 bLefttoRight = false;
             }
 
+            //if this play is a kickoff then set where to kickoff from
+            if (bKickoff)
+            {
+                if (bLefttoRight)
+                    Line_of_Scrimmage = 35.0;
+                else
+                    Line_of_Scrimmage = 65.0;
+
+                Vertical_Ball_Placement = 50;
+            }
+
             Offensive_Package = Offensive_Coach.Call_Off_PlayFormation(bKickoff);
             DEF_Formation = Defensive_Coach.Call_Def_Formation(Offensive_Package);
-
 
             //You could get the allow substitutions from either coach
             bool bAllowSubs = Home_Coach.AllowSubstitutions();
@@ -208,72 +230,43 @@ namespace SpectatorFootball.GameNS
                 //the defense has to forfeit the game
             }
 
-            //if this is a new quarter
-            if (bStartQTR)
-            {
-                g.Quarter += 1;
-                Delay_Seconds = 0;
-                g.Time = app_Constants.GAME_QUARTER_SECONDS;
 
-                switch (g.Quarter)
-                {
-                    case 1:
-                    case 3:
-                        Down = 1;
-                        Yards_to_go = 10;
-                        bKickoff = true;
-                        break;
-                    case 2:
-                    case 4:
-                        break;
-                    default:  //overtime
-                        Down = 1;
-                        Yards_to_go = 10;
-                        bKickoff = true;
-                        break;
-                }
+            //execute the play
+            //accume stats
+            Down_and_Yards = Game_Helper.getDownAndYardString(Down, Yards_to_go, Line_of_Scrimmage, bLefttoRight);
+            GameQTREnd();
 
-                if (bLefttoRight)
-                    Line_of_Scrimmage = 35.0;
-                else
-                    Line_of_Scrimmage = 65.0;
 
-                Vertical_Ball_Placement = 50;
-            }
-            else
-            {
-                //execute the play
-                //accume stats
-                Down_and_Yards = Game_Helper.getDownAndYardString(Down, Yards_to_go, Line_of_Scrimmage, bLefttoRight);
-                GameQTREnd();
-
-            }
-
-            //After the play is complete and everything is updated.
-            r.Away_Score = (long) g.Away_Score;
-            r.Home_Score = (long)g.Home_Score;
+            //After the play is complete 
+            //I need to update the global variables here
+            r.Away_Score = Away_Score;
+            r.Home_Score = Home_Score;
 
              r.Down_and_Yards = Down_and_Yards;
-
-            r.Away_Score = (long) g.Away_Score;
-            r.Home_Score = (long) g.Home_Score;
             r.Away_Timeouts = Away_timeouts;
             r.Home_Timeouts = Home_timeouts;
 
             r.Offensive_Package = Offensive_Package;
             r.Defensive_Formation = DEF_Formation;
             r.Delay_seconds = Delay_Seconds;
-            r.Display_QTR = Game_Helper.getQTRString(g.Quarter) + " QTR";
-            r.Display_Time = Game_Helper.getTimestringFromSeconds(g.Time);
+            r.Display_QTR = Game_Helper.getQTRString(Quarter) + " QTR";
+            r.Display_Time = Game_Helper.getTimestringFromSeconds(Time);
             r.Line_of_Scimmage = Line_of_Scrimmage;
             r.Vertical_Ball_Placement = Vertical_Ball_Placement;
 
             Execut_Play_Num += 1;
 
             if (Execut_Play_Num >= 1)
-                bGameOver = true;
+                g_bGameOver = true;
 
-            r.bGameOver = bGameOver;
+            r.bGameOver = g_bGameOver;
+            if (g_bGameOver)
+            {
+                r.After_Away_Score = (long) g.Away_Score;
+                r.After_Home_Score = (long) g.Home_Score;
+                r.After_Display_Time = Game_Helper.getTimestringFromSeconds(g.Time); 
+            }
+ 
             return r;
         }
         private void GameQTREnd()
@@ -281,12 +274,11 @@ namespace SpectatorFootball.GameNS
 
             //If we are in overtime and one team has a higher score then the game is over
             if (g.Quarter > 4 && g.Away_Score != g.Home_Score)
-                bGameOver = true;
+                g_bGameOver = true;
             else if (g.Quarter == 4 && g.Time <= 0 && g.Away_Score != g.Home_Score)
-                bGameOver = true;
-            else if (g.Time <= 0)
-                bStartQTR = true;
-
+                g_bGameOver = true;
+            else
+                g_bGameOver = false;
         }
     }
 }

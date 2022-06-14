@@ -11,9 +11,9 @@ namespace SpectatorFootball.GameNS
     public class Formation_Rec
     {
         public Player_Pos Pos { get; set; }
-        public int YardLine { get; set; }
+        public double YardLine { get; set; }
         public int Vertical_Percent_Pos { get; set; }
-        public bool bSpecialTeams { get; set; }
+        public Player_States Initial_State { get; set; }
         public Player_and_Ratings p_and_r { get; set; }
 
     }

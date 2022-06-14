@@ -9,6 +9,7 @@ namespace SpectatorFootball.GameNS
 {
     public class Play_Struct
     {
+        //Before the play is executed
         public long Away_Score;
         public long Home_Score;
         public string Display_QTR;
@@ -17,7 +18,13 @@ namespace SpectatorFootball.GameNS
         public int Away_Timeouts;
         public int Home_Timeouts;
         public bool bStartQTR;
+        public Ball_States Initial_Ball_State;
+
+        //These are from after the play is executed
         public bool bGameOver;
+        public long After_Away_Score;
+        public long After_Home_Score;
+        public string After_Display_Time;
 
         //Second to delay before the next play.  Used to show things such as
         //stats inbetween halves.
