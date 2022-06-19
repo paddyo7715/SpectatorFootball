@@ -25,7 +25,7 @@ namespace SpectatorFootball.GameNS
         public long After_Away_Score;
         public long After_Home_Score;
         public string After_Display_Time;
-
+        public bool bLefttoRight;
         //Second to delay before the next play.  Used to show things such as
         //stats inbetween halves.
         public int Delay_seconds;

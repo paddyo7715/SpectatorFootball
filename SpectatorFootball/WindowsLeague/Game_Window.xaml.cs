@@ -50,6 +50,7 @@ namespace SpectatorFootball.WindowsLeague
         private int Field_Border = 40;
         private int EndZonePixels = 200;
         private int Pixels_per_yard = 20;
+        private const double RIGHT_YARDS_FUDGE = 3.0;
 
         private int Width_dir = -1;
         private int Height_dir = -1;
@@ -63,6 +64,9 @@ namespace SpectatorFootball.WindowsLeague
 
         Game_Ball Game_Ball = new Game_Ball();
         public Rectangle Ball = new Rectangle();
+
+        public const double VIEW_EDGE_OFFSET_YARDLINE = 12.0;
+        private int VIEW_EDGE_PIXELS;
 
         public Game_Window(MainWindow pw, Game g)
         {
@@ -111,6 +115,8 @@ namespace SpectatorFootball.WindowsLeague
 
                 Ball.Width = 8;
                 Ball.Height = 8;
+
+                VIEW_EDGE_PIXELS = Yardline_to_Pixel(VIEW_EDGE_OFFSET_YARDLINE);
 
                 //End of game not sure where this should go
                 //gs.SaveGame(g, g.injuries, pw.Loaded_League);
@@ -186,6 +192,8 @@ namespace SpectatorFootball.WindowsLeague
 
                 //Place the ball on the field
                 setBAll(Play);
+                //set the left edge of the view
+                setView(Play);
 
 
                 //Set the scoreboard after the play
@@ -208,10 +216,34 @@ namespace SpectatorFootball.WindowsLeague
             lblClock.Content = Play.After_Display_Time;
 
         }
+
+        private void setView(Play_Struct Play)
+        {
+            double view_edge;
+            int H_Pixel = Yardline_to_Pixel(Play.Line_of_Scimmage);
+            view_edge = (H_Pixel + VIEW_EDGE_PIXELS) * -1;
+
+            //Correct if necessary
+            if (Play.bLefttoRight)
+            {
+                view_edge = view_edge > VIEW_EDGE_PIXELS ? 0.0 : view_edge;
+            }
+            else
+            {
+                view_edge = view_edge < VIEW_EDGE_PIXELS ? MyCanvas.Width - back_width : view_edge;
+            }
+
+     //       view_edge = -1270.0;
+            Canvas.SetLeft(background, view_edge);
+        }
+
         private void setBAll(Play_Struct Play)
         {
-
             Game_Ball.setGraphicsProps(Play.Initial_Ball_State, Play.Line_of_Scimmage, Play.Vertical_Ball_Placement);
+
+
+//For testing
+ //           Play.Line_of_Scimmage = 35.0;
 
             int H_Pixel = Yardline_to_Pixel(Play.Line_of_Scimmage);
             double v_Pixel = VertPercent_to_Pixel(Play.Vertical_Ball_Placement);

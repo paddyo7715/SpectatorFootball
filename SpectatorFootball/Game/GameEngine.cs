@@ -234,7 +234,7 @@ namespace SpectatorFootball.GameNS
             //execute the play
             //accume stats
             Down_and_Yards = Game_Helper.getDownAndYardString(Down, Yards_to_go, Line_of_Scrimmage, bLefttoRight);
-            GameQTREnd();
+            GameEnd();
 
 
             //After the play is complete 
@@ -253,6 +253,7 @@ namespace SpectatorFootball.GameNS
             r.Display_Time = Game_Helper.getTimestringFromSeconds(Time);
             r.Line_of_Scimmage = Line_of_Scrimmage;
             r.Vertical_Ball_Placement = Vertical_Ball_Placement;
+            r.bLefttoRight = bLefttoRight;
 
             Execut_Play_Num += 1;
 
@@ -260,16 +261,16 @@ namespace SpectatorFootball.GameNS
                 g_bGameOver = true;
 
             r.bGameOver = g_bGameOver;
-            if (g_bGameOver)
-            {
-                r.After_Away_Score = (long) g.Away_Score;
-                r.After_Home_Score = (long) g.Home_Score;
-                r.After_Display_Time = Game_Helper.getTimestringFromSeconds(g.Time); 
-            }
+
+            //just incase a team scores on the final play of the half or game
+            r.After_Away_Score = (long) g.Away_Score;
+            r.After_Home_Score = (long) g.Home_Score;
+            r.After_Display_Time = Game_Helper.getTimestringFromSeconds(g.Time); 
+
  
             return r;
         }
-        private void GameQTREnd()
+        private void GameEnd()
         {
 
             //If we are in overtime and one team has a higher score then the game is over
