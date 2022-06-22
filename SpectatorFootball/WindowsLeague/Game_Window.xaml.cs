@@ -130,8 +130,6 @@ namespace SpectatorFootball.WindowsLeague
                 //Set_TopMenu?.Invoke(this, new EventArgs());
                 //this.Close();
 
-
-
             }
             catch (Exception e)
             {
@@ -196,18 +194,19 @@ namespace SpectatorFootball.WindowsLeague
 
                 Play = ge.ExecutePlay();
 
-                //set the left edge of the view
-                double view_left_edge = setView(Play);
-
                 bool bKickoff = false;
                 if (Play.Offensive_Package.Play == Enum.Play_Enum.KICKOFF_NORMAL ||
                     Play.Offensive_Package.Play == Enum.Play_Enum.KICKOFF_ONSIDES)
                     bKickoff = true;
 
                 Game_Ball.setGraphicsProps(Play.Initial_Ball_State, Play.Line_of_Scimmage, Play.Vertical_Ball_Placement);
-                //Place the ball on the field
-//                setBAll(Play.Line_of_Scimmage,Play.Vertical_Ball_Placement,Play.Initial_Ball_State, view_left_edge, bKickoff);
-                setBAll(Game_Ball.YardLine, Game_Ball.Vertical_Percent_Pos, Game_Ball.bState, view_left_edge, bKickoff);
+
+                //set the left edge of the view
+                double view_left_edge = setView(Game_Ball.YardLine, Play.bLefttoRight);
+
+                //Place the ball on the field if not carried
+                if (Game_Ball.bState != Ball_States.CARRIED)
+                    setBAll(Game_Ball.YardLine, Game_Ball.Vertical_Percent_Pos, Game_Ball.bState, view_left_edge, bKickoff);
 
                 //Set the scoreboard after the play
                 lblAwayScore.Content = Play.Away_Score;
@@ -230,18 +229,18 @@ namespace SpectatorFootball.WindowsLeague
 
         }
 
-        private double setView(Play_Struct Play)
+        private double setView(double YardLIne, bool bLefttoRight)
         {
             double view_edge;
-            int H_Pixel = Yardline_to_Pixel(Play.Line_of_Scimmage, true);
+            int H_Pixel = Yardline_to_Pixel(YardLIne, true);
             view_edge = H_Pixel * -1;
 
-            logger.Debug("SetView: " + Play.Line_of_Scimmage);
+            logger.Debug("SetView: " + YardLIne);
             logger.Debug("H_Pixel: " + H_Pixel);
             logger.Debug("VIEW_EDGE_PIXELS: " + VIEW_EDGE_PIXELS);
 
             //Correct if necessary
-            if (Play.bLefttoRight)
+            if (bLefttoRight)
             {
                 view_edge += VIEW_EDGE_PIXELS;
                 logger.Debug("before: " + view_edge);
@@ -258,8 +257,6 @@ namespace SpectatorFootball.WindowsLeague
 
             if (view_edge > 0)
                 view_edge = 0;
-
-
 
             logger.Debug("after: " + view_edge);
 
