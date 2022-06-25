@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SpectatorFootball.WindowsLeague"
         mc:Ignorable="d"
-        Height="780" Width="1220" WindowStyle="ToolWindow"  ResizeMode="CanResizeWithGrip"  ShowInTaskbar="False" Topmost="False">
-    <!--     <Border Style="{StaticResource popupBD}" BorderThickness="5"> -->
+        Height="780" Width="1220" WindowStyle="None"  ResizeMode="NoResize"  ShowInTaskbar="False" Topmost="true">
+        <Border Style="{StaticResource popupBD}" BorderThickness="5"> 
         <StackPanel Orientation="Vertical">
         <StackPanel Name="Game_intro_pnl" Style="{StaticResource popupSP}" Height="770" Width="1210" Orientation="Vertical" >
             <StackPanel.Background>
@@ -122,14 +122,14 @@
                     </StackPanel>
                 </Grid>
             <StackPanel HorizontalAlignment="right">
-<!--                <Border BorderThickness="1"> -->
-                    <Canvas Name="MyCanvas"  Focusable="True"  Background="LightBlue"  Height="710" Width="1210">
-                        <Rectangle Name="background" Height="680" Width="2480" Stretch="Fill" Canvas.Top="0"  Canvas.Left="0" /> 
+<!--                <Border BorderThickness="5" BorderBrush="Black"> -->
+                    <Canvas Name="MyCanvas" Focusable="True" ClipToBounds="True" Background="LightBlue"  Height="710" Width="1210" >
+                        <Rectangle Name="background" Height="900" Width="2480" Stretch="Fill" Canvas.Top="0"  Canvas.Left="0" /> 
                     </Canvas>
-<!--                </Border> -->
+<!--                </Border> --> 
             </StackPanel>
             </StackPanel>
         </StackPanel>
-<!--    </Border> -->
+       </Border> 
 
 </Window>

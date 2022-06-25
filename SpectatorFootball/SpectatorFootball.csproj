@@ -762,7 +762,7 @@
     <Resource Include="Images\Helmets\st_Turbos.png" />
     <Resource Include="Images\Stadiums\st_Detroit.jpg" />
     <Resource Include="Images\Game_Intro_Background.jpg" />
-    <Resource Include="Images\Stadiums\GenericGrass.png" />
+    <Resource Include="Images\Stadiums\GenericGrass2.png" />
     <Resource Include="Images\Stadiums\Field__Template.png" />
     <Content Include="Models\LeagueEDM.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

@@ -47,7 +47,8 @@ namespace SpectatorFootball.WindowsLeague
         private int Can_Height;
 
         private int back_width = 2480;
-        private int back_height = 680;
+//        private int back_height = 680;
+        private int back_height = 900;
         private int Field_Border = 40;
         private int EndZonePixels = 200;
         private int Pixels_per_yard = 20;
@@ -178,17 +179,19 @@ namespace SpectatorFootball.WindowsLeague
             lblHomeTeam.Background = new SolidColorBrush(CommonUtils.getColorfromHex(m2[0]));
             
             ImageBrush backgroundField = new ImageBrush();
-            backgroundField.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images/Stadiums/GenericGrass.png"));
+            backgroundField.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images/Stadiums/GenericGrass2.png"));
          
             background.Fill = backgroundField;
 
             //This causes the field to move
-            //                       GameTimer.Tick += ShowFrame;
-            //                       GameTimer.Interval = TimeSpan.FromMilliseconds(20);
-            //                       GameTimer.Start();
+                                   GameTimer.Tick += ShowFrame;
+                                   GameTimer.Interval = TimeSpan.FromMilliseconds(20);
+                                   GameTimer.Start();
 
             bool bGameEneded = false;
             Play_Struct Play = null;
+
+            bGameEneded = false;
             while (!bGameEneded)
             {
 
@@ -325,23 +328,23 @@ namespace SpectatorFootball.WindowsLeague
         {
             int current_left = (int) Canvas.GetLeft(background);
 
-//            int current_Top = (int)Canvas.GetTop(background);
+            int current_Top = (int)Canvas.GetTop(background);
 
-            if ((current_left + (Can_Width + 60)) <= 0)
+            if ((current_left + (Can_Width - back_width)) <= 0)
                 Width_dir = 1;
 
             if (current_left >= 0)
                 Width_dir = -1;
- /*
+ 
             if ((current_Top + (Can_Height + 60)) <= 0)
                 Height_dir = 1;
 
             if (current_Top >= 0)
                 Height_dir = -1;
- */
+ 
 
             Canvas.SetLeft(background, current_left + (3 * Width_dir));
-//            Canvas.SetTop(background, current_Top + (3 * Height_dir));
+            Canvas.SetTop(background, current_Top + (3 * Height_dir));
 
 
         }
