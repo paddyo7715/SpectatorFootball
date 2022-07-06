@@ -176,7 +176,7 @@ namespace SpectatorFootball.GameNS
             int Down = this.g_Down;
             int Yards_to_go = this.g_Yards_to_go;
             Double Line_of_Scrimmage = this.g_Line_of_Scrimmage;
-            int Vertical_Ball_Placement = this.g_Vertical_Ball_Placement;
+            double Vertical_Ball_Placement = this.g_Vertical_Ball_Placement;
             int Away_timeouts = this.g_Away_timeouts;
             int Home_timeouts = this.g_Home_timeouts;
             bool bKickoff = this.g_bKickoff;
@@ -206,7 +206,7 @@ namespace SpectatorFootball.GameNS
                 else
                     Line_of_Scrimmage = 65.0;
 
-                Vertical_Ball_Placement = 50;
+                Vertical_Ball_Placement = 50.0;
             }
 
             Offensive_Package = Offensive_Coach.Call_Off_PlayFormation(bKickoff);

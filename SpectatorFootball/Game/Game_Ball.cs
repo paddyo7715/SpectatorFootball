@@ -11,9 +11,9 @@ namespace SpectatorFootball.GameNS
     {
         public Ball_States bState;
         public double YardLine;
-        public int Vertical_Percent_Pos;
+        public double Vertical_Percent_Pos;
 
-        public void setGraphicsProps(Ball_States bState, double YardLine, int Vertical_Percent_Pos)
+        public void setGraphicsProps(Ball_States bState, double YardLine, double Vertical_Percent_Pos)
         {
             this.bState = bState;
             this.YardLine = YardLine;

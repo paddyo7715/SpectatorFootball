@@ -46,10 +46,9 @@ namespace SpectatorFootball.WindowsLeague
         private int Can_Width;
         private int Can_Height;
 
-        private int back_width = 2480;
-//        private int back_height = 680;
-        private int back_height = 900;
-        private int Field_Border = 40;
+        private int back_width = 2680;
+        private int back_height = 1280;
+        private int Field_Border = 140;
         private int EndZonePixels = 200;
         private int Pixels_per_yard = 20;
         private const double RIGHT_YARDS_FUDGE = 3.0;
@@ -179,19 +178,18 @@ namespace SpectatorFootball.WindowsLeague
             lblHomeTeam.Background = new SolidColorBrush(CommonUtils.getColorfromHex(m2[0]));
             
             ImageBrush backgroundField = new ImageBrush();
-            backgroundField.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images/Stadiums/GenericGrass2.png"));
+            backgroundField.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images/Stadiums/Grass_BrightGreen.png"));
          
             background.Fill = backgroundField;
 
             //This causes the field to move
-                                   GameTimer.Tick += ShowFrame;
-                                   GameTimer.Interval = TimeSpan.FromMilliseconds(20);
-                                   GameTimer.Start();
+//                                   GameTimer.Tick += ShowFrame;
+//                                   GameTimer.Interval = TimeSpan.FromMilliseconds(20);
+//                                   GameTimer.Start();
 
             bool bGameEneded = false;
             Play_Struct Play = null;
 
-            bGameEneded = false;
             while (!bGameEneded)
             {
 
@@ -205,11 +203,13 @@ namespace SpectatorFootball.WindowsLeague
                 Game_Ball.setGraphicsProps(Play.Initial_Ball_State, Play.Line_of_Scimmage, Play.Vertical_Ball_Placement);
 
                 //set the left edge of the view
-                double view_left_edge = setView(Game_Ball.YardLine, Play.bLefttoRight);
+                double[] a_edge = setViewEdge(Game_Ball.YardLine, Play.bLefttoRight, Game_Ball.Vertical_Percent_Pos);
+
+                Canvas.SetLeft(background, a_edge[0]);
 
                 //Place the ball on the field if not carried
                 if (Game_Ball.bState != Ball_States.CARRIED)
-                    setBAll(Game_Ball.YardLine, Game_Ball.Vertical_Percent_Pos, Game_Ball.bState, view_left_edge, bKickoff);
+                    setBAll(Game_Ball.YardLine, Game_Ball.Vertical_Percent_Pos, Game_Ball.bState, a_edge[0], bKickoff);
 
                 //Set the scoreboard after the play
                 lblAwayScore.Content = Play.Away_Score;
@@ -232,11 +232,14 @@ namespace SpectatorFootball.WindowsLeague
 
         }
 
-        private double setView(double YardLIne, bool bLefttoRight)
+        private double[] setViewEdge(double YardLIne, bool bLefttoRight, double vert_percent)
         {
-            double view_edge;
+            double view_edge_left;
+            double view_edge_top;
+
+            //Set the top edge
             int H_Pixel = Yardline_to_Pixel(YardLIne, true);
-            view_edge = H_Pixel * -1;
+            view_edge_left = H_Pixel * -1;
 
             logger.Debug("SetView: " + YardLIne);
             logger.Debug("H_Pixel: " + H_Pixel);
@@ -245,30 +248,41 @@ namespace SpectatorFootball.WindowsLeague
             //Correct if necessary
             if (bLefttoRight)
             {
-                view_edge += VIEW_EDGE_PIXELS;
-                logger.Debug("before: " + view_edge);
+                view_edge_left += VIEW_EDGE_PIXELS;
+                logger.Debug("before: " + view_edge_left);
             }
             else
             {
-                view_edge +=  CANVAS_WIDTH - VIEW_EDGE_PIXELS;
-                logger.Debug("before: " + view_edge);
+                view_edge_left +=  CANVAS_WIDTH - VIEW_EDGE_PIXELS;
+                logger.Debug("before: " + view_edge_left);
             }
 
-            //correct the view if the field will go off the edge
-            if (view_edge < CANVAS_WIDTH - back_width)
-                view_edge =  - back_width;
+            //correct the view if the field will go off left the edge
+            if (view_edge_left < CANVAS_WIDTH - back_width)
+                view_edge_left =  - back_width;
 
-            if (view_edge > 0)
-                view_edge = 0;
+            if (view_edge_left > 0)
+                view_edge_left = 0;
 
-            logger.Debug("after: " + view_edge);
+            logger.Debug("after: " + view_edge_left);
 
-            Canvas.SetLeft(background, view_edge);
+            //set the top edge
+            double vertTemp1 = VertPercent_to_Pixel(vert_percent, false);
+            double halfCanHeight = Can_Height / 2;
+            view_edge_top = vertTemp1 - halfCanHeight;
 
-            return view_edge;
+            //correct the view if the field will go off the top edge
+            if (view_edge_top < Can_Height - back_height)
+                view_edge_left = -back_width;
+
+            if (view_edge_top > 0)
+                view_edge_top = 0;
+
+
+            return new double[2] { view_edge_left, view_edge_top };
         }
 
-        private void setBAll(double yardLine, int Vertical_Ball_Placement, Ball_States bstate, double view_left_edge, bool bKickoff)
+        private void setBAll(double yardLine, double Vertical_Ball_Placement, Ball_States bstate, double view_left_edge, bool bKickoff)
         {
             switch (bstate)
             {
@@ -281,7 +295,7 @@ namespace SpectatorFootball.WindowsLeague
             }
 
             int H_Pixel = Yardline_to_Pixel(yardLine, true);
-            double v_Pixel = VertPercent_to_Pixel(Vertical_Ball_Placement);
+            double v_Pixel = VertPercent_to_Pixel(Vertical_Ball_Placement, true);
 
             //If kickoff then the ball must be placed in the middle of the 35 yard line
             if (bKickoff)
@@ -330,13 +344,13 @@ namespace SpectatorFootball.WindowsLeague
 
             int current_Top = (int)Canvas.GetTop(background);
 
-            if ((current_left + (Can_Width - back_width)) <= 0)
+            if (current_left < CANVAS_WIDTH - back_width + 6)
                 Width_dir = 1;
 
             if (current_left >= 0)
                 Width_dir = -1;
  
-            if ((current_Top + (Can_Height + 60)) <= 0)
+            if (current_Top < (Can_Height - back_height + 6))
                 Height_dir = 1;
 
             if (current_Top >= 0)
@@ -361,13 +375,15 @@ namespace SpectatorFootball.WindowsLeague
             return r;
         }
 
-        private double VertPercent_to_Pixel(int v)
+        private double VertPercent_to_Pixel(double v, bool bIncludeBall)
         {
             double r = 0.0;
+            double ballHeight = bIncludeBall ? Ball.Height : 0.0;
 
-            int verical_field_pixels = back_height - (int) Ball.Height - (Field_Border*2);
+            double verical_field_pixels = back_height - ballHeight - (Field_Border * 2);
+
             r = (verical_field_pixels * (v / 100.0)) + Field_Border;
-
+            r = 500.0;
             return r;
         }
     }

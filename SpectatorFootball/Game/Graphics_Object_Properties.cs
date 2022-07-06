@@ -12,6 +12,6 @@ namespace SpectatorFootball.GameNS
         public Ball_States bState { get; set; }
         public Player_States pState { get; set; }
         public double YardLine { get; set; }
-        public int Vertical_Percent_Pos { get; set; }
+        public double Vertical_Percent_Pos { get; set; }
     }
 }
