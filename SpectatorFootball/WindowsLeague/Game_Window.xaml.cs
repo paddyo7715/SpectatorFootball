@@ -71,7 +71,9 @@ namespace SpectatorFootball.WindowsLeague
         //I'm not sure why I have to do this, but it seems that
         //the 1210 might not be the full view it might be just 1204
         private const int RIGHT_PIXEL_FUDGE = 6;
+        private const int TOP_PIXEL_FUDGE = 10;
         private double CANVAS_WIDTH;
+        private double CANVAS_HEIGHT;
 
 
         private int VIEW_EDGE_PIXELS;
@@ -123,6 +125,7 @@ namespace SpectatorFootball.WindowsLeague
 
                 VIEW_EDGE_PIXELS = Yardline_to_Pixel(VIEW_EDGE_OFFSET_YARDLINE, false);
                 CANVAS_WIDTH = MyCanvas.Width - RIGHT_PIXEL_FUDGE;
+                CANVAS_HEIGHT = MyCanvas.Height;
 
                 //End of game not sure where this should go
                 //gs.SaveGame(g, g.injuries, pw.Loaded_League);
@@ -206,10 +209,11 @@ namespace SpectatorFootball.WindowsLeague
                 double[] a_edge = setViewEdge(Game_Ball.YardLine, Play.bLefttoRight, Game_Ball.Vertical_Percent_Pos);
 
                 Canvas.SetLeft(background, a_edge[0]);
+                Canvas.SetTop(background, a_edge[1]);
 
                 //Place the ball on the field if not carried
                 if (Game_Ball.bState != Ball_States.CARRIED)
-                    setBAll(Game_Ball.YardLine, Game_Ball.Vertical_Percent_Pos, Game_Ball.bState, a_edge[0], bKickoff);
+                    setBAll(Game_Ball.YardLine, Game_Ball.Vertical_Percent_Pos, Game_Ball.bState, a_edge, bKickoff);
 
                 //Set the scoreboard after the play
                 lblAwayScore.Content = Play.Away_Score;
@@ -221,7 +225,6 @@ namespace SpectatorFootball.WindowsLeague
                 lblAwayTimeouts.Content = Play.Away_Timeouts;
                 lblHomeTimeouts.Content = Play.Home_Timeouts;
 
-
                 bGameEneded = Play.bGameOver;
                 //just to test one play take this out.
             }
@@ -229,7 +232,6 @@ namespace SpectatorFootball.WindowsLeague
             lblAwayScore.Content = Play.After_Away_Score;
             lblHomeScore.Content = Play.After_Home_Score;
             lblClock.Content = Play.After_Display_Time;
-
         }
 
         private double[] setViewEdge(double YardLIne, bool bLefttoRight, double vert_percent)
@@ -269,26 +271,36 @@ namespace SpectatorFootball.WindowsLeague
             //set the top edge
             double vertTemp1 = VertPercent_to_Pixel(vert_percent, false);
             double halfCanHeight = Can_Height / 2;
-            view_edge_top = vertTemp1 - halfCanHeight;
+            view_edge_top = vertTemp1 - halfCanHeight - TOP_PIXEL_FUDGE;
+            view_edge_top *= -1;
+
+            logger.Debug("Can_Height: " + CANVAS_HEIGHT);
+            logger.Debug("vertTemp1: " + vertTemp1);
+            logger.Debug("view_edge_top: " + view_edge_top);
 
             //correct the view if the field will go off the top edge
-            if (view_edge_top < Can_Height - back_height)
-                view_edge_left = -back_width;
+            if (view_edge_top < CANVAS_HEIGHT - back_height)
+                view_edge_top = -back_width;
 
             if (view_edge_top > 0)
                 view_edge_top = 0;
 
 
+
+            logger.Debug("after: " + view_edge_top);
+
             return new double[2] { view_edge_left, view_edge_top };
         }
 
-        private void setBAll(double yardLine, double Vertical_Ball_Placement, Ball_States bstate, double view_left_edge, bool bKickoff)
+        private void setBAll(double yardLine, double Vertical_Ball_Placement, Ball_States bstate, double[] a_edge, bool bKickoff)
         {
             switch (bstate)
             {
                 case Ball_States.TEED_UP:
-                    Ball.Width = 8;
-                    Ball.Height = 8;
+                    Game_Ball.width = 8.0;
+                    Game_Ball.Height = 8.0;
+                    Ball.Width = Game_Ball.width;
+                    Ball.Height = Game_Ball.Height;
                     Ball.Fill = System.Windows.Media.Brushes.Brown;
                     Ball.Stroke = System.Windows.Media.Brushes.Black;
                     break;
@@ -302,7 +314,8 @@ namespace SpectatorFootball.WindowsLeague
                 H_Pixel -= (int)Ball.Width / 2;
 
             //Adjust the position on the canvas for the view edge
-            H_Pixel += (int)view_left_edge;
+            H_Pixel += (int)a_edge[0];
+            v_Pixel += (int)a_edge[1];
 
             Canvas.SetTop(Ball, v_Pixel);
             Canvas.SetLeft(Ball, H_Pixel);
@@ -378,12 +391,11 @@ namespace SpectatorFootball.WindowsLeague
         private double VertPercent_to_Pixel(double v, bool bIncludeBall)
         {
             double r = 0.0;
-            double ballHeight = bIncludeBall ? Ball.Height : 0.0;
+            double ballHeight = bIncludeBall ? Game_Ball.Height : 0.0;
 
             double verical_field_pixels = back_height - ballHeight - (Field_Border * 2);
 
             r = (verical_field_pixels * (v / 100.0)) + Field_Border;
-            r = 500.0;
             return r;
         }
     }

@@ -12,6 +12,8 @@ namespace SpectatorFootball.GameNS
         public Ball_States bState;
         public double YardLine;
         public double Vertical_Percent_Pos;
+        public double Height;
+        public double width;
 
         public void setGraphicsProps(Ball_States bState, double YardLine, double Vertical_Percent_Pos)
         {

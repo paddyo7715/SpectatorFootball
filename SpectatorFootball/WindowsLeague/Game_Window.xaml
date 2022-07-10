@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SpectatorFootball.WindowsLeague"
         mc:Ignorable="d"
-        Height="780" Width="1220" WindowStyle="None"  ResizeMode="NoResize"  ShowInTaskbar="False" Topmost="True">
+        Height="780" Width="1220" WindowStyle="None"  ResizeMode="NoResize"  ShowInTaskbar="False" Topmost="False">
         <Border Style="{StaticResource popupBD}" BorderThickness="5"> 
         <StackPanel Orientation="Vertical">
         <StackPanel Name="Game_intro_pnl" Style="{StaticResource popupSP}" Height="770" Width="1210" Orientation="Vertical" >
@@ -102,12 +102,12 @@
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal">
                                 <Label Name="lblAwayTeam" Height="40" Width="420" HorizontalContentAlignment="Right" Style="{StaticResource GameBarFonts}">Bullies</Label>
-                                <Label Name="lblAwayScore" Height="40" Width="40" Style="{StaticResource GameBarFonts}" >14</Label>
+                                <Label Name="lblAwayScore" Height="40" Width="40" HorizontalContentAlignment="Center" Style="{StaticResource GameBarFonts}" >14</Label>
                                 <Label Width="10" />
                                 <Label Name="lblClock" Height="40" Width="85" Style="{StaticResource GameBarFonts}" BorderBrush="Black" BorderThickness="1">11:23</Label>
                                 <Label Name="lblQTR" Height="40" Width="120" Style="{StaticResource GameBarFonts}" BorderBrush="Black" BorderThickness="1">2nd QTR</Label>
                                 <Label Width="10" />
-                                <Label Name="lblHomeScore" Height="40" Width="40" Style="{StaticResource GameBarFonts}" >17</Label>
+                                <Label Name="lblHomeScore" Height="40" Width="40" HorizontalContentAlignment="Center" Style="{StaticResource GameBarFonts}" >17</Label>
                                 <Label Name="lblHomeTeam" Height="40" Width="420" HorizontalContentAlignment="Left" Style="{StaticResource GameBarFonts}">Legends</Label>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
