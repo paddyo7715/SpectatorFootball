@@ -59,7 +59,7 @@ namespace SpectatorFootball.WindowsLeague
         //this is the model 
         private Game g = null;
 
-        //This is the game engine where the game is played.
+        //This is the game engine where the game is played!!
         GameEngine ge = null;
 
 
