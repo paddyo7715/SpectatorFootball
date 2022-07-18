@@ -193,6 +193,7 @@
     <Compile Include="Free_Agency\Pos_and_Count.cs" />
     <Compile Include="Game\Game_Ball.cs" />
     <Compile Include="Game\Game_Helper.cs" />
+    <Compile Include="Game\Game_Player.cs" />
     <Compile Include="Game\Graphics_Object_Properties.cs" />
     <Compile Include="Game\Play_Struct.cs" />
     <Compile Include="Game\Play_Package.cs" />

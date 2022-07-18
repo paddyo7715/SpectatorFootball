@@ -410,6 +410,7 @@ namespace SpectatorFootball
         public const int STARTER_DL_SUB_PERCENT = 10;
         public const int STARTER_LB_SUB_PERCENT = 20;
         public const int STARTER_DB_SUB_PERCENT = 10;
+        public const int PLAYERS_ON_FIELD_PER_TEAM = 11;
 
         //Stats
         public const double MAX_QBR = 158.3;

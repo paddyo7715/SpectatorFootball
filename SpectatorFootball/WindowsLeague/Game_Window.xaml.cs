@@ -60,11 +60,18 @@ namespace SpectatorFootball.WindowsLeague
         private Game g = null;
 
         //This is the game engine where the game is played!!
-        GameEngine ge = null;
+        public GameEngine ge = null;
 
-
-        Game_Ball Game_Ball = new Game_Ball();
+        //ball objects
+        public Game_Ball Game_Ball = new Game_Ball();
         public Ellipse Ball = new Ellipse();
+
+        //Home and Away Player lists
+        private List<Rectangle> Away_Players_rect = new List<Rectangle>();
+        private List<Rectangle> Home_Players_rect = new List<Rectangle>();
+
+        private const int PLAYER_SIZE = 50;
+        private const int BALL_SIZE = 8;
 
         public const double VIEW_EDGE_OFFSET_YARDLINE = 12.0;
 
@@ -127,11 +134,34 @@ namespace SpectatorFootball.WindowsLeague
                 CANVAS_WIDTH = MyCanvas.Width - RIGHT_PIXEL_FUDGE;
                 CANVAS_HEIGHT = MyCanvas.Height;
 
-                //End of game not sure where this should go
-                //gs.SaveGame(g, g.injuries, pw.Loaded_League);
-                //Game done see if the state of the league has changed
-                //Set_TopMenu?.Invoke(this, new EventArgs());
-                //this.Close();
+                //Add ball to canvas
+                MyCanvas.Children.Add(Ball);
+
+                //Create the player rectangles for both away and home
+                for (int xxx=0; xxx < app_Constants.PLAYERS_ON_FIELD_PER_TEAM; xxx++)
+                {
+                    Rectangle ap = new Rectangle()
+                    {
+                        Height = PLAYER_SIZE,
+                        Width = PLAYER_SIZE,
+                        Fill = new SolidColorBrush(Colors.Blue),
+                        Stroke = System.Windows.Media.Brushes.Black
+                    };
+
+                    Away_Players_rect.Add(ap);
+                    MyCanvas.Children.Add(ap);
+
+                    Rectangle hp = new Rectangle
+                    {
+                        Height = PLAYER_SIZE,
+                        Width = PLAYER_SIZE,
+                        Fill = new SolidColorBrush(Colors.Red),
+                        Stroke = System.Windows.Media.Brushes.Black
+                    };
+
+                    Home_Players_rect.Add(hp);
+                    MyCanvas.Children.Add(hp);
+                }
 
             }
             catch (Exception e)
@@ -203,17 +233,13 @@ namespace SpectatorFootball.WindowsLeague
                     Play.Offensive_Package.Play == Enum.Play_Enum.KICKOFF_ONSIDES)
                     bKickoff = true;
 
-                Game_Ball.setGraphicsProps(Play.Initial_Ball_State, Play.Line_of_Scimmage, Play.Vertical_Ball_Placement);
+                Game_Ball.setValues(Play.Initial_Ball_State, Play.Line_of_Scimmage, Play.Vertical_Ball_Placement);
 
                 //set the left edge of the view
                 double[] a_edge = setViewEdge(Game_Ball.YardLine, Play.bLefttoRight, Game_Ball.Vertical_Percent_Pos);
 
-                Canvas.SetLeft(background, a_edge[0]);
-                Canvas.SetTop(background, a_edge[1]);
-
-                //Place the ball on the field if not carried
-                if (Game_Ball.bState != Ball_States.CARRIED)
-                    setBAll(Game_Ball.YardLine, Game_Ball.Vertical_Percent_Pos, Game_Ball.bState, a_edge, bKickoff);
+                //Set all graphics objects including setting the view edges
+                ShowGraphicObjects(a_edge, Game_Ball, Play.Offensive_Package.Formation.Player_list, Play.Defensive_Formation.Player_list);
 
                 //Set the scoreboard after the play
                 lblAwayScore.Content = Play.Away_Score;
@@ -232,6 +258,12 @@ namespace SpectatorFootball.WindowsLeague
             lblAwayScore.Content = Play.After_Away_Score;
             lblHomeScore.Content = Play.After_Home_Score;
             lblClock.Content = Play.After_Display_Time;
+
+            //End of game not sure where this should go
+            //gs.SaveGame(g, g.injuries, pw.Loaded_League);
+            //Game done see if the state of the league has changed
+            //Set_TopMenu?.Invoke(this, new EventArgs());
+            //this.Close();
         }
 
         private double[] setViewEdge(double YardLIne, bool bLefttoRight, double vert_percent)
@@ -269,7 +301,7 @@ namespace SpectatorFootball.WindowsLeague
             logger.Debug("after: " + view_edge_left);
 
             //set the top edge
-            double vertTemp1 = VertPercent_to_Pixel(vert_percent, false);
+            double vertTemp1 = VertPercent_to_Pixel(vert_percent, 0);
             double halfCanHeight = Can_Height / 2;
             view_edge_top = vertTemp1 - halfCanHeight - TOP_PIXEL_FUDGE;
             view_edge_top *= -1;
@@ -292,13 +324,13 @@ namespace SpectatorFootball.WindowsLeague
             return new double[2] { view_edge_left, view_edge_top };
         }
 
-        private void setBAll(double yardLine, double Vertical_Ball_Placement, Ball_States bstate, double[] a_edge, bool bKickoff)
+        private void setBAll(double yardLine, double Vertical_Ball_Placement, Ball_States bstate, double[] a_edge)
         {
             switch (bstate)
             {
                 case Ball_States.TEED_UP:
-                    Game_Ball.width = 8.0;
-                    Game_Ball.Height = 8.0;
+                    Game_Ball.width = BALL_SIZE;
+                    Game_Ball.Height = BALL_SIZE;
                     Ball.Width = Game_Ball.width;
                     Ball.Height = Game_Ball.Height;
                     Ball.Fill = System.Windows.Media.Brushes.Brown;
@@ -307,11 +339,9 @@ namespace SpectatorFootball.WindowsLeague
             }
 
             int H_Pixel = Yardline_to_Pixel(yardLine, true);
-            double v_Pixel = VertPercent_to_Pixel(Vertical_Ball_Placement, true);
+            double v_Pixel = VertPercent_to_Pixel(Vertical_Ball_Placement, BALL_SIZE);
 
-            //If kickoff then the ball must be placed in the middle of the 35 yard line
-            if (bKickoff)
-                H_Pixel -= (int)Ball.Width / 2;
+            H_Pixel -= (int)Ball.Width / 2;
 
             //Adjust the position on the canvas for the view edge
             H_Pixel += (int)a_edge[0];
@@ -319,8 +349,33 @@ namespace SpectatorFootball.WindowsLeague
 
             Canvas.SetTop(Ball, v_Pixel);
             Canvas.SetLeft(Ball, H_Pixel);
-            if (!MyCanvas.Children.Contains(Ball))
-                MyCanvas.Children.Add(Ball);
+        }
+
+        private void setPlayer(double yardLine, double Vertical_Placement, Player_States pstate, double[] a_edge, Rectangle Player_Rect)
+        {
+            /*           switch (Pstate)
+                       {
+                           case Ball_States.TEED_UP:
+                               Game_Ball.width = 8.0;
+                               Game_Ball.Height = 8.0;
+                               Ball.Width = Game_Ball.width;
+                               Ball.Height = Game_Ball.Height;
+                               Ball.Fill = System.Windows.Media.Brushes.Brown;
+                               Ball.Stroke = System.Windows.Media.Brushes.Black;
+                               break;
+                       }
+           */
+
+            int H_Pixel = Yardline_to_Pixel(yardLine, true);
+            double v_Pixel = VertPercent_to_Pixel(Vertical_Placement, PLAYER_SIZE);
+
+            //Adjust the position on the canvas for the view edge
+            H_Pixel += (int)a_edge[0];
+            v_Pixel += (int)a_edge[1];
+//            v_Pixel += (int)PLAYER_SIZE / 2;
+
+            Canvas.SetTop(Player_Rect, v_Pixel);
+            Canvas.SetLeft(Player_Rect, H_Pixel);
         }
 
         private void Show_Play()
@@ -388,15 +443,46 @@ namespace SpectatorFootball.WindowsLeague
             return r;
         }
 
-        private double VertPercent_to_Pixel(double v, bool bIncludeBall)
+        private double VertPercent_to_Pixel(double v, int objectHeight)
         {
             double r = 0.0;
-            double ballHeight = bIncludeBall ? Game_Ball.Height : 0.0;
+//            double ballHeight = bIncludeBall ? Game_Ball.Height : 0.0;
+           
 
-            double verical_field_pixels = back_height - ballHeight - (Field_Border * 2);
+            double verical_field_pixels = back_height - objectHeight - (Field_Border * 2);
 
             r = (verical_field_pixels * (v / 100.0)) + Field_Border;
+//            r += (int)objectHeight / 2;
             return r;
         }
+
+    private void ShowGraphicObjects(double[] a_edge, Game_Ball Game_Ball, List<Formation_Rec> Off_Players, List<Formation_Rec> Def_Players)
+    {
+        Canvas.SetLeft(background, a_edge[0]);
+        Canvas.SetTop(background, a_edge[1]);
+
+        //Place the ball on the field if not carried
+        if (Game_Ball.bState != Ball_States.CARRIED)
+            setBAll(Game_Ball.YardLine, Game_Ball.Vertical_Percent_Pos, Game_Ball.bState, a_edge);
+
+       int xxx = 0;
+        foreach (Formation_Rec f in Off_Players)
+        {
+            double away_yardline = Game_Ball.YardLine + f.YardLine;
+            setPlayer(away_yardline, f.Vertical_Percent_Pos, f.State, a_edge, Away_Players_rect[xxx]);
+
+            xxx++;
+        }
+
+        xxx = 0;
+        foreach (Formation_Rec f in Def_Players)
+        {
+            double home_yardline = Game_Ball.YardLine + f.YardLine;
+            setPlayer(home_yardline, f.Vertical_Percent_Pos, f.State, a_edge, Home_Players_rect[xxx]);
+
+            xxx++;
+        }
+
+    }
     }
 }

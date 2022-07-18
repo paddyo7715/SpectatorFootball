@@ -13,8 +13,10 @@ namespace SpectatorFootball.GameNS
         public Player_Pos Pos { get; set; }
         public double YardLine { get; set; }
         public int Vertical_Percent_Pos { get; set; }
-        public Player_States Initial_State { get; set; }
+        public Player_States State { get; set; }
         public Player_and_Ratings p_and_r { get; set; }
+
+        public bool bCarryingBall { get; set; }
 
     }
 }
