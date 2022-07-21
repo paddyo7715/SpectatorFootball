@@ -51,7 +51,6 @@ namespace SpectatorFootball.WindowsLeague
         private int Field_Border = 140;
         private int EndZonePixels = 200;
         private int Pixels_per_yard = 20;
-        private const double RIGHT_YARDS_FUDGE = 3.0;
 
         private int Width_dir = -1;
         private int Height_dir = -1;
@@ -77,8 +76,9 @@ namespace SpectatorFootball.WindowsLeague
 
         //I'm not sure why I have to do this, but it seems that
         //the 1210 might not be the full view it might be just 1204
-        private const int RIGHT_PIXEL_FUDGE = 6;
-        private const int TOP_PIXEL_FUDGE = 10;
+//        private const int RIGHT_PIXEL_FUDGE = 6;
+        private const int RIGHT_PIXEL_FUDGE = 0;
+        private const int TOP_PIXEL_FUDGE = 0;
         private double CANVAS_WIDTH;
         private double CANVAS_HEIGHT;
 
@@ -239,7 +239,7 @@ namespace SpectatorFootball.WindowsLeague
                 double[] a_edge = setViewEdge(Game_Ball.YardLine, Play.bLefttoRight, Game_Ball.Vertical_Percent_Pos);
 
                 //Set all graphics objects including setting the view edges
-                ShowGraphicObjects(a_edge, Game_Ball, Play.Offensive_Package.Formation.Player_list, Play.Defensive_Formation.Player_list);
+                ShowGraphicObjects(a_edge, Game_Ball, Play.Offensive_Package.Formation.Player_list, Play.Defensive_Formation.Player_list, bKickoff, Play.bLefttoRight);
 
                 //Set the scoreboard after the play
                 lblAwayScore.Content = Play.Away_Score;
@@ -271,7 +271,7 @@ namespace SpectatorFootball.WindowsLeague
             double view_edge_left;
             double view_edge_top;
 
-            //Set the top edge
+            //Set the left edge
             int H_Pixel = Yardline_to_Pixel(YardLIne, true);
             view_edge_left = H_Pixel * -1;
 
@@ -317,14 +317,12 @@ namespace SpectatorFootball.WindowsLeague
             if (view_edge_top > 0)
                 view_edge_top = 0;
 
-
-
             logger.Debug("after: " + view_edge_top);
 
             return new double[2] { view_edge_left, view_edge_top };
         }
 
-        private void setBAll(double yardLine, double Vertical_Ball_Placement, Ball_States bstate, double[] a_edge)
+        private void setBAll(double yardLine, double Vertical_Ball_Placement, Ball_States bstate, double[] a_edge, bool bKickoff, bool bLefttoRight)
         {
             switch (bstate)
             {
@@ -341,7 +339,11 @@ namespace SpectatorFootball.WindowsLeague
             int H_Pixel = Yardline_to_Pixel(yardLine, true);
             double v_Pixel = VertPercent_to_Pixel(Vertical_Ball_Placement, BALL_SIZE);
 
-            H_Pixel -= (int)Ball.Width / 2;
+            if (bKickoff)
+                H_Pixel -= (int)BALL_SIZE / 2;
+            else
+                if (bLefttoRight)
+                    H_Pixel -= BALL_SIZE;
 
             //Adjust the position on the canvas for the view edge
             H_Pixel += (int)a_edge[0];
@@ -351,7 +353,7 @@ namespace SpectatorFootball.WindowsLeague
             Canvas.SetLeft(Ball, H_Pixel);
         }
 
-        private void setPlayer(double yardLine, double Vertical_Placement, Player_States pstate, double[] a_edge, Rectangle Player_Rect)
+        private void setPlayer(double yardLine, double Vertical_Placement, Player_States pstate, double[] a_edge, Rectangle Player_Rect, bool bLefttoRight)
         {
             /*           switch (Pstate)
                        {
@@ -367,12 +369,17 @@ namespace SpectatorFootball.WindowsLeague
            */
 
             int H_Pixel = Yardline_to_Pixel(yardLine, true);
+            if (bLefttoRight)
+                H_Pixel -= PLAYER_SIZE;
+
             double v_Pixel = VertPercent_to_Pixel(Vertical_Placement, PLAYER_SIZE);
 
             //Adjust the position on the canvas for the view edge
             H_Pixel += (int)a_edge[0];
             v_Pixel += (int)a_edge[1];
-//            v_Pixel += (int)PLAYER_SIZE / 2;
+
+
+            logger.Debug("vertical pixel: " + Vertical_Placement + " " + v_Pixel);
 
             Canvas.SetTop(Player_Rect, v_Pixel);
             Canvas.SetLeft(Player_Rect, H_Pixel);
@@ -449,27 +456,28 @@ namespace SpectatorFootball.WindowsLeague
 //            double ballHeight = bIncludeBall ? Game_Ball.Height : 0.0;
            
 
-            double verical_field_pixels = back_height - objectHeight - (Field_Border * 2);
+//            double verical_field_pixels = back_height - objectHeight - (Field_Border * 2);
+            double verical_field_pixels = back_height - (Field_Border * 2);
 
             r = (verical_field_pixels * (v / 100.0)) + Field_Border;
-//            r += (int)objectHeight / 2;
+            r -= (int)objectHeight / 2;
             return r;
         }
 
-    private void ShowGraphicObjects(double[] a_edge, Game_Ball Game_Ball, List<Formation_Rec> Off_Players, List<Formation_Rec> Def_Players)
+    private void ShowGraphicObjects(double[] a_edge, Game_Ball Game_Ball, List<Formation_Rec> Off_Players, List<Formation_Rec> Def_Players,bool bKickoff, bool bLefttoRight)
     {
         Canvas.SetLeft(background, a_edge[0]);
         Canvas.SetTop(background, a_edge[1]);
 
         //Place the ball on the field if not carried
         if (Game_Ball.bState != Ball_States.CARRIED)
-            setBAll(Game_Ball.YardLine, Game_Ball.Vertical_Percent_Pos, Game_Ball.bState, a_edge);
+            setBAll(Game_Ball.YardLine, Game_Ball.Vertical_Percent_Pos, Game_Ball.bState, a_edge, bKickoff, bLefttoRight);
 
        int xxx = 0;
         foreach (Formation_Rec f in Off_Players)
         {
             double away_yardline = Game_Ball.YardLine + f.YardLine;
-            setPlayer(away_yardline, f.Vertical_Percent_Pos, f.State, a_edge, Away_Players_rect[xxx]);
+            setPlayer(away_yardline, f.Vertical_Percent_Pos, f.State, a_edge, Away_Players_rect[xxx], bLefttoRight);
 
             xxx++;
         }
@@ -478,7 +486,7 @@ namespace SpectatorFootball.WindowsLeague
         foreach (Formation_Rec f in Def_Players)
         {
             double home_yardline = Game_Ball.YardLine + f.YardLine;
-            setPlayer(home_yardline, f.Vertical_Percent_Pos, f.State, a_edge, Home_Players_rect[xxx]);
+            setPlayer(home_yardline, f.Vertical_Percent_Pos, f.State, a_edge, Home_Players_rect[xxx], bLefttoRight);
 
             xxx++;
         }
