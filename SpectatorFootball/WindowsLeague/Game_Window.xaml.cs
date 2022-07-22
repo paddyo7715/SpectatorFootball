@@ -69,8 +69,8 @@ namespace SpectatorFootball.WindowsLeague
         private List<Rectangle> Away_Players_rect = new List<Rectangle>();
         private List<Rectangle> Home_Players_rect = new List<Rectangle>();
 
-        private const int PLAYER_SIZE = 50;
-        private const int BALL_SIZE = 8;
+        private const int PLAYER_SIZE = 30;
+        private const int BALL_SIZE = 12;
 
         public const double VIEW_EDGE_OFFSET_YARDLINE = 12.0;
 
