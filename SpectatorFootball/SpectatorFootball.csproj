@@ -765,6 +765,10 @@
     <Resource Include="Images\Game_Intro_Background.jpg" />
     <Resource Include="Images\Stadiums\Field__Template.png" />
     <Resource Include="Images\Stadiums\Grass_BrightGreen.png" />
+    <Resource Include="Images\Players\A_Standing_Player.png" />
+    <Resource Include="Images\Players\H_Standing_Player.png" />
+    <Resource Include="Images\Players\A_Stand_Player.png" />
+    <Resource Include="Images\Players\H_Stand_Player.png" />
     <Content Include="Models\LeagueEDM.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>LeagueEDM.edmx</DependentUpon>

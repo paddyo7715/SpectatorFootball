@@ -69,7 +69,7 @@ namespace SpectatorFootball.WindowsLeague
         private List<Rectangle> Away_Players_rect = new List<Rectangle>();
         private List<Rectangle> Home_Players_rect = new List<Rectangle>();
 
-        private const int PLAYER_SIZE = 30;
+        private const int PLAYER_SIZE = 50;
         private const int BALL_SIZE = 12;
 
         public const double VIEW_EDGE_OFFSET_YARDLINE = 12.0;
@@ -78,12 +78,15 @@ namespace SpectatorFootball.WindowsLeague
         //the 1210 might not be the full view it might be just 1204
 //        private const int RIGHT_PIXEL_FUDGE = 6;
         private const int RIGHT_PIXEL_FUDGE = 0;
-        private const int TOP_PIXEL_FUDGE = 0;
+        private const int TOP_PIXEL_FUDGE = 10;
         private double CANVAS_WIDTH;
         private double CANVAS_HEIGHT;
 
 
         private int VIEW_EDGE_PIXELS;
+
+        private ImageBrush A_Standing_Player = new ImageBrush();
+        private ImageBrush H_Standing_Player = new ImageBrush();
 
         public Game_Window(MainWindow pw, Game g)
         {
@@ -144,8 +147,6 @@ namespace SpectatorFootball.WindowsLeague
                     {
                         Height = PLAYER_SIZE,
                         Width = PLAYER_SIZE,
-                        Fill = new SolidColorBrush(Colors.Blue),
-                        Stroke = System.Windows.Media.Brushes.Black
                     };
 
                     Away_Players_rect.Add(ap);
@@ -155,8 +156,6 @@ namespace SpectatorFootball.WindowsLeague
                     {
                         Height = PLAYER_SIZE,
                         Width = PLAYER_SIZE,
-                        Fill = new SolidColorBrush(Colors.Red),
-                        Stroke = System.Windows.Media.Brushes.Black
                     };
 
                     Home_Players_rect.Add(hp);
@@ -215,10 +214,16 @@ namespace SpectatorFootball.WindowsLeague
          
             background.Fill = backgroundField;
 
+            A_Standing_Player.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images/Players/A_Stand_Player.png"));
+            H_Standing_Player.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images/Players/H_Stand_Player.png"));
+
+
+
+
             //This causes the field to move
-//                                   GameTimer.Tick += ShowFrame;
-//                                   GameTimer.Interval = TimeSpan.FromMilliseconds(20);
-//                                   GameTimer.Start();
+            //                                   GameTimer.Tick += ShowFrame;
+            //                                   GameTimer.Interval = TimeSpan.FromMilliseconds(20);
+            //                                   GameTimer.Start();
 
             bool bGameEneded = false;
             Play_Struct Play = null;
@@ -353,7 +358,7 @@ namespace SpectatorFootball.WindowsLeague
             Canvas.SetLeft(Ball, H_Pixel);
         }
 
-        private void setPlayer(double yardLine, double Vertical_Placement, Player_States pstate, double[] a_edge, Rectangle Player_Rect, bool bLefttoRight)
+        private void setPlayer(double yardLine, double Vertical_Placement, Player_States pstate, double[] a_edge, Rectangle Player_Rect, bool bLefttoRight, bool awayTeam)
         {
             /*           switch (Pstate)
                        {
@@ -368,10 +373,15 @@ namespace SpectatorFootball.WindowsLeague
                        }
            */
 
+            if (awayTeam)
+                Player_Rect.Fill = A_Standing_Player;
+            else
+                Player_Rect.Fill = H_Standing_Player;
+
             int H_Pixel = Yardline_to_Pixel(yardLine, true);
             if (bLefttoRight)
                 H_Pixel -= PLAYER_SIZE;
-
+            
             double v_Pixel = VertPercent_to_Pixel(Vertical_Placement, PLAYER_SIZE);
 
             //Adjust the position on the canvas for the view edge
@@ -474,10 +484,11 @@ namespace SpectatorFootball.WindowsLeague
             setBAll(Game_Ball.YardLine, Game_Ball.Vertical_Percent_Pos, Game_Ball.bState, a_edge, bKickoff, bLefttoRight);
 
        int xxx = 0;
+            double PossessionAdjuster = bLefttoRight ? 1.0 : -1.0;
         foreach (Formation_Rec f in Off_Players)
         {
-            double away_yardline = Game_Ball.YardLine + f.YardLine;
-            setPlayer(away_yardline, f.Vertical_Percent_Pos, f.State, a_edge, Away_Players_rect[xxx], bLefttoRight);
+            double away_yardline = Game_Ball.YardLine + (f.YardLine * PossessionAdjuster);
+            setPlayer(away_yardline, f.Vertical_Percent_Pos, f.State, a_edge, Away_Players_rect[xxx], bLefttoRight, true);
 
             xxx++;
         }
@@ -485,8 +496,8 @@ namespace SpectatorFootball.WindowsLeague
         xxx = 0;
         foreach (Formation_Rec f in Def_Players)
         {
-            double home_yardline = Game_Ball.YardLine + f.YardLine;
-            setPlayer(home_yardline, f.Vertical_Percent_Pos, f.State, a_edge, Home_Players_rect[xxx], bLefttoRight);
+            double home_yardline = Game_Ball.YardLine + (f.YardLine * PossessionAdjuster);
+            setPlayer(home_yardline, f.Vertical_Percent_Pos, f.State, a_edge, Home_Players_rect[xxx], bLefttoRight, false);
 
             xxx++;
         }
