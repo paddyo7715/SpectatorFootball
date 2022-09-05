@@ -214,8 +214,8 @@ namespace SpectatorFootball.WindowsLeague
          
             background.Fill = backgroundField;
 
-            A_Standing_Player.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images/Players/A_Stand_Player.png"));
-            H_Standing_Player.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images/Players/H_Stand_Player.png"));
+            A_Standing_Player.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images/Players/L_Stand_Player.png"));
+            H_Standing_Player.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images/Players/R_Stand_Player.png"));
 
 
 
@@ -484,11 +484,10 @@ namespace SpectatorFootball.WindowsLeague
             setBAll(Game_Ball.YardLine, Game_Ball.Vertical_Percent_Pos, Game_Ball.bState, a_edge, bKickoff, bLefttoRight);
 
        int xxx = 0;
-            double PossessionAdjuster = bLefttoRight ? 1.0 : -1.0;
         foreach (Formation_Rec f in Off_Players)
         {
-            double away_yardline = Game_Ball.YardLine + (f.YardLine * PossessionAdjuster);
-            setPlayer(away_yardline, f.Vertical_Percent_Pos, f.State, a_edge, Away_Players_rect[xxx], bLefttoRight, true);
+              double away_yardline = Game_Ball.YardLine + f.YardLine;
+              setPlayer(away_yardline, f.Vertical_Percent_Pos, f.State, a_edge, Away_Players_rect[xxx], bLefttoRight, true);
 
             xxx++;
         }
@@ -496,8 +495,8 @@ namespace SpectatorFootball.WindowsLeague
         xxx = 0;
         foreach (Formation_Rec f in Def_Players)
         {
-            double home_yardline = Game_Ball.YardLine + (f.YardLine * PossessionAdjuster);
-            setPlayer(home_yardline, f.Vertical_Percent_Pos, f.State, a_edge, Home_Players_rect[xxx], bLefttoRight, false);
+              double home_yardline = Game_Ball.YardLine + f.YardLine;
+              setPlayer(home_yardline, f.Vertical_Percent_Pos, f.State, a_edge, Home_Players_rect[xxx], bLefttoRight, false);
 
             xxx++;
         }

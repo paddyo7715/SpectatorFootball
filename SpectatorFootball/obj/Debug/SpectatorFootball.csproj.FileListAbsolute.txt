@@ -126,3 +126,4 @@ C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\Wind
 C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\WindowsLeague\Progress_Dialog_Season_End.baml
 C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\WindowsLeague\PlayoffsUX.g.cs
 C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\WindowsLeague\PlayoffsUX.baml
+C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\SpectatorFootball.csprojAssemblyReference.cache

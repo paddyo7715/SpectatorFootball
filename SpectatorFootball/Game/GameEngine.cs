@@ -209,8 +209,11 @@ namespace SpectatorFootball.GameNS
                 Vertical_Ball_Placement = 50.0;
             }
 
-            Offensive_Package = Offensive_Coach.Call_Off_PlayFormation(bKickoff);
-            DEF_Formation = Defensive_Coach.Call_Def_Formation(Offensive_Package);
+            //adjust the formation positions depending on which team has the ball
+            double PossessionAdjuster = bLefttoRight ? 1.0 : -1.0;
+
+            Offensive_Package = Offensive_Coach.Call_Off_PlayFormation(bKickoff, PossessionAdjuster);
+            DEF_Formation = Defensive_Coach.Call_Def_Formation(Offensive_Package, PossessionAdjuster);
 
             //You could get the allow substitutions from either coach
             bool bAllowSubs = Home_Coach.AllowSubstitutions();

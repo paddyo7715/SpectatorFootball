@@ -38,7 +38,7 @@ namespace SpectatorFootball.GameNS
 
         }
  
-        public Play_Package Call_Off_PlayFormation(bool bKickoff)
+        public Play_Package Call_Off_PlayFormation(bool bKickoff, double PossessionAdjuster)
         {
             Formations_Enum f;
             Play_Enum p;
@@ -83,7 +83,7 @@ namespace SpectatorFootball.GameNS
                 p = Play_Enum.KICKOFF_NORMAL;
             }
 
-            formation = Game_Helper.getFormation(f);
+            formation = Game_Helper.getFormation(f, PossessionAdjuster);
 
             return new Play_Package() { Formation = formation, Play = p } ;
         }
@@ -101,7 +101,7 @@ namespace SpectatorFootball.GameNS
             }
         }
 
-        public Formation Call_Def_Formation(Play_Package pp)
+        public Formation Call_Def_Formation(Play_Package pp, double PossessionAdjuster)
         {
             Formations_Enum r;
             Formation fList = null;
@@ -131,7 +131,7 @@ namespace SpectatorFootball.GameNS
                 r = Formations_Enum.KICKOFF_REGULAR_RECEIVE;
             }
 
-            fList = Game_Helper.getFormation(r);
+            fList = Game_Helper.getFormation(r, PossessionAdjuster);
 
             return fList;
         }
