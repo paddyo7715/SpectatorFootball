@@ -17,6 +17,7 @@
                 <MenuItem Name="MenuNew" Header="New" Click = "Show_NewLeague" />
                 <MenuItem Name="MenuLoad" Header="Load" Click = "Show_LoadLeague" />
                 <MenuItem Name="MenuMain" Header="Main Menu" Click = "Show_MainMenu" />
+                <MenuItem Name="MenuOptions" Header="Options" Click = "Show_Options" />
                 <Separator />
                 <MenuItem Name="MenuExit" Header="Exit" Click = "mmTopExit_Click" />
             </MenuItem>

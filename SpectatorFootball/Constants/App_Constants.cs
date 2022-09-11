@@ -20,6 +20,7 @@ namespace SpectatorFootball
         public const string LEAGUE_HELMETS_SUBFOLDER = "Helmet_Images";
         public const string LEAGUE_STADIUM_SUBFOLDER = "Stadium_Images";
         public const string LEAGUE_PROFILE_FILE = "Profile.txt";
+        public const string GAME_OPTIONS_FILE = "Game_Options_File.txt";
 
         // The following three were intended to be constants, but when I added the file seperator variable, they could no longer be Consts
         public static string APP_HELMET_FOLDER = Path.DirectorySeparatorChar + "Images" + Path.DirectorySeparatorChar + "Helmets" + Path.DirectorySeparatorChar;
@@ -411,6 +412,9 @@ namespace SpectatorFootball
         public const int STARTER_LB_SUB_PERCENT = 20;
         public const int STARTER_DB_SUB_PERCENT = 10;
         public const int PLAYERS_ON_FIELD_PER_TEAM = 11;
+
+        public const string DEFAULT_GAME_BALL_COLOR = "#FFFFFF";
+        public const string DEFAULT_GAME_BALL_2_COLOR = "#808080";
 
         //Stats
         public const double MAX_QBR = 158.3;

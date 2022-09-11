@@ -51,6 +51,11 @@ namespace SpectatorFootball
                 Directory.CreateDirectory(DIRPath_League);
                 CommonUtils.SetFullAccess(DIRPath_League);
 
+                //Create game options file if it does not exist
+                string options_filename = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + app_Constants.GAME_OPTIONS_FILE;
+                if (!File.Exists(options_filename))
+                    Create_Options_File(options_filename, app_Constants.DEFAULT_GAME_BALL_COLOR + "|" + app_Constants.DEFAULT_GAME_BALL_2_COLOR);
+
                 // Create Backup Folder
                 logger.Info("Creating league backup folder");
                 Directory.CreateDirectory(DIRPath_League + Path.DirectorySeparatorChar + app_Constants.BACKUP_FOLDER);
@@ -241,6 +246,14 @@ namespace SpectatorFootball
                 throw new Exception("Error creating schedule. Error: " + r);
 
             return s;
+        }
+
+        private void Create_Options_File(string options_filename, string ball_color)
+        {
+            using (StreamWriter sw = new StreamWriter(options_filename))
+            {
+                sw.WriteLine("Game_Ball_Color: " + ball_color);
+            }
         }
 
         public string[] CheckDBVersion(string League_Shortname)
@@ -1528,5 +1541,27 @@ namespace SpectatorFootball
             logger.Info("EndSeason Ended Successfully");
         }
 
+        public string[] getGameOptions()
+        {
+            string sBallColor = "";
+
+            string options_filename = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + app_Constants.GAME_OPTIONS_FILE;
+            if (File.Exists(options_filename))
+            {
+                foreach (string line in File.ReadAllLines(options_filename))
+                {
+                    if (line.StartsWith("Game_Ball_Color:"))
+                        sBallColor = line.Split(':')[1];
+                }
+            }
+            else
+            {
+                sBallColor = app_Constants.DEFAULT_GAME_BALL_COLOR + "|" + app_Constants.DEFAULT_GAME_BALL_2_COLOR;
+            }
+
+            return new string[] { sBallColor.Trim() };
+
         }
+
+    }
 }

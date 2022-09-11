@@ -1,0 +1,118 @@
+﻿<Window x:Class="SpectatorFootball.WindowsLeague.Game_Options_Dialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SpectatorFootball.WindowsLeague"
+        mc:Ignorable="d"
+        Height="190" Width="300" WindowStyle="none" ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True">
+        <Border Style="{StaticResource popupBD}" BorderThickness="1">
+            <StackPanel Style="{StaticResource popupSP}" Height="180" Width="290" Orientation="Vertical" >
+                <Label Style="{StaticResource popupTT}" HorizontalAlignment="Center">Game Options</Label>
+
+            <StackPanel Orientation="Vertical" Style="{StaticResource HelpSP}" Width="270" Height="100">
+                <StackPanel Orientation="Horizontal">
+                    <Label Height="30" VerticalContentAlignment="Center" Style="{StaticResource appProgressSmallLBL}" Width="100">Ball Color:</Label>
+                    <ComboBox Name="cboBallColor" Width="150" Height="30" FontSize="14" Style="{StaticResource ComboBoxstyleBlue}"  IsEditable="False">
+                        <ComboBoxItem Style="{StaticResource HelpCI}">
+                            <StackPanel Orientation="Horizontal">
+                                <Ellipse Width="26" Height="13">
+                                    <Ellipse.Fill>
+                                        <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                            <GradientStop Color="#FFFFFF" Offset="0.0" />
+                                            <GradientStop Color="#808080" Offset="0.7" />
+                                        </LinearGradientBrush>
+                                    </Ellipse.Fill>
+                                </Ellipse> 
+                                <Label FontSize="14" Foreground="Black">White</Label>
+                            </StackPanel>
+                        </ComboBoxItem>
+                        <ComboBoxItem Style="{StaticResource HelpCI}">
+                            <StackPanel Orientation="Horizontal" >
+                                <Ellipse Width="26" Height="13" >
+                                    <Ellipse.Fill>
+                                        <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                            <GradientStop Color="#806517" Offset="0.0" />
+                                            <GradientStop Color="#000000" Offset="0.7" />
+                                        </LinearGradientBrush>
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                                <Label FontSize="14" Foreground="Black">Brown</Label>
+                            </StackPanel>
+                        </ComboBoxItem>
+                        <ComboBoxItem Style="{StaticResource HelpCI}">
+                            <StackPanel Orientation="Horizontal">
+                                <Ellipse Width="26" Height="13" >
+                                    <Ellipse.Fill>
+                                        <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                            <GradientStop Color="#2C3539" Offset="0.0" />
+                                            <GradientStop Color="#000000" Offset="0.7" />
+                                        </LinearGradientBrush>
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                                <Label FontSize="14" Foreground="Black">Black</Label>
+                            </StackPanel>
+                        </ComboBoxItem>
+                        <ComboBoxItem Style="{StaticResource HelpCI}">
+                            <StackPanel Orientation="Horizontal">
+                                <Ellipse Width="26" Height="13">
+                                    <Ellipse.Fill>
+                                        <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                            <GradientStop Color="#FF0000" Offset="0.0" />
+                                            <GradientStop Color="#63221c" Offset="0.7" />
+                                        </LinearGradientBrush>
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                                <Label FontSize="14" Foreground="Black">Red</Label>
+                            </StackPanel>
+                        </ComboBoxItem>
+                        <ComboBoxItem Style="{StaticResource HelpCI}">
+                            <StackPanel Orientation="Horizontal">
+                                <Ellipse Width="26" Height="13">
+                                    <Ellipse.Fill>
+                                        <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                            <GradientStop Color="#0000FF" Offset="0.0" />
+                                            <GradientStop Color="#1e2042" Offset="0.7" />
+                                        </LinearGradientBrush>
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                                <Label FontSize="14" Foreground="Black">Blue</Label>
+                            </StackPanel>
+                        </ComboBoxItem>
+                        <ComboBoxItem Style="{StaticResource HelpCI}">
+                            <StackPanel Orientation="Horizontal">
+                                    <Ellipse Width="26" Height="13">
+                                    <Ellipse.Fill>
+                                        <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                            <GradientStop Color="#FFFF00" Offset="0.0" />
+                                            <GradientStop Color="#967e17" Offset="0.7" />
+                                        </LinearGradientBrush>
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                                    <Label FontSize="14" Foreground="Black">Yellow</Label>
+                            </StackPanel>
+                        </ComboBoxItem>
+                        <ComboBoxItem Style="{StaticResource HelpCI}">
+                            <StackPanel Orientation="Horizontal">
+                                <Ellipse Width="26" Height="13">
+                                    <Ellipse.Fill>
+                                        <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                            <GradientStop Color="#FF00FF" Offset="0.0" />
+                                            <GradientStop Color="#591548" Offset="0.7" />
+                                        </LinearGradientBrush>
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                                <Label FontSize="14" Foreground="Black">Magenta</Label>
+                            </StackPanel>
+                        </ComboBoxItem>
+                    </ComboBox>
+                </StackPanel>
+            </StackPanel>
+                
+            <StackPanel Orientation="Horizontal">
+                <Button Name="options_close" Style="{StaticResource appSubmitStyle}" Click="Close_Click" >Close</Button>
+                <Button Name="options_save" Style="{StaticResource appSubmitStyle}" Click="Save_Click" >Save</Button>
+            </StackPanel>
+        </StackPanel>
+        </Border>
+</Window>

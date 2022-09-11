@@ -491,6 +491,9 @@
     <Compile Include="Team\Uniform.cs" />
     <Compile Include="Team\Uniform_Image.cs" />
     <Compile Include="Versioning\App_Version.cs" />
+    <Compile Include="WindowsLeague\Game_Options_Dialog.xaml.cs">
+      <DependentUpon>Game_Options_Dialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WindowsLeague\Game_Window.xaml.cs">
       <DependentUpon>Game_Window.xaml</DependentUpon>
     </Compile>
@@ -649,6 +652,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Stock_Team_detail.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowsLeague\Game_Options_Dialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

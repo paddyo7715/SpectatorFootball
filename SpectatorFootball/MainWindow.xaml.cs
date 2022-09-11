@@ -82,6 +82,7 @@ namespace SpectatorFootball
 
             MainMenuUC.Show_NewLeague += Show_NewLeague;
             MainMenuUC.Show_LoadLeague += Show_LoadLeague;
+            MainMenuUC.Show_Options += Show_Options;
 
             setNonLeagueMenu();
 
@@ -770,8 +771,34 @@ namespace SpectatorFootball
         }
         //************************************************************************
 
-        //*********************  General Methods  *******************************
-        public void SetLeagueTeamsMenu(Loaded_League_Structure lls)
+        //Options
+        private void Show_Options(object sender, EventArgs e)
+        {
+            if (Mouse.OverrideCursor == Cursors.Wait) return;
+
+            try
+            {
+                League_Services ls = new League_Services();
+                string[] m = ls.getGameOptions();
+
+                var GO_Window = new Game_Options_Dialog(m[0]);
+                GO_Window.Top = (SystemParameters.PrimaryScreenHeight - GO_Window.Height) / 2;
+                GO_Window.Left = (SystemParameters.PrimaryScreenWidth - GO_Window.Width) / 2;
+                GO_Window.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                Mouse.OverrideCursor = null;
+                logger.Error("Error Loading Game Options to show Options Dialog");
+                logger.Error(ex);
+                MessageBox.Show(CommonUtils.substr(ex.Message, 0, 100), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+            //^^^^^^^^^^^^^^^^^^^^^^
+
+
+            //*********************  General Methods  *******************************
+            public void SetLeagueTeamsMenu(Loaded_League_Structure lls)
         {
             List<Teams_by_Season> sorted_teams = lls.season.Teams_by_Season.OrderBy(x => x.City).ThenBy(x => x.Nickname).ToList();
 

@@ -9,6 +9,7 @@ namespace SpectatorFootball
     {
         public event EventHandler Show_NewLeague;
         public event EventHandler Show_LoadLeague;
+        public event EventHandler Show_Options;
         public MainMenuUC()
         {
             InitializeComponent();
@@ -23,8 +24,9 @@ namespace SpectatorFootball
             Window parent = Window.GetWindow(this);
             parent.Close();
         }
-        private void mmAdmin_Click(object sender, RoutedEventArgs e)
+        private void mmOptions_Click(object sender, RoutedEventArgs e)
         {
+            Show_Options?.Invoke(this, new EventArgs());
         }
 
         private void mmLoad_Click(object sender, RoutedEventArgs e)

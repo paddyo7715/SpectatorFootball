@@ -15,7 +15,7 @@
                 <Label Height="20"></Label>
                 <Button Name="mmLoad" Style="{StaticResource appMainMenubtnStyle}" Click="mmLoad_Click">Load League</Button>
                 <Label Height="20"></Label>
-                <Button Name="mmAdmin" Style="{StaticResource appMainMenubtnStyle}" Click="mmAdmin_Click">Administration</Button>
+                <Button Name="mmAdmin" Style="{StaticResource appMainMenubtnStyle}" Click="mmOptions_Click">Options</Button>
                 <Label Height="20"></Label>
                 <Button Name="mmExit" Style="{StaticResource appMainMenubtnStyle}" Click="mmExit_Click">Exit</Button>
             </StackPanel>
