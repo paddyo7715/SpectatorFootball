@@ -33,11 +33,16 @@ namespace SpectatorFootball.WindowsLeague
             int i = 0;
             foreach (ComboBoxItem cb in cboItems)
             {
-                StackPanel sp = (StackPanel)cb.Content;
-                Ellipse e = (Ellipse)sp.Children[0];
-                var gradb = (LinearGradientBrush)e.Fill;
-                string color1 = CommonUtils.getHexfromColor(gradb.GradientStops[0].Color);
-                string color2 = CommonUtils.getHexfromColor(gradb.GradientStops[1].Color);
+                /*                StackPanel sp = (StackPanel)cb.Content;
+                                Ellipse e = (Ellipse)sp.Children[0];
+                                var gradb = (LinearGradientBrush)e.Fill;
+                                string color1 = CommonUtils.getHexfromColor(gradb.GradientStops[0].Color);
+                                string color2 = CommonUtils.getHexfromColor(gradb.GradientStops[1].Color);
+                */
+                string[] mm = getColorsFromCBItem(cb).Split('|');
+                string color1 = mm[0];
+                string color2 = mm[1];
+
                 if (color1.ToUpper() == ball_Color1.ToUpper() &&
                     color2.ToUpper() == ball_Color2.ToUpper())
                 {
@@ -50,14 +55,29 @@ namespace SpectatorFootball.WindowsLeague
             cboBallColor.SelectedIndex = selectedIndex;
         }
 
+        private string getColorsFromCBItem(ComboBoxItem cb)
+        {
+            StackPanel sp = (StackPanel)cb.Content;
+            Ellipse e = (Ellipse)sp.Children[0];
+            var gradb = (LinearGradientBrush)e.Fill;
+            string color1 = CommonUtils.getHexfromColor(gradb.GradientStops[0].Color);
+            string color2 = CommonUtils.getHexfromColor(gradb.GradientStops[1].Color);
+            return color1 + "|" + color2;
+        }
         private void Close_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
 
+
+
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-
+            ComboBoxItem cb = (ComboBoxItem)cboBallColor.SelectedItem;
+            string color_string = getColorsFromCBItem(cb);
+            League_Services ls = new League_Services();
+            ls.Create_Options_File(color_string);
+            this.Close();
         }
     }
 }

@@ -54,7 +54,7 @@ namespace SpectatorFootball
                 //Create game options file if it does not exist
                 string options_filename = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + app_Constants.GAME_OPTIONS_FILE;
                 if (!File.Exists(options_filename))
-                    Create_Options_File(options_filename, app_Constants.DEFAULT_GAME_BALL_COLOR + "|" + app_Constants.DEFAULT_GAME_BALL_2_COLOR);
+                    Create_Options_File(app_Constants.DEFAULT_GAME_BALL_COLOR + "|" + app_Constants.DEFAULT_GAME_BALL_2_COLOR);
 
                 // Create Backup Folder
                 logger.Info("Creating league backup folder");
@@ -248,9 +248,12 @@ namespace SpectatorFootball
             return s;
         }
 
-        private void Create_Options_File(string options_filename, string ball_color)
+        public void Create_Options_File(string ball_color)
         {
-            using (StreamWriter sw = new StreamWriter(options_filename))
+            string options_filename = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + app_Constants.GAME_OPTIONS_FILE;
+            FileStream stream = new FileStream(options_filename, FileMode.Create);
+
+            using (StreamWriter sw = new StreamWriter(stream))
             {
                 sw.WriteLine("Game_Ball_Color: " + ball_color);
             }
