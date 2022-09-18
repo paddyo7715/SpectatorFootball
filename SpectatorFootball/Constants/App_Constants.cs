@@ -271,6 +271,7 @@ namespace SpectatorFootball
         public static Color STOCK_SOCKS_COLOR = Color.FromArgb(236, 133, 102);
         public static Color STOCK_CLEATES_COLOR = Color.FromArgb(113, 89, 111);
 
+        public static Color STOCK_BALL_COLOR = Color.FromArgb(41, 85, 99);
         // age
         public const int STARTING_ROOKIE_AGE = 21;
         public const int NEWLEAGE_LOW_AGE = 21;
