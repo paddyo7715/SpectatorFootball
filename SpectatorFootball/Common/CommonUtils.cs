@@ -164,6 +164,12 @@ namespace SpectatorFootball
             r = System.Windows.Media.Color.FromRgb(red, green, blue);
             return r;
         }
+        public static System.Drawing.Color SystemDrawColorfromHex(string h)
+        {
+            Color mc = default(Color);
+            mc = CommonUtils.getColorfromHex(h);
+            return System.Drawing.Color.FromArgb(mc.A, mc.R, mc.G, mc.B);
+        }
         public static object getBrushfromHex(string s)
         {
             var bc = new BrushConverter();

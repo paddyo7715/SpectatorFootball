@@ -813,8 +813,7 @@
     <Resource Include="Images\Game_Intro_Background.jpg" />
     <Resource Include="Images\Stadiums\Field__Template.png" />
     <Resource Include="Images\Stadiums\Grass_BrightGreen.png" />
-    <Resource Include="Images\Players\L_Stand_Player.png" />
-    <Resource Include="Images\Players\R_Stand_Player.png" />
+    <Resource Include="Images\Players\Player_Sprite_Sheet.png" />
     <Content Include="Models\LeagueEDM.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>LeagueEDM.edmx</DependentUpon>
