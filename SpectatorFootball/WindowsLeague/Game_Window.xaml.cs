@@ -83,11 +83,12 @@ namespace SpectatorFootball.WindowsLeague
         private double CANVAS_WIDTH;
         private double CANVAS_HEIGHT;
 
+        private Uniform_Image Uniform_Img;
 
         private int VIEW_EDGE_PIXELS;
 
-        private ImageBrush A_Standing_Player = new ImageBrush();
-        private ImageBrush H_Standing_Player = new ImageBrush();
+        private ImageBrush A_Player_Sheet = new ImageBrush();
+        private ImageBrush H_Player_Sheet = new ImageBrush();
 
         public Game_Window(MainWindow pw, Game g)
         {
@@ -164,7 +165,7 @@ namespace SpectatorFootball.WindowsLeague
                 }
 
                 //Load and colorize the sprite sheets
-                Uniform_Image Uniform_Img = new Uniform_Image(CommonUtils.getAppPath() + System.IO.Path.DirectorySeparatorChar + "Images" + System.IO.Path.DirectorySeparatorChar + "Players" + System.IO.Path.DirectorySeparatorChar + "Player_Sprite_Sheet.png");
+                Uniform_Img = new Uniform_Image(CommonUtils.getAppPath() + System.IO.Path.DirectorySeparatorChar + "Images" + System.IO.Path.DirectorySeparatorChar + "Players" + System.IO.Path.DirectorySeparatorChar + "Player_Sprite_Sheet.png");
 
                 Uniform_Img.Flip_All_Colors(true , CommonUtils.SystemDrawColorfromHex(ht.Helmet_Color) , CommonUtils.SystemDrawColorfromHex(ht.Helmet_Facemask_Color) , CommonUtils.SystemDrawColorfromHex(ht.Helmet_Logo_Color) , CommonUtils.SystemDrawColorfromHex(ht.Home_jersey_Color), CommonUtils.SystemDrawColorfromHex(ht.Home_Jersey_Number_Color) , CommonUtils.SystemDrawColorfromHex(ht.Home_Jersey_Number_Outline_Color) , CommonUtils.SystemDrawColorfromHex(ht.Home_Sleeve_Color) , CommonUtils.SystemDrawColorfromHex(ht.Home_Jersey_Shoulder_Stripe) , CommonUtils.SystemDrawColorfromHex(ht.Home_Jersey_Sleeve_Stripe_Color_1) , CommonUtils.SystemDrawColorfromHex(ht.Home_Jersey_Sleeve_Stripe_Color_2) , CommonUtils.SystemDrawColorfromHex(ht.Home_Jersey_Sleeve_Stripe_Color_3) , CommonUtils.SystemDrawColorfromHex(ht.Home_Jersey_Sleeve_Stripe_Color_4) , CommonUtils.SystemDrawColorfromHex(ht.Home_Jersey_Sleeve_Stripe_Color_5) , CommonUtils.SystemDrawColorfromHex(ht.Home_Jersey_Sleeve_Stripe_Color_6) , CommonUtils.SystemDrawColorfromHex(ht.Home_Pants_Color) , CommonUtils.SystemDrawColorfromHex(ht.Home_Pants_Stripe_Color_1) , CommonUtils.SystemDrawColorfromHex(ht.Home_Pants_Stripe_Color_2) , CommonUtils.SystemDrawColorfromHex(ht.Home_Pants_Stripe_Color_3) , CommonUtils.SystemDrawColorfromHex(ht.Socks_Color) , CommonUtils.SystemDrawColorfromHex(ht.Cleats_Color));
                 Uniform_Img.Flip_All_Colors(false, CommonUtils.SystemDrawColorfromHex(at.Helmet_Color), CommonUtils.SystemDrawColorfromHex(at.Helmet_Facemask_Color), CommonUtils.SystemDrawColorfromHex(at.Helmet_Logo_Color), CommonUtils.SystemDrawColorfromHex(at.Away_jersey_Color), CommonUtils.SystemDrawColorfromHex(at.Away_Jersey_Number_Color), CommonUtils.SystemDrawColorfromHex(at.Away_Jersey_Number_Outline_Color), CommonUtils.SystemDrawColorfromHex(at.Away_Sleeve_Color), CommonUtils.SystemDrawColorfromHex(at.Away_Jersey_Shoulder_Stripe), CommonUtils.SystemDrawColorfromHex(at.Away_Jersey_Sleeve_Stripe_Color_1), CommonUtils.SystemDrawColorfromHex(at.Away_Jersey_Sleeve_Stripe_Color_2), CommonUtils.SystemDrawColorfromHex(at.Away_Jersey_Sleeve_Stripe_Color_3), CommonUtils.SystemDrawColorfromHex(at.Away_Jersey_Sleeve_Stripe_Color_4), CommonUtils.SystemDrawColorfromHex(at.Away_Jersey_Sleeve_Stripe_Color_5), CommonUtils.SystemDrawColorfromHex(at.Away_Jersey_Sleeve_Stripe_Color_6), CommonUtils.SystemDrawColorfromHex(at.Away_Pants_Color), CommonUtils.SystemDrawColorfromHex(at.Away_Pants_Stripe_Color_1), CommonUtils.SystemDrawColorfromHex(at.Away_Pants_Stripe_Color_2), CommonUtils.SystemDrawColorfromHex(at.Away_Pants_Stripe_Color_3), CommonUtils.SystemDrawColorfromHex(at.Socks_Color), CommonUtils.SystemDrawColorfromHex(at.Cleats_Color));
@@ -229,9 +230,11 @@ namespace SpectatorFootball.WindowsLeague
          
             background.Fill = backgroundField;
 
-            A_Standing_Player.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images/Players/L_Stand_Player.png"));
-            H_Standing_Player.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images/Players/R_Stand_Player.png"));
+            //            A_Standing_Player.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images/Players/L_Stand_Player.png"));
+            //            H_Standing_Player.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images/Players/R_Stand_Player.png"));
 
+            A_Player_Sheet.ImageSource = Uniform_Img.GetAwayUniform_Image();
+            H_Player_Sheet.ImageSource = Uniform_Img.getHomeUniform_Image();
 
 
 
@@ -387,11 +390,14 @@ namespace SpectatorFootball.WindowsLeague
                                break;
                        }
            */
-
             if (awayTeam)
-                Player_Rect.Fill = A_Standing_Player;
+                Player_Rect.Fill = A_Player_Sheet;
             else
-                Player_Rect.Fill = H_Standing_Player;
+            {
+                H_Player_Sheet.ImageSource = Uniform_Img.getFirstBitmap();
+                Player_Rect.Fill = H_Player_Sheet;
+
+            }
 
             int H_Pixel = Yardline_to_Pixel(yardLine, true);
             if (bLefttoRight)
@@ -503,8 +509,7 @@ namespace SpectatorFootball.WindowsLeague
         {
               double away_yardline = Game_Ball.YardLine + f.YardLine;
               setPlayer(away_yardline, f.Vertical_Percent_Pos, f.State, a_edge, Away_Players_rect[xxx], bLefttoRight, true);
-
-            xxx++;
+              xxx++;
         }
 
         xxx = 0;
@@ -512,8 +517,7 @@ namespace SpectatorFootball.WindowsLeague
         {
               double home_yardline = Game_Ball.YardLine + f.YardLine;
               setPlayer(home_yardline, f.Vertical_Percent_Pos, f.State, a_edge, Home_Players_rect[xxx], bLefttoRight, false);
-
-            xxx++;
+              xxx++;
         }
 
     }
