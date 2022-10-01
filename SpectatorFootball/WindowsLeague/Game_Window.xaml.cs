@@ -87,8 +87,13 @@ namespace SpectatorFootball.WindowsLeague
 
         private int VIEW_EDGE_PIXELS;
 
+        private const int PLAYER_IN_SPRITE_ROW = 19;
+
         private ImageBrush A_Player_Sheet = new ImageBrush();
         private ImageBrush H_Player_Sheet = new ImageBrush();
+
+        private BitmapImage[] A_Player_Sprites = null;
+        private BitmapImage[] H_Player_Sprites = null;
 
         public Game_Window(MainWindow pw, Game g)
         {
@@ -178,6 +183,10 @@ namespace SpectatorFootball.WindowsLeague
                 Uniform_Img.Flip_One_Color(true, app_Constants.STOCK_BALL_COLOR, CommonUtils.SystemDrawColorfromHex(ball_Color));
                 Uniform_Img.Flip_One_Color(false, app_Constants.STOCK_BALL_COLOR, CommonUtils.SystemDrawColorfromHex(ball_Color));
 
+                A_Player_Sprites = Uniform_Img.SplitSpriteSheet(false, PLAYER_IN_SPRITE_ROW, PLAYER_SIZE);
+                H_Player_Sprites = Uniform_Img.SplitSpriteSheet(true, PLAYER_IN_SPRITE_ROW, PLAYER_SIZE);
+
+
             }
             catch (Exception e)
             {
@@ -232,11 +241,6 @@ namespace SpectatorFootball.WindowsLeague
 
             //            A_Standing_Player.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images/Players/L_Stand_Player.png"));
             //            H_Standing_Player.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images/Players/R_Stand_Player.png"));
-
-            A_Player_Sheet.ImageSource = Uniform_Img.GetAwayUniform_Image();
-            H_Player_Sheet.ImageSource = Uniform_Img.getHomeUniform_Image();
-
-
 
             //This causes the field to move
             //                                   GameTimer.Tick += ShowFrame;
@@ -391,10 +395,13 @@ namespace SpectatorFootball.WindowsLeague
                        }
            */
             if (awayTeam)
+            {
+                A_Player_Sheet.ImageSource = A_Player_Sprites[0];
                 Player_Rect.Fill = A_Player_Sheet;
+            }
             else
             {
-                H_Player_Sheet.ImageSource = Uniform_Img.getFirstBitmap();
+                H_Player_Sheet.ImageSource = H_Player_Sprites[0];
                 Player_Rect.Fill = H_Player_Sheet;
 
             }

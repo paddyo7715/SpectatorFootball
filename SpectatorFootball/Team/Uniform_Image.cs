@@ -170,13 +170,18 @@ namespace SpectatorFootball
                 }
             }
         }
-        public BitmapImage[] SplitSpriteSheet(Bitmap SpriteSheet, int PlayersInRow, int PlayerSize)
+        public BitmapImage[] SplitSpriteSheet(bool bHome, int PlayersInRow, int PlayerSize)
         {
             BitmapImage[] r = new BitmapImage[PlayersInRow * 2];
             int i = 0;
 
+            Bitmap SpriteSheet = null;
+            if (bHome)
+                SpriteSheet = Home_Uniform_image;
+            else
+                SpriteSheet = Away_Uniform_Image;
 
-            for(int y=0; y<2; y++)
+            for (int y=0; y<2; y++)
             {
                 for(int x=0; x < PlayersInRow; x++)
                 {
@@ -188,6 +193,7 @@ namespace SpectatorFootball
                     g.DrawImage(SpriteSheet, 0, 0, subRect, GraphicsUnit.Pixel);
                     g.Dispose();
                     r[i] = ConvertBMtoBitmapImage(subBitmap);
+                    i++;
                 }
             }
 
