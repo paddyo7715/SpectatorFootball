@@ -67,8 +67,10 @@ namespace SpectatorFootball.WindowsLeague
         private string ball_Color;
 
         //Home and Away Player lists
-        private List<Rectangle> Away_Players_rect = new List<Rectangle>();
-        private List<Rectangle> Home_Players_rect = new List<Rectangle>();
+        private List<Player_Graphics1_Rec> Away_Players_rect = new List<Player_Graphics1_Rec>();
+        private List<Player_Graphics1_Rec> Home_Players_rect = new List<Player_Graphics1_Rec>();
+
+
 
         private const int PLAYER_SIZE = 50;
         private const int BALL_SIZE = 12;
@@ -89,8 +91,8 @@ namespace SpectatorFootball.WindowsLeague
 
         private const int PLAYER_IN_SPRITE_ROW = 19;
 
-        private ImageBrush A_Player_Sheet = new ImageBrush();
-        private ImageBrush H_Player_Sheet = new ImageBrush();
+//        private ImageBrush A_Player_Sheet = new ImageBrush();
+//        private ImageBrush H_Player_Sheet = new ImageBrush();
 
         private BitmapImage[] A_Player_Sprites = null;
         private BitmapImage[] H_Player_Sprites = null;
@@ -156,7 +158,7 @@ namespace SpectatorFootball.WindowsLeague
                         Width = PLAYER_SIZE,
                     };
 
-                    Away_Players_rect.Add(ap);
+                    Away_Players_rect.Add(new Player_Graphics1_Rec() { Player_Rect = ap } );
                     MyCanvas.Children.Add(ap);
 
                     Rectangle hp = new Rectangle
@@ -165,7 +167,7 @@ namespace SpectatorFootball.WindowsLeague
                         Width = PLAYER_SIZE,
                     };
 
-                    Home_Players_rect.Add(hp);
+                    Home_Players_rect.Add(new Player_Graphics1_Rec() { Player_Rect = hp });
                     MyCanvas.Children.Add(hp);
                 }
 
@@ -380,31 +382,48 @@ namespace SpectatorFootball.WindowsLeague
             Canvas.SetLeft(Ball, H_Pixel);
         }
 
-        private void setPlayer(double yardLine, double Vertical_Placement, Player_States pstate, double[] a_edge, Rectangle Player_Rect, bool bLefttoRight, bool awayTeam)
+        private Player_Graphic_Sprite setNewSprite(Player_States pState, Player_Graphic_Sprite sState, bool bPossessBall)
         {
-            /*           switch (Pstate)
-                       {
-                           case Ball_States.TEED_UP:
-                               Game_Ball.width = 8.0;
-                               Game_Ball.Height = 8.0;
-                               Ball.Width = Game_Ball.width;
-                               Ball.Height = Game_Ball.Height;
-                               Ball.Fill = System.Windows.Media.Brushes.Brown;
-                               Ball.Stroke = System.Windows.Media.Brushes.Black;
-                               break;
-                       }
-           */
-            if (awayTeam)
-            {
-                A_Player_Sheet.ImageSource = A_Player_Sprites[0];
-                Player_Rect.Fill = A_Player_Sheet;
-            }
-            else
-            {
-                H_Player_Sheet.ImageSource = H_Player_Sprites[0];
-                Player_Rect.Fill = H_Player_Sheet;
+            Player_Graphic_Sprite r = Player_Graphic_Sprite.STANDING;
 
+            switch (pState)
+            {
+                case Player_States.STANDING:
+                    break;
+                case Player_States.RUNNING_FORWARD:
+                    break;
+                case Player_States.FG_KICK:
+                    break;
+                case Player_States.ABOUT_TO_CATCH_KICK:
+                    break;
+                case Player_States.BLOCKING:
+                    break;
+                case Player_States.RUNNING_UP:
+                    break;
+                case Player_States.RUNNING_DOWN:
+                    break;
+                case Player_States.TACKLING:
+                    break;
+                case Player_States.TACKLED:
+                    break;
+                case Player_States.ON_BACK:
+                    break;
+                default:
+                    throw new Exception("Unknown Player_States " + pState.ToString());
             }
+            return r;
+        }
+
+        private void setPlayer(double yardLine, double Vertical_Placement, double[] a_edge, Player_States State, Player_Graphics1_Rec Player_Graphic, BitmapImage[] Player_Sprites, bool bLefttoRight, bool bReverse)
+        {
+
+            //set the new 
+
+            ImageBrush Player_Sheet = new ImageBrush();
+            int ind = (int) Player_Graphic;
+            Player_Sheet.ImageSource = Player_Sprites[ind];
+
+            Player_Graphic.Player_Rect.Fill = Player_Sheet; 
 
             int H_Pixel = Yardline_to_Pixel(yardLine, true);
             if (bLefttoRight)
@@ -419,8 +438,8 @@ namespace SpectatorFootball.WindowsLeague
 
             logger.Debug("vertical pixel: " + Vertical_Placement + " " + v_Pixel);
 
-            Canvas.SetTop(Player_Rect, v_Pixel);
-            Canvas.SetLeft(Player_Rect, H_Pixel);
+            Canvas.SetTop(Player_Graphic.Player_Rect, v_Pixel);
+            Canvas.SetLeft(Player_Graphic.Player_Rect, H_Pixel);
         }
 
         private void Show_Play()
@@ -511,19 +530,47 @@ namespace SpectatorFootball.WindowsLeague
         if (Game_Ball.bState != Ball_States.CARRIED)
             setBAll(Game_Ball.YardLine, Game_Ball.Vertical_Percent_Pos, Game_Ball.bState, a_edge, bKickoff, bLefttoRight);
 
-       int xxx = 0;
+        List<Player_Graphics1_Rec> off_Players_rect = null;
+        List<Player_Graphics1_Rec> def_Players_rect = null;
+
+        BitmapImage[] off_Player_Sprites = null;
+        BitmapImage[] def_Player_Sprites = null;
+
+        bool bOff_Reverse_Player_Facing = false;
+        bool bDef_Reverse_Player_Facing = false;
+
+        if (bLefttoRight)
+        {
+            off_Players_rect = Away_Players_rect;
+            off_Player_Sprites = A_Player_Sprites;
+            def_Players_rect = Home_Players_rect;
+            def_Player_Sprites = H_Player_Sprites;
+            bOff_Reverse_Player_Facing = false;
+            bDef_Reverse_Player_Facing = false;
+        }
+        else
+        {
+            off_Players_rect = Home_Players_rect;
+            off_Player_Sprites = H_Player_Sprites;
+            def_Players_rect = Away_Players_rect;
+            def_Player_Sprites = A_Player_Sprites;
+            bOff_Reverse_Player_Facing = true;
+            bDef_Reverse_Player_Facing = true;
+            }
+
+        int xxx = 0;
         foreach (Formation_Rec f in Off_Players)
         {
-              double away_yardline = Game_Ball.YardLine + f.YardLine;
-              setPlayer(away_yardline, f.Vertical_Percent_Pos, f.State, a_edge, Away_Players_rect[xxx], bLefttoRight, true);
+              double yardline = Game_Ball.YardLine + f.YardLine;
+              setPlayer(yardline, f.Vertical_Percent_Pos, a_edge,f.State, off_Players_rect[xxx], off_Player_Sprites, bLefttoRight, bOff_Reverse_Player_Facing);
               xxx++;
         }
 
         xxx = 0;
         foreach (Formation_Rec f in Def_Players)
         {
-              double home_yardline = Game_Ball.YardLine + f.YardLine;
-              setPlayer(home_yardline, f.Vertical_Percent_Pos, f.State, a_edge, Home_Players_rect[xxx], bLefttoRight, false);
+              double yardline = Game_Ball.YardLine + f.YardLine;
+              setPlayer(yardline, f.Vertical_Percent_Pos, a_edge, f.State, def_Players_rect[xxx], def_Player_Sprites, bLefttoRight, bDef_Reverse_Player_Facing);
               xxx++;
         }
 
