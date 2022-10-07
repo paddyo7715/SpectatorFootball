@@ -12,6 +12,7 @@ namespace SpectatorFootball.GameNS
     {
         public Rectangle Player_Rect;
         public Player_Graphic_Sprite Graphic_Sprinte;
+        public bool bHasBall = false;
 
         public static explicit operator int(Player_Graphics1_Rec v)
         {

@@ -389,24 +389,76 @@ namespace SpectatorFootball.WindowsLeague
             switch (pState)
             {
                 case Player_States.STANDING:
+                    r = Player_Graphic_Sprite.STANDING;
                     break;
                 case Player_States.RUNNING_FORWARD:
+                    if (bPossessBall)
+                    {
+                        if (sState == Player_Graphic_Sprite.RUNNING_FORWARD_NO_BALL_1)
+                            r = Player_Graphic_Sprite.RUNNING_FORWARD_WITH_BALL_2;
+                        else
+                            r = Player_Graphic_Sprite.RUNNING_FORWARD_WITH_BALL_1;
+                    }
+                    else
+                    {
+                        if (sState == Player_Graphic_Sprite.RUNNING_FORWARD_NO_BALL_1)
+                            r = Player_Graphic_Sprite.RUNNING_FORWARD_NO_BALL_1;
+                        else
+                            r = Player_Graphic_Sprite.RUNNING_FORWARD_NO_BALL_2;
+                    }
                     break;
                 case Player_States.FG_KICK:
+                    r = Player_Graphic_Sprite.FG_KICK;
                     break;
                 case Player_States.ABOUT_TO_CATCH_KICK:
+                    r = Player_Graphic_Sprite.ABOUT_TO_CATCH_KICK;
                     break;
                 case Player_States.BLOCKING:
+                    if (sState == Player_Graphic_Sprite.BLOCKING_1)
+                        r = Player_Graphic_Sprite.BLOCKING_2;
+                    else
+                        r = Player_Graphic_Sprite.BLOCKING_1;
                     break;
                 case Player_States.RUNNING_UP:
+                    if (bPossessBall)
+                    {
+                        if (sState == Player_Graphic_Sprite.RUNNING_UP_WITH_BALL_1)
+                            r = Player_Graphic_Sprite.RUNNING_UP_WITH_BALL_2;
+                        else
+                            r = Player_Graphic_Sprite.RUNNING_UP_WITH_BALL_1;
+                    }
+                    else
+                    {
+                        if (sState == Player_Graphic_Sprite.RUNNING_UP_NO_BALL_1)
+                            r = Player_Graphic_Sprite.RUNNING_UP_NO_BALL_1;
+                        else
+                            r = Player_Graphic_Sprite.RUNNING_UP_NO_BALL_2;
+                    }
                     break;
                 case Player_States.RUNNING_DOWN:
+                    if (bPossessBall)
+                    {
+                        if (sState == Player_Graphic_Sprite.RUNNING_DOWN_WITH_BALL_1)
+                            r = Player_Graphic_Sprite.RUNNING_DOWN_WITH_BALL_2;
+                        else
+                            r = Player_Graphic_Sprite.RUNNING_DOWN_WITH_BALL_1;
+                    }
+                    else
+                    {
+                        if (sState == Player_Graphic_Sprite.RUNNING_DOWN_NO_BALL_1)
+                            r = Player_Graphic_Sprite.RUNNING_DOWN_NO_BALL_1;
+                        else
+                            r = Player_Graphic_Sprite.RUNNING_DOWN_NO_BALL_2;
+                    }
                     break;
                 case Player_States.TACKLING:
+                    r = Player_Graphic_Sprite.TACKLING;
                     break;
                 case Player_States.TACKLED:
+                    r = Player_Graphic_Sprite.TACKLED;
                     break;
                 case Player_States.ON_BACK:
+                    r = Player_Graphic_Sprite.ON_BACK;
                     break;
                 default:
                     throw new Exception("Unknown Player_States " + pState.ToString());
@@ -414,14 +466,19 @@ namespace SpectatorFootball.WindowsLeague
             return r;
         }
 
-        private void setPlayer(double yardLine, double Vertical_Placement, double[] a_edge, Player_States State, Player_Graphics1_Rec Player_Graphic, BitmapImage[] Player_Sprites, bool bLefttoRight, bool bReverse)
+        private void setPlayer(double yardLine, double Vertical_Placement, double[] a_edge, Player_States State, Player_Graphics1_Rec Player_Graphic, BitmapImage[] Player_Sprites, bool bLefttoRight, bool bOffense)
         {
+            int Left_Right_Image_Offset = 0;
+
+            if ((bLefttoRight && !bOffense) || !bLefttoRight && bOffense)
+                Left_Right_Image_Offset = PLAYER_IN_SPRITE_ROW;
 
             //set the new 
+            Player_Graphic.Graphic_Sprinte = setNewSprite(State, Player_Graphic.Graphic_Sprinte, Player_Graphic.bHasBall);
+            int ind = (int)Player_Graphic.Graphic_Sprinte;
 
             ImageBrush Player_Sheet = new ImageBrush();
-            int ind = (int) Player_Graphic;
-            Player_Sheet.ImageSource = Player_Sprites[ind];
+             Player_Sheet.ImageSource = Player_Sprites[ind + Left_Right_Image_Offset];
 
             Player_Graphic.Player_Rect.Fill = Player_Sheet; 
 
@@ -434,7 +491,6 @@ namespace SpectatorFootball.WindowsLeague
             //Adjust the position on the canvas for the view edge
             H_Pixel += (int)a_edge[0];
             v_Pixel += (int)a_edge[1];
-
 
             logger.Debug("vertical pixel: " + Vertical_Placement + " " + v_Pixel);
 
@@ -536,17 +592,12 @@ namespace SpectatorFootball.WindowsLeague
         BitmapImage[] off_Player_Sprites = null;
         BitmapImage[] def_Player_Sprites = null;
 
-        bool bOff_Reverse_Player_Facing = false;
-        bool bDef_Reverse_Player_Facing = false;
-
         if (bLefttoRight)
         {
             off_Players_rect = Away_Players_rect;
             off_Player_Sprites = A_Player_Sprites;
             def_Players_rect = Home_Players_rect;
             def_Player_Sprites = H_Player_Sprites;
-            bOff_Reverse_Player_Facing = false;
-            bDef_Reverse_Player_Facing = false;
         }
         else
         {
@@ -554,15 +605,13 @@ namespace SpectatorFootball.WindowsLeague
             off_Player_Sprites = H_Player_Sprites;
             def_Players_rect = Away_Players_rect;
             def_Player_Sprites = A_Player_Sprites;
-            bOff_Reverse_Player_Facing = true;
-            bDef_Reverse_Player_Facing = true;
-            }
+        }
 
         int xxx = 0;
         foreach (Formation_Rec f in Off_Players)
         {
               double yardline = Game_Ball.YardLine + f.YardLine;
-              setPlayer(yardline, f.Vertical_Percent_Pos, a_edge,f.State, off_Players_rect[xxx], off_Player_Sprites, bLefttoRight, bOff_Reverse_Player_Facing);
+              setPlayer(yardline, f.Vertical_Percent_Pos, a_edge,f.State, off_Players_rect[xxx], off_Player_Sprites, bLefttoRight, true);
               xxx++;
         }
 
@@ -570,7 +619,7 @@ namespace SpectatorFootball.WindowsLeague
         foreach (Formation_Rec f in Def_Players)
         {
               double yardline = Game_Ball.YardLine + f.YardLine;
-              setPlayer(yardline, f.Vertical_Percent_Pos, a_edge, f.State, def_Players_rect[xxx], def_Player_Sprites, bLefttoRight, bDef_Reverse_Player_Facing);
+              setPlayer(yardline, f.Vertical_Percent_Pos, a_edge, f.State, def_Players_rect[xxx], def_Player_Sprites, bLefttoRight, false);
               xxx++;
         }
 
