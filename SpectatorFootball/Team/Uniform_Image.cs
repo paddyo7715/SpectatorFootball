@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System;
 
 namespace SpectatorFootball
 {
@@ -10,6 +11,8 @@ namespace SpectatorFootball
         private Bitmap stock_image = null;
         private Bitmap Home_Uniform_image = null;
         private Bitmap Away_Uniform_Image = null;
+
+        private int debug_file_id = 0;
 
         public Uniform_Image(string stock_image_file_path)
         {
@@ -181,6 +184,9 @@ namespace SpectatorFootball
             else
                 SpriteSheet = Away_Uniform_Image;
 
+            Away_Uniform_Image.Save("C:\\Database\\spritesheet.png", ImageFormat.Png);
+
+
             for (int y=0; y<2; y++)
             {
                 for(int x=0; x < PlayersInRow; x++)
@@ -220,7 +226,8 @@ namespace SpectatorFootball
 
         public BitmapImage ConvertBMtoBitmapImage(Bitmap bitmap)
         {
-//            bitmap.Save("C:\\Database\\bitmap.png", ImageFormat.Png);
+            debug_file_id++;
+//            bitmap.Save("C:\\Database\\bitmap" + debug_file_id + ".png", ImageFormat.Png);
 
             using (var memory = new MemoryStream())
             {

@@ -89,7 +89,7 @@ namespace SpectatorFootball.WindowsLeague
 
         private int VIEW_EDGE_PIXELS;
 
-        private const int PLAYER_IN_SPRITE_ROW = 19;
+        private const int PLAYER_IN_SPRITE_ROW = 21;
 
 //        private ImageBrush A_Player_Sheet = new ImageBrush();
 //        private ImageBrush H_Player_Sheet = new ImageBrush();
@@ -360,7 +360,7 @@ namespace SpectatorFootball.WindowsLeague
                     Game_Ball.Height = BALL_SIZE;
                     Ball.Width = Game_Ball.width;
                     Ball.Height = Game_Ball.Height;
-                    Ball.Fill = System.Windows.Media.Brushes.Brown;
+                    Ball.Fill = (Brush) CommonUtils.getBrushfromHex(ball_Color);
                     Ball.Stroke = System.Windows.Media.Brushes.Black;
                     break;
             }
@@ -459,6 +459,12 @@ namespace SpectatorFootball.WindowsLeague
                     break;
                 case Player_States.ON_BACK:
                     r = Player_Graphic_Sprite.ON_BACK;
+                    break;
+                case Player_States.RUNNING_BACKWORDS:
+                    if (sState == Player_Graphic_Sprite.RUNNING_BACKWORDS_1)
+                        r = Player_Graphic_Sprite.RUNNING_BACKWORDS_2;
+                    else
+                        r = Player_Graphic_Sprite.RUNNING_BACKWORDS_1;
                     break;
                 default:
                     throw new Exception("Unknown Player_States " + pState.ToString());

@@ -27,6 +27,8 @@ namespace SpectatorFootball.Enum
         RUNNING_DOWN_WITH_BALL_2,
         TACKLING,
         TACKLED,
-        ON_BACK
+        ON_BACK,
+        RUNNING_BACKWORDS_1,
+        RUNNING_BACKWORDS_2
     }
 }
