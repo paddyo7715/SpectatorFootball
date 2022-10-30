@@ -25,8 +25,6 @@ namespace SpectatorFootball.GameNS
         private Coach Away_Coach = null;
         private Coach Home_Coach = null;
 
-        private long Max_TD_Points = 7;
-
         //Game State that are not in the Game model
         private long Fid_first_posession;
 
@@ -44,11 +42,22 @@ namespace SpectatorFootball.GameNS
         //Just for testing
         private int Execut_Play_Num = 0;
 
-        private bool bSureGame;
+        private long Max_TD_Points = 7;
+
+        //Game Settings
+        private bool bSureGame = false;
+        private bool bAllowKickoffs = false;
+        private bool bTwoPointConv = false;
+        private bool bThreePointConv = false;
+
+        //other settings
+        private double YardsInField = 100.0;
+        private double KickoffYardline = 35.0;
+        private double nonKickoff_StartingYardline = 25.0;
 
 
         public GameEngine(MainWindow pw, Game g, Teams_by_Season at, List<Player_and_Ratings> Away_Players,
-            Teams_by_Season ht, List<Player_and_Ratings> Home_Players)
+            Teams_by_Season ht, List<Player_and_Ratings> Home_Players, bool bWatchGame)
         {
             this.pw = pw;
             this.at = at;
@@ -132,10 +141,16 @@ namespace SpectatorFootball.GameNS
 
             //set max possible point for 1 touchdown
             if (pw.Loaded_League.season.League_Structure_by_Season[0].Two_Point_Conversion == 1)
+            {
+                bTwoPointConv = true;
                 Max_TD_Points = 8;
+            }
 
             if (pw.Loaded_League.season.League_Structure_by_Season[0].Three_Point_Conversion == 1)
+            {
+                bThreePointConv = true;
                 Max_TD_Points = 9;
+            }
 
             //create the two coaching objects
             Away_Coach = new Coach(at.Franchise_ID, g, Max_TD_Points, Home_Players, Away_Players, lInj);
@@ -166,6 +181,15 @@ namespace SpectatorFootball.GameNS
             Coach Defensive_Coach = null;
             int Delay_Seconds = 0;
             string Down_and_Yards = "";
+
+            //if the play should be a kickoff but kickoffs not used in this league then set the team
+            //on the 25 with a first and ten and switch possession
+            if (!bAllowKickoffs)
+            {
+                g_Down = 1;
+                g_Yards_to_go = 10;
+                g_Line_of_Scrimmage = nonKickoff_StartingYardline;
+            }
 
             //Local Game vairalbes just for this play
             long Away_Score = (long) g.Away_Score;
@@ -201,10 +225,15 @@ namespace SpectatorFootball.GameNS
             //if this play is a kickoff then set where to kickoff from
             if (bKickoff)
             {
-                if (bLefttoRight)
-                    Line_of_Scrimmage = 35.0;
-                else
-                    Line_of_Scrimmage = 65.0;
+
+//bpo here
+//                if (bLefttoRight)
+//                    Line_of_Scrimmage = 35.0;
+//                else
+//                    Line_of_Scrimmage = 65.0;
+
+                Line_of_Scrimmage = getScrimmageLine(KickoffYardline, bLefttoRight);
+
 
                 Vertical_Ball_Placement = 50.0;
             }
@@ -283,6 +312,15 @@ namespace SpectatorFootball.GameNS
                 g_bGameOver = true;
             else
                 g_bGameOver = false;
+        }
+        private double getScrimmageLine(double y, bool bLefttoRight)
+        {
+            double yardLine = y;
+
+            if (!bLefttoRight)
+                yardLine = YardsInField - y;
+
+            return yardLine;
         }
     }
 }

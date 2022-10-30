@@ -182,6 +182,7 @@
     <Compile Include="Draft\Draft_Pos_Importance.cs" />
     <Compile Include="Enum\Ball_States.cs" />
     <Compile Include="Enum\Formations_Enum.cs" />
+    <Compile Include="Enum\Game_Sounds.cs" />
     <Compile Include="Enum\Graphics_Player_States.cs" />
     <Compile Include="Enum\Player_Graphic_Sprite.cs" />
     <Compile Include="Enum\Player_States.cs" />
@@ -808,6 +809,16 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Sounds\Booing_Long.mp3" />
+    <Content Include="Sounds\Booing_Short.mp3" />
+    <Content Include="Sounds\Cheers_long.mp3" />
+    <Content Include="Sounds\Cheer_Short.mp3" />
+    <Content Include="Sounds\Doink.mp3" />
+    <Content Include="Sounds\huthut.mp3" />
+    <Content Include="Sounds\kickball.mp3" />
+    <Content Include="Sounds\Players_Colliding.mp3" />
+    <Content Include="Sounds\Tackle.mp3" />
+    <Content Include="Sounds\Whistle.mp3" />
     <Resource Include="Images\fplayer.jpg" />
     <Resource Include="Images\Helmets\st_Turbos.png" />
     <Resource Include="Images\Stadiums\st_Detroit.jpg" />

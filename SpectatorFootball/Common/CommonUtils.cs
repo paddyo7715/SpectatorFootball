@@ -256,7 +256,7 @@ namespace SpectatorFootball
 
             return r;
         }
-
+        
         public static long ZeroifNull(long? l)
         {
             if (l == null)

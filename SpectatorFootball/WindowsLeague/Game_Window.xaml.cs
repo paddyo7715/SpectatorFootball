@@ -70,7 +70,7 @@ namespace SpectatorFootball.WindowsLeague
         private List<Player_Graphics1_Rec> Away_Players_rect = new List<Player_Graphics1_Rec>();
         private List<Player_Graphics1_Rec> Home_Players_rect = new List<Player_Graphics1_Rec>();
 
-
+        private MediaPlayer Sound_player = new MediaPlayer();
 
         private const int PLAYER_SIZE = 50;
         private const int BALL_SIZE = 12;
@@ -140,7 +140,7 @@ namespace SpectatorFootball.WindowsLeague
                 dispatcherTimer.Start();
 
                 ge = new GameEngine(pw, g, (Teams_by_Season)at, (List<Player_and_Ratings>)Away_Players,
-                    (Teams_by_Season)ht, (List<Player_and_Ratings>)Home_Players);
+                    (Teams_by_Season)ht, (List<Player_and_Ratings>)Home_Players, true);
 
                 VIEW_EDGE_PIXELS = Yardline_to_Pixel(VIEW_EDGE_OFFSET_YARDLINE, false);
                 CANVAS_WIDTH = MyCanvas.Width - RIGHT_PIXEL_FUDGE;
@@ -187,7 +187,6 @@ namespace SpectatorFootball.WindowsLeague
 
                 A_Player_Sprites = Uniform_Img.SplitSpriteSheet(false, PLAYER_IN_SPRITE_ROW, PLAYER_SIZE);
                 H_Player_Sprites = Uniform_Img.SplitSpriteSheet(true, PLAYER_IN_SPRITE_ROW, PLAYER_SIZE);
-
 
             }
             catch (Exception e)
@@ -237,12 +236,9 @@ namespace SpectatorFootball.WindowsLeague
             lblHomeTeam.Background = new SolidColorBrush(CommonUtils.getColorfromHex(m2[0]));
             
             ImageBrush backgroundField = new ImageBrush();
-            backgroundField.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images/Stadiums/Grass_BrightGreen.png"));
-         
-            background.Fill = backgroundField;
+            backgroundField.ImageSource = new BitmapImage(new Uri(CommonUtils.getAppPath() + "/images/Stadiums/Grass_BrightGreen.png"));
 
-            //            A_Standing_Player.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images/Players/L_Stand_Player.png"));
-            //            H_Standing_Player.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images/Players/R_Stand_Player.png"));
+            background.Fill = backgroundField;
 
             //This causes the field to move
             //                                   GameTimer.Tick += ShowFrame;
@@ -251,6 +247,10 @@ namespace SpectatorFootball.WindowsLeague
 
             bool bGameEneded = false;
             Play_Struct Play = null;
+
+            //bpo test
+            Play_Sound(Game_Sounds.BALL_HITS_GOALPOST);
+            //
 
             while (!bGameEneded)
             {
@@ -630,5 +630,53 @@ namespace SpectatorFootball.WindowsLeague
         }
 
     }
+    private void Play_Sound(Game_Sounds gs)
+        {
+            string s = CommonUtils.getAppPath() + "/Sounds/";
+            try
+            {
+
+                switch (gs)
+                {
+                    case Game_Sounds.BALL_HITS_GOALPOST:
+                        s += "Doink.mp3";
+                        break;
+                    case Game_Sounds.HUT_HUT:
+                        s += "huthut.mp3";
+                        break;
+                    case Game_Sounds.KICK:
+                        s += "kickball.mp3";
+                        break;
+                    case Game_Sounds.LOUD_BOO:
+                        s += "Booing_Long.mp3";
+                        break;
+                    case Game_Sounds.LOUD_CHEER:
+                        s += "Cheers_long.mp3";
+                        break;
+                    case Game_Sounds.LOW_BOO:
+                        s += "Booing_Short.mp3";
+                        break;
+                    case Game_Sounds.LOW_CHEER:
+                        s += "Cheer_Short.mp3";
+                        break;
+                    case Game_Sounds.PLAYERS_COLLIDING:
+                        s += "Players_Colliding.mp3";
+                        break;
+                    case Game_Sounds.PLAYER_TACKLED:
+                        s += "Tackle.mp3";
+                        break;
+                    case Game_Sounds.WHISTLE:
+                        s += "Whistle.mp3";
+                        break;
+                }
+
+                var u = new Uri(s);
+                Sound_player.Open(u);
+                Sound_player.Play();
+
+            }
+            catch { }
+
+        }
     }
 }

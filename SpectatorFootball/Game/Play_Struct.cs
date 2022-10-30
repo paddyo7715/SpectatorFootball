@@ -39,6 +39,8 @@ namespace SpectatorFootball.GameNS
         public Play_Package Offensive_Package = null;
         public Formation Defensive_Formation;
 
-        List<string> Player_Movements = null;
+        string Before_Snap = null;
+
+        List<string> Play_Stages = null;
     }
 }

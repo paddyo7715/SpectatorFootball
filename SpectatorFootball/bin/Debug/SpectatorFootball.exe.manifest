@@ -102,14 +102,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SpectatorFootball.exe" size="17223168">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SpectatorFootball.exe" size="17225216">
       <assemblyIdentity name="SpectatorFootball" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>SVFq6HUTctyjgIO37Yx8XUFLDdvlJ97dAxqoE/3Vuag=</dsig:DigestValue>
+        <dsig:DigestValue>DwJ5NmomBzYJoedAkV5hsxf+9pJyDL1lnI3ylwotXM0=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -372,6 +372,96 @@
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
       <dsig:DigestValue>HL9o7LlQkPLeqgeqM6/+zGZe6rRJGu5Qg78iH6j807U=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Sounds\Booing_Long.mp3" size="53704">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>yZ7FVp0xM1KWaFt/XGTBA2DAtaIlhl7/D7ip4OR6KI0=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Sounds\Booing_Short.mp3" size="25079">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>QVSiPqBUAvqsXPk1QTwxCPYeY4oKdzc2YTEjTfppe6w=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Sounds\Cheer_Short.mp3" size="19141">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>RLQpS0m8VCuKfwLgi1W9CvgeVK+cvbUaESCL7xTjxPs=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Sounds\Cheers_long.mp3" size="62636">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>u5vktpN78PH42YZ+7oSPhuqPvvykaSdD8LMGmD+gyyw=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Sounds\Doink.mp3" size="8083">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>/nWx4NN512Qbv/Eivq0SexHKWsENpV0NxE4+yLa6ssk=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Sounds\huthut.mp3" size="7303">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>6h5uwqfV79VE/TMdqEAL6rBJuZQsCBvTW3FZhbr1AZ0=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Sounds\kickball.mp3" size="5739">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>ZbQtqYI3LWCpKIkRsJHj6x8Ey17fzFMsWZMoj0J7Pmc=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Sounds\Players_Colliding.mp3" size="82499">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>z1gAwlvXIKUw31v4EaWlByy5feXiYF+FlkVCnmcdoBs=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Sounds\Tackle.mp3" size="9128">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>rIwebhpD9PMVipqVr/n7Zpncms9XS28H+VCnVC2+hQ4=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Sounds\Whistle.mp3" size="8868">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>ZGmNMRtn7/Yufl+GH+8biANiL0Xp93jpGQdCvyqb9RY=</dsig:DigestValue>
     </hash>
   </file>
   <file name="SpectatorFootball.exe.config" size="4845">
