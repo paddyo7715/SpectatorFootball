@@ -198,6 +198,7 @@
     <Compile Include="Game\Game_Helper.cs" />
     <Compile Include="Game\Game_Player.cs" />
     <Compile Include="Game\Player_Graphics1_Rec.cs" />
+    <Compile Include="Game\Play_Result.cs" />
     <Compile Include="Game\Play_Struct.cs" />
     <Compile Include="Game\Play_Package.cs" />
     <Compile Include="Help_Forms\Help_Champions.xaml.cs">

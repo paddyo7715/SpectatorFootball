@@ -36,8 +36,12 @@ namespace SpectatorFootball.GameNS
         public int g_Vertical_Ball_Placement;
         private int g_Away_timeouts = 3;
         private int g_Home_timeouts = 3;
-        private bool g_bKickoff = true;
         private bool g_bGameOver = false;
+
+        //Manditory next plays
+        private bool bKickoff;
+        private bool bExtraPoint;
+        private bool bFreeKick;
 
         //Just for testing
         private int Execut_Play_Num = 0;
@@ -158,6 +162,8 @@ namespace SpectatorFootball.GameNS
 
             g_fid_posession = CoinToss();
             Fid_first_posession = g_fid_posession;
+
+            bKickoff = true;
         }
 
         private long CoinToss()
@@ -182,15 +188,6 @@ namespace SpectatorFootball.GameNS
             int Delay_Seconds = 0;
             string Down_and_Yards = "";
 
-            //if the play should be a kickoff but kickoffs not used in this league then set the team
-            //on the 25 with a first and ten and switch possession
-            if (!bAllowKickoffs)
-            {
-                g_Down = 1;
-                g_Yards_to_go = 10;
-                g_Line_of_Scrimmage = nonKickoff_StartingYardline;
-            }
-
             //Local Game vairalbes just for this play
             long Away_Score = (long) g.Away_Score;
             long Home_Score = (long)g.Home_Score;
@@ -203,7 +200,7 @@ namespace SpectatorFootball.GameNS
             double Vertical_Ball_Placement = this.g_Vertical_Ball_Placement;
             int Away_timeouts = this.g_Away_timeouts;
             int Home_timeouts = this.g_Home_timeouts;
-            bool bKickoff = this.g_bKickoff;
+//            bool bKickoff = this.g_bKickoff;
             bool bGameOver = this.g_bGameOver;
 
             //call the offensive and defensive plays
@@ -222,26 +219,30 @@ namespace SpectatorFootball.GameNS
                 bLefttoRight = false;
             }
 
+            //if the play should be a kickoff but kickoffs not used in this league then set the team
+            //on the 25 with a first and ten and switch possession
+            if (!bAllowKickoffs && bKickoff)
+            {
+                g_Down = 1;
+                g_Yards_to_go = 10;
+                g_Line_of_Scrimmage = nonKickoff_StartingYardline;
+                Vertical_Ball_Placement = 50.0;
+                fid_posession = Switch_Posession(fid_posession, at.Franchise_ID, ht.Franchise_ID);
+            }
+
             //if this play is a kickoff then set where to kickoff from
             if (bKickoff)
             {
 
-//bpo here
-//                if (bLefttoRight)
-//                    Line_of_Scrimmage = 35.0;
-//                else
-//                    Line_of_Scrimmage = 65.0;
-
                 Line_of_Scrimmage = getScrimmageLine(KickoffYardline, bLefttoRight);
-
-
                 Vertical_Ball_Placement = 50.0;
             }
 
             //adjust the formation positions depending on which team has the ball
             double PossessionAdjuster = bLefttoRight ? 1.0 : -1.0;
 
-            Offensive_Package = Offensive_Coach.Call_Off_PlayFormation(bKickoff, PossessionAdjuster);
+            //Call the play
+            Offensive_Package = Offensive_Coach.Call_Off_PlayFormation(bKickoff, bExtraPoint, bFreeKick, PossessionAdjuster);
             DEF_Formation = Defensive_Coach.Call_Def_Formation(Offensive_Package, PossessionAdjuster);
 
             //You could get the allow substitutions from either coach
@@ -321,6 +322,17 @@ namespace SpectatorFootball.GameNS
                 yardLine = YardsInField - y;
 
             return yardLine;
+        }
+        private long Switch_Posession(long Current_possession, long at, long ht)
+        {
+            long r = Current_possession;
+
+            if (Current_possession == at)
+                r = ht;
+            else
+                r = at;
+
+            return r;
         }
     }
 }

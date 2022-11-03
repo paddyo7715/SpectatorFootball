@@ -38,7 +38,7 @@ namespace SpectatorFootball.GameNS
 
         }
  
-        public Play_Package Call_Off_PlayFormation(bool bKickoff, double PossessionAdjuster)
+        public Play_Package Call_Off_PlayFormation(bool bKickoff, bool bExtraPoint, bool bFreeKick, double PossessionAdjuster)
         {
             Formations_Enum f;
             Play_Enum p;
