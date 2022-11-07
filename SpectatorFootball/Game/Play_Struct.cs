@@ -22,6 +22,7 @@ namespace SpectatorFootball.GameNS
 
         //These are from after the play is executed
         public bool bGameOver;
+        public bool bForfeitedGame;
         public long After_Away_Score;
         public long After_Home_Score;
         public string After_Display_Time;

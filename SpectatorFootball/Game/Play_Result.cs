@@ -11,6 +11,7 @@ namespace SpectatorFootball.GameNS
     {
         public string Message = "";
         public long yards_gained = 0;
+        public bool bRighttoLeft;
 
         //Next manditory play
         public bool bKickoff = false;
@@ -20,10 +21,7 @@ namespace SpectatorFootball.GameNS
         public Play_Package Offensive_Package = null;
         public Formation DEF_Formation = null;
 
-        public bool bTouchdown = false;
-        public bool bSafety = false;
-        public bool bPenalty = false;
-        public bool bPenaltyAccepted = false;
+        public bool bSwitchPossession = false;
 
         public long away_points = 0;
         public long home_points = 0;
@@ -47,7 +45,7 @@ namespace SpectatorFootball.GameNS
         public long away_time_of_possession = 0;
 
         public long away_turnovers = 0;
-        public long away_sacks = 0;
+        public long away_sacks = 0;  //by the defense
 
         public long home_first_downs = 0;
         public long home_third_down_att = 0;
@@ -88,5 +86,9 @@ namespace SpectatorFootball.GameNS
         public List<Game_Player_Rushing_Stats> Game_Player_Rushing_Stats = new List<Game_Player_Rushing_Stats>();
         public List<Game_Scoring_Summary> Game_Scoring_Summary = new List<Game_Scoring_Summary>();
 
+        public Play_Result(bool bRighttoLeft)
+        {
+            this.bRighttoLeft = bRighttoLeft;
+        }
     }
 }
