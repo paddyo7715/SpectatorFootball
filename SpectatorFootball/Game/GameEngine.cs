@@ -481,6 +481,58 @@ namespace SpectatorFootball.GameNS
                     }
                 }
 
+                foreach (Game_Player_Passing_Stats s in p_result.Game_Player_Passing_Stats)
+                {
+                    Game_Player_Passing_Stats ps = g.Game_Player_Passing_Stats.Where(x => x.Player_ID == s.Player_ID).FirstOrDefault();
+                    if (ps == null)
+                        g.Game_Player_Passing_Stats.Add(s);
+                    else
+                    {
+                        ps.Fumbles += s.Fumbles;
+                        ps.Fumbles_Lost += s.Fumbles_Lost;
+                        ps.Sacked += s.Sacked;
+                        ps.Pass_Comp += s.Pass_Comp;
+                        ps.Pass_Att += s.Pass_Att;
+                        ps.Pass_Yards += s.Pass_Yards;
+                        ps.Pass_TDs += s.Pass_TDs;
+                        ps.Pass_Ints += s.Pass_Ints;
+                        if (ps.Long < s.Long) ps.Long = s.Long;
+                        ps.Passes_Blocks += s.Passes_Blocks;
+                    }
+                }
+
+                foreach (Game_Player_Penalty_Stats s in p_result.Game_Player_Penalty_Stats)
+                    g.Game_Player_Penalty_Stats.Add(s);
+
+                foreach (Game_Player_Punt_Defenders s in p_result.Game_Player_Punt_Defenders)
+                {
+                    Game_Player_Punt_Defenders ps = g.Game_Player_Punt_Defenders.Where(x => x.Player_ID == s.Player_ID).FirstOrDefault();
+                    if (ps == null)
+                        g.Game_Player_Punt_Defenders.Add(s);
+                    else
+                    {
+                        ps.Forced_Fumbles_Punt += s.Forced_Fumbles_Punt;
+                        ps.Fumbles_Punt_Recovered += s.Fumbles_Punt_Recovered;
+                        ps.Fumbles_Punt_Recovered_TDs += s.Fumbles_Punt_Recovered_TDs;
+                        ps.Fumbles_Punt_Recovered_Yards += s.Fumbles_Punt_Recovered_Yards;
+                        ps.Punt_Tackles += s.Punt_Tackles;
+                    }
+                }
+
+                foreach (Game_Player_Punt_Receiver_Stats s in p_result.Game_Player_Punt_Receiver_Stats)
+                {
+                    Game_Player_Punt_Receiver_Stats ps = g.Game_Player_Punt_Receiver_Stats.Where(x => x.Player_ID == s.Player_ID).FirstOrDefault();
+                    if (ps == null)
+                        g.Game_Player_Punt_Receiver_Stats.Add(s);
+                    else
+                    {
+                        ps.Punt_Block += s.Punt_Block;
+                        ps.Punt_Block_Recovery += s.Punt_Block_Recovery;
+                        ps.Punt_Block_Recovery_Yards += s.Punt_Block_Recovery_Yards;
+                        ps.Punt_Block_Recovery_TDs += s.Punt_Block_Recovery_TDs;
+                    }
+                }
+
                 //if the play resulted in a change of possession then switch possession
                 if (p_result.bSwitchPossession)
                     g_fid_posession = Switch_Posession(g_fid_posession, at.Franchise_ID, ht.Franchise_ID);
