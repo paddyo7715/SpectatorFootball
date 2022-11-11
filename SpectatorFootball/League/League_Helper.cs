@@ -124,7 +124,7 @@ namespace SpectatorFootball.League
             r.source_list.Add("12 teams 3 divisions 0 conferences");
             r.source_list.Add("14 teams 2 divisions 0 conferences");
             r.source_list.Add("16 teams 4 divisions 2 conferences");
-            r.source_list.Add("16 teams 2 divisions 2 conferences");
+            r.source_list.Add("16 teams 2 divisions 0 conferences");
             r.source_list.Add("18 teams 3 divisions 0 conferences");
             r.source_list.Add("20 teams 4 divisions 2 conferences");
             r.source_list.Add("20 teams 2 divisions 2 conferences");
@@ -198,7 +198,7 @@ namespace SpectatorFootball.League
 
                     r.selected = "14,16";
                     break;
-                case "16 teams 2 divisions 2 conferences":
+                case "16 teams 2 divisions 0 conferences":
                     r.source_list.Add("16,18");
                     r.source_list.Add("18,20");
                     r.source_list.Add("20,22");

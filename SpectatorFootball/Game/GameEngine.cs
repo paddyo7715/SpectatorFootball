@@ -143,6 +143,120 @@ namespace SpectatorFootball.GameNS
             List<Game_Player_Rushing_Stats> Game_Player_Rushing_Stats = new List<Game_Player_Rushing_Stats>();
             List<Game_Scoring_Summary> Game_Scoring_Summary = new List<Game_Scoring_Summary>();
 
+            //Add starter records for both teams
+            foreach (Player_Pos pp in System.Enum.GetValues(typeof(Player_Pos)))
+            {
+                int num_starters = Team_Helper.getNumStartingPlayersByPosition(pp);
+                List <Player_and_Ratings> away_starter_list = Away_Players.Where(x => x.p.Pos == (int)pp).OrderBy(x => x.p.Pos).ThenByDescending(x => x.Overall_Grade).Take(num_starters).ToList();
+                foreach(Player_and_Ratings a in away_starter_list)
+                {
+                    switch ((Player_Pos)a.p.Pos)
+                    {
+                        case Player_Pos.QB:
+                            {
+                                Game_Player_Passing_Stats.Add(new Game_Player_Passing_Stats() { Franchise_ID = at.Franchise_ID, Game_ID = g.ID, Player_ID = a.p.ID, Started = 1 });
+                                break;
+                            }
+
+                        case Player_Pos.RB:
+                            {
+                                Game_Player_Rushing_Stats.Add(new Game_Player_Rushing_Stats() { Franchise_ID = at.Franchise_ID, Game_ID = g.ID, Player_ID = a.p.ID, Started = 1 });
+                                break;
+                            }
+
+                        case Player_Pos.WR:
+                        case Player_Pos.TE:
+                            {
+                                Game_Player_Receiving_Stats.Add(new Game_Player_Receiving_Stats() { Franchise_ID = at.Franchise_ID, Game_ID = g.ID, Player_ID = a.p.ID, Started = 1 });
+                                break;
+                            }
+                        case Player_Pos.OL:
+                            {
+                                Game_Player_Offensive_Linemen_Stats.Add(new Game_Player_Offensive_Linemen_Stats() { Franchise_ID = at.Franchise_ID, Game_ID = g.ID, Player_ID = a.p.ID, Started = 1 });
+                                break;
+                            }
+
+                        case Player_Pos.DL:
+                        case Player_Pos.LB:
+                            {
+                                Game_Player_Defense_Stats.Add(new Game_Player_Defense_Stats() { Franchise_ID = at.Franchise_ID, Game_ID = g.ID, Player_ID = a.p.ID, Started = 1 });
+                                break;
+                            }
+                        case Player_Pos.DB:
+                            {
+                                Game_Player_Pass_Defense_Stats.Add(new Game_Player_Pass_Defense_Stats() { Franchise_ID = at.Franchise_ID, Game_ID = g.ID, Player_ID = a.p.ID, Started = 1 });
+                                break;
+                            }
+
+                        case Player_Pos.K:
+                            {
+                                Game_Player_Kicker_Stats.Add(new Game_Player_Kicker_Stats() { Franchise_ID = at.Franchise_ID, Game_ID = g.ID, Player_ID = a.p.ID, Started = 1 });
+                                break;
+                            }
+
+                        case Player_Pos.P:
+                            {
+                                Game_Player_Punter_Stats.Add(new Game_Player_Punter_Stats() { Franchise_ID = at.Franchise_ID, Game_ID = g.ID, Player_ID = a.p.ID, Started = 1 });
+                                break;
+                            }
+                    }
+                }
+                List<Player_and_Ratings> home_starter_list = Home_Players.Where(x => x.p.Pos == (int)pp).OrderBy(x => x.p.Pos).ThenByDescending(x => x.Overall_Grade).Take(num_starters).ToList();
+                foreach (Player_and_Ratings a in away_starter_list)
+                {
+                    switch ((Player_Pos)a.p.Pos)
+                    {
+                        case Player_Pos.QB:
+                            {
+                                Game_Player_Passing_Stats.Add(new Game_Player_Passing_Stats() { Franchise_ID = ht.Franchise_ID, Game_ID = g.ID, Player_ID = a.p.ID, Started = 1 });
+                                break;
+                            }
+
+                        case Player_Pos.RB:
+                            {
+                                Game_Player_Rushing_Stats.Add(new Game_Player_Rushing_Stats() { Franchise_ID = ht.Franchise_ID, Game_ID = g.ID, Player_ID = a.p.ID, Started = 1 });
+                                break;
+                            }
+
+                        case Player_Pos.WR:
+                        case Player_Pos.TE:
+                            {
+                                Game_Player_Receiving_Stats.Add(new Game_Player_Receiving_Stats() { Franchise_ID = ht.Franchise_ID, Game_ID = g.ID, Player_ID = a.p.ID, Started = 1 });
+                                break;
+                            }
+                        case Player_Pos.OL:
+                            {
+                                Game_Player_Offensive_Linemen_Stats.Add(new Game_Player_Offensive_Linemen_Stats() { Franchise_ID = ht.Franchise_ID, Game_ID = g.ID, Player_ID = a.p.ID, Started = 1 });
+                                break;
+                            }
+
+                        case Player_Pos.DL:
+                        case Player_Pos.LB:
+                            {
+                                Game_Player_Defense_Stats.Add(new Game_Player_Defense_Stats() { Franchise_ID = ht.Franchise_ID, Game_ID = g.ID, Player_ID = a.p.ID, Started = 1 });
+                                break;
+                            }
+                        case Player_Pos.DB:
+                            {
+                                Game_Player_Pass_Defense_Stats.Add(new Game_Player_Pass_Defense_Stats() { Franchise_ID = ht.Franchise_ID, Game_ID = g.ID, Player_ID = a.p.ID, Started = 1 });
+                                break;
+                            }
+
+                        case Player_Pos.K:
+                            {
+                                Game_Player_Kicker_Stats.Add(new Game_Player_Kicker_Stats() { Franchise_ID = ht.Franchise_ID, Game_ID = g.ID, Player_ID = a.p.ID, Started = 1 });
+                                break;
+                            }
+
+                        case Player_Pos.P:
+                            {
+                                Game_Player_Punter_Stats.Add(new Game_Player_Punter_Stats() { Franchise_ID = ht.Franchise_ID, Game_ID = g.ID, Player_ID = a.p.ID, Started = 1 });
+                                break;
+                            }
+                    }
+                }
+            }
+
             //initialize the injuries list
             lInj = new List<Injury>();
 

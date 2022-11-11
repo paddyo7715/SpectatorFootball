@@ -121,6 +121,12 @@ namespace SpectatorFootball.Services
                     double new_overall_rating = Player_Helper.Create_Overall_Rating((Player_Pos)new_player.Pos, new_player.Player_Ratings.First());
 
                     Player_DAO pda = new Player_DAO();
+
+                    //bpo debug test
+                    int ttt = 0;
+                    if (new_player.Eligible_for_Draft == 1)
+                        ttt = 56;
+                    //================
                     pda.AddSinglePlayer(new_player, League_con_string);
                     r = new Player_and_Ratings();
                     r.p = new_player;
