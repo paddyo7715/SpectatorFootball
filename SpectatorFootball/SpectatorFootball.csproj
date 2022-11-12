@@ -747,10 +747,6 @@
       <LastGenOutput>SettingsEDM.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <None Include="Images\Source\Field_Templates\Template.xcf" />
-    <EntityDeploy Include="Models\LeagueEDM.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>LeagueEDM.Designer.cs</LastGenOutput>
-    </EntityDeploy>
     <None Include="Images\Source\Players\L_FG_KICK.xcf" />
     <None Include="Images\Source\Players\L_Kick_About_to_Catch.xcf" />
     <None Include="Images\Source\Players\L_On_Back.xcf" />
@@ -791,6 +787,10 @@
     <None Include="Images\Source\Players\R_Upright_Block1.xcf" />
     <None Include="Images\Source\Players\R_Upright_Block2.xcf" />
     <None Include="Images\Source\Players\sprite_sheet.xcf" />
+    <EntityDeploy Include="Models\LeagueEDM.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>LeagueEDM.Designer.cs</LastGenOutput>
+    </EntityDeploy>
     <None Include="Models\LeagueEDM.edmx.diagram">
       <DependentUpon>LeagueEDM.edmx</DependentUpon>
     </None>
@@ -810,6 +810,16 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Models\LeagueEDM.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>LeagueEDM.edmx</DependentUpon>
+      <LastGenOutput>LeagueEDM.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\LeagueEDM.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>LeagueEDM.edmx</DependentUpon>
+      <LastGenOutput>LeagueEDM.cs</LastGenOutput>
+    </Content>
     <Content Include="Sounds\Booing_Long.mp3" />
     <Content Include="Sounds\Booing_Short.mp3" />
     <Content Include="Sounds\Cheers_long.mp3" />
@@ -827,16 +837,6 @@
     <Resource Include="Images\Stadiums\Field__Template.png" />
     <Resource Include="Images\Stadiums\Grass_BrightGreen.png" />
     <Resource Include="Images\Players\Player_Sprite_Sheet.png" />
-    <Content Include="Models\LeagueEDM.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>LeagueEDM.edmx</DependentUpon>
-      <LastGenOutput>LeagueEDM.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\LeagueEDM.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>LeagueEDM.edmx</DependentUpon>
-      <LastGenOutput>LeagueEDM.cs</LastGenOutput>
-    </Content>
     <Content Include="Models\SettingsEDM.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>SettingsEDM.edmx</DependentUpon>

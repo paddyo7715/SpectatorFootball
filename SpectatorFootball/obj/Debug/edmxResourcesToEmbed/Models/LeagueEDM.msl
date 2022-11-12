@@ -421,6 +421,7 @@
           <ScalarProperty Name="Num_of_Weeks" ColumnName="Num_of_Weeks" />
           <ScalarProperty Name="Career_Ending" ColumnName="Career_Ending" />
           <ScalarProperty Name="Season_Ending" ColumnName="Season_Ending" />
+          <ScalarProperty Name="Num_of_Plays" ColumnName="Num_of_Plays" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

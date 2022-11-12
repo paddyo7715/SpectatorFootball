@@ -479,8 +479,17 @@ namespace SpectatorFootball
         public const string PLAYER_OF_THE_YEAR_DEF = "POYD";
         public const string ALL_PRO = "APRO";
         public const string CHAMPIONSHIP_MVP = "CMVP";
-
         public const double ALL_PRO_PERCENT = 0.10;
+
+        //Injuries
+        public const int PERCENT_INJURY_ON_A_PLAY = 5;
+        public const int PERCENT_OFF_DEF = 50;
+        public const int INJURY_ADJUSTER = 110;
+        public const int CHANCE_CAREER_ENDING = 1;
+        public const int CHANCE_SEASON_ENDING = 6;
+        public const int CHANCE_WEEKS = 30;
+        public const int MAX_WEEKS_OUT = 10;
+        public const int MAX_PLAYS_OUT = 25;
 
 
 

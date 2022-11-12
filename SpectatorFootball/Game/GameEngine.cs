@@ -62,7 +62,6 @@ namespace SpectatorFootball.GameNS
         private long non_forfeit_win_score = 2;
         private long forfeit_lose_score = 0;
 
-
         public GameEngine(MainWindow pw, Game g, Teams_by_Season at, List<Player_and_Ratings> Away_Players,
             Teams_by_Season ht, List<Player_and_Ratings> Home_Players, bool bWatchGame)
         {
@@ -298,8 +297,10 @@ namespace SpectatorFootball.GameNS
         public Play_Struct ExecutePlay()
         {
             Play_Struct r = new Play_Struct();
+
             Play_Package Offensive_Package = null;
             Formation DEF_Formation = null;
+
             Coach Offensive_Coach = null;
             Coach Defensive_Coach = null;
             int Delay_Seconds = 0;
@@ -826,6 +827,78 @@ namespace SpectatorFootball.GameNS
 
 
             return r; 
+        }
+        private Injury CheckforInjuries(Play_Package Offensive_Package, Formation DEF_Formation)
+        {
+            Injury r = null;
+            List<Formation_Rec> injury_team = null;
+            long off_id = 0;
+            long deff_id = 0;
+            long f_id = 0;
+            if (g_fid_posession == at.Franchise_ID)
+            {
+                off_id = at.Franchise_ID;
+                deff_id = ht.Franchise_ID;
+            }
+            else
+            {
+                off_id = ht.Franchise_ID;
+                deff_id = at.Franchise_ID;
+            }
+
+            int iInjury = CommonUtils.getRandomNum(1, 100);
+            if (iInjury <= app_Constants.PERCENT_INJURY_ON_A_PLAY)
+            {
+                int iOffDef = CommonUtils.getRandomNum(1, 100);
+                if (iOffDef <= app_Constants.PERCENT_OFF_DEF) //if true then defense injury injury   
+                {
+                    injury_team = DEF_Formation.Player_list;
+                    f_id = deff_id;
+                }
+                else
+                {
+                    injury_team = Offensive_Package.Formation.Player_list;
+                    f_id = off_id;
+                }
+
+                int kickerCount = 0;
+                while (true)
+                {
+                    int iFormNum = CommonUtils.getRandomNum(1, injury_team.Count()) - 1;
+                    Formation_Rec injured_player = injury_team[iFormNum];
+                    //it should be rare that a kicker is injured
+                    if (injured_player.Pos == Player_Pos.K || injured_player.Pos == Player_Pos.P)
+                        kickerCount++;
+
+                    if (kickerCount < 2)
+                        continue;
+
+                    long toughness = injured_player.p_and_r.pr.First().Toughness_Ratings;
+                    long injury_chance =  app_Constants.INJURY_ADJUSTER - toughness;
+
+                    r = new Injury() { Player_ID = injured_player.p_and_r.p.ID, Franchise_ID = f_id, Season_ID = g.Season_ID, Week = g.Week, Career_Ending = 0, Num_of_Plays = 0, Num_of_Weeks = 0, Season_Ending = 0 };
+
+                    int itype_num = CommonUtils.getRandomNum(1, 100);
+                    if (itype_num <= app_Constants.CHANCE_CAREER_ENDING)
+                        r.Career_Ending = 1;
+                    else if (itype_num <= app_Constants.CHANCE_SEASON_ENDING)
+                        r.Season_Ending = 1;
+                    else if (itype_num <= app_Constants.CHANCE_WEEKS)
+                    {
+                        int iWeeks = CommonUtils.getRandomNum(1, app_Constants.MAX_WEEKS_OUT);
+                        r.Num_of_Weeks = iWeeks;
+                    }
+                    else
+                    {
+                        int iPlays = CommonUtils.getRandomNum(1, app_Constants.MAX_PLAYS_OUT);
+                        r.Num_of_Weeks = iPlays;
+                    }
+                }
+
+            }  //if injury
+
+                
+            return r;
         }
     }
 }

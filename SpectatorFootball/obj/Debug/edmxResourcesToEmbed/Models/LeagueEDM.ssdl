@@ -412,6 +412,7 @@
     <Property Name="Num_of_Weeks" Type="integer" Nullable="false" />
     <Property Name="Career_Ending" Type="integer" Nullable="false" />
     <Property Name="Season_Ending" Type="integer" Nullable="false" />
+    <Property Name="Num_of_Plays" Type="integer" Nullable="false" />
   </EntityType>
   <EntityType Name="Injury_Log">
     <Key>
@@ -1362,14 +1363,14 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Injuries_0_0">
-    <End Role="Season" Type="Self.Season" Multiplicity="1" />
+    <End Role="Franchise" Type="Self.Franchise" Multiplicity="1" />
     <End Role="Injuries" Type="Self.Injuries" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Season">
+      <Principal Role="Franchise">
         <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="Injuries">
-        <PropertyRef Name="Season_ID" />
+        <PropertyRef Name="Franchise_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1386,14 +1387,14 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Injuries_2_0">
-    <End Role="Franchise" Type="Self.Franchise" Multiplicity="1" />
+    <End Role="Season" Type="Self.Season" Multiplicity="1" />
     <End Role="Injuries" Type="Self.Injuries" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Franchise">
+      <Principal Role="Season">
         <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="Injuries">
-        <PropertyRef Name="Franchise_ID" />
+        <PropertyRef Name="Season_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1922,7 +1923,7 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
       <End Role="Hall_of_Fame" EntitySet="Hall_of_Fame" />
     </AssociationSet>
     <AssociationSet Name="FK_Injuries_0_0" Association="Self.FK_Injuries_0_0">
-      <End Role="Season" EntitySet="Season" />
+      <End Role="Franchise" EntitySet="Franchise" />
       <End Role="Injuries" EntitySet="Injuries" />
     </AssociationSet>
     <AssociationSet Name="FK_Injuries_1_0" Association="Self.FK_Injuries_1_0">
@@ -1930,7 +1931,7 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
       <End Role="Injuries" EntitySet="Injuries" />
     </AssociationSet>
     <AssociationSet Name="FK_Injuries_2_0" Association="Self.FK_Injuries_2_0">
-      <End Role="Franchise" EntitySet="Franchise" />
+      <End Role="Season" EntitySet="Season" />
       <End Role="Injuries" EntitySet="Injuries" />
     </AssociationSet>
     <AssociationSet Name="FK_Injury_Log_0_0" Association="Self.FK_Injury_Log_0_0">

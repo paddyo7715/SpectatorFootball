@@ -21,9 +21,10 @@ namespace SpectatorFootball.Models
         public long Num_of_Weeks { get; set; }
         public long Career_Ending { get; set; }
         public long Season_Ending { get; set; }
+        public long Num_of_Plays { get; set; }
     
         public virtual Franchise Franchise { get; set; }
-        public virtual Season Season { get; set; }
         public virtual Player Player { get; set; }
+        public virtual Season Season { get; set; }
     }
 }
