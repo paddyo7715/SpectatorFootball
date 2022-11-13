@@ -53,6 +53,8 @@ namespace SpectatorFootball.GameNS
         private bool bAllowKickoffs = false;
         private bool bTwoPointConv = false;
         private bool bThreePointConv = false;
+        private bool bAllowInjuries = false;
+        private bool bAllowPenalties = false;
 
         //other settings
         private double YardsInField = 100.0;
@@ -272,12 +274,31 @@ namespace SpectatorFootball.GameNS
                 Max_TD_Points = 9;
             }
 
+            if (pw.Loaded_League.season.League_Structure_by_Season[0].Kickoff_Type == 1)
+                bAllowKickoffs = true;
+            else
+                bAllowKickoffs = false;
+
+            if (pw.Loaded_League.season.League_Structure_by_Season[0].Injuries == 1)
+                bAllowInjuries = true;
+            else
+                bAllowInjuries = false;
+
+            if (pw.Loaded_League.season.League_Structure_by_Season[0].Penalties == 1)
+                bAllowPenalties = true;
+            else
+                bAllowPenalties = false;
+
+
+
             //create the two coaching objects
             Away_Coach = new Coach(at.Franchise_ID, g, Max_TD_Points, Home_Players, Away_Players, lInj);
             Home_Coach = new Coach(ht.Franchise_ID, g, Max_TD_Points, Home_Players, Away_Players, lInj);
 
             g_fid_posession = CoinToss();
             Fid_first_posession = g_fid_posession;
+
+
 
             bKickoff = true;
         }
@@ -718,6 +739,16 @@ namespace SpectatorFootball.GameNS
                 foreach (Game_Scoring_Summary s in p_result.Game_Scoring_Summary)
                     g.Game_Scoring_Summary.Add(s);
 
+                //work the injuries
+                if (bAllowInjuries)
+                {
+                    Reduce_Play_Injuries();
+
+                    Injury new_injury = CheckforInjuries(Offensive_Package, DEF_Formation);
+                    if (new_injury != null)
+                        lInj.Add(new_injury);
+                }
+
                 //if the play resulted in a change of possession then switch possession
                 if (p_result.bSwitchPossession)
                     g_fid_posession = Switch_Posession(g_fid_posession, at.Franchise_ID, ht.Franchise_ID);
@@ -899,6 +930,21 @@ namespace SpectatorFootball.GameNS
 
                 
             return r;
+        }
+
+        private void Reduce_Play_Injuries()
+        {
+            List<Injury> injuries_ended = lInj.Where(x => x.Num_of_Plays == 1).ToList();
+            List<Injury> injuries_reduced = lInj.Where(x => x.Num_of_Plays > 1).ToList();
+
+            //These players can return to play
+            foreach (Injury j in injuries_ended)
+                lInj.Remove(j);
+
+            //These players are one play closer to returning to the field
+            foreach (Injury j in injuries_reduced)
+                j.Num_of_Plays -= 1;
+
         }
     }
 }
