@@ -376,6 +376,23 @@ namespace SpectatorFootball.GameNS
             //You could get the allow substitutions from either coach
             bool bAllowSubs = Home_Coach.AllowSubstitutions();
 
+// Get the Game Values Before the Play is Executed
+            r.Line_of_Scimmage = g_Line_of_Scrimmage;
+            r.Vertical_Ball_Placement = g_Vertical_Ball_Placement;
+            r.bLefttoRight = bLefttoRight;
+
+            r.Before_Away_Score = g.Away_Score.ToString();
+            r.Before_Home_Score = g.Home_Score.ToString();
+
+            Down_and_Yards = Game_Helper.getDownAndYardString(g_Down, g_Yards_to_go, g_Vertical_Ball_Placement, bLefttoRight);
+            r.Before_Down_and_Yards = Down_and_Yards;
+            r.Before_Away_Timeouts = g_Away_timeouts.ToString();
+            r.Before_Home_Timeouts = g_Home_timeouts.ToString();
+
+            r.Before_Display_QTR = Game_Helper.getQTRString((long)g.Quarter) + " QTR";
+            r.Before_Display_Time = Game_Helper.getTimestringFromSeconds((long)g.Time);
+//=================================================================
+
             Offensive_Package.Formation.Player_list = Offensive_Coach.Populate_Formation(
                 Offensive_Package.Formation.Player_list,
                 bAllowSubs, Offensive_Package.Formation.bSpecialTeams);
@@ -408,6 +425,9 @@ namespace SpectatorFootball.GameNS
 
                 r.Long_Message = getForfeit_Message(at, ht, (long)g.Away_Score, (long)g.Home_Score);
             }
+
+            r.Offensive_Package = Offensive_Package;
+            r.Defensive_Formation = DEF_Formation;
 
             //Only execute the play and accume the play stats if the game has not been forfeited
             if (!r.bForfeitedGame)
@@ -744,9 +764,14 @@ namespace SpectatorFootball.GameNS
                 {
                     Reduce_Play_Injuries();
 
-                    Injury new_injury = CheckforInjuries(Offensive_Package, DEF_Formation);
+                    string injur_message = null;
+                    Injury new_injury = CheckforInjuries(Offensive_Package, DEF_Formation, injur_message);
+
                     if (new_injury != null)
+                    {
                         lInj.Add(new_injury);
+                        r.Long_Message += injur_message;
+                    }
                 }
 
                 //if the play resulted in a change of possession then switch possession
@@ -756,26 +781,22 @@ namespace SpectatorFootball.GameNS
 
             }
 
-            Down_and_Yards = Game_Helper.getDownAndYardString(g_Down, g_Yards_to_go, g_Vertical_Ball_Placement, bLefttoRight);
             GameEnd();
 
-            //After the play is complete 
-            //I need to update the global variables here
-            r.Away_Score = (long) g.Away_Score;
-            r.Home_Score = (long) g.Home_Score;
+            // Get the Game Values Before the Play is Executed
+            r.After_Away_Score = g.Away_Score.ToString();
+            r.After_Home_Score = g.Home_Score.ToString();
 
-             r.Down_and_Yards = Down_and_Yards;
-            r.Away_Timeouts = g_Away_timeouts;
-            r.Home_Timeouts = g_Home_timeouts;
+            Down_and_Yards = Game_Helper.getDownAndYardString(g_Down, g_Yards_to_go, g_Vertical_Ball_Placement, bLefttoRight);
+            r.After_Down_and_Yards = Down_and_Yards;
+            r.After_Away_Timeouts = g_Away_timeouts.ToString();
+            r.After_Home_Timeouts = g_Home_timeouts.ToString();
 
-            r.Offensive_Package = Offensive_Package;
-            r.Defensive_Formation = DEF_Formation;
+            r.After_QTR = Game_Helper.getQTRString((long)g.Quarter) + " QTR";
+            r.After_Time = Game_Helper.getTimestringFromSeconds((long)g.Time);
+            //=================================================================
+
             r.Delay_seconds = Delay_Seconds;
-            r.Display_QTR = Game_Helper.getQTRString((long)g.Quarter) + " QTR";
-            r.Display_Time = Game_Helper.getTimestringFromSeconds((long)g.Time);
-            r.Line_of_Scimmage = g_Line_of_Scrimmage;
-            r.Vertical_Ball_Placement = g_Vertical_Ball_Placement;
-            r.bLefttoRight = bLefttoRight;
 
             Execut_Play_Num += 1;
 
@@ -784,10 +805,6 @@ namespace SpectatorFootball.GameNS
 
             r.bGameOver = g_bGameOver;
 
-            //just incase a team scores on the final play of the half or game
-            r.After_Away_Score = (long) g.Away_Score;
-            r.After_Home_Score = (long) g.Home_Score;
-            r.After_Display_Time = Game_Helper.getTimestringFromSeconds(g.Time); 
 
  
             return r;
@@ -859,22 +876,31 @@ namespace SpectatorFootball.GameNS
 
             return r; 
         }
-        private Injury CheckforInjuries(Play_Package Offensive_Package, Formation DEF_Formation)
+        private Injury CheckforInjuries(Play_Package Offensive_Package, Formation DEF_Formation, string inj_message)
         {
             Injury r = null;
             List<Formation_Rec> injury_team = null;
+            string injury_team_nickname = null;
+            string injury_player_name = null;
             long off_id = 0;
             long deff_id = 0;
             long f_id = 0;
+            string off_nickname = null;
+            string def_nickname = null;
+
             if (g_fid_posession == at.Franchise_ID)
             {
                 off_id = at.Franchise_ID;
                 deff_id = ht.Franchise_ID;
+                off_nickname = at.Nickname;
+                def_nickname = ht.Nickname;
             }
             else
             {
                 off_id = ht.Franchise_ID;
                 deff_id = at.Franchise_ID;
+                off_nickname = ht.Nickname;
+                def_nickname = at.Nickname;
             }
 
             int iInjury = CommonUtils.getRandomNum(1, 100);
@@ -884,11 +910,13 @@ namespace SpectatorFootball.GameNS
                 if (iOffDef <= app_Constants.PERCENT_OFF_DEF) //if true then defense injury injury   
                 {
                     injury_team = DEF_Formation.Player_list;
+                    injury_team_nickname = def_nickname;
                     f_id = deff_id;
                 }
                 else
                 {
                     injury_team = Offensive_Package.Formation.Player_list;
+                    injury_team_nickname = off_nickname;
                     f_id = off_id;
                 }
 
@@ -907,6 +935,8 @@ namespace SpectatorFootball.GameNS
                     long toughness = injured_player.p_and_r.pr.First().Toughness_Ratings;
                     long injury_chance =  app_Constants.INJURY_ADJUSTER - toughness;
 
+                    injury_player_name = injured_player.p_and_r.p.First_Name + " " + injured_player.p_and_r.p.Last_Name;
+
                     r = new Injury() { Player_ID = injured_player.p_and_r.p.ID, Franchise_ID = f_id, Season_ID = g.Season_ID, Week = g.Week, Career_Ending = 0, Num_of_Plays = 0, Num_of_Weeks = 0, Season_Ending = 0 };
 
                     int itype_num = CommonUtils.getRandomNum(1, 100);
@@ -924,11 +954,27 @@ namespace SpectatorFootball.GameNS
                         int iPlays = CommonUtils.getRandomNum(1, app_Constants.MAX_PLAYS_OUT);
                         r.Num_of_Weeks = iPlays;
                     }
+                    break;
                 }
+
+                inj_message = Environment.NewLine + Environment.NewLine;
+                string injury_text = null;
+                if (r.Num_of_Plays > 0)
+                    injury_text = " has been shaken up and will be out for " + r.Num_of_Plays + " plays";
+                else if (r.Num_of_Weeks > 0)
+                    injury_text = " has suffered an injury and will be out for " + r.Num_of_Weeks + " weeks";
+                else if (r.Season_Ending == 1)
+                    injury_text = " has suffered a serious injury and will be out for the rest of the season";
+                else
+                    injury_text = " has suffered a horrific career ending injury.  He will never return from this";
+
+                inj_message += injury_player_name + " of the " + injury_team_nickname + " has suffered";
 
             }  //if injury
 
-                
+
+
+
             return r;
         }
 

@@ -271,22 +271,19 @@ namespace SpectatorFootball.WindowsLeague
                 ShowGraphicObjects(a_edge, Game_Ball, Play.Offensive_Package.Formation.Player_list, Play.Defensive_Formation.Player_list, bKickoff, Play.bLefttoRight);
 
                 //Set the scoreboard after the play
-                lblAwayScore.Content = Play.Away_Score;
-                lblHomeScore.Content = Play.Home_Score;
+                lblAwayScore.Content = Play.Before_Away_Score;
+                lblHomeScore.Content = Play.Before_Home_Score;
 
-                lblClock.Content = Play.Display_Time;
-                lblQTR.Content = Play.Display_QTR;
+                lblClock.Content = Play.Before_Display_Time;
+                lblQTR.Content = Play.Before_Display_QTR;
 
-                lblAwayTimeouts.Content = Play.Away_Timeouts;
-                lblHomeTimeouts.Content = Play.Home_Timeouts;
+                lblAwayTimeouts.Content = Play.Before_Away_Timeouts;
+                lblHomeTimeouts.Content = Play.Before_Home_Timeouts;
 
                 bGameEneded = Play.bGameOver;
                 //just to test one play take this out.
             }
             //Set this in case a team scores on the last play of the game
-            lblAwayScore.Content = Play.After_Away_Score;
-            lblHomeScore.Content = Play.After_Home_Score;
-            lblClock.Content = Play.After_Display_Time;
 
             //End of game not sure where this should go
             //gs.SaveGame(g, g.injuries, pw.Loaded_League);
