@@ -55,6 +55,7 @@ namespace SpectatorFootball.GameNS
         private bool bThreePointConv = false;
         private bool bAllowInjuries = false;
         private bool bAllowPenalties = false;
+        private bool bWatchGame = false;
 
         //other settings
         private double YardsInField = 100.0;
@@ -73,6 +74,7 @@ namespace SpectatorFootball.GameNS
             this.ht = ht;
             this.Home_Players = Home_Players;
             this.g = g;
+            this.bWatchGame = bWatchGame;
 
             //Initialize the game object
             g.Home_Score = 0;
@@ -289,8 +291,6 @@ namespace SpectatorFootball.GameNS
             else
                 bAllowPenalties = false;
 
-
-
             //create the two coaching objects
             Away_Coach = new Coach(at.Franchise_ID, g, Max_TD_Points, Home_Players, Away_Players, lInj);
             Home_Coach = new Coach(ht.Franchise_ID, g, Max_TD_Points, Home_Players, Away_Players, lInj);
@@ -436,7 +436,7 @@ namespace SpectatorFootball.GameNS
                 double yards_gained = 0.0;
 
                 if (bKickoff && Offensive_Package.Play == Play_Enum.KICKOFF_NORMAL)
-                    p_result = Kickoff_Normal_Play(bLefttoRight, false);
+                    p_result = Kickoff_Normal_Play(Offensive_Package.Formation, DEF_Formation, bLefttoRight, false, bWatchGame);
 
                 //set results and accume team stats
                 r.Long_Message = p_result.Message;
@@ -869,9 +869,20 @@ namespace SpectatorFootball.GameNS
 
             return r;
         }
-        private Play_Result Kickoff_Normal_Play(bool bLefttoRight, bool FreeKic)
+        private Play_Result Kickoff_Normal_Play(Formation offense, Formation defense, bool bLefttoRight, bool FreeKic, bool bSim)
         {
             Play_Result r = new Play_Result(bLefttoRight);
+            List<Formation_Rec> Off_Players = offense.Player_list;
+            List<Formation_Rec> Def_Players = defense.Player_list;
+
+            //Get the kicker
+            Formation_Rec Kicker = Off_Players.Where(x => x.Pos == Player_Pos.K).First();
+
+            if (!bSim)
+            {
+                string pre_snap = "|";
+
+            }
 
 
             return r; 
@@ -971,9 +982,6 @@ namespace SpectatorFootball.GameNS
                 inj_message += injury_player_name + " of the " + injury_team_nickname + " has suffered";
 
             }  //if injury
-
-
-
 
             return r;
         }

@@ -182,7 +182,9 @@
     <Compile Include="Draft\Draft_Pos_Importance.cs" />
     <Compile Include="Enum\Ball_States.cs" />
     <Compile Include="Enum\Formations_Enum.cs" />
+    <Compile Include="Enum\Game_Object_Types.cs" />
     <Compile Include="Enum\Game_Sounds.cs" />
+    <Compile Include="Enum\Graphics_Ball_Stats.cs" />
     <Compile Include="Enum\Graphics_Player_States.cs" />
     <Compile Include="Enum\Player_Graphic_Sprite.cs" />
     <Compile Include="Enum\Player_States.cs" />

@@ -352,7 +352,7 @@ namespace SpectatorFootball.WindowsLeague
         {
             switch (bstate)
             {
-                case Ball_States.TEED_UP:
+                case Ball_States.TU:
                     Game_Ball.width = BALL_SIZE;
                     Game_Ball.Height = BALL_SIZE;
                     Ball.Width = Game_Ball.width;
@@ -385,10 +385,10 @@ namespace SpectatorFootball.WindowsLeague
 
             switch (pState)
             {
-                case Player_States.STANDING:
+                case Player_States.STN:
                     r = Player_Graphic_Sprite.STANDING;
                     break;
-                case Player_States.RUNNING_FORWARD:
+                case Player_States.RUNF:
                     if (bPossessBall)
                     {
                         if (sState == Player_Graphic_Sprite.RUNNING_FORWARD_NO_BALL_1)
@@ -404,19 +404,19 @@ namespace SpectatorFootball.WindowsLeague
                             r = Player_Graphic_Sprite.RUNNING_FORWARD_NO_BALL_2;
                     }
                     break;
-                case Player_States.FG_KICK:
+                case Player_States.FGK:
                     r = Player_Graphic_Sprite.FG_KICK;
                     break;
-                case Player_States.ABOUT_TO_CATCH_KICK:
+                case Player_States.CTCHK:
                     r = Player_Graphic_Sprite.ABOUT_TO_CATCH_KICK;
                     break;
-                case Player_States.BLOCKING:
+                case Player_States.BLK:
                     if (sState == Player_Graphic_Sprite.BLOCKING_1)
                         r = Player_Graphic_Sprite.BLOCKING_2;
                     else
                         r = Player_Graphic_Sprite.BLOCKING_1;
                     break;
-                case Player_States.RUNNING_UP:
+                case Player_States.RUNU:
                     if (bPossessBall)
                     {
                         if (sState == Player_Graphic_Sprite.RUNNING_UP_WITH_BALL_1)
@@ -432,7 +432,7 @@ namespace SpectatorFootball.WindowsLeague
                             r = Player_Graphic_Sprite.RUNNING_UP_NO_BALL_2;
                     }
                     break;
-                case Player_States.RUNNING_DOWN:
+                case Player_States.RUND:
                     if (bPossessBall)
                     {
                         if (sState == Player_Graphic_Sprite.RUNNING_DOWN_WITH_BALL_1)
@@ -448,16 +448,16 @@ namespace SpectatorFootball.WindowsLeague
                             r = Player_Graphic_Sprite.RUNNING_DOWN_NO_BALL_2;
                     }
                     break;
-                case Player_States.TACKLING:
+                case Player_States.TACKL:
                     r = Player_Graphic_Sprite.TACKLING;
                     break;
-                case Player_States.TACKLED:
+                case Player_States.TACKLD:
                     r = Player_Graphic_Sprite.TACKLED;
                     break;
-                case Player_States.ON_BACK:
+                case Player_States.ONBK:
                     r = Player_Graphic_Sprite.ON_BACK;
                     break;
-                case Player_States.RUNNING_BACKWORDS:
+                case Player_States.RUNB:
                     if (sState == Player_Graphic_Sprite.RUNNING_BACKWORDS_1)
                         r = Player_Graphic_Sprite.RUNNING_BACKWORDS_2;
                     else
@@ -586,7 +586,7 @@ namespace SpectatorFootball.WindowsLeague
         Canvas.SetTop(background, a_edge[1]);
 
         //Place the ball on the field if not carried
-        if (Game_Ball.bState != Ball_States.CARRIED)
+        if (Game_Ball.bState != Ball_States.CAR)
             setBAll(Game_Ball.YardLine, Game_Ball.Vertical_Percent_Pos, Game_Ball.bState, a_edge, bKickoff, bLefttoRight);
 
         List<Player_Graphics1_Rec> off_Players_rect = null;
