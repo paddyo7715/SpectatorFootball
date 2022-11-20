@@ -440,6 +440,7 @@ namespace SpectatorFootball.GameNS
 
                 //set results and accume team stats
                 r.Long_Message = p_result.Message;
+                r.Before_Snap = p_result.Before_Snap;
                 yards_gained = p_result.yards_gained;
                 bKickoff = p_result.bKickoff;
                 bExtraPoint = p_result.bExtraPoint;
@@ -874,17 +875,79 @@ namespace SpectatorFootball.GameNS
             Play_Result r = new Play_Result(bLefttoRight);
             List<Formation_Rec> Off_Players = offense.Player_list;
             List<Formation_Rec> Def_Players = defense.Player_list;
+            List<string> Play_Stages = new List<string>();
+            string pre_snap = null;
 
             //Get the kicker
             Formation_Rec Kicker = Off_Players.Where(x => x.Pos == Player_Pos.K).First();
 
             if (!bSim)
             {
-                string pre_snap = "|";
+                //Do the premove of the kicker running up to the ball and kicking it downfield
+
+                //Set the location and state of the ball first
+                pre_snap += "B$" + "N$" + Ball_States.TU.ToString() + "^N^0.0^0";
+
+                pre_snap += ",";
+
+                int io_Players = 1;
+                //cycle thru the offensive/kickoff team then he defense
+                //if kicker then do their special thing; otherwise, the player just remains standing 
+                foreach (Formation_Rec p in Off_Players)
+                {
+                    string sMain_Object = null;
+                    string sMovements = null;
+
+                    if (p == Kicker)
+                    {
+                        sMain_Object = "Y";
+
+                        //Kicker runs up to the ball
+                        double move_yards = 6.9;
+                        int move_vertical = 0;
+                        sMovements = Player_States.RUNF.ToString() + "^N^" + move_yards.ToString() + "^" + move_vertical.ToString();
+
+                        //Player Kicks the ball
+                        sMovements += Player_States.FGK.ToString() + "^N^0.0^0";
+
+                        //The sound of the  ball being kicked is played
+                        sMovements += "S^" + Game_Sounds.KICK;
+                    }
+                    else
+                    {
+                        //Other players just stand there waiting for the kick
+                        sMain_Object = "N";
+                        sMovements = Player_States.STN.ToString() + "^N^0.0^0";
+                    }
+                    pre_snap += "P$" + sMain_Object + "$" + sMovements;
+
+                    io_Players++;
+
+                    if (io_Players < Off_Players.Count)
+                        pre_snap += ",";
+                }
+
+                pre_snap += "|";
+
+                int id_Players = 1;
+                //The team receiving the kick will just stand there before the kick
+                foreach (Formation_Rec p in Def_Players)
+                {
+                    string sMain_Object = "N";
+                    string sMovements = null;
+                    sMovements = Player_States.STN.ToString() + "^N^0.0^0";
+                    pre_snap += "P$" + sMain_Object + "$" + sMovements;
+                }
+
+                id_Players++;
+
+                if (id_Players < Def_Players.Count)
+                    pre_snap += ",";
 
             }
 
-
+            r.Before_Snap = pre_snap;
+            r.Play_Stages = Play_Stages;
             return r; 
         }
         private Injury CheckforInjuries(Play_Package Offensive_Package, Formation DEF_Formation, string inj_message)
