@@ -112,7 +112,7 @@
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <Label Name="lblAwayTimeouts" Height="40" Width="420" HorizontalContentAlignment="Right" Style="{StaticResource GameBar2Fonts}">Timeouts: 3</Label>
-                                <Label Name="lblDown" Height="40" Width="300" HorizontalContentAlignment="Center" Style="{StaticResource GameBar2Fonts}"    >1st and 10</Label>
+                                <Label Name="lblDown" Height="40" Width="300" HorizontalContentAlignment="Center" Style="{StaticResource GameBar2Fonts}"></Label>
                                 <Label Name="lblHomeTimeouts"  Height="40" Width="420" HorizontalContentAlignment="Left"  Style="{StaticResource GameBar2Fonts}">Timeouts: 3</Label>
                             </StackPanel>
                         </StackPanel>

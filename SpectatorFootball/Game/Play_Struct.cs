@@ -39,7 +39,7 @@ namespace SpectatorFootball.GameNS
         public string Long_Message;
 
         public Double Line_of_Scimmage;
-        public Double Vertical_Ball_Placement;
+        public double Vertical_Ball_Placement;
 
         public Play_Package Offensive_Package = null;
         public Formation Defensive_Formation;

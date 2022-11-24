@@ -246,7 +246,7 @@ namespace SpectatorFootball.WindowsLeague
             //                                   GameTimer.Start();
 
             bool bGameEneded = false;
-            Play_Struct Play = null;
+            Play_Struct Play;
 
             //bpo test
             Play_Sound(Game_Sounds.BALL_HITS_GOALPOST);
@@ -257,32 +257,28 @@ namespace SpectatorFootball.WindowsLeague
 
                 Play = ge.ExecutePlay();
 
-                bool bKickoff = false;
-                if (Play.Offensive_Package.Play == Enum.Play_Enum.KICKOFF_NORMAL ||
-                    Play.Offensive_Package.Play == Enum.Play_Enum.KICKOFF_ONSIDES)
-                    bKickoff = true;
-
                 Game_Ball.setValues(Play.Initial_Ball_State, Play.Line_of_Scimmage, Play.Vertical_Ball_Placement);
 
                 //set the left edge of the view
                 double[] a_edge = setViewEdge(Game_Ball.YardLine, Play.bLefttoRight, Game_Ball.Vertical_Percent_Pos);
 
                 //Set all graphics objects including setting the view edges
-                ShowGraphicObjects(a_edge, Game_Ball, Play.Offensive_Package.Formation.Player_list, Play.Defensive_Formation.Player_list, bKickoff, Play.bLefttoRight);
+                ShowGraphicObjects(a_edge, Game_Ball, Play.Offensive_Package.Formation.Player_list, Play.Defensive_Formation.Player_list, Play.bLefttoRight);
 
-                //Set the scoreboard after the play
-                lblAwayScore.Content = Play.Before_Away_Score;
-                lblHomeScore.Content = Play.Before_Home_Score;
+                //Set the scoreboard before the play
+                setScoreboard(Play.Before_Away_Score, Play.Before_Home_Score, Play.Before_Display_Time, Play.Before_Display_QTR, Play.Before_Away_Timeouts, Play.Before_Home_Timeouts, Play.Before_Down_and_Yards);
 
-                lblClock.Content = Play.Before_Display_Time;
-                lblQTR.Content = Play.Before_Display_QTR;
 
-                lblAwayTimeouts.Content = Play.Before_Away_Timeouts;
-                lblHomeTimeouts.Content = Play.Before_Home_Timeouts;
+
+                //if there is pre-snap movement then show it
+
+
+
 
                 bGameEneded = Play.bGameOver;
                 //just to test one play take this out.
-            }
+            }  //Game ended
+
             //Set this in case a team scores on the last play of the game
 
             //End of game not sure where this should go
@@ -348,7 +344,7 @@ namespace SpectatorFootball.WindowsLeague
             return new double[2] { view_edge_left, view_edge_top };
         }
 
-        private void setBAll(double yardLine, double Vertical_Ball_Placement, Ball_States bstate, double[] a_edge, bool bKickoff, bool bLefttoRight)
+        private void setBAll(double yardLine, double Vertical_Ball_Placement, Ball_States bstate, double[] a_edge, bool bLefttoRight)
         {
             switch (bstate)
             {
@@ -365,11 +361,7 @@ namespace SpectatorFootball.WindowsLeague
             int H_Pixel = Yardline_to_Pixel(yardLine, true);
             double v_Pixel = VertPercent_to_Pixel(Vertical_Ball_Placement, BALL_SIZE);
 
-            if (bKickoff)
-                H_Pixel -= (int)BALL_SIZE / 2;
-            else
-                if (bLefttoRight)
-                    H_Pixel -= BALL_SIZE;
+             H_Pixel -= (int)BALL_SIZE / 2;
 
             //Adjust the position on the canvas for the view edge
             H_Pixel += (int)a_edge[0];
@@ -580,14 +572,14 @@ namespace SpectatorFootball.WindowsLeague
             return r;
         }
 
-    private void ShowGraphicObjects(double[] a_edge, Game_Ball Game_Ball, List<Formation_Rec> Off_Players, List<Formation_Rec> Def_Players,bool bKickoff, bool bLefttoRight)
+    private void ShowGraphicObjects(double[] a_edge, Game_Ball Game_Ball, List<Formation_Rec> Off_Players, List<Formation_Rec> Def_Players, bool bLefttoRight)
     {
         Canvas.SetLeft(background, a_edge[0]);
         Canvas.SetTop(background, a_edge[1]);
 
         //Place the ball on the field if not carried
         if (Game_Ball.bState != Ball_States.CAR)
-            setBAll(Game_Ball.YardLine, Game_Ball.Vertical_Percent_Pos, Game_Ball.bState, a_edge, bKickoff, bLefttoRight);
+            setBAll(Game_Ball.YardLine, Game_Ball.Vertical_Percent_Pos, Game_Ball.bState, a_edge, bLefttoRight);
 
         List<Player_Graphics1_Rec> off_Players_rect = null;
         List<Player_Graphics1_Rec> def_Players_rect = null;
@@ -673,6 +665,23 @@ namespace SpectatorFootball.WindowsLeague
 
             }
             catch { }
+
+        }
+        private void setScoreboard(string Away_Score, string Home_Score, string Time, string QTR, string Away_Timeouts, string Home_Timeouts, string Down_and_Yards)
+        {
+            lblAwayScore.Content = Away_Score;
+            lblHomeScore.Content = Home_Score;
+
+            lblClock.Content = Time;
+            lblQTR.Content = QTR;
+
+            lblAwayTimeouts.Content = Away_Timeouts;
+            lblHomeTimeouts.Content = Home_Timeouts;
+
+            lblDown.Content = Down_and_Yards;
+        }
+        private void MoveBall()
+        {
 
         }
     }
