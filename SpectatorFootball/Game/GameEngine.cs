@@ -322,6 +322,10 @@ namespace SpectatorFootball.GameNS
             Play_Package Offensive_Package = null;
             Formation DEF_Formation = null;
 
+            List<Game_Player> Offensive_Players = null;
+            List<Game_Player> Defensive_Players = null;
+            Game_Ball Game_Ball = null;
+
             Coach Offensive_Coach = null;
             Coach Defensive_Coach = null;
             int Delay_Seconds = 0;
@@ -434,6 +438,11 @@ namespace SpectatorFootball.GameNS
             {
                 Play_Result p_result = null;
                 double yards_gained = 0.0;
+
+                Offensive_Players = setGamePlayerLIsts(Offensive_Package.Formation);
+                Defensive_Players = setGamePlayerLIsts(DEF_Formation);
+
+                Game_Ball = new Game_Ball() { State = Offensive_Package.Formation.bState };
 
                 if (bKickoff && Offensive_Package.Play == Play_Enum.KICKOFF_NORMAL)
                     p_result = Kickoff_Normal_Play(Offensive_Package.Formation, DEF_Formation, bLefttoRight, false, bWatchGame);
@@ -870,79 +879,70 @@ namespace SpectatorFootball.GameNS
 
             return r;
         }
-        private Play_Result Kickoff_Normal_Play(Formation offense, Formation defense, bool bLefttoRight, bool FreeKic, bool bSim)
+        private Play_Result Kickoff_Normal_Play(Game_Ball gBall,List<Game_Player> Off_Players, List<Game_Player> Def_Players, bool bLefttoRight, bool FreeKic, bool bSim)
         {
             Play_Result r = new Play_Result(bLefttoRight);
-            List<Formation_Rec> Off_Players = offense.Player_list;
-            List<Formation_Rec> Def_Players = defense.Player_list;
             List<string> Play_Stages = new List<string>();
             string pre_snap = null;
 
             //Get the kicker
-            Formation_Rec Kicker = Off_Players.Where(x => x.Pos == Player_Pos.K).First();
+            Game_Player Kicker = Off_Players.Where(x => x.Pos == Player_Pos.K).First();
 
             if (!bSim)
             {
                 //Do the premove of the kicker running up to the ball and kicking it downfield
 
                 //Set the location and state of the ball first
-                pre_snap += "B$" + "N$" + Ball_States.TU.ToString() + "^N^0.0^0";
+                Action bas = Create_Action_Sound(Game_Object_Types.B, 0.0, 0.0, false, false, null, Ball_States.TU, null, null);
 
-                pre_snap += ",";
+                Play_Stage bStage = new Play_Stage();
+                bStage.Main_Object = false;
+                bStage.Actions.Add(bas);
+
+                gBall.Stages.Add(bStage);
 
                 int io_Players = 1;
                 //cycle thru the offensive/kickoff team then he defense
                 //if kicker then do their special thing; otherwise, the player just remains standing 
-                foreach (Formation_Rec p in Off_Players)
+                foreach (Game_Player p in Off_Players)
                 {
-                    string sMain_Object = null;
-                    string sMovements = null;
-
                     if (p == Kicker)
                     {
-                        sMain_Object = "Y";
+                        Action pas =  Create_Action_Sound(Game_Object_Types.P, 6.9, 0.0, true, false, Player_States.RUNF, null, null, null);
+                        Action pas2 = Create_Action_Sound(Game_Object_Types.P, 0.1, 0.0, true, false, Player_States.FGK, null, null, Game_Sounds.KICK);
 
-                        //Kicker runs up to the ball
-                        double move_yards = 6.9;
-                        int move_vertical = 0;
-                        sMovements = Player_States.RUNF.ToString() + "^N^" + move_yards.ToString() + "^" + move_vertical.ToString();
-
-                        //Player Kicks the ball
-                        sMovements += Player_States.FGK.ToString() + "^N^0.0^0";
-
-                        //The sound of the  ball being kicked is played
-                        sMovements += "S^" + Game_Sounds.KICK;
+                        Play_Stage pStage = new Play_Stage();
+                        pStage.Main_Object = true;
+                        pStage.Actions.Add(pas);
+                        pStage.Actions.Add(pas2);
+                        p.Stages.Add(pStage);
                     }
                     else
                     {
+
                         //Other players just stand there waiting for the kick
-                        sMain_Object = "N";
-                        sMovements = Player_States.STN.ToString() + "^N^0.0^0";
+                        Action pas = Create_Action_Sound(Game_Object_Types.P, 0.0, 0.0, false, false, Player_States.STN, null, null, null);
+                        Play_Stage pStage = new Play_Stage();
+                        pStage.Main_Object = false;
+                        pStage.Actions.Add(pas);
+                        p.Stages.Add(pStage);
                     }
-                    pre_snap += "P$" + sMain_Object + "$" + sMovements;
-
                     io_Players++;
-
-                    if (io_Players < Off_Players.Count)
-                        pre_snap += ",";
                 }
-
-                pre_snap += "|";
 
                 int id_Players = 1;
                 //The team receiving the kick will just stand there before the kick
-                foreach (Formation_Rec p in Def_Players)
+                foreach (Game_Player p in Def_Players)
                 {
-                    string sMain_Object = "N";
-                    string sMovements = null;
-                    sMovements = Player_States.STN.ToString() + "^N^0.0^0";
-                    pre_snap += "P$" + sMain_Object + "$" + sMovements;
+                    //Receiving players just stand there waiting for the kick
+                    Action pas = Create_Action_Sound(Game_Object_Types.P, 0.0, 0.0, false, false, Player_States.STN, null, null, null);
+                    Play_Stage pStage = new Play_Stage();
+                    pStage.Main_Object = false;
+                    pStage.Actions.Add(pas);
+                    p.Stages.Add(pStage);
                 }
 
                 id_Players++;
-
-                if (id_Players < Def_Players.Count)
-                    pre_snap += ",";
 
             }
 
@@ -1063,5 +1063,41 @@ namespace SpectatorFootball.GameNS
                 j.Num_of_Plays -= 1;
 
         }
-    }
+        private List<Game_Player> setGamePlayerLIsts(Formation f)
+        {
+            List<Game_Player> r = new List<Game_Player>();
+            foreach(Formation_Rec fr in f.Player_list)
+            {
+                r.Add(new Game_Player()
+                {
+                    bCarryingBall = fr.bCarryingBall,
+                    Current_Vertical_Percent_Pos = fr.Vertical_Percent_Pos,
+                    Current_YardLine = fr.YardLine,
+                    Starting_Vertical_Percent_Pos = fr.Vertical_Percent_Pos,
+                    Starting_YardLine = fr.YardLine,
+                    Pos = fr.Pos,
+                    p_and_r = fr.p_and_r,
+                    State = fr.State
+                });
+            }
+
+            return r;
+        }
+        private Action Create_Action_Sound(Game_Object_Types type, double end_yardline, double end_vertical,
+         bool Move, bool bPossesses_Ball, Player_States? p_state, Ball_States? b_state, Game_Sounds? Before_Sound_File, Game_Sounds? After_Sound_File)
+        {
+            Action r = new Action();
+            r.type = type;
+            r.end_yardline = end_yardline;
+            r.end_vertical = end_vertical;
+            r.bPossesses_Ball = bPossesses_Ball;
+            r.p_state = p_state;
+            r.b_state = b_state;
+            r.Before_Sound = Before_Sound_File;
+            r.After_Sound = After_Sound_File;
+
+            return r;
+        }
+
+   
 }

@@ -41,8 +41,12 @@ namespace SpectatorFootball.GameNS
         public Double Line_of_Scimmage;
         public double Vertical_Ball_Placement;
 
-        public Play_Package Offensive_Package = null;
-        public Formation Defensive_Formation;
+        //       public Play_Package Offensive_Package = null;
+        //       public Formation Defensive_Formation;
+
+        Game_Ball Game_Ball;
+        List<Game_Player> Offensive_Players;
+        List<Game_Player> Defensive_Players;
 
         public string Before_Snap = null;
         public List<string> Play_Stages = null;

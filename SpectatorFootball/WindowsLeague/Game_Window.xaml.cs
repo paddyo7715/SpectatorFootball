@@ -62,7 +62,7 @@ namespace SpectatorFootball.WindowsLeague
         public GameEngine ge = null;
 
         //ball objects
-        public Game_Ball Game_Ball = new Game_Ball();
+        public Graphics_Game_Ball Game_Ball = new Graphics_Game_Ball();
         public Ellipse Ball = new Ellipse();
         private string ball_Color;
 
@@ -572,7 +572,7 @@ namespace SpectatorFootball.WindowsLeague
             return r;
         }
 
-    private void ShowGraphicObjects(double[] a_edge, Game_Ball Game_Ball, List<Formation_Rec> Off_Players, List<Formation_Rec> Def_Players, bool bLefttoRight)
+    private void ShowGraphicObjects(double[] a_edge, Graphics_Game_Ball Game_Ball, List<Formation_Rec> Off_Players, List<Formation_Rec> Def_Players, bool bLefttoRight)
     {
         Canvas.SetLeft(background, a_edge[0]);
         Canvas.SetTop(background, a_edge[1]);
@@ -659,9 +659,9 @@ namespace SpectatorFootball.WindowsLeague
                         break;
                 }
 
-                var u = new Uri(s);
-                Sound_player.Open(u);
-                Sound_player.Play();
+//                var u = new Uri(s);
+//                Sound_player.Open(u);
+//                Sound_player.Play();
 
             }
             catch { }

@@ -9,7 +9,6 @@ namespace SpectatorFootball.Enum
     public enum Game_Object_Types
     {
         P, //Player
-        B, //Ball
-        S  //Sound
+        B //Ball
     }
 }
