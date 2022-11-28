@@ -10,10 +10,10 @@ namespace SpectatorFootball.Enum
 
     public enum Ball_States
     {
-        TU, //TEED_UP
-        EOE, //END_OVER_END
-        SPRL, //SPIRAL
-        OG, //On the ground
-        CAR, //CARRIED
+        TEED_UP, 
+        END_OVER_END, 
+        SPIRAL, 
+        ON_THE_GROUND, 
+        CARRIED
     }
 }

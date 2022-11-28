@@ -18,7 +18,6 @@ namespace SpectatorFootball.GameNS
         public string Before_Away_Timeouts;
         public string Before_Home_Timeouts;
         public bool bStartQTR;
-        public Ball_States Initial_Ball_State;
 
         //These are from after the play is executed
         public bool bGameOver;
@@ -39,14 +38,10 @@ namespace SpectatorFootball.GameNS
         public string Long_Message;
 
         public Double Line_of_Scimmage;
-        public double Vertical_Ball_Placement;
 
-        //       public Play_Package Offensive_Package = null;
-        //       public Formation Defensive_Formation;
-
-        Game_Ball Game_Ball;
-        List<Game_Player> Offensive_Players;
-        List<Game_Player> Defensive_Players;
+        public Game_Ball Game_Ball;
+        public List<Game_Player> Offensive_Players;
+        public List<Game_Player> Defensive_Players;
 
         public string Before_Snap = null;
         public List<string> Play_Stages = null;

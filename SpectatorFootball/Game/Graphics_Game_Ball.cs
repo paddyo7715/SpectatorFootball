@@ -9,30 +9,85 @@ namespace SpectatorFootball.GameNS
 {
     public class Graphics_Game_Ball
     {
+        private const int BALL_SIZE = 12;
+
         public Ball_States bState;
+        public Graphics_Ball_Stats graph_bState;
         public double YardLine;
         public double Vertical_Percent_Pos;
-        public double end_YardLine;
-        public double end_Vertical_Percent_Pos;
-        bool main_object;
-        List<string> movements = new List<string>();
-        string pre_movement = null;
-        int current_movement = 0;
-        bool bFinished = false;
+        public List<Play_Stage> Stages = null;
+        private int current_Stage = 0;
+        private int current_size = 0;
 
-        public double Height;
-        public double width;
-
-        public void setValues(Ball_States bState, double YardLine, double Vertical_Percent_Pos)
+        private int current_Action = 0;
+        public bool bFinished = false;
+        public int Height;
+        public int width;
+        public string sSound = null;
+        public Graphics_Game_Ball(Ball_States bState, double YardLine, double Vertical_Percent_Pos,
+            List<Play_Stage> Stages)
         {
             this.bState = bState;
             this.YardLine = YardLine;
             this.Vertical_Percent_Pos = Vertical_Percent_Pos;
+            this.Stages = Stages;
+
+            current_size = BALL_SIZE;
+            graph_bState = setGraphicsState();
+
         }
+        private Graphics_Ball_Stats setGraphicsState()
+        {
+            Graphics_Ball_Stats r = Graphics_Ball_Stats.TEED_UP;
+
+            switch (bState)
+            {
+                case Ball_States.TEED_UP:
+                    Height = BALL_SIZE;
+                    width = BALL_SIZE;
+                    r = Graphics_Ball_Stats.TEED_UP;
+                    break;
+                case Ball_States.CARRIED:
+                    Height = 0;
+                    width = 0;
+                    r = Graphics_Ball_Stats.CARRIED;
+                    break;
+                case Ball_States.END_OVER_END:
+                    if (graph_bState != Graphics_Ball_Stats.END_OVER_END_1)
+                    {
+                        Height = BALL_SIZE;
+                        width = BALL_SIZE * 2;
+                        r = Graphics_Ball_Stats.END_OVER_END_1;
+                    }
+                    else
+                    {
+                        Height = BALL_SIZE;
+                        width = BALL_SIZE;
+                        r = Graphics_Ball_Stats.END_OVER_END_2;
+                    }
+                    break;
+                case Ball_States.ON_THE_GROUND:
+                    Height = BALL_SIZE;
+                    width = BALL_SIZE * 2;
+                    r = Graphics_Ball_Stats.ON_GROUND;
+                    break;
+                case Ball_States.SPIRAL:
+                    Height = BALL_SIZE;
+                    width = BALL_SIZE * 2;
+                    if (graph_bState != Graphics_Ball_Stats.SPIRAL_1)
+                        r = Graphics_Ball_Stats.SPIRAL_1;
+                    else
+                        r = Graphics_Ball_Stats.SPIRAL_2;
+                    break;
+            }
+
+            return r;
+        }
+
         public void isEnd_Movement()
         {
 
-            if (YardLine >= end_YardLine && Vertical_Percent_Pos >= end_Vertical_Percent_Pos)
+/*            if (YardLine >= end_YardLine && Vertical_Percent_Pos >= end_Vertical_Percent_Pos)
             {
                 if (current_movement >= movements.Count - 1)
                     bFinished = true;
@@ -41,7 +96,7 @@ namespace SpectatorFootball.GameNS
                     current_movement++;
                 }
             }
-
+*/
         }
     }
 }

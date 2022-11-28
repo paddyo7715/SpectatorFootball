@@ -20,7 +20,7 @@ namespace SpectatorFootball.GameNS
         private Game g = null;
         private List<Injury> lInj = null;
 
-        private Play_Struct play; 
+        private Play_Struct play;
 
         private Coach Away_Coach = null;
         private Coach Home_Coach = null;
@@ -150,8 +150,8 @@ namespace SpectatorFootball.GameNS
             foreach (Player_Pos pp in System.Enum.GetValues(typeof(Player_Pos)))
             {
                 int num_starters = Team_Helper.getNumStartingPlayersByPosition(pp);
-                List <Player_and_Ratings> away_starter_list = Away_Players.Where(x => x.p.Pos == (int)pp).OrderBy(x => x.p.Pos).ThenByDescending(x => x.Overall_Grade).Take(num_starters).ToList();
-                foreach(Player_and_Ratings a in away_starter_list)
+                List<Player_and_Ratings> away_starter_list = Away_Players.Where(x => x.p.Pos == (int)pp).OrderBy(x => x.p.Pos).ThenByDescending(x => x.Overall_Grade).Take(num_starters).ToList();
+                foreach (Player_and_Ratings a in away_starter_list)
                 {
                     switch ((Player_Pos)a.p.Pos)
                     {
@@ -380,9 +380,8 @@ namespace SpectatorFootball.GameNS
             //You could get the allow substitutions from either coach
             bool bAllowSubs = Home_Coach.AllowSubstitutions();
 
-// Get the Game Values Before the Play is Executed
+            // Get the Game Values Before the Play is Executed
             r.Line_of_Scimmage = g_Line_of_Scrimmage;
-            r.Vertical_Ball_Placement = g_Vertical_Ball_Placement;
             r.bLefttoRight = bLefttoRight;
 
             r.Before_Away_Score = g.Away_Score.ToString();
@@ -395,7 +394,7 @@ namespace SpectatorFootball.GameNS
 
             r.Before_Display_QTR = Game_Helper.getQTRString((long)g.Quarter) + " QTR";
             r.Before_Display_Time = Game_Helper.getTimestringFromSeconds((long)g.Time);
-//=================================================================
+            //=================================================================
 
             Offensive_Package.Formation.Player_list = Offensive_Coach.Populate_Formation(
                 Offensive_Package.Formation.Player_list,
@@ -405,13 +404,13 @@ namespace SpectatorFootball.GameNS
                 r.bForfeitedGame = true;
                 r.bGameOver = true;
 
-                if(bLefttoRight && g.Away_Score >= g.Home_Score)
+                if (bLefttoRight && g.Away_Score >= g.Home_Score)
                 {
                     g.Away_Score = forfeit_lose_score;
                     g.Home_Score = non_forfeit_win_score;
                 }
 
-                r.Long_Message = getForfeit_Message(at, ht,(long) g.Away_Score, (long) g.Home_Score);
+                r.Long_Message = getForfeit_Message(at, ht, (long)g.Away_Score, (long)g.Home_Score);
             }
             DEF_Formation.Player_list = Defensive_Coach.Populate_Formation(
                 DEF_Formation.Player_list,
@@ -430,8 +429,9 @@ namespace SpectatorFootball.GameNS
                 r.Long_Message = getForfeit_Message(at, ht, (long)g.Away_Score, (long)g.Home_Score);
             }
 
-            r.Offensive_Package = Offensive_Package;
-            r.Defensive_Formation = DEF_Formation;
+            r.Offensive_Players = Offensive_Players;
+            r.Defensive_Players = Defensive_Players;
+            r.Game_Ball = Game_Ball;
 
             //Only execute the play and accume the play stats if the game has not been forfeited
             if (!r.bForfeitedGame)
@@ -442,10 +442,12 @@ namespace SpectatorFootball.GameNS
                 Offensive_Players = setGamePlayerLIsts(Offensive_Package.Formation);
                 Defensive_Players = setGamePlayerLIsts(DEF_Formation);
 
-                Game_Ball = new Game_Ball() { State = Offensive_Package.Formation.bState };
+                Game_Ball = new Game_Ball() { State = Offensive_Package.Formation.bState, Initial_State = Offensive_Package.Formation.bState,
+                 Current_Vertical_Percent_Pos = g_Vertical_Ball_Placement, Current_YardLine = g_Line_of_Scrimmage,
+                 Starting_Vertical_Percent_Pos = g_Vertical_Ball_Placement, Starting_YardLine = g_Line_of_Scrimmage};
 
                 if (bKickoff && Offensive_Package.Play == Play_Enum.KICKOFF_NORMAL)
-                    p_result = Kickoff_Normal_Play(Offensive_Package.Formation, DEF_Formation, bLefttoRight, false, bWatchGame);
+                    p_result = Kickoff_Normal_Play(Game_Ball, Offensive_Players, Defensive_Players, bLefttoRight, false, bWatchGame);
 
                 //set results and accume team stats
                 r.Long_Message = p_result.Message;
@@ -519,7 +521,7 @@ namespace SpectatorFootball.GameNS
                 //acume individual stats
                 foreach (Game_Player_Defense_Stats s in p_result.Game_Player_Defense_Stats)
                 {
-                    Game_Player_Defense_Stats ps = g.Game_Player_Defense_Stats.Where(x => x.Player_ID == s.Player_ID).FirstOrDefault(); 
+                    Game_Player_Defense_Stats ps = g.Game_Player_Defense_Stats.Where(x => x.Player_ID == s.Player_ID).FirstOrDefault();
                     if (ps == null)
                         g.Game_Player_Defense_Stats.Add(s);
                     else
@@ -816,7 +818,7 @@ namespace SpectatorFootball.GameNS
             r.bGameOver = g_bGameOver;
 
 
- 
+
             return r;
         }
         private void GameEnd()
@@ -879,7 +881,7 @@ namespace SpectatorFootball.GameNS
 
             return r;
         }
-        private Play_Result Kickoff_Normal_Play(Game_Ball gBall,List<Game_Player> Off_Players, List<Game_Player> Def_Players, bool bLefttoRight, bool FreeKic, bool bSim)
+        private Play_Result Kickoff_Normal_Play(Game_Ball gBall, List<Game_Player> Off_Players, List<Game_Player> Def_Players, bool bLefttoRight, bool FreeKic, bool bSim)
         {
             Play_Result r = new Play_Result(bLefttoRight);
             List<string> Play_Stages = new List<string>();
@@ -893,8 +895,8 @@ namespace SpectatorFootball.GameNS
                 //Do the premove of the kicker running up to the ball and kicking it downfield
 
                 //Set the location and state of the ball first
-                Action bas = Create_Action_Sound(Game_Object_Types.B, 0.0, 0.0, false, false, null, Ball_States.TU, null, null);
-
+                Action bas = Create_Action_Sound(Game_Object_Types.B, 0.0, 0.0, false, false, null, Ball_States.TEED_UP, null, null);
+                
                 Play_Stage bStage = new Play_Stage();
                 bStage.Main_Object = false;
                 bStage.Actions.Add(bas);
@@ -908,8 +910,8 @@ namespace SpectatorFootball.GameNS
                 {
                     if (p == Kicker)
                     {
-                        Action pas =  Create_Action_Sound(Game_Object_Types.P, 6.9, 0.0, true, false, Player_States.RUNF, null, null, null);
-                        Action pas2 = Create_Action_Sound(Game_Object_Types.P, 0.1, 0.0, true, false, Player_States.FGK, null, null, Game_Sounds.KICK);
+                        Action pas = Create_Action_Sound(Game_Object_Types.P, 6.9, 0.0, true, false, Player_States.RUNNING_FORWARD, null, null, null);
+                        Action pas2 = Create_Action_Sound(Game_Object_Types.P, 0.1, 0.0, true, false, Player_States.FG_KICK, null, null, Game_Sounds.KICK);
 
                         Play_Stage pStage = new Play_Stage();
                         pStage.Main_Object = true;
@@ -921,7 +923,7 @@ namespace SpectatorFootball.GameNS
                     {
 
                         //Other players just stand there waiting for the kick
-                        Action pas = Create_Action_Sound(Game_Object_Types.P, 0.0, 0.0, false, false, Player_States.STN, null, null, null);
+                        Action pas = Create_Action_Sound(Game_Object_Types.P, 0.0, 0.0, false, false, Player_States.STANDING, null, null, null);
                         Play_Stage pStage = new Play_Stage();
                         pStage.Main_Object = false;
                         pStage.Actions.Add(pas);
@@ -935,7 +937,7 @@ namespace SpectatorFootball.GameNS
                 foreach (Game_Player p in Def_Players)
                 {
                     //Receiving players just stand there waiting for the kick
-                    Action pas = Create_Action_Sound(Game_Object_Types.P, 0.0, 0.0, false, false, Player_States.STN, null, null, null);
+                    Action pas = Create_Action_Sound(Game_Object_Types.P, 0.0, 0.0, false, false, Player_States.STANDING, null, null, null);
                     Play_Stage pStage = new Play_Stage();
                     pStage.Main_Object = false;
                     pStage.Actions.Add(pas);
@@ -948,7 +950,7 @@ namespace SpectatorFootball.GameNS
 
             r.Before_Snap = pre_snap;
             r.Play_Stages = Play_Stages;
-            return r; 
+            return r;
         }
         private Injury CheckforInjuries(Play_Package Offensive_Package, Formation DEF_Formation, string inj_message)
         {
@@ -1007,7 +1009,7 @@ namespace SpectatorFootball.GameNS
                         continue;
 
                     long toughness = injured_player.p_and_r.pr.First().Toughness_Ratings;
-                    long injury_chance =  app_Constants.INJURY_ADJUSTER - toughness;
+                    long injury_chance = app_Constants.INJURY_ADJUSTER - toughness;
 
                     injury_player_name = injured_player.p_and_r.p.First_Name + " " + injured_player.p_and_r.p.Last_Name;
 
@@ -1066,7 +1068,7 @@ namespace SpectatorFootball.GameNS
         private List<Game_Player> setGamePlayerLIsts(Formation f)
         {
             List<Game_Player> r = new List<Game_Player>();
-            foreach(Formation_Rec fr in f.Player_list)
+            foreach (Formation_Rec fr in f.Player_list)
             {
                 r.Add(new Game_Player()
                 {
@@ -1099,5 +1101,5 @@ namespace SpectatorFootball.GameNS
             return r;
         }
 
-   
+    }
 }

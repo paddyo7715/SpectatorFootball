@@ -11,16 +11,16 @@ namespace SpectatorFootball.Enum
     //running_forward state then they alertenate between running 1 and 2.
     public enum Player_States
     {
-        STN,  //STANDING
-        RUNF, //RUNNING_FORWARD
-        FGK, //FG_KICK
-        CTCHK,  //ABOUT_TO_CATCH_KICK
-        BLK,  //BLOCKING
-        RUNU, //RUNNING_UP 
-        RUND,  //RUNNING_DOWN
-        TACKL,  //TACKLING
-        TACKLD,  //TACKLED
-        ONBK,  //ON_BACK
-        RUNB  //RUNNING_BACKWORDS
+        STANDING,  
+        RUNNING_FORWARD, 
+        FG_KICK, 
+        ABOUT_TO_CATCH_KICK,  
+        BLOCKING,  
+        RUNNING_UP,  
+        RUNNING_DOWN,  
+        TACKLING,  
+        TACKLED,  
+        ON_BACK,  
+        RUNNING_BACKWORDS  
     }
 }
