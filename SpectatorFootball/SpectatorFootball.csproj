@@ -186,7 +186,6 @@
     <Compile Include="Enum\Game_Sounds.cs" />
     <Compile Include="Enum\Graphics_Ball_Stats.cs" />
     <Compile Include="Enum\Graphics_Player_States.cs" />
-    <Compile Include="Enum\Player_Graphic_Sprite.cs" />
     <Compile Include="Enum\Player_States.cs" />
     <Compile Include="Enum\Play_Enum.cs" />
     <Compile Include="Enum\Stat_Type.cs" />
@@ -202,7 +201,6 @@
     <Compile Include="Game\Graphics_Game_Ball.cs" />
     <Compile Include="Game\Game_Helper.cs" />
     <Compile Include="Game\Graphics_Game_Player.cs" />
-    <Compile Include="Game\Player_Graphics1_Rec.cs" />
     <Compile Include="Game\Play_Result.cs" />
     <Compile Include="Game\Play_Stage.cs" />
     <Compile Include="Game\Play_Struct.cs" />

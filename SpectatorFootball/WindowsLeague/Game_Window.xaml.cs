@@ -70,10 +70,6 @@ namespace SpectatorFootball.WindowsLeague
         public Ellipse Ball = new Ellipse();
         private string ball_Color;
 
-        //Home and Away Player lists
-        private List<Player_Graphics1_Rec> Away_Players_rect = new List<Player_Graphics1_Rec>();
-        private List<Player_Graphics1_Rec> Home_Players_rect = new List<Player_Graphics1_Rec>();
-
         private MediaPlayer Sound_player = new MediaPlayer();
 
         private const int PLAYER_SIZE = 50;
@@ -151,28 +147,6 @@ namespace SpectatorFootball.WindowsLeague
 
                 //Add ball to canvas
                 MyCanvas.Children.Add(Ball);
-
-                //Create the player rectangles for both away and home
-                for (int xxx=0; xxx < app_Constants.PLAYERS_ON_FIELD_PER_TEAM; xxx++)
-                {
-                    Rectangle ap = new Rectangle()
-                    {
-                        Height = PLAYER_SIZE,
-                        Width = PLAYER_SIZE,
-                    };
-
-                    Away_Players_rect.Add(new Player_Graphics1_Rec() { Player_Rect = ap } );
-                    MyCanvas.Children.Add(ap);
-
-                    Rectangle hp = new Rectangle
-                    {
-                        Height = PLAYER_SIZE,
-                        Width = PLAYER_SIZE,
-                    };
-
-                    Home_Players_rect.Add(new Player_Graphics1_Rec() { Player_Rect = hp });
-                    MyCanvas.Children.Add(hp);
-                }
 
                 //Load and colorize the sprite sheets
                 Uniform_Img = new Uniform_Image(CommonUtils.getAppPath() + System.IO.Path.DirectorySeparatorChar + "Images" + System.IO.Path.DirectorySeparatorChar + "Players" + System.IO.Path.DirectorySeparatorChar + "Player_Sprite_Sheet.png");
@@ -259,7 +233,7 @@ namespace SpectatorFootball.WindowsLeague
             {
                 Play = ge.ExecutePlay();
 
-                gGame_Ball = new Graphics_Game_Ball(Play.Game_Ball.Initial_State, Play.Game_Ball.Starting_YardLine, Play.Game_Ball.Starting_Vertical_Percent_Pos, Play.Game_Ball.Stages);
+                gGame_Ball = new Graphics_Game_Ball(Play.Game_Ball.Initial_State, Play.Game_Ball.Starting_YardLine, Play.Game_Ball.Starting_Vertical_Percent_Pos, Play.Game_Ball.Stages, Ball, ball_Color);
 
                 Offensive_Players = CreateGamePlayersLIst(Play.Offensive_Players);
                 Defensive_Players = CreateGamePlayersLIst(Play.Defensive_Players);
@@ -272,11 +246,6 @@ namespace SpectatorFootball.WindowsLeague
 
                 //Set the scoreboard before the play
                 setScoreboard(Play.Before_Away_Score, Play.Before_Home_Score, Play.Before_Display_Time, Play.Before_Display_QTR, Play.Before_Away_Timeouts, Play.Before_Home_Timeouts, Play.Before_Down_and_Yards);
-
-
-
-                //if there is pre-snap movement then show it
-
 
 
 
@@ -352,11 +321,11 @@ namespace SpectatorFootball.WindowsLeague
         private void setBAll(Graphics_Game_Ball gBall, double[] a_edge, bool bLefttoRight)
         {
 
-            Ball.Width = gGame_Ball.width;
+/*            Ball.Width = gGame_Ball.width;
             Ball.Height = gGame_Ball.Height;
             Ball.Fill = (Brush) CommonUtils.getBrushfromHex(ball_Color);
             Ball.Stroke = System.Windows.Media.Brushes.Black;
-
+*/
             int H_Pixel = Yardline_to_Pixel(gGame_Ball.YardLine, true);
             double v_Pixel = VertPercent_to_Pixel(gGame_Ball.Vertical_Percent_Pos, gGame_Ball.Height);
 
@@ -370,126 +339,35 @@ namespace SpectatorFootball.WindowsLeague
             Canvas.SetLeft(Ball, H_Pixel);
         }
 
-        private Player_Graphic_Sprite setNewSprite(Player_States pState, Player_Graphic_Sprite sState, bool bPossessBall)
+        private void setPlayer(Graphics_Game_Ball gBall, Graphics_Game_Player ggp, double[] a_edge, BitmapImage[] Player_Sprites, bool bLefttoRight, bool bOffense)
         {
-            Player_Graphic_Sprite r = Player_Graphic_Sprite.STANDING;
-
-            switch (pState)
-            {
-                case Player_States.STN:
-                    r = Player_Graphic_Sprite.STANDING;
-                    break;
-                case Player_States.RUNF:
-                    if (bPossessBall)
-                    {
-                        if (sState == Player_Graphic_Sprite.RUNNING_FORWARD_NO_BALL_1)
-                            r = Player_Graphic_Sprite.RUNNING_FORWARD_WITH_BALL_2;
-                        else
-                            r = Player_Graphic_Sprite.RUNNING_FORWARD_WITH_BALL_1;
-                    }
-                    else
-                    {
-                        if (sState == Player_Graphic_Sprite.RUNNING_FORWARD_NO_BALL_1)
-                            r = Player_Graphic_Sprite.RUNNING_FORWARD_NO_BALL_1;
-                        else
-                            r = Player_Graphic_Sprite.RUNNING_FORWARD_NO_BALL_2;
-                    }
-                    break;
-                case Player_States.FGK:
-                    r = Player_Graphic_Sprite.FG_KICK;
-                    break;
-                case Player_States.CTCHK:
-                    r = Player_Graphic_Sprite.ABOUT_TO_CATCH_KICK;
-                    break;
-                case Player_States.BLK:
-                    if (sState == Player_Graphic_Sprite.BLOCKING_1)
-                        r = Player_Graphic_Sprite.BLOCKING_2;
-                    else
-                        r = Player_Graphic_Sprite.BLOCKING_1;
-                    break;
-                case Player_States.RUNU:
-                    if (bPossessBall)
-                    {
-                        if (sState == Player_Graphic_Sprite.RUNNING_UP_WITH_BALL_1)
-                            r = Player_Graphic_Sprite.RUNNING_UP_WITH_BALL_2;
-                        else
-                            r = Player_Graphic_Sprite.RUNNING_UP_WITH_BALL_1;
-                    }
-                    else
-                    {
-                        if (sState == Player_Graphic_Sprite.RUNNING_UP_NO_BALL_1)
-                            r = Player_Graphic_Sprite.RUNNING_UP_NO_BALL_1;
-                        else
-                            r = Player_Graphic_Sprite.RUNNING_UP_NO_BALL_2;
-                    }
-                    break;
-                case Player_States.RUND:
-                    if (bPossessBall)
-                    {
-                        if (sState == Player_Graphic_Sprite.RUNNING_DOWN_WITH_BALL_1)
-                            r = Player_Graphic_Sprite.RUNNING_DOWN_WITH_BALL_2;
-                        else
-                            r = Player_Graphic_Sprite.RUNNING_DOWN_WITH_BALL_1;
-                    }
-                    else
-                    {
-                        if (sState == Player_Graphic_Sprite.RUNNING_DOWN_NO_BALL_1)
-                            r = Player_Graphic_Sprite.RUNNING_DOWN_NO_BALL_1;
-                        else
-                            r = Player_Graphic_Sprite.RUNNING_DOWN_NO_BALL_2;
-                    }
-                    break;
-                case Player_States.TACKL:
-                    r = Player_Graphic_Sprite.TACKLING;
-                    break;
-                case Player_States.TACKLD:
-                    r = Player_Graphic_Sprite.TACKLED;
-                    break;
-                case Player_States.ONBK:
-                    r = Player_Graphic_Sprite.ON_BACK;
-                    break;
-                case Player_States.RUNB:
-                    if (sState == Player_Graphic_Sprite.RUNNING_BACKWORDS_1)
-                        r = Player_Graphic_Sprite.RUNNING_BACKWORDS_2;
-                    else
-                        r = Player_Graphic_Sprite.RUNNING_BACKWORDS_1;
-                    break;
-                default:
-                    throw new Exception("Unknown Player_States " + pState.ToString());
-            }
-            return r;
-        }
-
-        private void setPlayer(double yardLine, double Vertical_Placement, double[] a_edge, Player_States State, Player_Graphics1_Rec Player_Graphic, BitmapImage[] Player_Sprites, bool bLefttoRight, bool bOffense)
-        {
+            double yardline = gBall.YardLine + ggp.YardLine;
             int Left_Right_Image_Offset = 0;
 
             if ((bLefttoRight && !bOffense) || !bLefttoRight && bOffense)
                 Left_Right_Image_Offset = PLAYER_IN_SPRITE_ROW;
 
-            //set the new 
-            Player_Graphic.Graphic_Sprinte = setNewSprite(State, Player_Graphic.Graphic_Sprinte, Player_Graphic.bHasBall);
-            int ind = (int)Player_Graphic.Graphic_Sprinte;
+            int ind = (int)ggp.graph_pState;
 
             ImageBrush Player_Sheet = new ImageBrush();
              Player_Sheet.ImageSource = Player_Sprites[ind + Left_Right_Image_Offset];
 
-            Player_Graphic.Player_Rect.Fill = Player_Sheet; 
+            ggp.Player_Rect.Fill = Player_Sheet; 
 
-            int H_Pixel = Yardline_to_Pixel(yardLine, true);
+            int H_Pixel = Yardline_to_Pixel(yardline, true);
             if (bLefttoRight)
                 H_Pixel -= PLAYER_SIZE;
             
-            double v_Pixel = VertPercent_to_Pixel(Vertical_Placement, PLAYER_SIZE);
+            double v_Pixel = VertPercent_to_Pixel(ggp.Vertical_Percent_Pos, PLAYER_SIZE);
 
             //Adjust the position on the canvas for the view edge
             H_Pixel += (int)a_edge[0];
             v_Pixel += (int)a_edge[1];
 
-            logger.Debug("vertical pixel: " + Vertical_Placement + " " + v_Pixel);
+            logger.Debug("vertical pixel: " + ggp.Vertical_Percent_Pos + " " + v_Pixel);
 
-            Canvas.SetTop(Player_Graphic.Player_Rect, v_Pixel);
-            Canvas.SetLeft(Player_Graphic.Player_Rect, H_Pixel);
+            Canvas.SetTop(ggp.Player_Rect, v_Pixel);
+            Canvas.SetLeft(ggp.Player_Rect, H_Pixel);
         }
 
         private void Show_Play()
@@ -580,40 +458,42 @@ namespace SpectatorFootball.WindowsLeague
         if (Game_Ball.bState != Ball_States.CARRIED)
             setBAll(Game_Ball, a_edge, bLefttoRight);
 
-        List<Player_Graphics1_Rec> off_Players_rect = null;
-        List<Player_Graphics1_Rec> def_Players_rect = null;
+        List<Graphics_Game_Player> off_Players_rect = null;
+        List<Graphics_Game_Player> def_Players_rect = null;
 
         BitmapImage[] off_Player_Sprites = null;
         BitmapImage[] def_Player_Sprites = null;
 
         if (bLefttoRight)
         {
-            off_Players_rect = Away_Players_rect;
+//            off_Players_rect = Away_Players_rect;
             off_Player_Sprites = A_Player_Sprites;
-            def_Players_rect = Home_Players_rect;
+//            def_Players_rect = Home_Players_rect;
             def_Player_Sprites = H_Player_Sprites;
         }
         else
         {
-            off_Players_rect = Home_Players_rect;
+//            off_Players_rect = Home_Players_rect;
             off_Player_Sprites = H_Player_Sprites;
-            def_Players_rect = Away_Players_rect;
+//            def_Players_rect = Away_Players_rect;
             def_Player_Sprites = A_Player_Sprites;
         }
 
-        int xxx = 0;
-        foreach (Formation_Rec f in Off_Players)
+//private void setPlayer(Graphics_Game_Ball gBall, Graphics_Game_Player ggp, double[] a_edge, BitmapImage[] Player_Sprites, bool bLefttoRight, bool bOffense)
+
+            int xxx = 0;
+        foreach (Graphics_Game_Player f in Off_Players)
         {
-              double yardline = Game_Ball.YardLine + f.YardLine;
-              setPlayer(yardline, f.Vertical_Percent_Pos, a_edge,f.State, off_Players_rect[xxx], off_Player_Sprites, bLefttoRight, true);
+                double yardline = Game_Ball.YardLine + f.YardLine;
+                setPlayer(Game_Ball, f, a_edge, off_Player_Sprites, bLefttoRight, true);
               xxx++;
         }
 
         xxx = 0;
-        foreach (Formation_Rec f in Def_Players)
+        foreach (Graphics_Game_Player f in Def_Players)
         {
               double yardline = Game_Ball.YardLine + f.YardLine;
-              setPlayer(yardline, f.Vertical_Percent_Pos, a_edge, f.State, def_Players_rect[xxx], def_Player_Sprites, bLefttoRight, false);
+              setPlayer(Game_Ball, f, a_edge, def_Player_Sprites, bLefttoRight, false);
               xxx++;
         }
 
@@ -684,8 +564,7 @@ namespace SpectatorFootball.WindowsLeague
             List<Graphics_Game_Player> r = new List<Graphics_Game_Player>();
             foreach (Game_Player p in gpList)
             {
-                Graphics_Game_Player ggp = new Graphics_Game_Player()
-                { bCarringBall = p.bCarryingBall, Vertical_Percent_Pos = p.Starting_Vertical_Percent_Pos, YardLine = p.Starting_YardLine, pState = p.State, Stages = p.Stages };
+                Graphics_Game_Player ggp = new Graphics_Game_Player(p.State, p.bCarryingBall, p.Current_YardLine, p.Current_Vertical_Percent_Pos, p.Stages);
                 r.Add(ggp);
             }
             return r;
