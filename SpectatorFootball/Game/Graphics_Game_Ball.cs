@@ -29,21 +29,15 @@ namespace SpectatorFootball.GameNS
         public Ellipse Ball = null;
 
         public Graphics_Game_Ball(Ball_States bState, double YardLine, double Vertical_Percent_Pos,
-            List<Play_Stage> Stages, Ellipse Ball, string ball_Color)
+            List<Play_Stage> Stages)
         {
             this.bState = bState;
             this.YardLine = YardLine;
             this.Vertical_Percent_Pos = Vertical_Percent_Pos;
             this.Stages = Stages;
-            this.Ball = Ball;
 
             current_size = BALL_SIZE;
             graph_bState = setGraphicsState();
-
-            Ball.Width = width;
-            Ball.Height = Height;
-            Ball.Fill = (Brush)CommonUtils.getBrushfromHex(ball_Color);
-            Ball.Stroke = System.Windows.Media.Brushes.Black;
 
         }
         private Graphics_Ball_Stats setGraphicsState()

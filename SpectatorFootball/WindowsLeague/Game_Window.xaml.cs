@@ -66,9 +66,12 @@ namespace SpectatorFootball.WindowsLeague
         public List<Graphics_Game_Player> Offensive_Players;
         public List<Graphics_Game_Player> Defensive_Players;
 
-
         public Ellipse Ball = new Ellipse();
         private string ball_Color;
+
+        private List<Rectangle> Away_Players_rect = new List<Rectangle>();
+        private List<Rectangle> Home_Players_rect = new List<Rectangle>();
+
 
         private MediaPlayer Sound_player = new MediaPlayer();
 
@@ -147,6 +150,28 @@ namespace SpectatorFootball.WindowsLeague
 
                 //Add ball to canvas
                 MyCanvas.Children.Add(Ball);
+
+                //Create the player rectangles for both away and home
+                for (int xxx = 0; xxx < app_Constants.PLAYERS_ON_FIELD_PER_TEAM; xxx++)
+                {
+                    Rectangle ap = new Rectangle()
+                    {
+                        Height = PLAYER_SIZE,
+                        Width = PLAYER_SIZE,
+                    };
+
+                    Away_Players_rect.Add(ap);
+                    MyCanvas.Children.Add(ap);
+
+                    Rectangle hp = new Rectangle
+                    {
+                        Height = PLAYER_SIZE,
+                        Width = PLAYER_SIZE,
+                    };
+
+                    Home_Players_rect.Add(hp);
+                    MyCanvas.Children.Add(hp);
+                }
 
                 //Load and colorize the sprite sheets
                 Uniform_Img = new Uniform_Image(CommonUtils.getAppPath() + System.IO.Path.DirectorySeparatorChar + "Images" + System.IO.Path.DirectorySeparatorChar + "Players" + System.IO.Path.DirectorySeparatorChar + "Player_Sprite_Sheet.png");
@@ -233,7 +258,7 @@ namespace SpectatorFootball.WindowsLeague
             {
                 Play = ge.ExecutePlay();
 
-                gGame_Ball = new Graphics_Game_Ball(Play.Game_Ball.Initial_State, Play.Game_Ball.Starting_YardLine, Play.Game_Ball.Starting_Vertical_Percent_Pos, Play.Game_Ball.Stages, Ball, ball_Color);
+                gGame_Ball = new Graphics_Game_Ball(Play.Game_Ball.Initial_State, Play.Game_Ball.Starting_YardLine, Play.Game_Ball.Starting_Vertical_Percent_Pos, Play.Game_Ball.Stages);
 
                 Offensive_Players = CreateGamePlayersLIst(Play.Offensive_Players);
                 Defensive_Players = CreateGamePlayersLIst(Play.Defensive_Players);
@@ -321,11 +346,11 @@ namespace SpectatorFootball.WindowsLeague
         private void setBAll(Graphics_Game_Ball gBall, double[] a_edge, bool bLefttoRight)
         {
 
-/*            Ball.Width = gGame_Ball.width;
+            Ball.Width = gGame_Ball.width;
             Ball.Height = gGame_Ball.Height;
             Ball.Fill = (Brush) CommonUtils.getBrushfromHex(ball_Color);
             Ball.Stroke = System.Windows.Media.Brushes.Black;
-*/
+
             int H_Pixel = Yardline_to_Pixel(gGame_Ball.YardLine, true);
             double v_Pixel = VertPercent_to_Pixel(gGame_Ball.Vertical_Percent_Pos, gGame_Ball.Height);
 
@@ -339,7 +364,7 @@ namespace SpectatorFootball.WindowsLeague
             Canvas.SetLeft(Ball, H_Pixel);
         }
 
-        private void setPlayer(Graphics_Game_Ball gBall, Graphics_Game_Player ggp, double[] a_edge, BitmapImage[] Player_Sprites, bool bLefttoRight, bool bOffense)
+        private void setPlayer(Graphics_Game_Ball gBall, Graphics_Game_Player ggp, double[] a_edge, BitmapImage[] Player_Sprites, bool bLefttoRight, bool bOffense, int xxx, List<Rectangle> players_rect)
         {
             double yardline = gBall.YardLine + ggp.YardLine;
             int Left_Right_Image_Offset = 0;
@@ -352,7 +377,7 @@ namespace SpectatorFootball.WindowsLeague
             ImageBrush Player_Sheet = new ImageBrush();
              Player_Sheet.ImageSource = Player_Sprites[ind + Left_Right_Image_Offset];
 
-            ggp.Player_Rect.Fill = Player_Sheet; 
+            players_rect[xxx].Fill = Player_Sheet;
 
             int H_Pixel = Yardline_to_Pixel(yardline, true);
             if (bLefttoRight)
@@ -366,8 +391,8 @@ namespace SpectatorFootball.WindowsLeague
 
             logger.Debug("vertical pixel: " + ggp.Vertical_Percent_Pos + " " + v_Pixel);
 
-            Canvas.SetTop(ggp.Player_Rect, v_Pixel);
-            Canvas.SetLeft(ggp.Player_Rect, H_Pixel);
+            Canvas.SetTop(players_rect[xxx], v_Pixel);
+            Canvas.SetLeft(players_rect[xxx], H_Pixel);
         }
 
         private void Show_Play()
@@ -458,34 +483,32 @@ namespace SpectatorFootball.WindowsLeague
         if (Game_Ball.bState != Ball_States.CARRIED)
             setBAll(Game_Ball, a_edge, bLefttoRight);
 
-        List<Graphics_Game_Player> off_Players_rect = null;
-        List<Graphics_Game_Player> def_Players_rect = null;
+        List<Rectangle> off_Players_rect = null;
+        List<Rectangle> def_Players_rect = null;
 
         BitmapImage[] off_Player_Sprites = null;
         BitmapImage[] def_Player_Sprites = null;
 
         if (bLefttoRight)
         {
-//            off_Players_rect = Away_Players_rect;
+            off_Players_rect = Away_Players_rect;
             off_Player_Sprites = A_Player_Sprites;
-//            def_Players_rect = Home_Players_rect;
+            def_Players_rect = Home_Players_rect;
             def_Player_Sprites = H_Player_Sprites;
         }
         else
         {
-//            off_Players_rect = Home_Players_rect;
+            off_Players_rect = Home_Players_rect;
             off_Player_Sprites = H_Player_Sprites;
-//            def_Players_rect = Away_Players_rect;
+            def_Players_rect = Away_Players_rect;
             def_Player_Sprites = A_Player_Sprites;
         }
 
-//private void setPlayer(Graphics_Game_Ball gBall, Graphics_Game_Player ggp, double[] a_edge, BitmapImage[] Player_Sprites, bool bLefttoRight, bool bOffense)
-
-            int xxx = 0;
+        int xxx = 0;
         foreach (Graphics_Game_Player f in Off_Players)
         {
                 double yardline = Game_Ball.YardLine + f.YardLine;
-                setPlayer(Game_Ball, f, a_edge, off_Player_Sprites, bLefttoRight, true);
+                setPlayer(Game_Ball, f, a_edge, off_Player_Sprites, bLefttoRight, true, xxx, off_Players_rect);
               xxx++;
         }
 
@@ -493,7 +516,7 @@ namespace SpectatorFootball.WindowsLeague
         foreach (Graphics_Game_Player f in Def_Players)
         {
               double yardline = Game_Ball.YardLine + f.YardLine;
-              setPlayer(Game_Ball, f, a_edge, def_Player_Sprites, bLefttoRight, false);
+              setPlayer(Game_Ball, f, a_edge, def_Player_Sprites, bLefttoRight, false, xxx, def_Players_rect);
               xxx++;
         }
 

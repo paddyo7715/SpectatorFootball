@@ -20,10 +20,6 @@ namespace SpectatorFootball.GameNS
         private int current_Action = 0;
         bool bFinished = false;
         public string sSound = null;
-        public Rectangle Player_Rect;
-        private const int PLAYER_SIZE = 50;
-
-
 
         public Graphics_Game_Player(Player_States pState, bool bCarringBall, double YardLine,
             double Vertical_Percent_Pos, List<Play_Stage> Stages)
@@ -35,12 +31,6 @@ namespace SpectatorFootball.GameNS
             this.Stages = Stages;
 
             graph_pState = setGraphicsState();
-
-            Rectangle Player_Rect = new Rectangle()
-            {
-                Height = PLAYER_SIZE,
-                Width = PLAYER_SIZE,
-            };
 
         }
 
