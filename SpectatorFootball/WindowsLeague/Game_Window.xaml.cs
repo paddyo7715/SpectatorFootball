@@ -194,7 +194,7 @@ namespace SpectatorFootball.WindowsLeague
             catch (Exception e)
             {
                 Mouse.OverrideCursor = null;
-                string err = "Error Loading Data to Start Game!";
+                string err = "Error Loading Data to Start Game !";
                 logger.Error(err);
                 logger.Error(e);
                 MessageBox.Show(CommonUtils.substr(err, 0, 100), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -258,6 +258,7 @@ namespace SpectatorFootball.WindowsLeague
             {
                 Play = ge.ExecutePlay();
 
+                //play.game_ball is null error
                 gGame_Ball = new Graphics_Game_Ball(Play.Game_Ball.Initial_State, Play.Game_Ball.Starting_YardLine, Play.Game_Ball.Starting_Vertical_Percent_Pos, Play.Game_Ball.Stages);
 
                 Offensive_Players = CreateGamePlayersLIst(Play.Offensive_Players);

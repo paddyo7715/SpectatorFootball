@@ -429,22 +429,24 @@ namespace SpectatorFootball.GameNS
                 r.Long_Message = getForfeit_Message(at, ht, (long)g.Away_Score, (long)g.Home_Score);
             }
 
-            r.Offensive_Players = Offensive_Players;
-            r.Defensive_Players = Defensive_Players;
-            r.Game_Ball = Game_Ball;
+            Offensive_Players = setGamePlayerLIsts(Offensive_Package.Formation);
+            Defensive_Players = setGamePlayerLIsts(DEF_Formation);
+
+            Game_Ball = new Game_Ball()
+            {
+                State = Offensive_Package.Formation.bState,
+                Initial_State = Offensive_Package.Formation.bState,
+                Current_Vertical_Percent_Pos = g_Vertical_Ball_Placement,
+                Current_YardLine = g_Line_of_Scrimmage,
+                Starting_Vertical_Percent_Pos = g_Vertical_Ball_Placement,
+                Starting_YardLine = g_Line_of_Scrimmage
+            };
 
             //Only execute the play and accume the play stats if the game has not been forfeited
             if (!r.bForfeitedGame)
             {
                 Play_Result p_result = null;
                 double yards_gained = 0.0;
-
-                Offensive_Players = setGamePlayerLIsts(Offensive_Package.Formation);
-                Defensive_Players = setGamePlayerLIsts(DEF_Formation);
-
-                Game_Ball = new Game_Ball() { State = Offensive_Package.Formation.bState, Initial_State = Offensive_Package.Formation.bState,
-                 Current_Vertical_Percent_Pos = g_Vertical_Ball_Placement, Current_YardLine = g_Line_of_Scrimmage,
-                 Starting_Vertical_Percent_Pos = g_Vertical_Ball_Placement, Starting_YardLine = g_Line_of_Scrimmage};
 
                 if (bKickoff && Offensive_Package.Play == Play_Enum.KICKOFF_NORMAL)
                     p_result = Kickoff_Normal_Play(Game_Ball, Offensive_Players, Defensive_Players, bLefttoRight, false, bWatchGame);
@@ -794,6 +796,10 @@ namespace SpectatorFootball.GameNS
             }
 
             GameEnd();
+
+            r.Offensive_Players = Offensive_Players;
+            r.Defensive_Players = Defensive_Players;
+            r.Game_Ball = Game_Ball;
 
             // Get the Game Values Before the Play is Executed
             r.After_Away_Score = g.Away_Score.ToString();
