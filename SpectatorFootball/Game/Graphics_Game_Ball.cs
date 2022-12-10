@@ -18,10 +18,8 @@ namespace SpectatorFootball.GameNS
         public double YardLine;
         public double Vertical_Percent_Pos;
         public List<Play_Stage> Stages = null;
-        private int current_Stage = 0;
-        private int current_size = 0;
-
-        private int current_Action = 0;
+        public int current_Stage = 0;
+        public int current_movement = 0;
         public bool bFinished = false;
         public int Height;
         public int width;
@@ -36,7 +34,6 @@ namespace SpectatorFootball.GameNS
             this.Vertical_Percent_Pos = Vertical_Percent_Pos;
             this.Stages = Stages;
 
-            current_size = BALL_SIZE;
             graph_bState = setGraphicsState();
 
         }

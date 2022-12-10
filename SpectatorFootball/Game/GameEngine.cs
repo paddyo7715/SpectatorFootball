@@ -429,8 +429,8 @@ namespace SpectatorFootball.GameNS
                 r.Long_Message = getForfeit_Message(at, ht, (long)g.Away_Score, (long)g.Home_Score);
             }
 
-            Offensive_Players = setGamePlayerLIsts(Offensive_Package.Formation);
-            Defensive_Players = setGamePlayerLIsts(DEF_Formation);
+            Offensive_Players = setGamePlayerLIsts(g_Line_of_Scrimmage, Offensive_Package.Formation);
+            Defensive_Players = setGamePlayerLIsts(g_Line_of_Scrimmage, DEF_Formation);
 
             Game_Ball = new Game_Ball()
             {
@@ -898,10 +898,10 @@ namespace SpectatorFootball.GameNS
 
             if (!bSim)
             {
-                //Do the premove of the kicker running up to the ball and kicking it downfield
-
                 //Set the location and state of the ball first
-                Action bas = Create_Action_Sound(Game_Object_Types.B, 0.0, 0.0, false, false, null, Ball_States.TEED_UP, null, null);
+
+                gBall.State = Ball_States.TEED_UP;
+                Action bas = new Action(Game_Object_Types.B, gBall.Starting_YardLine, gBall.Starting_Vertical_Percent_Pos, 0.0, 0.0, false,true, null, gBall.State, null, null, Movement.NONE);
                 
                 Play_Stage bStage = new Play_Stage();
                 bStage.Main_Object = false;
@@ -916,20 +916,28 @@ namespace SpectatorFootball.GameNS
                 {
                     if (p == Kicker)
                     {
-                        Action pas = Create_Action_Sound(Game_Object_Types.P, 6.9, 0.0, true, false, Player_States.RUNNING_FORWARD, null, null, null);
-                        Action pas2 = Create_Action_Sound(Game_Object_Types.P, 0.1, 0.0, true, false, Player_States.FG_KICK, null, null, Game_Sounds.KICK);
+                        p.Current_YardLine += 6.6 * HorizontalAdj(bLefttoRight);
+                        p.Current_Vertical_Percent_Pos += 0.0 * VerticalAdj(bLefttoRight);
+                        Action pas = new Action(Game_Object_Types.P,p.Starting_YardLine, p.Starting_Vertical_Percent_Pos,p.Current_YardLine, p.Current_Vertical_Percent_Pos,false, false, Player_States.RUNNING_FORWARD, null, null, null, Movement.LINE);
+
+                        p.Current_YardLine += 0.4 * HorizontalAdj(bLefttoRight);
+                        p.Current_Vertical_Percent_Pos += 0.0 * VerticalAdj(bLefttoRight);
+                        Action pas2 = new Action(Game_Object_Types.P, p.Starting_YardLine, p.Starting_Vertical_Percent_Pos, p.Current_YardLine, p.Current_Vertical_Percent_Pos, false, true, Player_States.FG_KICK, null, null, Game_Sounds.KICK,Movement.LINE);
 
                         Play_Stage pStage = new Play_Stage();
                         pStage.Main_Object = true;
                         pStage.Actions.Add(pas);
                         pStage.Actions.Add(pas2);
                         p.Stages.Add(pStage);
+
+                        p.Starting_YardLine += p.Current_YardLine;
+                        p.Starting_Vertical_Percent_Pos += p.Current_Vertical_Percent_Pos;
                     }
                     else
                     {
 
                         //Other players just stand there waiting for the kick
-                        Action pas = Create_Action_Sound(Game_Object_Types.P, 0.0, 0.0, false, false, Player_States.STANDING, null, null, null);
+                        Action pas = new Action(Game_Object_Types.P, p.Starting_YardLine, p.Starting_Vertical_Percent_Pos, 0.0, 0.0, false, true, Player_States.STANDING, null, null, null, Movement.NONE);
                         Play_Stage pStage = new Play_Stage();
                         pStage.Main_Object = false;
                         pStage.Actions.Add(pas);
@@ -943,7 +951,7 @@ namespace SpectatorFootball.GameNS
                 foreach (Game_Player p in Def_Players)
                 {
                     //Receiving players just stand there waiting for the kick
-                    Action pas = Create_Action_Sound(Game_Object_Types.P, 0.0, 0.0, false, false, Player_States.STANDING, null, null, null);
+                    Action pas = new Action(Game_Object_Types.P, p.Starting_YardLine, p.Starting_Vertical_Percent_Pos, 0.0, 0.0, false, true, Player_States.STANDING, null, null, null, Movement.NONE);
                     Play_Stage pStage = new Play_Stage();
                     pStage.Main_Object = false;
                     pStage.Actions.Add(pas);
@@ -1071,7 +1079,7 @@ namespace SpectatorFootball.GameNS
                 j.Num_of_Plays -= 1;
 
         }
-        private List<Game_Player> setGamePlayerLIsts(Formation f)
+        private List<Game_Player> setGamePlayerLIsts(double Line_of_Scrimmage, Formation f)
         {
             List<Game_Player> r = new List<Game_Player>();
             foreach (Formation_Rec fr in f.Player_list)
@@ -1080,7 +1088,7 @@ namespace SpectatorFootball.GameNS
                 {
                     bCarryingBall = fr.bCarryingBall,
                     Current_Vertical_Percent_Pos = fr.Vertical_Percent_Pos,
-                    Current_YardLine = fr.YardLine,
+                    Current_YardLine = Line_of_Scrimmage + fr.YardLine,
                     Starting_Vertical_Percent_Pos = fr.Vertical_Percent_Pos,
                     Starting_YardLine = fr.YardLine,
                     Pos = fr.Pos,
@@ -1091,18 +1099,23 @@ namespace SpectatorFootball.GameNS
 
             return r;
         }
-        private Action Create_Action_Sound(Game_Object_Types type, double end_yardline, double end_vertical,
-         bool Move, bool bPossesses_Ball, Player_States? p_state, Ball_States? b_state, Game_Sounds? Before_Sound_File, Game_Sounds? After_Sound_File)
+
+        private int HorizontalAdj(bool b)
         {
-            Action r = new Action();
-            r.type = type;
-            r.end_yardline = end_yardline;
-            r.end_vertical = end_vertical;
-            r.bPossesses_Ball = bPossesses_Ball;
-            r.p_state = p_state;
-            r.b_state = b_state;
-            r.Before_Sound = Before_Sound_File;
-            r.After_Sound = After_Sound_File;
+            int r = 1;
+
+            if (!b)
+                r *= -1;
+
+            return r;
+        }
+
+        private int VerticalAdj(bool b)
+        {
+            int r = 1;
+
+            if (b)
+                r *= -1;
 
             return r;
         }

@@ -16,10 +16,10 @@ namespace SpectatorFootball.GameNS
         public double YardLine;
         public double Vertical_Percent_Pos;
         public List<Play_Stage> Stages = null;
-        private int current_Stage = 0;
-        private int current_Action = 0;
-        bool bFinished = false;
+        public int current_Stage = 0;
+        public int current_movement = 0;
         public string sSound = null;
+        public bool bFinished = false;
 
         public Graphics_Game_Player(Player_States pState, bool bCarringBall, double YardLine,
             double Vertical_Percent_Pos, List<Play_Stage> Stages)

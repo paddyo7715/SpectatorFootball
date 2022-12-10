@@ -164,6 +164,7 @@
     <Compile Include="Common\LoadLeagueEventArgs.cs" />
     <Compile Include="Common\Long_and_Long.cs" />
     <Compile Include="Common\Long_and_String.cs" />
+    <Compile Include="Common\PointXY.cs" />
     <Compile Include="Common\SettingsConnection.cs" />
     <Compile Include="Common\Validator.cs" />
     <Compile Include="CustomControls\CustomTextBox.cs" />
@@ -186,6 +187,7 @@
     <Compile Include="Enum\Game_Sounds.cs" />
     <Compile Include="Enum\Graphics_Ball_Stats.cs" />
     <Compile Include="Enum\Graphics_Player_States.cs" />
+    <Compile Include="Enum\Movement.cs" />
     <Compile Include="Enum\Player_States.cs" />
     <Compile Include="Enum\Play_Enum.cs" />
     <Compile Include="Enum\Stat_Type.cs" />
@@ -205,6 +207,7 @@
     <Compile Include="Game\Play_Stage.cs" />
     <Compile Include="Game\Play_Struct.cs" />
     <Compile Include="Game\Play_Package.cs" />
+    <Compile Include="Game\PointPlotter.cs" />
     <Compile Include="Help_Forms\Help_Champions.xaml.cs">
       <DependentUpon>Help_Champions.xaml</DependentUpon>
     </Compile>

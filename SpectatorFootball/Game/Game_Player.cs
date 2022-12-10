@@ -12,9 +12,9 @@ namespace SpectatorFootball.GameNS
     {
         public Player_Pos Pos;
         public double Starting_YardLine;
-        public int Starting_Vertical_Percent_Pos;
+        public double Starting_Vertical_Percent_Pos;
         public double Current_YardLine;
-        public int Current_Vertical_Percent_Pos;
+        public double Current_Vertical_Percent_Pos;
         public Player_States State;
         public Player_and_Ratings p_and_r;
         public bool bCarryingBall;

@@ -273,10 +273,44 @@ namespace SpectatorFootball.WindowsLeague
                 //Set the scoreboard before the play
                 setScoreboard(Play.Before_Away_Score, Play.Before_Home_Score, Play.Before_Display_Time, Play.Before_Display_QTR, Play.Before_Away_Timeouts, Play.Before_Home_Timeouts, Play.Before_Down_and_Yards);
 
-
-
                 bGameEneded = Play.bGameOver;
                 //just to test one play take this out.
+
+                //go thru the play stages.  The ball and all players have the same number of stages.
+                for (int stg=0; stg < gGame_Ball.Stages.Count; stg++)
+                {
+                    //reset the ball and all players to the new stage and reset their movement index to 0
+                    gGame_Ball.current_Stage = stg;
+                    gGame_Ball.current_movement = 0;
+
+                    foreach(Graphics_Game_Player p in Offensive_Players)
+                    {
+                        p.current_Stage = stg;
+                        p.current_movement = 0;
+                    }
+
+                    foreach (Graphics_Game_Player p in Defensive_Players)
+                    {
+                        p.current_Stage = stg;
+                        p.current_movement = 0;
+                    }
+
+                    bool bMovementsDone = false;
+                    do
+                    {
+
+
+                        
+                        if (gGame_Ball.bFinished || Offensive_Players.Where(x => x.bFinished).Count() > 0)
+                            bMovementsDone = true;
+                    } while (bMovementsDone);
+
+
+
+                    //up the stage number of the ball and player objects offense and defense
+
+
+                }  // for loop stage
             }  //Game ended
 
             //Set this in case a team scores on the last play of the game
@@ -367,7 +401,8 @@ namespace SpectatorFootball.WindowsLeague
 
         private void setPlayer(Graphics_Game_Ball gBall, Graphics_Game_Player ggp, double[] a_edge, BitmapImage[] Player_Sprites, bool bLefttoRight, bool bOffense, int xxx, List<Rectangle> players_rect)
         {
-            double yardline = gBall.YardLine + ggp.YardLine;
+            double yardline = ggp.YardLine;
+
             int Left_Right_Image_Offset = 0;
 
             if ((bLefttoRight && !bOffense) || !bLefttoRight && bOffense)
@@ -389,6 +424,10 @@ namespace SpectatorFootball.WindowsLeague
             //Adjust the position on the canvas for the view edge
             H_Pixel += (int)a_edge[0];
             v_Pixel += (int)a_edge[1];
+
+            //Make it so the kickers feet line up with the ball so pull them up a little
+            v_Pixel -= PLAYER_SIZE/3;
+
 
             logger.Debug("vertical pixel: " + ggp.Vertical_Percent_Pos + " " + v_Pixel);
 
@@ -508,7 +547,7 @@ namespace SpectatorFootball.WindowsLeague
         int xxx = 0;
         foreach (Graphics_Game_Player f in Off_Players)
         {
-                double yardline = Game_Ball.YardLine + f.YardLine;
+                double yardline = f.YardLine;
                 setPlayer(Game_Ball, f, a_edge, off_Player_Sprites, bLefttoRight, true, xxx, off_Players_rect);
               xxx++;
         }
