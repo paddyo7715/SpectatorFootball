@@ -17,9 +17,11 @@ namespace SpectatorFootball.GameNS
         public double Vertical_Percent_Pos;
         public List<Play_Stage> Stages = null;
         public int current_Stage = 0;
-        public int current_movement = 0;
-        public string sSound = null;
-        public bool bFinished = false;
+        public int current_action = 0;
+        public int current_point = 0;
+        public Game_Sounds? Before_Sound;
+        public Game_Sounds? After_Sound;
+        public bool bStageFinished = false;
 
         public Graphics_Game_Player(Player_States pState, bool bCarringBall, double YardLine,
             double Vertical_Percent_Pos, List<Play_Stage> Stages)
@@ -30,11 +32,11 @@ namespace SpectatorFootball.GameNS
             this.Vertical_Percent_Pos = Vertical_Percent_Pos;
             this.Stages = Stages;
 
-            graph_pState = setGraphicsState();
+            graph_pState = setGraphicsState(this.pState);
 
         }
 
-        private Graphics_Player_States setGraphicsState()
+        private Graphics_Player_States setGraphicsState(Player_States pState)
         {
             Graphics_Player_States r = Graphics_Player_States.STANDING;
 
@@ -109,20 +111,52 @@ namespace SpectatorFootball.GameNS
             }
             return r;
         }
-            public void isEnd_Movement()
+        public void Update()
         {
+            Before_Sound = null;
+            After_Sound = null;
+            Play_Stage pStage = Stages[current_Stage];
 
-            /*
-            if (YardLine >= end_YardLine && Vertical_Percent_Pos >= end_Vertical_Percent_Pos)
+            //This must never be true
+            if (pStage.Main_Object && pStage.Actions.Count() == 0)
+                throw new Exception("Cant be main object with no actions");
+
+            //Only if there are actions/movements left.
+            if (pStage.Actions[current_action].PointXY.Count() > 0 &&
+                current_action < pStage.Actions.Count() &&
+               (current_point < pStage.Actions[current_action].PointXY.Count()))
             {
-                if (current_movement >= movements.Count - 1)
-                    bFinished = true;
+
+                Action act = pStage.Actions[current_action];
+
+                pState = (Player_States)act.b_state;
+                graph_pState = setGraphicsState(pState);
+                YardLine = act.PointXY[current_point].x;
+                Vertical_Percent_Pos = act.PointXY[current_point].y;
+
+
+                Before_Sound = act.Before_Sound;
+                After_Sound = act.After_Sound;
+
+                current_point++;
+                if (current_point >= act.PointXY.Count())
                 {
-                    bFinished = false;
-                    current_movement++;
+                    current_action++;
+                    current_point = 0;
                 }
-            }
-*/
+
+                //If this is the main object in the stage and all of its actions are over then the stage is done
+                if (pStage.Main_Object &&
+                    (current_action >= pStage.Actions.Count()) &&
+                    (current_point >= pStage.Actions[current_action].PointXY.Count()))
+                {
+                    bStageFinished = true;
+                }
+
+            } //if actions
+            else
+                graph_pState = setGraphicsState(pState);
+
 
         }
     }

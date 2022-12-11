@@ -1,4 +1,5 @@
-﻿using SpectatorFootball.Enum;
+﻿using SpectatorFootball.Common;
+using SpectatorFootball.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,12 +20,13 @@ namespace SpectatorFootball.GameNS
         public double Vertical_Percent_Pos;
         public List<Play_Stage> Stages = null;
         public int current_Stage = 0;
-        public int current_movement = 0;
-        public bool bFinished = false;
+        public int current_action = 0;
+        public int current_point = 0;
         public int Height;
         public int width;
-        public string sSound = null;
-        public Ellipse Ball = null;
+        public Game_Sounds? Before_Sound;
+        public Game_Sounds? After_Sound;
+        public bool bStageFinished = false;
 
         public Graphics_Game_Ball(Ball_States bState, double YardLine, double Vertical_Percent_Pos,
             List<Play_Stage> Stages)
@@ -34,10 +36,10 @@ namespace SpectatorFootball.GameNS
             this.Vertical_Percent_Pos = Vertical_Percent_Pos;
             this.Stages = Stages;
 
-            graph_bState = setGraphicsState();
+            graph_bState = setGraphicsState(this.bState);
 
         }
-        private Graphics_Ball_Stats setGraphicsState()
+        private Graphics_Ball_Stats setGraphicsState(Ball_States bState)
         {
             Graphics_Ball_Stats r = Graphics_Ball_Stats.TEED_UP;
 
@@ -85,19 +87,54 @@ namespace SpectatorFootball.GameNS
             return r;
         }
 
-        public void isEnd_Movement()
+        public void Update()
         {
+            Before_Sound = null;
+            After_Sound = null;
+            Play_Stage pStage = Stages[current_Stage];
 
-/*            if (YardLine >= end_YardLine && Vertical_Percent_Pos >= end_Vertical_Percent_Pos)
+            //This must never be true
+            if (pStage.Main_Object && pStage.Actions.Count() == 0)
+                throw new Exception("Cant be main object with no actions");
+
+            //Only if there are actions/movements left.
+            if (pStage.Actions[current_action].PointXY.Count() > 0 &&
+                current_action < pStage.Actions.Count() &&
+               (current_point < pStage.Actions[current_action].PointXY.Count()))
             {
-                if (current_movement >= movements.Count - 1)
-                    bFinished = true;
+
+                Action act = pStage.Actions[current_action];
+
+                bState = (Ball_States)act.b_state;
+                graph_bState = setGraphicsState(bState);
+                YardLine = act.PointXY[current_point].x;
+                Vertical_Percent_Pos = act.PointXY[current_point].y;
+
+
+                Before_Sound = act.Before_Sound;
+                After_Sound = act.After_Sound;
+
+                current_point++;
+                if (current_point >= act.PointXY.Count())
                 {
-                    bFinished = false;
-                    current_movement++;
+                    current_action++;
+                    current_point = 0;
                 }
-            }
-*/
+
+                //If this is the main object in the stage and all of its actions are over then the stage is done
+                if (pStage.Main_Object &&
+                    (current_action >= pStage.Actions.Count()) &&
+                    (current_point >= pStage.Actions[current_action].PointXY.Count()))
+                {
+                    bStageFinished = true;
+                }
+
+            } //if actions
+            else
+                graph_bState = setGraphicsState(bState);
+
+
         }
+
     }
 }
