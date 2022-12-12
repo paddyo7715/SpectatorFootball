@@ -55,7 +55,7 @@ namespace SpectatorFootball.GameNS
         private bool bThreePointConv = false;
         private bool bAllowInjuries = false;
         private bool bAllowPenalties = false;
-        private bool bWatchGame = false;
+        private bool bSimGame = false;
 
         //other settings
         private double YardsInField = 100.0;
@@ -66,7 +66,7 @@ namespace SpectatorFootball.GameNS
         private long forfeit_lose_score = 0;
 
         public GameEngine(MainWindow pw, Game g, Teams_by_Season at, List<Player_and_Ratings> Away_Players,
-            Teams_by_Season ht, List<Player_and_Ratings> Home_Players, bool bWatchGame)
+            Teams_by_Season ht, List<Player_and_Ratings> Home_Players, bool bSimGame)
         {
             this.pw = pw;
             this.at = at;
@@ -74,7 +74,7 @@ namespace SpectatorFootball.GameNS
             this.ht = ht;
             this.Home_Players = Home_Players;
             this.g = g;
-            this.bWatchGame = bWatchGame;
+            this.bSimGame = bSimGame;
 
             //Initialize the game object
             g.Home_Score = 0;
@@ -449,7 +449,7 @@ namespace SpectatorFootball.GameNS
                 double yards_gained = 0.0;
 
                 if (bKickoff && Offensive_Package.Play == Play_Enum.KICKOFF_NORMAL)
-                    p_result = Kickoff_Normal_Play(Game_Ball, Offensive_Players, Defensive_Players, bLefttoRight, false, bWatchGame);
+                    p_result = Kickoff_Normal_Play(Game_Ball, Offensive_Players, Defensive_Players, bLefttoRight, false, bSimGame);
 
                 //set results and accume team stats
                 r.Long_Message = p_result.Message;
@@ -1090,7 +1090,7 @@ namespace SpectatorFootball.GameNS
                     Current_Vertical_Percent_Pos = fr.Vertical_Percent_Pos,
                     Current_YardLine = Line_of_Scrimmage + fr.YardLine,
                     Starting_Vertical_Percent_Pos = fr.Vertical_Percent_Pos,
-                    Starting_YardLine = fr.YardLine,
+                    Starting_YardLine = Line_of_Scrimmage + fr.YardLine,
                     Pos = fr.Pos,
                     p_and_r = fr.p_and_r,
                     State = fr.State

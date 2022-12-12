@@ -40,6 +40,7 @@ namespace SpectatorFootball.WindowsLeague
 
         private DispatcherTimer dispatcherTimer = new DispatcherTimer();
         private DispatcherTimer GameTimer = new DispatcherTimer();
+//        private DispatcherTimer StartGame = new DispatcherTimer();
 
         private string Field_File = "";
 
@@ -60,11 +61,6 @@ namespace SpectatorFootball.WindowsLeague
 
         //This is the game engine where the game is played!!
         public GameEngine ge = null;
-
-        //ball objects
-//        public Graphics_Game_Ball gGame_Ball = null;
-//        public List<Graphics_Game_Player> Offensive_Players;
-//        public List<Graphics_Game_Player> Defensive_Players;
 
         public Ellipse Ball = new Ellipse();
         private string ball_Color;
@@ -139,12 +135,8 @@ namespace SpectatorFootball.WindowsLeague
                 Can_Width = (int)CANVAS_WIDTH;
                 Can_Height = (int) MyCanvas.Height;
 
-                dispatcherTimer.Tick += CloseGameInfo;
-                dispatcherTimer.Interval = new TimeSpan(0, 0, 5);
-                dispatcherTimer.Start();
-
                 ge = new GameEngine(pw, g, (Teams_by_Season)at, (List<Player_and_Ratings>)Away_Players,
-                    (Teams_by_Season)ht, (List<Player_and_Ratings>)Home_Players, true);
+                    (Teams_by_Season)ht, (List<Player_and_Ratings>)Home_Players, false);
 
                 VIEW_EDGE_PIXELS = Yardline_to_Pixel(VIEW_EDGE_OFFSET_YARDLINE, false);
                 CANVAS_WIDTH = MyCanvas.Width - RIGHT_PIXEL_FUDGE;
@@ -192,6 +184,10 @@ namespace SpectatorFootball.WindowsLeague
                 A_Player_Sprites = Uniform_Img.SplitSpriteSheet(false, PLAYER_IN_SPRITE_ROW, PLAYER_SIZE);
                 H_Player_Sprites = Uniform_Img.SplitSpriteSheet(true, PLAYER_IN_SPRITE_ROW, PLAYER_SIZE);
 
+                dispatcherTimer.Tick += CloseGameInfo;
+                dispatcherTimer.Interval = new TimeSpan(0, 0, 0);
+                dispatcherTimer.Start();
+
             }
             catch (Exception e)
             {
@@ -238,7 +234,7 @@ namespace SpectatorFootball.WindowsLeague
 
             lblHomeTeam.Foreground = new SolidColorBrush(CommonUtils.getColorfromHex(m2[1]));
             lblHomeTeam.Background = new SolidColorBrush(CommonUtils.getColorfromHex(m2[0]));
-            
+
             ImageBrush backgroundField = new ImageBrush();
             backgroundField.ImageSource = new BitmapImage(new Uri(CommonUtils.getAppPath() + "/images/Stadiums/Grass_BrightGreen.png"));
 
@@ -275,7 +271,7 @@ namespace SpectatorFootball.WindowsLeague
                 setScoreboard(Play.Before_Away_Score, Play.Before_Home_Score, Play.Before_Display_Time, Play.Before_Display_QTR, Play.Before_Away_Timeouts, Play.Before_Home_Timeouts, Play.Before_Down_and_Yards);
 
                 //go thru the play stages.  The ball and all players have the same number of stages.
-                for (int stg=0; stg < gGame_Ball.Stages.Count; stg++)
+                for (int stg = 0; stg < gGame_Ball.Stages.Count; stg++)
                 {
                     bool bStageFinished = false;
                     do
@@ -297,15 +293,17 @@ namespace SpectatorFootball.WindowsLeague
                         }
                         Thread.Sleep(sleepfor);
                         //Show graphic objects
+                        a_edge = setViewEdge(gGame_Ball.YardLine, Play.bLefttoRight, gGame_Ball.Vertical_Percent_Pos);
                         ShowGraphicObjects(a_edge, gGame_Ball, Offensive_Players, Defensive_Players, Play.bLefttoRight);
 
 
-                    } while (bStageFinished);
+                    } while (!bStageFinished);
 
                 }  // for loop stage
 
-                bGameEneded = Play.bGameOver;
+                //                bGameEneded = Play.bGameOver;
                 //just to test one play take this out.
+                bGameEneded = true;
 
             }  //Game ended
 

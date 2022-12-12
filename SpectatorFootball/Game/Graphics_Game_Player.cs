@@ -129,11 +129,10 @@ namespace SpectatorFootball.GameNS
 
                 Action act = pStage.Actions[current_action];
 
-                pState = (Player_States)act.b_state;
+                pState = (Player_States)act.p_state;
                 graph_pState = setGraphicsState(pState);
                 YardLine = act.PointXY[current_point].x;
                 Vertical_Percent_Pos = act.PointXY[current_point].y;
-
 
                 Before_Sound = act.Before_Sound;
                 After_Sound = act.After_Sound;
@@ -146,9 +145,7 @@ namespace SpectatorFootball.GameNS
                 }
 
                 //If this is the main object in the stage and all of its actions are over then the stage is done
-                if (pStage.Main_Object &&
-                    (current_action >= pStage.Actions.Count()) &&
-                    (current_point >= pStage.Actions[current_action].PointXY.Count()))
+                if (pStage.Main_Object && current_action >= pStage.Actions.Count())
                 {
                     bStageFinished = true;
                 }
