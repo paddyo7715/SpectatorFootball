@@ -68,6 +68,9 @@ namespace SpectatorFootball.WindowsLeague
         private List<Rectangle> Away_Players_rect = new List<Rectangle>();
         private List<Rectangle> Home_Players_rect = new List<Rectangle>();
 
+        private Graphics_Game_Ball gGame_Ball = null;
+        private List<Graphics_Game_Player> Offensive_Players;
+        private List<Graphics_Game_Player> Defensive_Players;
 
         private MediaPlayer Sound_player = new MediaPlayer();
 
@@ -94,6 +97,10 @@ namespace SpectatorFootball.WindowsLeague
 
         private BitmapImage[] A_Player_Sprites = null;
         private BitmapImage[] H_Player_Sprites = null;
+
+        //game graphics objects
+        private double[] a_edge;
+        private Play_Struct Play;
 
         private int sleepfor = 100;
 
@@ -209,8 +216,6 @@ namespace SpectatorFootball.WindowsLeague
         private void CloseGameInfo(object sender, EventArgs e)
         {
             dispatcherTimer.Stop();
-            Game_intro_pnl.Visibility = Visibility.Collapsed;
-            Gamepnl.Visibility = Visibility.Visible;
 
             //set away team
             lblAwayTeam.Content = at.Nickname;
@@ -235,24 +240,38 @@ namespace SpectatorFootball.WindowsLeague
             lblHomeTeam.Foreground = new SolidColorBrush(CommonUtils.getColorfromHex(m2[1]));
             lblHomeTeam.Background = new SolidColorBrush(CommonUtils.getColorfromHex(m2[0]));
 
-            ImageBrush backgroundField = new ImageBrush();
-            backgroundField.ImageSource = new BitmapImage(new Uri(CommonUtils.getAppPath() + "/images/Stadiums/Grass_BrightGreen.png"));
-
-            background.Fill = backgroundField;
+            GameTimer.Tick += Play_Game;
+            GameTimer.Interval = TimeSpan.FromMilliseconds(00);
+            GameTimer.Start();
 
             //This causes the field to move
             //                                   GameTimer.Tick += ShowFrame;
             //                                   GameTimer.Interval = TimeSpan.FromMilliseconds(20);
             //                                   GameTimer.Start();
 
+
+        }
+
+        private void Play_Game(object sender, EventArgs e)
+        {
+            GameTimer.Stop();
+
+            Game_intro_pnl.Visibility = Visibility.Collapsed;
+            Gamepnl.Visibility = Visibility.Visible;
+
+            ImageBrush backgroundField = new ImageBrush();
+            backgroundField.ImageSource = new BitmapImage(new Uri(CommonUtils.getAppPath() + "/images/Stadiums/Grass_BrightGreen.png"));
+
+            background.Fill = backgroundField;
+
             bool bGameEneded = false;
-            Play_Struct Play;
+            Play = null;
 
             while (!bGameEneded)
             {
-                Graphics_Game_Ball gGame_Ball = null;
-                List<Graphics_Game_Player> Offensive_Players;
-                List<Graphics_Game_Player> Defensive_Players;
+                gGame_Ball = null;
+                Offensive_Players = null;
+                Defensive_Players = null;
                 Play = ge.ExecutePlay();
 
                 //play.game_ball is null error
@@ -262,10 +281,14 @@ namespace SpectatorFootball.WindowsLeague
                 Defensive_Players = CreateGamePlayersLIst(Play.Defensive_Players);
 
                 //set the left edge of the view
-                double[] a_edge = setViewEdge(gGame_Ball.YardLine, Play.bLefttoRight, gGame_Ball.Vertical_Percent_Pos);
+                a_edge = setViewEdge(gGame_Ball.YardLine, Play.bLefttoRight, gGame_Ball.Vertical_Percent_Pos);
+
+
+                ShowGraphicObjects(a_edge, gGame_Ball, Offensive_Players, Defensive_Players, Play.bLefttoRight);
+
 
                 //Set all graphics objects including setting the view edges
-                ShowGraphicObjects(a_edge, gGame_Ball, Offensive_Players, Defensive_Players, Play.bLefttoRight);
+//                ShowGraphicObjects(a_edge, gGame_Ball, Offensive_Players, Defensive_Players, Play.bLefttoRight);
 
                 //Set the scoreboard before the play
                 setScoreboard(Play.Before_Away_Score, Play.Before_Home_Score, Play.Before_Display_Time, Play.Before_Display_QTR, Play.Before_Away_Timeouts, Play.Before_Home_Timeouts, Play.Before_Down_and_Yards);
@@ -294,6 +317,8 @@ namespace SpectatorFootball.WindowsLeague
                         Thread.Sleep(sleepfor);
                         //Show graphic objects
                         a_edge = setViewEdge(gGame_Ball.YardLine, Play.bLefttoRight, gGame_Ball.Vertical_Percent_Pos);
+//                        ShowGraphicObjects(a_edge, gGame_Ball, Offensive_Players, Defensive_Players, Play.bLefttoRight);
+
                         ShowGraphicObjects(a_edge, gGame_Ball, Offensive_Players, Defensive_Players, Play.bLefttoRight);
 
 
@@ -314,6 +339,7 @@ namespace SpectatorFootball.WindowsLeague
             //Game done see if the state of the league has changed
             //Set_TopMenu?.Invoke(this, new EventArgs());
             //this.Close();
+
         }
 
         private double[] setViewEdge(double YardLIne, bool bLefttoRight, double vert_percent)
@@ -429,7 +455,7 @@ namespace SpectatorFootball.WindowsLeague
             Canvas.SetLeft(players_rect[xxx], H_Pixel);
         }
 
-        private void Show_Play()
+        private void Show_Play(object sender, EventArgs e)
         {
             Rectangle OPlayer1 = new Rectangle();
             OPlayer1.Width = 25;
@@ -457,32 +483,103 @@ namespace SpectatorFootball.WindowsLeague
 
         }
 
-        private void ShowFrame(object sender, EventArgs e)
+
+        private void ShowFrame()
         {
-            int current_left = (int) Canvas.GetLeft(background);
-
-            int current_Top = (int)Canvas.GetTop(background);
-
-            if (current_left < CANVAS_WIDTH - back_width + 6)
-                Width_dir = 1;
-
-            if (current_left >= 0)
-                Width_dir = -1;
- 
-            if (current_Top < (Can_Height - back_height + 6))
-                Height_dir = 1;
-
-            if (current_Top >= 0)
-                Height_dir = -1;
- 
-
-            Canvas.SetLeft(background, current_left + (3 * Width_dir));
-            Canvas.SetTop(background, current_Top + (3 * Height_dir));
+            Canvas.SetLeft(background, a_edge[0]);
+            Canvas.SetTop(background, a_edge[1]);
 
 
+            if (gGame_Ball.Before_Sound != null)
+                Play_Sound((Game_Sounds)gGame_Ball.Before_Sound);
+
+            //Place the ball on the field if not carried
+            if (gGame_Ball.bState != Ball_States.CARRIED)
+                setBAll(gGame_Ball, a_edge, Play.bLefttoRight);
+
+            if (gGame_Ball.After_Sound != null)
+                Play_Sound((Game_Sounds)gGame_Ball.Before_Sound);
+
+            List<Rectangle> off_Players_rect = null;
+            List<Rectangle> def_Players_rect = null;
+
+            BitmapImage[] off_Player_Sprites = null;
+            BitmapImage[] def_Player_Sprites = null;
+
+            if (Play.bLefttoRight)
+            {
+                off_Players_rect = Away_Players_rect;
+                off_Player_Sprites = A_Player_Sprites;
+                def_Players_rect = Home_Players_rect;
+                def_Player_Sprites = H_Player_Sprites;
+            }
+            else
+            {
+                off_Players_rect = Home_Players_rect;
+                off_Player_Sprites = H_Player_Sprites;
+                def_Players_rect = Away_Players_rect;
+                def_Player_Sprites = A_Player_Sprites;
+            }
+
+            int xxx = 0;
+            foreach (Graphics_Game_Player f in Offensive_Players)
+            {
+                if (f.Before_Sound != null)
+                    Play_Sound((Game_Sounds)f.Before_Sound);
+
+                double yardline = f.YardLine;
+                setPlayer(gGame_Ball, f, a_edge, off_Player_Sprites, Play.bLefttoRight, true, xxx, off_Players_rect);
+
+                if (f.Before_Sound != null)
+                    Play_Sound((Game_Sounds)f.After_Sound);
+
+                xxx++;
+            }
+
+            xxx = 0;
+            foreach (Graphics_Game_Player f in Defensive_Players)
+            {
+                if (f.Before_Sound != null)
+                    Play_Sound((Game_Sounds)f.Before_Sound);
+
+                double yardline = gGame_Ball.YardLine + f.YardLine;
+                setPlayer(gGame_Ball, f, a_edge, def_Player_Sprites, Play.bLefttoRight, false, xxx, def_Players_rect);
+
+                if (f.Before_Sound != null)
+                    Play_Sound((Game_Sounds)f.After_Sound);
+
+                xxx++;
+            }
         }
 
-        private int Yardline_to_Pixel(double y, bool bAddEndzone)
+            /*
+                    private void ShowFrame(object sender, EventArgs e)
+                    {
+                        int current_left = (int) Canvas.GetLeft(background);
+
+                        int current_Top = (int)Canvas.GetTop(background);
+
+                        if (current_left < CANVAS_WIDTH - back_width + 6)
+                            Width_dir = 1;
+
+                        if (current_left >= 0)
+                            Width_dir = -1;
+
+                        if (current_Top < (Can_Height - back_height + 6))
+                            Height_dir = 1;
+
+                        if (current_Top >= 0)
+                            Height_dir = -1;
+
+
+                        Canvas.SetLeft(background, current_left + (3 * Width_dir));
+                        Canvas.SetTop(background, current_Top + (3 * Height_dir));
+
+
+                    }
+            */
+
+            private int Yardline_to_Pixel(double y, bool bAddEndzone)
         {
             int r = 0;
 
@@ -508,13 +605,28 @@ namespace SpectatorFootball.WindowsLeague
             return r;
         }
 
+//    private void ShowGraphicObjects(object data)
     private void ShowGraphicObjects(double[] a_edge, Graphics_Game_Ball Game_Ball, List<Graphics_Game_Player> Off_Players, List<Graphics_Game_Player> Def_Players, bool bLefttoRight)
-    {
-        Canvas.SetLeft(background, a_edge[0]);
-        Canvas.SetTop(background, a_edge[1]);
 
+        {
 
-        if (Game_Ball.Before_Sound != null)
+            /*
+                        Ball_and_Players_data bpd = (Ball_and_Players_data)data;
+                        double[] a_edge = bpd.a_edge;
+                        Graphics_Game_Ball Game_Ball = bpd.Game_Ball;
+                        List<Graphics_Game_Player> Off_Players = bpd.Off_Players;
+                        List<Graphics_Game_Player> Def_Players = bpd.Def_Players;
+                        bool bLefttoRight = bpd.bLefttoRight;
+                        Shape background = bpd.tBackground;
+            */
+
+//            Dispatcher.Invoke(() =>
+//            {
+
+                Canvas.SetLeft(background, a_edge[0]);
+            Canvas.SetTop(background, a_edge[1]);
+
+            if (Game_Ball.Before_Sound != null)
             Play_Sound((Game_Sounds)Game_Ball.Before_Sound);
 
         //Place the ball on the field if not carried
@@ -575,7 +687,11 @@ namespace SpectatorFootball.WindowsLeague
                 xxx++;
         }
 
-    }
+            //            });
+
+            DoEvents();
+
+        }
     private void Play_Sound(Game_Sounds gs)
         {
             string s = CommonUtils.getAppPath() + "/Sounds/";
@@ -646,6 +762,11 @@ namespace SpectatorFootball.WindowsLeague
                 r.Add(ggp);
             }
             return r;
+        }
+        public static void DoEvents()
+        {
+            Application.Current.Dispatcher.Invoke(DispatcherPriority.Render,
+                                                  new System.Action(delegate { }));
         }
     }
 }
