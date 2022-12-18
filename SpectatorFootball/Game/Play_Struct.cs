@@ -42,8 +42,5 @@ namespace SpectatorFootball.GameNS
         public Game_Ball Game_Ball;
         public List<Game_Player> Offensive_Players;
         public List<Game_Player> Defensive_Players;
-
-        public string Before_Snap = null;
-        public List<string> Play_Stages = null;
     }
 }

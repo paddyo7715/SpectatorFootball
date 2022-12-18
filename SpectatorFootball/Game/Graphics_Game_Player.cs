@@ -19,8 +19,7 @@ namespace SpectatorFootball.GameNS
         public int current_Stage = 0;
         public int current_action = 0;
         public int current_point = 0;
-        public Game_Sounds? Before_Sound;
-        public Game_Sounds? After_Sound;
+        public Game_Sounds? Sound;
         public bool bStageFinished = false;
 
         public Graphics_Game_Player(Player_States pState, bool bCarringBall, double YardLine,
@@ -113,8 +112,7 @@ namespace SpectatorFootball.GameNS
         }
         public void Update()
         {
-            Before_Sound = null;
-            After_Sound = null;
+            Sound = null;
             Play_Stage pStage = Stages[current_Stage];
 
             //This must never be true
@@ -134,8 +132,13 @@ namespace SpectatorFootball.GameNS
                 YardLine = act.PointXY[current_point].x;
                 Vertical_Percent_Pos = act.PointXY[current_point].y;
 
-                Before_Sound = act.Before_Sound;
-                After_Sound = act.After_Sound;
+                if (act.PointXY != null && act.PointXY.Count() > 0)
+                {
+                    if (current_point == 0)
+                        Sound = act.Sound;
+                    else
+                        Sound = null;
+                }
 
                 current_point++;
                 if (current_point >= act.PointXY.Count())

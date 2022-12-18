@@ -317,11 +317,7 @@ namespace SpectatorFootball.WindowsLeague
                         Thread.Sleep(sleepfor);
                         //Show graphic objects
                         a_edge = setViewEdge(gGame_Ball.YardLine, Play.bLefttoRight, gGame_Ball.Vertical_Percent_Pos);
-//                        ShowGraphicObjects(a_edge, gGame_Ball, Offensive_Players, Defensive_Players, Play.bLefttoRight);
-
                         ShowGraphicObjects(a_edge, gGame_Ball, Offensive_Players, Defensive_Players, Play.bLefttoRight);
-
-
                     } while (!bStageFinished);
 
                 }  // for loop stage
@@ -483,7 +479,7 @@ namespace SpectatorFootball.WindowsLeague
 
         }
 
-
+/*
         private void ShowFrame()
         {
             Canvas.SetLeft(background, a_edge[0]);
@@ -551,6 +547,7 @@ namespace SpectatorFootball.WindowsLeague
                 xxx++;
             }
         }
+*/
 
             /*
                     private void ShowFrame(object sender, EventArgs e)
@@ -579,7 +576,7 @@ namespace SpectatorFootball.WindowsLeague
                     }
             */
 
-            private int Yardline_to_Pixel(double y, bool bAddEndzone)
+        private int Yardline_to_Pixel(double y, bool bAddEndzone)
         {
             int r = 0;
 
@@ -606,95 +603,72 @@ namespace SpectatorFootball.WindowsLeague
         }
 
 //    private void ShowGraphicObjects(object data)
-    private void ShowGraphicObjects(double[] a_edge, Graphics_Game_Ball Game_Ball, List<Graphics_Game_Player> Off_Players, List<Graphics_Game_Player> Def_Players, bool bLefttoRight)
-
+        private void ShowGraphicObjects(double[] a_edge, Graphics_Game_Ball Game_Ball, List<Graphics_Game_Player> Off_Players, List<Graphics_Game_Player> Def_Players, bool bLefttoRight)
         {
 
-            /*
-                        Ball_and_Players_data bpd = (Ball_and_Players_data)data;
-                        double[] a_edge = bpd.a_edge;
-                        Graphics_Game_Ball Game_Ball = bpd.Game_Ball;
-                        List<Graphics_Game_Player> Off_Players = bpd.Off_Players;
-                        List<Graphics_Game_Player> Def_Players = bpd.Def_Players;
-                        bool bLefttoRight = bpd.bLefttoRight;
-                        Shape background = bpd.tBackground;
-            */
-
-//            Dispatcher.Invoke(() =>
-//            {
-
-                Canvas.SetLeft(background, a_edge[0]);
+            Canvas.SetLeft(background, a_edge[0]);
             Canvas.SetTop(background, a_edge[1]);
 
-            if (Game_Ball.Before_Sound != null)
-            Play_Sound((Game_Sounds)Game_Ball.Before_Sound);
+            if (Game_Ball.Sound != null)
+            Play_Sound((Game_Sounds)Game_Ball.Sound);
 
-        //Place the ball on the field if not carried
-        if (Game_Ball.bState != Ball_States.CARRIED)
-            setBAll(Game_Ball, a_edge, bLefttoRight);
-
-        if (Game_Ball.After_Sound != null)
-            Play_Sound((Game_Sounds)Game_Ball.Before_Sound);
+            //Place the ball on the field if not carried
+            if (Game_Ball.bState != Ball_States.CARRIED)
+                setBAll(Game_Ball, a_edge, bLefttoRight);
 
             List<Rectangle> off_Players_rect = null;
-        List<Rectangle> def_Players_rect = null;
+            List<Rectangle> def_Players_rect = null;
 
-        BitmapImage[] off_Player_Sprites = null;
-        BitmapImage[] def_Player_Sprites = null;
+            BitmapImage[] off_Player_Sprites = null;
+            BitmapImage[] def_Player_Sprites = null;
 
-        if (bLefttoRight)
-        {
-            off_Players_rect = Away_Players_rect;
-            off_Player_Sprites = A_Player_Sprites;
-            def_Players_rect = Home_Players_rect;
-            def_Player_Sprites = H_Player_Sprites;
-        }
-        else
-        {
-            off_Players_rect = Home_Players_rect;
-            off_Player_Sprites = H_Player_Sprites;
-            def_Players_rect = Away_Players_rect;
-            def_Player_Sprites = A_Player_Sprites;
-        }
+            if (bLefttoRight)
+            {
+                off_Players_rect = Away_Players_rect;
+                off_Player_Sprites = A_Player_Sprites;
+                def_Players_rect = Home_Players_rect;
+                def_Player_Sprites = H_Player_Sprites;
+            }
+            else
+            {
+                off_Players_rect = Home_Players_rect;
+                off_Player_Sprites = H_Player_Sprites;
+                def_Players_rect = Away_Players_rect;
+                def_Player_Sprites = A_Player_Sprites;
+            }
 
-        int xxx = 0;
-        foreach (Graphics_Game_Player f in Off_Players)
-        {
-                if (f.Before_Sound != null)
-                    Play_Sound((Game_Sounds)f.Before_Sound);
+            int xxx = 0;
+            foreach (Graphics_Game_Player f in Off_Players)
+            {
+                    if (f.Sound != null)
+                        Play_Sound((Game_Sounds)f.Sound);
 
-                double yardline = f.YardLine;
-                setPlayer(Game_Ball, f, a_edge, off_Player_Sprites, bLefttoRight, true, xxx, off_Players_rect);
+                    double yardline = f.YardLine;
+                    setPlayer(Game_Ball, f, a_edge, off_Player_Sprites, bLefttoRight, true, xxx, off_Players_rect);
 
-                if (f.Before_Sound != null)
-                    Play_Sound((Game_Sounds)f.After_Sound);
+                    xxx++;
+            }
 
-                xxx++;
-        }
+            xxx = 0;
+            foreach (Graphics_Game_Player f in Def_Players)
+            {
+                    if (f.Sound != null)
+                        Play_Sound((Game_Sounds)f.Sound);
 
-        xxx = 0;
-        foreach (Graphics_Game_Player f in Def_Players)
-        {
-                if (f.Before_Sound != null)
-                    Play_Sound((Game_Sounds)f.Before_Sound);
+                    double yardline = Game_Ball.YardLine + f.YardLine;
+                    setPlayer(Game_Ball, f, a_edge, def_Player_Sprites, bLefttoRight, false, xxx, def_Players_rect);
 
-                double yardline = Game_Ball.YardLine + f.YardLine;
-                setPlayer(Game_Ball, f, a_edge, def_Player_Sprites, bLefttoRight, false, xxx, def_Players_rect);
+                    xxx++;
+            }
 
-                if (f.Before_Sound != null)
-                    Play_Sound((Game_Sounds)f.After_Sound);
 
-                xxx++;
-        }
-
-            //            });
 
             DoEvents();
 
         }
     private void Play_Sound(Game_Sounds gs)
         {
-            string s = CommonUtils.getAppPath() + "/Sounds/";
+            string s = CommonUtils.getAppPath() + "\\Sounds\\";
             try
             {
 
@@ -732,9 +706,9 @@ namespace SpectatorFootball.WindowsLeague
                         break;
                 }
 
-//                var u = new Uri(s);
-//                Sound_player.Open(u);
-//                Sound_player.Play();
+                var u = new Uri(s);
+                Sound_player.Open(u);
+                Sound_player.Play();
 
             }
             catch { }

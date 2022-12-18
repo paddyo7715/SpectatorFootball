@@ -284,13 +284,13 @@ namespace SpectatorFootball
         public const int PRIMARY_ABILITY_LOW_RATING = 40;
         public const int PRIMARY_ABILITY_HIGH_RATING = 100;
 
-        public const int SECONDARY_1_ABILITY_LOW_RATING = 30;
+        public const int SECONDARY_1_ABILITY_LOW_RATING = 35;
         public const int SECONDARY_1_ABILITY_HIGH_RATING = 90;
 
-        public const int SECONDARY_2_ABILITY_LOW_RATING = 20;
+        public const int SECONDARY_2_ABILITY_LOW_RATING = 30;
         public const int SECONDARY_2_ABILITY_HIGH_RATING = 80;
 
-        public const int SECONDARY_3_ABILITY_LOW_RATING = 10;
+        public const int SECONDARY_3_ABILITY_LOW_RATING = 25;
         public const int SECONDARY_3_ABILITY_HIGH_RATING = 70;
 
         public const int TERTIARY_ABILITY_LOW_RATING = 1;

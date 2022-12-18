@@ -86,7 +86,6 @@ namespace SpectatorFootball.GameNS
         public List<Game_Player_Rushing_Stats> Game_Player_Rushing_Stats = new List<Game_Player_Rushing_Stats>();
         public List<Game_Scoring_Summary> Game_Scoring_Summary = new List<Game_Scoring_Summary>();
 
-        public string Before_Snap = null;
         public List<string> Play_Stages = null;
         public Play_Result(bool bRighttoLeft)
         {

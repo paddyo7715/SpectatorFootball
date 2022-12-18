@@ -9,8 +9,8 @@ namespace SpectatorFootball.GameNS
 {
     public class PointPlotter
     {
-        private static int BALL_SKIP = 6;
-        private static int PLAYER_SKIP = 2;
+        private static int BALL_SKIP = 16;
+        private static int PLAYER_SKIP = 8;
 
         public static List<PointXY> PlotLine (bool bBall,double sx, double sy, double ex, double ey, bool addEndpoint)
         {
@@ -50,7 +50,7 @@ namespace SpectatorFootball.GameNS
                 int new_x = (int)Math.Round(x) + p1X;
                 int new_y = (int)Math.Round(y) + p1Y;
 
-                if ((i + 1) % skip_count == 0)
+                if ((i + 1) % skip_count > 0)
                     continue;
 
                 r.Add(new PointXY() { x = new_x / 10.0, y = new_y / 10.0 });

@@ -3,6 +3,7 @@ using SpectatorFootball.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using log4net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,6 +13,7 @@ namespace SpectatorFootball.GameNS
     [Serializable]
     public class GameEngine
     {
+        private static ILog logger = LogManager.GetLogger("RollingFile");
         private MainWindow pw = null;
         private Teams_by_Season at = null;
         private List<Player_and_Ratings> Away_Players = null;
@@ -453,7 +455,6 @@ namespace SpectatorFootball.GameNS
 
                 //set results and accume team stats
                 r.Long_Message = p_result.Message;
-                r.Before_Snap = p_result.Before_Snap;
                 yards_gained = p_result.yards_gained;
                 bKickoff = p_result.bKickoff;
                 bExtraPoint = p_result.bExtraPoint;
@@ -901,7 +902,7 @@ namespace SpectatorFootball.GameNS
                 //Set the location and state of the ball first
 
                 gBall.State = Ball_States.TEED_UP;
-                Action bas = new Action(Game_Object_Types.B, gBall.Starting_YardLine, gBall.Starting_Vertical_Percent_Pos, 0.0, 0.0, false,true, null, gBall.State, null, null, Movement.NONE);
+                Action bas = new Action(Game_Object_Types.B, gBall.Starting_YardLine, gBall.Starting_Vertical_Percent_Pos, 0.0, 0.0, false,true, null, gBall.State, null, Movement.NONE);
                 
                 Play_Stage bStage = new Play_Stage();
                 bStage.Main_Object = false;
@@ -918,11 +919,15 @@ namespace SpectatorFootball.GameNS
                     {
                         p.Current_YardLine += 6.6 * HorizontalAdj(bLefttoRight);
                         p.Current_Vertical_Percent_Pos += 0.0 * VerticalAdj(bLefttoRight);
-                        Action pas = new Action(Game_Object_Types.P,p.Starting_YardLine, p.Starting_Vertical_Percent_Pos,p.Current_YardLine, p.Current_Vertical_Percent_Pos,false, false, Player_States.RUNNING_FORWARD, null, null, null, Movement.LINE);
-
+                        Action pas = new Action(Game_Object_Types.P,p.Starting_YardLine, p.Starting_Vertical_Percent_Pos,p.Current_YardLine, p.Current_Vertical_Percent_Pos,false, false, Player_States.RUNNING_FORWARD, null, null, Movement.LINE);
+                        p.Starting_YardLine = p.Current_YardLine;
+                        p.Starting_Vertical_Percent_Pos = p.Current_Vertical_Percent_Pos;
+                           
                         p.Current_YardLine += 0.4 * HorizontalAdj(bLefttoRight);
                         p.Current_Vertical_Percent_Pos += 0.0 * VerticalAdj(bLefttoRight);
-                        Action pas2 = new Action(Game_Object_Types.P, p.Starting_YardLine, p.Starting_Vertical_Percent_Pos, p.Current_YardLine, p.Current_Vertical_Percent_Pos, false, true, Player_States.FG_KICK, null, null, Game_Sounds.KICK,Movement.LINE);
+                        Action pas2 = new Action(Game_Object_Types.P, p.Starting_YardLine, p.Starting_Vertical_Percent_Pos, p.Current_YardLine, p.Current_Vertical_Percent_Pos, false, true, Player_States.FG_KICK, null, Game_Sounds.KICK,Movement.LINE);
+                        p.Starting_YardLine = p.Current_YardLine;
+                        p.Starting_Vertical_Percent_Pos = p.Current_Vertical_Percent_Pos;
 
                         Play_Stage pStage = new Play_Stage();
                         pStage.Main_Object = true;
@@ -937,7 +942,7 @@ namespace SpectatorFootball.GameNS
                     {
 
                         //Other players just stand there waiting for the kick
-                        Action pas = new Action(Game_Object_Types.P, p.Starting_YardLine, p.Starting_Vertical_Percent_Pos, 0.0, 0.0, false, true, Player_States.STANDING, null, null, null, Movement.NONE);
+                        Action pas = new Action(Game_Object_Types.P, p.Starting_YardLine, p.Starting_Vertical_Percent_Pos, 0.0, 0.0, false, true, Player_States.STANDING, null, null, Movement.NONE);
                         Play_Stage pStage = new Play_Stage();
                         pStage.Main_Object = false;
                         pStage.Actions.Add(pas);
@@ -951,7 +956,7 @@ namespace SpectatorFootball.GameNS
                 foreach (Game_Player p in Def_Players)
                 {
                     //Receiving players just stand there waiting for the kick
-                    Action pas = new Action(Game_Object_Types.P, p.Starting_YardLine, p.Starting_Vertical_Percent_Pos, 0.0, 0.0, false, true, Player_States.STANDING, null, null, null, Movement.NONE);
+                    Action pas = new Action(Game_Object_Types.P, p.Starting_YardLine, p.Starting_Vertical_Percent_Pos, 0.0, 0.0, false, true, Player_States.STANDING, null, null, Movement.NONE);
                     Play_Stage pStage = new Play_Stage();
                     pStage.Main_Object = false;
                     pStage.Actions.Add(pas);
@@ -962,7 +967,10 @@ namespace SpectatorFootball.GameNS
 
             }
 
-            r.Before_Snap = pre_snap;
+            //Now determine how straigh and far the kicks is
+
+
+
             r.Play_Stages = Play_Stages;
             return r;
         }
@@ -1021,6 +1029,11 @@ namespace SpectatorFootball.GameNS
 
                     if (kickerCount < 2)
                         continue;
+
+                    if (injured_player == null)
+                        logger.Debug("injured_player is null");
+                    else if (injured_player.p_and_r == null)
+                        logger.Debug("injured_player.p_and_r is null");
 
                     long toughness = injured_player.p_and_r.pr.First().Toughness_Ratings;
                     long injury_chance = app_Constants.INJURY_ADJUSTER - toughness;
