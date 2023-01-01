@@ -40,7 +40,6 @@ namespace SpectatorFootball.WindowsLeague
 
         private DispatcherTimer dispatcherTimer = new DispatcherTimer();
         private DispatcherTimer GameTimer = new DispatcherTimer();
-//        private DispatcherTimer StartGame = new DispatcherTimer();
 
         private string Field_File = "";
 
@@ -244,12 +243,6 @@ namespace SpectatorFootball.WindowsLeague
             GameTimer.Interval = TimeSpan.FromMilliseconds(00);
             GameTimer.Start();
 
-            //This causes the field to move
-            //                                   GameTimer.Tick += ShowFrame;
-            //                                   GameTimer.Interval = TimeSpan.FromMilliseconds(20);
-            //                                   GameTimer.Start();
-
-
         }
 
         private void Play_Game(object sender, EventArgs e)
@@ -282,8 +275,6 @@ namespace SpectatorFootball.WindowsLeague
 
                 //set the left edge of the view
                 a_edge = setViewEdge(gGame_Ball.YardLine, Play.bLefttoRight, gGame_Ball.Vertical_Percent_Pos);
-
-
                 ShowGraphicObjects(a_edge, gGame_Ball, Offensive_Players, Defensive_Players, Play.bLefttoRight);
 
 
@@ -297,6 +288,7 @@ namespace SpectatorFootball.WindowsLeague
                 for (int stg = 0; stg < gGame_Ball.Stages.Count; stg++)
                 {
                     bool bStageFinished = false;
+                    gGame_Ball.current_Stage = stg;
                     do
                     {
                         //set the ball position and state
@@ -308,6 +300,9 @@ namespace SpectatorFootball.WindowsLeague
                         //Go thru all offensive and def players and place them
                         for (int pSlot = 0; pSlot < Offensive_Players.Count(); pSlot++)
                         {
+                            Offensive_Players[pSlot].current_Stage = stg;
+                            Defensive_Players[pSlot].current_Stage = stg;
+
                             Offensive_Players[pSlot].Update();
                             Defensive_Players[pSlot].Update();
 
@@ -317,6 +312,12 @@ namespace SpectatorFootball.WindowsLeague
                         Thread.Sleep(sleepfor);
                         //Show graphic objects
                         a_edge = setViewEdge(gGame_Ball.YardLine, Play.bLefttoRight, gGame_Ball.Vertical_Percent_Pos);
+
+//bpo test
+//                        logger.Debug("L to R: " + Play.bLefttoRight + " Yardline: " + gGame_Ball.YardLine + " Vertical: " + gGame_Ball.Vertical_Percent_Pos + " left: " + a_edge[0] + " top " + a_edge[1] + " visiblity: " + Gamepnl.Visibility.ToString());
+//
+ 
+
                         ShowGraphicObjects(a_edge, gGame_Ball, Offensive_Players, Defensive_Players, Play.bLefttoRight);
                     } while (!bStageFinished);
 
@@ -347,30 +348,32 @@ namespace SpectatorFootball.WindowsLeague
             int H_Pixel = Yardline_to_Pixel(YardLIne, true);
             view_edge_left = H_Pixel * -1;
 
-            logger.Debug("SetView: " + YardLIne);
-            logger.Debug("H_Pixel: " + H_Pixel);
-            logger.Debug("VIEW_EDGE_PIXELS: " + VIEW_EDGE_PIXELS);
+//            logger.Debug("SetView: " + YardLIne);
+//            logger.Debug("H_Pixel: " + H_Pixel);
+//            logger.Debug("VIEW_EDGE_PIXELS: " + VIEW_EDGE_PIXELS);
 
             //Correct if necessary
             if (bLefttoRight)
             {
                 view_edge_left += VIEW_EDGE_PIXELS;
-                logger.Debug("before: " + view_edge_left);
+//                logger.Debug("before: " + view_edge_left);
             }
             else
             {
                 view_edge_left +=  CANVAS_WIDTH - VIEW_EDGE_PIXELS;
-                logger.Debug("before: " + view_edge_left);
+//                logger.Debug("before: " + view_edge_left);
             }
 
             //correct the view if the field will go off left the edge
             if (view_edge_left < CANVAS_WIDTH - back_width)
-                view_edge_left =  - back_width;
+                view_edge_left = CANVAS_WIDTH - back_width;
+//            view_edge_left = -back_width;
+
 
             if (view_edge_left > 0)
                 view_edge_left = 0;
 
-            logger.Debug("after: " + view_edge_left);
+//            logger.Debug("after: " + view_edge_left);
 
             //set the top edge
             double vertTemp1 = VertPercent_to_Pixel(vert_percent, 0);
@@ -378,9 +381,9 @@ namespace SpectatorFootball.WindowsLeague
             view_edge_top = vertTemp1 - halfCanHeight - TOP_PIXEL_FUDGE;
             view_edge_top *= -1;
 
-            logger.Debug("Can_Height: " + CANVAS_HEIGHT);
-            logger.Debug("vertTemp1: " + vertTemp1);
-            logger.Debug("view_edge_top: " + view_edge_top);
+//            logger.Debug("Can_Height: " + CANVAS_HEIGHT);
+//            logger.Debug("vertTemp1: " + vertTemp1);
+//            logger.Debug("view_edge_top: " + view_edge_top);
 
             //correct the view if the field will go off the top edge
             if (view_edge_top < CANVAS_HEIGHT - back_height)
@@ -389,7 +392,7 @@ namespace SpectatorFootball.WindowsLeague
             if (view_edge_top > 0)
                 view_edge_top = 0;
 
-            logger.Debug("after: " + view_edge_top);
+//            logger.Debug("after: " + view_edge_top);
 
             return new double[2] { view_edge_left, view_edge_top };
         }
@@ -479,103 +482,6 @@ namespace SpectatorFootball.WindowsLeague
 
         }
 
-/*
-        private void ShowFrame()
-        {
-            Canvas.SetLeft(background, a_edge[0]);
-            Canvas.SetTop(background, a_edge[1]);
-
-
-            if (gGame_Ball.Before_Sound != null)
-                Play_Sound((Game_Sounds)gGame_Ball.Before_Sound);
-
-            //Place the ball on the field if not carried
-            if (gGame_Ball.bState != Ball_States.CARRIED)
-                setBAll(gGame_Ball, a_edge, Play.bLefttoRight);
-
-            if (gGame_Ball.After_Sound != null)
-                Play_Sound((Game_Sounds)gGame_Ball.Before_Sound);
-
-            List<Rectangle> off_Players_rect = null;
-            List<Rectangle> def_Players_rect = null;
-
-            BitmapImage[] off_Player_Sprites = null;
-            BitmapImage[] def_Player_Sprites = null;
-
-            if (Play.bLefttoRight)
-            {
-                off_Players_rect = Away_Players_rect;
-                off_Player_Sprites = A_Player_Sprites;
-                def_Players_rect = Home_Players_rect;
-                def_Player_Sprites = H_Player_Sprites;
-            }
-            else
-            {
-                off_Players_rect = Home_Players_rect;
-                off_Player_Sprites = H_Player_Sprites;
-                def_Players_rect = Away_Players_rect;
-                def_Player_Sprites = A_Player_Sprites;
-            }
-
-            int xxx = 0;
-            foreach (Graphics_Game_Player f in Offensive_Players)
-            {
-                if (f.Before_Sound != null)
-                    Play_Sound((Game_Sounds)f.Before_Sound);
-
-                double yardline = f.YardLine;
-                setPlayer(gGame_Ball, f, a_edge, off_Player_Sprites, Play.bLefttoRight, true, xxx, off_Players_rect);
-
-                if (f.Before_Sound != null)
-                    Play_Sound((Game_Sounds)f.After_Sound);
-
-                xxx++;
-            }
-
-            xxx = 0;
-            foreach (Graphics_Game_Player f in Defensive_Players)
-            {
-                if (f.Before_Sound != null)
-                    Play_Sound((Game_Sounds)f.Before_Sound);
-
-                double yardline = gGame_Ball.YardLine + f.YardLine;
-                setPlayer(gGame_Ball, f, a_edge, def_Player_Sprites, Play.bLefttoRight, false, xxx, def_Players_rect);
-
-                if (f.Before_Sound != null)
-                    Play_Sound((Game_Sounds)f.After_Sound);
-
-                xxx++;
-            }
-        }
-*/
-
-            /*
-                    private void ShowFrame(object sender, EventArgs e)
-                    {
-                        int current_left = (int) Canvas.GetLeft(background);
-
-                        int current_Top = (int)Canvas.GetTop(background);
-
-                        if (current_left < CANVAS_WIDTH - back_width + 6)
-                            Width_dir = 1;
-
-                        if (current_left >= 0)
-                            Width_dir = -1;
-
-                        if (current_Top < (Can_Height - back_height + 6))
-                            Height_dir = 1;
-
-                        if (current_Top >= 0)
-                            Height_dir = -1;
-
-
-                        Canvas.SetLeft(background, current_left + (3 * Width_dir));
-                        Canvas.SetTop(background, current_Top + (3 * Height_dir));
-
-
-                    }
-            */
-
         private int Yardline_to_Pixel(double y, bool bAddEndzone)
         {
             int r = 0;
@@ -602,10 +508,8 @@ namespace SpectatorFootball.WindowsLeague
             return r;
         }
 
-//    private void ShowGraphicObjects(object data)
         private void ShowGraphicObjects(double[] a_edge, Graphics_Game_Ball Game_Ball, List<Graphics_Game_Player> Off_Players, List<Graphics_Game_Player> Def_Players, bool bLefttoRight)
         {
-
             Canvas.SetLeft(background, a_edge[0]);
             Canvas.SetTop(background, a_edge[1]);
 
@@ -660,8 +564,6 @@ namespace SpectatorFootball.WindowsLeague
 
                     xxx++;
             }
-
-
 
             DoEvents();
 

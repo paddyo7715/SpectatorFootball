@@ -113,6 +113,7 @@ namespace SpectatorFootball.GameNS
         public void Update()
         {
             Sound = null;
+            bStageFinished = false;
             Play_Stage pStage = Stages[current_Stage];
 
             //This must never be true
@@ -120,9 +121,9 @@ namespace SpectatorFootball.GameNS
                 throw new Exception("Cant be main object with no actions");
 
             //Only if there are actions/movements left.
-            if (pStage.Actions[current_action].PointXY.Count() > 0 &&
-                current_action < pStage.Actions.Count() &&
-               (current_point < pStage.Actions[current_action].PointXY.Count()))
+                if (current_action < pStage.Actions.Count() &&
+                    pStage.Actions[current_action].PointXY.Count() > 0 &&
+                   (current_point < pStage.Actions[current_action].PointXY.Count()))
             {
 
                 Action act = pStage.Actions[current_action];
@@ -147,17 +148,16 @@ namespace SpectatorFootball.GameNS
                     current_point = 0;
                 }
 
-                //If this is the main object in the stage and all of its actions are over then the stage is done
-                if (pStage.Main_Object && current_action >= pStage.Actions.Count())
-                {
-                    bStageFinished = true;
-                }
+                graph_pState = setGraphicsState(pState);
 
             } //if actions
             else
-                graph_pState = setGraphicsState(pState);
-
-
+            {
+                if (pStage.Main_Object)
+                {
+                    bStageFinished = true;
+                }
+            }
         }
     }
 

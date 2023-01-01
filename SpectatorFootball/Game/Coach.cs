@@ -162,6 +162,7 @@ namespace SpectatorFootball.GameNS
             //if a player spot can not be filled (and this should almost never happen) then
             //the team will return null for the return code and they must forfeit the game.
             List<Formation_Rec> r = new List<Formation_Rec>();
+            bool bCouldFine_Player = false;
 
             foreach (Formation_Rec f in fList)
             {
@@ -179,10 +180,19 @@ namespace SpectatorFootball.GameNS
                 if (Player_rating == null)
                     Player_rating = getPlayerSubstitutes(f.Pos, fList);
 
+                if (Player_rating != null)
+                    f.p_and_r = Player_rating;
+
                 //if no other player could be found then the team will have to forfeit the game
+                if (Player_rating == null)
+                    bCouldFine_Player = true;
+
             }
 
-            return fList;
+            if (bCouldFine_Player)
+                return null;  //The team must forfeit
+            else
+                return fList;
         }
         private Player_and_Ratings PlayerSamePOS(Player_Pos pp, bool bSubstitue, List<Formation_Rec> fList)
         {

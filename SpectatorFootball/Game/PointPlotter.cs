@@ -61,5 +61,20 @@ namespace SpectatorFootball.GameNS
 
             return r;
         }
+        public static double calcLineLength(double x1, double y1, double x2, double y2)
+        {
+            double r;
+
+            double xDiff = Math.Abs(x1 - x2);
+            double yDiff = Math.Abs(y1 - y2);
+
+            double xDiff_Squared = Math.Pow(xDiff, 2);
+            double yDiff_Squared = Math.Pow(yDiff, 2);
+
+            r = Math.Sqrt(xDiff_Squared + yDiff_Squared);
+
+            return r;
+
+        }
     }
 }

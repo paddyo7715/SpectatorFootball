@@ -491,9 +491,23 @@ namespace SpectatorFootball
         public const int MAX_WEEKS_OUT = 10;
         public const int MAX_PLAYS_OUT = 25;
 
+        //Game 
+        //Kickers
+        public const double OFFCENTER_YARDS_LESS = 0.1;
+        public const int KICKOFF_MIN_SUPER_SHORT_DIST = 40;
+        public const int KICKOFF_MAX_SUPER_SHORT_DIST = 50;
+        public const int KICKOFF_MIN_SHORT_DISTANCE = 51;
+        public const int KICKOFF_MAX_SHORT_DISTANCE = 57;
+        public const int KICKOFF_MIN_AVG_DISTANCE = 58;
+        public const int KICKOFF_MAX_AVG_DISTANCE = 67;
+        public const int KICKOFF_MIN_LONG_DISTANCE = 68;
+        public const int KICKOFF_MAX_LONG_DISTANCE = 75;
 
-
-
-
+        public const int KICKOFF_TOP_MIN_VERTICAL = 5;
+        public const int KICKOFF_BOTTOM_MAX_VERTICAL = 95;
+        public const int KICKOFF_TOP_AVG_VERTICAL = 35;
+        public const int KICKOFF_BOTTOM_AVG_VERTICAL = 65;
+        public const int KICKOFF_LENGTH_CALC_VARIABLE = 200;
+        public const int KICKOFF_ACC_CALC_VARIABLE = 110;
     }
 }
