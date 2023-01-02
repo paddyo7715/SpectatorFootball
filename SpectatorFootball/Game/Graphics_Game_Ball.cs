@@ -12,7 +12,8 @@ namespace SpectatorFootball.GameNS
 {
     public class Graphics_Game_Ball
     {
-        private const int BALL_SIZE = 12;
+        private int ball_size = 12;
+        private const int BASE_BALL_SIZE = 12;
 
         public Ball_States bState;
         public Graphics_Ball_Stats graph_bState;
@@ -45,8 +46,8 @@ namespace SpectatorFootball.GameNS
             switch (bState)
             {
                 case Ball_States.TEED_UP:
-                    Height = BALL_SIZE;
-                    width = BALL_SIZE;
+                    Height = ball_size;
+                    width = ball_size;
                     r = Graphics_Ball_Stats.TEED_UP;
                     break;
                 case Ball_States.CARRIED:
@@ -57,25 +58,25 @@ namespace SpectatorFootball.GameNS
                 case Ball_States.END_OVER_END:
                     if (graph_bState != Graphics_Ball_Stats.END_OVER_END_1)
                     {
-                        Height = BALL_SIZE;
-                        width = BALL_SIZE * 2;
+                        Height = ball_size;
+                        width = (int)(ball_size * 1.75);
                         r = Graphics_Ball_Stats.END_OVER_END_1;
                     }
                     else
                     {
-                        Height = BALL_SIZE;
-                        width = BALL_SIZE;
+                        Height = ball_size;
+                        width = ball_size;
                         r = Graphics_Ball_Stats.END_OVER_END_2;
                     }
                     break;
                 case Ball_States.ON_THE_GROUND:
-                    Height = BALL_SIZE;
-                    width = BALL_SIZE * 2;
+                    Height = ball_size;
+                    width = ball_size * 2;
                     r = Graphics_Ball_Stats.ON_GROUND;
                     break;
                 case Ball_States.SPIRAL:
-                    Height = BALL_SIZE;
-                    width = BALL_SIZE * 2;
+                    Height = ball_size;
+                    width = ball_size * 2;
                     if (graph_bState != Graphics_Ball_Stats.SPIRAL_1)
                         r = Graphics_Ball_Stats.SPIRAL_1;
                     else
@@ -109,6 +110,10 @@ namespace SpectatorFootball.GameNS
                 YardLine = act.PointXY[current_point].x;
                 Vertical_Percent_Pos = act.PointXY[current_point].y;
 
+                //set the size of the bll
+                setBallSize(current_point, act.PointXY.Count());
+
+
                 if (act.PointXY != null && act.PointXY.Count() > 0)
                 {
                     if (current_point == 0)
@@ -124,7 +129,6 @@ namespace SpectatorFootball.GameNS
                     current_point = 0;
                 }
 
-                graph_bState = setGraphicsState(bState);
             } //if actions
             else
             {
@@ -136,6 +140,20 @@ namespace SpectatorFootball.GameNS
 
 
         }
+        private int setBallSize(int current_point, int totPoints)
+        {
+            int r = 1;
 
+            if (current_point <= (totPoints / 2))
+                ball_size += 1;
+            else
+                ball_size -= 1;
+
+            if (current_point + 1 == totPoints)
+                ball_size = BASE_BALL_SIZE;
+
+            return r;
+        }
+       
     }
 }

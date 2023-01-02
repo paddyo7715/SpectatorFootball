@@ -33,12 +33,6 @@ namespace SpectatorFootball.WindowsLeague
             int i = 0;
             foreach (ComboBoxItem cb in cboItems)
             {
-                /*                StackPanel sp = (StackPanel)cb.Content;
-                                Ellipse e = (Ellipse)sp.Children[0];
-                                var gradb = (LinearGradientBrush)e.Fill;
-                                string color1 = CommonUtils.getHexfromColor(gradb.GradientStops[0].Color);
-                                string color2 = CommonUtils.getHexfromColor(gradb.GradientStops[1].Color);
-                */
                 string[] mm = getColorsFromCBItem(cb).Split('|');
                 string color1 = mm[0];
                 string color2 = mm[1];

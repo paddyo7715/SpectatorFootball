@@ -491,7 +491,6 @@ namespace SpectatorFootball
         public const int MAX_WEEKS_OUT = 10;
         public const int MAX_PLAYS_OUT = 25;
 
-        //Game 
         //Kickers
         public const double OFFCENTER_YARDS_LESS = 0.1;
         public const int KICKOFF_MIN_SUPER_SHORT_DIST = 40;

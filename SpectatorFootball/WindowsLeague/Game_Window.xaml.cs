@@ -63,6 +63,9 @@ namespace SpectatorFootball.WindowsLeague
 
         public Ellipse Ball = new Ellipse();
         private string ball_Color;
+        private string ball_shade_color;
+        private LinearGradientBrush myLinearGradientBrush1 = null;
+        private LinearGradientBrush myLinearGradientBrush2 = null;
 
         private List<Rectangle> Away_Players_rect = new List<Rectangle>();
         private List<Rectangle> Home_Players_rect = new List<Rectangle>();
@@ -183,12 +186,32 @@ namespace SpectatorFootball.WindowsLeague
                 string[] m = ls.getGameOptions();
                 string[] m2 = m[0].Split('|');
                 ball_Color = m2[0];
+                ball_shade_color = m2[1];
 
                 Uniform_Img.Flip_One_Color(true, app_Constants.STOCK_BALL_COLOR, CommonUtils.SystemDrawColorfromHex(ball_Color));
                 Uniform_Img.Flip_One_Color(false, app_Constants.STOCK_BALL_COLOR, CommonUtils.SystemDrawColorfromHex(ball_Color));
 
                 A_Player_Sprites = Uniform_Img.SplitSpriteSheet(false, PLAYER_IN_SPRITE_ROW, PLAYER_SIZE);
                 H_Player_Sprites = Uniform_Img.SplitSpriteSheet(true, PLAYER_IN_SPRITE_ROW, PLAYER_SIZE);
+
+                //setup the gradiants for the game ball
+                //Gradient 1
+                myLinearGradientBrush1 = new LinearGradientBrush();
+                myLinearGradientBrush1.StartPoint = new Point(0.5,0);
+                myLinearGradientBrush1.EndPoint = new Point(0.5, 1);
+                myLinearGradientBrush1.GradientStops.Add(
+                    new GradientStop(CommonUtils.getColorfromHex(ball_Color), 0.0));
+                myLinearGradientBrush1.GradientStops.Add(
+                    new GradientStop(CommonUtils.getColorfromHex(ball_shade_color), 0.9));
+                //gradient 2
+                myLinearGradientBrush2 = new LinearGradientBrush();
+                myLinearGradientBrush2.StartPoint = new Point(0.5, 0);
+                myLinearGradientBrush2.EndPoint = new Point(0.5, 1);
+                myLinearGradientBrush2.GradientStops.Add(
+                    new GradientStop(CommonUtils.getColorfromHex(ball_shade_color), 0.1));
+                myLinearGradientBrush2.GradientStops.Add(
+                    new GradientStop(CommonUtils.getColorfromHex(ball_Color), 0.0));
+
 
                 dispatcherTimer.Tick += CloseGameInfo;
                 dispatcherTimer.Interval = new TimeSpan(0, 0, 0);
@@ -402,20 +425,48 @@ namespace SpectatorFootball.WindowsLeague
 
             Ball.Width = gBall.width;
             Ball.Height = gBall.Height;
-            Ball.Fill = (Brush) CommonUtils.getBrushfromHex(ball_Color);
+
             Ball.Stroke = System.Windows.Media.Brushes.Black;
+
+
+            switch (gBall.bState)
+            {
+                case Ball_States.TEED_UP:
+                    Ball.Fill = (Brush)CommonUtils.getBrushfromHex(ball_Color);
+                    break;
+                 case Ball_States.END_OVER_END:
+                    int rnum = CommonUtils.getRandomNum(1, 2);
+                    if (rnum == 1)
+                        Ball.Fill = myLinearGradientBrush1;
+                    else
+                        Ball.Fill = myLinearGradientBrush2;
+                    break;
+                case Ball_States.ON_THE_GROUND:
+                    Ball.Fill = (Brush)CommonUtils.getBrushfromHex(ball_Color);
+                    break;
+                case Ball_States.SPIRAL:
+                    if (gBall.graph_bState == Graphics_Ball_Stats.SPIRAL_1)
+                        Ball.Fill = myLinearGradientBrush1;
+                    else
+                        Ball.Fill = myLinearGradientBrush2;
+                    break;
+            }
+
 
             int H_Pixel = Yardline_to_Pixel(gBall.YardLine, true);
             double v_Pixel = VertPercent_to_Pixel(gBall.Vertical_Percent_Pos, gBall.Height);
 
-             H_Pixel -= (int)gBall.width / 2;
+            H_Pixel -= (int)gBall.width / 2;
 
             //Adjust the position on the canvas for the view edge
             H_Pixel += (int)a_edge[0];
             v_Pixel += (int)a_edge[1];
 
-            Canvas.SetTop(Ball, v_Pixel);
-            Canvas.SetLeft(Ball, H_Pixel);
+            if (gBall.bState != Ball_States.CARRIED)
+            { 
+                Canvas.SetTop(Ball, v_Pixel);
+                Canvas.SetLeft(Ball, H_Pixel);
+            }
         }
 
         private void setPlayer(Graphics_Game_Ball gBall, Graphics_Game_Player ggp, double[] a_edge, BitmapImage[] Player_Sprites, bool bLefttoRight, bool bOffense, int xxx, List<Rectangle> players_rect)
