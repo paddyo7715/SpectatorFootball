@@ -155,9 +155,10 @@ namespace SpectatorFootball.GameNS
                     f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.TE, YardLine = (25.0 * PossessionAdjuster), Vertical_Percent_Pos = 73, State = Player_States.STANDING });
                     //Two back blockers
                     f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.DB, YardLine = (50.0 * PossessionAdjuster), Vertical_Percent_Pos = 35, State = Player_States.STANDING });
-                    f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.WR, YardLine = (60.0 * PossessionAdjuster), Vertical_Percent_Pos = 50, State = Player_States.STANDING });
-                    //Ball Returner
                     f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.DB, YardLine = (50.0 * PossessionAdjuster), Vertical_Percent_Pos = 65, State = Player_States.STANDING });
+
+                    //Ball Returner
+                    f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.WR, YardLine = (60.0 * PossessionAdjuster), Vertical_Percent_Pos = 50, State = Player_States.STANDING });
 
 
                     break;

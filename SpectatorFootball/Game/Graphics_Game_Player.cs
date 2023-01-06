@@ -120,37 +120,46 @@ namespace SpectatorFootball.GameNS
             if (pStage.Main_Object && pStage.Actions.Count() == 0)
                 throw new Exception("Cant be main object with no actions");
 
-            //Only if there are actions/movements left.
-                if (current_action < pStage.Actions.Count() &&
-                    pStage.Actions[current_action].PointXY.Count() > 0 &&
-                   (current_point < pStage.Actions[current_action].PointXY.Count()))
+            if (current_action < pStage.Actions.Count())
             {
-
                 Action act = pStage.Actions[current_action];
 
                 pState = (Player_States)act.p_state;
                 graph_pState = setGraphicsState(pState);
-                YardLine = act.PointXY[current_point].x;
-                Vertical_Percent_Pos = act.PointXY[current_point].y;
 
-                if (act.PointXY != null && act.PointXY.Count() > 0)
+                //Only if there are actions/movements left.
+                if (act.PointXY.Count() > 0 &&
+                   (current_point < act.PointXY.Count()))
                 {
-                    if (current_point == 0)
-                        Sound = act.Sound;
-                    else
-                        Sound = null;
-                }
+                    YardLine = act.PointXY[current_point].x;
+                    Vertical_Percent_Pos = act.PointXY[current_point].y;
 
-                current_point++;
-                if (current_point >= act.PointXY.Count())
+                    if (act.PointXY != null && act.PointXY.Count() > 0)
+                    {
+                        if (current_point == 0)
+                            Sound = act.Sound;
+                        else
+                            Sound = null;
+                    }
+
+                    current_point++;
+                    if (current_point >= act.PointXY.Count())
+                    {
+                        current_action++;
+                        current_point = 0;
+                    }
+
+ //                   graph_pState = setGraphicsState(pState);
+
+                } //if pointxy left
+                else
                 {
-                    current_action++;
-                    current_point = 0;
+                    if (pStage.Main_Object)
+                    {
+                        bStageFinished = true;
+                    }
                 }
-
-                graph_pState = setGraphicsState(pState);
-
-            } //if actions
+            }  //if actions
             else
             {
                 if (pStage.Main_Object)

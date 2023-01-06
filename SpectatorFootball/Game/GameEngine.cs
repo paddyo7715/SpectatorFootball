@@ -922,16 +922,12 @@ namespace SpectatorFootball.GameNS
                     p.Current_YardLine += 6.6 * HorizontalAdj(bLefttoRight);
                     p.Current_Vertical_Percent_Pos += 0.0 * VerticalAdj(bLefttoRight);
                     if (!bSim)  pas = new Action(Game_Object_Types.P, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos,false, false, Player_States.RUNNING_FORWARD, null, null, Movement.LINE);
-                    //                    p.Starting_YardLine = p.Current_YardLine;
-                    //                    p.Starting_Vertical_Percent_Pos = p.Current_Vertical_Percent_Pos;
 
                     prev_yl = p.Current_YardLine;
                     prev_v = p.Current_Vertical_Percent_Pos;
                     p.Current_YardLine += 0.4 * HorizontalAdj(bLefttoRight);
                     p.Current_Vertical_Percent_Pos += 0.0 * VerticalAdj(bLefttoRight);
                     if (!bSim)  pas2 = new Action(Game_Object_Types.P, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, false, true, Player_States.FG_KICK, null, Game_Sounds.KICK,Movement.LINE);
-//                    p.Starting_YardLine = p.Current_YardLine;
-//                    p.Starting_Vertical_Percent_Pos = p.Current_Vertical_Percent_Pos;
 
                     if (!bSim)
                     {
@@ -1006,10 +1002,11 @@ namespace SpectatorFootball.GameNS
                 bStage.Actions.Add(bas);
                 gBall.Stages.Add(bStage);
             }
-//            gBall.Starting_YardLine = gBall.Current_YardLine;
-//            gBall.Starting_Vertical_Percent_Pos = gBall.Current_Vertical_Percent_Pos;
+            //            gBall.Starting_YardLine = gBall.Current_YardLine;
+            //            gBall.Starting_Vertical_Percent_Pos = gBall.Current_Vertical_Percent_Pos;
 
             //for now just have all the other players just stand there.
+            id_Players = 1;
             foreach (Game_Player p in Off_Players)
             {
                 if (!bSim)
@@ -1020,21 +1017,47 @@ namespace SpectatorFootball.GameNS
                     pStage.Actions.Add(pas);
                     p.Stages.Add(pStage);
                 }
+                id_Players++;
             }
 
-
-            //The team receiving the kick will just stand there before the kick
+            id_Players = 1;
             foreach (Game_Player p in Def_Players)
             {
-                //Receiving players just stand there waiting for the kick
-                if (!bSim)
+                //The player who will return the ball
+                if (id_Players == 11)
                 {
-                    Action pas = new Action(Game_Object_Types.P, p.Starting_YardLine, p.Starting_Vertical_Percent_Pos, 0.0, 0.0, false, true, Player_States.STANDING, null, null, Movement.NONE);
-                    Play_Stage pStage = new Play_Stage();
-                    pStage.Main_Object = false;
-                    pStage.Actions.Add(pas);
-                    p.Stages.Add(pStage);
+                    Action pas = null;
+                    Action pas2 = null;
+                    double prev_yl = p.Current_YardLine;
+                    double prev_v = p.Current_Vertical_Percent_Pos;
+                    p.Current_YardLine = gBall.Current_YardLine;
+                    p.Current_Vertical_Percent_Pos = gBall.Current_Vertical_Percent_Pos;
+                    if (!bSim) pas = new Action(Game_Object_Types.P, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, false, false, Player_States.RUNNING_BACKWORDS, null, null, Movement.LINE);
+
+                    if (!bSim) pas2 = new Action(Game_Object_Types.P, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, false, true, Player_States.ABOUT_TO_CATCH_KICK, null, null, null);
+
+                    if (!bSim)
+                    {
+                        Play_Stage pStage = new Play_Stage();
+                        pStage.Main_Object = false;
+                        pStage.Actions.Add(pas);
+                        pStage.Actions.Add(pas2);
+                        p.Stages.Add(pStage);
+                    }
                 }
+                else
+                {
+                    //Receiving players just stand there waiting for the kick
+                    if (!bSim)
+                    {
+                        Action pas = new Action(Game_Object_Types.P, p.Starting_YardLine, p.Starting_Vertical_Percent_Pos, 0.0, 0.0, false, true, Player_States.STANDING, null, null, Movement.NONE);
+                        Play_Stage pStage = new Play_Stage();
+                        pStage.Main_Object = false;
+                        pStage.Actions.Add(pas);
+                        p.Stages.Add(pStage);
+                    }
+                }
+                id_Players++;
             }
 //*/ 
 //commented out code

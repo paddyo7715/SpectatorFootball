@@ -83,9 +83,9 @@
                             <StackPanel Orientation="Horizontal">
                                     <Ellipse Width="26" Height="13">
                                     <Ellipse.Fill>
-                                        <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                                            <GradientStop Color="#FFFF00" Offset="0.0" />
-                                            <GradientStop Color="#967e17" Offset="0.9" />
+                                        <LinearGradientBrush StartPoint="0.9,0" EndPoint="0.9,1">
+                                            <GradientStop Color="#FFFF00" Offset="0.1" />
+                                            <GradientStop Color="#967e17" Offset="0.0" />
                                         </LinearGradientBrush>
                                     </Ellipse.Fill>
                                 </Ellipse>
@@ -96,9 +96,9 @@
                             <StackPanel Orientation="Horizontal">
                                 <Ellipse Width="26" Height="13">
                                     <Ellipse.Fill>
-                                        <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                                            <GradientStop Color="#FF00FF" Offset="0.0" />
-                                            <GradientStop Color="#591548" Offset="0.7" />
+                                        <LinearGradientBrush StartPoint="0.9,0" EndPoint="0.9,1">
+                                            <GradientStop Color="#FF00FF" Offset="0.3" />
+                                            <GradientStop Color="#591548" Offset="0.0" />
                                         </LinearGradientBrush>
                                     </Ellipse.Fill>
                                 </Ellipse>

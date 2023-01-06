@@ -776,6 +776,7 @@
     <None Include="Images\Source\Players\L_Tackled.xcf" />
     <None Include="Images\Source\Players\L_Upright_Block1.xcf" />
     <None Include="Images\Source\Players\L_Upright_Block2.xcf" />
+    <None Include="Images\Source\Players\Player_Sprite_Sheet.xcf" />
     <None Include="Images\Source\Players\R_FG_KICK.xcf" />
     <None Include="Images\Source\Players\R_Kick_About_to_Catch.xcf" />
     <None Include="Images\Source\Players\R_On_Back.xcf" />

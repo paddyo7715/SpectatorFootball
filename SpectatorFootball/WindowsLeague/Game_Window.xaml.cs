@@ -92,7 +92,7 @@ namespace SpectatorFootball.WindowsLeague
 
         private int VIEW_EDGE_PIXELS;
 
-        private const int PLAYER_IN_SPRITE_ROW = 21;
+        private const int PLAYER_IN_SPRITE_ROW = 22;
 
 //        private ImageBrush A_Player_Sheet = new ImageBrush();
 //        private ImageBrush H_Player_Sheet = new ImageBrush();
@@ -109,6 +109,9 @@ namespace SpectatorFootball.WindowsLeague
         public Game_Window(MainWindow pw, Game g)
         {
             InitializeComponent();
+
+            logger.Debug("Game Window Constructor started");
+
             this.pw = pw;
             this.g = g;
 
@@ -197,26 +200,27 @@ namespace SpectatorFootball.WindowsLeague
                 //setup the gradiants for the game ball
                 //Gradient 1
                 myLinearGradientBrush1 = new LinearGradientBrush();
-                myLinearGradientBrush1.StartPoint = new Point(0.5,0);
-                myLinearGradientBrush1.EndPoint = new Point(0.5, 1);
+                myLinearGradientBrush1.StartPoint = new Point(0.9,0);
+                myLinearGradientBrush1.EndPoint = new Point(0.9, 1);
                 myLinearGradientBrush1.GradientStops.Add(
                     new GradientStop(CommonUtils.getColorfromHex(ball_Color), 0.0));
                 myLinearGradientBrush1.GradientStops.Add(
                     new GradientStop(CommonUtils.getColorfromHex(ball_shade_color), 0.9));
                 //gradient 2
                 myLinearGradientBrush2 = new LinearGradientBrush();
-                myLinearGradientBrush2.StartPoint = new Point(0.5, 0);
-                myLinearGradientBrush2.EndPoint = new Point(0.5, 1);
+                myLinearGradientBrush2.StartPoint = new Point(0.9, 0);
+                myLinearGradientBrush2.EndPoint = new Point(0.9, 1);
                 myLinearGradientBrush2.GradientStops.Add(
-                    new GradientStop(CommonUtils.getColorfromHex(ball_shade_color), 0.1));
+                    new GradientStop(CommonUtils.getColorfromHex(ball_shade_color), 0.0));
                 myLinearGradientBrush2.GradientStops.Add(
-                    new GradientStop(CommonUtils.getColorfromHex(ball_Color), 0.0));
+                    new GradientStop(CommonUtils.getColorfromHex(ball_Color), 0.1));
 
 
                 dispatcherTimer.Tick += CloseGameInfo;
                 dispatcherTimer.Interval = new TimeSpan(0, 0, 0);
                 dispatcherTimer.Start();
 
+                logger.Debug("Game Window Constructor ended");
             }
             catch (Exception e)
             {
@@ -237,6 +241,8 @@ namespace SpectatorFootball.WindowsLeague
 
         private void CloseGameInfo(object sender, EventArgs e)
         {
+            logger.Debug("CloseGameInfo started");
+
             dispatcherTimer.Stop();
 
             //set away team
@@ -266,10 +272,14 @@ namespace SpectatorFootball.WindowsLeague
             GameTimer.Interval = TimeSpan.FromMilliseconds(00);
             GameTimer.Start();
 
+            logger.Debug("CloseGameInfo ended");
+
         }
 
         private void Play_Game(object sender, EventArgs e)
         {
+            logger.Debug("Play_Game started");
+
             GameTimer.Stop();
 
             Game_intro_pnl.Visibility = Visibility.Collapsed;
@@ -288,7 +298,9 @@ namespace SpectatorFootball.WindowsLeague
                 gGame_Ball = null;
                 Offensive_Players = null;
                 Defensive_Players = null;
+                logger.Debug("Play_Game before executePlay");
                 Play = ge.ExecutePlay();
+                logger.Debug("Play_Game End executePlay");
 
                 //play.game_ball is null error
                 gGame_Ball = new Graphics_Game_Ball(Play.Game_Ball.Initial_State, Play.Game_Ball.Starting_YardLine, Play.Game_Ball.Starting_Vertical_Percent_Pos, Play.Game_Ball.Stages);
@@ -337,7 +349,7 @@ namespace SpectatorFootball.WindowsLeague
                         a_edge = setViewEdge(gGame_Ball.YardLine, Play.bLefttoRight, gGame_Ball.Vertical_Percent_Pos);
 
 //bpo test
-//                        logger.Debug("L to R: " + Play.bLefttoRight + " Yardline: " + gGame_Ball.YardLine + " Vertical: " + gGame_Ball.Vertical_Percent_Pos + " left: " + a_edge[0] + " top " + a_edge[1] + " visiblity: " + Gamepnl.Visibility.ToString());
+                        logger.Debug("L to R: " + Play.bLefttoRight + " Yardline: " + gGame_Ball.YardLine + " Vertical: " + gGame_Ball.Vertical_Percent_Pos + " left: " + a_edge[0] + " top " + a_edge[1] + " visiblity: " + Gamepnl.Visibility.ToString());
 //
  
 
@@ -360,6 +372,7 @@ namespace SpectatorFootball.WindowsLeague
             //Set_TopMenu?.Invoke(this, new EventArgs());
             //this.Close();
 
+            logger.Debug("Play_Game ended");
         }
 
         private double[] setViewEdge(double YardLIne, bool bLefttoRight, double vert_percent)
@@ -410,7 +423,7 @@ namespace SpectatorFootball.WindowsLeague
 
             //correct the view if the field will go off the top edge
             if (view_edge_top < CANVAS_HEIGHT - back_height)
-                view_edge_top = -back_width;
+                view_edge_top = CANVAS_HEIGHT - back_height;
 
             if (view_edge_top > 0)
                 view_edge_top = 0;
@@ -479,6 +492,8 @@ namespace SpectatorFootball.WindowsLeague
                 Left_Right_Image_Offset = PLAYER_IN_SPRITE_ROW;
 
             int ind = (int)ggp.graph_pState;
+
+//            logger.Debug("ind: " + ind + " offset: " + Left_Right_Image_Offset);
 
             ImageBrush Player_Sheet = new ImageBrush();
              Player_Sheet.ImageSource = Player_Sprites[ind + Left_Right_Image_Offset];
