@@ -378,9 +378,11 @@ namespace SpectatorFootball.GameNS
             //Call the play
             Offensive_Package = Offensive_Coach.Call_Off_PlayFormation(bKickoff, bExtraPoint, bFreeKick, PossessionAdjuster);
             DEF_Formation = Defensive_Coach.Call_Def_Formation(Offensive_Package, PossessionAdjuster);
+            logger.Debug("ExecutePlay Offensive and Defensive plays called.");
 
             //You could get the allow substitutions from either coach
             bool bAllowSubs = Home_Coach.AllowSubstitutions();
+            logger.Debug("ExecutePlay Allowsubstituions finished.");
 
             // Get the Game Values Before the Play is Executed
             r.Line_of_Scimmage = g_Line_of_Scrimmage;
@@ -397,10 +399,11 @@ namespace SpectatorFootball.GameNS
             r.Before_Display_QTR = Game_Helper.getQTRString((long)g.Quarter) + " QTR";
             r.Before_Display_Time = Game_Helper.getTimestringFromSeconds((long)g.Time);
             //=================================================================
-
+            logger.Debug("Before  Offensive_Coach.Populate_Formation");
             Offensive_Package.Formation.Player_list = Offensive_Coach.Populate_Formation(
                 Offensive_Package.Formation.Player_list,
                 bAllowSubs, Offensive_Package.Formation.bSpecialTeams);
+            logger.Debug("After  Offensive_Coach.Populate_Formation");
             if (Offensive_Package.Formation.Player_list == null)
             {
                 r.bForfeitedGame = true;
@@ -414,9 +417,11 @@ namespace SpectatorFootball.GameNS
 
                 r.Long_Message = getForfeit_Message(at, ht, (long)g.Away_Score, (long)g.Home_Score);
             }
+            logger.Debug("Before  Defensive_Coach.Populate_Formation");
             DEF_Formation.Player_list = Defensive_Coach.Populate_Formation(
                 DEF_Formation.Player_list,
                  bAllowSubs, DEF_Formation.bSpecialTeams);
+            logger.Debug("After  Defensive_Coach.Populate_Formation");
             if (DEF_Formation.Player_list == null)
             {
                 r.bForfeitedGame = true;
@@ -432,7 +437,9 @@ namespace SpectatorFootball.GameNS
             }
 
             Offensive_Players = setGamePlayerLIsts(g_Line_of_Scrimmage, Offensive_Package.Formation);
+            logger.Debug("Offensive Players set");
             Defensive_Players = setGamePlayerLIsts(g_Line_of_Scrimmage, DEF_Formation);
+            logger.Debug("Defensive Players set");
 
             Game_Ball = new Game_Ball()
             {
@@ -450,8 +457,10 @@ namespace SpectatorFootball.GameNS
                 Play_Result p_result = null;
                 double yards_gained = 0.0;
 
+                logger.Debug("Before  kickoff play");
                 if (bKickoff && Offensive_Package.Play == Play_Enum.KICKOFF_NORMAL)
                     p_result = Kickoff_Normal_Play(Game_Ball, Offensive_Players, Defensive_Players, bLefttoRight, false, bSimGame);
+                logger.Debug("AFter  kickoff play");
 
                 //set results and accume team stats
                 r.Long_Message = p_result.Message;
@@ -774,9 +783,13 @@ namespace SpectatorFootball.GameNS
                 foreach (Game_Scoring_Summary s in p_result.Game_Scoring_Summary)
                     g.Game_Scoring_Summary.Add(s);
 
+                logger.Debug("After accum stats");
+
                 //work the injuries
                 if (bAllowInjuries)
                 {
+                    logger.Debug("There were injuries");
+
                     Reduce_Play_Injuries();
 
                     string injur_message = null;
@@ -919,8 +932,9 @@ namespace SpectatorFootball.GameNS
                     Action pas2 = null;
                     double prev_yl = p.Current_YardLine;
                     double prev_v = p.Current_Vertical_Percent_Pos;
-                    p.Current_YardLine += 6.6 * HorizontalAdj(bLefttoRight);
-                    p.Current_Vertical_Percent_Pos += 0.0 * VerticalAdj(bLefttoRight);
+                    p.Current_YardLine += 5.4 * HorizontalAdj(bLefttoRight);
+                    double adjustment_to_match_feet_to_ball = bLefttoRight ? 1.5 : -1.5;
+                    p.Current_Vertical_Percent_Pos += adjustment_to_match_feet_to_ball * VerticalAdj(bLefttoRight);
                     if (!bSim)  pas = new Action(Game_Object_Types.P, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos,false, false, Player_States.RUNNING_FORWARD, null, null, Movement.LINE);
 
                     prev_yl = p.Current_YardLine;
@@ -937,7 +951,6 @@ namespace SpectatorFootball.GameNS
                         pStage.Actions.Add(pas2);
                         p.Stages.Add(pStage);
                     }
-
 //                    p.Starting_YardLine += p.Current_YardLine;
 //                    p.Starting_Vertical_Percent_Pos += p.Current_Vertical_Percent_Pos;
                 }
@@ -974,7 +987,8 @@ namespace SpectatorFootball.GameNS
 
             id_Players++;
 
-
+//bpo commenting out
+///*
             //Stage two the ball flies thru the air
             //Now determine how far and straight the kick is
 //bpo comment this code out for now to test
@@ -1032,7 +1046,8 @@ namespace SpectatorFootball.GameNS
                     double prev_v = p.Current_Vertical_Percent_Pos;
                     p.Current_YardLine = gBall.Current_YardLine;
                     p.Current_Vertical_Percent_Pos = gBall.Current_Vertical_Percent_Pos;
-                    if (!bSim) pas = new Action(Game_Object_Types.P, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, false, false, Player_States.RUNNING_BACKWORDS, null, null, Movement.LINE);
+                    Player_States moving_ps = setRunningState(bLefttoRight, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos);
+                    if (!bSim) pas = new Action(Game_Object_Types.P, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, false, false, moving_ps, null, null, Movement.LINE);
 
                     if (!bSim) pas2 = new Action(Game_Object_Types.P, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, false, true, Player_States.ABOUT_TO_CATCH_KICK, null, null, null);
 
@@ -1061,8 +1076,6 @@ namespace SpectatorFootball.GameNS
             }
 //*/ 
 //commented out code
-
-
 
 
             if (!bSim)  r.Play_Stages = Play_Stages;
@@ -1223,6 +1236,30 @@ namespace SpectatorFootball.GameNS
 
             if (b)
                 r *= -1;
+
+            return r;
+        }
+        private Player_States setRunningState(bool bLefttoRight, double x1, double y1, double x2, double y2)
+        {
+            Player_States r = Player_States.RUNNING_FORWARD;
+            double xdiff = x1 - x2;
+            double ydiff = y1 - y2;
+
+            if (Math.Abs(xdiff) >= Math.Abs(ydiff) )
+            {
+                if (xdiff < 0)
+                    r = Player_States.RUNNING_BACKWORDS;
+                else
+                    r = Player_States.RUNNING_FORWARD;
+            }
+            else
+            {
+                if (xdiff < 0)
+                    r = Player_States.RUNNING_UP;
+                else
+                    r = Player_States.RUNNING_DOWN;
+            }
+
 
             return r;
         }

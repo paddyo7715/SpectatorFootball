@@ -77,6 +77,7 @@ namespace SpectatorFootball.WindowsLeague
         private MediaPlayer Sound_player = new MediaPlayer();
 
         private const int PLAYER_SIZE = 50;
+        private const int PLAYER_BALL_SIZE_DIFF = 30;
 
         public const double VIEW_EDGE_OFFSET_YARDLINE = 12.0;
 
@@ -341,6 +342,10 @@ namespace SpectatorFootball.WindowsLeague
                             Offensive_Players[pSlot].Update();
                             Defensive_Players[pSlot].Update();
 
+//bpo just for testing
+                            if (pSlot == 10)
+                                logger.Debug("plyr yardline: " + Defensive_Players[pSlot].YardLine);
+
                             if (Offensive_Players[pSlot].bStageFinished || Defensive_Players[pSlot].bStageFinished)
                                 bStageFinished = true;
                         }
@@ -348,10 +353,11 @@ namespace SpectatorFootball.WindowsLeague
                         //Show graphic objects
                         a_edge = setViewEdge(gGame_Ball.YardLine, Play.bLefttoRight, gGame_Ball.Vertical_Percent_Pos);
 
-//bpo test
-                        logger.Debug("L to R: " + Play.bLefttoRight + " Yardline: " + gGame_Ball.YardLine + " Vertical: " + gGame_Ball.Vertical_Percent_Pos + " left: " + a_edge[0] + " top " + a_edge[1] + " visiblity: " + Gamepnl.Visibility.ToString());
-//
- 
+                        //bpo test
+                        logger.Debug("Ball yardline: " + gGame_Ball.YardLine);
+                        //                        logger.Debug("L to R: " + Play.bLefttoRight + " Yardline: " + gGame_Ball.YardLine + " Vertical: " + gGame_Ball.Vertical_Percent_Pos + " left: " + a_edge[0] + " top " + a_edge[1] + " visiblity: " + Gamepnl.Visibility.ToString());
+                        //
+
 
                         ShowGraphicObjects(a_edge, gGame_Ball, Offensive_Players, Defensive_Players, Play.bLefttoRight);
                     } while (!bStageFinished);
@@ -500,10 +506,13 @@ namespace SpectatorFootball.WindowsLeague
 
             players_rect[xxx].Fill = Player_Sheet;
 
+            //bpo test
             int H_Pixel = Yardline_to_Pixel(yardline, true);
             if (bLefttoRight)
-                H_Pixel -= PLAYER_SIZE;
-            
+                H_Pixel -= PLAYER_SIZE - PLAYER_BALL_SIZE_DIFF;
+            else
+                H_Pixel -= PLAYER_BALL_SIZE_DIFF;
+
             double v_Pixel = VertPercent_to_Pixel(ggp.Vertical_Percent_Pos, PLAYER_SIZE);
 
             //Adjust the position on the canvas for the view edge
@@ -511,7 +520,7 @@ namespace SpectatorFootball.WindowsLeague
             v_Pixel += (int)a_edge[1];
 
             //Make it so the kickers feet line up with the ball so pull them up a little
-            v_Pixel -= PLAYER_SIZE/3;
+//            v_Pixel -= PLAYER_SIZE/4;
 
 
 //            logger.Debug("vertical pixel: " + ggp.Vertical_Percent_Pos + " " + v_Pixel);
@@ -613,7 +622,6 @@ namespace SpectatorFootball.WindowsLeague
                     if (f.Sound != null)
                         Play_Sound((Game_Sounds)f.Sound);
 
-                    double yardline = f.YardLine;
                     setPlayer(Game_Ball, f, a_edge, off_Player_Sprites, bLefttoRight, true, xxx, off_Players_rect);
 
                     xxx++;
@@ -625,7 +633,6 @@ namespace SpectatorFootball.WindowsLeague
                     if (f.Sound != null)
                         Play_Sound((Game_Sounds)f.Sound);
 
-                    double yardline = Game_Ball.YardLine + f.YardLine;
                     setPlayer(Game_Ball, f, a_edge, def_Player_Sprites, bLefttoRight, false, xxx, def_Players_rect);
 
                     xxx++;
