@@ -1,4 +1,5 @@
 ﻿using SpectatorFootball.Common;
+using SpectatorFootball.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,11 @@ namespace SpectatorFootball.GameNS
 {
     public class PointPlotter
     {
-        private static int BALL_SKIP = 16;
+        private static int BALL_NORMAL_SKIP = 12;
+        private static int BALL_SLOW_SKIP = 8;
         private static int PLAYER_SKIP = 8;
 
-        public static List<PointXY> PlotLine (bool bBall,double sx, double sy, double ex, double ey, bool addEndpoint)
+        public static List<PointXY> PlotLine (bool bBall,double sx, double sy, double ex, double ey, bool addEndpoint, Ball_Speed? Ball_Speed)
         {
             List<PointXY> r = new List<PointXY>();
 
@@ -23,7 +25,19 @@ namespace SpectatorFootball.GameNS
             int p2X;
             int p2Y;
 
-            int skip_count = bBall ? BALL_SKIP : PLAYER_SKIP;
+            int skip_count;
+            if (bBall)
+            {
+                if (Ball_Speed == Enum.Ball_Speed.SLOW)
+                    skip_count = BALL_SLOW_SKIP;
+                else
+                    skip_count = BALL_NORMAL_SKIP;
+            }
+            else
+                skip_count = PLAYER_SKIP;
+
+
+
 
             p1X = (int)(sx * 10.0);
             p1Y = (int)(sy * 10.0);
