@@ -933,8 +933,7 @@ namespace SpectatorFootball.GameNS
                     double prev_yl = p.Current_YardLine;
                     double prev_v = p.Current_Vertical_Percent_Pos;
                     p.Current_YardLine += 5.4 * HorizontalAdj(bLefttoRight);
-                    double adjustment_to_match_feet_to_ball = bLefttoRight ? 1.5 : -1.5;
-                    p.Current_Vertical_Percent_Pos += adjustment_to_match_feet_to_ball * VerticalAdj(bLefttoRight);
+
                     if (!bSim)
                     {
                         Player_States moving_ps = setRunningState(bLefttoRight, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos);
@@ -943,7 +942,7 @@ namespace SpectatorFootball.GameNS
                     prev_yl = p.Current_YardLine;
                     prev_v = p.Current_Vertical_Percent_Pos;
                     p.Current_YardLine += 0.4 * HorizontalAdj(bLefttoRight);
-                    p.Current_Vertical_Percent_Pos += 0.0 * VerticalAdj(bLefttoRight);
+                    p.Current_Vertical_Percent_Pos += 0.0;
                     if (!bSim)  pas2 = new Action(Game_Object_Types.P, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, false, true, Player_States.FG_KICK, null, Game_Sounds.KICK,Movement.LINE, null);
 
                     if (!bSim)
@@ -1241,15 +1240,6 @@ namespace SpectatorFootball.GameNS
             return r;
         }
 
-        private int VerticalAdj(bool b)
-        {
-            int r = 1;
-
-            if (b)
-                r *= -1;
-
-            return r;
-        }
         private Player_States setRunningState(bool bLefttoRight, double x1, double y1, double x2, double y2)
         {
             Player_States r = Player_States.RUNNING_FORWARD;
@@ -1258,10 +1248,20 @@ namespace SpectatorFootball.GameNS
 
             if (Math.Abs(xdiff) >= Math.Abs(ydiff) )
             {
-                if (xdiff < 0)
-                    r = Player_States.RUNNING_BACKWORDS;
+                if (bLefttoRight)
+                {
+                    if (xdiff < 0)
+                        r = Player_States.RUNNING_FORWARD;
+                    else
+                        r = Player_States.RUNNING_BACKWORDS;
+                }
                 else
-                    r = Player_States.RUNNING_FORWARD;
+                {
+                    if (xdiff < 0)
+                        r = Player_States.RUNNING_BACKWORDS;
+                    else
+                        r = Player_States.RUNNING_FORWARD;
+                }
             }
             else
             {

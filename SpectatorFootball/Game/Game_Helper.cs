@@ -136,7 +136,7 @@ namespace SpectatorFootball.GameNS
                     f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.DB, YardLine = (-1.0 * PossessionAdjuster), Vertical_Percent_Pos = 44, State = Player_States.STANDING });
                     f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.WR, YardLine = (-1.0 * PossessionAdjuster), Vertical_Percent_Pos = 56, State = Player_States.STANDING });
                     //kicker
-                    f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.K, YardLine = (-7.0 * PossessionAdjuster), Vertical_Percent_Pos = 50, State = Player_States.STANDING });
+                    f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.K, YardLine = (-7.0 * PossessionAdjuster), Vertical_Percent_Pos = 49, State = Player_States.STANDING });
 
                     break;
                 case Formations_Enum.KICKOFF_REGULAR_RECEIVE:

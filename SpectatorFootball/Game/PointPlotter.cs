@@ -12,6 +12,7 @@ namespace SpectatorFootball.GameNS
     {
         private static int BALL_NORMAL_SKIP = 12;
         private static int BALL_SLOW_SKIP = 8;
+//        private static int BALL_SLOW_SKIP = 16;
         private static int PLAYER_SKIP = 8;
 
         public static List<PointXY> PlotLine (bool bBall,double sx, double sy, double ex, double ey, bool addEndpoint, Ball_Speed? Ball_Speed)
