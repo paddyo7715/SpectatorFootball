@@ -554,5 +554,12 @@
             <Setter Property="FontWeight" Value="normal"/>
             <Setter Property="Foreground" Value="White" />
         </Style>
+        <!-- Large Radio Button -->
+        <Style TargetType="RadioButton" x:Key="appProgressSmallGroupButton">
+            <Setter Property="FontFamily" Value="Verdana"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="normal"/>
+            <Setter Property="Foreground" Value="Black"/>
+        </Style>
     </Application.Resources>
 </Application>

@@ -1006,11 +1006,6 @@ namespace SpectatorFootball.GameNS
             //Adjust the length of the kick based on the vertical
             Kickoff_Len = Kicking_Helper.AdjustKickLength(Kickoff_Len, Kickoff_Vert);
 
-            //bpo test
-//            Kickoff_Len = 65.0;
-//            Kickoff_Vert = 21.0;
-            //
-
             //possision where ball should be caught
             gBall.Current_YardLine = gBall.Starting_YardLine + (Kickoff_Len * HorizontalAdj(bLefttoRight));
             gBall.Current_Vertical_Percent_Pos = Kickoff_Vert;
@@ -1063,6 +1058,7 @@ namespace SpectatorFootball.GameNS
                         {
                             Play_Stage pStage = new Play_Stage();
                             pStage.Main_Object = false;
+                            pStage.Player_Catches_Ball = true;
                             pStage.Actions.Add(pas);
                             pStage.Actions.Add(pas2);
                             p.Stages.Add(pStage);

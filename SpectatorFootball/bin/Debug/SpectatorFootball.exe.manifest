@@ -102,14 +102,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SpectatorFootball.exe" size="17259008">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SpectatorFootball.exe" size="17260544">
       <assemblyIdentity name="SpectatorFootball" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>ukBFzlRedVfE2f3dZ+qrrqYsThw1X033ub/JA1ke1uI=</dsig:DigestValue>
+        <dsig:DigestValue>NSGipCqXfXccRDGQdfxNBB8k9AS9ikLI97/8btWjtcQ=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

@@ -83,7 +83,7 @@
                             <StackPanel Orientation="Horizontal">
                                     <Ellipse Width="26" Height="13">
                                     <Ellipse.Fill>
-                                        <LinearGradientBrush StartPoint="0.9,0" EndPoint="0.9,1">
+                                        <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
                                             <GradientStop Color="#FFFF00" Offset="0.1" />
                                             <GradientStop Color="#967e17" Offset="0.0" />
                                         </LinearGradientBrush>
@@ -96,7 +96,7 @@
                             <StackPanel Orientation="Horizontal">
                                 <Ellipse Width="26" Height="13">
                                     <Ellipse.Fill>
-                                        <LinearGradientBrush StartPoint="0.9,0" EndPoint="0.9,1">
+                                        <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
                                             <GradientStop Color="#FF00FF" Offset="0.3" />
                                             <GradientStop Color="#591548" Offset="0.0" />
                                         </LinearGradientBrush>
@@ -107,8 +107,15 @@
                         </ComboBoxItem>
                     </ComboBox>
                 </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label  Width="100" Height="10" VerticalContentAlignment="Top" Padding="5,0,0,0"  Style="{StaticResource appProgressSmallLBL}"></Label>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label  Width="100" VerticalContentAlignment="Top" Padding="5,0,0,0"  Style="{StaticResource appProgressSmallLBL}">Ball Type:</Label>
+                    <RadioButton Width="60" Name="opt3d" GroupName="optBallType" IsChecked="True" Style="{StaticResource appProgressSmallGroupButton}">3D</RadioButton>
+                    <RadioButton Width="60" Name="opt2d" GroupName="optBallType" Style="{StaticResource appProgressSmallGroupButton}">2D</RadioButton>
+                </StackPanel>
             </StackPanel>
-                
             <StackPanel Orientation="Horizontal">
                 <Button Name="options_close" Style="{StaticResource appSubmitStyle}" Click="Close_Click" >Close</Button>
                 <Button Name="options_save" Style="{StaticResource appSubmitStyle}" Click="Save_Click" >Save</Button>

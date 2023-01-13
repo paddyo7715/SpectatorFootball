@@ -13,6 +13,7 @@ namespace SpectatorFootball.GameNS
         public Player_States pState;
         public Graphics_Player_States graph_pState;
         public bool bCarringBall;
+        public bool bPlayerCatchesBall = false;
         public double YardLine;
         public double Vertical_Percent_Pos;
         public List<Play_Stage> Stages = null;
@@ -125,6 +126,7 @@ namespace SpectatorFootball.GameNS
                 Action act = pStage.Actions[current_action];
 
                 pState = (Player_States)act.p_state;
+                bPlayerCatchesBall = pStage.Player_Catches_Ball;
                 graph_pState = setGraphicsState(pState);
 
                 //Only if there are actions/movements left.

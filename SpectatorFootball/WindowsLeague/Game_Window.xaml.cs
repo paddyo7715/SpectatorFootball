@@ -107,6 +107,11 @@ namespace SpectatorFootball.WindowsLeague
 
         private int sleepfor = 100;
 
+        private const int PLAYER_CATCHING_BALL_ZINDEX = 100;
+        private const int BALL_ZINDEX = 90;
+        private const int PERSON_ON_FIELD_ZINDEX = 50;
+        private const int FIELD_ART_ZINDEX = 10;
+
         public Game_Window(MainWindow pw, Game g)
         {
             InitializeComponent();
@@ -215,7 +220,6 @@ namespace SpectatorFootball.WindowsLeague
                     new GradientStop(CommonUtils.getColorfromHex(ball_shade_color), 0.0));
                 myLinearGradientBrush2.GradientStops.Add(
                     new GradientStop(CommonUtils.getColorfromHex(ball_Color), 0.1));
-
 
                 dispatcherTimer.Tick += CloseGameInfo;
                 dispatcherTimer.Interval = new TimeSpan(0, 0, 0);
@@ -485,6 +489,7 @@ namespace SpectatorFootball.WindowsLeague
             { 
                 Canvas.SetTop(Ball, v_Pixel);
                 Canvas.SetLeft(Ball, H_Pixel);
+                Canvas.SetZIndex(Ball, BALL_ZINDEX);
             }
         }
 
@@ -527,6 +532,12 @@ namespace SpectatorFootball.WindowsLeague
 
             Canvas.SetTop(players_rect[xxx], v_Pixel);
             Canvas.SetLeft(players_rect[xxx], H_Pixel);
+
+            if (ggp.bPlayerCatchesBall)
+                Canvas.SetZIndex(players_rect[xxx], PLAYER_CATCHING_BALL_ZINDEX);
+            else
+                Canvas.SetZIndex(players_rect[xxx], PERSON_ON_FIELD_ZINDEX);
+
         }
 
         private void Show_Play(object sender, EventArgs e)
@@ -591,10 +602,6 @@ namespace SpectatorFootball.WindowsLeague
             if (Game_Ball.Sound != null)
             Play_Sound((Game_Sounds)Game_Ball.Sound);
 
-            //Place the ball on the field if not carried
-            if (Game_Ball.bState != Ball_States.CARRIED)
-                setBAll(Game_Ball, a_edge, bLefttoRight);
-
             List<Rectangle> off_Players_rect = null;
             List<Rectangle> def_Players_rect = null;
 
@@ -637,6 +644,10 @@ namespace SpectatorFootball.WindowsLeague
 
                     xxx++;
             }
+
+            //Place the ball on the field if not carried
+            if (Game_Ball.bState != Ball_States.CARRIED)
+                setBAll(Game_Ball, a_edge, bLefttoRight);
 
             DoEvents();
 
