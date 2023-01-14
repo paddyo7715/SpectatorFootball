@@ -71,6 +71,7 @@ namespace SpectatorFootball.WindowsLeague
         private List<Rectangle> Home_Players_rect = new List<Rectangle>();
 
         private Graphics_Game_Ball gGame_Ball = null;
+        private bool ThreeDee_ball;
         private List<Graphics_Game_Player> Offensive_Players;
         private List<Graphics_Game_Player> Defensive_Players;
 
@@ -196,6 +197,7 @@ namespace SpectatorFootball.WindowsLeague
                 string[] m2 = m[0].Split('|');
                 ball_Color = m2[0];
                 ball_shade_color = m2[1];
+                ThreeDee_ball = Convert.ToBoolean(m[1]);
 
                 Uniform_Img.Flip_One_Color(true, app_Constants.STOCK_BALL_COLOR, CommonUtils.SystemDrawColorfromHex(ball_Color));
                 Uniform_Img.Flip_One_Color(false, app_Constants.STOCK_BALL_COLOR, CommonUtils.SystemDrawColorfromHex(ball_Color));
@@ -308,7 +310,7 @@ namespace SpectatorFootball.WindowsLeague
                 logger.Debug("Play_Game End executePlay");
 
                 //play.game_ball is null error
-                gGame_Ball = new Graphics_Game_Ball(Play.Game_Ball.Initial_State, Play.Game_Ball.Starting_YardLine, Play.Game_Ball.Starting_Vertical_Percent_Pos, Play.Game_Ball.Stages);
+                gGame_Ball = new Graphics_Game_Ball(Play.Game_Ball.Initial_State, Play.Game_Ball.Starting_YardLine, Play.Game_Ball.Starting_Vertical_Percent_Pos, Play.Game_Ball.Stages, ThreeDee_ball);
 
                 Offensive_Players = CreateGamePlayersLIst(Play.Offensive_Players);
                 Defensive_Players = CreateGamePlayersLIst(Play.Defensive_Players);

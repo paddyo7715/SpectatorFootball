@@ -54,7 +54,7 @@ namespace SpectatorFootball
                 //Create game options file if it does not exist
                 string options_filename = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + app_Constants.GAME_OPTIONS_FILE;
                 if (!File.Exists(options_filename))
-                    Create_Options_File(app_Constants.DEFAULT_GAME_BALL_COLOR + "|" + app_Constants.DEFAULT_GAME_BALL_2_COLOR);
+                    Create_Options_File(app_Constants.DEFAULT_GAME_BALL_COLOR + "|" + app_Constants.DEFAULT_GAME_BALL_2_COLOR, true);
 
                 // Create Backup Folder
                 logger.Info("Creating league backup folder");
@@ -248,7 +248,7 @@ namespace SpectatorFootball
             return s;
         }
 
-        public void Create_Options_File(string ball_color)
+        public void Create_Options_File(string ball_color, bool ThreeDee)
         {
             string options_filename = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + app_Constants.GAME_OPTIONS_FILE;
             FileStream stream = new FileStream(options_filename, FileMode.Create);
@@ -256,6 +256,7 @@ namespace SpectatorFootball
             using (StreamWriter sw = new StreamWriter(stream))
             {
                 sw.WriteLine("Game_Ball_Color: " + ball_color);
+                sw.WriteLine("Ball_Style_3d: " + ThreeDee.ToString());
             }
         }
 
@@ -1547,6 +1548,8 @@ namespace SpectatorFootball
         public string[] getGameOptions()
         {
             string sBallColor = "";
+            string s3d = "";
+            bool tbool;
 
             string options_filename = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + app_Constants.GAME_OPTIONS_FILE;
             if (File.Exists(options_filename))
@@ -1555,14 +1558,27 @@ namespace SpectatorFootball
                 {
                     if (line.StartsWith("Game_Ball_Color:"))
                         sBallColor = line.Split(':')[1];
+                    if (line.StartsWith("Ball_Style_3d:"))
+                        s3d = line.Split(':')[1];
                 }
+
+                try
+                {
+                    tbool = Convert.ToBoolean(s3d);
+                }
+                catch (Exception e)
+                {
+                    tbool = true;
+                }
+
             }
             else
             {
                 sBallColor = app_Constants.DEFAULT_GAME_BALL_COLOR + "|" + app_Constants.DEFAULT_GAME_BALL_2_COLOR;
+                s3d = "true";
             }
 
-            return new string[] { sBallColor.Trim() };
+            return new string[] { sBallColor.Trim(), s3d };
 
         }
 

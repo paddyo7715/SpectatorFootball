@@ -781,7 +781,7 @@ namespace SpectatorFootball
                 League_Services ls = new League_Services();
                 string[] m = ls.getGameOptions();
 
-                var GO_Window = new Game_Options_Dialog(m[0]);
+                var GO_Window = new Game_Options_Dialog(m[0], m[1]);
                 GO_Window.Top = (SystemParameters.PrimaryScreenHeight - GO_Window.Height) / 2;
                 GO_Window.Left = (SystemParameters.PrimaryScreenWidth - GO_Window.Width) / 2;
                 GO_Window.ShowDialog();

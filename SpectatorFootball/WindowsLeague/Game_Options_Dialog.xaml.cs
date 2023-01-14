@@ -21,13 +21,23 @@ namespace SpectatorFootball.WindowsLeague
     {
         private string ball_Color1;
         private string ball_Color2;
-        public Game_Options_Dialog(string ball_Colors)
+        public Game_Options_Dialog(string ball_Colors, string ThreeDee)
         {
             InitializeComponent();
             string[] m = ball_Colors.Split('|');
             ball_Color1 = m[0];
             ball_Color2 = m[1];
             int selectedIndex = 0;
+
+            bool ThreeDee_ball;
+            try
+            {
+                ThreeDee_ball = Convert.ToBoolean(ThreeDee);
+            }
+            catch (Exception e)
+            {
+                ThreeDee_ball = true;
+            }
 
             var cboItems = cboBallColor.Items;
             int i = 0;
@@ -47,6 +57,11 @@ namespace SpectatorFootball.WindowsLeague
             }
 
             cboBallColor.SelectedIndex = selectedIndex;
+            if (ThreeDee_ball)
+                opt3d.IsChecked = true;
+            else
+                opt2d.IsChecked = true;
+
         }
 
         private string getColorsFromCBItem(ComboBoxItem cb)
@@ -63,14 +78,18 @@ namespace SpectatorFootball.WindowsLeague
             this.Close();
         }
 
-
-
         private void Save_Click(object sender, RoutedEventArgs e)
         {
             ComboBoxItem cb = (ComboBoxItem)cboBallColor.SelectedItem;
             string color_string = getColorsFromCBItem(cb);
+
+            bool threeDee = false;
+
+            if (opt3d.IsChecked == true)
+                threeDee = true;
+
             League_Services ls = new League_Services();
-            ls.Create_Options_File(color_string);
+            ls.Create_Options_File(color_string, threeDee);
             this.Close();
         }
     }

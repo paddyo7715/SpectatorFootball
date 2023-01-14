@@ -27,16 +27,18 @@ namespace SpectatorFootball.GameNS
         public int width;
         public Game_Sounds? Sound;
         public bool bStageFinished = false;
+        public bool ThreeDee_ball;
 
         public Graphics_Game_Ball(Ball_States bState, double YardLine, double Vertical_Percent_Pos,
-            List<Play_Stage> Stages)
+            List<Play_Stage> Stages, bool ThreeDee_ball)
         {
             this.bState = bState;
             this.YardLine = YardLine;
             this.Vertical_Percent_Pos = Vertical_Percent_Pos;
             this.Stages = Stages;
+            this.ThreeDee_ball = ThreeDee_ball;
 
-            graph_bState = setGraphicsState(this.bState);
+           graph_bState = setGraphicsState(this.bState);
 
         }
         private Graphics_Ball_Stats setGraphicsState(Ball_States bState)
@@ -111,7 +113,8 @@ namespace SpectatorFootball.GameNS
                 Vertical_Percent_Pos = act.PointXY[current_point].y;
 
                 //set the size of the bll
-                setBallSize(current_point, act.PointXY.Count());
+                if (ThreeDee_ball)
+                    setBallSize(current_point, act.PointXY.Count());
 
 
                 if (act.PointXY != null && act.PointXY.Count() > 0)
