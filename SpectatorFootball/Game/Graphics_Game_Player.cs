@@ -36,6 +36,16 @@ namespace SpectatorFootball.GameNS
 
         }
 
+        public void ChangeStage(int current_Stage)
+        {
+            if (this.current_Stage != current_Stage)
+            {
+                this.current_action = 0;
+                this.current_point = 0;
+            }
+            this.current_Stage = current_Stage;
+        }
+
         private Graphics_Player_States setGraphicsState(Player_States pState)
         {
             Graphics_Player_States r = Graphics_Player_States.STANDING;

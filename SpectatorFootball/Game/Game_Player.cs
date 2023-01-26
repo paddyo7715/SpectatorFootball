@@ -16,6 +16,7 @@ namespace SpectatorFootball.GameNS
         public double Current_YardLine;
         public double Current_Vertical_Percent_Pos;
         public Player_States State;
+        public Player_States Initial_State;
         public Player_and_Ratings p_and_r;
         public bool bCarryingBall;
         public List<Play_Stage> Stages = new List<Play_Stage>();

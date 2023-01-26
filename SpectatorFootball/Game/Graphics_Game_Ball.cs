@@ -89,6 +89,15 @@ namespace SpectatorFootball.GameNS
             return r;
         }
 
+        public void ChangeStage(int current_Stage)
+        {
+            if (this.current_Stage != current_Stage)
+            {
+                this.current_action = 0;
+                this.current_point = 0;
+            }
+            this.current_Stage = current_Stage;
+        }
         public void Update()
         {
             Sound = null;

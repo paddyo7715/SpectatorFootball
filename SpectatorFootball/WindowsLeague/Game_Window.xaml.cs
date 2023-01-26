@@ -330,7 +330,7 @@ namespace SpectatorFootball.WindowsLeague
                 for (int stg = 0; stg < gGame_Ball.Stages.Count; stg++)
                 {
                     bool bStageFinished = false;
-                    gGame_Ball.current_Stage = stg;
+                    gGame_Ball.ChangeStage(stg);
                     do
                     {
                         //set the ball position and state
@@ -342,15 +342,11 @@ namespace SpectatorFootball.WindowsLeague
                         //Go thru all offensive and def players and place them
                         for (int pSlot = 0; pSlot < Offensive_Players.Count(); pSlot++)
                         {
-                            Offensive_Players[pSlot].current_Stage = stg;
-                            Defensive_Players[pSlot].current_Stage = stg;
+                            Offensive_Players[pSlot].ChangeStage(stg);
+                            Defensive_Players[pSlot].ChangeStage(stg);
 
                             Offensive_Players[pSlot].Update();
                             Defensive_Players[pSlot].Update();
-
-//bpo just for testing
-                            if (pSlot == 10)
-                                logger.Debug("plyr yardline: " + Defensive_Players[pSlot].YardLine);
 
                             if (Offensive_Players[pSlot].bStageFinished || Defensive_Players[pSlot].bStageFinished)
                                 bStageFinished = true;
@@ -720,7 +716,8 @@ namespace SpectatorFootball.WindowsLeague
             List<Graphics_Game_Player> r = new List<Graphics_Game_Player>();
             foreach (Game_Player p in gpList)
             {
-                Graphics_Game_Player ggp = new Graphics_Game_Player(p.State, p.bCarryingBall, p.Current_YardLine, p.Current_Vertical_Percent_Pos, p.Stages);
+//                Graphics_Game_Player ggp = new Graphics_Game_Player(p.State, p.bCarryingBall, p.Current_YardLine, p.Current_Vertical_Percent_Pos, p.Stages);
+                Graphics_Game_Player ggp = new Graphics_Game_Player(p.Initial_State, false, p.Starting_YardLine, p.Starting_Vertical_Percent_Pos, p.Stages);
                 r.Add(ggp);
             }
             return r;

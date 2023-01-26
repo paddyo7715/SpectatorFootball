@@ -508,5 +508,22 @@ namespace SpectatorFootball
         public const int KICKOFF_BOTTOM_AVG_VERTICAL = 65;
         public const int KICKOFF_LENGTH_CALC_VARIABLE = 200;
         public const int KICKOFF_ACC_CALC_VARIABLE = 110;
+
+        //Kickoff
+        public const int KICKOFF_GROUP_CALC_VARIABLE = 40;
+        public const int KICKOFF_AVOID_TRACKER_CALC_VARIABLE = 100;
+        public const int KICKOFF_SPEED_CUTOFF = 70;
+        public const int KICKOFF_AGILITY_CUTOFF = 70;
+        public const int KICKOFF_PLAYERS_IN_GROUP = 5;
+        public const int KICKOFF_TACKLING_GROUPS = 3;
+        public const int KICKOFF_GROUP_1_MIN = 7;
+        public const int KICKOFF_GROUP_1_MAX = 10;
+        public const int KICKOFF_GROUP_2_MIN = 20;
+        public const int KICKOFF_GROUP_2_MAX = 23;
+        public const int KICKOFF_GROUP_3_MIN = 30;
+        public const int KICKOFF_GROUP_3_MAX = 33;
+        public const double KICKOFF_GROUP_VERT_DIST = 7.0;
+        public const double KICKOFF_DIST_BETWEEN_BLOCK_ATTACHERS = 1.5;
+        public const double MOVEMENT_DIST_BEFORE_TURNING_BACK = 8.0;
     }
 }
