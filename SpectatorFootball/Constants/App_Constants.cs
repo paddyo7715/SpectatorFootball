@@ -525,5 +525,9 @@ namespace SpectatorFootball
         public const double KICKOFF_GROUP_VERT_DIST = 7.0;
         public const double KICKOFF_DIST_BETWEEN_BLOCK_ATTACHERS = 1.5;
         public const double MOVEMENT_DIST_BEFORE_TURNING_BACK = 8.0;
+        public const int KICKOFF_BLOCKER_TACKLER_CALC_VARIABLE = 500;
+        public const int KICKOFF_TACKLE_FLATTENED_BLOCKER_ADVANTAGE = 2;
+        public const double KICKOFF_ADJACENT_TACKLE_REDUCER = -0.2;
+        public const double KICKOFF_TACKLE_ADVANTAGE = 1.5;
     }
 }
