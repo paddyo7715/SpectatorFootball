@@ -502,8 +502,6 @@ namespace SpectatorFootball.WindowsLeague
 
             int ind = (int)ggp.graph_pState;
 
-//            logger.Debug("ind: " + ind + " offset: " + Left_Right_Image_Offset);
-
             ImageBrush Player_Sheet = new ImageBrush();
              Player_Sheet.ImageSource = Player_Sprites[ind + Left_Right_Image_Offset];
 
@@ -511,10 +509,15 @@ namespace SpectatorFootball.WindowsLeague
 
             //bpo test
             int H_Pixel = Yardline_to_Pixel(yardline, true);
+
+            //bpo test to see if this is ok
             if (bLefttoRight)
                 H_Pixel -= PLAYER_SIZE - PLAYER_BALL_SIZE_DIFF;
             else
                 H_Pixel -= PLAYER_BALL_SIZE_DIFF;
+
+//            H_Pixel -= (PLAYER_SIZE/2) - PLAYER_BALL_SIZE_DIFF;
+
 
             double v_Pixel = VertPercent_to_Pixel(ggp.Vertical_Percent_Pos, PLAYER_SIZE);
 

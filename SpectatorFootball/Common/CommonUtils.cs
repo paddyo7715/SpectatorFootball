@@ -309,30 +309,16 @@ namespace SpectatorFootball
 
             return r;
         }
+
         public static int getRandomIndex(int n)
         {
             int r = 0;
-            int upper_val = 0;
 
-            for (int i = 1; i <= n; i++)
-                upper_val += 10 * i;
+            r = CommonUtils.getRandomNum(1, n) - 1;
 
-            int rnd = CommonUtils.getRandomNum(1, upper_val);
-
-            int y = 1;
-            for (int i = n; i <= 1; i--)
-            {
-                if (rnd <= (10 * y))
-                {
-                    r = i;
-                    break;
-                }
-                y *= 2;
-            }
-
-                return r;
+            return r;
         }
-       
+      
     }
 
 }

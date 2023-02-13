@@ -87,9 +87,6 @@ namespace SpectatorFootball.GameNS
         public List<Game_Scoring_Summary> Game_Scoring_Summary = new List<Game_Scoring_Summary>();
 
         public List<string> Play_Stages = null;
-        public Play_Result(bool bRighttoLeft)
-        {
-            this.bRighttoLeft = bRighttoLeft;
-        }
+
     }
 }

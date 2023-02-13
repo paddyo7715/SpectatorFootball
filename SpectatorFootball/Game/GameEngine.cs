@@ -905,9 +905,51 @@ namespace SpectatorFootball.GameNS
         //Kickoff or Free Kick
         private Play_Result Kickoff_Normal_Play(Game_Ball gBall, List<Game_Player> Kickoff_Players, List<Game_Player> Return_Players, bool bLefttoRight, bool FreeKic, bool bSim)
         {
-            Play_Result r = new Play_Result(bLefttoRight);
+            Play_Result r = new Play_Result();
+            r.bRighttoLeft = bLefttoRight;
             List<string> Play_Stages = new List<string>();
-            string pre_snap = null;
+
+
+            //for testing print out all the players and their relevant ratings
+            logger.Debug("bLefttoRight: " + bLefttoRight.ToString());
+            logger.Debug(" ");
+
+            logger.Debug("Kickoff Players");
+            int d_index = 0;
+            foreach (Game_Player p in Kickoff_Players)
+            {
+                string sPos = p.Pos.ToString();
+                long leg_stn = p.p_and_r.pr.First().Kicker_Leg_Power_Rating;
+                long leg_acc = p.p_and_r.pr.First().Kicker_Leg_Accuracy_Rating;
+                long rn_att = p.p_and_r.pr.First().Run_Attack_Rating;
+                logger.Debug("Ind:" + d_index +
+                    " POS:" + sPos +
+                    " Leg Strength:" + leg_stn +
+                    " Leg Accuracy:" + leg_acc +
+                    " Run Attack:" + rn_att
+                    );
+                d_index++;
+            }
+            logger.Debug("Receiving Players");
+            d_index = 0;
+            foreach (Game_Player p in Return_Players)
+            {
+                string sPos = p.Pos.ToString();
+                long spd = p.p_and_r.pr.First().Speed_Rating;
+                long agile = p.p_and_r.pr.First().Agilty_Rating;
+                long rn_block = p.p_and_r.pr.First().Run_Block_Rating;
+                long tkl = p.p_and_r.pr.First().Tackle_Rating;
+                logger.Debug("Ind:" + d_index +
+                    " POS:" + sPos +
+                    " Spped:" + spd +
+                    " Agility:" + agile +
+                    " Run Blocking:" + rn_block +
+                    " Tackling:" + tkl
+                    );
+                d_index++;
+            }
+            logger.Debug(" ");
+//=============================================
 
             //Get the kicker - kicker and returner must be slot 5 in the formation
             Game_Player Kicker = Kickoff_Players[5];
@@ -999,8 +1041,15 @@ namespace SpectatorFootball.GameNS
             KickOff_Verticl Kick_Vert_enum = Kicking_Helper.getKickoff_Vert_enum(leg_accuracy);
             double Kickoff_Vert = Kicking_Helper.getKickoff_Vert(Kick_Vert_enum);
 
+            logger.Debug("Kicker Leg Strength:" + leg_strength + " Leg Accuracy:" + leg_accuracy);
+            logger.Debug("Kickoff length enum:" + kick_length_enum.ToString());
+            logger.Debug("Kickoff length:" + Kickoff_Len.ToString());
+            logger.Debug("Kickoff Vert enum:" + Kick_Vert_enum.ToString());
+            logger.Debug("Kickoff Vert:" + Kickoff_Vert.ToString());
+
             //Adjust the length of the kick based on the vertical
             Kickoff_Len = Kicking_Helper.AdjustKickLength(Kickoff_Len, Kickoff_Vert);
+            logger.Debug("Adjusted Kickoff len:" + Kickoff_Len.ToString());
 
             //possision where ball should be caught
             gBall.Current_YardLine = gBall.Starting_YardLine + (Kickoff_Len * HorizontalAdj(bLefttoRight));
@@ -1015,6 +1064,9 @@ namespace SpectatorFootball.GameNS
                 gBall.Stages.Add(bStage);
             }
 
+            logger.Debug("Stage 2");
+            logger.Debug("Kickoff Players:");
+
             //decide which players are in group 1 (closest to returner( group 2 and group 3
             List<int> group_1 = new List<int>();
             List<int> group_2 = new List<int>();
@@ -1025,23 +1077,41 @@ namespace SpectatorFootball.GameNS
                 long speed = p.p_and_r.pr.First().Speed_Rating;
                 if (p != Kicker)
                 {
+                    string debug_string = "Player slot:" + id_Players + " Speed:" + speed + " ";
                     int group1_var = (int)speed - app_Constants.KICKOFF_SPEED_CUTOFF;
+                    debug_string += "group1_var:" + group1_var + " ";
                     int temp1 = CommonUtils.getRandomNum(1, app_Constants.KICKOFF_GROUP_CALC_VARIABLE);
+                    debug_string += "temp1:" + temp1 + " ";
                     if (temp1 <= group1_var)
+                    {
                         group_1.Add(id_Players);
+                        debug_string += "added to group 1";
+                    }
                     else
                     {
                         int group2_var = app_Constants.KICKOFF_SPEED_CUTOFF - (int)speed;
                         int temp2 = CommonUtils.getRandomNum(1, app_Constants.KICKOFF_GROUP_CALC_VARIABLE);
                         if (temp2 <= group2_var)
+                        {
                             group_3.Add(id_Players);
+                            debug_string += "added to group 2";
+                        }
                         else
+                        {
                             group_2.Add(id_Players);
+                            debug_string += "added to group 3";
+                        }
                     }
+                    logger.Debug("Player slot:" + id_Players + " Speed:" + speed + " debug string: " + debug_string);
                 }
+
                 id_Players++;
             }
 
+            logger.Debug("Groups before rearranging");
+            logger.Debug("Group 1:" + string.Join(",", group_1.ToArray()));
+            logger.Debug("Group 2:" + string.Join(",", group_2.ToArray()));
+            logger.Debug("Group 3:" + string.Join(",", group_3.ToArray()));
             //Adjust the group lists if any one of them has > 5 members
             //emoveRandomIndexes(int Desired_size, List<int> lst)
             List<int> g1_deletes = removeRandomIndexes(app_Constants.KICKOFF_PLAYERS_IN_GROUP, group_1);
@@ -1051,9 +1121,14 @@ namespace SpectatorFootball.GameNS
             List<int> g2_deletes = removeRandomIndexes(app_Constants.KICKOFF_PLAYERS_IN_GROUP, group_2);
             group_3.AddRange(g2_deletes);
 
-            group_1 = group_1.OrderByDescending(x => x).ToList();
-            group_2 = group_2.OrderByDescending(x => x).ToList();
-            group_3 = group_3.OrderByDescending(x => x).ToList();
+            group_1 = group_1.OrderBy(x => x).ToList();
+            group_2 = group_2.OrderBy(x => x).ToList();
+            group_3 = group_3.OrderBy(x => x).ToList();
+
+            logger.Debug("Groups after rearranging");
+            logger.Debug("Group 1:" + string.Join(",", group_1.ToArray()));
+            logger.Debug("Group 2:" + string.Join(",", group_2.ToArray()));
+            logger.Debug("Group 3:" + string.Join(",", group_3.ToArray()));
 
             if (group_1.Count() > app_Constants.KICKOFF_PLAYERS_IN_GROUP ||
                 group_2.Count() > app_Constants.KICKOFF_PLAYERS_IN_GROUP ||
@@ -1065,10 +1140,16 @@ namespace SpectatorFootball.GameNS
             List<double> group_2_vert = getCovageVertList(group_2);
             List<double> group_3_vert = getCovageVertList(group_3);
 
+            logger.Debug("Groups verticals");
+            logger.Debug("Group 1:" + string.Join(",", group_1_vert.ToArray()));
+            logger.Debug("Group 2:" + string.Join(",", group_2_vert.ToArray()));
+            logger.Debug("Group 3:" + string.Join(",", group_3_vert.ToArray()));
+
             double yardline_Offset;
             double vert_offset;
 
             id_Players = 0;
+            logger.Debug("Kickoff Players:");
             foreach (Game_Player p in Kickoff_Players)
             {
                 if (p == Kicker)
@@ -1106,14 +1187,27 @@ namespace SpectatorFootball.GameNS
                 double prev_v = p.Current_Vertical_Percent_Pos;
                 p.Current_YardLine += yardline_Offset * HorizontalAdj(bLefttoRight);
                 p.Current_Vertical_Percent_Pos = vert_offset;
+
+                string sPos = p.Pos.ToString();
+                long spd = p.p_and_r.pr.First().Speed_Rating;
+                logger.Debug("Ind:" + d_index +
+                    " POS:" + sPos +
+                    " prev_yl:" + prev_yl +
+                    " prev_v:" + prev_v +
+                    " Current_YardLine:" + p.Current_YardLine +
+                    " Current_Vertical_Percent_Pos:" + p.Current_Vertical_Percent_Pos
+                    );
+
                 if (!bSim)
                 {
                     Action pas = null;
                     Player_States moving_ps = setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos);
                     pas = new Action(Game_Object_Types.P, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, false, false, moving_ps, null, null, Movement.LINE, null);
+                    Action pas2 = new Action(Game_Object_Types.P, p.Starting_YardLine, p.Starting_Vertical_Percent_Pos, 0.0, 0.0, false, false, Player_States.STANDING, null, null, Movement.NONE, null);
                     Play_Stage pStage = new Play_Stage();
                     pStage.Main_Object = false;
                     pStage.Actions.Add(pas);
+                    pStage.Actions.Add(pas2);
                     p.Stages.Add(pStage);
                 }
                 id_Players++;
@@ -1160,21 +1254,29 @@ namespace SpectatorFootball.GameNS
                         pas = null;
                         Player_States moving_ps = setRunningState(bLefttoRight, false, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos);
                         pas = new Action(Game_Object_Types.P, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, false, false, moving_ps, null, null, Movement.LINE, null);
+                        Action pasTwo = new Action(Game_Object_Types.P, p.Starting_YardLine, p.Starting_Vertical_Percent_Pos, 0.0, 0.0, false, false, Player_States.STANDING, null, null, Movement.NONE, null);
                         Play_Stage pStage = new Play_Stage();
                         pStage.Main_Object = false;
                         pStage.Actions.Add(pas);
+                        pStage.Actions.Add(pasTwo);
                         p.Stages.Add(pStage);
                     }
                 }
                 id_Players++;
             }
             //===== End of Stage Two - The ball flies thru the air and the players run ============
-            bool bReturnerTackled = false;
 
             //============================  Stage Three, four and five ==========================
             //==== Returner runs to group 1,2 and 3 other players block or attempt to tackle ====
             //Note that offensive team are now the tacklers
+            bool bTackled = false;
             int slot_index = 3;
+
+            //since the returner will catch the ball switch blefttoright
+            if (bLefttoRight) bLefttoRight = false; else bLefttoRight = true;
+            //                r.bSwitchPossession = true;
+
+
             for (int i = 1; i <= app_Constants.KICKOFF_TACKLING_GROUPS; i++)
             {
                 List<int> group = null;
@@ -1196,25 +1298,32 @@ namespace SpectatorFootball.GameNS
                 }
                 string[] GroupArr = ExpandGroup(group, group_vert);
 
-                double agility = Returner.p_and_r.pr.First().Kicker_Leg_Power_Rating;
+                logger.Debug("Group:" + i);
+                logger.Debug("Expanded GroupArr:" + string.Join(",", GroupArr));
+
+                double agility = Returner.p_and_r.pr.First().Agilty_Rating;
+                logger.Debug("Returner Agility:" + agility);
                 //Returners agility determines how many times he looks for an open 
                 //slot to run thru in the group.
                 int agility_var = (int)agility - app_Constants.KICKOFF_AGILITY_CUTOFF;
+                logger.Debug("agility_var:" + agility_var);
                 int r_agile = CommonUtils.getRandomNum(1, app_Constants.KICKOFF_AVOID_TRACKER_CALC_VARIABLE);
+                logger.Debug("r_agile:" + r_agile);
+
                 int Returner_Avoid_Tackle = 0;
 
                 bool bFindOpenSlot = false;
                 if (r_agile <= agility_var)
                     bFindOpenSlot = true;
 
+                logger.Debug("bFindOpenSlot:" + bFindOpenSlot.ToString());
+
                 bool bPossibleTacker = false;
                 bool bAdjactentTackler = false;
-                bool bTackled = false;
                 string slot_string = null;
 
                 bool bTacklerFlattened = false;
                 bool bBlockerFlattened = false;
-
 
                 int Tackler_Ability = 0;
                 int Tackler_Index = 0;
@@ -1223,57 +1332,73 @@ namespace SpectatorFootball.GameNS
                 Game_Player Tackler = null;
                 Game_Player Blocker = null;
 
-                if (group.Count() > 0)
+                slot_string = getKickReturnRunSlot(slot_index, bFindOpenSlot, GroupArr);
+                string[] m = slot_string.Split('|');
+                slot_index = int.Parse(m[0]);
+
+                logger.Debug("slot_string:" + slot_string +
+                    " slot_index:" + slot_index);
+
+                if (m[1] != "")
                 {
-                    slot_string = getKickReturnRunSlot(bFindOpenSlot, GroupArr);
-                    string[] m = slot_string.Split('|');
-                    slot_index = int.Parse(m[0]);
-      
-                    if (m[1] != "")
+                    logger.Debug("m[1] is not blank");
+
+                    bPossibleTacker = true;
+                    bAdjactentTackler = false;
+                    string[] m2 = slot_string.Split('|');
+                    Tackler_Index = int.Parse(m2[1]);
+                    Tacker_vert = double.Parse(m2[2]);
+                    logger.Debug("Tackler_Index:" + Tackler_Index + " Tacker_vert:" + Tacker_vert);
+                    Tackler = Kickoff_Players[Tackler_Index];
+                    Blocker = Return_Players[Tackler_Index];
+                }
+                else
+                {
+                    logger.Debug("m[1] is blank");
+                    //see if we can find an adjacent tackler or not
+                    string adjacent_string = getAdjacentTackler(slot_index, GroupArr);
+                    if (adjacent_string != null)
                     {
                         bPossibleTacker = true;
-                        bAdjactentTackler = false;
-                        string[] m2 = slot_string.Split('|');
-                        Tackler_Index = int.Parse(m2[1]);
-                        Tacker_vert = double.Parse(m2[2]);
+                        bAdjactentTackler = true;
+                        string[] m3 = adjacent_string.Split('|');
+                        Tackler_Index = int.Parse(m3[0]);
+                        Tacker_vert = double.Parse(m3[1]);
+                        logger.Debug("Tackler_Index:" + Tackler_Index + " Tacker_vert:" + Tacker_vert);
                         Tackler = Kickoff_Players[Tackler_Index];
                         Blocker = Return_Players[Tackler_Index];
                     }
                     else
                     {
-                        //see if we can find an adjacent tackler or not
-                        string adjacent_string = getAdjacentTackler(slot_index, GroupArr);
-                        if (adjacent_string != null)
-                        {
-                            bPossibleTacker = true;
-                            bAdjactentTackler = true;
-                            string[] m3 = adjacent_string.Split('|');
-                            Tackler_Index = int.Parse(m3[1]);
-                            Tacker_vert = double.Parse(m3[2]);
-                            Tackler = Kickoff_Players[Tackler_Index];
-                            Blocker = Return_Players[Tackler_Index];
-                        }
-                        else
-                        {
-                            bPossibleTacker = false;
-                            bAdjactentTackler = false;
-                        }
+                        bPossibleTacker = false;
+                        bAdjactentTackler = false;
                     }
                 }
 
+                logger.Debug("bPossibleTacker:" + bPossibleTacker.ToString() + " bAdjactentTackler:" + bAdjactentTackler.ToString());
+
+
                 if (bPossibleTacker)
                 {
-                    long RunBlocking = Blocker.p_and_r.pr.First().Kicker_Leg_Power_Rating;
+                    long RunBlocking = Blocker.p_and_r.pr.First().Run_Block_Rating;
                     long RunAttack = Tackler.p_and_r.pr.First().Run_Attack_Rating;
+
+                    logger.Debug("RunBlocking:" + RunBlocking.ToString());
+                    logger.Debug("RunAttack:" + RunAttack.ToString());
 
                     Returner_Avoid_Tackle = (int)((Returner.p_and_r.pr.First().Agilty_Rating +
                          Returner.p_and_r.pr.First().Speed_Rating) / 2);
+                    logger.Debug("Returner_Avoid_Tackle:" + Returner_Avoid_Tackle.ToString());
 
                     Tackler_Ability = (int)(Tackler.p_and_r.pr.First().Tackle_Rating);
+                    logger.Debug("Tackler_Ability:" + Tackler_Ability.ToString());
 
                     int irunB = (int)RunBlocking;
                     int irunA = (int)(app_Constants.KICKOFF_BLOCKER_TACKLER_CALC_VARIABLE - RunAttack);
                     int rnum = CommonUtils.getRandomNum(1, app_Constants.KICKOFF_BLOCKER_TACKLER_CALC_VARIABLE);
+
+                    logger.Debug("irunB:" + irunB.ToString() + " irunA:" + irunA + " rnum:" + rnum);
+
                     if (rnum <= irunB) //run blocker wins
                     {
                         bTacklerFlattened = true;
@@ -1290,6 +1415,7 @@ namespace SpectatorFootball.GameNS
                         bBlockerFlattened = false;
                     }
 
+                    logger.Debug("bTacklerFlattened:" + bTacklerFlattened.ToString() + " bBlockerFlattened:" + bBlockerFlattened.ToString());
 
                     if (bAdjactentTackler)
                     {
@@ -1307,6 +1433,9 @@ namespace SpectatorFootball.GameNS
                     }
 
                     Tackler_Ability = (int) (Tackler_Ability * app_Constants.KICKOFF_TACKLE_ADVANTAGE);
+
+                    logger.Debug("Tackler_Ability:" + Tackler_Ability.ToString());
+
                 }
 
                 if (Tackler == null)
@@ -1317,11 +1446,15 @@ namespace SpectatorFootball.GameNS
                 {  //decide if the tackler makes the tackle
                     int tack_calc_var = Tackler_Ability + Returner_Avoid_Tackle;
                     int t_rnd = CommonUtils.getRandomNum(1, tack_calc_var);
+                    logger.Debug("t_rnd:" + t_rnd.ToString() + " tack_calc_var:" + tack_calc_var.ToString());
+
                     if (t_rnd <= Tackler_Ability)
                         bTackled = true;
                     else
                         bTackled = false;
                 }
+
+                logger.Debug("bTackled:" + bTackled.ToString());
 
                 double Breakthrough_len = 0.0;
                 double Breakthrough_vert = 0.0;
@@ -1329,13 +1462,17 @@ namespace SpectatorFootball.GameNS
                 double Possible_tackler_len = 0.0;
                 double Possible_tackler_vert = 0.0;
 
-                Breakthrough_vert = Returner.Current_Vertical_Percent_Pos - getKickoffGroupOffset(slot_index);
-                Breakthrough_len = app_Constants.KICKOFF_GROUP_1_MAX - app_Constants.KICKOFF_GROUP_1_MIN;
+                Breakthrough_vert = Returner.Current_Vertical_Percent_Pos + getKickoffGroupOffset(slot_index);
+                Breakthrough_len = (app_Constants.KICKOFF_GROUP_1_MAX - app_Constants.KICKOFF_GROUP_1_MIN) + (app_Constants.KICKOFF_GROUP_2_MIN - app_Constants.KICKOFF_GROUP_1_MAX);
+
+                logger.Debug("Breakthrough_len:" + Breakthrough_len.ToString() + " Breakthrough_vert:" + Breakthrough_vert);
 
                 if (Tackler != null)
                 {
                     Possible_tackler_len = 0.4;
                     Possible_tackler_vert = Tackler.Current_Vertical_Percent_Pos - getKickoffGroupOffset(slot_index);
+
+                    logger.Debug("Possible_tackler_len:" + Possible_tackler_len.ToString() + " Possible_tackler_vert:" + Possible_tackler_vert);
                 }
 
                 id_Players = 0;
@@ -1343,8 +1480,10 @@ namespace SpectatorFootball.GameNS
                 {
                     if (p == Tackler)
                     {
+                        logger.Debug("Tacker:");
                         if (bTacklerFlattened)
                         {
+                            logger.Debug("Flattened");
                             Action pas = new Action(Game_Object_Types.P, p.Current_YardLine, p.Current_Vertical_Percent_Pos, p.Current_YardLine, p.Current_Vertical_Percent_Pos, false, false, Player_States.ON_BACK, null, null, Movement.LINE, null);
                             Play_Stage pStage = new Play_Stage();
                             pStage.Main_Object = false;
@@ -1358,6 +1497,10 @@ namespace SpectatorFootball.GameNS
 
                             p.Current_YardLine += Possible_tackler_len * HorizontalAdj(bLefttoRight);
                             p.Current_Vertical_Percent_Pos = Possible_tackler_vert;
+
+                            logger.Debug("prev_yl:" + prev_yl.ToString() + " prev_v:" + prev_v.ToString());
+                            logger.Debug("Current_YardLine:" + p.Current_YardLine.ToString() + " Current_Vertical_Percent_Pos:" + p.Current_Vertical_Percent_Pos.ToString());
+
 
                             if (!bSim)
                             {
@@ -1391,50 +1534,88 @@ namespace SpectatorFootball.GameNS
                 {
                     if (p == Returner)  //Kick Returner
                     {
+                        logger.Debug("Returner:");
                         if (bTackled)
                         {
+                            logger.Debug("Gets Tackled:");
+
                             double prev_yl = p.Current_YardLine;
                             double prev_v = p.Current_Vertical_Percent_Pos;
 
-                            p.Current_YardLine += Math.Abs(Tackler.Current_YardLine = p.Current_YardLine) * HorizontalAdj(bLefttoRight);
+                            p.Current_YardLine = Tackler.Current_YardLine;
                             p.Current_Vertical_Percent_Pos = Possible_tackler_vert;
+
+                            //must move the ball too, even thogh it will not be visible.
+                            gBall.Current_YardLine = p.Current_YardLine;
+                            gBall.Current_Vertical_Percent_Pos = p.Current_Vertical_Percent_Pos;
+
+                            logger.Debug("prev_yl:" + prev_yl.ToString() + " prev_v:" + prev_v.ToString());
+                            logger.Debug("Current_YardLine:" + p.Current_YardLine.ToString() + " Current_Vertical_Percent_Pos:" + p.Current_Vertical_Percent_Pos.ToString());
+
 
                             if (!bSim)
                             {
-                                Player_States moving_ps = setRunningState(bLefttoRight, false, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos);
-                                Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, false, false, moving_ps, null, null, Movement.LINE, null);
-                                Action pas2 = new Action(Game_Object_Types.P, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, false, false, Player_States.TACKLED, null, null, Movement.NONE, null);
+                                Player_States moving_ps = setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos);
+                                Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, true, false, moving_ps, null, null, Movement.LINE, null);
+                                Action pas2 = new Action(Game_Object_Types.P, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, true, false, Player_States.TACKLED, null, null, Movement.NONE, null);
                                 Play_Stage pStage = new Play_Stage();
-                                pStage.Main_Object = true;
+                                pStage.Main_Object = false;
                                 pStage.Actions.Add(pas);
                                 pStage.Actions.Add(pas2);
                                 p.Stages.Add(pStage);
+
+                                //for the ball
+                                gBall.State = Ball_States.CARRIED;
+                                Action bas = new Action(Game_Object_Types.B, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, true, false, null, gBall.State, null, Movement.LINE, Ball_Speed.SLOW);
+                                Play_Stage bStage = new Play_Stage();
+                                bStage.Main_Object = true;
+                                bStage.Actions.Add(bas);
+                                gBall.Stages.Add(bStage);
                             }
                         }
                         else
                         {
+                            logger.Debug("Breaks Thru:");
+
                             double prev_yl = p.Current_YardLine;
                             double prev_v = p.Current_Vertical_Percent_Pos;
 
                             p.Current_YardLine += Breakthrough_len * HorizontalAdj(bLefttoRight);
-                            p.Current_Vertical_Percent_Pos += Breakthrough_vert;
+                            p.Current_Vertical_Percent_Pos = Breakthrough_vert;
+
+                            gBall.Current_YardLine = p.Current_YardLine;
+                            gBall.Current_Vertical_Percent_Pos = p.Current_Vertical_Percent_Pos;
+
+                            logger.Debug("prev_yl:" + prev_yl.ToString() + " prev_v:" + prev_v.ToString());
+                            logger.Debug("Current_YardLine:" + p.Current_YardLine.ToString() + " Current_Vertical_Percent_Pos:" + p.Current_Vertical_Percent_Pos.ToString());
 
                             if (!bSim)
                             {
-                                Player_States moving_ps = setRunningState(bLefttoRight, false, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos);
+                                Player_States moving_ps = setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos);
                                 Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, false, false, moving_ps, null, null, Movement.LINE, null);
                                 Play_Stage pStage = new Play_Stage();
                                 pStage.Main_Object = false;
                                 pStage.Actions.Add(pas);
                                 p.Stages.Add(pStage);
+
+                                //for the ball
+                                gBall.State = Ball_States.CARRIED;
+                                Action bas = new Action(Game_Object_Types.B, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, true, false, null, gBall.State, null, Movement.LINE, Ball_Speed.SLOW);
+                                Play_Stage bStage = new Play_Stage();
+                                bStage.Main_Object = true;
+                                bStage.Actions.Add(bas);
+                                gBall.Stages.Add(bStage);
                             }
                         }
 
                     }
                     else if (p == Blocker)
                     {
+                        logger.Debug("Blocker");
                         if (bBlockerFlattened)
                         {
+                            logger.Debug("Flattened");
+
                             Action pas = new Action(Game_Object_Types.P, p.Current_YardLine, p.Current_Vertical_Percent_Pos, p.Current_YardLine, p.Current_Vertical_Percent_Pos, false, false, Player_States.ON_BACK, null, null, Movement.LINE, null);
                             Play_Stage pStage = new Play_Stage();
                             pStage.Main_Object = false;
@@ -1471,9 +1652,228 @@ namespace SpectatorFootball.GameNS
 
 
 
-            //===== End of Stage Three - the returner runs thru groups 1,2 and 3 ============
+            //===== End of Stage Three,four or five - the returner runs thru groups 1,2 and 3 ============
+
+            //==== Stage Six Kicker tries to tackle the returner if the returner makes it this far =====
+            bool bTacklerFallDown = false;
+            double slot_vert = 0;
+            if (!bTackled)
+            {
+                logger.Debug("Stage Six:");
+                //Determine if the kicker will tackle the returner
+                long RunAttack = Kicker.p_and_r.pr.First().Running_Power_Rating;
+                logger.Debug("RunAttack:" + RunAttack.ToString());
+                long Returner_Avoid_Tackle = (int)(Returner.p_and_r.pr.First().Agilty_Rating +
+                  Returner.p_and_r.pr.First().Speed_Rating) / 2;
+                logger.Debug("Returner_Avoid_Tackle:" + Returner_Avoid_Tackle.ToString());
+                long Tackler_Ability = (int)(Kicker.p_and_r.pr.First().Tackle_Rating);
+                logger.Debug("Tackler_Ability:" + Tackler_Ability.ToString());
+
+                double agility = Returner.p_and_r.pr.First().Agilty_Rating;
+                logger.Debug("Returner Agility:" + agility);
+                //Returners agility determines if he looks for a hole to rnn thru.
+                int agility_var = (int)agility - app_Constants.KICKOFF_AGILITY_CUTOFF;
+                logger.Debug("agility_var:" + agility_var);
+                int r_agile = CommonUtils.getRandomNum(1, app_Constants.KICKOFF_AVOID_TRACKER_CALC_VARIABLE);
+                logger.Debug("r_agile:" + r_agile);
+
+                bool bFindOpenSlot = false;
+                if (r_agile <= agility_var)
+                    bFindOpenSlot = true;
+                logger.Debug("bFindOpenSlot:" + bFindOpenSlot.ToString());
+
+                bool bPossibleTacker = false;
+                bool bAdjactentTackler = false;
+                string slot_string = null;
+
+                int slot_Index = 3;
+
+                if (bFindOpenSlot)
+                {
+                    int slotrand = CommonUtils.getRandomNum(1, 2);
+                    if (slotrand == 1)
+                        slot_Index = 0;
+                    else
+                        slot_Index = app_Constants.KICKOFF_PLAYERS_IN_GROUP;
+                }
+
+                logger.Debug("Tackler_Index:" + slot_Index);
+
+                if (slot_Index == 3)
+                {
+                    int rtack = CommonUtils.getRandomNum(1, app_Constants.KICKOFF_KICKER_MAKE_TACKLE_CALC_VARIABLE);
+                    if (rtack <= RunAttack)
+                    {
+                        bTackled = true;
+                        bTacklerFallDown = true;
+                    }
+                }
+                else
+                {
+                    bTackled = false;
+                    bTacklerFallDown = true;
+                }
+
+                switch (slot_Index)
+                {
+                    case 1:
+                        slot_vert = Kicker.Current_Vertical_Percent_Pos - (app_Constants.KICKOFF_GROUP_VERT_DIST * 2);
+                        break;
+                    case 2:
+                        slot_vert = Kicker.Current_Vertical_Percent_Pos - app_Constants.KICKOFF_GROUP_VERT_DIST;
+                        break;
+                    case 3:
+                        slot_vert = Kicker.Current_Vertical_Percent_Pos;
+                        break;
+                    case 4:
+                        slot_vert = Kicker.Current_Vertical_Percent_Pos + app_Constants.KICKOFF_GROUP_VERT_DIST;
+                        break;
+                    case 5:
+                        slot_vert = Kicker.Current_Vertical_Percent_Pos + (app_Constants.KICKOFF_GROUP_VERT_DIST * 2); 
+                       break;
+
+                }
+            }
+            double BreakAwayYardline = 0.0;
+            if (bLefttoRight)
+                BreakAwayYardline = 105.0;
+            else
+                BreakAwayYardline = -5.0;
+
+            id_Players = 0;
+            foreach (Game_Player p in Kickoff_Players)
+            {
+                if (p == Kicker)
+                {
+                    if (bTacklerFallDown)
+                    {
+                        logger.Debug("kicker falls down.");
+                        Action pas = new Action(Game_Object_Types.P, p.Current_YardLine, p.Current_Vertical_Percent_Pos, p.Current_YardLine, p.Current_Vertical_Percent_Pos, false, false, Player_States.ON_BACK, null, null, Movement.LINE, null);
+                        Play_Stage pStage = new Play_Stage();
+                        pStage.Main_Object = false;
+                        pStage.Actions.Add(pas);
+                        p.Stages.Add(pStage);
+                    }
+                    else
+                    {
+                        if (!bSim)
+                        {
+                            Action pas = new Action(Game_Object_Types.P, p.Starting_YardLine, p.Starting_Vertical_Percent_Pos, 0.0, 0.0, false, false, Player_States.STANDING, null, null, Movement.NONE, null);
+                            Play_Stage pStage = new Play_Stage();
+                            pStage.Main_Object = false;
+                            pStage.Actions.Add(pas);
+                            p.Stages.Add(pStage);
+                        }
+                    }
+                }
+                else
+                {
+                    //Other players just stand there waiting for the kick
+                    if (!bSim)
+                    {
+                        Action pas = new Action(Game_Object_Types.P, p.Starting_YardLine, p.Starting_Vertical_Percent_Pos, 0.0, 0.0, false, false, Player_States.STANDING, null, null, Movement.NONE, null);
+                        Play_Stage pStage = new Play_Stage();
+                        pStage.Main_Object = false;
+                        pStage.Actions.Add(pas);
+                        p.Stages.Add(pStage);
+                    }
+                }
+            }
 
 
+            id_Players = 0;
+            foreach (Game_Player p in Return_Players)
+            {
+                if (p == Returner)  //Kick Returner
+                {
+                    logger.Debug("Returner:");
+                    if (bTackled)
+                    {
+                        logger.Debug("Gets Tackled:");
+
+                        double prev_yl = p.Current_YardLine;
+                        double prev_v = p.Current_Vertical_Percent_Pos;
+
+                        p.Current_YardLine = Kicker.Current_YardLine;
+                        p.Current_Vertical_Percent_Pos = Kicker.Current_Vertical_Percent_Pos;
+
+                        //must move the ball too, even thogh it will not be visible.
+                        gBall.Current_YardLine = p.Current_YardLine;
+                        gBall.Current_Vertical_Percent_Pos = p.Current_Vertical_Percent_Pos;
+
+                        logger.Debug("prev_yl:" + prev_yl.ToString() + " prev_v:" + prev_v.ToString());
+                        logger.Debug("Current_YardLine:" + p.Current_YardLine.ToString() + " Current_Vertical_Percent_Pos:" + p.Current_Vertical_Percent_Pos.ToString());
+
+                        if (!bSim)
+                        {
+                            Player_States moving_ps = setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos);
+                            Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, true, false, moving_ps, null, null, Movement.LINE, null);
+                            Action pas2 = new Action(Game_Object_Types.P, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, true, false, Player_States.TACKLED, null, null, Movement.NONE, null);
+                            Play_Stage pStage = new Play_Stage();
+                            pStage.Main_Object = false;
+                            pStage.Actions.Add(pas);
+                            pStage.Actions.Add(pas2);
+                            p.Stages.Add(pStage);
+
+                            //for the ball
+                            gBall.State = Ball_States.CARRIED;
+                            Action bas = new Action(Game_Object_Types.B, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, true, false, null, gBall.State, null, Movement.LINE, Ball_Speed.SLOW);
+                            Play_Stage bStage = new Play_Stage();
+                            bStage.Main_Object = true;
+                            bStage.Actions.Add(bas);
+                            gBall.Stages.Add(bStage);
+                        }
+                    }
+                    else
+                    {
+                        logger.Debug("Breaks Thru:");
+
+                        double prev_yl = p.Current_YardLine;
+                        double prev_v = p.Current_Vertical_Percent_Pos;
+
+                        p.Current_YardLine = BreakAwayYardline;
+                        p.Current_Vertical_Percent_Pos = slot_vert;
+
+                        gBall.Current_YardLine = p.Current_YardLine;
+                        gBall.Current_Vertical_Percent_Pos = p.Current_Vertical_Percent_Pos;
+
+                        logger.Debug("prev_yl:" + prev_yl.ToString() + " prev_v:" + prev_v.ToString());
+                        logger.Debug("Current_YardLine:" + p.Current_YardLine.ToString() + " Current_Vertical_Percent_Pos:" + p.Current_Vertical_Percent_Pos.ToString());
+
+                        if (!bSim)
+                        {
+                            Player_States moving_ps = setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos);
+                            Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, false, false, moving_ps, null, null, Movement.LINE, null);
+                            Play_Stage pStage = new Play_Stage();
+                            pStage.Main_Object = false;
+                            pStage.Actions.Add(pas);
+                            p.Stages.Add(pStage);
+
+                            //for the ball
+                            gBall.State = Ball_States.CARRIED;
+                            Action bas = new Action(Game_Object_Types.B, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, true, false, null, gBall.State, null, Movement.LINE, Ball_Speed.SLOW);
+                            Play_Stage bStage = new Play_Stage();
+                            bStage.Main_Object = true;
+                            bStage.Actions.Add(bas);
+                            gBall.Stages.Add(bStage);
+                        }
+                    }
+
+                }
+                else
+                {
+                    if (!bSim)
+                    {
+                        Action pas = new Action(Game_Object_Types.P, p.Starting_YardLine, p.Starting_Vertical_Percent_Pos, 0.0, 0.0, false, false, Player_States.BLOCKING, null, null, Movement.NONE, null);
+                        Play_Stage pStage = new Play_Stage();
+                        pStage.Main_Object = false;
+                        pStage.Actions.Add(pas);
+                        p.Stages.Add(pStage);
+                    }
+                }
+            }
+
+            //===== end of stage six
             if (!bSim) r.Play_Stages = Play_Stages;
             return r;
         }
@@ -1686,9 +2086,6 @@ namespace SpectatorFootball.GameNS
                     r = Player_States.RUNNING_UP;
             }
 
-            //           if (r == Player_States.RUNNING_BACKWORDS && Math.Abs(xdiff) >= app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK)
-            //               r = Player_States.RUNNING_FORWARD;
-
             return r;
         }
         private List<int> removeRandomIndexes(int Desired_size, List<int> lst)
@@ -1749,7 +2146,7 @@ namespace SpectatorFootball.GameNS
 
             for (int i = 0; i < app_Constants.KICKOFF_PLAYERS_IN_GROUP; i++)
             {
-                if (i < group_vert.Count() && group_vert[ig] == posY)
+                if (ig < group_vert.Count() && group_vert[ig] == posY)
                 {
                     r[i] = Group[ig] + "|" + group_vert[ig];
                     ig++;
@@ -1764,12 +2161,16 @@ namespace SpectatorFootball.GameNS
         }
 
         //This method will pick the running slot and tackler to run by
-        private string getKickReturnRunSlot(bool bLookforhole, string[] GroupArr)
+        private string getKickReturnRunSlot(int slot_index, bool bLookforhole, string[] GroupArr)
         {
             string r = null;
 
             int empty_slots = GroupArr.Where(x => x == null).Count();
-            if (empty_slots == app_Constants.KICKOFF_PLAYERS_IN_GROUP || !bLookforhole)
+            if (empty_slots == app_Constants.KICKOFF_PLAYERS_IN_GROUP)
+            {
+                r = slot_index.ToString() + "|" + GroupArr[slot_index];
+            }
+            else if (empty_slots == 0 || !bLookforhole)
             {
                 int r_index = CommonUtils.getRandomIndex(GroupArr.Count());
                 r = r_index.ToString() + "|" + GroupArr[r_index];
@@ -1779,7 +2180,7 @@ namespace SpectatorFootball.GameNS
                 //Now find a slot or open slot depending on the boolean
                 int r_ind;
                 //create a score for each open slot the highest wins
-                List<int> Score = new List<int>();
+                int[] Score = new int[app_Constants.KICKOFF_PLAYERS_IN_GROUP];
                 for (int ii = 0; ii < GroupArr.Length; ii++)
                 {
                     if (GroupArr[ii] == null)
@@ -1788,35 +2189,34 @@ namespace SpectatorFootball.GameNS
                         //Look at slots above
                         int x = ii;
                         x--;
-                        while (x >= 0)
-                        {
-                            if (GroupArr[x] == null)
-                                Score[x] += 1;
-                            x--;
-                        }
+
+                        if (x < 0)
+                            Score[ii] += 1;
+                        else if (GroupArr[x] == null)
+                            Score[ii] += 1;
+
                         x = ii + 1;
-                        while (x < GroupArr.Length)
-                        {
-                            if (GroupArr[x] == null)
-                                Score[x] += 1;
-                            x++;
-                        }
-
-                        //get max score
-                        int top_score = Score.Max();
-
-                        //get all indexes that have the max score
-                        List<int> score_indexes = new List<int>();
-                        foreach (int sc in Score)
-                        {
-                            if (sc == top_score)
-                                score_indexes.Add(sc);
-                        }
-
-                        int rnd_index = CommonUtils.getRandomIndex(score_indexes.Count());
-                        r = rnd_index.ToString() + "|" + GroupArr[score_indexes[rnd_index]];
+                        if (x >= app_Constants.KICKOFF_PLAYERS_IN_GROUP)
+                            Score[ii] += 1;
+                        else if (GroupArr[x] == null)
+                            Score[ii] += 1;
                     }
                 }
+                //get max score
+                int top_score = Score.Max();
+
+                //get all indexes that have the max score
+                List<int> score_indexes = new List<int>();
+                int yy = 0;
+                foreach (int sc in Score)
+                {
+                    if (sc == top_score)
+                        score_indexes.Add(yy);
+                    yy++;
+                }
+
+                int rnd_index = CommonUtils.getRandomIndex(score_indexes.Count());
+                r = score_indexes[rnd_index].ToString() + "|" + GroupArr[score_indexes[rnd_index]];
             }
             return r;
         }
