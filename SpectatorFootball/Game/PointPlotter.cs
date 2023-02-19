@@ -37,9 +37,6 @@ namespace SpectatorFootball.GameNS
             else
                 skip_count = PLAYER_SKIP;
 
-
-
-
             p1X = (int)(sx * 10.0);
             p1Y = (int)(sy * 10.0);
 
@@ -91,5 +88,7 @@ namespace SpectatorFootball.GameNS
             return r;
 
         }
+
+
     }
 }

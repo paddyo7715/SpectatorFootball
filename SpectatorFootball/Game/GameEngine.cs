@@ -1270,7 +1270,8 @@ namespace SpectatorFootball.GameNS
             //==== Returner runs to group 1,2 and 3 other players block or attempt to tackle ====
             //Note that offensive team are now the tacklers
             bool bTackled = false;
-            int slot_index = 3;
+            int slot_index = 2;
+            logger.Debug("Stage 3");
 
             //since the returner will catch the ball switch blefttoright
             if (bLefttoRight) bLefttoRight = false; else bLefttoRight = true;
@@ -1364,7 +1365,7 @@ namespace SpectatorFootball.GameNS
                         string[] m3 = adjacent_string.Split('|');
                         Tackler_Index = int.Parse(m3[0]);
                         Tacker_vert = double.Parse(m3[1]);
-                        logger.Debug("Tackler_Index:" + Tackler_Index + " Tacker_vert:" + Tacker_vert);
+                        logger.Debug("Adjacent: Tackler_Index:" + Tackler_Index + " Tacker_vert:" + Tacker_vert);
                         Tackler = Kickoff_Players[Tackler_Index];
                         Blocker = Return_Players[Tackler_Index];
                     }
@@ -1461,7 +1462,7 @@ namespace SpectatorFootball.GameNS
 
                 double Possible_tackler_len = 0.0;
                 double Possible_tackler_vert = 0.0;
-
+                double returner_slot_vert = 0.0;
                 Breakthrough_vert = Returner.Current_Vertical_Percent_Pos + getKickoffGroupOffset(slot_index);
                 Breakthrough_len = (app_Constants.KICKOFF_GROUP_1_MAX - app_Constants.KICKOFF_GROUP_1_MIN) + (app_Constants.KICKOFF_GROUP_2_MIN - app_Constants.KICKOFF_GROUP_1_MAX);
 
@@ -1469,8 +1470,19 @@ namespace SpectatorFootball.GameNS
 
                 if (Tackler != null)
                 {
+                    returner_slot_vert = Tackler.Current_Vertical_Percent_Pos - getKickoffGroupOffset(slot_index);
+                    Possible_tackler_vert = returner_slot_vert;
                     Possible_tackler_len = 0.4;
-                    Possible_tackler_vert = Tackler.Current_Vertical_Percent_Pos - getKickoffGroupOffset(slot_index);
+                    if (!bTackled)
+                    {
+                        double swerv = app_Constants.KICKOFF_GROUP_VERT_DIST / 2.0;
+
+                        int r_swerv = CommonUtils.getRandomNum(1, 2);
+                        if (r_swerv == 1)
+                            returner_slot_vert -= swerv;
+                        else
+                            returner_slot_vert += swerv;
+                    }
 
                     logger.Debug("Possible_tackler_len:" + Possible_tackler_len.ToString() + " Possible_tackler_vert:" + Possible_tackler_vert);
                 }
@@ -1543,7 +1555,7 @@ namespace SpectatorFootball.GameNS
                             double prev_v = p.Current_Vertical_Percent_Pos;
 
                             p.Current_YardLine = Tackler.Current_YardLine;
-                            p.Current_Vertical_Percent_Pos = Possible_tackler_vert;
+                            p.Current_Vertical_Percent_Pos = returner_slot_vert;
 
                             //must move the ball too, even thogh it will not be visible.
                             gBall.Current_YardLine = p.Current_YardLine;
@@ -1683,7 +1695,6 @@ namespace SpectatorFootball.GameNS
                 logger.Debug("bFindOpenSlot:" + bFindOpenSlot.ToString());
 
                 bool bPossibleTacker = false;
-                bool bAdjactentTackler = false;
                 string slot_string = null;
 
                 int slot_Index = 3;
@@ -2031,7 +2042,7 @@ namespace SpectatorFootball.GameNS
         {
             Player_States r = Player_States.RUNNING_FORWARD;
             double xdiff = x2 - x1;
-            double ydiff = y2 - y1;
+            double ydiff = (y2 - y1) / 2.0;
 
             if (Math.Abs(xdiff) >= Math.Abs(ydiff))
             {
@@ -2172,7 +2183,7 @@ namespace SpectatorFootball.GameNS
             }
             else if (empty_slots == 0 || !bLookforhole)
             {
-                int r_index = CommonUtils.getRandomIndex(GroupArr.Count());
+                int r_index = CommonUtils.getRandomNum(0, app_Constants.KICKOFF_PLAYERS_IN_GROUP-1);
                 r = r_index.ToString() + "|" + GroupArr[r_index];
             }
             else
@@ -2251,8 +2262,9 @@ namespace SpectatorFootball.GameNS
         {
             double r = 0;
 
-            r = (-app_Constants.KICKOFF_GROUP_VERT_DIST * 2) + (app_Constants.KICKOFF_GROUP_VERT_DIST * 2);
+            ind -= 2;
 
+            r = -app_Constants.KICKOFF_GROUP_VERT_DIST * ind;
 
             return r;
         }
