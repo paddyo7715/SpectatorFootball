@@ -1538,6 +1538,7 @@ namespace SpectatorFootball.GameNS
                             p.Stages.Add(pStage);
                         }
                     }
+                    id_Players++;
                 }
 
 
@@ -1546,7 +1547,7 @@ namespace SpectatorFootball.GameNS
                 {
                     if (p == Returner)  //Kick Returner
                     {
-                        logger.Debug("Returner:");
+                        logger.Debug("Returner: ID " + id_Players);
                         if (bTackled)
                         {
                             logger.Debug("Gets Tackled:");
@@ -1657,6 +1658,7 @@ namespace SpectatorFootball.GameNS
                             p.Stages.Add(pStage);
                         }
                     }
+                    id_Players++;
                 }
 
                 if (bTackled) break;
@@ -1672,32 +1674,30 @@ namespace SpectatorFootball.GameNS
             if (!bTackled)
             {
                 logger.Debug("Stage Six:");
+
+                //Returners agility determines if he looks for a hole to rnn thru.
+                double agility = Returner.p_and_r.pr.First().Agilty_Rating;
+                logger.Debug("Returner Agility:" + agility);
+//                int agility_var = (int)agility - app_Constants.KICKOFF_AGILITY_CUTOFF;
+//                logger.Debug("agility_var:" + agility_var);
+                int r_agile = CommonUtils.getRandomNum(1, app_Constants.KICKOFF_AVOID_TRACKER_CALC_VARIABLE);
+                logger.Debug("r_agile:" + r_agile);
+                bool bFindOpenSlot = false;
+                if (r_agile <= agility)
+                    bFindOpenSlot = true;
+                logger.Debug("bFindOpenSlot:" + bFindOpenSlot.ToString());
+
                 //Determine if the kicker will tackle the returner
-                long RunAttack = Kicker.p_and_r.pr.First().Running_Power_Rating;
-                logger.Debug("RunAttack:" + RunAttack.ToString());
                 long Returner_Avoid_Tackle = (int)(Returner.p_and_r.pr.First().Agilty_Rating +
                   Returner.p_and_r.pr.First().Speed_Rating) / 2;
                 logger.Debug("Returner_Avoid_Tackle:" + Returner_Avoid_Tackle.ToString());
                 long Tackler_Ability = (int)(Kicker.p_and_r.pr.First().Tackle_Rating);
                 logger.Debug("Tackler_Ability:" + Tackler_Ability.ToString());
 
-                double agility = Returner.p_and_r.pr.First().Agilty_Rating;
-                logger.Debug("Returner Agility:" + agility);
-                //Returners agility determines if he looks for a hole to rnn thru.
-                int agility_var = (int)agility - app_Constants.KICKOFF_AGILITY_CUTOFF;
-                logger.Debug("agility_var:" + agility_var);
-                int r_agile = CommonUtils.getRandomNum(1, app_Constants.KICKOFF_AVOID_TRACKER_CALC_VARIABLE);
-                logger.Debug("r_agile:" + r_agile);
-
-                bool bFindOpenSlot = false;
-                if (r_agile <= agility_var)
-                    bFindOpenSlot = true;
-                logger.Debug("bFindOpenSlot:" + bFindOpenSlot.ToString());
-
                 bool bPossibleTacker = false;
                 string slot_string = null;
 
-                int slot_Index = 3;
+                int slot_Index = 2;
 
                 if (bFindOpenSlot)
                 {
@@ -1710,10 +1710,10 @@ namespace SpectatorFootball.GameNS
 
                 logger.Debug("Tackler_Index:" + slot_Index);
 
-                if (slot_Index == 3)
+                if (slot_Index == 2)
                 {
                     int rtack = CommonUtils.getRandomNum(1, app_Constants.KICKOFF_KICKER_MAKE_TACKLE_CALC_VARIABLE);
-                    if (rtack <= RunAttack)
+                    if (rtack <= Tackler_Ability)
                     {
                         bTackled = true;
                         bTacklerFallDown = true;
@@ -1725,48 +1725,43 @@ namespace SpectatorFootball.GameNS
                     bTacklerFallDown = true;
                 }
 
-                switch (slot_Index)
-                {
-                    case 1:
-                        slot_vert = Kicker.Current_Vertical_Percent_Pos - (app_Constants.KICKOFF_GROUP_VERT_DIST * 2);
-                        break;
-                    case 2:
-                        slot_vert = Kicker.Current_Vertical_Percent_Pos - app_Constants.KICKOFF_GROUP_VERT_DIST;
-                        break;
-                    case 3:
-                        slot_vert = Kicker.Current_Vertical_Percent_Pos;
-                        break;
-                    case 4:
-                        slot_vert = Kicker.Current_Vertical_Percent_Pos + app_Constants.KICKOFF_GROUP_VERT_DIST;
-                        break;
-                    case 5:
-                        slot_vert = Kicker.Current_Vertical_Percent_Pos + (app_Constants.KICKOFF_GROUP_VERT_DIST * 2); 
-                       break;
+                slot_vert = Kicker.Current_Vertical_Percent_Pos + getKickoffGroupOffset(slot_Index);
 
-                }
-            }
-            double BreakAwayYardline = 0.0;
-            if (bLefttoRight)
-                BreakAwayYardline = 105.0;
-            else
-                BreakAwayYardline = -5.0;
+                double BreakAwayYardline = 0.0;
+                if (bLefttoRight)
+                    BreakAwayYardline = 105.0;
+                else
+                    BreakAwayYardline = -5.0;
 
-            id_Players = 0;
-            foreach (Game_Player p in Kickoff_Players)
-            {
-                if (p == Kicker)
+                id_Players = 0;
+                foreach (Game_Player p in Kickoff_Players)
                 {
-                    if (bTacklerFallDown)
+                    if (p == Kicker)
                     {
-                        logger.Debug("kicker falls down.");
-                        Action pas = new Action(Game_Object_Types.P, p.Current_YardLine, p.Current_Vertical_Percent_Pos, p.Current_YardLine, p.Current_Vertical_Percent_Pos, false, false, Player_States.ON_BACK, null, null, Movement.LINE, null);
-                        Play_Stage pStage = new Play_Stage();
-                        pStage.Main_Object = false;
-                        pStage.Actions.Add(pas);
-                        p.Stages.Add(pStage);
+                        if (bTacklerFallDown)
+                        {
+                            logger.Debug("kicker falls down.");
+                            Action pas = new Action(Game_Object_Types.P, p.Current_YardLine, p.Current_Vertical_Percent_Pos, p.Current_YardLine, p.Current_Vertical_Percent_Pos, false, false, Player_States.ON_BACK, null, null, Movement.LINE, null);
+                            Play_Stage pStage = new Play_Stage();
+                            pStage.Main_Object = false;
+                            pStage.Actions.Add(pas);
+                            p.Stages.Add(pStage);
+                        }
+                        else
+                        {
+                            if (!bSim)
+                            {
+                                Action pas = new Action(Game_Object_Types.P, p.Starting_YardLine, p.Starting_Vertical_Percent_Pos, 0.0, 0.0, false, false, Player_States.STANDING, null, null, Movement.NONE, null);
+                                Play_Stage pStage = new Play_Stage();
+                                pStage.Main_Object = false;
+                                pStage.Actions.Add(pas);
+                                p.Stages.Add(pStage);
+                            }
+                        }
                     }
                     else
                     {
+                        //Other players just stand there waiting for the kick
                         if (!bSim)
                         {
                             Action pas = new Action(Game_Object_Types.P, p.Starting_YardLine, p.Starting_Vertical_Percent_Pos, 0.0, 0.0, false, false, Player_States.STANDING, null, null, Movement.NONE, null);
@@ -1777,112 +1772,107 @@ namespace SpectatorFootball.GameNS
                         }
                     }
                 }
-                else
+
+                id_Players = 0;
+                foreach (Game_Player p in Return_Players)
                 {
-                    //Other players just stand there waiting for the kick
-                    if (!bSim)
+                    if (p == Returner)  //Kick Returner
                     {
-                        Action pas = new Action(Game_Object_Types.P, p.Starting_YardLine, p.Starting_Vertical_Percent_Pos, 0.0, 0.0, false, false, Player_States.STANDING, null, null, Movement.NONE, null);
-                        Play_Stage pStage = new Play_Stage();
-                        pStage.Main_Object = false;
-                        pStage.Actions.Add(pas);
-                        p.Stages.Add(pStage);
-                    }
-                }
-            }
-
-
-            id_Players = 0;
-            foreach (Game_Player p in Return_Players)
-            {
-                if (p == Returner)  //Kick Returner
-                {
-                    logger.Debug("Returner:");
-                    if (bTackled)
-                    {
-                        logger.Debug("Gets Tackled:");
-
-                        double prev_yl = p.Current_YardLine;
-                        double prev_v = p.Current_Vertical_Percent_Pos;
-
-                        p.Current_YardLine = Kicker.Current_YardLine;
-                        p.Current_Vertical_Percent_Pos = Kicker.Current_Vertical_Percent_Pos;
-
-                        //must move the ball too, even thogh it will not be visible.
-                        gBall.Current_YardLine = p.Current_YardLine;
-                        gBall.Current_Vertical_Percent_Pos = p.Current_Vertical_Percent_Pos;
-
-                        logger.Debug("prev_yl:" + prev_yl.ToString() + " prev_v:" + prev_v.ToString());
-                        logger.Debug("Current_YardLine:" + p.Current_YardLine.ToString() + " Current_Vertical_Percent_Pos:" + p.Current_Vertical_Percent_Pos.ToString());
-
-                        if (!bSim)
+                        logger.Debug("Returner:");
+                        if (bTackled)
                         {
-                            Player_States moving_ps = setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos);
-                            Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, true, false, moving_ps, null, null, Movement.LINE, null);
-                            Action pas2 = new Action(Game_Object_Types.P, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, true, false, Player_States.TACKLED, null, null, Movement.NONE, null);
-                            Play_Stage pStage = new Play_Stage();
-                            pStage.Main_Object = false;
-                            pStage.Actions.Add(pas);
-                            pStage.Actions.Add(pas2);
-                            p.Stages.Add(pStage);
+                            logger.Debug("Gets Tackled:");
 
-                            //for the ball
-                            gBall.State = Ball_States.CARRIED;
-                            Action bas = new Action(Game_Object_Types.B, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, true, false, null, gBall.State, null, Movement.LINE, Ball_Speed.SLOW);
-                            Play_Stage bStage = new Play_Stage();
-                            bStage.Main_Object = true;
-                            bStage.Actions.Add(bas);
-                            gBall.Stages.Add(bStage);
+                            double prev_yl = p.Current_YardLine;
+                            double prev_v = p.Current_Vertical_Percent_Pos;
+
+                            p.Current_YardLine = Kicker.Current_YardLine;
+                            p.Current_Vertical_Percent_Pos = slot_vert;
+
+                            //must move the ball too, even thogh it will not be visible.
+                            gBall.Current_YardLine = p.Current_YardLine;
+                            gBall.Current_Vertical_Percent_Pos = slot_vert;
+
+                            logger.Debug("prev_yl:" + prev_yl.ToString() + " prev_v:" + prev_v.ToString());
+                            logger.Debug("Current_YardLine:" + p.Current_YardLine.ToString() + " Current_Vertical_Percent_Pos:" + p.Current_Vertical_Percent_Pos.ToString());
+
+                            if (!bSim)
+                            {
+                                Player_States moving_ps = setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos);
+                                Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, true, false, moving_ps, null, null, Movement.LINE, null);
+                                Action pas2 = new Action(Game_Object_Types.P, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, true, false, Player_States.TACKLED, null, null, Movement.NONE, null);
+                                Play_Stage pStage = new Play_Stage();
+                                pStage.Main_Object = false;
+                                pStage.Actions.Add(pas);
+                                pStage.Actions.Add(pas2);
+                                p.Stages.Add(pStage);
+
+                                //for the ball
+                                gBall.State = Ball_States.CARRIED;
+                                Action bas = new Action(Game_Object_Types.B, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, true, false, null, gBall.State, null, Movement.LINE, Ball_Speed.SLOW);
+                                Play_Stage bStage = new Play_Stage();
+                                bStage.Main_Object = true;
+                                bStage.Actions.Add(bas);
+                                gBall.Stages.Add(bStage);
+                            }
                         }
+                        else
+                        {
+                            logger.Debug("Breaks Thru:");
+
+                            double prev_yl = p.Current_YardLine;
+                            double prev_v = p.Current_Vertical_Percent_Pos;
+
+                            //                            p.Current_YardLine = BreakAwayYardline;
+                            p.Current_YardLine = Kicker.Current_YardLine;
+                            p.Current_Vertical_Percent_Pos = slot_vert;
+
+                            gBall.Current_YardLine = p.Current_YardLine;
+                            gBall.Current_Vertical_Percent_Pos = p.Current_Vertical_Percent_Pos;
+
+                            logger.Debug("prev_yl:" + prev_yl.ToString() + " prev_v:" + prev_v.ToString());
+                            logger.Debug("Current_YardLine:" + p.Current_YardLine.ToString() + " Current_Vertical_Percent_Pos:" + p.Current_Vertical_Percent_Pos.ToString());
+
+                            if (!bSim)
+                            {
+                                Player_States moving_ps = setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos);
+                                Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, false, false, moving_ps, null, null, Movement.LINE, null);
+                                Action pas2 = new Action(Game_Object_Types.P, p.Current_YardLine, p.Current_Vertical_Percent_Pos, BreakAwayYardline, p.Current_Vertical_Percent_Pos, false, false, moving_ps, null, null, Movement.LINE, null);
+                                Play_Stage pStage = new Play_Stage();
+                                pStage.Main_Object = false;
+                                pStage.Actions.Add(pas);
+                                pStage.Actions.Add(pas2);
+                                p.Stages.Add(pStage);
+
+                                //for the ball
+                                gBall.State = Ball_States.CARRIED;
+                                Action bas = new Action(Game_Object_Types.B, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, true, false, null, gBall.State, null, Movement.LINE, Ball_Speed.SLOW);
+                                Action bas2 = new Action(Game_Object_Types.B, p.Current_YardLine, p.Current_Vertical_Percent_Pos, BreakAwayYardline, p.Current_Vertical_Percent_Pos, true, false, null, gBall.State, null, Movement.LINE, Ball_Speed.SLOW);
+                                Play_Stage bStage = new Play_Stage();
+                                bStage.Main_Object = true;
+                                bStage.Actions.Add(bas);
+                                bStage.Actions.Add(bas2);
+                                gBall.Stages.Add(bStage);
+                            }
+
+                            p.Current_YardLine = BreakAwayYardline;
+                            gBall.Current_YardLine = p.Current_YardLine;
+                        }
+
                     }
                     else
                     {
-                        logger.Debug("Breaks Thru:");
-
-                        double prev_yl = p.Current_YardLine;
-                        double prev_v = p.Current_Vertical_Percent_Pos;
-
-                        p.Current_YardLine = BreakAwayYardline;
-                        p.Current_Vertical_Percent_Pos = slot_vert;
-
-                        gBall.Current_YardLine = p.Current_YardLine;
-                        gBall.Current_Vertical_Percent_Pos = p.Current_Vertical_Percent_Pos;
-
-                        logger.Debug("prev_yl:" + prev_yl.ToString() + " prev_v:" + prev_v.ToString());
-                        logger.Debug("Current_YardLine:" + p.Current_YardLine.ToString() + " Current_Vertical_Percent_Pos:" + p.Current_Vertical_Percent_Pos.ToString());
-
                         if (!bSim)
                         {
-                            Player_States moving_ps = setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos);
-                            Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, false, false, moving_ps, null, null, Movement.LINE, null);
+                            Action pas = new Action(Game_Object_Types.P, p.Starting_YardLine, p.Starting_Vertical_Percent_Pos, 0.0, 0.0, false, false, Player_States.BLOCKING, null, null, Movement.NONE, null);
                             Play_Stage pStage = new Play_Stage();
                             pStage.Main_Object = false;
                             pStage.Actions.Add(pas);
                             p.Stages.Add(pStage);
-
-                            //for the ball
-                            gBall.State = Ball_States.CARRIED;
-                            Action bas = new Action(Game_Object_Types.B, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, true, false, null, gBall.State, null, Movement.LINE, Ball_Speed.SLOW);
-                            Play_Stage bStage = new Play_Stage();
-                            bStage.Main_Object = true;
-                            bStage.Actions.Add(bas);
-                            gBall.Stages.Add(bStage);
                         }
                     }
-
                 }
-                else
-                {
-                    if (!bSim)
-                    {
-                        Action pas = new Action(Game_Object_Types.P, p.Starting_YardLine, p.Starting_Vertical_Percent_Pos, 0.0, 0.0, false, false, Player_States.BLOCKING, null, null, Movement.NONE, null);
-                        Play_Stage pStage = new Play_Stage();
-                        pStage.Main_Object = false;
-                        pStage.Actions.Add(pas);
-                        p.Stages.Add(pStage);
-                    }
-                }
-            }
+            } //not tackled
 
             //===== end of stage six
             if (!bSim) r.Play_Stages = Play_Stages;
@@ -2042,7 +2032,7 @@ namespace SpectatorFootball.GameNS
         {
             Player_States r = Player_States.RUNNING_FORWARD;
             double xdiff = x2 - x1;
-            double ydiff = (y2 - y1) / 2.0;
+            double ydiff = (y2 - y1) / 2.5;
 
             if (Math.Abs(xdiff) >= Math.Abs(ydiff))
             {

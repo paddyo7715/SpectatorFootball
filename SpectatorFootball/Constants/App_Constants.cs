@@ -511,8 +511,8 @@ namespace SpectatorFootball
 
         //Kickoff
         public const int KICKOFF_GROUP_CALC_VARIABLE = 40;
-        public const int KICKOFF_AVOID_TRACKER_CALC_VARIABLE = 100;
-        public const int KICKOFF_KICKER_MAKE_TACKLE_CALC_VARIABLE = 100;
+        public const int KICKOFF_AVOID_TRACKER_CALC_VARIABLE = 102;
+        public const int KICKOFF_KICKER_MAKE_TACKLE_CALC_VARIABLE = 70;
         public const int KICKOFF_SPEED_CUTOFF = 70;
         public const int KICKOFF_AGILITY_CUTOFF = 40;
         public const int KICKOFF_PLAYERS_IN_GROUP = 5;
