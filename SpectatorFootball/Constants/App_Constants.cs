@@ -510,10 +510,10 @@ namespace SpectatorFootball
         public const int KICKOFF_ACC_CALC_VARIABLE = 110;
 
         //Kickoff
-        public const int KICKOFF_GROUP_CALC_VARIABLE = 40;
+        public const int KICKOFF_GROUP_CALC_VARIABLE = 54;
         public const int KICKOFF_AVOID_TRACKER_CALC_VARIABLE = 102;
         public const int KICKOFF_KICKER_MAKE_TACKLE_CALC_VARIABLE = 70;
-        public const int KICKOFF_SPEED_CUTOFF = 70;
+        public const int KICKOFF_SPEED_CUTOFF = 50;
         public const int KICKOFF_AGILITY_CUTOFF = 40;
         public const int KICKOFF_PLAYERS_IN_GROUP = 5;
         public const int KICKOFF_TACKLING_GROUPS = 3;
@@ -526,9 +526,10 @@ namespace SpectatorFootball
         public const double KICKOFF_GROUP_VERT_DIST = 7.0;
         public const double KICKOFF_DIST_BETWEEN_BLOCK_ATTACHERS = 1.5;
         public const double MOVEMENT_DIST_BEFORE_TURNING_BACK = 8.0;
-        public const int KICKOFF_BLOCKER_TACKLER_CALC_VARIABLE = 500;
+        public const int KICKOFF_BLOCKER_TACKLER_CALC_VARIABLE = 300;
         public const int KICKOFF_TACKLE_FLATTENED_BLOCKER_ADVANTAGE = 2;
-        public const double KICKOFF_ADJACENT_TACKLE_REDUCER = -0.2;
-        public const double KICKOFF_TACKLE_ADVANTAGE = 1.5;
+        public const int KICKOFF_TACKLE_ADVANTAGE = 2;
+        public const int KICKOFF_AFTER_FIRST_GROUP_SLOT_VARIANCE = 2;
+        public const int KICKOFF_TACKLE_TEST_ADJUSTER = 900;  //Set 0 normally or high to test
     }
 }
