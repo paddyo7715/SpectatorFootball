@@ -646,9 +646,7 @@ namespace SpectatorFootball.WindowsLeague
                     xxx++;
             }
 
-            //Place the ball on the field if not carried
-            if (Game_Ball.bState != Ball_States.CARRIED)
-                setBAll(Game_Ball, a_edge, bLefttoRight);
+            setBAll(Game_Ball, a_edge, bLefttoRight);
 
             DoEvents();
 

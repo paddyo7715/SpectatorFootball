@@ -1278,7 +1278,6 @@ namespace SpectatorFootball.GameNS
             if (bLefttoRight) bLefttoRight = false; else bLefttoRight = true;
             //                r.bSwitchPossession = true;
 
-
             for (int i = 1; i <= app_Constants.KICKOFF_TACKLING_GROUPS; i++)
             {
                 List<int?> group = null;
@@ -1511,7 +1510,7 @@ namespace SpectatorFootball.GameNS
 
                                 //for the ball
                                 gBall.State = Ball_States.CARRIED;
-                                Action bas = new Action(Game_Object_Types.B, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, true, false, null, gBall.State, null, Movement.LINE, Ball_Speed.SLOW);
+                                Action bas = new Action(Game_Object_Types.B, prev_yl, prev_v, gBall.Current_YardLine, gBall.Current_Vertical_Percent_Pos, true, false, null, gBall.State, null, Movement.LINE, Ball_Speed.SLOW);
                                 Play_Stage bStage = new Play_Stage();
                                 bStage.Main_Object = true;
                                 bStage.Actions.Add(bas);
@@ -1537,7 +1536,7 @@ namespace SpectatorFootball.GameNS
                             if (!bSim)
                             {
                                 Player_States moving_ps = setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos);
-                                Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, false, false, moving_ps, null, null, Movement.LINE, null);
+                                Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, true, false, moving_ps, null, null, Movement.LINE, null);
                                 Play_Stage pStage = new Play_Stage();
                                 pStage.Main_Object = false;
                                 pStage.Actions.Add(pas);
@@ -1756,8 +1755,8 @@ namespace SpectatorFootball.GameNS
                             if (!bSim)
                             {
                                 Player_States moving_ps = setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos);
-                                Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, false, false, moving_ps, null, null, Movement.LINE, null);
-                                Action pas2 = new Action(Game_Object_Types.P, p.Current_YardLine, p.Current_Vertical_Percent_Pos, BreakAwayYardline, p.Current_Vertical_Percent_Pos, false, false, moving_ps, null, null, Movement.LINE, null);
+                                Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, true, false, moving_ps, null, null, Movement.LINE, null);
+                                Action pas2 = new Action(Game_Object_Types.P, p.Current_YardLine, p.Current_Vertical_Percent_Pos, BreakAwayYardline, p.Current_Vertical_Percent_Pos, true, false, moving_ps, null, null, Movement.LINE, null);
                                 Play_Stage pStage = new Play_Stage();
                                 pStage.Main_Object = false;
                                 pStage.Actions.Add(pas);

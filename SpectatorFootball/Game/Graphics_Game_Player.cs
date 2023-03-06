@@ -57,7 +57,7 @@ namespace SpectatorFootball.GameNS
                     break;
                 case Player_States.RUNNING_FORWARD:
                     if (bCarringBall)
-                        if (graph_pState != Graphics_Player_States.RUNNING_1)
+                        if (graph_pState != Graphics_Player_States.RUNNING_WITH_BALL_1)
                             r = Graphics_Player_States.RUNNING_WITH_BALL_1;
                         else
                             r = Graphics_Player_States.RUNNING_WITH_BALL_2;
@@ -137,6 +137,9 @@ namespace SpectatorFootball.GameNS
 
                 pState = (Player_States)act.p_state;
                 bPlayerCatchesBall = pStage.Player_Catches_Ball;
+
+                bCarringBall = act.bPossesses_Ball;
+
                 graph_pState = setGraphicsState(pState);
 
                 //Only if there are actions/movements left.
