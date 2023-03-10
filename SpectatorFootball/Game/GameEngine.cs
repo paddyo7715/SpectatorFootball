@@ -1411,24 +1411,35 @@ namespace SpectatorFootball.GameNS
                 }
 
                 logger.Debug("bTackled:" + bTackled.ToString());
-                //bpo sopped heret
                 double Breakthrough_len = 0.0;
                 double Breakthrough_vert = 0.0;
 
-                double Possible_tackler_len = 0.0;
-                double Possible_tackler_vert = 0.0;
-                double returner_slot_vert = 0.0;
-                Breakthrough_vert = returner_catch_vert + getKickoffGroupOffset(slot_index);
-                Breakthrough_len = (app_Constants.KICKOFF_GROUP_1_MAX - app_Constants.KICKOFF_GROUP_1_MIN) + (app_Constants.KICKOFF_GROUP_2_MIN - app_Constants.KICKOFF_GROUP_1_MAX);
+                double returner_before_tackler_yardline = 0.0;
+                double returner_before_tackler_vert = 0.0;
 
-                logger.Debug("Breakthrough_len:" + Breakthrough_len.ToString() + " Breakthrough_vert:" + Breakthrough_vert);
+                double returner_slot_vert = 0.0;
+                double dbetweenVert = 0.0;
 
                 if (Tackler != null)
                 {
+                    //the runner will run one yard before the tackler and then swerve up or down
+                    returner_before_tackler_yardline = Tackler.Current_YardLine - (app_Constants.KICKOFF_YARDS_BEFORE_TACKLER * HorizontalAdj(true));
+                    returner_before_tackler_vert = Tackler.Current_Vertical_Percent_Pos;
+
+                    dbetweenVert = app_Constants.KICKOFF_GROUP_VERT_DIST / 2.0;
+                    double returner_swerve_vert;
+                    int r_swerve = CommonUtils.getRandomNum(1, 2);
+                    if (r_swerve == 1)
+                        dbetweenVert *= -1;
+
+                    returner_swerve_vert = Tackler.Current_Vertical_Percent_Pos + dbetweenVert;
+
                     logger.Debug("Slot: " + slot_index + "Curent vert: " + Tackler.Current_Vertical_Percent_Pos + " getKickoffGroupOffset:" + getKickoffGroupOffset(slot_index));
-                    returner_slot_vert = Tackler.Current_Vertical_Percent_Pos;
-                    Possible_tackler_vert = returner_slot_vert;
-                    Possible_tackler_len = 0.4;
+                }
+                else
+                {
+                    Breakthrough_vert = returner_catch_vert + getKickoffGroupOffset(slot_index);
+                    Breakthrough_len = (app_Constants.KICKOFF_GROUP_1_MAX - app_Constants.KICKOFF_GROUP_1_MIN) + (app_Constants.KICKOFF_GROUP_2_MIN - app_Constants.KICKOFF_GROUP_1_MAX);
                 }
 
                 id_Players = 0;
@@ -1437,20 +1448,32 @@ namespace SpectatorFootball.GameNS
                     if (p == Tackler)
                     {
                         logger.Debug("Tacker:");
+
+                        //keep blocking till the returner runs up to you
+                        if (!bSim)
+                        {
+                            Action pas = new Action(Game_Object_Types.P, p.Starting_YardLine, p.Starting_Vertical_Percent_Pos, 0.0, 0.0, false, false, Player_States.BLOCKING, null, Game_Sounds.PLAYERS_COLLIDING, Movement.NONE, null);
+                            Play_Stage pStage = new Play_Stage();
+                            pStage.Main_Object = false;
+                            pStage.Actions.Add(pas);
+                            p.Stages.Add(pStage);
+                        }
+
                         double prev_yl = p.Current_YardLine;
                         double prev_v = p.Current_Vertical_Percent_Pos;
 
-                        p.Current_YardLine += Possible_tackler_len * HorizontalAdj(bLefttoRight);
-                        p.Current_Vertical_Percent_Pos = Possible_tackler_vert;
+                        p.Current_Vertical_Percent_Pos += dbetweenVert;
 
                         logger.Debug("prev_yl:" + prev_yl.ToString() + " prev_v:" + prev_v.ToString());
                         logger.Debug("Current_YardLine:" + p.Current_YardLine.ToString() + " Current_Vertical_Percent_Pos:" + p.Current_Vertical_Percent_Pos.ToString());
 
+                        //Move vertically to make the tackle
                         if (!bSim)
                         {
                             Player_States moving_ps = setRunningState(bLefttoRight, false, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos);
                             Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, false, false, moving_ps, null, null, Movement.LINE, null);
                             Action pas2 = new Action(Game_Object_Types.P, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, false, false, Player_States.TACKLING, null, null, Movement.NONE, null);
+                            Action pas3 = new Action(Game_Object_Types.P, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, false, false, Player_States.ON_BACK, null, null, Movement.NONE, null);
                             Play_Stage pStage = new Play_Stage();
                             pStage.Main_Object = false;
                             pStage.Actions.Add(pas);
@@ -1468,6 +1491,13 @@ namespace SpectatorFootball.GameNS
                             pStage.Main_Object = false;
                             pStage.Actions.Add(pas);
                             p.Stages.Add(pStage);
+
+                            //If there is a tackler then  continue to block while he attempts the tackle
+                            if (Tackler != null)
+                            {
+                                pStage.Actions.Add(pas);
+                                p.Stages.Add(pStage);
+                            }
                         }
                     }
                     id_Players++;
@@ -1479,15 +1509,15 @@ namespace SpectatorFootball.GameNS
                     if (p == Returner)  //Kick Returner
                     {
                         logger.Debug("Returner: ID " + id_Players);
-                        if (bTackled)
+                        if (Tackler != null)
                         {
-                            logger.Debug("Gets Tackled:");
+                            logger.Debug("Returner runs up to tackler:");
 
                             double prev_yl = p.Current_YardLine;
                             double prev_v = p.Current_Vertical_Percent_Pos;
 
-                            p.Current_YardLine = Tackler.Current_YardLine;
-                            p.Current_Vertical_Percent_Pos = returner_slot_vert;
+                            p.Current_YardLine = returner_before_tackler_yardline;
+                            p.Current_Vertical_Percent_Pos = returner_before_tackler_vert;
 
                             //must move the ball too, even thogh it will not be visible.
                             gBall.Current_YardLine = p.Current_YardLine;
@@ -1496,16 +1526,47 @@ namespace SpectatorFootball.GameNS
                             logger.Debug("prev_yl:" + prev_yl.ToString() + " prev_v:" + prev_v.ToString());
                             logger.Debug("Current_YardLine:" + p.Current_YardLine.ToString() + " Current_Vertical_Percent_Pos:" + p.Current_Vertical_Percent_Pos.ToString());
 
+                            if (!bSim)
+                            {
+                                Player_States moving_ps = setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos);
+                                Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, true, false, moving_ps, null, null, Movement.LINE, null); Play_Stage pStage = new Play_Stage();
+                                pStage.Main_Object = false;
+                                pStage.Actions.Add(pas);
+                                p.Stages.Add(pStage);
+
+                                //for the ball
+                                gBall.State = Ball_States.CARRIED;
+                                Action bas = new Action(Game_Object_Types.B, prev_yl, prev_v, gBall.Current_YardLine, gBall.Current_Vertical_Percent_Pos, true, false, null, gBall.State, null, Movement.LINE, Ball_Speed.SLOW);
+                                Play_Stage bStage = new Play_Stage();
+                                bStage.Main_Object = true;
+                                bStage.Actions.Add(bas);
+                                gBall.Stages.Add(bStage);
+                            }
+
+                            //he either gets tackled or not
+                            prev_yl = p.Current_YardLine;
+                            prev_v = p.Current_Vertical_Percent_Pos;
+
+                            p.Current_YardLine = Tackler.Current_YardLine;
+                            p.Current_Vertical_Percent_Pos = Tackler.Current_Vertical_Percent_Pos;
+
+                            //must move the ball too, even thogh it will not be visible.
+                            gBall.Current_YardLine = p.Current_YardLine;
+                            gBall.Current_Vertical_Percent_Pos = p.Current_Vertical_Percent_Pos;
+
+                            logger.Debug("prev_yl:" + prev_yl.ToString() + " prev_v:" + prev_v.ToString());
+                            logger.Debug("Current_YardLine:" + p.Current_YardLine.ToString() + " Current_Vertical_Percent_Pos:" + p.Current_Vertical_Percent_Pos.ToString());
 
                             if (!bSim)
                             {
                                 Player_States moving_ps = setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos);
                                 Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, true, false, moving_ps, null, null, Movement.LINE, null);
-                                Action pas2 = new Action(Game_Object_Types.P, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, true, false, Player_States.TACKLED, null, null, Movement.NONE, null);
+                                Action pas2 = null;
+                                if (bTackled) pas2 = new Action(Game_Object_Types.P, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, true, false, Player_States.TACKLED, null, null, Movement.NONE, null);
                                 Play_Stage pStage = new Play_Stage();
                                 pStage.Main_Object = false;
                                 pStage.Actions.Add(pas);
-                                pStage.Actions.Add(pas2);
+                                if (bTackled)  pStage.Actions.Add(pas2);
                                 p.Stages.Add(pStage);
 
                                 //for the ball
@@ -1519,7 +1580,7 @@ namespace SpectatorFootball.GameNS
                         }
                         else
                         {
-                            logger.Debug("Breaks Thru:");
+                            logger.Debug("Returner Breaks Thru:");
 
                             double prev_yl = p.Current_YardLine;
                             double prev_v = p.Current_Vertical_Percent_Pos;
@@ -1564,6 +1625,14 @@ namespace SpectatorFootball.GameNS
                             pStage.Main_Object = false;
                             pStage.Actions.Add(pas);
                             p.Stages.Add(pStage);
+
+                            if (Tackler != null)
+                            {
+                                pas = new Action(Game_Object_Types.P, p.Current_YardLine, p.Current_Vertical_Percent_Pos, p.Current_YardLine, p.Current_Vertical_Percent_Pos, false, false, Player_States.STANDING, null, null, Movement.LINE, null);
+                                pStage.Main_Object = false;
+                                pStage.Actions.Add(pas);
+                                p.Stages.Add(pStage);
+                            }
                         }
                     }
                     else
@@ -1575,6 +1644,14 @@ namespace SpectatorFootball.GameNS
                             pStage.Main_Object = false;
                             pStage.Actions.Add(pas);
                             p.Stages.Add(pStage);
+
+                            if (Tackler != null)
+                            {
+                                pas = new Action(Game_Object_Types.P, p.Current_YardLine, p.Current_Vertical_Percent_Pos, p.Current_YardLine, p.Current_Vertical_Percent_Pos, false, false, Player_States.BLOCKING, null, null, Movement.LINE, null);
+                                pStage.Main_Object = false;
+                                pStage.Actions.Add(pas);
+                                p.Stages.Add(pStage);
+                            }
                         }
                     }
                     id_Players++;
