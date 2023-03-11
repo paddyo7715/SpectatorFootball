@@ -1423,7 +1423,7 @@ namespace SpectatorFootball.GameNS
                 if (Tackler != null)
                 {
                     //the runner will run one yard before the tackler and then swerve up or down
-                    returner_before_tackler_yardline = Tackler.Current_YardLine - (app_Constants.KICKOFF_YARDS_BEFORE_TACKLER * HorizontalAdj(true));
+                    returner_before_tackler_yardline = Tackler.Current_YardLine - (app_Constants.KICKOFF_YARDS_BEFORE_TACKLER * HorizontalAdj(bLefttoRight));
                     returner_before_tackler_vert = Tackler.Current_Vertical_Percent_Pos;
 
                     dbetweenVert = app_Constants.KICKOFF_GROUP_VERT_DIST / 2.0;
