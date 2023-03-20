@@ -977,26 +977,16 @@ namespace SpectatorFootball.GameNS
                     Action pas2 = null;
                     double prev_yl = p.Current_YardLine;
                     double prev_v = p.Current_Vertical_Percent_Pos;
-                    p.Current_YardLine += 5.4 * HorizontalAdj(bLefttoRight);
+                    double Runup_end_yardline = p.Current_YardLine += 5.4 * HorizontalAdj(bLefttoRight);
+                    double Runup_end_vert_pos = p.Current_Vertical_Percent_Pos += 0.0;
+
+                    p.Current_YardLine = Runup_end_yardline +(0.4 * HorizontalAdj(bLefttoRight));
+                    p.Current_Vertical_Percent_Pos += 0.0;
 
                     if (!bSim)
                     {
                         Player_States moving_ps = setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos);
-                        pas = new Action(Game_Object_Types.P, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, false, false, moving_ps, null, null, Movement.LINE, null);
-                    }
-                    prev_yl = p.Current_YardLine;
-                    prev_v = p.Current_Vertical_Percent_Pos;
-                    p.Current_YardLine += 0.4 * HorizontalAdj(bLefttoRight);
-                    p.Current_Vertical_Percent_Pos += 0.0;
-                    if (!bSim) pas2 = new Action(Game_Object_Types.P, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, false, true, Player_States.FG_KICK, null, Game_Sounds.KICK, Movement.LINE, null);
-
-                    if (!bSim)
-                    {
-                        Play_Stage pStage = new Play_Stage();
-                        pStage.Main_Object = true;
-                        pStage.Actions.Add(pas);
-                        pStage.Actions.Add(pas2);
-                        p.Stages.Add(pStage);
+                        p.KickBall(moving_ps, prev_yl, prev_v, Runup_end_yardline, Runup_end_vert_pos);
                     }
                 }
                 else
@@ -1464,12 +1454,12 @@ namespace SpectatorFootball.GameNS
                         {
                             Player_States moving_ps = setRunningState(bLefttoRight, false, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos);
                             Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, false, false, moving_ps, null, null, Movement.LINE, null);
-                            Action pas2 = new Action(Game_Object_Types.P, prev_yl, prev_v, p.Current_YardLine + (app_Constants.TACKLER_FOO_MOVE * HorizontalAdj(bLefttoRight)), p.Current_Vertical_Percent_Pos, false, false, Player_States.TACKLING, null, null, Movement.LINE, null);
+//                            Action pas2 = new Action(Game_Object_Types.P, prev_yl, prev_v, p.Current_YardLine + (app_Constants.TACKLER_FOO_MOVE * HorizontalAdj(bLefttoRight)), p.Current_Vertical_Percent_Pos, false, false, Player_States.TACKLING, null, null, Movement.LINE, null);
                             Action pas3 = new Action(Game_Object_Types.P, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, false, false, Player_States.ON_BACK, null, null, Movement.NONE, null);
                             Play_Stage pStage = new Play_Stage();
                             pStage.Main_Object = false;
                             pStage.Actions.Add(pas);
-                            pStage.Actions.Add(pas2);
+//                            pStage.Actions.Add(pas2);
                             pStage.Actions.Add(pas3);
                             p.Stages.Add(pStage);
                         }
@@ -1537,12 +1527,7 @@ namespace SpectatorFootball.GameNS
                                 p.Stages.Add(pStage);
 
                                 //for the ball
-                                gBall.State = Ball_States.CARRIED;
-                                Action bas = new Action(Game_Object_Types.B, prev_yl, prev_v, gBall.Current_YardLine, gBall.Current_Vertical_Percent_Pos, true, false, null, gBall.State, null, Movement.LINE, Ball_Speed.SLOW);
-                                Play_Stage bStage = new Play_Stage();
-                                bStage.Main_Object = true;
-                                bStage.Actions.Add(bas);
-                                gBall.Stages.Add(bStage);
+                                gBall.Carried(prev_yl, prev_v);
                             }
 
                             //he either gets tackled or not
@@ -1572,12 +1557,7 @@ namespace SpectatorFootball.GameNS
                                 p.Stages.Add(pStage);
 
                                 //for the ball
-                                gBall.State = Ball_States.CARRIED;
-                                Action bas = new Action(Game_Object_Types.B, prev_yl, prev_v, gBall.Current_YardLine, gBall.Current_Vertical_Percent_Pos, true, false, null, gBall.State, null, Movement.LINE, Ball_Speed.SLOW);
-                                Play_Stage bStage = new Play_Stage();
-                                bStage.Main_Object = true;
-                                bStage.Actions.Add(bas);
-                                gBall.Stages.Add(bStage);
+                                gBall.Carried(prev_yl, prev_v);
                             }
                         }
                         else
@@ -1606,12 +1586,7 @@ namespace SpectatorFootball.GameNS
                                 p.Stages.Add(pStage);
 
                                 //for the ball
-                                gBall.State = Ball_States.CARRIED;
-                                Action bas = new Action(Game_Object_Types.B, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, true, false, null, gBall.State, null, Movement.LINE, Ball_Speed.SLOW);
-                                Play_Stage bStage = new Play_Stage();
-                                bStage.Main_Object = true;
-                                bStage.Actions.Add(bas);
-                                gBall.Stages.Add(bStage);
+                                gBall.Carried(prev_yl, prev_v);
                             }
                         }
                     }
@@ -1794,7 +1769,7 @@ namespace SpectatorFootball.GameNS
                         //keep blocking till the returner runs up to you
                         if (!bSim)
                         {
-                            Action pas = new Action(Game_Object_Types.P, p.Starting_YardLine, p.Starting_Vertical_Percent_Pos, 0.0, 0.0, false, false, Player_States.BLOCKING, null, Game_Sounds.PLAYERS_COLLIDING, Movement.NONE, null);
+                            Action pas = new Action(Game_Object_Types.P, p.Starting_YardLine, p.Starting_Vertical_Percent_Pos, 0.0, 0.0, false, false, Player_States.STANDING, null, Game_Sounds.PLAYERS_COLLIDING, Movement.NONE, null);
                             Play_Stage pStage = new Play_Stage();
                             pStage.Main_Object = false;
                             pStage.Actions.Add(pas);
@@ -1814,12 +1789,12 @@ namespace SpectatorFootball.GameNS
                         {
                             Player_States moving_ps = setRunningState(bLefttoRight, false, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos);
                             Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, false, false, moving_ps, null, null, Movement.LINE, null);
-                            Action pas2 = new Action(Game_Object_Types.P, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, false, false, Player_States.TACKLING, null, null, Movement.NONE, null);
+//                            Action pas2 = new Action(Game_Object_Types.P, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, false, false, Player_States.TACKLING, null, null, Movement.NONE, null);
                             Action pas3 = new Action(Game_Object_Types.P, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, false, false, Player_States.ON_BACK, null, null, Movement.NONE, null);
                             Play_Stage pStage = new Play_Stage();
                             pStage.Main_Object = false;
                             pStage.Actions.Add(pas);
-                            pStage.Actions.Add(pas2);
+//                            pStage.Actions.Add(pas2);
                             p.Stages.Add(pStage);
                         }
                     }
@@ -1885,12 +1860,7 @@ namespace SpectatorFootball.GameNS
                                 p.Stages.Add(pStage);
 
                                 //for the ball
-                                gBall.State = Ball_States.CARRIED;
-                                Action bas = new Action(Game_Object_Types.B, prev_yl, prev_v, gBall.Current_YardLine, gBall.Current_Vertical_Percent_Pos, true, false, null, gBall.State, null, Movement.LINE, Ball_Speed.SLOW);
-                                Play_Stage bStage = new Play_Stage();
-                                bStage.Main_Object = true;
-                                bStage.Actions.Add(bas);
-                                gBall.Stages.Add(bStage);
+                                gBall.Carried(prev_yl, prev_v);
                             }
 
                             //he either gets tackled or not
@@ -1920,12 +1890,7 @@ namespace SpectatorFootball.GameNS
                                 p.Stages.Add(pStage);
 
                                 //for the ball
-                                gBall.State = Ball_States.CARRIED;
-                                Action bas = new Action(Game_Object_Types.B, prev_yl, prev_v, gBall.Current_YardLine, gBall.Current_Vertical_Percent_Pos, true, false, null, gBall.State, null, Movement.LINE, Ball_Speed.SLOW);
-                                Play_Stage bStage = new Play_Stage();
-                                bStage.Main_Object = true;
-                                bStage.Actions.Add(bas);
-                                gBall.Stages.Add(bStage);
+                                gBall.Carried(prev_yl, prev_v);
                             }
                         }
                         else
@@ -1953,12 +1918,7 @@ namespace SpectatorFootball.GameNS
                                 p.Stages.Add(pStage);
 
                                 //for the ball
-                                gBall.State = Ball_States.CARRIED;
-                                Action bas = new Action(Game_Object_Types.B, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, true, false, null, gBall.State, null, Movement.LINE, Ball_Speed.SLOW);
-                                Play_Stage bStage = new Play_Stage();
-                                bStage.Main_Object = true;
-                                bStage.Actions.Add(bas);
-                                gBall.Stages.Add(bStage);
+                                gBall.Carried(prev_yl, prev_v);
                             }
                         }
                     }

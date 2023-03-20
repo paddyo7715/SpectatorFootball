@@ -54,6 +54,17 @@ namespace SpectatorFootball.GameNS
 
             Stages.Add(new_st);
         }
+
+        public void KickBall(Player_States moving_ps, double prev_yl_1, double prev_v_1, double RunUp_YardLine_1, double RunUp_Vertical_Percent_Pos_1)
+        {
+            Action pas1 = new Action(Game_Object_Types.P, prev_yl_1, prev_v_1, RunUp_YardLine_1, RunUp_Vertical_Percent_Pos_1, false, false, moving_ps, null, null, Movement.LINE, null);
+            Action pas2 = new Action(Game_Object_Types.P, RunUp_YardLine_1, RunUp_Vertical_Percent_Pos_1, Current_YardLine, Current_Vertical_Percent_Pos, false, true, Player_States.FG_KICK, null, Game_Sounds.KICK, Movement.LINE, null);
+            Play_Stage pStage = new Play_Stage();
+            pStage.Main_Object = true;
+            pStage.Actions.Add(pas1);
+            pStage.Actions.Add(pas2);
+            Stages.Add(pStage);
+        }
     }
 
 

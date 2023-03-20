@@ -37,5 +37,13 @@ namespace SpectatorFootball.GameNS
             bStage.Actions.Add(bas);
             Stages.Add(bStage);
         }
+        public void Carried(double prev_yl, double prev_v)
+        {
+            Action bas = new Action(Game_Object_Types.B, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, true, false, null, Ball_States.CARRIED, null, Movement.LINE, Ball_Speed.SLOW);
+            Play_Stage bStage = new Play_Stage();
+            bStage.Main_Object = true;
+            bStage.Actions.Add(bas);
+            Stages.Add(bStage);
+        }
     }
 }
