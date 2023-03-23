@@ -529,7 +529,7 @@ namespace SpectatorFootball
         public const int KICKOFF_BLOCKER_TACKLER_CALC_VARIABLE = 300;
         public const int KICKOFF_TACKLE_FLATTENED_BLOCKER_ADVANTAGE = 2;
         public const int KICKOFF_TACKLE_ADVANTAGE = 2;
-        public const int KICKOFF_AFTER_FIRST_GROUP_SLOT_VARIANCE = 2;
+        public const int KICKOFF_AFTER_FIRST_GROUP_SLOT_VARIANCE = 1;
         public const double KICKOFF_YARDS_BEFORE_TACKLER = 2.5;
         public const int KICKOFF_TACKLE_TEST_ADJUSTER = 10000;  //Set 0 normally or high to test
 

@@ -65,6 +65,39 @@ namespace SpectatorFootball.GameNS
             pStage.Actions.Add(pas2);
             Stages.Add(pStage);
         }
+
+        public void Block()
+        {
+            Action pas = new Action(Game_Object_Types.P, Current_YardLine, Current_Vertical_Percent_Pos, Current_YardLine, Current_Vertical_Percent_Pos, false, false, Player_States.BLOCKING, null, null, Movement.NONE, null);
+            Play_Stage pStage = new Play_Stage();
+            pStage.Main_Object = false;
+            pStage.Actions.Add(pas);
+            Stages.Add(pStage);
+        }
+        public void Run_Then_Stand(Player_States moving_ps, double prev_yl, double prev_v)
+        {
+            Action pas = null;
+            pas = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, false, false, moving_ps, null, null, Movement.LINE, null);
+            Action pas2 = new Action(Game_Object_Types.P, Starting_YardLine, Starting_Vertical_Percent_Pos, 0.0, 0.0, false, false, Player_States.STANDING, null, null, Movement.NONE, null);
+            Play_Stage pStage = new Play_Stage();
+            pStage.Main_Object = false;
+            pStage.Actions.Add(pas);
+            pStage.Actions.Add(pas2);
+            Stages.Add(pStage);
+        }
+
+        public void Run_Then_CatchKick(Player_States moving_ps, double prev_yl, double prev_v)
+        {
+            Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, false, false, moving_ps, null, null, Movement.LINE, null);
+            Action pas2 = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, false, true, Player_States.ABOUT_TO_CATCH_KICK, null, null, null, null);
+            Play_Stage pStage = new Play_Stage();
+            pStage.Main_Object = false;
+            pStage.Player_Catches_Ball = true;
+            pStage.Actions.Add(pas);
+            pStage.Actions.Add(pas2);
+            Stages.Add(pStage);
+        }
+
     }
 
 

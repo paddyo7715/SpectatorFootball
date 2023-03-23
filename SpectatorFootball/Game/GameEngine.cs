@@ -973,8 +973,6 @@ namespace SpectatorFootball.GameNS
             {
                 if (p == Kicker)
                 {
-                    Action pas = null;
-                    Action pas2 = null;
                     double prev_yl = p.Current_YardLine;
                     double prev_v = p.Current_Vertical_Percent_Pos;
                     double Runup_end_yardline = p.Current_YardLine += 5.4 * HorizontalAdj(bLefttoRight);
@@ -993,13 +991,7 @@ namespace SpectatorFootball.GameNS
                 {
                     //Other players just stand there waiting for the kick
                     if (!bSim)
-                    {
-                        Action pas = new Action(Game_Object_Types.P, p.Starting_YardLine, p.Starting_Vertical_Percent_Pos, 0.0, 0.0, false, false, Player_States.STANDING, null, null, Movement.NONE, null);
-                        Play_Stage pStage = new Play_Stage();
-                        pStage.Main_Object = false;
-                        pStage.Actions.Add(pas);
-                        p.Stages.Add(pStage);
-                    }
+                        p.Stand();
                 }
                 io_Players++;
             }
@@ -1009,13 +1001,7 @@ namespace SpectatorFootball.GameNS
             {
                 //Receiving players just stand there waiting for the kick
                 if (!bSim)
-                {
-                    Action pas = new Action(Game_Object_Types.P, p.Starting_YardLine, p.Starting_Vertical_Percent_Pos, 0.0, 0.0, false, true, Player_States.STANDING, null, null, Movement.NONE, null);
-                    Play_Stage pStage = new Play_Stage();
-                    pStage.Main_Object = false;
-                    pStage.Actions.Add(pas);
-                    p.Stages.Add(pStage);
-                }
+                    p.Stand();
             }
             //===== End of Stage One - Kicker Runs up to the ball and kicks it ================
             logger.Debug("=======================================================");
@@ -1178,15 +1164,8 @@ namespace SpectatorFootball.GameNS
 
                 if (!bSim)
                 {
-                    Action pas = null;
                     Player_States moving_ps = setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos);
-                    pas = new Action(Game_Object_Types.P, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, false, false, moving_ps, null, null, Movement.LINE, null);
-                    Action pas2 = new Action(Game_Object_Types.P, p.Starting_YardLine, p.Starting_Vertical_Percent_Pos, 0.0, 0.0, false, false, Player_States.STANDING, null, null, Movement.NONE, null);
-                    Play_Stage pStage = new Play_Stage();
-                    pStage.Main_Object = false;
-                    pStage.Actions.Add(pas);
-                    pStage.Actions.Add(pas2);
-                    p.Stages.Add(pStage);
+                    p.Run_Then_Stand(moving_ps, prev_yl, prev_v);
                 }
                 id_Players++;
             }
@@ -1194,9 +1173,6 @@ namespace SpectatorFootball.GameNS
             id_Players = 0;
             foreach (Game_Player p in Return_Players)
             {
-                Action pas = null;
-                Action pas2 = null;
-
                 //The player who will return the ball
                 if (p == Returner)
                 {
@@ -1204,19 +1180,10 @@ namespace SpectatorFootball.GameNS
                     double prev_v = p.Current_Vertical_Percent_Pos;
                     p.Current_YardLine = gBall.Current_YardLine;
                     p.Current_Vertical_Percent_Pos = gBall.Current_Vertical_Percent_Pos;
-                    Player_States moving_ps = setRunningState(bLefttoRight, false, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos);
-                    if (!bSim) pas = new Action(Game_Object_Types.P, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, false, false, moving_ps, null, null, Movement.LINE, null);
-
-                    if (!bSim) pas2 = new Action(Game_Object_Types.P, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, false, true, Player_States.ABOUT_TO_CATCH_KICK, null, null, null, null);
-
                     if (!bSim)
                     {
-                        Play_Stage pStage = new Play_Stage();
-                        pStage.Main_Object = false;
-                        pStage.Player_Catches_Ball = true;
-                        pStage.Actions.Add(pas);
-                        pStage.Actions.Add(pas2);
-                        p.Stages.Add(pStage);
+                        Player_States moving_ps = setRunningState(bLefttoRight, false, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos);
+                        p.Run_Then_CatchKick(moving_ps, prev_yl, prev_v);
                     }
                 }
                 else
@@ -1229,15 +1196,8 @@ namespace SpectatorFootball.GameNS
                     p.Current_Vertical_Percent_Pos = Kickoff_Players[id_Players].Current_Vertical_Percent_Pos;
                     if (!bSim)
                     {
-                        pas = null;
-                        Player_States moving_ps = setRunningState(bLefttoRight, false, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos);
-                        pas = new Action(Game_Object_Types.P, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, false, false, moving_ps, null, null, Movement.LINE, null);
-                        Action pasTwo = new Action(Game_Object_Types.P, p.Starting_YardLine, p.Starting_Vertical_Percent_Pos, 0.0, 0.0, false, false, Player_States.STANDING, null, null, Movement.NONE, null);
-                        Play_Stage pStage = new Play_Stage();
-                        pStage.Main_Object = false;
-                        pStage.Actions.Add(pas);
-                        pStage.Actions.Add(pasTwo);
-                        p.Stages.Add(pStage);
+                        Player_States moving_ps = setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos);
+                        p.Run_Then_Stand(moving_ps, prev_yl, prev_v);
                     }
                 }
                 id_Players++;
@@ -1606,20 +1566,10 @@ namespace SpectatorFootball.GameNS
  
                         if (!bSim)
                         {
-                            Action pas = new Action(Game_Object_Types.P, p.Current_YardLine, p.Current_Vertical_Percent_Pos, p.Current_YardLine, p.Current_Vertical_Percent_Pos, false, false, Player_States.BLOCKING, null, null, Movement.NONE, null);
-                            Play_Stage pStage = new Play_Stage();
-                            pStage.Main_Object = false;
-                            pStage.Actions.Add(pas);
-                            p.Stages.Add(pStage);
+                            p.Block();
 
                             if (Tackler != null)
-                            {
-                                pas = new Action(Game_Object_Types.P, p.Current_YardLine, p.Current_Vertical_Percent_Pos, p.Current_YardLine, p.Current_Vertical_Percent_Pos, false, false, Player_States.STANDING, null, null, Movement.LINE, null);
-                                Play_Stage pStage2 = new Play_Stage();
-                                pStage2.Main_Object = false;
-                                pStage2.Actions.Add(pas);
-                                p.Stages.Add(pStage2);
-                            }
+                                p.Stand();
                         }
                     }
                     else
@@ -1697,9 +1647,10 @@ namespace SpectatorFootball.GameNS
                 //The index of the kicker doesn't matter
                 List<int?> g_list = new List<int?>() {null, null,2,null,null };
                 slot_index = getKickReturnRunSlot(slot_index, bFindOpenSlot, g_list, false);
+                logger.Debug("slot_index:" + slot_index);
 
                 //bpo test
-               //slot_index = 2;
+                //slot_index = 2;
 
                 if (slot_index == 2)
                     bTackler = true;
@@ -2187,38 +2138,6 @@ namespace SpectatorFootball.GameNS
 
             return r;
         }
-        private List<double> getCovageVertList(List<int> lst)
-        {
-            List<double> r = new List<double>();
-
-            int missing_Slots = app_Constants.KICKOFF_PLAYERS_IN_GROUP - lst.Count();
-
-            double posY = -app_Constants.KICKOFF_GROUP_VERT_DIST * 2;
-            int skips = 0;
-            foreach (int i in lst)
-            {
-                bool bFound = false;
-                while (skips < missing_Slots && !bFound)
-                {
-                    int rnd = CommonUtils.getRandomNum(1, 2);
-                    if (rnd == 1)
-                    {
-                        skips++;
-                        posY += app_Constants.KICKOFF_GROUP_VERT_DIST;
-                    }
-                    else
-                        bFound = true;
-                }
-
-                r.Add(posY);
-                posY += app_Constants.KICKOFF_GROUP_VERT_DIST;
-
-            }
-
-
-            return r;
-        }
-
         //This method will expand the passed in tackler group list
         private List<int?> ExpandGroup(List<int?> Group)
         {
