@@ -12,10 +12,12 @@ namespace SpectatorFootball.GameNS
     {
         private static int BALL_NORMAL_SKIP = 12;
         private static int BALL_SLOW_SKIP = 8;
-//        private static int BALL_SLOW_SKIP = 16;
+//        private static int BALL_SLOW_SKIP = 16; 
         private static int PLAYER_SKIP = 8;
+        private static int STARTING_KICK_SKIP = 24;
+        private static int ENDING_KICK_SKIP = 6;
 
-        public static List<PointXY> PlotLine (bool bBall,double sx, double sy, double ex, double ey, bool addEndpoint, Ball_Speed? Ball_Speed)
+        public static List<PointXY> PlotLine (bool bBall,double sx, double sy, double ex, double ey, bool addEndpoint, Ball_Speed? Ball_Speed, Ball_States? b_state)
         {
             List<PointXY> r = new List<PointXY>();
 
@@ -29,7 +31,9 @@ namespace SpectatorFootball.GameNS
             int skip_count;
             if (bBall)
             {
-                if (Ball_Speed == Enum.Ball_Speed.SLOW)
+                if ((b_state == Ball_States.END_OVER_END || b_state == Ball_States.SPIRAL))
+                    skip_count = STARTING_KICK_SKIP;
+                else if (Ball_Speed == Enum.Ball_Speed.SLOW)
                     skip_count = BALL_SLOW_SKIP;
                 else
                     skip_count = BALL_NORMAL_SKIP;
@@ -54,9 +58,10 @@ namespace SpectatorFootball.GameNS
             double slope = (double)(p2Y - p1Y) / (p2X - p1X);
             double x, y;
 
+            int mid_point = quantity / 2;
+
             for (double i = 0; i < quantity; i++)
             {
-
                 y = slope == 0 ? 0 : ydiff * (i / quantity);
                 x = slope == 0 ? xdiff * (i / quantity) : y / slope;
                 int new_x = (int)Math.Round(x) + p1X;
@@ -64,6 +69,20 @@ namespace SpectatorFootball.GameNS
 
                 if ((i + 1) % skip_count > 0)
                     continue;
+
+                if (bBall && (b_state == Ball_States.END_OVER_END || b_state == Ball_States.SPIRAL))
+                {
+                    if (i < mid_point)
+                        skip_count--;
+                    else
+                        skip_count++;
+
+                    if (skip_count > STARTING_KICK_SKIP)
+                        skip_count = STARTING_KICK_SKIP;
+
+                    if (skip_count < ENDING_KICK_SKIP)
+                        skip_count = ENDING_KICK_SKIP;
+                }
 
                 r.Add(new PointXY() { x = new_x / 10.0, y = new_y / 10.0 });
             }

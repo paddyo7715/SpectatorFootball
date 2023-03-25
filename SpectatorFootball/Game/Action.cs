@@ -42,6 +42,7 @@ namespace SpectatorFootball.GameNS
             this.MoveType = MoveType;
             this.Ball_Speed = Ball_Speed;
 
+
             bool bBall = false;
 
             if (type == Game_Object_Types.B)
@@ -50,7 +51,7 @@ namespace SpectatorFootball.GameNS
             switch (MoveType)
             {
                 case Movement.LINE:
-                    PointXY = PointPlotter.PlotLine(bBall, start_yardline, start_vertical, end_yardline, end_vertical, bEndofStageAction, Ball_Speed);
+                    PointXY = PointPlotter.PlotLine(bBall, start_yardline, start_vertical, end_yardline, end_vertical, bEndofStageAction, Ball_Speed, b_state);
                     break;
             }
         }
