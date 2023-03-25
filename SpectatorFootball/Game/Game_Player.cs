@@ -98,6 +98,40 @@ namespace SpectatorFootball.GameNS
             Stages.Add(pStage);
         }
 
+        public void Attempt_Tackle(Player_States moving_ps, double prev_yl, double prev_v)
+        {
+            Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, false, false, moving_ps, null, null, Movement.LINE, null);
+            //                            Action pas2 = new Action(Game_Object_Types.P, prev_yl, prev_v, p.Current_YardLine + (app_Constants.TACKLER_FOO_MOVE * HorizontalAdj(bLefttoRight)), p.Current_Vertical_Percent_Pos, false, false, Player_States.TACKLING, null, null, Movement.LINE, null);
+            Action pas3 = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, false, false, Player_States.ON_BACK, null, null, Movement.NONE, null);
+            Play_Stage pStage = new Play_Stage();
+            pStage.Main_Object = false;
+            pStage.Actions.Add(pas);
+            //                            pStage.Actions.Add(pas2);
+            pStage.Actions.Add(pas3);
+            Stages.Add(pStage);
+        }
+
+        public void Run(Player_States moving_ps, double prev_yl, double prev_v)
+        {
+            Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, true, false, moving_ps, null, null, Movement.LINE, null); 
+            Play_Stage pStage = new Play_Stage();
+            pStage.Main_Object = false;
+            pStage.Actions.Add(pas);
+            Stages.Add(pStage);
+        }
+
+        public void Run_and_Tackled(Player_States moving_ps, double prev_yl, double prev_v)
+        {
+            Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, true, false, moving_ps, null, null, Movement.LINE, null);
+            Action pas2 = null;
+            pas2 = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, true, false, Player_States.TACKLED, null, null, Movement.NONE, null);
+            Play_Stage pStage = new Play_Stage();
+            pStage.Main_Object = false;
+            pStage.Actions.Add(pas);
+            pStage.Actions.Add(pas2);
+            Stages.Add(pStage);
+        }
+
     }
 
 
