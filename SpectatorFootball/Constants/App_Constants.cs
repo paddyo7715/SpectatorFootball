@@ -534,5 +534,17 @@ namespace SpectatorFootball
         public const int KICKOFF_TACKLE_TEST_ADJUSTER = 10000;  //Set 0 normally or high to test
 
         public const double TACKLER_FOO_MOVE = 0.3;
+
+        //Blocking
+        public const int BLOCKING_MAX_RAND = 1000;
+        public const double TACKLER_DOMINATED = 2.0;
+        public const double TACKLER_ADVANTAGE = 1.0;
+        public const double BLOCKER_DOMINATED = 0.0;
+        public const double BLOCKER_ADVANTAGE = 2.0;
+        public const double EVEN = 1.2;
+
+        //Tackling
+        public const long TACKLER_ADVANTAGE_MULTIPLIER = 3;
+
     }
 }

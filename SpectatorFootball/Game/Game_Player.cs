@@ -74,6 +74,14 @@ namespace SpectatorFootball.GameNS
             pStage.Actions.Add(pas);
             Stages.Add(pStage);
         }
+        public void OnBack()
+        {
+            Action pas = new Action(Game_Object_Types.P, Current_YardLine, Current_Vertical_Percent_Pos, Current_YardLine, Current_Vertical_Percent_Pos, false, false, Player_States.ON_BACK, null, null, Movement.NONE, null);
+            Play_Stage pStage = new Play_Stage();
+            pStage.Main_Object = false;
+            pStage.Actions.Add(pas);
+            Stages.Add(pStage);
+        }
         public void Run_Then_Stand(Player_States moving_ps, double prev_yl, double prev_v)
         {
             Action pas = null;

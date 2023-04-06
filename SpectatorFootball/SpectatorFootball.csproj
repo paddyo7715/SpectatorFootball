@@ -183,6 +183,7 @@
     <Compile Include="Draft\Draft_Pos_Importance.cs" />
     <Compile Include="Enum\Ball_Speed.cs" />
     <Compile Include="Enum\Ball_States.cs" />
+    <Compile Include="Enum\block_result.cs" />
     <Compile Include="Enum\Formations_Enum.cs" />
     <Compile Include="Enum\Game_Object_Types.cs" />
     <Compile Include="Enum\Game_Sounds.cs" />
@@ -202,6 +203,7 @@
     <Compile Include="Game\GameEngine.cs" />
     <Compile Include="Free_Agency\Pos_and_Count.cs" />
     <Compile Include="Game\Game_Ball.cs" />
+    <Compile Include="Game\Game_Engine_Helper.cs" />
     <Compile Include="Game\Game_Player.cs" />
     <Compile Include="Game\Graphics_Game_Ball.cs" />
     <Compile Include="Game\Game_Helper.cs" />
