@@ -1243,7 +1243,7 @@ namespace SpectatorFootball.GameNS
 
                 double agility = Returner.p_and_r.pr.First().Agilty_Rating;
                 logger.Debug("Returner Agility:" + agility);
-                //Returners agility determines how many times he looks for an open 
+                //Returners agility determines if he looks for an open 
                 //slot to run thru in the group.
                 int agility_var = (int)agility - app_Constants.KICKOFF_AGILITY_CUTOFF;
                 logger.Debug("agility_var:" + agility_var);
@@ -1265,16 +1265,23 @@ namespace SpectatorFootball.GameNS
                 double dbetweenVert = 0.0;
 
                 Game_Player Tackler = null;
-                Game_Player Blocker = null;
 
                 bool bAnySlot = i == 1 ? true : false;
                 logger.Debug("bAnySlot: " + bAnySlot.ToString());
-                slot_index = getKickReturnRunSlot(slot_index, bFindOpenSlot, group, bAnySlot);
+                slot_index = Game_Engine_Helper.getKickReturnRunSlot(slot_index, bFindOpenSlot, group, bAnySlot);
                 logger.Debug("slot_index: " + slot_index.ToString());
 
                 List<int> TB_List = new List<int>();  //tacklers/blocker around the returner
                 List<int> FB_LIst = new List<int>();  //Flattened blockers around the returner
                 List<int> FT_LIst = new List<int>();  //Flattened Tacklers around the returner
+
+                double returner_swerve_vert = 0.0;
+                double Breakthrough_len = 0.0;
+                double Breakthrough_vert = 0.0;
+
+                double returner_before_tackler_yardline = 0.0;
+                double returner_before_tackler_vert = 0.0;
+                double returner_hole_yl = 0.0;
 
                 if (group[slot_index] != null)
                 {
@@ -1284,18 +1291,13 @@ namespace SpectatorFootball.GameNS
                     TB_List.Add(Tackler_Index);
 
                     dbetweenVert = app_Constants.KICKOFF_GROUP_VERT_DIST / 2.0;
-                    double returner_swerve_vert;
-                    int r_swerve = CommonUtils.getRandomNum(1, 2);
-                    if (r_swerve == 1)
-                    dbetweenVert *= -1;
 
-                    returner_swerve_vert = Tackler.Current_Vertical_Percent_Pos + dbetweenVert;
-
-                    bool bSwereUp = r_swerve == 1 ? true : false;
+                    bool bSwereUp = CommonUtils.getRandomTrueFalse();
+                    if (bSwereUp) 
+                        dbetweenVert *= -1;
                     int? adjacent_tackler = getPossibleUporDownTackler(bSwereUp, slot_index, group);
                     if (adjacent_tackler != null)
                         TB_List.Add((int)adjacent_tackler);
-
                 }
                 else
                 {
@@ -1304,27 +1306,22 @@ namespace SpectatorFootball.GameNS
                     TB_List.AddRange(getPossibleAdjacentTacklers(slot_index, group));
                 }
 
-
                 //go thru the tacler/blocker list to determine if a tackle is made
                 int b_list_ind = CommonUtils.getRandomIndex(TB_List.Count);
                 for (int tb_xx = 0; tb_xx < TB_List.Count; tb_xx++)
                 {
-                    if (b_list_ind == TB_List.Count - 1)
-                        b_list_ind = 0;
-                    else
-                        b_list_ind++;
-
+                    int tackler_ind = TB_List[b_list_ind];
                     block_result br = Game_Engine_Helper.Attempt_Block(true,
                         CommonUtils.getRandomNum(1, app_Constants.BLOCKING_MAX_RAND),
-                        Return_Players[b_list_ind].p_and_r.pr.First().Pass_Block_Rating,
-                        Return_Players[b_list_ind].p_and_r.pr.First().Run_Block_Rating,
-                        Return_Players[b_list_ind].p_and_r.pr.First().Agilty_Rating,
-                        Kickoff_Players[b_list_ind].p_and_r.pr.First().Pass_Attack_Rating,
-                        Kickoff_Players[b_list_ind].p_and_r.pr.First().Run_Attack_Rating,
-                        Kickoff_Players[b_list_ind].p_and_r.pr.First().Agilty_Rating,
-                        Kickoff_Players[b_list_ind].p_and_r.pr.First().Speed_Rating);
+                        Return_Players[tackler_ind].p_and_r.pr.First().Pass_Block_Rating,
+                        Return_Players[tackler_ind].p_and_r.pr.First().Run_Block_Rating,
+                        Return_Players[tackler_ind].p_and_r.pr.First().Agilty_Rating,
+                        Kickoff_Players[tackler_ind].p_and_r.pr.First().Pass_Attack_Rating,
+                        Kickoff_Players[tackler_ind].p_and_r.pr.First().Run_Attack_Rating,
+                        Kickoff_Players[tackler_ind].p_and_r.pr.First().Agilty_Rating,
+                        Kickoff_Players[tackler_ind].p_and_r.pr.First().Speed_Rating);
 
-                    long tackler_tackle_rating = Kickoff_Players[b_list_ind].p_and_r.pr.First().Tackle_Rating;
+                    long tackler_tackle_rating = Kickoff_Players[tackler_ind].p_and_r.pr.First().Tackle_Rating;
                     //adjust potential tackler's tackle rating based on the block
                     tackler_tackle_rating = Game_Engine_Helper.AdjustTackleRating_forBlock(br, tackler_tackle_rating);
 
@@ -1332,30 +1329,29 @@ namespace SpectatorFootball.GameNS
                         Returner.p_and_r.pr.First().Speed_Rating,
                         Returner.p_and_r.pr.First().Agilty_Rating,
                         Returner.p_and_r.pr.First().Running_Power_Rating,
-                        Kickoff_Players[b_list_ind].p_and_r.pr.First().Tackle_Rating);
+                        tackler_tackle_rating);
 
                     if (bTack)
-                        Tackler = Kickoff_Players[b_list_ind];
+                        Tackler = Kickoff_Players[tackler_ind];
 
                     if (Tackler != null)
                         break;
 
+                    if (b_list_ind == TB_List.Count - 1)
+                        b_list_ind = 0;
+                    else
+                        b_list_ind++;
                 }
-
-                double Breakthrough_len = 0.0;
-                double Breakthrough_vert = 0.0;
-
-                double returner_before_tackler_yardline = 0.0;
-                double returner_before_tackler_vert = 0.0;
 
                 if (TB_List.Count > 0)
                 {
                     //the runner will run one yard before the tackler and then swerve up or down
-                    returner_before_tackler_yardline = Tackler.Current_YardLine - (app_Constants.KICKOFF_YARDS_BEFORE_TACKLER * HorizontalAdj(bLefttoRight));
-                    returner_before_tackler_vert = Tackler.Current_Vertical_Percent_Pos;
-
-                    logger.Debug("Slot: " + slot_index + "Curent vert: " + Tackler.Current_Vertical_Percent_Pos + " getKickoffGroupOffset:" + getKickoffGroupOffset(slot_index));
-                }
+                    int ind_close_Tklr = Game_Engine_Helper.getClosestKickGroupPlayerInd(slot_index, group);
+                    returner_hole_yl = Kickoff_Players[ind_close_Tklr].Current_YardLine;
+                    returner_before_tackler_yardline = returner_hole_yl - (app_Constants.KICKOFF_YARDS_BEFORE_TACKLER * HorizontalAdj(bLefttoRight));
+                    returner_before_tackler_vert = Returner.Current_Vertical_Percent_Pos + getKickoffGroupOffset(slot_index);
+                    returner_swerve_vert = Returner.Current_Vertical_Percent_Pos + getKickoffGroupOffset(slot_index) + dbetweenVert;
+                   }
                 else
                 {
                     Breakthrough_vert = returner_catch_vert + getKickoffGroupOffset(slot_index);
@@ -1450,8 +1446,8 @@ namespace SpectatorFootball.GameNS
                             prev_yl = p.Current_YardLine;
                             prev_v = p.Current_Vertical_Percent_Pos;
 
-                            p.Current_YardLine = Tackler.Current_YardLine;
-                            p.Current_Vertical_Percent_Pos = Tackler.Current_Vertical_Percent_Pos;
+                            p.Current_YardLine = returner_hole_yl;
+                            p.Current_Vertical_Percent_Pos = returner_swerve_vert;
 
                             //must move the ball too, even thogh it will not be visible.
                             gBall.Current_YardLine = p.Current_YardLine;
@@ -1590,7 +1586,7 @@ namespace SpectatorFootball.GameNS
 
                 //The index of the kicker doesn't matter
                 List<int?> g_list = new List<int?>() {null, null,2,null,null };
-                slot_index = getKickReturnRunSlot(slot_index, bFindOpenSlot, g_list, false);
+                slot_index = Game_Engine_Helper.getKickReturnRunSlot(slot_index, bFindOpenSlot, g_list, false);
                 logger.Debug("slot_index:" + slot_index);
 
                 //bpo test
@@ -2069,57 +2065,7 @@ namespace SpectatorFootball.GameNS
             return r;
         }
 
-        //This method will pick the running slot
-        private int getKickReturnRunSlot(int slot_index, bool bLookforhole, List<int?> group, bool bAnyFive)
-        {
-            int r;
-            List<int> empty_indexes = group.Where(q => q == null).Select(q => group.IndexOf(q)).ToList();
-            List<int> possible_indexes = new List<int>();
-            if (empty_indexes.Count() == 0)
-                possible_indexes.Add(slot_index);
-            else if (bAnyFive)
-            {
-                if (bLookforhole)
-                    possible_indexes = empty_indexes;
-                else
-                    possible_indexes = group.Select(q => group.IndexOf(q)).ToList();
-            }
-            else
-            {
-                if (bLookforhole) //you can go a max of 2 up or down
-                {
-                    foreach (int i in empty_indexes)
-                    {
-                        if (i >= slot_index - app_Constants.KICKOFF_AFTER_FIRST_GROUP_SLOT_VARIANCE && i <= slot_index + app_Constants.KICKOFF_AFTER_FIRST_GROUP_SLOT_VARIANCE)
-                            possible_indexes.Add(i);
-                    }
-                    if (possible_indexes.Count() == 0)
-                     {
-                        for (int i = slot_index- app_Constants.KICKOFF_AFTER_FIRST_GROUP_SLOT_VARIANCE; i <= slot_index + app_Constants.KICKOFF_AFTER_FIRST_GROUP_SLOT_VARIANCE; i++)
-                        {
-                            if (i >= 0 && i < group.Count())
-                                possible_indexes.Add(i);
-                        }
-                    }
-                }
-                else
-                {
-                    for (int i = slot_index - app_Constants.KICKOFF_AFTER_FIRST_GROUP_SLOT_VARIANCE; i <= slot_index + app_Constants.KICKOFF_AFTER_FIRST_GROUP_SLOT_VARIANCE; i++)
-                    {
-                        if (i >= 0 && i < group.Count())
-                            possible_indexes.Add(i);
-                    }
-                }
-
-            }
-
-            int r_ind = CommonUtils.getRandomIndex(possible_indexes.Count());
-            r = possible_indexes[r_ind];
-
-            return r;
-        }
-
-        private double getKickoffGroupOffset(int ind)
+         private double getKickoffGroupOffset(int ind)
         {
             double r = 0;
 
@@ -2137,16 +2083,16 @@ namespace SpectatorFootball.GameNS
             if (slot_index > 0)
             {
                 int above_slot = slot_index - 1;
-                if (group[above_slot] != null)
-                    r.Add(above_slot);
+               if (group[above_slot] != null)
+                    r.Add((int)group[above_slot]);
             }
 
             //Check one apot below
-            if (slot_index < app_Constants.KICKOFF_PLAYERS_IN_GROUP)
+            if (slot_index < app_Constants.KICKOFF_PLAYERS_IN_GROUP-1)
             {
                 int below_slot = slot_index + 1;
                 if (group[below_slot] != null)
-                    r.Add(below_slot);
+                    r.Add((int)group[below_slot]);
             }
 
             return r;
@@ -2157,9 +2103,13 @@ namespace SpectatorFootball.GameNS
             int? r = null;
 
             if (bSwerveUp)
+            {
                 if (slot_index > 0) r = group[slot_index - 1];
-                else
-                if (slot_index < app_Constants.KICKOFF_PLAYERS_IN_GROUP) r = group[slot_index + 1];
+            }
+            else
+            {
+                if (slot_index < app_Constants.KICKOFF_PLAYERS_IN_GROUP - 1) r = group[slot_index + 1];
+            }
 
             return r;
         }

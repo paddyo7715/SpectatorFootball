@@ -82,6 +82,19 @@ namespace SpectatorFootball
 
             return r;
         }
+        public static bool getRandomTrueFalse()
+        {
+            bool r;
+
+            int andnum = random.Next(1, 2);
+            if (andnum == 1)
+                r = true;
+            else
+                r = false;
+
+            return r;
+        }
+
         public static int getDivisionNum_from_Team_Number(int num_divs, int t_num)
         {
             return (t_num - 1) % num_divs + 1;
@@ -318,7 +331,23 @@ namespace SpectatorFootball
 
             return r;
         }
+        //For some reason, this could not be done in linq
+        public static List<int> GetIndexes(List<int?> g, bool bOnlyNulls)
+        {
+            List<int> r = new List<int>();
+
+            int ind = 0;
+            foreach (int? o in g)
+            {
+                if (o == null || !bOnlyNulls)
+                    r.Add(ind);
+
+                ind++;
+            }
+
+            return r;
+        }
       
     }
-
+    
 }

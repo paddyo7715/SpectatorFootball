@@ -19,16 +19,16 @@ namespace SpectatorFootball.GameNS
             int Blocker_Flt_val = 0;
             int Attacker_Flt_val = 0;
 
-            const double PASS_BLK_MULT = 25;
-            const double PASS_BLK_AGIL_MULT = 6.5;
-            const double PASS_ATK_MULT = 20;
-            const double PASS_ATK_AGIL_MULT = 6.5;
-            const double PASS_ATK_SPEED_MULT = 5;
+            const double PASS_BLK_MULT = 2.5;
+            const double PASS_BLK_AGIL_MULT = 1.0;
+            const double PASS_ATK_MULT = 2.0;
+            const double PASS_ATK_AGIL_MULT = .65;
+            const double PASS_ATK_SPEED_MULT = .5;
 
-            const double RUN_BLK_MULT = 25;
-            const double RUN_BLK_AGIL_MULT = 6.5;
-            const double RUN_ATK_MULT = 20;
-            const double RUN_ATK_AGIL_MULT = 6.5;
+            const double RUN_BLK_MULT = 2.5;
+            const double RUN_BLK_AGIL_MULT = .65;
+            const double RUN_ATK_MULT = 2.0;
+            const double RUN_ATK_AGIL_MULT = .65;
 
             const double ATTACKER_ADVANTAGE = 1.5;
 
@@ -47,14 +47,14 @@ namespace SpectatorFootball.GameNS
                 Attacker_adv_val = (int)(Math.Round(atkRun_Attack * RUN_ATK_MULT) + (atkAgility * RUN_ATK_AGIL_MULT));
             }
 
-            Blocker_Flt_val = (int)(Blocker_adv_val * FALLEN_PERCENT_VALUE);
-            Attacker_Flt_val = (int)(Attacker_adv_val * FALLEN_PERCENT_VALUE);
-
             //noew give the attacker an advantage such as +=2
-            Attacker_adv_val = (int) (Attacker_adv_val * ATTACKER_ADVANTAGE);
-            Attacker_Flt_val = (int)(Attacker_Flt_val * ATTACKER_ADVANTAGE);
+            Attacker_adv_val = (int)(Attacker_adv_val * ATTACKER_ADVANTAGE);
+
+            Blocker_Flt_val = (int)(Blocker_adv_val * FALLEN_PERCENT_VALUE + .5);
+            Attacker_Flt_val = (int)(Attacker_adv_val * FALLEN_PERCENT_VALUE + .5);
 
             Attacker_adv_val = app_Constants.BLOCKING_MAX_RAND - Attacker_adv_val;
+            Attacker_Flt_val = app_Constants.BLOCKING_MAX_RAND - Attacker_Flt_val;
 
             if (rndNum <= Blocker_Flt_val)
                 r = block_result.BLOCKER_DOMINATED;
@@ -104,7 +104,7 @@ namespace SpectatorFootball.GameNS
         {
             bool r = false;
 
-            double crrier_val = (carrier_speed + carrier_agility + carrier_power_running) * 3;
+            double crrier_val = (carrier_speed + carrier_agility + carrier_power_running) / 3;
             double tackler_val = tackler_tackle_rating * app_Constants.TACKLER_ADVANTAGE_MULTIPLIER;
 
             int max_rnd_num = (int)(tackler_val + crrier_val);
@@ -114,5 +114,76 @@ namespace SpectatorFootball.GameNS
 
             return r;
         }
+        //This method will pick the running slot
+        public static int getKickReturnRunSlot(int slot_index, bool bLookforhole, List<int?> group, bool bAnyFive)
+        {
+            int r;
+            List<int> empty_indexes = CommonUtils.GetIndexes(group, true);
+            List<int> possible_indexes = new List<int>();
+            if (bAnyFive)
+            {
+                if (bLookforhole && empty_indexes.Count() > 0)
+                    possible_indexes = empty_indexes;
+                else
+                    possible_indexes = CommonUtils.GetIndexes(group, false);
+            }
+            else
+            {
+                if (bLookforhole) //you can go a max of 2 up or down
+                {
+                    foreach (int i in empty_indexes)
+                    {
+                        if (i >= slot_index - app_Constants.KICKOFF_AFTER_FIRST_GROUP_SLOT_VARIANCE && i <= slot_index + app_Constants.KICKOFF_AFTER_FIRST_GROUP_SLOT_VARIANCE)
+                            possible_indexes.Add(i);
+                    }
+                    if (possible_indexes.Count() == 0)
+                    {
+                        for (int i = slot_index - app_Constants.KICKOFF_AFTER_FIRST_GROUP_SLOT_VARIANCE; i <= slot_index + app_Constants.KICKOFF_AFTER_FIRST_GROUP_SLOT_VARIANCE; i++)
+                        {
+                            if (i >= 0 && i < group.Count())
+                                possible_indexes.Add(i);
+                        }
+                    }
+                }
+                else
+                {
+                    for (int i = slot_index - app_Constants.KICKOFF_AFTER_FIRST_GROUP_SLOT_VARIANCE; i <= slot_index + app_Constants.KICKOFF_AFTER_FIRST_GROUP_SLOT_VARIANCE; i++)
+                    {
+                        if (i >= 0 && i < group.Count())
+                            possible_indexes.Add(i);
+                    }
+                }
+
+            }
+
+            int r_ind = CommonUtils.getRandomIndex(possible_indexes.Count());
+            r = possible_indexes[r_ind];
+
+            return r;
+        }
+
+        public static int getClosestKickGroupPlayerInd(int slot_index, List<int?> Group)
+        {
+            int r;
+            List<int> Possible_Indexes = new List<int>();
+
+            if (Group[slot_index] != null)
+                Possible_Indexes.Add(slot_index);
+
+            if (slot_index > 0 && Group[slot_index - 1] != null)
+                Possible_Indexes.Add(slot_index - 1);
+
+            if (slot_index < app_Constants.KICKOFF_PLAYERS_IN_GROUP - 1 && Group[slot_index + 1] != null)
+                Possible_Indexes.Add(slot_index + 1);
+
+            if (Possible_Indexes.Count == 0)
+                throw new Exception("Could not find closest tacker in method getClosestKickGroupPlayerInd");
+
+            int r_ind = CommonUtils.getRandomIndex(Possible_Indexes.Count());
+            r = Possible_Indexes[r_ind];
+
+            return r;
+        }
+
     }
 }
