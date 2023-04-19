@@ -1130,6 +1130,16 @@ namespace SpectatorFootball.GameNS
                         yardline_Offset = Math.Abs(gBall.Current_YardLine - p.Current_YardLine) - yard_off_returner;
                         int group_index = group_1.IndexOf(id_Players);
                         vert_offset = gBall.Current_Vertical_Percent_Pos + getKickoffGroupOffset(group_index);
+
+                        string sPos = p.Pos.ToString();
+                        long spd = p.p_and_r.pr.First().Speed_Rating;
+                        logger.Debug("Ind:" + id_Players +
+                            " POS:" + sPos +
+                            " target_YardLine:" + yardline_Offset * HorizontalAdj(bLefttoRight) +
+                            " target vertical:" + vert_offset
+                            );
+
+
                     }
                     else if (group_2.Contains(id_Players))
                     {
@@ -1152,15 +1162,16 @@ namespace SpectatorFootball.GameNS
                 p.Current_YardLine += yardline_Offset * HorizontalAdj(bLefttoRight);
                 p.Current_Vertical_Percent_Pos = vert_offset;
 
-                string sPos = p.Pos.ToString();
+/*                string sPos = p.Pos.ToString();
                 long spd = p.p_and_r.pr.First().Speed_Rating;
-                logger.Debug("Ind:" + d_index +
+                logger.Debug("Ind:" + ind_index +
                     " POS:" + sPos +
                     " prev_yl:" + prev_yl +
                     " prev_v:" + prev_v +
                     " Current_YardLine:" + p.Current_YardLine +
                     " Current_Vertical_Percent_Pos:" + p.Current_Vertical_Percent_Pos
                     );
+*/
 
                 if (!bSim)
                 {
@@ -1213,6 +1224,7 @@ namespace SpectatorFootball.GameNS
 
             double returner_catch_vert = Returner.Current_Vertical_Percent_Pos;
             int slot_index = 2;
+            int prev_slot_index;
             List<int> Past_Blocker_Tackler_List = new List<int>();
             logger.Debug("Stage 3, 4 or 5");
             logger.Debug("=======================================================");
@@ -1267,13 +1279,12 @@ namespace SpectatorFootball.GameNS
                 Game_Player Tackler = null;
 
                 bool bAnySlot = i == 1 ? true : false;
+                prev_slot_index = slot_index;
                 logger.Debug("bAnySlot: " + bAnySlot.ToString());
                 slot_index = Game_Engine_Helper.getKickReturnRunSlot(slot_index, bFindOpenSlot, group, bAnySlot);
                 logger.Debug("slot_index: " + slot_index.ToString());
 
                 List<int> TB_List = new List<int>();  //tacklers/blocker around the returner
-                List<int> FB_LIst = new List<int>();  //Flattened blockers around the returner
-                List<int> FT_LIst = new List<int>();  //Flattened Tacklers around the returner
 
                 double returner_swerve_vert = 0.0;
                 double Breakthrough_len = 0.0;
@@ -1283,6 +1294,7 @@ namespace SpectatorFootball.GameNS
                 double returner_before_tackler_vert = 0.0;
                 double returner_hole_yl = 0.0;
 
+                bool bSwereUp;
                 if (group[slot_index] != null)
                 {
                     logger.Debug("Tackler in this slot");
@@ -1292,7 +1304,7 @@ namespace SpectatorFootball.GameNS
 
                     dbetweenVert = app_Constants.KICKOFF_GROUP_VERT_DIST / 2.0;
 
-                    bool bSwereUp = CommonUtils.getRandomTrueFalse();
+                    bSwereUp = CommonUtils.getRandomTrueFalse();
                     if (bSwereUp) 
                         dbetweenVert *= -1;
                     int? adjacent_tackler = getPossibleUporDownTackler(bSwereUp, slot_index, group);
@@ -1348,28 +1360,33 @@ namespace SpectatorFootball.GameNS
                     //the runner will run one yard before the tackler and then swerve up or down
                     int ind_close_Tklr = Game_Engine_Helper.getClosestKickGroupPlayerInd(slot_index, group);
                     returner_hole_yl = Kickoff_Players[ind_close_Tklr].Current_YardLine;
-                    returner_before_tackler_yardline = returner_hole_yl - (app_Constants.KICKOFF_YARDS_BEFORE_TACKLER * HorizontalAdj(bLefttoRight));
-                    returner_before_tackler_vert = Returner.Current_Vertical_Percent_Pos + getKickoffGroupOffset(slot_index);
-                    returner_swerve_vert = Returner.Current_Vertical_Percent_Pos + getKickoffGroupOffset(slot_index) + dbetweenVert;
-                   }
+
+                    if (group[slot_index] != null)
+                        returner_before_tackler_yardline = returner_hole_yl - (app_Constants.KICKOFF_YARDS_BEFORE_TACKLER * HorizontalAdj(bLefttoRight));
+                    else
+                        returner_before_tackler_yardline = returner_hole_yl - (app_Constants.KICKOFF_YARDS_BEFORE_TACKLER2 * HorizontalAdj(bLefttoRight));
+
+                    returner_before_tackler_vert = returner_catch_vert + getKickoffGroupOffset(slot_index);
+                    returner_swerve_vert = returner_before_tackler_vert + dbetweenVert;
+
+
+                    logger.Debug("ind_close_Tklr: " + ind_close_Tklr + "  Kickoff_Players[ind_close_Tklr].Current_YardLine: " + Kickoff_Players[ind_close_Tklr].Current_YardLine);
+                    logger.Debug("returner_before_tackler_yardline: " + returner_before_tackler_yardline + "  returner_before_tackler_vert: " + returner_before_tackler_vert);
+                    logger.Debug("dbetweenVert: " + dbetweenVert + "  returner_swerve_vert: " + returner_swerve_vert);
+                    logger.Debug("returner_swerve_vert: " + returner_swerve_vert);
+                }
                 else
                 {
                     Breakthrough_vert = returner_catch_vert + getKickoffGroupOffset(slot_index);
                     Breakthrough_len = (app_Constants.KICKOFF_GROUP_1_MAX - app_Constants.KICKOFF_GROUP_1_MIN) + (app_Constants.KICKOFF_GROUP_2_MIN - app_Constants.KICKOFF_GROUP_1_MAX);
                 }
 
+                logger.Debug("Past_Blocker_Tackler_List: " + string.Join(",", Past_Blocker_Tackler_List.ToArray()));
+
                 id_Players = 0;
                 foreach (Game_Player p in Kickoff_Players)
                 {
-                    if (FT_LIst.Contains(id_Players))
-                    {
-                        if (!bSim)
-                        {
-                            p.Block();
-                            p.OnBack();
-                        }
-                    }
-                    else if (TB_List.Contains(id_Players))
+                    if (TB_List.Contains(id_Players))
                     {
                         //keep blocking till the returner runs up to you
                         if (!bSim)
@@ -1378,7 +1395,8 @@ namespace SpectatorFootball.GameNS
                         double prev_yl = p.Current_YardLine;
                         double prev_v = p.Current_Vertical_Percent_Pos;
 
-                        p.Current_Vertical_Percent_Pos += dbetweenVert;
+                        p.Current_YardLine = returner_hole_yl;
+                        p.Current_Vertical_Percent_Pos = returner_swerve_vert;
 
                         //Move vertically to make the tackle
                         if (!bSim)
@@ -1492,14 +1510,6 @@ namespace SpectatorFootball.GameNS
                                 //for the ball
                                 gBall.Carried(prev_yl, prev_v);
                             }
-                        }
-                    }
-                    else if(FB_LIst.Contains(id_Players))
-                    {
-                        if (!bSim)
-                        {
-                            p.Block();
-                            p.OnBack();
                         }
                     }
                     // Players from previous groups should still do what they last did not go back to blocking

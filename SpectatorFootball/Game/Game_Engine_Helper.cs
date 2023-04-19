@@ -164,7 +164,7 @@ namespace SpectatorFootball.GameNS
 
         public static int getClosestKickGroupPlayerInd(int slot_index, List<int?> Group)
         {
-            int r;
+            int r,g;
             List<int> Possible_Indexes = new List<int>();
 
             if (Group[slot_index] != null)
@@ -180,9 +180,11 @@ namespace SpectatorFootball.GameNS
                 throw new Exception("Could not find closest tacker in method getClosestKickGroupPlayerInd");
 
             int r_ind = CommonUtils.getRandomIndex(Possible_Indexes.Count());
-            r = Possible_Indexes[r_ind];
+            g = Possible_Indexes[r_ind];
 
-            return r;
+            r = (int)Group[g];
+
+            return  r;
         }
 
     }

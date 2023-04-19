@@ -12,7 +12,6 @@ namespace SpectatorFootball.GameNS
     {
         private static int BALL_NORMAL_SKIP = 12;
         private static int BALL_SLOW_SKIP = 8;
-//        private static int BALL_SLOW_SKIP = 16; 
         private static int PLAYER_SKIP = 8;
         private static int STARTING_KICK_SKIP = 24;
         private static int ENDING_KICK_SKIP = 6;
@@ -50,7 +49,7 @@ namespace SpectatorFootball.GameNS
             int ydiff = p2Y - p1Y;
             int xdiff = p2X - p1X;
 
-            if (Math.Abs(xdiff) > Math.Abs(ydiff))
+            if (Math.Abs(xdiff) >= Math.Abs(ydiff))
                 quantity = Math.Abs(xdiff);
             else
                 quantity = Math.Abs(ydiff);
