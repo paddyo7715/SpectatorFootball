@@ -516,13 +516,15 @@ namespace SpectatorFootball
         public const int KICKOFF_SPEED_CUTOFF = 50;
         public const int KICKOFF_AGILITY_CUTOFF = 40;
         public const int KICKOFF_PLAYERS_IN_GROUP = 5;
+        public const int KICKOFF_PLAYERS_GROUP_MIDPOINT = 2;
         public const int KICKOFF_TACKLING_GROUPS = 3;
-        public const int KICKOFF_GROUP_1_MIN = 15;
-        public const int KICKOFF_GROUP_1_MAX = 19;
-        public const int KICKOFF_GROUP_2_MIN = 27;
-        public const int KICKOFF_GROUP_2_MAX = 31;
-        public const int KICKOFF_GROUP_3_MIN = 37;
-        public const int KICKOFF_GROUP_3_MAX = 41;
+        public const int KICKOFF_GROUP_1_MIN = 8;
+        public const int KICKOFF_GROUP_1_MAX = 12;
+        public const int KICKOFF_GROUP_2_MIN = 20;
+        public const int KICKOFF_GROUP_2_MAX = 24;
+        public const int KICKOFF_GROUP_3_MIN = 32;
+        public const int KICKOFF_GROUP_3_MAX = 36;
+        public const int KICKOFF_KICKER_FROM_RETURNER = 57;
         public const double KICKOFF_GROUP_VERT_DIST = 7.0;
         public const double KICKOFF_DIST_BETWEEN_BLOCK_ATTACHERS = 1.00;  
         public const double MOVEMENT_DIST_BEFORE_TURNING_BACK = 8.0;
@@ -530,8 +532,9 @@ namespace SpectatorFootball
         public const int KICKOFF_TACKLE_FLATTENED_BLOCKER_ADVANTAGE = 2;
         public const int KICKOFF_TACKLE_ADVANTAGE = 2;
         public const int KICKOFF_AFTER_FIRST_GROUP_SLOT_VARIANCE = 1;
-        public const double KICKOFF_YARDS_BEFORE_TACKLER = 3.5;
-        public const double KICKOFF_YARDS_BEFORE_TACKLER2 = 5.0;
+        public const double KICKOFF_YARDS_BEFORE_TACKLER = 3.0;
+        public const double KICKOFF_YARDS_BEFORE_TACKLER2 = 4.0;
+        public const double KICKOFF_YARDS_BEFORE_TACKLER3 = 6.0;
         public const int KICKOFF_TACKLE_TEST_ADJUSTER = 10000;  //Set 0 normally or high to test
 
         public const double TACKLER_FOO_MOVE = 0.3;

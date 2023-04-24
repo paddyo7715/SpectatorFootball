@@ -187,5 +187,17 @@ namespace SpectatorFootball.GameNS
             return  r;
         }
 
+        public static bool ReturnerLookforHole(double agility)
+        {
+            bool r = false;
+
+            int agility_var = (int)agility - app_Constants.KICKOFF_AGILITY_CUTOFF;
+            int r_agile = CommonUtils.getRandomNum(1, app_Constants.KICKOFF_AVOID_TRACKER_CALC_VARIABLE);
+            if (r_agile <= agility_var)
+                r = true;
+
+            return r;
+        }
+
     }
 }
