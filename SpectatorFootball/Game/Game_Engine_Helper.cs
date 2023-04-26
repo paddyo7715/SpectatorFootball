@@ -198,6 +198,20 @@ namespace SpectatorFootball.GameNS
 
             return r;
         }
+        public static int? getPossibleUporDownTackler(bool bSwerveUp, int slot_index, List<int?> group)
+        {
+            int? r = null;
 
+            if (bSwerveUp)
+            {
+                if (slot_index > 0) r = group[slot_index - 1];
+            }
+            else
+            {
+                if (slot_index < app_Constants.KICKOFF_PLAYERS_IN_GROUP - 1) r = group[slot_index + 1];
+            }
+
+            return r;
+        }
     }
 }

@@ -519,11 +519,11 @@ namespace SpectatorFootball
         public const int KICKOFF_PLAYERS_GROUP_MIDPOINT = 2;
         public const int KICKOFF_TACKLING_GROUPS = 3;
         public const int KICKOFF_GROUP_1_MIN = 8;
-        public const int KICKOFF_GROUP_1_MAX = 12;
+        public const int KICKOFF_GROUP_1_MAX = 11;
         public const int KICKOFF_GROUP_2_MIN = 20;
-        public const int KICKOFF_GROUP_2_MAX = 24;
+        public const int KICKOFF_GROUP_2_MAX = 21;
         public const int KICKOFF_GROUP_3_MIN = 32;
-        public const int KICKOFF_GROUP_3_MAX = 36;
+        public const int KICKOFF_GROUP_3_MAX = 35;
         public const int KICKOFF_KICKER_FROM_RETURNER = 57;
         public const double KICKOFF_GROUP_VERT_DIST = 7.0;
         public const double KICKOFF_DIST_BETWEEN_BLOCK_ATTACHERS = 1.00;  

@@ -1281,7 +1281,7 @@ namespace SpectatorFootball.GameNS
                     bSwereUp = CommonUtils.getRandomTrueFalse();
                     if (bSwereUp) 
                         dbetweenVert *= -1;
-                    int? adjacent_tackler = getPossibleUporDownTackler(bSwereUp, slot_index, group);
+                    int? adjacent_tackler = Game_Engine_Helper.getPossibleUporDownTackler(bSwereUp, slot_index, group);
                     if (adjacent_tackler != null)
                         TB_List.Add((int)adjacent_tackler);
                 }
@@ -1553,12 +1553,12 @@ namespace SpectatorFootball.GameNS
 
                 //The index of the kicker doesn't matter
                 List<int?> g_list = new List<int?>() {null,null,2,null,null };
-                slot_index = Game_Engine_Helper.getKickReturnRunSlot(slot_index, bFindOpenSlot, g_list, false);
                 logger.Debug("slot_index:" + slot_index);
 
                 //bpo test
                 //slot_index = 2;
                 double BreakAwayYardline = 0.0;
+                double Breakthrough_vert = 0.0;
                 double returner_before_tackler_yardline = 0.0;
                 double returner_before_tackler_vert = 0.0;
                 double returner_hole_yl = 0.0;
@@ -1567,6 +1567,7 @@ namespace SpectatorFootball.GameNS
                     BreakAwayYardline = 105.0;
                 else
                     BreakAwayYardline = -5.0;
+//                Breakthrough_vert = returner_catch_vert + getKickoffGroupOffset(slot_index);
 
                 if (slot_index >= app_Constants.KICKOFF_PLAYERS_GROUP_MIDPOINT - 1 && slot_index <= app_Constants.KICKOFF_PLAYERS_GROUP_MIDPOINT + 1)
                 {
@@ -1679,7 +1680,7 @@ namespace SpectatorFootball.GameNS
                             double prev_v = p.Current_Vertical_Percent_Pos;
 
                             p.Current_YardLine = returner_before_tackler_yardline;
-                            p.Current_Vertical_Percent_Pos = returner_before_tackler_vert;
+                            p.Current_Vertical_Percent_Pos = returner_swerve_vert;
 
                             //must move the ball too, even thogh it will not be visible.
                             gBall.Current_YardLine = p.Current_YardLine;
@@ -1733,7 +1734,7 @@ namespace SpectatorFootball.GameNS
                             double prev_v = p.Current_Vertical_Percent_Pos;
 
                             p.Current_YardLine = BreakAwayYardline;
-    
+
                             gBall.Current_YardLine = p.Current_YardLine;
                             gBall.Current_Vertical_Percent_Pos = p.Current_Vertical_Percent_Pos;
 
@@ -2069,21 +2070,7 @@ namespace SpectatorFootball.GameNS
             return r;
         }
 
-        public int? getPossibleUporDownTackler(bool bSwerveUp, int slot_index, List<int?> group)
-        {
-            int? r = null;
 
-            if (bSwerveUp)
-            {
-                if (slot_index > 0) r = group[slot_index - 1];
-            }
-            else
-            {
-                if (slot_index < app_Constants.KICKOFF_PLAYERS_IN_GROUP - 1) r = group[slot_index + 1];
-            }
-
-            return r;
-        }
 
 
     }
