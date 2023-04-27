@@ -9,6 +9,76 @@ namespace SpectatorFootball.GameNS
 {
     public class Game_Engine_Helper
     {
+        public static int HorizontalAdj(bool b)
+        {
+            int r = 1;
+
+            if (!b)
+                r *= -1;
+
+            return r;
+        }
+        public static Player_States setRunningState(bool bLefttoRight, bool bOffense, double x1, double y1, double x2, double y2)
+        {
+            Player_States r = Player_States.RUNNING_FORWARD;
+            double xdiff = x2 - x1;
+            double ydiff = (y2 - y1) / 2.5;
+
+            if (Math.Abs(xdiff) >= Math.Abs(ydiff))
+            {
+                if (bLefttoRight)
+                {
+                    if (bOffense)
+                    {
+                        if (xdiff < 0 && xdiff < -app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK)
+                            r = Player_States.RUNNING_BACKWORDS;
+                        else if (xdiff < 0)
+                            r = Player_States.RUNNING_FORWARD;
+                        else
+                            r = Player_States.RUNNING_FORWARD;
+                    }
+                    else
+                    {
+                        if (xdiff > 0 && xdiff > app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK)
+                            r = Player_States.RUNNING_BACKWORDS;
+                        else if (xdiff > 0)
+                            r = Player_States.RUNNING_FORWARD;
+                        else
+                            r = Player_States.RUNNING_FORWARD;
+                    }
+                }
+                else
+                {
+                    if (bOffense)
+                    {
+                        if (xdiff > 0 && xdiff > app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK)
+                            r = Player_States.RUNNING_BACKWORDS;
+                        else if (xdiff > 0)
+                            r = Player_States.RUNNING_FORWARD;
+                        else
+                            r = Player_States.RUNNING_FORWARD;
+                    }
+                    else
+                    {
+                        if (xdiff < 0 && xdiff < -app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK)
+                            r = Player_States.RUNNING_BACKWORDS;
+                        else if (xdiff < 0)
+                            r = Player_States.RUNNING_FORWARD;
+                        else
+                            r = Player_States.RUNNING_FORWARD;
+                    }
+                }
+            }
+            else
+            {
+                if (ydiff > 0)
+                    r = Player_States.RUNNING_DOWN;
+                else
+                    r = Player_States.RUNNING_UP;
+            }
+
+            return r;
+        }
         public static block_result Attempt_Block(bool runBlock, int rndNum, 
             long blkPass_Block_Rating, long blkRun_Block_Rating, long bklAgility,
             long atkPass_Attack, long atkRun_Attack, long atkAgility, long atkSpeed)
@@ -209,6 +279,79 @@ namespace SpectatorFootball.GameNS
             else
             {
                 if (slot_index < app_Constants.KICKOFF_PLAYERS_IN_GROUP - 1) r = group[slot_index + 1];
+            }
+
+            return r;
+        }
+        public static List<int> getPossibleAdjacentTacklers(int slot_index, List<int?> group)
+        {
+            List<int> r = new List<int>();
+
+            //Check one spot above
+            if (slot_index > 0)
+            {
+                int above_slot = slot_index - 1;
+                if (group[above_slot] != null)
+                    r.Add((int)group[above_slot]);
+            }
+
+            //Check one apot below
+            if (slot_index < app_Constants.KICKOFF_PLAYERS_IN_GROUP - 1)
+            {
+                int below_slot = slot_index + 1;
+                if (group[below_slot] != null)
+                    r.Add((int)group[below_slot]);
+            }
+
+            return r;
+        }
+        public static double getKickoffGroupOffset(int ind)
+        {
+            double r = 0;
+
+            ind -= 2;
+
+            r = app_Constants.KICKOFF_GROUP_VERT_DIST * ind;
+
+            return r;
+        }
+        public static List<int?> ExpandGroup(List<int?> Group)
+        {
+            List<int?> r = new List<int?>();
+            int empty_spots = app_Constants.KICKOFF_PLAYERS_IN_GROUP - Group.Count();
+
+            foreach (int? s in Group)
+            {
+                bool bStopEmpties = false;
+                while (!bStopEmpties && empty_spots > 0)
+                {
+                    int rnd = CommonUtils.getRandomNum(1, 10);
+                    if (rnd <= 6)
+                    {
+                        r.Add(null);
+                        empty_spots--;
+                    }
+                    else
+                        bStopEmpties = true;
+                }
+
+                r.Add(s);
+            }
+
+            for (int i = 0; i < empty_spots; i++)
+                r.Add(null);
+
+            return r;
+        }
+        public static List<int?> removeRandomIndexes(List<int?> lst)
+        {
+            List<int?> r = new List<int?>();
+
+            while (lst.Count > app_Constants.KICKOFF_PLAYERS_IN_GROUP)
+            {
+                int ind = CommonUtils.getRandomNum(1, lst.Count()) - 1;
+                r.Add(lst[ind]);
+                lst.RemoveAt(ind);
             }
 
             return r;
