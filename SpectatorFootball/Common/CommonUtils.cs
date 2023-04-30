@@ -347,6 +347,29 @@ namespace SpectatorFootball
 
             return r;
         }
+        public static int getListIndexFavorEarly(int count, int EachPercent)
+        {
+            int r = 0;
+
+            for (int i = 0; i < count; i++)
+            {
+                int rnd = CommonUtils.getRandomNum(1, 100);
+                if (rnd <= EachPercent || i >= count-1)
+                {
+                    r = 1;
+                    break;
+                }
+            }
+
+            return r;
+        }
+        public static List<T> RemoveFirstElements<T>(List<T> list, int count)
+        {
+            for (int i = 0; i < count; i++)
+                list.RemoveAt(0);
+
+            return list;
+        }
       
     }
     

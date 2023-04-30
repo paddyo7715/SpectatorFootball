@@ -135,35 +135,37 @@ namespace SpectatorFootball.GameNS
 
             return fList;
         }
-        public bool AllowSubstitutions()
+        public bool AllowSubstitutions(bool bSpecialTeams)
         {
             bool r = true;
-            setOurThereScore();
-            long scoreDiff = ourScore - theirScore;
 
-            if (g.Quarter == 1)
+            if (!bSpecialTeams)
             {
-                if (g.Time >= 600)
-                    r = false;
-            }
+                if (g.Quarter == 1)
+                {
+                    if (g.Time >= 600)
+                        r = false;
+                }
 
-            if (g.Quarter == 4)
-            {
-                if (g.Time <= 120)
-                    r = false;
+                if (g.Quarter == 4)
+                {
+                    if (g.Time <= 120)
+                        r = false;
+                }
             }
 
             return false;
         }
         public List<Formation_Rec> Populate_Formation(List<Formation_Rec> fList, 
             bool bAllowSubstitutions,
-            bool bSpecialTeams)
+            bool bSpecialTeams, bool bPlayWithReturner)
         {
             //if a player spot can not be filled (and this should almost never happen) then
             //the team will return null for the return code and they must forfeit the game.
             List<Formation_Rec> r = new List<Formation_Rec>();
             bool bCouldFine_Player = false;
 
+            int p_id = 0;
             foreach (Formation_Rec f in fList)
             {
                 bool bSlotSubstitution = false;
@@ -172,8 +174,14 @@ namespace SpectatorFootball.GameNS
                 if (bAllowSubstitutions)
                     bSlotSubstitution = SlotSubstitute(f.Pos);
 
+                if (bSpecialTeams)
+                    bSlotSubstitution = true;
+
+                bool bReturner = false;
+                if (bPlayWithReturner && p_id == app_Constants.RETURNER_INDEX)
+                    bReturner = true;
                 //try to get a player at the need position either a starter or sub
-                Player_rating = PlayerSamePOS(f.Pos, bSpecialTeams, fList);
+                Player_rating = PlayerSamePOS(f.Pos, fList, bSlotSubstitution, bReturner, bSpecialTeams  );
 
                 //if a player at the request position could not be found then we need to try to 
                 //get a player at an alternate position
@@ -187,6 +195,7 @@ namespace SpectatorFootball.GameNS
                 if (Player_rating == null)
                     bCouldFine_Player = true;
 
+                p_id++;
             }
 
             if (bCouldFine_Player)
@@ -194,28 +203,35 @@ namespace SpectatorFootball.GameNS
             else
                 return fList;
         }
-        private Player_and_Ratings PlayerSamePOS(Player_Pos pp, bool bSubstitue, List<Formation_Rec> fList)
+        private Player_and_Ratings PlayerSamePOS(Player_Pos pp, List<Formation_Rec> fList, bool bSubstitue, bool bReturner, bool bSpecialTeams)
         {
             Player_and_Ratings r = null;
 
-            List<Player_and_Ratings> Available_Players = Our_Players.Where(x => x.p.Pos == (int)pp &&
+            List<Player_and_Ratings> Players_List = Our_Players.Where(x => x.p.Pos == (int)pp &&
                 !(fList.Any(f => f.p_and_r != null && f.p_and_r.p.ID == x.p.ID) && !(lInj.Any(j => j.Player_ID == x.p.ID))))
                 .OrderByDescending(o => o.Overall_Grade).ToList();
 
-            if (!bSubstitue)
-                r = Available_Players.FirstOrDefault();
-            else
+            int num_starters = Team_Helper.getNumStartingPlayersByPosition(pp);
+            int num_bench_warmers = Players_List.Count() - num_starters;
+
+            if (!bSubstitue || Players_List.Count() <= num_starters)
+                r = Players_List.FirstOrDefault();
+            else if (bReturner)
             {
-                int num_starters = Team_Helper.getNumStartingPlayersByPosition(pp);
-                if (Available_Players.Count() <= num_starters)
-                    r = Available_Players.FirstOrDefault();
-                else
-                {
-                    int indexes = Available_Players.Count() - num_starters;
-                    int ind = CommonUtils.getRandomIndex(indexes);
-                    ind += (num_starters - 1);
-                    r = r = Available_Players[ind];
-                }
+                Players_List = CommonUtils.RemoveFirstElements(Players_List, num_starters);
+                r = Players_List.First();
+            }
+            else if (bSpecialTeams)
+            {
+                Players_List = CommonUtils.RemoveFirstElements(Players_List, num_starters);
+                int id = CommonUtils.getRandomIndex(Players_List.Count());
+                r = Players_List[id];
+            }
+            else if (bSubstitue)
+            {
+                Players_List = CommonUtils.RemoveFirstElements(Players_List, num_starters);
+                int id = CommonUtils.getListIndexFavorEarly(Players_List.Count(), app_Constants.RETURNER_PERCENT_LIST_SELECTION);
+                r = Players_List[id];
             }
 
             return r;

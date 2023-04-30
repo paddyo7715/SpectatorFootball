@@ -491,6 +491,10 @@ namespace SpectatorFootball
         public const int MAX_WEEKS_OUT = 10;
         public const int MAX_PLAYS_OUT = 25;
 
+        //Player Indexes in Formation
+        public const int RETURNER_INDEX = 5;
+        public const int KICKER_INDEX = 5;
+
         //Kickers
         public const double OFFCENTER_YARDS_LESS = 0.1;
         public const int KICKOFF_MIN_SUPER_SHORT_DIST = 45;
@@ -546,6 +550,9 @@ namespace SpectatorFootball
         public const double BLOCKER_DOMINATED = 0.0;
         public const double BLOCKER_ADVANTAGE = 2.0;
         public const double EVEN = 1.2;
+
+        //Returners
+        public const int RETURNER_PERCENT_LIST_SELECTION = 80;
 
         //Tackling
         public const long TACKLER_ADVANTAGE_MULTIPLIER = 3;
