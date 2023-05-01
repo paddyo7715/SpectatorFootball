@@ -194,5 +194,16 @@ namespace SpectatorFootball.GameNS
 
             return r;
         }
+        public static long Switch_Posession(long Current_possession, long at, long ht)
+        {
+            long r = Current_possession;
+
+            if (Current_possession == at)
+                r = ht;
+            else
+                r = at;
+
+            return r;
+        }
     }
 }

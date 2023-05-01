@@ -355,7 +355,7 @@ namespace SpectatorFootball.GameNS
                 g_Yards_to_go = 10;
                 g_Line_of_Scrimmage = nonKickoff_StartingYardline;
                 g_Vertical_Ball_Placement = 50.0;
-                g_fid_posession = Switch_Posession(g_fid_posession, at.Franchise_ID, ht.Franchise_ID);
+                g_fid_posession = Game_Engine_Helper.Switch_Posession(g_fid_posession, at.Franchise_ID, ht.Franchise_ID);
             }
             else if (bKickoff)             //if this play is a kickoff then set where to kickoff from
             {
@@ -815,8 +815,7 @@ namespace SpectatorFootball.GameNS
 
                 //if the play resulted in a change of possession then switch possession
                 if (p_result.bSwitchPossession)
-                    g_fid_posession = Switch_Posession(g_fid_posession, at.Franchise_ID, ht.Franchise_ID);
-
+                    g_fid_posession = Game_Engine_Helper.Switch_Posession(g_fid_posession, at.Franchise_ID, ht.Franchise_ID);
 
             }
 
@@ -871,17 +870,6 @@ namespace SpectatorFootball.GameNS
                 yardLine = YardsInField - y;
 
             return yardLine;
-        }
-        private long Switch_Posession(long Current_possession, long at, long ht)
-        {
-            long r = Current_possession;
-
-            if (Current_possession == at)
-                r = ht;
-            else
-                r = at;
-
-            return r;
         }
         private string getForfeit_Message(Teams_by_Season at, Teams_by_Season ht, long away_score, long home_score)
         {
@@ -1055,13 +1043,6 @@ namespace SpectatorFootball.GameNS
 
             return r;
         }
-
-
-
-
-
-
-
 
     }
 }
