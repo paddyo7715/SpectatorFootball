@@ -21,6 +21,7 @@ namespace SpectatorFootball.Enum
         TACKLING,  
         TACKLED,  
         ON_BACK,  
-        RUNNING_BACKWORDS  
+        RUNNING_BACKWORDS,
+        KNEELING
     }
 }

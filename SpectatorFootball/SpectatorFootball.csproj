@@ -763,6 +763,9 @@
     <None Include="Images\Source\Field_Templates\Template.xcf" />
     <None Include="Images\Source\Players\L_FG_KICK.xcf" />
     <None Include="Images\Source\Players\L_Kick_About_to_Catch.xcf" />
+    <None Include="Images\Source\Players\L_kneel1_With_Ball.xcf" />
+    <None Include="Images\Source\Players\L_Kneel2_With_Ball.xcf" />
+    <None Include="Images\Source\Players\L_Kneel3_With_Ball.xcf" />
     <None Include="Images\Source\Players\L_On_Back.xcf" />
     <None Include="Images\Source\Players\L_Run1_Down_No_Ball.xcf" />
     <None Include="Images\Source\Players\L_Run1_Down_With_Ball.xcf" />
@@ -783,6 +786,9 @@
     <None Include="Images\Source\Players\Player_Sprite_Sheet.xcf" />
     <None Include="Images\Source\Players\R_FG_KICK.xcf" />
     <None Include="Images\Source\Players\R_Kick_About_to_Catch.xcf" />
+    <None Include="Images\Source\Players\R_kneel1_With_Ball.xcf" />
+    <None Include="Images\Source\Players\R_kneel2_With_Ball.xcf" />
+    <None Include="Images\Source\Players\R_Kneel3_With_Ball.xcf" />
     <None Include="Images\Source\Players\R_On_Back.xcf" />
     <None Include="Images\Source\Players\R_Run1_Down_No_Ball.xcf" />
     <None Include="Images\Source\Players\R_Run1_Down_With_Ball.xcf" />
@@ -801,7 +807,6 @@
     <None Include="Images\Source\Players\R_Upright_Block.xcf" />
     <None Include="Images\Source\Players\R_Upright_Block1.xcf" />
     <None Include="Images\Source\Players\R_Upright_Block2.xcf" />
-    <None Include="Images\Source\Players\sprite_sheet.xcf" />
     <EntityDeploy Include="Models\LeagueEDM.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>LeagueEDM.Designer.cs</LastGenOutput>

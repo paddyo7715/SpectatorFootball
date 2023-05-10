@@ -205,5 +205,15 @@ namespace SpectatorFootball.GameNS
 
             return r;
         }
+
+        public static bool Switch_LefttoRight(bool bLefttoRight)
+        {
+            bool r;
+
+            if (bLefttoRight) r = false; else r = true;
+
+            return r;
+        }
+
     }
 }

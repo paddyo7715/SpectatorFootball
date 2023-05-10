@@ -21,7 +21,7 @@ namespace SpectatorFootball.GameNS
         public void TeeUp()
         {
             State = Ball_States.TEED_UP;
-            Action bas = new Action(Game_Object_Types.B, Current_YardLine, Current_Vertical_Percent_Pos, 0.0, 0.0, false, false, null, Ball_States.TEED_UP, null, Movement.NONE, null);
+            Action bas = new Action(Game_Object_Types.B, Current_YardLine, Current_Vertical_Percent_Pos, 0.0, 0.0, false, false, null, Ball_States.TEED_UP, null, Movement.NONE, null, false);
             Play_Stage bStage = new Play_Stage();
             bStage.Main_Object = false;
             bStage.Actions.Add(bas);
@@ -31,7 +31,7 @@ namespace SpectatorFootball.GameNS
         public void End_Over_End_Thru_Air()
         {
             State = Ball_States.END_OVER_END;
-            Action bas = new Action(Game_Object_Types.B, Starting_YardLine, Starting_Vertical_Percent_Pos, Current_YardLine, Current_Vertical_Percent_Pos, false, true, null, Ball_States.END_OVER_END, null, Movement.LINE, Ball_Speed.SLOW);
+            Action bas = new Action(Game_Object_Types.B, Starting_YardLine, Starting_Vertical_Percent_Pos, Current_YardLine, Current_Vertical_Percent_Pos, false, true, null, Ball_States.END_OVER_END, null, Movement.LINE, Ball_Speed.SLOW, false);
             Play_Stage bStage = new Play_Stage();
             bStage.Main_Object = true;
             bStage.Actions.Add(bas);
@@ -39,7 +39,16 @@ namespace SpectatorFootball.GameNS
         }
         public void Carried(double prev_yl, double prev_v)
         {
-            Action bas = new Action(Game_Object_Types.B, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, true, false, null, Ball_States.CARRIED, null, Movement.LINE, Ball_Speed.SLOW);
+            Action bas = new Action(Game_Object_Types.B, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, true, false, null, Ball_States.CARRIED, null, Movement.LINE, Ball_Speed.SLOW, false);
+            Play_Stage bStage = new Play_Stage();
+            bStage.Main_Object = true;
+            bStage.Actions.Add(bas);
+            Stages.Add(bStage);
+        }
+
+        public void Carried_Fake_Movement(double prev_yl, double prev_v)
+        {
+            Action bas = new Action(Game_Object_Types.B, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, true, false, null, Ball_States.CARRIED, null, Movement.FAKE_MOVEMENT, Ball_Speed.SLOW, false);
             Play_Stage bStage = new Play_Stage();
             bStage.Main_Object = true;
             bStage.Actions.Add(bas);

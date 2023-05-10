@@ -539,7 +539,9 @@ namespace SpectatorFootball
         public const double KICKOFF_YARDS_BEFORE_TACKLER = 3.0;
         public const double KICKOFF_YARDS_BEFORE_TACKLER2 = 4.0;
         public const double KICKOFF_YARDS_BEFORE_TACKLER3 = 6.0;
+        public const double KICKOFF_RUN_OUT_YARD_FACTOR = 0.5;
         public const int KICKOFF_TACKLE_TEST_ADJUSTER = 10000;  //Set 0 normally or high to test
+
 
         public const double TACKLER_FOO_MOVE = 0.3;
 

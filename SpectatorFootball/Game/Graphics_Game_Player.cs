@@ -32,7 +32,7 @@ namespace SpectatorFootball.GameNS
             this.Vertical_Percent_Pos = Vertical_Percent_Pos;
             this.Stages = Stages;
 
-            graph_pState = setGraphicsState(this.pState);
+            graph_pState = setGraphicsState(this.pState) ;
 
         }
 
@@ -117,6 +117,14 @@ namespace SpectatorFootball.GameNS
                         r = Graphics_Player_States.RUNNING_BACKWORDS_1;
                     else
                         r = Graphics_Player_States.RUNNING_BACKWORDS_2;
+                    break;
+                case Player_States.KNEELING:
+                    if (graph_pState == Graphics_Player_States.ABOUT_TO_CATCH_KICK)
+                        r = Graphics_Player_States.KNEELING_1;
+                    else if (graph_pState == Graphics_Player_States.KNEELING_1)
+                         r = Graphics_Player_States.KNEELING_2;
+                    else if (graph_pState == Graphics_Player_States.KNEELING_2)
+                          r = Graphics_Player_States.KNEELING_3;
                     break;
             }
             return r;

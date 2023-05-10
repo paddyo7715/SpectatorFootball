@@ -15,8 +15,9 @@ namespace SpectatorFootball.GameNS
         private static int PLAYER_SKIP = 8;
         private static int STARTING_KICK_SKIP = 24;
         private static int ENDING_KICK_SKIP = 6;
+        private static int NO_SKIP = 1;
 
-        public static List<PointXY> PlotLine (bool bBall,double sx, double sy, double ex, double ey, bool addEndpoint, Ball_Speed? Ball_Speed, Ball_States? b_state)
+        public static List<PointXY> PlotLine (bool bBall,double sx, double sy, double ex, double ey, bool addEndpoint, Ball_Speed? Ball_Speed, Ball_States? b_state, bool bnoSkip)
         {
             List<PointXY> r = new List<PointXY>();
 
@@ -106,6 +107,19 @@ namespace SpectatorFootball.GameNS
             return r;
 
         }
+        public static List<PointXY> PlotFakeMoves(double x, double y)
+        {
+            List<PointXY> r = new List<PointXY>();
+
+            for (int i = 0; i < 3; i++)
+            {
+                r.Add(new PointXY() { x = x, y = y });
+            }
+
+            return r;
+        }
+
+
 
 
     }

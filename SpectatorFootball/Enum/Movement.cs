@@ -10,6 +10,7 @@ namespace SpectatorFootball.Enum
     {
         LINE,
         ARC,
-        NONE
+        NONE,
+        FAKE_MOVEMENT
     }
 }

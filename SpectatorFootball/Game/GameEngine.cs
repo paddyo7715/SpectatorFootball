@@ -462,7 +462,7 @@ namespace SpectatorFootball.GameNS
 
                 logger.Debug("Before  kickoff play");
                 if (bKickoff && Offensive_Package.Play == Play_Enum.KICKOFF_NORMAL)
-                    p_result = Play_Kickoff_Normal.Execute(Game_Ball, Offensive_Players, Defensive_Players, bLefttoRight, false, bSimGame);
+                    p_result = Play_Kickoff_Normal.Execute(Game_Ball, Offensive_Players, Defensive_Players, bLefttoRight, false, bSimGame, false);
                 logger.Debug("AFter  kickoff play");
 
                 int ball_stages = Game_Ball.Stages.Count();

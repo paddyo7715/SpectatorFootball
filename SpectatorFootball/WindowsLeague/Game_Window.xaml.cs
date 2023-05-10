@@ -94,7 +94,7 @@ namespace SpectatorFootball.WindowsLeague
 
         private int VIEW_EDGE_PIXELS;
 
-        private const int PLAYER_IN_SPRITE_ROW = 22;
+        private const int PLAYER_IN_SPRITE_ROW = 25;
 
 //        private ImageBrush A_Player_Sheet = new ImageBrush();
 //        private ImageBrush H_Player_Sheet = new ImageBrush();
@@ -339,11 +339,15 @@ namespace SpectatorFootball.WindowsLeague
                         if (gGame_Ball.bStageFinished)
                             bStageFinished = true;
 
+                        int idebugger;
                         //Go thru all offensive and def players and place them
                         for (int pSlot = 0; pSlot < Offensive_Players.Count(); pSlot++)
                         {
                             Offensive_Players[pSlot].ChangeStage(stg);
                             Defensive_Players[pSlot].ChangeStage(stg);
+
+                            if (pSlot == 5)
+                                idebugger = 6;
 
                             Offensive_Players[pSlot].Update();
                             Defensive_Players[pSlot].Update();
