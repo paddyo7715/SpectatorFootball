@@ -146,6 +146,26 @@ namespace SpectatorFootball.GameNS
             Stages.Add(pStage);
         }
 
+        public bool isKickOutofEndzone(double yardline)
+        {
+            bool r = false;
+
+            if (yardline < 0.0 || yardline > 100.0)
+            {
+                double d = 0;
+
+                if (yardline < 0)
+                    d = Math.Abs(yardline);
+                else if (yardline > 100)
+                    d = yardline - 100;
+
+                if (d >= app_Constants.KICK_OUT_OF_ENDZONE_YARD)
+                    r = true; ;
+            }
+
+            return r;
+        }
+
         public bool isTouchback(List<int?> group_1)
         {
             logger.Debug("isReturnKickoff");

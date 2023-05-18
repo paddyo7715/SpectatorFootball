@@ -761,6 +761,7 @@
       <LastGenOutput>SettingsEDM.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <None Include="Images\Source\Field_Templates\Template.xcf" />
+    <None Include="Images\Source\misc\Goalposts.xcf" />
     <None Include="Images\Source\Players\L_FG_KICK.xcf" />
     <None Include="Images\Source\Players\L_Kick_About_to_Catch.xcf" />
     <None Include="Images\Source\Players\L_kneel1_With_Ball.xcf" />
@@ -830,6 +831,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\Goalposts.png" />
     <Content Include="Models\LeagueEDM.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>LeagueEDM.edmx</DependentUpon>

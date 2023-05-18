@@ -14,6 +14,8 @@ namespace SpectatorFootball.Enum
         END_OVER_END, 
         SPIRAL, 
         ON_THE_GROUND, 
-        CARRIED
+        CARRIED,
+        BOUNCING,
+        ROLLING
     }
 }

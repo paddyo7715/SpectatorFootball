@@ -474,326 +474,55 @@ namespace SpectatorFootball.GameNS
                 }
 
                 //set results and accume team stats
-                r.Long_Message = p_result.Message;
                 yards_gained = p_result.yards_gained;
-                bKickoff = p_result.bKickoff;
-                bExtraPoint = p_result.bExtraPoint;
-                bFreeKick = p_result.bFreeKick;
 
-                g.Away_Score += p_result.away_points;
-                g.Home_Score += p_result.home_points;
+                //                g.Away_Score += p_result.away_points;
+                //                g.Home_Score += p_result.home_points;
 
-                switch (g.Quarter)
-                {
-                    case 1:
-                        g.Away_Score_Q1 += p_result.away_points;
-                        g.Home_Score_Q1 += p_result.home_points;
-                        break;
-                    case 2:
-                        g.Away_Score_Q2 += p_result.away_points;
-                        g.Home_Score_Q2 += p_result.home_points;
-                        break;
-                    case 3:
-                        g.Away_Score_Q3 += p_result.away_points;
-                        g.Home_Score_Q3 += p_result.home_points;
-                        break;
-                    case 4:
-                        g.Away_Score_Q4 += p_result.away_points;
-                        g.Home_Score_Q4 += p_result.home_points;
-                        break;
-                    default:
-                        g.Away_Score_OT += p_result.away_points;
-                        g.Home_Score_OT += p_result.home_points;
-                        break;
-                }
+                /*                switch (g.Quarter)
+                                {
+                                    case 1:
+                                        g.Away_Score_Q1 += p_result.away_points;
+                                        g.Home_Score_Q1 += p_result.home_points;
+                                        break;
+                                    case 2:
+                                        g.Away_Score_Q2 += p_result.away_points;
+                                        g.Home_Score_Q2 += p_result.home_points;
+                                        break;
+                                    case 3:
+                                        g.Away_Score_Q3 += p_result.away_points;
+                                        g.Home_Score_Q3 += p_result.home_points;
+                                        break;
+                                    case 4:
+                                        g.Away_Score_Q4 += p_result.away_points;
+                                        g.Home_Score_Q4 += p_result.home_points;
+                                        break;
+                                    default:
+                                        g.Away_Score_OT += p_result.away_points;
+                                        g.Home_Score_OT += p_result.home_points;
+                                        break;
+                                }
+                */
 
-                g.Away_FirstDowns += p_result.away_first_downs;
-                g.Away_ThirdDowns += p_result.away_third_down_att;
-                g.Away_ThirdDown_Conversions += p_result.away_third_down_conv;
-                g.Away_FourthDowns += p_result.away_fourth_down_att;
-                g.Away_FourthDown_Conversions += p_result.away_fourth_down_conv;
-
-                g.Away_1Point_Conv_Att += p_result.away_1point_att;
-                g.Away_1Point_Conv_Made += p_result.away_1point_conv;
-                g.Away_2Point_Conv_Att += p_result.away_2point_att;
-                g.Away_2Point_Conv_Made += p_result.away_2point_conv;
-                g.Away_3Point_Conv_Att += p_result.away_3point_att;
-                g.Away_3Point_Conv_Made += p_result.away_3point_conv;
-
-                g.Away_TOP += p_result.away_time_of_possession;
-                g.Away_Turnovers += p_result.away_turnovers;
-                g.Away_Sacks += p_result.away_sacks;
-
-                g.Home_FirstDowns += p_result.home_first_downs;
-                g.Home_ThirdDowns += p_result.home_third_down_att;
-                g.Home_ThirdDown_Conversions += p_result.home_third_down_conv;
-                g.Home_FourthDowns += p_result.home_fourth_down_att;
-                g.Home_FourthDown_Conversions += p_result.home_fourth_down_conv;
-
-                g.Home_1Point_Conv_Att += p_result.home_1point_att;
-                g.Home_1Point_Conv_Made += p_result.home_1point_conv;
-                g.Home_2Point_Conv_Att += p_result.home_2point_att;
-                g.Home_2Point_Conv_Made += p_result.home_2point_conv;
-                g.Home_3Point_Conv_Att += p_result.home_3point_att;
-                g.Home_3Point_Conv_Made += p_result.home_3point_conv;
-
-                g.Home_TOP += p_result.home_time_of_possession;
-                g.Home_Turnovers += p_result.home_turnovers;
-                g.Home_Sacks += p_result.home_sacks;
 
                 //acume individual stats
-                foreach (Game_Player_Defense_Stats s in p_result.Game_Player_Defense_Stats)
-                {
-                    Game_Player_Defense_Stats ps = g.Game_Player_Defense_Stats.Where(x => x.Player_ID == s.Player_ID).FirstOrDefault();
-                    if (ps == null)
-                        g.Game_Player_Defense_Stats.Add(s);
-                    else
-                    {
-                        ps.Pass_Blocks += s.Pass_Blocks;
-                        ps.Pass_Rushes += s.Pass_Rushes;
-                        ps.QB_Pressures += s.QB_Pressures;
-                        ps.Recovered_Fumbles += s.Recovered_Fumbles;
-                    }
-                }
 
-                foreach (Game_Player_FG_Defense_Stats s in p_result.Game_Player_FG_Defense_Stats)
-                {
-                    Game_Player_FG_Defense_Stats ps = g.Game_Player_FG_Defense_Stats.Where(x => x.Player_ID == s.Player_ID).FirstOrDefault();
-                    if (ps == null)
-                        g.Game_Player_FG_Defense_Stats.Add(s);
-                    else
-                    {
-                        ps.FG_Block += s.FG_Block;
-                        ps.FG_Block_Recovery += s.FG_Block_Recovery;
-                        ps.FG_Block_Recovery_Yards += s.FG_Block_Recovery_Yards;
-                        ps.FG_Block_Recovery_TDs += s.FG_Block_Recovery_TDs;
-                        ps.XP_Block += s.XP_Block;
-                    }
-                }
-
-                foreach (Game_Player_Kick_Returner_Stats s in p_result.Game_Player_Kick_Returner_Stats)
-                {
-                    Game_Player_Kick_Returner_Stats ps = g.Game_Player_Kick_Returner_Stats.Where(x => x.Player_ID == s.Player_ID).FirstOrDefault();
-                    if (ps == null)
-                        g.Game_Player_Kick_Returner_Stats.Add(s);
-                    else
-                    {
-                        ps.Kickoffs_Returned += s.Kickoffs_Returned;
-                        ps.Kickoffs_Returned_Yards += s.Kickoffs_Returned_Yards;
-                        ps.Kickoffs_Returned_TDs += s.Kickoffs_Returned_TDs;
-                        if (ps.Kickoff_Return_Yards_Long < s.Kickoff_Return_Yards_Long) ps.Kickoff_Return_Yards_Long = s.Kickoff_Return_Yards_Long;
-                        ps.Kickoffs_Returned_Fumbles += s.Kickoffs_Returned_Fumbles;
-                        ps.Kickoffs_Returned_Fumbles_Lost += s.Kickoffs_Returned_Fumbles_Lost;
-                    }
-                }
-
-                foreach (Game_Player_Kicker_Stats s in p_result.Game_Player_Kicker_Stats)
-                {
-                    Game_Player_Kicker_Stats ps = g.Game_Player_Kicker_Stats.Where(x => x.Player_ID == s.Player_ID).FirstOrDefault();
-                    if (ps == null)
-                        g.Game_Player_Kicker_Stats.Add(s);
-                    else
-                    {
-                        ps.XP_Att += s.XP_Att;
-                        ps.XP_Made += s.XP_Made;
-                        ps.FG_Att += s.FG_Att;
-                        ps.FG_Made += s.FG_Made;
-                        if (ps.FG_Long < s.FG_Long) ps.FG_Long = s.FG_Long;
-                        ps.FG_Blocked += s.FG_Blocked;
-                        ps.Kickoffs += s.Kickoffs;
-                        ps.Kickoff_Out_of_Bounds += s.Kickoff_Out_of_Bounds;
-                        ps.Kickoff_Touchback += s.Kickoff_Touchback;
-                        ps.onside_attempt += s.onside_attempt;
-                        ps.onside_successful += s.onside_successful;
-                    }
-                }
-
-                foreach (Game_Player_Kickoff_Defenders s in p_result.Game_Player_Kickoff_Defenders)
-                {
-                    Game_Player_Kickoff_Defenders ps = g.Game_Player_Kickoff_Defenders.Where(x => x.Player_ID == s.Player_ID).FirstOrDefault();
-                    if (ps == null)
-                        g.Game_Player_Kickoff_Defenders.Add(s);
-                    else
-                    {
-                        ps.Forced_Fumbles_Kickoffs += s.Forced_Fumbles_Kickoffs;
-                        ps.Fumbles_Kickoffs_Recovered += s.Fumbles_Kickoffs_Recovered;
-                        ps.Fumbles_Kickoffs_Recovered_TDs += s.Fumbles_Kickoffs_Recovered_TDs;
-                        ps.Fumbles_Kickoffs_Recovered_Yards += s.Fumbles_Kickoffs_Recovered_Yards;
-                        ps.Kickoff_Tackles += s.Kickoff_Tackles;
-                        ps.KickOff_Onside_Kick_Recoveries += s.KickOff_Onside_Kick_Recoveries;
-                    }
-                }
-
-                foreach (Game_Player_Kickoff_Receiver_Stats s in p_result.Game_Player_Kickoff_Receiver_Stats)
-                {
-                    Game_Player_Kickoff_Receiver_Stats ps = g.Game_Player_Kickoff_Receiver_Stats.Where(x => x.Player_ID == s.Player_ID).FirstOrDefault();
-                    if (ps == null)
-                        g.Game_Player_Kickoff_Receiver_Stats.Add(s);
-                    else
-                    {
-                        ps.Onside_Kickoff_Recovery += s.Onside_Kickoff_Recovery;
-                    }
-                }
-
-                foreach (Game_Player_Offensive_Linemen_Stats s in p_result.Game_Player_Offensive_Linemen_Stats)
-                {
-                    Game_Player_Offensive_Linemen_Stats ps = g.Game_Player_Offensive_Linemen_Stats.Where(x => x.Player_ID == s.Player_ID).FirstOrDefault();
-                    if (ps == null)
-                        g.Game_Player_Offensive_Linemen_Stats.Add(s);
-                    else
-                    {
-                        ps.Oline_Plays += s.Oline_Plays;
-                        ps.OLine_Sacks_Allowed += s.OLine_Sacks_Allowed;
-                        ps.OLine_Rushing_Loss_Allowed += s.OLine_Rushing_Loss_Allowed;
-                        ps.OLine_Missed_Block += s.OLine_Missed_Block;
-                        ps.OLine_Pancakes += s.OLine_Pancakes;
-                        ps.QB_Pressures_Allowed += s.QB_Pressures_Allowed;
-                    }
-                }
-
-                foreach (Game_Player_Pass_Defense_Stats s in p_result.Game_Player_Pass_Defense_Stats)
-                {
-                    Game_Player_Pass_Defense_Stats ps = g.Game_Player_Pass_Defense_Stats.Where(x => x.Player_ID == s.Player_ID).FirstOrDefault();
-                    if (ps == null)
-                        g.Game_Player_Pass_Defense_Stats.Add(s);
-                    else
-                    {
-                        ps.Ints += s.Ints;
-                        ps.Def_Int_Yards += s.Def_Int_Yards;
-                        ps.Def_int_TDs += s.Def_int_TDs;
-                        ps.Def_Pass_Defenses += s.Def_Pass_Defenses;
-                        ps.Tackles += s.Tackles;
-                        ps.Def_Missed_Tackles += s.Def_Missed_Tackles;
-                        ps.Touchdowns_Surrendered += s.Touchdowns_Surrendered;
-                        ps.Forced_Fumbles += s.Forced_Fumbles;
-                        ps.Fumble_Recoveries += s.Fumble_Recoveries;
-                        ps.Fumble_Return_Yards += s.Fumble_Return_Yards;
-                        ps.Fumble_Return_TD += s.Fumble_Return_TD;
-                    }
-                }
-
-                foreach (Game_Player_Passing_Stats s in p_result.Game_Player_Passing_Stats)
-                {
-                    Game_Player_Passing_Stats ps = g.Game_Player_Passing_Stats.Where(x => x.Player_ID == s.Player_ID).FirstOrDefault();
-                    if (ps == null)
-                        g.Game_Player_Passing_Stats.Add(s);
-                    else
-                    {
-                        ps.Fumbles += s.Fumbles;
-                        ps.Fumbles_Lost += s.Fumbles_Lost;
-                        ps.Sacked += s.Sacked;
-                        ps.Pass_Comp += s.Pass_Comp;
-                        ps.Pass_Att += s.Pass_Att;
-                        ps.Pass_Yards += s.Pass_Yards;
-                        ps.Pass_TDs += s.Pass_TDs;
-                        ps.Pass_Ints += s.Pass_Ints;
-                        if (ps.Long < s.Long) ps.Long = s.Long;
-                        ps.Passes_Blocks += s.Passes_Blocks;
-                    }
-                }
-
-                foreach (Game_Player_Penalty_Stats s in p_result.Game_Player_Penalty_Stats)
-                    g.Game_Player_Penalty_Stats.Add(s);
-
-                foreach (Game_Player_Punt_Defenders s in p_result.Game_Player_Punt_Defenders)
-                {
-                    Game_Player_Punt_Defenders ps = g.Game_Player_Punt_Defenders.Where(x => x.Player_ID == s.Player_ID).FirstOrDefault();
-                    if (ps == null)
-                        g.Game_Player_Punt_Defenders.Add(s);
-                    else
-                    {
-                        ps.Forced_Fumbles_Punt += s.Forced_Fumbles_Punt;
-                        ps.Fumbles_Punt_Recovered += s.Fumbles_Punt_Recovered;
-                        ps.Fumbles_Punt_Recovered_TDs += s.Fumbles_Punt_Recovered_TDs;
-                        ps.Fumbles_Punt_Recovered_Yards += s.Fumbles_Punt_Recovered_Yards;
-                        ps.Punt_Tackles += s.Punt_Tackles;
-                    }
-                }
-
-                foreach (Game_Player_Punt_Receiver_Stats s in p_result.Game_Player_Punt_Receiver_Stats)
-                {
-                    Game_Player_Punt_Receiver_Stats ps = g.Game_Player_Punt_Receiver_Stats.Where(x => x.Player_ID == s.Player_ID).FirstOrDefault();
-                    if (ps == null)
-                        g.Game_Player_Punt_Receiver_Stats.Add(s);
-                    else
-                    {
-                        ps.Punt_Block += s.Punt_Block;
-                        ps.Punt_Block_Recovery += s.Punt_Block_Recovery;
-                        ps.Punt_Block_Recovery_Yards += s.Punt_Block_Recovery_Yards;
-                        ps.Punt_Block_Recovery_TDs += s.Punt_Block_Recovery_TDs;
-                    }
-                }
-
-
-                foreach (Game_Player_Punt_Returner_Stats s in p_result.Game_Player_Punt_Returner_Stats)
-                {
-                    Game_Player_Punt_Returner_Stats ps = g.Game_Player_Punt_Returner_Stats.Where(x => x.Player_ID == s.Player_ID).FirstOrDefault();
-                    if (ps == null)
-                        g.Game_Player_Punt_Returner_Stats.Add(s);
-                    else
-                    {
-                        ps.Punts_Returned += s.Punts_Returned;
-                        ps.Punts_Returned_Yards += s.Punts_Returned_Yards;
-                        ps.Punts_Returned_TDs += s.Punts_Returned_TDs;
-                        if (ps.Punt_Returned_Yards_Long < s.Punt_Returned_Yards_Long) ps.Punt_Returned_Yards_Long = s.Punt_Returned_Yards_Long;
-                        ps.Punts_Returned_Fumbles += s.Punts_Returned_Fumbles;
-                        ps.Punts_Returned_Fumbles_Lost += s.Punts_Returned_Fumbles_Lost;
-                    }
-                }
-
-                foreach (Game_Player_Punter_Stats s in p_result.Game_Player_Punter_Stats)
-                {
-                    Game_Player_Punter_Stats ps = g.Game_Player_Punter_Stats.Where(x => x.Player_ID == s.Player_ID).FirstOrDefault();
-                    if (ps == null)
-                        g.Game_Player_Punter_Stats.Add(s);
-                    else
-                    {
-                        ps.Fumbles += s.Fumbles;
-                        ps.Fumbles_Lost += s.Fumbles_Lost;
-                        ps.num_punts += s.num_punts;
-                        ps.Punt_yards += s.Punt_yards;
-                        ps.Punt_Killed_att += s.Punt_Killed_att;
-                        ps.Punt_killed_num += s.Punt_killed_num;
-                        ps.Blocked_Punts += s.Blocked_Punts;
-                    }
-                }
-
-                foreach (Game_Player_Receiving_Stats s in p_result.Game_Player_Receiving_Stats)
-                {
-                    Game_Player_Receiving_Stats ps = g.Game_Player_Receiving_Stats.Where(x => x.Player_ID == s.Player_ID).FirstOrDefault();
-                    if (ps == null)
-                        g.Game_Player_Receiving_Stats.Add(s);
-                    else
-                    {
-                        ps.Fumbles += s.Fumbles;
-                        ps.Fumbles_Lost += s.Fumbles_Lost;
-                        ps.Rec_Catches += s.Rec_Catches;
-                        ps.Rec_Drops += s.Rec_Drops;
-                        ps.Rec_Yards += s.Rec_Yards;
-                        ps.Rec_TDs += s.Rec_TDs;
-                        if (ps.Long < s.Long) ps.Long = s.Long;
-                    }
-                }
-
-                foreach (Game_Player_Rushing_Stats s in p_result.Game_Player_Rushing_Stats)
-                {
-                    Game_Player_Rushing_Stats ps = g.Game_Player_Rushing_Stats.Where(x => x.Player_ID == s.Player_ID).FirstOrDefault();
-                    if (ps == null)
-                        g.Game_Player_Rushing_Stats.Add(s);
-                    else
-                    {
-                        ps.Fumbles += s.Fumbles;
-                        ps.Fumbles_Lost += s.Fumbles_Lost;
-                        ps.Rush_Att += s.Rush_Att;
-                        ps.Rush_Yards += s.Rush_Yards;
-                        ps.Rush_TDs += s.Rush_TDs;
-                        if (ps.Long < s.Long) ps.Long = s.Long;
-                    }
-                }
-
-                foreach (Game_Scoring_Summary s in p_result.Game_Scoring_Summary)
-                    g.Game_Scoring_Summary.Add(s);
-
+                Accume_Play_Stats(p_result.Game_Player_Defense_Stats,
+                     p_result.Game_Player_FG_Defense_Stats,
+                     p_result.Game_Player_Kick_Returner_Stats,
+                     p_result.Game_Player_Kicker_Stats,
+                     p_result.Game_Player_Kickoff_Defenders,
+                     p_result.Game_Player_Kickoff_Receiver_Stats,
+                     p_result.Game_Player_Offensive_Linemen_Stats,
+                     p_result.Game_Player_Pass_Defense_Stats,
+                     p_result.Game_Player_Passing_Stats,
+                     p_result.Game_Player_Penalty_Stats,
+                     p_result.Game_Player_Punt_Defenders,
+                     p_result.Game_Player_Punt_Receiver_Stats,
+                     p_result.Game_Player_Punt_Returner_Stats,
+                     p_result.Game_Player_Punter_Stats,
+                     p_result.Game_Player_Receiving_Stats,
+                     p_result.Game_Player_Rushing_Stats);
                 logger.Debug("After accum stats");
 
                 //work the injuries
@@ -1042,6 +771,273 @@ namespace SpectatorFootball.GameNS
             }
 
             return r;
+        }
+        public void Accume_Play_Stats(List<Game_Player_Defense_Stats> Game_Player_Defense_Stats,
+         List<Game_Player_FG_Defense_Stats> Game_Player_FG_Defense_Stats,
+         List<Game_Player_Kick_Returner_Stats> Game_Player_Kick_Returner_Stats,
+         List<Game_Player_Kicker_Stats> Game_Player_Kicker_Stats,
+         List<Game_Player_Kickoff_Defenders> Game_Player_Kickoff_Defenders,
+         List<Game_Player_Kickoff_Receiver_Stats> Game_Player_Kickoff_Receiver_Stats,
+         List<Game_Player_Offensive_Linemen_Stats> Game_Player_Offensive_Linemen_Stats,
+         List<Game_Player_Pass_Defense_Stats> Game_Player_Pass_Defense_Stats,
+         List<Game_Player_Passing_Stats> Game_Player_Passing_Stats,
+         List<Game_Player_Penalty_Stats> Game_Player_Penalty_Stats,
+         List<Game_Player_Punt_Defenders> Game_Player_Punt_Defenders,
+         List<Game_Player_Punt_Receiver_Stats> Game_Player_Punt_Receiver_Stats,
+         List<Game_Player_Punt_Returner_Stats> Game_Player_Punt_Returner_Stats,
+         List<Game_Player_Punter_Stats> Game_Player_Punter_Stats,
+         List<Game_Player_Receiving_Stats> Game_Player_Receiving_Stats,
+         List<Game_Player_Rushing_Stats> Game_Player_Rushing_Stats)
+        {
+            foreach (Game_Player_Defense_Stats s in Game_Player_Defense_Stats)
+            {
+                Game_Player_Defense_Stats ps = g.Game_Player_Defense_Stats.Where(x => x.Player_ID == s.Player_ID).FirstOrDefault();
+                if (ps == null)
+                    g.Game_Player_Defense_Stats.Add(s);
+                else
+                {
+                    ps.Pass_Blocks += s.Pass_Blocks;
+                    ps.Pass_Rushes += s.Pass_Rushes;
+                    ps.QB_Pressures += s.QB_Pressures;
+                    ps.Recovered_Fumbles += s.Recovered_Fumbles;
+                }
+            }
+
+            foreach (Game_Player_FG_Defense_Stats s in Game_Player_FG_Defense_Stats)
+            {
+                Game_Player_FG_Defense_Stats ps = g.Game_Player_FG_Defense_Stats.Where(x => x.Player_ID == s.Player_ID).FirstOrDefault();
+                if (ps == null)
+                    g.Game_Player_FG_Defense_Stats.Add(s);
+                else
+                {
+                    ps.FG_Block += s.FG_Block;
+                    ps.FG_Block_Recovery += s.FG_Block_Recovery;
+                    ps.FG_Block_Recovery_Yards += s.FG_Block_Recovery_Yards;
+                    ps.FG_Block_Recovery_TDs += s.FG_Block_Recovery_TDs;
+                    ps.XP_Block += s.XP_Block;
+                }
+            }
+
+            foreach (Game_Player_Kick_Returner_Stats s in Game_Player_Kick_Returner_Stats)
+            {
+                Game_Player_Kick_Returner_Stats ps = g.Game_Player_Kick_Returner_Stats.Where(x => x.Player_ID == s.Player_ID).FirstOrDefault();
+                if (ps == null)
+                    g.Game_Player_Kick_Returner_Stats.Add(s);
+                else
+                {
+                    ps.Kickoffs_Returned += s.Kickoffs_Returned;
+                    ps.Kickoffs_Returned_Yards += s.Kickoffs_Returned_Yards;
+                    ps.Kickoffs_Returned_TDs += s.Kickoffs_Returned_TDs;
+                    if (ps.Kickoff_Return_Yards_Long < s.Kickoff_Return_Yards_Long) ps.Kickoff_Return_Yards_Long = s.Kickoff_Return_Yards_Long;
+                    ps.Kickoffs_Returned_Fumbles += s.Kickoffs_Returned_Fumbles;
+                    ps.Kickoffs_Returned_Fumbles_Lost += s.Kickoffs_Returned_Fumbles_Lost;
+                }
+            }
+
+            foreach (Game_Player_Kicker_Stats s in Game_Player_Kicker_Stats)
+            {
+                Game_Player_Kicker_Stats ps = g.Game_Player_Kicker_Stats.Where(x => x.Player_ID == s.Player_ID).FirstOrDefault();
+                if (ps == null)
+                    g.Game_Player_Kicker_Stats.Add(s);
+                else
+                {
+                    ps.XP_Att += s.XP_Att;
+                    ps.XP_Made += s.XP_Made;
+                    ps.FG_Att += s.FG_Att;
+                    ps.FG_Made += s.FG_Made;
+                    if (ps.FG_Long < s.FG_Long) ps.FG_Long = s.FG_Long;
+                    ps.FG_Blocked += s.FG_Blocked;
+                    ps.Kickoffs += s.Kickoffs;
+                    ps.Kickoff_Out_of_Bounds += s.Kickoff_Out_of_Bounds;
+                    ps.Kickoff_Touchback += s.Kickoff_Touchback;
+                    ps.onside_attempt += s.onside_attempt;
+                    ps.onside_successful += s.onside_successful;
+                }
+            }
+
+            foreach (Game_Player_Kickoff_Defenders s in Game_Player_Kickoff_Defenders)
+            {
+                Game_Player_Kickoff_Defenders ps = g.Game_Player_Kickoff_Defenders.Where(x => x.Player_ID == s.Player_ID).FirstOrDefault();
+                if (ps == null)
+                    g.Game_Player_Kickoff_Defenders.Add(s);
+                else
+                {
+                    ps.Forced_Fumbles_Kickoffs += s.Forced_Fumbles_Kickoffs;
+                    ps.Fumbles_Kickoffs_Recovered += s.Fumbles_Kickoffs_Recovered;
+                    ps.Fumbles_Kickoffs_Recovered_TDs += s.Fumbles_Kickoffs_Recovered_TDs;
+                    ps.Fumbles_Kickoffs_Recovered_Yards += s.Fumbles_Kickoffs_Recovered_Yards;
+                    ps.Kickoff_Tackles += s.Kickoff_Tackles;
+                    ps.KickOff_Onside_Kick_Recoveries += s.KickOff_Onside_Kick_Recoveries;
+                }
+            }
+
+            foreach (Game_Player_Kickoff_Receiver_Stats s in Game_Player_Kickoff_Receiver_Stats)
+            {
+                Game_Player_Kickoff_Receiver_Stats ps = g.Game_Player_Kickoff_Receiver_Stats.Where(x => x.Player_ID == s.Player_ID).FirstOrDefault();
+                if (ps == null)
+                    g.Game_Player_Kickoff_Receiver_Stats.Add(s);
+                else
+                {
+                    ps.Onside_Kickoff_Recovery += s.Onside_Kickoff_Recovery;
+                }
+            }
+
+            foreach (Game_Player_Offensive_Linemen_Stats s in Game_Player_Offensive_Linemen_Stats)
+            {
+                Game_Player_Offensive_Linemen_Stats ps = g.Game_Player_Offensive_Linemen_Stats.Where(x => x.Player_ID == s.Player_ID).FirstOrDefault();
+                if (ps == null)
+                    g.Game_Player_Offensive_Linemen_Stats.Add(s);
+                else
+                {
+                    ps.Oline_Plays += s.Oline_Plays;
+                    ps.OLine_Sacks_Allowed += s.OLine_Sacks_Allowed;
+                    ps.OLine_Rushing_Loss_Allowed += s.OLine_Rushing_Loss_Allowed;
+                    ps.OLine_Missed_Block += s.OLine_Missed_Block;
+                    ps.OLine_Pancakes += s.OLine_Pancakes;
+                    ps.QB_Pressures_Allowed += s.QB_Pressures_Allowed;
+                }
+            }
+
+            foreach (Game_Player_Pass_Defense_Stats s in Game_Player_Pass_Defense_Stats)
+            {
+                Game_Player_Pass_Defense_Stats ps = g.Game_Player_Pass_Defense_Stats.Where(x => x.Player_ID == s.Player_ID).FirstOrDefault();
+                if (ps == null)
+                    g.Game_Player_Pass_Defense_Stats.Add(s);
+                else
+                {
+                    ps.Ints += s.Ints;
+                    ps.Def_Int_Yards += s.Def_Int_Yards;
+                    ps.Def_int_TDs += s.Def_int_TDs;
+                    ps.Def_Pass_Defenses += s.Def_Pass_Defenses;
+                    ps.Tackles += s.Tackles;
+                    ps.Def_Missed_Tackles += s.Def_Missed_Tackles;
+                    ps.Touchdowns_Surrendered += s.Touchdowns_Surrendered;
+                    ps.Forced_Fumbles += s.Forced_Fumbles;
+                    ps.Fumble_Recoveries += s.Fumble_Recoveries;
+                    ps.Fumble_Return_Yards += s.Fumble_Return_Yards;
+                    ps.Fumble_Return_TD += s.Fumble_Return_TD;
+                }
+            }
+
+            foreach (Game_Player_Passing_Stats s in Game_Player_Passing_Stats)
+            {
+                Game_Player_Passing_Stats ps = g.Game_Player_Passing_Stats.Where(x => x.Player_ID == s.Player_ID).FirstOrDefault();
+                if (ps == null)
+                    g.Game_Player_Passing_Stats.Add(s);
+                else
+                {
+                    ps.Fumbles += s.Fumbles;
+                    ps.Fumbles_Lost += s.Fumbles_Lost;
+                    ps.Sacked += s.Sacked;
+                    ps.Pass_Comp += s.Pass_Comp;
+                    ps.Pass_Att += s.Pass_Att;
+                    ps.Pass_Yards += s.Pass_Yards;
+                    ps.Pass_TDs += s.Pass_TDs;
+                    ps.Pass_Ints += s.Pass_Ints;
+                    if (ps.Long < s.Long) ps.Long = s.Long;
+                    ps.Passes_Blocks += s.Passes_Blocks;
+                }
+            }
+
+            foreach (Game_Player_Penalty_Stats s in Game_Player_Penalty_Stats)
+                g.Game_Player_Penalty_Stats.Add(s);
+
+            foreach (Game_Player_Punt_Defenders s in Game_Player_Punt_Defenders)
+            {
+                Game_Player_Punt_Defenders ps = g.Game_Player_Punt_Defenders.Where(x => x.Player_ID == s.Player_ID).FirstOrDefault();
+                if (ps == null)
+                    g.Game_Player_Punt_Defenders.Add(s);
+                else
+                {
+                    ps.Forced_Fumbles_Punt += s.Forced_Fumbles_Punt;
+                    ps.Fumbles_Punt_Recovered += s.Fumbles_Punt_Recovered;
+                    ps.Fumbles_Punt_Recovered_TDs += s.Fumbles_Punt_Recovered_TDs;
+                    ps.Fumbles_Punt_Recovered_Yards += s.Fumbles_Punt_Recovered_Yards;
+                    ps.Punt_Tackles += s.Punt_Tackles;
+                }
+            }
+
+            foreach (Game_Player_Punt_Receiver_Stats s in Game_Player_Punt_Receiver_Stats)
+            {
+                Game_Player_Punt_Receiver_Stats ps = g.Game_Player_Punt_Receiver_Stats.Where(x => x.Player_ID == s.Player_ID).FirstOrDefault();
+                if (ps == null)
+                    g.Game_Player_Punt_Receiver_Stats.Add(s);
+                else
+                {
+                    ps.Punt_Block += s.Punt_Block;
+                    ps.Punt_Block_Recovery += s.Punt_Block_Recovery;
+                    ps.Punt_Block_Recovery_Yards += s.Punt_Block_Recovery_Yards;
+                    ps.Punt_Block_Recovery_TDs += s.Punt_Block_Recovery_TDs;
+                }
+            }
+
+
+            foreach (Game_Player_Punt_Returner_Stats s in Game_Player_Punt_Returner_Stats)
+            {
+                Game_Player_Punt_Returner_Stats ps = g.Game_Player_Punt_Returner_Stats.Where(x => x.Player_ID == s.Player_ID).FirstOrDefault();
+                if (ps == null)
+                    g.Game_Player_Punt_Returner_Stats.Add(s);
+                else
+                {
+                    ps.Punts_Returned += s.Punts_Returned;
+                    ps.Punts_Returned_Yards += s.Punts_Returned_Yards;
+                    ps.Punts_Returned_TDs += s.Punts_Returned_TDs;
+                    if (ps.Punt_Returned_Yards_Long < s.Punt_Returned_Yards_Long) ps.Punt_Returned_Yards_Long = s.Punt_Returned_Yards_Long;
+                    ps.Punts_Returned_Fumbles += s.Punts_Returned_Fumbles;
+                    ps.Punts_Returned_Fumbles_Lost += s.Punts_Returned_Fumbles_Lost;
+                }
+            }
+
+            foreach (Game_Player_Punter_Stats s in Game_Player_Punter_Stats)
+            {
+                Game_Player_Punter_Stats ps = g.Game_Player_Punter_Stats.Where(x => x.Player_ID == s.Player_ID).FirstOrDefault();
+                if (ps == null)
+                    g.Game_Player_Punter_Stats.Add(s);
+                else
+                {
+                    ps.Fumbles += s.Fumbles;
+                    ps.Fumbles_Lost += s.Fumbles_Lost;
+                    ps.num_punts += s.num_punts;
+                    ps.Punt_yards += s.Punt_yards;
+                    ps.Punt_Killed_att += s.Punt_Killed_att;
+                    ps.Punt_killed_num += s.Punt_killed_num;
+                    ps.Blocked_Punts += s.Blocked_Punts;
+                }
+            }
+
+            foreach (Game_Player_Receiving_Stats s in Game_Player_Receiving_Stats)
+            {
+                Game_Player_Receiving_Stats ps = g.Game_Player_Receiving_Stats.Where(x => x.Player_ID == s.Player_ID).FirstOrDefault();
+                if (ps == null)
+                    g.Game_Player_Receiving_Stats.Add(s);
+                else
+                {
+                    ps.Fumbles += s.Fumbles;
+                    ps.Fumbles_Lost += s.Fumbles_Lost;
+                    ps.Rec_Catches += s.Rec_Catches;
+                    ps.Rec_Drops += s.Rec_Drops;
+                    ps.Rec_Yards += s.Rec_Yards;
+                    ps.Rec_TDs += s.Rec_TDs;
+                    if (ps.Long < s.Long) ps.Long = s.Long;
+                }
+            }
+
+            foreach (Game_Player_Rushing_Stats s in Game_Player_Rushing_Stats)
+            {
+                Game_Player_Rushing_Stats ps = g.Game_Player_Rushing_Stats.Where(x => x.Player_ID == s.Player_ID).FirstOrDefault();
+                if (ps == null)
+                    g.Game_Player_Rushing_Stats.Add(s);
+                else
+                {
+                    ps.Fumbles += s.Fumbles;
+                    ps.Fumbles_Lost += s.Fumbles_Lost;
+                    ps.Rush_Att += s.Rush_Att;
+                    ps.Rush_Yards += s.Rush_Yards;
+                    ps.Rush_TDs += s.Rush_TDs;
+                    if (ps.Long < s.Long) ps.Long = s.Long;
+                }
+            }
+
         }
 
     }
