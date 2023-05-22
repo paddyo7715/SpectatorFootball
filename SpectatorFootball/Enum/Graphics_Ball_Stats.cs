@@ -15,6 +15,11 @@ namespace SpectatorFootball.Enum
         SPIRAL_2,
         SHOOTGON_TO_QB,
         ON_GROUND,
-        CARRIED
+        CARRIED,
+        BOUNCING_1,
+        BOUNCING_2,
+        ROLLING_1,
+        ROLLING_2
+
     }
 }

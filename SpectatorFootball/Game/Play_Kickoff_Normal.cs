@@ -133,7 +133,7 @@ namespace SpectatorFootball.GameNS
             Kickoff_Len = Kicking_Helper.AdjustKickLength(Kickoff_Len, Kickoff_Vert);
 
             //bpo test take out
-            Kickoff_Len = 78.0;
+            Kickoff_Len = 80.0;
             //=================
 
             logger.Debug("Adjusted Kickoff len:" + Kickoff_Len.ToString());
@@ -141,6 +141,9 @@ namespace SpectatorFootball.GameNS
             //possision where ball should be caught
             gBall.Current_YardLine = gBall.Starting_YardLine + (Kickoff_Len * Game_Engine_Helper.HorizontalAdj(bLefttoRight));
             gBall.Current_Vertical_Percent_Pos = Kickoff_Vert;
+
+            gBall.Current_YardLine = Kicking_Helper.SetMaxKickoffYardline(gBall.Current_YardLine);
+
             if (!bSim)
                 gBall.End_Over_End_Thru_Air();
 
@@ -300,10 +303,10 @@ namespace SpectatorFootball.GameNS
                             vrt = app_Constants.KICKOFF_RETURNER_VERT_STANDBY * -1;
                         else
                             vrt = app_Constants.KICKOFF_RETURNER_VERT_STANDBY;
-                        yt = app_Constants.KICK_OUT_OF_ENDZONE_YARD * Game_Engine_Helper.HorizontalAdj(bLefttoRight);
+                        yt = gBall.Current_YardLine + (app_Constants.KICK_OUT_OF_ENDZONE_YARD * Game_Engine_Helper.HorizontalAdj(!bLefttoRight));
 
-                        p.Current_YardLine += yt;
-                        p.Current_Vertical_Percent_Pos += vrt;
+                        p.Current_YardLine = yt;
+                        p.Current_Vertical_Percent_Pos = gBall.Current_Vertical_Percent_Pos;
 
                         if (!bSim)
                         {

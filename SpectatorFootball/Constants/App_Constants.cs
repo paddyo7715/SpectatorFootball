@@ -504,7 +504,9 @@ namespace SpectatorFootball
         public const int KICKOFF_MIN_AVG_DISTANCE = 63;
         public const int KICKOFF_MAX_AVG_DISTANCE = 69;
         public const int KICKOFF_MIN_LONG_DISTANCE = 70;
-        public const int KICKOFF_MAX_LONG_DISTANCE = 78;
+        public const int KICKOFF_MAX_LONG_DISTANCE = 80;
+        public const double KICKOFF_MAX_YARDLINE_1  = 109;
+        public const double KICKOFF_MAX_YARDLINE_2 = -9;
 
         public const int KICKOFF_TOP_MIN_VERTICAL = 21;
         public const int KICKOFF_BOTTOM_MAX_VERTICAL = 79;
@@ -540,8 +542,8 @@ namespace SpectatorFootball
         public const double KICKOFF_YARDS_BEFORE_TACKLER2 = 4.0;
         public const double KICKOFF_YARDS_BEFORE_TACKLER3 = 6.0;
         public const double KICKOFF_RUN_OUT_YARD_FACTOR = 0.5;
-        public const double KICK_OUT_OF_ENDZONE_YARD = 8.0;
-        public const double KICKOFF_RETURNER_VERT_STANDBY = 1.0;
+        public const double KICK_OUT_OF_ENDZONE_YARD = 4.0;
+        public const double KICKOFF_RETURNER_VERT_STANDBY = 2.0;
         public const double KICKOFF_RETURNER_Y_STANDBY = 1.0;
         public const int KICKOFF_TACKLE_TEST_ADJUSTER = 10000;  //Set 0 normally or high to test
         

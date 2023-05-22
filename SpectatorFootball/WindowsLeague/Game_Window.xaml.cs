@@ -20,6 +20,7 @@ using SpectatorFootball.GameNS;
 using System.Windows.Shapes;
 using SpectatorFootball.Enum;
 
+
 namespace SpectatorFootball.WindowsLeague
 {
     /// <summary>
@@ -70,6 +71,8 @@ namespace SpectatorFootball.WindowsLeague
         private List<Rectangle> Away_Players_rect = new List<Rectangle>();
         private List<Rectangle> Home_Players_rect = new List<Rectangle>();
 
+        private List<Rectangle> Goalpost_Rects = new List<Rectangle>();
+
         private Graphics_Game_Ball gGame_Ball = null;
         private bool ThreeDee_ball;
         private List<Graphics_Game_Player> Offensive_Players;
@@ -79,6 +82,12 @@ namespace SpectatorFootball.WindowsLeague
 
         private const int PLAYER_SIZE = 50;
         private const int PLAYER_BALL_SIZE_DIFF = 30;
+
+        private const int GOALPOST_WIDTH = 50;
+        private const int GOALPOST_HEIGHT = 160;
+        private const int GOALPOSTS_VERT = 50;
+        private const double GOALPOST_AWAY_YL = -11.5;
+        private const double GOALPOST_HOME_YL = 111.5;
 
         public const double VIEW_EDGE_OFFSET_YARDLINE = 12.0;
 
@@ -101,6 +110,7 @@ namespace SpectatorFootball.WindowsLeague
 
         private BitmapImage[] A_Player_Sprites = null;
         private BitmapImage[] H_Player_Sprites = null;
+        private BitmapImage[] Goalpost_Images = null;
 
         //game graphics objects
         private double[] a_edge;
@@ -108,10 +118,13 @@ namespace SpectatorFootball.WindowsLeague
 
         private int sleepfor = 100;
 
+        private const int GOALPOST_INDEX = 200;
         private const int PLAYER_CATCHING_BALL_ZINDEX = 100;
         private const int BALL_ZINDEX = 90;
         private const int PERSON_ON_FIELD_ZINDEX = 50;
         private const int FIELD_ART_ZINDEX = 10;
+
+        private System.Drawing.Bitmap goalpost_sheet = null;
 
         public Game_Window(MainWindow pw, Game g)
         {
@@ -186,6 +199,20 @@ namespace SpectatorFootball.WindowsLeague
                     MyCanvas.Children.Add(hp);
                 }
 
+                //Create the goalpost rectangles for both away and home
+                for (int xxx = 0; xxx < 2; xxx++)
+                {
+                    Rectangle ap = new Rectangle()
+                    {
+                        Height = GOALPOST_HEIGHT,
+                        Width = GOALPOST_WIDTH,
+                    };
+
+                    Goalpost_Rects.Add(ap);
+                    MyCanvas.Children.Add(ap);
+                }
+
+
                 //Load and colorize the sprite sheets
                 Uniform_Img = new Uniform_Image(CommonUtils.getAppPath() + System.IO.Path.DirectorySeparatorChar + "Images" + System.IO.Path.DirectorySeparatorChar + "Players" + System.IO.Path.DirectorySeparatorChar + "Player_Sprite_Sheet.png");
 
@@ -202,8 +229,20 @@ namespace SpectatorFootball.WindowsLeague
                 Uniform_Img.Flip_One_Color(true, app_Constants.STOCK_BALL_COLOR, CommonUtils.SystemDrawColorfromHex(ball_Color));
                 Uniform_Img.Flip_One_Color(false, app_Constants.STOCK_BALL_COLOR, CommonUtils.SystemDrawColorfromHex(ball_Color));
 
-                A_Player_Sprites = Uniform_Img.SplitSpriteSheet(false, PLAYER_IN_SPRITE_ROW, PLAYER_SIZE);
-                H_Player_Sprites = Uniform_Img.SplitSpriteSheet(true, PLAYER_IN_SPRITE_ROW, PLAYER_SIZE);
+                A_Player_Sprites = CommonUtils.SplitImageSheet(PLAYER_IN_SPRITE_ROW, 2, PLAYER_SIZE, PLAYER_SIZE, Uniform_Img.Away_Uniform_Image);
+                H_Player_Sprites = CommonUtils.SplitImageSheet(PLAYER_IN_SPRITE_ROW, 2, PLAYER_SIZE, PLAYER_SIZE, Uniform_Img.Home_Uniform_image);
+
+                string goalposts_file = CommonUtils.getAppPath() + System.IO.Path.DirectorySeparatorChar + "Images" + System.IO.Path.DirectorySeparatorChar + "Goalposts.png";
+                goalpost_sheet = new System.Drawing.Bitmap(goalposts_file);
+                Goalpost_Images = CommonUtils.SplitImageSheet(2, 2, GOALPOST_WIDTH, GOALPOST_HEIGHT, goalpost_sheet);
+
+                for (int iiii = 0; iiii < 2; iiii++)
+                {
+                    ImageBrush Goalpost_Sheet = new ImageBrush();
+                    Goalpost_Sheet.ImageSource = Goalpost_Images[iiii];
+                    Goalpost_Rects[iiii].Fill = Goalpost_Sheet;
+                }
+
 
                 //setup the gradiants for the game ball
                 //Gradient 1
@@ -545,6 +584,39 @@ namespace SpectatorFootball.WindowsLeague
 
         }
 
+        private void setGoalposts(double[] a_edge, int ind)
+        {
+            double yardline;
+
+            if (ind == 0)
+                yardline = GOALPOST_AWAY_YL;
+            else
+                yardline = GOALPOST_HOME_YL;
+
+            //bpo test
+            int H_Pixel = Yardline_to_Pixel(yardline, true);
+
+            //bpo test to see if this is ok
+            if (ind == 0)
+                H_Pixel -= PLAYER_SIZE - PLAYER_BALL_SIZE_DIFF;
+            else
+                H_Pixel -= PLAYER_BALL_SIZE_DIFF;
+
+
+            double v_Pixel = VertPercent_to_Pixel(GOALPOSTS_VERT, GOALPOST_HEIGHT);
+
+            //Adjust the position on the canvas for the view edge
+            H_Pixel += (int)a_edge[0];
+            v_Pixel += (int)a_edge[1];
+
+            Canvas.SetTop(Goalpost_Rects[ind], v_Pixel);
+            Canvas.SetLeft(Goalpost_Rects[ind], H_Pixel);
+
+            Canvas.SetZIndex(Goalpost_Rects[ind], GOALPOST_INDEX);
+
+
+        }
+
         private void Show_Play(object sender, EventArgs e)
         {
             Rectangle OPlayer1 = new Rectangle();
@@ -610,6 +682,7 @@ namespace SpectatorFootball.WindowsLeague
             List<Rectangle> off_Players_rect = null;
             List<Rectangle> def_Players_rect = null;
 
+
             BitmapImage[] off_Player_Sprites = null;
             BitmapImage[] def_Player_Sprites = null;
 
@@ -651,6 +724,10 @@ namespace SpectatorFootball.WindowsLeague
             }
 
             setBAll(Game_Ball, a_edge, bLefttoRight);
+
+            for (int igp = 0; igp < 2; igp++)
+                setGoalposts(a_edge, igp);
+
 
             DoEvents();
 

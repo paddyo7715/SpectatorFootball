@@ -9,8 +9,8 @@ namespace SpectatorFootball
     public class Uniform_Image
     {
         private Bitmap stock_image = null;
-        private Bitmap Home_Uniform_image = null;
-        private Bitmap Away_Uniform_Image = null;
+        public Bitmap Home_Uniform_image = null;
+        public Bitmap Away_Uniform_Image = null;
 
         private int debug_file_id = 0;
 
@@ -173,40 +173,6 @@ namespace SpectatorFootball
                 }
             }
         }
-        public BitmapImage[] SplitSpriteSheet(bool bHome, int PlayersInRow, int PlayerSize)
-        {
-            BitmapImage[] r = new BitmapImage[PlayersInRow * 2];
-            int i = 0;
-
-            Bitmap SpriteSheet = null;
-            if (bHome)
-                SpriteSheet = Home_Uniform_image;
-            else
-                SpriteSheet = Away_Uniform_Image;
-
-            Away_Uniform_Image.Save("C:\\Database\\spritesheet.png", ImageFormat.Png);
-
-
-            for (int y=0; y<2; y++)
-            {
-                for(int x=0; x < PlayersInRow; x++)
-                {
-                    Rectangle subRect = new Rectangle(x* PlayerSize, y* PlayerSize, PlayerSize, PlayerSize);
-                    Bitmap subBitmap;
-                    subBitmap = new Bitmap(PlayerSize, PlayerSize, SpriteSheet.PixelFormat);
-
-                    Graphics g = Graphics.FromImage(subBitmap);
-                    g.DrawImage(SpriteSheet, 0, 0, subRect, GraphicsUnit.Pixel);
-                    g.Dispose();
-                    r[i] = ConvertBMtoBitmapImage(subBitmap);
-                    i++;
-                }
-            }
-
-            return r;
-        }
-
-
         public BitmapImage getFirstBitmap()
         {
 //                        Home_Uniform_image.Save("C:\\Database\\spritesheet.png", ImageFormat.Png);
@@ -221,28 +187,7 @@ namespace SpectatorFootball
             g.Dispose();
 //            Home_Uniform_image.Save("C:\\Database\\spritesheet2.png", ImageFormat.Png);
 
-            return ConvertBMtoBitmapImage(subBitmap);
-        }
-
-        public BitmapImage ConvertBMtoBitmapImage(Bitmap bitmap)
-        {
-            debug_file_id++;
-//            bitmap.Save("C:\\Database\\bitmap" + debug_file_id + ".png", ImageFormat.Png);
-
-            using (var memory = new MemoryStream())
-            {
-                bitmap.Save(memory, ImageFormat.Png);
-                memory.Position = 0;
-
-                var bitmapImage = new BitmapImage();
-                bitmapImage.BeginInit();
-                bitmapImage.StreamSource = memory;
-                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-                bitmapImage.EndInit();
-                bitmapImage.Freeze();
-
-                return bitmapImage;
-            }
+            return CommonUtils.ConvertBMtoBitmapImage(subBitmap);
         }
     }
 }

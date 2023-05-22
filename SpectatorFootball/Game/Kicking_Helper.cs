@@ -38,6 +38,17 @@ namespace SpectatorFootball.GameNS
 
             return r;
         }
+        public static double SetMaxKickoffYardline(double yt)
+        {
+            double r = yt;
+
+            if (yt > app_Constants.KICKOFF_MAX_YARDLINE_1)
+                r = app_Constants.KICKOFF_MAX_YARDLINE_1;
+            else if (yt < app_Constants.KICKOFF_MAX_YARDLINE_2)
+                r = app_Constants.KICKOFF_MAX_YARDLINE_2;
+
+            return r;
+        }
         public static KickOff_Length getKickOff_Len_enum(long leg_strength)
         {
             int long_variable = (int) leg_strength - app_Constants.PRIMARY_ABILITY_LOW_RATING;

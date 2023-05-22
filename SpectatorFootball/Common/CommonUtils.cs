@@ -19,7 +19,7 @@ namespace SpectatorFootball
         private static Random random = new Random();
         public static String getSettingsDBConnectionString()
         {
-          return "Data Source=" + getAppPath() + Path.DirectorySeparatorChar + "Database" + Path.DirectorySeparatorChar + "Settings.db;";
+            return "Data Source=" + getAppPath() + Path.DirectorySeparatorChar + "Database" + Path.DirectorySeparatorChar + "Settings.db;";
         }
 
         public static String getLeagueDBConnectionString(string newLeague_path)
@@ -166,13 +166,13 @@ namespace SpectatorFootball
         public static System.Windows.Media.Color getColorfromHex(string s)
         {
             System.Windows.Media.Color r = new System.Windows.Media.Color();
-            byte red = (byte) 0;
+            byte red = (byte)0;
             byte green = (byte)0;
             byte blue = (byte)0;
 
-            red = (byte)Convert.ToInt32(s.Substring(1, 2),16);
-            green = (byte)Convert.ToInt32(s.Substring(3, 2),16);
-            blue = (byte)Convert.ToInt32(s.Substring(5, 2),16);
+            red = (byte)Convert.ToInt32(s.Substring(1, 2), 16);
+            green = (byte)Convert.ToInt32(s.Substring(3, 2), 16);
+            blue = (byte)Convert.ToInt32(s.Substring(5, 2), 16);
 
             r = System.Windows.Media.Color.FromRgb(red, green, blue);
             return r;
@@ -186,7 +186,7 @@ namespace SpectatorFootball
         public static object getBrushfromHex(string s)
         {
             var bc = new BrushConverter();
-            return bc.ConvertFrom(s); 
+            return bc.ConvertFrom(s);
         }
         public static bool isAlpha(string s, bool bAllowSpace)
         {
@@ -239,7 +239,7 @@ namespace SpectatorFootball
             float range = upperR - lowerR;
             float true_value = value - lowerR;
 
-            r = (int)(((true_value / range) * 100.0) + 0.5) ;
+            r = (int)(((true_value / range) * 100.0) + 0.5);
             return r;
         }
         public static void SetFullAccess(string DIRPath_League)
@@ -269,7 +269,7 @@ namespace SpectatorFootball
 
             return r;
         }
-        
+
         public static long ZeroifNull(long? l)
         {
             if (l == null)
@@ -309,7 +309,7 @@ namespace SpectatorFootball
             return r;
         }
 
-        
+
         public static List<string> ListfromListofDelimitted(List<string> s, string delimChar)
         {
             List<string> r = new List<string>();
@@ -354,7 +354,7 @@ namespace SpectatorFootball
             for (int i = 0; i < count; i++)
             {
                 int rnd = CommonUtils.getRandomNum(1, 100);
-                if (rnd <= EachPercent || i >= count-1)
+                if (rnd <= EachPercent || i >= count - 1)
                 {
                     r = 1;
                     break;
@@ -370,7 +370,48 @@ namespace SpectatorFootball
 
             return list;
         }
-      
+
+        public static BitmapImage[] SplitImageSheet(int NumImages, int rows, int Imagex, int Imagey, System.Drawing.Bitmap SpriteSheet)
+        {
+            System.Windows.Media.Imaging.BitmapImage[] r = new BitmapImage[NumImages * 2];
+            int i = 0;
+
+            for (int y = 0; y < rows; y++)
+            {
+                for (int x = 0; x < NumImages; x++)
+                {
+                    System.Drawing.Rectangle subRect = new System.Drawing.Rectangle(x * Imagex, y * Imagey, Imagex, Imagey);
+                    System.Drawing.Bitmap subBitmap;
+                    subBitmap = new System.Drawing.Bitmap(Imagex, Imagey, SpriteSheet.PixelFormat);
+
+                    System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(subBitmap);
+                    g.DrawImage(SpriteSheet, 0, 0, subRect, System.Drawing.GraphicsUnit.Pixel);
+                    g.Dispose();
+                    r[i] = ConvertBMtoBitmapImage(subBitmap);
+                    i++;
+                }
+            }
+
+            return r;
+        }
+        public static BitmapImage ConvertBMtoBitmapImage(System.Drawing.Bitmap bitmap)
+        {
+            using (var memory = new MemoryStream())
+            {
+                bitmap.Save(memory, System.Drawing.Imaging.ImageFormat.Png);
+                memory.Position = 0;
+
+                var bitmapImage = new BitmapImage();
+                bitmapImage.BeginInit();
+                bitmapImage.StreamSource = memory;
+                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                bitmapImage.EndInit();
+                bitmapImage.Freeze();
+
+                return bitmapImage;
+            }
+
+        }
     }
     
 }

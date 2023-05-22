@@ -37,6 +37,25 @@ namespace SpectatorFootball.GameNS
             bStage.Actions.Add(bas);
             Stages.Add(bStage);
         }
+
+        public void End_Over_End_Thru_Air_Not_Caught(
+            double st_bounce_yl, double st_bounce_vert, double bounce_yl, double bounce_vert,
+            double st_rolling_yl, double st_rolling_vert, double rolling_yl, double rolling_vert)
+        {
+            State = Ball_States.END_OVER_END;
+            Action bas = new Action(Game_Object_Types.B, Starting_YardLine, Starting_Vertical_Percent_Pos, Current_YardLine, Current_Vertical_Percent_Pos, false, false, null, Ball_States.END_OVER_END, null, Movement.LINE, Ball_Speed.SLOW, false);
+            State = Ball_States.BOUNCING;
+            Action bas2 = new Action(Game_Object_Types.B, st_bounce_yl, st_bounce_vert, bounce_yl, bounce_vert, false, false, null, Ball_States.BOUNCING, null, Movement.LINE, Ball_Speed.SLOW, false);
+            State = Ball_States.ROLLING;
+            Action bas3 = new Action(Game_Object_Types.B, st_rolling_yl, st_rolling_vert, rolling_yl, rolling_vert, false, true, null, Ball_States.ROLLING, null, Movement.LINE, Ball_Speed.SLOW, false);
+
+            Play_Stage bStage = new Play_Stage();
+            bStage.Main_Object = true;
+            bStage.Actions.Add(bas);
+            bStage.Actions.Add(bas2);
+            bStage.Actions.Add(bas3);
+            Stages.Add(bStage);
+        }
         public void Carried(double prev_yl, double prev_v)
         {
             Action bas = new Action(Game_Object_Types.B, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, true, false, null, Ball_States.CARRIED, null, Movement.LINE, Ball_Speed.SLOW, false);
