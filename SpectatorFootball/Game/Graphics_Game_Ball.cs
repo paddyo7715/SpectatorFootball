@@ -79,12 +79,35 @@ namespace SpectatorFootball.GameNS
                 case Ball_States.SPIRAL:
                     Height = ball_size;
                     width = ball_size * 2;
-                    if (graph_bState != Graphics_Ball_Stats.SPIRAL_1)
+                    if (graph_bState != Graphics_Ball_Stats.SPIRAL_2)
                         r = Graphics_Ball_Stats.SPIRAL_1;
                     else
                         r = Graphics_Ball_Stats.SPIRAL_2;
                     break;
+                case Ball_States.BOUNCING:
+                    if (graph_bState != Graphics_Ball_Stats.BOUNCING_2)
+                    {
+                        r = Graphics_Ball_Stats.BOUNCING_1;
+                        Height = ball_size;
+                        width = ball_size * 2;
+                    }
+                    else
+                    {
+                        r = Graphics_Ball_Stats.BOUNCING_2;
+                        Height = ball_size * 2;
+                        width = ball_size;
+                    }
+                    break;
+                case Ball_States.ROLLING:
+                    Height = ball_size;
+                    width = ball_size * 2;
+                    if (graph_bState != Graphics_Ball_Stats.ROLLING_2)
+                        r = Graphics_Ball_Stats.ROLLING_1;
+                    else
+                        r = Graphics_Ball_Stats.ROLLING_2;
+                    break;
             }
+
 
             return r;
         }

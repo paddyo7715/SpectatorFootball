@@ -118,5 +118,32 @@ namespace SpectatorFootball.GameNS
             return r;
         }
 
+        public double GetSlopofLIne(double x1, double y1, double x2, double y2)
+        {
+            double r = 0.0;
+
+            r = (y2 - y1) * (x2 - x1);
+
+            return r;
+        }
+
+        public static PointXY getExtendedEndpoint(double start_x, double start_y, double end_x, double end_y, double length)
+        {
+            double diff_x = end_x - start_x;
+            double diff_y = end_y - start_y;
+
+            //End point can not be calcualted for a vertical line
+            if (diff_y == 0)
+                throw new Exception("diff_y of 0 can not divide by 0 in getExtendedEndpoint");
+
+            double slope = diff_y / diff_x;
+            double a = Math.Atan(slope);
+
+            double new_end_x = end_x + (length * Math.Cos(a));
+            double new_end_y = end_y + (length * Math.Sin(a));
+
+            return new PointXY() { x = new_end_x, y = new_end_y };
+        }
+
     }
 }

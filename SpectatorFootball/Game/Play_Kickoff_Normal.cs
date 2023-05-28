@@ -144,12 +144,19 @@ namespace SpectatorFootball.GameNS
 
             gBall.Current_YardLine = Kicking_Helper.SetMaxKickoffYardline(gBall.Current_YardLine);
 
-            if (!bSim)
-                gBall.End_Over_End_Thru_Air();
+
 
             r.bKickoff_Out_of_Endzone = r.Returner.isKickOutofEndzone(gBall.Current_YardLine);
             if (r.bKickoff_Out_of_Endzone)
                 r.bTouchback = true;
+
+            if (!bSim)
+            {
+                if (r.bTouchback)
+                    gBall.End_Over_End_Thru_Air_Not_Caught();
+                else
+                    gBall.End_Over_End_Thru_Air();
+            }
 
             //decide which players are in group 1 (closest to returner( group 2 and group 3
             List<int?> group_1 = new List<int?>();
