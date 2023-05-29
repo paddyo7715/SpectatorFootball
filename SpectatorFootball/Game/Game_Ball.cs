@@ -39,13 +39,15 @@ namespace SpectatorFootball.GameNS
             Stages.Add(bStage);
         }
 
-        public void End_Over_End_Thru_Air_Not_Caught()
+        public void End_Over_End_Thru_Air_Not_Caught(bool blefttoRight)
         {
-            const double BOUNCE_LENGTH = 2;
-            const double ROLL_LENGTH = 2;
+            const double BOUNCE_LENGTH = 4.7;
+            const double ROLL_LENGTH = 1.3;
 
             double prev_yardline = Starting_YardLine;
             double prev_vert = Starting_Vertical_Percent_Pos;
+
+            double dlefttoRight = blefttoRight ? 1 : -1;
 
             PointXY new_end_point = null; 
 
@@ -53,23 +55,16 @@ namespace SpectatorFootball.GameNS
             Action bas = new Action(Game_Object_Types.B, prev_yardline, prev_vert, Current_YardLine, Current_Vertical_Percent_Pos, false, false, null, Ball_States.END_OVER_END, null, Movement.LINE, Ball_Speed.SLOW, false);
 
             //Get the end point for bouncing ball
-            new_end_point = PointPlotter.getExtendedEndpoint(prev_yardline, prev_vert, Current_YardLine, Current_Vertical_Percent_Pos, BOUNCE_LENGTH);
-
-            prev_yardline = Current_YardLine;
-            prev_vert = Current_Vertical_Percent_Pos;
+            new_end_point = PointPlotter.getExtendedEndpoint(prev_yardline, prev_vert, Current_YardLine, Current_Vertical_Percent_Pos, BOUNCE_LENGTH * dlefttoRight);
 
             State = Ball_States.BOUNCING;
-            Action bas2 = new Action(Game_Object_Types.B, prev_yardline, prev_vert, new_end_point.x, new_end_point.y, false, false, null, Ball_States.BOUNCING, null, Movement.LINE, Ball_Speed.SLOW, false);
-
-            prev_yardline = new_end_point.x;
-            prev_vert = new_end_point.y;
+            Action bas2 = new Action(Game_Object_Types.B, Current_YardLine, Current_Vertical_Percent_Pos, new_end_point.x, new_end_point.y, false, false, null, Ball_States.BOUNCING, null, Movement.LINE, Ball_Speed.SLOW, false);
 
             //Get the end point for rolling ball
-            new_end_point = PointPlotter.getExtendedEndpoint(prev_yardline, prev_vert, Current_YardLine, Current_Vertical_Percent_Pos, ROLL_LENGTH);
-
+            PointXY rolling_end_point = PointPlotter.getExtendedEndpoint(prev_yardline, prev_vert, new_end_point.x, new_end_point.y, ROLL_LENGTH * dlefttoRight);
 
             State = Ball_States.ROLLING;
-            Action bas3 = new Action(Game_Object_Types.B, prev_yardline, prev_vert, new_end_point.x, new_end_point.y, false, true, null, Ball_States.ROLLING, null, Movement.LINE, Ball_Speed.SLOW, false);
+            Action bas3 = new Action(Game_Object_Types.B, new_end_point.x, new_end_point.y, rolling_end_point.x, rolling_end_point.y, false, true, null, Ball_States.ROLLING, null, Movement.LINE, Ball_Speed.SLOW, false);
 
             Play_Stage bStage = new Play_Stage();
             bStage.Main_Object = true;

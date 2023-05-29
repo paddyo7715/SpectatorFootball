@@ -12,8 +12,10 @@ namespace SpectatorFootball.GameNS
 {
     public class Graphics_Game_Ball
     {
-        private int ball_size = 12;
-        private const int BASE_BALL_SIZE = 12;
+        private double ball_size = 12;
+        private const double BASE_BALL_SIZE = 12;
+
+
 
         public Ball_States bState;
         public Graphics_Ball_Stats graph_bState;
@@ -23,8 +25,8 @@ namespace SpectatorFootball.GameNS
         public int current_Stage = 0;
         public int current_action = 0;
         public int current_point = 0;
-        public int Height;
-        public int width;
+        public double Height;
+        public double width;
         public Game_Sounds? Sound;
         public bool bStageFinished = false;
         public bool ThreeDee_ball;
@@ -85,23 +87,23 @@ namespace SpectatorFootball.GameNS
                         r = Graphics_Ball_Stats.SPIRAL_2;
                     break;
                 case Ball_States.BOUNCING:
-                    if (graph_bState != Graphics_Ball_Stats.BOUNCING_2)
+                    if (graph_bState != Graphics_Ball_Stats.BOUNCING_1)
                     {
                         r = Graphics_Ball_Stats.BOUNCING_1;
-                        Height = ball_size;
-                        width = ball_size * 2;
+                        Height = BASE_BALL_SIZE;
+                        width = BASE_BALL_SIZE * 1.25;
                     }
                     else
                     {
                         r = Graphics_Ball_Stats.BOUNCING_2;
-                        Height = ball_size * 2;
-                        width = ball_size;
+                        Height = BASE_BALL_SIZE * 1.25;
+                        width = BASE_BALL_SIZE * 1.65;
                     }
                     break;
                 case Ball_States.ROLLING:
-                    Height = ball_size;
-                    width = ball_size * 2;
-                    if (graph_bState != Graphics_Ball_Stats.ROLLING_2)
+                    Height = BASE_BALL_SIZE * 1.2;
+                    width = BASE_BALL_SIZE * 0.90;
+                    if (graph_bState != Graphics_Ball_Stats.ROLLING_1)
                         r = Graphics_Ball_Stats.ROLLING_1;
                     else
                         r = Graphics_Ball_Stats.ROLLING_2;

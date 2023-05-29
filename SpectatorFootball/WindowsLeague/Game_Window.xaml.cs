@@ -514,6 +514,14 @@ namespace SpectatorFootball.WindowsLeague
                     else
                         Ball.Fill = myLinearGradientBrush2;
                     break;
+                case Ball_States.ROLLING:
+                    logger.Debug("Ball Height: " + gBall.Height + " Width: " + gBall.width);
+                    if (gBall.graph_bState == Graphics_Ball_Stats.ROLLING_1)
+                        Ball.Fill = myLinearGradientBrush1;
+                    else
+                        Ball.Fill = myLinearGradientBrush2;
+                    break;
+
             }
 
 
@@ -657,7 +665,7 @@ namespace SpectatorFootball.WindowsLeague
             return r;
         }
 
-        private double VertPercent_to_Pixel(double v, int objectHeight)
+        private double VertPercent_to_Pixel(double v, double objectHeight)
         {
             double r = 0.0;
 //            double ballHeight = bIncludeBall ? Game_Ball.Height : 0.0;

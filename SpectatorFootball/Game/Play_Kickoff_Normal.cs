@@ -153,7 +153,7 @@ namespace SpectatorFootball.GameNS
             if (!bSim)
             {
                 if (r.bTouchback)
-                    gBall.End_Over_End_Thru_Air_Not_Caught();
+                    gBall.End_Over_End_Thru_Air_Not_Caught(bLefttoRight);
                 else
                     gBall.End_Over_End_Thru_Air();
             }
