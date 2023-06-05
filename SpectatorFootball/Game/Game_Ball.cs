@@ -90,5 +90,29 @@ namespace SpectatorFootball.GameNS
             bStage.Actions.Add(bas);
             Stages.Add(bStage);
         }
+
+        public void Carried_Out_of_Bounds(double prev_yl, double prev_v, bool blefttoRight)
+        {
+            double top_adjustment = 0.0;
+
+            double dlefttoRight = blefttoRight ? 1 : -1;
+
+            if (Current_Vertical_Percent_Pos <= 0)
+                top_adjustment = app_Constants.TOP_OUTOFBOUNDS_ADJUSTMENT;
+
+            PointXY new_end_point = null;
+
+            Action bas = new Action(Game_Object_Types.B, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, true, false, null, Ball_States.CARRIED, null, Movement.LINE, Ball_Speed.SLOW, false);
+
+            //Get the end point for the layer running out of bounds
+            new_end_point = PointPlotter.getExtendedEndpoint(prev_v, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, (app_Constants.OUT_OF_BOUNDS_LEN + top_adjustment) * dlefttoRight);
+
+            Action bas2 = new Action(Game_Object_Types.B, Current_YardLine, Current_Vertical_Percent_Pos, new_end_point.x, new_end_point.y, true, true, null, Ball_States.CARRIED, null, Movement.LINE, Ball_Speed.SLOW, false);
+            Play_Stage bStage = new Play_Stage();
+            bStage.Main_Object = true;
+            bStage.Actions.Add(bas);
+            bStage.Actions.Add(bas2);
+            Stages.Add(bStage);
+        }
     }
 }

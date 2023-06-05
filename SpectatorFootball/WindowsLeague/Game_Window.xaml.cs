@@ -375,18 +375,14 @@ namespace SpectatorFootball.WindowsLeague
                         //set the ball position and state
                         gGame_Ball.Update();
 
-                        if (gGame_Ball.bStageFinished)
-                            bStageFinished = true;
+//                        if (gGame_Ball.bStageFinished)
+//                            bStageFinished = true;
 
-                        int idebugger;
                         //Go thru all offensive and def players and place them
                         for (int pSlot = 0; pSlot < Offensive_Players.Count(); pSlot++)
                         {
                             Offensive_Players[pSlot].ChangeStage(stg);
                             Defensive_Players[pSlot].ChangeStage(stg);
-
-                            if (pSlot == 5)
-                                idebugger = 6;
 
                             Offensive_Players[pSlot].Update();
                             Defensive_Players[pSlot].Update();
@@ -399,12 +395,13 @@ namespace SpectatorFootball.WindowsLeague
                         a_edge = setViewEdge(gGame_Ball.YardLine, Play.bLefttoRight, gGame_Ball.Vertical_Percent_Pos);
 
                         //bpo test
-                        logger.Debug("Ball yardline: " + gGame_Ball.YardLine);
+                        logger.Debug("Ball x: " + gGame_Ball.YardLine + "y: " + gGame_Ball.Vertical_Percent_Pos);
                         //                        logger.Debug("L to R: " + Play.bLefttoRight + " Yardline: " + gGame_Ball.YardLine + " Vertical: " + gGame_Ball.Vertical_Percent_Pos + " left: " + a_edge[0] + " top " + a_edge[1] + " visiblity: " + Gamepnl.Visibility.ToString());
                         //
 
-
                         ShowGraphicObjects(a_edge, gGame_Ball, Offensive_Players, Defensive_Players, Play.bLefttoRight);
+                        if (gGame_Ball.bStageFinished)
+                           bStageFinished = true;
                     } while (!bStageFinished);
 
                 }  // for loop stage
@@ -726,7 +723,11 @@ namespace SpectatorFootball.WindowsLeague
                     if (f.Sound != null)
                         Play_Sound((Game_Sounds)f.Sound);
 
-                    setPlayer(Game_Ball, f, a_edge, def_Player_Sprites, bLefttoRight, false, xxx, def_Players_rect);
+                    if (xxx == 5)
+                    logger.Debug("Returner x: " + f.YardLine + "y: " +f.Vertical_Percent_Pos);
+
+
+                setPlayer(Game_Ball, f, a_edge, def_Player_Sprites, bLefttoRight, false, xxx, def_Players_rect);
 
                     xxx++;
             }

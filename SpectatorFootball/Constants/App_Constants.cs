@@ -401,6 +401,7 @@ namespace SpectatorFootball
         public const int PLAYOFF_DIVISIONAL_WEEK = 2000;
         public const int PLAYOFF_CONFERENCE_WEEK = 3000;
         public const int PLAYOFF_CHAMPIONSHIP_WEEK = 9999;
+        public const double OUT_OF_BOUNDS_LEN = 5.0;
 
         //Game
         public const int GAME_QUARTER_SECONDS = 900;
@@ -545,6 +546,9 @@ namespace SpectatorFootball
         public const double KICK_OUT_OF_ENDZONE_YARD = 4.0;
         public const double KICKOFF_RETURNER_VERT_STANDBY = 2.0;
         public const double KICKOFF_RETURNER_Y_STANDBY = 1.0;
+        public const double KICKOFF_RUN_OOB_TOP_LIMIT = 15.0;
+        public const double KICKOFF_RUN_OOB_BOTTOM_LIMIT = 85.0;
+        public const double TOP_OUTOFBOUNDS_ADJUSTMENT = 3.0;
         public const int KICKOFF_TACKLE_TEST_ADJUSTER = 10000;  //Set 0 normally or high to test
         
 

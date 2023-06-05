@@ -17,9 +17,7 @@ namespace SpectatorFootball.GameNS
         public bool bTouchback = false;
         public bool bFumble = false;
         public bool bFumble_Lost = false;
-
-        //special Penalties on Play
-        public bool bKickoff_Out_of_Bounds = false;
+        public bool bRunOutofBounds = false;
 
         public Game_Player Kicker = null;
         public Game_Player Returner = null;

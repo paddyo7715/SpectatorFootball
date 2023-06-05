@@ -6,8 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using log4net;
-
-
+using SpectatorFootball.Common;
 
 namespace SpectatorFootball.GameNS
 {
@@ -166,14 +165,14 @@ namespace SpectatorFootball.GameNS
             return r;
         }
 
-        public bool isTouchback(List<int?> group_1)
+        public bool isTouchback(bool bLast_Play, List<int?> group_1)
         {
             logger.Debug("isReturnKickoff");
             logger.Debug("Current Yardline: " + Current_YardLine);
 
             bool r = false;
 
-            if (Current_YardLine < 0.0 || Current_YardLine > 100.0)
+            if (!bLast_Play && (Current_YardLine < 0.0 || Current_YardLine > 100.0))
             {
                 double d = 0;
 
@@ -199,6 +198,59 @@ namespace SpectatorFootball.GameNS
             pStage.Actions.Add(pas);
             Stages.Add(pStage);
         }
+
+        public bool Kickoff_GoOutofBounds(bool bLast_Play, bool bGoOut, int slot, double ret_vert)
+        {
+            bool r = false;
+
+            if (!bLast_Play && bGoOut && (slot == 1 || slot == app_Constants.KICKOFF_PLAYERS_IN_GROUP) &&
+                (ret_vert <= app_Constants.KICKOFF_RUN_OOB_TOP_LIMIT || ret_vert > app_Constants.KICKOFF_RUN_OOB_BOTTOM_LIMIT))
+                r = true;
+
+            //bpo test
+            r = true;
+            //
+
+            return r;
+        }
+        //If the layer is looking to go out of bounds then get him the vert for the closest sideline
+        public double VertForNearestSideline(double v)
+        {
+            double r = 0.0;
+
+            if (v > 50.0)
+                r = 100.0;
+
+            return r;
+        }
+
+        public void Run_and_GoOut_of_Bounds(Player_States moving_ps, double prev_yl, double prev_v, bool blefttoRight)
+        {
+            double top_adjustment = 0.0;
+
+            double dlefttoRight = blefttoRight ? 1 : -1;
+
+            if (Current_Vertical_Percent_Pos <= 0)
+                top_adjustment = app_Constants.TOP_OUTOFBOUNDS_ADJUSTMENT;
+
+            PointXY new_end_point = null;
+
+            Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, true, false, moving_ps, null, null, Movement.LINE, null, false);
+
+            //Get the end point for the layer running out of bounds
+            new_end_point = PointPlotter.getExtendedEndpoint(prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, (app_Constants.OUT_OF_BOUNDS_LEN + app_Constants.TOP_OUTOFBOUNDS_ADJUSTMENT) * dlefttoRight);
+
+            Action pas2 = null;
+            pas2 = new Action(Game_Object_Types.P, Current_YardLine, Current_Vertical_Percent_Pos, new_end_point.x, new_end_point.y, true, false, moving_ps, null, null, Movement.LINE, null, false);
+
+            Play_Stage pStage = new Play_Stage();
+            pStage.Main_Object = false;
+            pStage.Actions.Add(pas);
+            pStage.Actions.Add(pas2);
+            Stages.Add(pStage);
+        }
+
+
 
     }
 

@@ -133,7 +133,7 @@ namespace SpectatorFootball.GameNS
             double diff_y = end_y - start_y;
 
             //End point can not be calcualted for a vertical line
-            if (diff_y == 0)
+            if (diff_x == 0)
                 throw new Exception("diff_y of 0 can not divide by 0 in getExtendedEndpoint");
 
             double slope = diff_y / diff_x;
