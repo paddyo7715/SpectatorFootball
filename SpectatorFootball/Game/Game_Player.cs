@@ -207,10 +207,6 @@ namespace SpectatorFootball.GameNS
                 (ret_vert <= app_Constants.KICKOFF_RUN_OOB_TOP_LIMIT || ret_vert > app_Constants.KICKOFF_RUN_OOB_BOTTOM_LIMIT))
                 r = true;
 
-            //bpo test
-            r = true;
-            //
-
             return r;
         }
         //If the layer is looking to go out of bounds then get him the vert for the closest sideline

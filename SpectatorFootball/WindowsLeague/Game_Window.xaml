@@ -124,7 +124,7 @@
             <StackPanel HorizontalAlignment="right">
 <!--                <Border BorderThickness="5" BorderBrush="Black"> -->
                     <Canvas Name="MyCanvas" Focusable="True" ClipToBounds="True" Background="LightBlue"  Height="710" Width="1210" >
-                        <Rectangle Name="background" Height="1280" Width="2680" Stretch="Fill" Canvas.Top="0"  Canvas.Left="0" /> 
+                        <Rectangle Name="background" Height="1480" Width="2880" Stretch="Fill" Canvas.Top="0"  Canvas.Left="0" /> 
                     </Canvas>
 <!--                </Border> --> 
             </StackPanel>

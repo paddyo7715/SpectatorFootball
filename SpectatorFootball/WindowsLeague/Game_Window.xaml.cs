@@ -47,9 +47,9 @@ namespace SpectatorFootball.WindowsLeague
         private int Can_Width;
         private int Can_Height;
 
-        private int back_width = 2680;
-        private int back_height = 1280;
-        private int Field_Border = 140;
+        private int back_width = 2880;
+        private int back_height = 1480;
+        private int Field_Border = 240;
         private int EndZonePixels = 200;
         private int Pixels_per_yard = 20;
 
@@ -72,6 +72,7 @@ namespace SpectatorFootball.WindowsLeague
         private List<Rectangle> Home_Players_rect = new List<Rectangle>();
 
         private List<Rectangle> Goalpost_Rects = new List<Rectangle>();
+        private Rectangle Mid_Field_Art_Rect = null;
 
         private Graphics_Game_Ball gGame_Ball = null;
         private bool ThreeDee_ball;
@@ -82,6 +83,7 @@ namespace SpectatorFootball.WindowsLeague
 
         private const int PLAYER_SIZE = 50;
         private const int PLAYER_BALL_SIZE_DIFF = 30;
+        private const double MID_FIELD_ART_OPACITY = .85;
 
         private const int GOALPOST_WIDTH = 50;
         private const int GOALPOST_HEIGHT = 160;
@@ -91,9 +93,14 @@ namespace SpectatorFootball.WindowsLeague
 
         public const double VIEW_EDGE_OFFSET_YARDLINE = 12.0;
 
+        public const double FIFTY_YARDLINE_ART_LY = 50.0;
+        public const double FIFTY_YARDLINE_ART_ERT = 50.0;
+        private const int FIFTY_YARDLINE_ART_WIDTH = 190;
+        private const int FIFTY_YARDLINE_ART_HEIGHT = 190;
+
         //I'm not sure why I have to do this, but it seems that
         //the 1210 might not be the full view it might be just 1204
-//        private const int RIGHT_PIXEL_FUDGE = 6;
+        //        private const int RIGHT_PIXEL_FUDGE = 6;
         private const int RIGHT_PIXEL_FUDGE = 0;
         private const int TOP_PIXEL_FUDGE = 10;
         private double CANVAS_WIDTH;
@@ -212,6 +219,12 @@ namespace SpectatorFootball.WindowsLeague
                     MyCanvas.Children.Add(ap);
                 }
 
+                Mid_Field_Art_Rect = new Rectangle()
+                {
+                    Height = FIFTY_YARDLINE_ART_HEIGHT,
+                    Width = FIFTY_YARDLINE_ART_WIDTH
+                };
+                MyCanvas.Children.Add(Mid_Field_Art_Rect);
 
                 //Load and colorize the sprite sheets
                 Uniform_Img = new Uniform_Image(CommonUtils.getAppPath() + System.IO.Path.DirectorySeparatorChar + "Images" + System.IO.Path.DirectorySeparatorChar + "Players" + System.IO.Path.DirectorySeparatorChar + "Player_Sprite_Sheet.png");
@@ -243,6 +256,10 @@ namespace SpectatorFootball.WindowsLeague
                     Goalpost_Rects[iiii].Fill = Goalpost_Sheet;
                 }
 
+                ImageBrush ib = new ImageBrush(pw.Loaded_League.getHelmetImg(ht.Helmet_Image_File));
+                ib.Opacity = MID_FIELD_ART_OPACITY;
+
+                Mid_Field_Art_Rect.Fill = ib;
 
                 //setup the gradiants for the game ball
                 //Gradient 1
@@ -737,6 +754,7 @@ namespace SpectatorFootball.WindowsLeague
             for (int igp = 0; igp < 2; igp++)
                 setGoalposts(a_edge, igp);
 
+            setMidFieldArt(a_edge);
 
             DoEvents();
 
@@ -817,6 +835,30 @@ namespace SpectatorFootball.WindowsLeague
         {
             Application.Current.Dispatcher.Invoke(DispatcherPriority.Render,
                                                   new System.Action(delegate { }));
+        }
+        private void setMidFieldArt(double[] a_edge)
+        {
+            double yardline;
+
+            yardline = FIFTY_YARDLINE_ART_LY;
+
+            //bpo test
+            int H_Pixel = Yardline_to_Pixel(yardline, true);
+
+            H_Pixel -= FIFTY_YARDLINE_ART_WIDTH / 2;
+
+            double v_Pixel = VertPercent_to_Pixel(FIFTY_YARDLINE_ART_ERT, FIFTY_YARDLINE_ART_HEIGHT);
+
+            //Adjust the position on the canvas for the view edge
+            H_Pixel += (int)a_edge[0];
+            v_Pixel += (int)a_edge[1];
+
+            Canvas.SetTop(Mid_Field_Art_Rect, v_Pixel);
+            Canvas.SetLeft(Mid_Field_Art_Rect, H_Pixel);
+
+            Canvas.SetZIndex(Mid_Field_Art_Rect, FIELD_ART_ZINDEX);
+
+
         }
     }
 }
