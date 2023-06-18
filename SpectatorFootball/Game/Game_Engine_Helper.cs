@@ -214,6 +214,43 @@ namespace SpectatorFootball.GameNS
 
             return r;
         }
+        public static bool DoesBallCarrierFumble(Ball_Carry_Actions bca, long BallCarrier_BallSafety_rating, long Tackle_rating,
+    long Run_Attack_Rating)
+        {
+            bool r = false;
+            Double rating_multiplyer = 1.0;
+            const int fumble_calc_top = 7000;
+            long fumble_calc_threshold = 0;
+
+            long fumble_avg_value = Tackle_rating + Run_Attack_Rating - BallCarrier_BallSafety_rating;
+            if (fumble_avg_value < 0)
+                fumble_avg_value = 0;
+
+            switch (bca)
+            {
+                case Ball_Carry_Actions.PASSER_SACKED:
+                    rating_multiplyer = 15;
+                    break;
+                case Ball_Carry_Actions.KICK_RETURN:
+                    rating_multiplyer = 3.1;
+                    break;
+                case Ball_Carry_Actions.RUNNING_THE_BALL:
+                    rating_multiplyer = 1.16;
+                    break;
+                case Ball_Carry_Actions.RUNNING_AFTER_CATCH:
+                    rating_multiplyer = 0.96;
+                    break;
+            }
+
+            fumble_calc_threshold = (int)Math.Round(fumble_avg_value * rating_multiplyer);
+
+            int rnd = CommonUtils.getRandomNum(1, fumble_calc_top);
+
+            if (rnd <= fumble_calc_threshold)
+                r = true;
+
+            return r;
+        }
 
     }
 }

@@ -181,6 +181,7 @@
     <Compile Include="DAO\TrainingCampDAO.cs" />
     <Compile Include="Draft\Draft_Helper.cs" />
     <Compile Include="Draft\Draft_Pos_Importance.cs" />
+    <Compile Include="Enum\Ball_Carry_Actions.cs" />
     <Compile Include="Enum\Ball_Speed.cs" />
     <Compile Include="Enum\Ball_States.cs" />
     <Compile Include="Enum\block_result.cs" />

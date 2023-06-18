@@ -752,7 +752,34 @@ namespace SpectatorFootball.GameNS
                     //bpo test code take it out
                     //bTackled = true;
                     //=========================
-                    if (r.Tackler != null || r.bTouchback || r.bRunOutofBounds) break;
+
+                    //if there is a tackle then check if the ball is fumbled.
+                    if (r.Tackler != null)
+                    {
+                        long ball_safety_rating = r.Returner.p_and_r.pr.First().Ball_Safety_Rating;
+                        long tackle_rating = r.Tackler.p_and_r.pr.First().Tackle_Rating;
+                        long run_attack_rating = r.Tackler.p_and_r.pr.First().Run_Attack_Rating;
+
+                        r.bFumble = Game_Engine_Helper.DoesBallCarrierFumble(
+                                   Ball_Carry_Actions.KICK_RETURN,
+                                   ball_safety_rating, tackle_rating, run_attack_rating);
+
+                        //if there is a fumble then there can not be a tackle, but give the tackler
+                        //creit for forcing the fumble
+                        if (r.bFumble)
+                        {
+                            r.Forced_Fumble_Tackler = r.Tackler;
+                            r.Tackler = null;
+                        }
+
+                        //Next pass in the players how could recover the fumble and get back
+                        //the player that recovers the ball.  I can then determine if the fumble
+                        //was lost and assign credit to the players
+                    }
+
+                    if (r.Tackler != null || r.bTouchback || r.bRunOutofBounds || r.bFumble)
+                        break;
+
 
                     Past_Blocker_Tackler_List.AddRange(group.Where(x => x != null).Select(x => (int)x).ToList());
                 }  //on group 1,2 or 3

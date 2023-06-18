@@ -83,7 +83,7 @@ namespace SpectatorFootball.WindowsLeague
 
         private const int PLAYER_SIZE = 50;
         private const int PLAYER_BALL_SIZE_DIFF = 30;
-        private const double MID_FIELD_ART_OPACITY = .85;
+        private const double MID_FIELD_ART_OPACITY = .97;
 
         private const int GOALPOST_WIDTH = 50;
         private const int GOALPOST_HEIGHT = 160;
@@ -95,8 +95,8 @@ namespace SpectatorFootball.WindowsLeague
 
         public const double FIFTY_YARDLINE_ART_LY = 50.0;
         public const double FIFTY_YARDLINE_ART_ERT = 50.0;
-        private const int FIFTY_YARDLINE_ART_WIDTH = 190;
-        private const int FIFTY_YARDLINE_ART_HEIGHT = 190;
+        private const int FIFTY_YARDLINE_ART_WIDTH = 160;
+        private const int FIFTY_YARDLINE_ART_HEIGHT = 160;
 
         //I'm not sure why I have to do this, but it seems that
         //the 1210 might not be the full view it might be just 1204

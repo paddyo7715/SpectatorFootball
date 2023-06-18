@@ -1039,6 +1039,5 @@ namespace SpectatorFootball.GameNS
             }
 
         }
-
     }
 }

@@ -22,7 +22,8 @@ namespace SpectatorFootball.GameNS
         public Game_Player Kicker = null;
         public Game_Player Returner = null;
         public Game_Player Tackler = null;
-        public Game_Player Fumber_Recoverer = null;
+        public Game_Player Fumble_Recoverer = null;
+        public Game_Player Forced_Fumble_Tackler = null;
 
         public bool bSwitchPossession = false;
 
