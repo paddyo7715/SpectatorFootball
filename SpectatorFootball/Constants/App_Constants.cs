@@ -549,7 +549,7 @@ namespace SpectatorFootball
         public const double KICKOFF_RUN_OOB_TOP_LIMIT = 15.0;
         public const double KICKOFF_RUN_OOB_BOTTOM_LIMIT = 85.0;
         public const double TOP_OUTOFBOUNDS_ADJUSTMENT = 3.0;
-        public const int KICKOFF_TACKLE_TEST_ADJUSTER = 10000;  //Set 0 normally or high to test
+        public const int KICKOFF_TACKLE_TEST_ADJUSTER = 0;  //Set 0 normally or high to test
         
 
         public const double TACKLER_FOO_MOVE = 0.3;

@@ -608,7 +608,7 @@ namespace SpectatorFootball.GameNS
                                     p.Kneel_With_Ball(p.Current_YardLine, p.Current_Vertical_Percent_Pos);
 
                                     //for the ball
-                                    gBall.Carried_Fake_Movement(gBall.Current_YardLine, gBall.Current_Vertical_Percent_Pos);
+                                    gBall.Carried_Fake_Movement(1);
                                 }
                             }
                             else if (r.bRunOutofBounds)
@@ -769,6 +769,18 @@ namespace SpectatorFootball.GameNS
                         if (r.bFumble)
                         {
                             r.Forced_Fumble_Tackler = r.Tackler;
+                            List<Game_Player> pFumble_Rec_Kickoff_Players = null;
+                            List<Game_Player> pFumble_Rec_Return_Players =  null;
+                            List<int> closest_players = getkickoffGroupClosestPlayers(slot_index, group);
+                            getBothGroupSlotPlayers(Kickoff_Players, Return_Players,
+                                pFumble_Rec_Kickoff_Players, pFumble_Rec_Return_Players, closest_players);
+                            pFumble_Rec_Return_Players.Add(r.Returner);
+                            Game_Player fumble_recoverer = Playstub_Fumble.Execute(bLefttoRight, gBall,
+                                Kickoff_Players, Return_Players,
+                                pFumble_Rec_Kickoff_Players, pFumble_Rec_Return_Players,
+                                r.Returner, r.Tackler, bSim);
+                            
+                            //If there is a fumble then no tackle is awarded
                             r.Tackler = null;
                         }
 
@@ -1195,6 +1207,46 @@ namespace SpectatorFootball.GameNS
 
             return r;
         }
+        public static List<int> getkickoffGroupClosestPlayers(int slot_index, List<int?> group)
+        {
+            List<int> r = new List<int>();
 
+            //Check one spot above
+            if (slot_index > 0)
+            {
+                int above_slot = slot_index - 1;
+                if (group[above_slot] != null)
+                    r.Add((int)group[above_slot]);
+            }
+
+            //Check one apot below
+            if (slot_index < app_Constants.KICKOFF_PLAYERS_IN_GROUP - 1)
+            {
+                int below_slot = slot_index + 1;
+                if (group[below_slot] != null)
+                    r.Add((int)group[below_slot]);
+            }
+
+            if (group[slot_index] != null)
+                r.Add((int)group[slot_index]);
+
+            return r;
+        }
+        public static void getBothGroupSlotPlayers(
+            List<Game_Player> Kickoff_Players, 
+            List<Game_Player> Return_Players, 
+            List<Game_Player> pFumble_Rec_Kickoff_Players, 
+            List<Game_Player> pFumble_Rec_Return_Players, 
+            List<int> grpIndexes)
+        {
+            pFumble_Rec_Kickoff_Players = new List<Game_Player>();
+            pFumble_Rec_Return_Players =  new List<Game_Player>();
+
+            foreach (int i in grpIndexes)
+            {
+                pFumble_Rec_Kickoff_Players.Add(Kickoff_Players[i]);
+                pFumble_Rec_Return_Players.Add(Return_Players[i]);
+            }
+        }
     }
 }

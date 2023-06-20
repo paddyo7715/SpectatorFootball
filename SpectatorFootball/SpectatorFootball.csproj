@@ -210,6 +210,7 @@
     <Compile Include="Game\Game_Helper.cs" />
     <Compile Include="Game\Graphics_Game_Player.cs" />
     <Compile Include="Game\Kicking_Helper.cs" />
+    <Compile Include="Game\Playstub_Fumble.cs" />
     <Compile Include="Game\Play_Kickoff_Normal.cs" />
     <Compile Include="Game\Play_Result.cs" />
     <Compile Include="Game\Play_Stage.cs" />

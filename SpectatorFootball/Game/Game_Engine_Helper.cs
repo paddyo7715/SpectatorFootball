@@ -215,10 +215,10 @@ namespace SpectatorFootball.GameNS
             return r;
         }
         public static bool DoesBallCarrierFumble(Ball_Carry_Actions bca, long BallCarrier_BallSafety_rating, long Tackle_rating,
-    long Run_Attack_Rating)
+            long Run_Attack_Rating)
         {
             bool r = false;
-            Double rating_multiplyer = 1.0;
+            double rating_multiplyer = 1.0;
             const int fumble_calc_top = 7000;
             long fumble_calc_threshold = 0;
 
@@ -240,6 +240,8 @@ namespace SpectatorFootball.GameNS
                 case Ball_Carry_Actions.RUNNING_AFTER_CATCH:
                     rating_multiplyer = 0.96;
                     break;
+                default:
+                    throw new Exception("Unknown Ball_Carry_Actions in DoesBallCarrierFumble");
             }
 
             fumble_calc_threshold = (int)Math.Round(fumble_avg_value * rating_multiplyer);
@@ -248,6 +250,9 @@ namespace SpectatorFootball.GameNS
 
             if (rnd <= fumble_calc_threshold)
                 r = true;
+
+            //bpo test take out
+//            r = true;
 
             return r;
         }

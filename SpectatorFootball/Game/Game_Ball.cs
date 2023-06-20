@@ -82,12 +82,18 @@ namespace SpectatorFootball.GameNS
             Stages.Add(bStage);
         }
 
-        public void Carried_Fake_Movement(double prev_yl, double prev_v)
+        public void Carried_Fake_Movement(int n)
         {
-            Action bas = new Action(Game_Object_Types.B, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, true, false, null, Ball_States.CARRIED, null, Movement.FAKE_MOVEMENT, Ball_Speed.SLOW, false);
             Play_Stage bStage = new Play_Stage();
             bStage.Main_Object = true;
-            bStage.Actions.Add(bas);
+
+            for (int i=0; i < n; i++)
+            {
+                Action bas = new Action(Game_Object_Types.B, Current_YardLine, Current_Vertical_Percent_Pos, Current_YardLine, Current_Vertical_Percent_Pos, true, false, null, Ball_States.CARRIED, null, Movement.FAKE_MOVEMENT, Ball_Speed.SLOW, false);
+                bStage.Actions.Add(bas);
+            }
+
+
             Stages.Add(bStage);
         }
 
