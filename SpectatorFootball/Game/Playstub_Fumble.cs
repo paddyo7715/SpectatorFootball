@@ -49,24 +49,20 @@ namespace SpectatorFootball.GameNS
             if (!bSim)
             {
                 //for the ball
-                gBall.Carried_Fake_Movement(10);
+                gBall.Carried_Fake_Movement(5);
             }
-
+            int ind = 0;
             foreach (Game_Player p in BallCarrying_Players)
             {
                 if (close_BallCarrying_Players.Contains(p) && p != Returner)
                 {
-                    //keep blocking till the returner runs up to you
-                    if (!bSim)
-                        p.Block();
-
                     double prev_yl = p.Current_YardLine;
                     double prev_v = p.Current_Vertical_Percent_Pos;
 
                     p.Current_YardLine = gBall.Current_YardLine;
                     p.Current_Vertical_Percent_Pos = gBall.Current_Vertical_Percent_Pos;
 
-                    if (bSim)
+                    if (!bSim)
                     {
                         Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos);
                         p.Run_and_Tackled(moving_ps, prev_yl, prev_v);
@@ -78,23 +74,21 @@ namespace SpectatorFootball.GameNS
                     if (!bSim)
                         p.Same_As_Last_Action();
                 }
+                ind++;
             }
 
+            ind = 0;
             foreach (Game_Player p in Tackling_Players)
             {
                 if (close_Tackling_Players.Contains(p) && p != Tackler)
                 {
-                    //keep blocking till the returner runs up to you
-                    if (!bSim)
-                        p.Block();
-
                     double prev_yl = p.Current_YardLine;
                     double prev_v = p.Current_Vertical_Percent_Pos;
 
                     p.Current_YardLine = gBall.Current_YardLine;
                     p.Current_Vertical_Percent_Pos = gBall.Current_Vertical_Percent_Pos;
 
-                    if (bSim)
+                    if (!bSim)
                     {
                         Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos);
                         p.Run_and_Tackled(moving_ps, prev_yl, prev_v);
@@ -106,6 +100,7 @@ namespace SpectatorFootball.GameNS
                     if (!bSim)
                         p.Same_As_Last_Action();
                 }
+                ind++;
             }
 
             return r;

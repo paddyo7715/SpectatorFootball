@@ -769,8 +769,8 @@ namespace SpectatorFootball.GameNS
                         if (r.bFumble)
                         {
                             r.Forced_Fumble_Tackler = r.Tackler;
-                            List<Game_Player> pFumble_Rec_Kickoff_Players = null;
-                            List<Game_Player> pFumble_Rec_Return_Players =  null;
+                            List<Game_Player> pFumble_Rec_Kickoff_Players = new List<Game_Player>();
+                            List<Game_Player> pFumble_Rec_Return_Players = new List<Game_Player>();
                             List<int> closest_players = getkickoffGroupClosestPlayers(slot_index, group);
                             getBothGroupSlotPlayers(Kickoff_Players, Return_Players,
                                 pFumble_Rec_Kickoff_Players, pFumble_Rec_Return_Players, closest_players);
@@ -805,7 +805,7 @@ namespace SpectatorFootball.GameNS
                 logger.Debug("Stage 6");
                 logger.Debug("=======================================================");
 
-                if (r.Tackler == null && !r.bTouchback && !r.bRunOutofBounds)
+                if (r.Tackler == null && !r.bTouchback && !r.bRunOutofBounds && !r.bFumble)
                 {
                     logger.Debug("Stage Six:");
                     bool bFindOpenSlot = false;
@@ -1239,8 +1239,6 @@ namespace SpectatorFootball.GameNS
             List<Game_Player> pFumble_Rec_Return_Players, 
             List<int> grpIndexes)
         {
-            pFumble_Rec_Kickoff_Players = new List<Game_Player>();
-            pFumble_Rec_Return_Players =  new List<Game_Player>();
 
             foreach (int i in grpIndexes)
             {
