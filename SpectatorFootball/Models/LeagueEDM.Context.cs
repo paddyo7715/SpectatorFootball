@@ -19,12 +19,7 @@ namespace SpectatorFootball.Models
             : base("name=leagueContext")
         {
         }
-
-        public leagueContext(string connString)
-            : base(connString)
-        {
-        }
-
+    
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
@@ -38,22 +33,8 @@ namespace SpectatorFootball.Models
         public virtual DbSet<Franchise> Franchises { get; set; }
         public virtual DbSet<Free_Agency> Free_Agency { get; set; }
         public virtual DbSet<Game> Games { get; set; }
-        public virtual DbSet<Game_Player_Defense_Stats> Game_Player_Defense_Stats { get; set; }
-        public virtual DbSet<Game_Player_FG_Defense_Stats> Game_Player_FG_Defense_Stats { get; set; }
-        public virtual DbSet<Game_Player_Kick_Returner_Stats> Game_Player_Kick_Returner_Stats { get; set; }
-        public virtual DbSet<Game_Player_Kicker_Stats> Game_Player_Kicker_Stats { get; set; }
-        public virtual DbSet<Game_Player_Kickoff_Defenders> Game_Player_Kickoff_Defenders { get; set; }
-        public virtual DbSet<Game_Player_Kickoff_Receiver_Stats> Game_Player_Kickoff_Receiver_Stats { get; set; }
-        public virtual DbSet<Game_Player_Offensive_Linemen_Stats> Game_Player_Offensive_Linemen_Stats { get; set; }
-        public virtual DbSet<Game_Player_Pass_Defense_Stats> Game_Player_Pass_Defense_Stats { get; set; }
-        public virtual DbSet<Game_Player_Passing_Stats> Game_Player_Passing_Stats { get; set; }
         public virtual DbSet<Game_Player_Penalty_Stats> Game_Player_Penalty_Stats { get; set; }
-        public virtual DbSet<Game_Player_Punt_Defenders> Game_Player_Punt_Defenders { get; set; }
-        public virtual DbSet<Game_Player_Punt_Receiver_Stats> Game_Player_Punt_Receiver_Stats { get; set; }
-        public virtual DbSet<Game_Player_Punt_Returner_Stats> Game_Player_Punt_Returner_Stats { get; set; }
-        public virtual DbSet<Game_Player_Punter_Stats> Game_Player_Punter_Stats { get; set; }
-        public virtual DbSet<Game_Player_Receiving_Stats> Game_Player_Receiving_Stats { get; set; }
-        public virtual DbSet<Game_Player_Rushing_Stats> Game_Player_Rushing_Stats { get; set; }
+        public virtual DbSet<Game_Player_Stats> Game_Player_Stats { get; set; }
         public virtual DbSet<Game_Scoring_Summary> Game_Scoring_Summary { get; set; }
         public virtual DbSet<Hall_of_Fame> Hall_of_Fame { get; set; }
         public virtual DbSet<Injury> Injuries { get; set; }

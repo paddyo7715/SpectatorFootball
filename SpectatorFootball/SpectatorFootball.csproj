@@ -274,52 +274,10 @@
     <Compile Include="Models\Game.cs">
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Game_Player_Defense_Stats.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Game_Player_FG_Defense_Stats.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Game_Player_Kicker_Stats.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Game_Player_Kickoff_Defenders.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Game_Player_Kickoff_Receiver_Stats.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Game_Player_Kick_Returner_Stats.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Game_Player_Offensive_Linemen_Stats.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Game_Player_Passing_Stats.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Game_Player_Pass_Defense_Stats.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Game_Player_Penalty_Stats.cs">
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Game_Player_Punter_Stats.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Game_Player_Punt_Defenders.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Game_Player_Punt_Receiver_Stats.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Game_Player_Punt_Returner_Stats.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Game_Player_Receiving_Stats.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Game_Player_Rushing_Stats.cs">
+    <Compile Include="Models\Game_Player_Stats.cs">
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Game_Scoring_Summary.cs">

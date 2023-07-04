@@ -60,22 +60,8 @@
     <Property Name="Name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
     <NavigationProperty Name="Drafts" Relationship="Self.FK_Draft_1_0" FromRole="Franchise" ToRole="Draft" />
     <NavigationProperty Name="Free_Agency" Relationship="Self.FK_Free_Agency_2_0" FromRole="Franchise" ToRole="Free_Agency" />
-    <NavigationProperty Name="Game_Player_Defense_Stats" Relationship="Self.FK_Game_Player_Defense_Stats_2_0" FromRole="Franchise" ToRole="Game_Player_Defense_Stats" />
-    <NavigationProperty Name="Game_Player_FG_Defense_Stats" Relationship="Self.FK_Game_Player_FG_Defense_Stats_0_0" FromRole="Franchise" ToRole="Game_Player_FG_Defense_Stats" />
-    <NavigationProperty Name="Game_Player_Kick_Returner_Stats" Relationship="Self.FK_Game_Player_Kick_Returner_Stats_1_0" FromRole="Franchise" ToRole="Game_Player_Kick_Returner_Stats" />
-    <NavigationProperty Name="Game_Player_Kicker_Stats" Relationship="Self.FK_Game_Player_Kicker_Stats_1_0" FromRole="Franchise" ToRole="Game_Player_Kicker_Stats" />
-    <NavigationProperty Name="Game_Player_Kickoff_Defenders" Relationship="Self.FK_Game_Player_Kickoff_Defenders_0_0" FromRole="Franchise" ToRole="Game_Player_Kickoff_Defenders" />
-    <NavigationProperty Name="Game_Player_Kickoff_Receiver_Stats" Relationship="Self.FK_Game_Player_Kickoff_Receiver_Stats_0_0" FromRole="Franchise" ToRole="Game_Player_Kickoff_Receiver_Stats" />
-    <NavigationProperty Name="Game_Player_Offensive_Linemen_Stats" Relationship="Self.FK_Game_Player_Offensive_Linemen_Stats_1_0" FromRole="Franchise" ToRole="Game_Player_Offensive_Linemen_Stats" />
-    <NavigationProperty Name="Game_Player_Pass_Defense_Stats" Relationship="Self.FK_Game_Player_Pass_Defense_Stats_0_0" FromRole="Franchise" ToRole="Game_Player_Pass_Defense_Stats" />
-    <NavigationProperty Name="Game_Player_Passing_Stats" Relationship="Self.FK_Game_Player_Passing_Stats_2_0" FromRole="Franchise" ToRole="Game_Player_Passing_Stats" />
     <NavigationProperty Name="Game_Player_Penalty_Stats" Relationship="Self.FK_Game_Player_Penalty_Stats_3_0" FromRole="Franchise" ToRole="Game_Player_Penalty_Stats" />
-    <NavigationProperty Name="Game_Player_Punt_Defenders" Relationship="Self.FK_Game_Player_Punt_Defenders_0_0" FromRole="Franchise" ToRole="Game_Player_Punt_Defenders" />
-    <NavigationProperty Name="Game_Player_Punt_Receiver_Stats" Relationship="Self.FK_Game_Player_Punt_Receiver_Stats_0_0" FromRole="Franchise" ToRole="Game_Player_Punt_Receiver_Stats" />
-    <NavigationProperty Name="Game_Player_Punt_Returner_Stats" Relationship="Self.FK_Game_Player_Punt_Returner_Stats_0_0" FromRole="Franchise" ToRole="Game_Player_Punt_Returner_Stats" />
-    <NavigationProperty Name="Game_Player_Punter_Stats" Relationship="Self.FK_Game_Player_Punter_Stats_2_0" FromRole="Franchise" ToRole="Game_Player_Punter_Stats" />
-    <NavigationProperty Name="Game_Player_Receiving_Stats" Relationship="Self.FK_Game_Player_Receiving_Stats_1_0" FromRole="Franchise" ToRole="Game_Player_Receiving_Stats" />
-    <NavigationProperty Name="Game_Player_Rushing_Stats" Relationship="Self.FK_Game_Player_Rushing_Stats_2_0" FromRole="Franchise" ToRole="Game_Player_Rushing_Stats" />
+    <NavigationProperty Name="Game_Player_Stats" Relationship="Self.FK_Game_Player_Stats_1_0" FromRole="Franchise" ToRole="Game_Player_Stats" />
     <NavigationProperty Name="Injuries" Relationship="Self.FK_Injuries_0_0" FromRole="Franchise" ToRole="Injuries" />
     <NavigationProperty Name="Players_By_Team" Relationship="Self.FK_Players_By_Team_2_0" FromRole="Franchise" ToRole="Players_By_Team" />
     <NavigationProperty Name="Playoff_Teams_by_Season" Relationship="Self.FK_Playoff_Teams_by_Season_1_0" FromRole="Franchise" ToRole="Playoff_Teams_by_Season" />
@@ -156,204 +142,9 @@
     <Property Name="Away_Sacks" Type="Int64" />
     <Property Name="Forfeited_Game" Type="Int64" />
     <NavigationProperty Name="Season" Relationship="Self.FK_Game_0_0" FromRole="Game" ToRole="Season" />
-    <NavigationProperty Name="Game_Player_Defense_Stats" Relationship="Self.FK_Game_Player_Defense_Stats_0_0" FromRole="Game" ToRole="Game_Player_Defense_Stats" />
-    <NavigationProperty Name="Game_Player_FG_Defense_Stats" Relationship="Self.FK_Game_Player_FG_Defense_Stats_2_0" FromRole="Game" ToRole="Game_Player_FG_Defense_Stats" />
-    <NavigationProperty Name="Game_Player_Kick_Returner_Stats" Relationship="Self.FK_Game_Player_Kick_Returner_Stats_0_0" FromRole="Game" ToRole="Game_Player_Kick_Returner_Stats" />
-    <NavigationProperty Name="Game_Player_Kicker_Stats" Relationship="Self.FK_Game_Player_Kicker_Stats_0_0" FromRole="Game" ToRole="Game_Player_Kicker_Stats" />
-    <NavigationProperty Name="Game_Player_Kickoff_Defenders" Relationship="Self.FK_Game_Player_Kickoff_Defenders_1_0" FromRole="Game" ToRole="Game_Player_Kickoff_Defenders" />
-    <NavigationProperty Name="Game_Player_Kickoff_Receiver_Stats" Relationship="Self.FK_Game_Player_Kickoff_Receiver_Stats_2_0" FromRole="Game" ToRole="Game_Player_Kickoff_Receiver_Stats" />
-    <NavigationProperty Name="Game_Player_Offensive_Linemen_Stats" Relationship="Self.FK_Game_Player_Offensive_Linemen_Stats_2_0" FromRole="Game" ToRole="Game_Player_Offensive_Linemen_Stats" />
-    <NavigationProperty Name="Game_Player_Pass_Defense_Stats" Relationship="Self.FK_Game_Player_Pass_Defense_Stats_2_0" FromRole="Game" ToRole="Game_Player_Pass_Defense_Stats" />
-    <NavigationProperty Name="Game_Player_Passing_Stats" Relationship="Self.FK_Game_Player_Passing_Stats_1_0" FromRole="Game" ToRole="Game_Player_Passing_Stats" />
     <NavigationProperty Name="Game_Player_Penalty_Stats" Relationship="Self.FK_Game_Player_Penalty_Stats_2_0" FromRole="Game" ToRole="Game_Player_Penalty_Stats" />
-    <NavigationProperty Name="Game_Player_Punt_Defenders" Relationship="Self.FK_Game_Player_Punt_Defenders_1_0" FromRole="Game" ToRole="Game_Player_Punt_Defenders" />
-    <NavigationProperty Name="Game_Player_Punt_Receiver_Stats" Relationship="Self.FK_Game_Player_Punt_Receiver_Stats_2_0" FromRole="Game" ToRole="Game_Player_Punt_Receiver_Stats" />
-    <NavigationProperty Name="Game_Player_Punt_Returner_Stats" Relationship="Self.FK_Game_Player_Punt_Returner_Stats_1_0" FromRole="Game" ToRole="Game_Player_Punt_Returner_Stats" />
-    <NavigationProperty Name="Game_Player_Punter_Stats" Relationship="Self.FK_Game_Player_Punter_Stats_0_0" FromRole="Game" ToRole="Game_Player_Punter_Stats" />
-    <NavigationProperty Name="Game_Player_Receiving_Stats" Relationship="Self.FK_Game_Player_Receiving_Stats_2_0" FromRole="Game" ToRole="Game_Player_Receiving_Stats" />
-    <NavigationProperty Name="Game_Player_Rushing_Stats" Relationship="Self.FK_Game_Player_Rushing_Stats_1_0" FromRole="Game" ToRole="Game_Player_Rushing_Stats" />
+    <NavigationProperty Name="Game_Player_Stats" Relationship="Self.FK_Game_Player_Stats_2_0" FromRole="Game" ToRole="Game_Player_Stats" />
     <NavigationProperty Name="Game_Scoring_Summary" Relationship="Self.FK_Game_Scoring_Summary_0_0" FromRole="Game" ToRole="Game_Scoring_Summary" />
-  </EntityType>
-  <EntityType Name="Game_Player_Defense_Stats">
-    <Key>
-      <PropertyRef Name="Game_ID" />
-      <PropertyRef Name="Player_ID" />
-    </Key>
-    <Property Name="Game_ID" Type="Int64" Nullable="false" />
-    <Property Name="Player_ID" Type="Int64" Nullable="false" />
-    <Property Name="Franchise_ID" Type="Int64" Nullable="false" />
-    <Property Name="Started" Type="Int64" Nullable="false" />
-    <Property Name="Def_Sacks" Type="Int64" Nullable="false" />
-    <Property Name="Def_Rushing_Loss" Type="Int64" Nullable="false" />
-    <Property Name="Def_Tackles" Type="Int64" Nullable="false" />
-    <Property Name="Def_Missed_Tackles" Type="Int64" Nullable="false" />
-    <Property Name="Def_Safety" Type="Int64" Nullable="false" />
-    <Property Name="Def_TDs" Type="Int64" Nullable="false" />
-    <Property Name="Forced_Fumbles" Type="Int64" Nullable="false" />
-    <Property Name="Recovered_Fumbles" Type="Int64" Nullable="false" />
-    <Property Name="Fumbles_Return_Yards" Type="Int64" Nullable="false" />
-    <Property Name="QB_Pressures" Type="Int64" Nullable="false" />
-    <Property Name="Pass_Rushes" Type="Int64" Nullable="false" />
-    <Property Name="Pass_Blocks" Type="Int64" Nullable="false" />
-    <NavigationProperty Name="Franchise" Relationship="Self.FK_Game_Player_Defense_Stats_2_0" FromRole="Game_Player_Defense_Stats" ToRole="Franchise" />
-    <NavigationProperty Name="Game" Relationship="Self.FK_Game_Player_Defense_Stats_0_0" FromRole="Game_Player_Defense_Stats" ToRole="Game" />
-    <NavigationProperty Name="Player" Relationship="Self.FK_Game_Player_Defense_Stats_1_0" FromRole="Game_Player_Defense_Stats" ToRole="Players" />
-  </EntityType>
-  <EntityType Name="Game_Player_FG_Defense_Stats">
-    <Key>
-      <PropertyRef Name="Game_ID" />
-      <PropertyRef Name="Player_ID" />
-    </Key>
-    <Property Name="Game_ID" Type="Int64" Nullable="false" />
-    <Property Name="Player_ID" Type="Int64" Nullable="false" />
-    <Property Name="Franchise_ID" Type="Int64" Nullable="false" />
-    <Property Name="FG_Block" Type="Int64" Nullable="false" />
-    <Property Name="FG_Block_Recovery" Type="Int64" Nullable="false" />
-    <Property Name="FG_Block_Recovery_Yards" Type="Int64" Nullable="false" />
-    <Property Name="FG_Block_Recovery_TDs" Type="Int64" Nullable="false" />
-    <Property Name="XP_Block" Type="Int64" Nullable="false" />
-    <NavigationProperty Name="Franchise" Relationship="Self.FK_Game_Player_FG_Defense_Stats_0_0" FromRole="Game_Player_FG_Defense_Stats" ToRole="Franchise" />
-    <NavigationProperty Name="Game" Relationship="Self.FK_Game_Player_FG_Defense_Stats_2_0" FromRole="Game_Player_FG_Defense_Stats" ToRole="Game" />
-    <NavigationProperty Name="Player" Relationship="Self.FK_Game_Player_FG_Defense_Stats_1_0" FromRole="Game_Player_FG_Defense_Stats" ToRole="Players" />
-  </EntityType>
-  <EntityType Name="Game_Player_Kick_Returner_Stats">
-    <Key>
-      <PropertyRef Name="Game_ID" />
-      <PropertyRef Name="Player_ID" />
-    </Key>
-    <Property Name="Game_ID" Type="Int64" Nullable="false" />
-    <Property Name="Player_ID" Type="Int64" Nullable="false" />
-    <Property Name="Franchise_ID" Type="Int64" Nullable="false" />
-    <Property Name="Kickoffs_Returned" Type="Int64" Nullable="false" />
-    <Property Name="Kickoffs_Returned_Yards" Type="Int64" Nullable="false" />
-    <Property Name="Kickoffs_Returned_TDs" Type="Int64" Nullable="false" />
-    <Property Name="Kickoff_Return_Yards_Long" Type="Int64" Nullable="false" />
-    <Property Name="Kickoffs_Returned_Fumbles" Type="Int64" Nullable="false" />
-    <Property Name="Kickoffs_Returned_Fumbles_Lost" Type="Int64" Nullable="false" />
-    <NavigationProperty Name="Franchise" Relationship="Self.FK_Game_Player_Kick_Returner_Stats_1_0" FromRole="Game_Player_Kick_Returner_Stats" ToRole="Franchise" />
-    <NavigationProperty Name="Game" Relationship="Self.FK_Game_Player_Kick_Returner_Stats_0_0" FromRole="Game_Player_Kick_Returner_Stats" ToRole="Game" />
-    <NavigationProperty Name="Player" Relationship="Self.FK_Game_Player_Kick_Returner_Stats_2_0" FromRole="Game_Player_Kick_Returner_Stats" ToRole="Players" />
-  </EntityType>
-  <EntityType Name="Game_Player_Kicker_Stats">
-    <Key>
-      <PropertyRef Name="Game_ID" />
-      <PropertyRef Name="Player_ID" />
-    </Key>
-    <Property Name="Game_ID" Type="Int64" Nullable="false" />
-    <Property Name="Player_ID" Type="Int64" Nullable="false" />
-    <Property Name="Franchise_ID" Type="Int64" Nullable="false" />
-    <Property Name="Started" Type="Int64" Nullable="false" />
-    <Property Name="XP_Att" Type="Int64" Nullable="false" />
-    <Property Name="XP_Made" Type="Int64" Nullable="false" />
-    <Property Name="FG_Att" Type="Int64" Nullable="false" />
-    <Property Name="FG_Made" Type="Int64" Nullable="false" />
-    <Property Name="FG_Long" Type="Int64" Nullable="false" />
-    <Property Name="FG_Blocked" Type="Int64" Nullable="false" />
-    <Property Name="Kickoffs" Type="Int64" Nullable="false" />
-    <Property Name="Kickoff_Out_of_Bounds" Type="Int64" Nullable="false" />
-    <Property Name="Kickoff_Touchback" Type="Int64" Nullable="false" />
-    <Property Name="onside_attempt" Type="Int64" Nullable="false" />
-    <Property Name="onside_successful" Type="Int64" Nullable="false" />
-    <NavigationProperty Name="Franchise" Relationship="Self.FK_Game_Player_Kicker_Stats_1_0" FromRole="Game_Player_Kicker_Stats" ToRole="Franchise" />
-    <NavigationProperty Name="Game" Relationship="Self.FK_Game_Player_Kicker_Stats_0_0" FromRole="Game_Player_Kicker_Stats" ToRole="Game" />
-    <NavigationProperty Name="Player" Relationship="Self.FK_Game_Player_Kicker_Stats_2_0" FromRole="Game_Player_Kicker_Stats" ToRole="Players" />
-  </EntityType>
-  <EntityType Name="Game_Player_Kickoff_Defenders">
-    <Key>
-      <PropertyRef Name="Game_ID" />
-      <PropertyRef Name="Player_ID" />
-    </Key>
-    <Property Name="Game_ID" Type="Int64" Nullable="false" />
-    <Property Name="Player_ID" Type="Int64" Nullable="false" />
-    <Property Name="Franchise_ID" Type="Int64" Nullable="false" />
-    <Property Name="Forced_Fumbles_Kickoffs" Type="Int64" Nullable="false" />
-    <Property Name="Fumbles_Kickoffs_Recovered" Type="Int64" Nullable="false" />
-    <Property Name="Fumbles_Kickoffs_Recovered_TDs" Type="Int64" Nullable="false" />
-    <Property Name="Fumbles_Kickoffs_Recovered_Yards" Type="Int64" Nullable="false" />
-    <Property Name="Kickoff_Tackles" Type="Int64" Nullable="false" />
-    <Property Name="KickOff_Onside_Kick_Recoveries" Type="Int64" Nullable="false" />
-    <NavigationProperty Name="Franchise" Relationship="Self.FK_Game_Player_Kickoff_Defenders_0_0" FromRole="Game_Player_Kickoff_Defenders" ToRole="Franchise" />
-    <NavigationProperty Name="Game" Relationship="Self.FK_Game_Player_Kickoff_Defenders_1_0" FromRole="Game_Player_Kickoff_Defenders" ToRole="Game" />
-    <NavigationProperty Name="Player" Relationship="Self.FK_Game_Player_Kickoff_Defenders_2_0" FromRole="Game_Player_Kickoff_Defenders" ToRole="Players" />
-  </EntityType>
-  <EntityType Name="Game_Player_Kickoff_Receiver_Stats">
-    <Key>
-      <PropertyRef Name="Game_ID" />
-      <PropertyRef Name="Player_ID" />
-    </Key>
-    <Property Name="Game_ID" Type="Int64" Nullable="false" />
-    <Property Name="Player_ID" Type="Int64" Nullable="false" />
-    <Property Name="Franchise_ID" Type="Int64" Nullable="false" />
-    <Property Name="Onside_Kickoff_Recovery" Type="Int64" Nullable="false" />
-    <NavigationProperty Name="Franchise" Relationship="Self.FK_Game_Player_Kickoff_Receiver_Stats_0_0" FromRole="Game_Player_Kickoff_Receiver_Stats" ToRole="Franchise" />
-    <NavigationProperty Name="Game" Relationship="Self.FK_Game_Player_Kickoff_Receiver_Stats_2_0" FromRole="Game_Player_Kickoff_Receiver_Stats" ToRole="Game" />
-    <NavigationProperty Name="Player" Relationship="Self.FK_Game_Player_Kickoff_Receiver_Stats_1_0" FromRole="Game_Player_Kickoff_Receiver_Stats" ToRole="Players" />
-  </EntityType>
-  <EntityType Name="Game_Player_Offensive_Linemen_Stats">
-    <Key>
-      <PropertyRef Name="Game_ID" />
-      <PropertyRef Name="Player_ID" />
-    </Key>
-    <Property Name="Game_ID" Type="Int64" Nullable="false" />
-    <Property Name="Player_ID" Type="Int64" Nullable="false" />
-    <Property Name="Franchise_ID" Type="Int64" Nullable="false" />
-    <Property Name="Started" Type="Int64" Nullable="false" />
-    <Property Name="Oline_Plays" Type="Int64" Nullable="false" />
-    <Property Name="OLine_Sacks_Allowed" Type="Int64" Nullable="false" />
-    <Property Name="OLine_Rushing_Loss_Allowed" Type="Int64" Nullable="false" />
-    <Property Name="OLine_Missed_Block" Type="Int64" Nullable="false" />
-    <Property Name="OLine_Pancakes" Type="Int64" Nullable="false" />
-    <Property Name="QB_Pressures_Allowed" Type="Int64" Nullable="false" />
-    <NavigationProperty Name="Franchise" Relationship="Self.FK_Game_Player_Offensive_Linemen_Stats_1_0" FromRole="Game_Player_Offensive_Linemen_Stats" ToRole="Franchise" />
-    <NavigationProperty Name="Game" Relationship="Self.FK_Game_Player_Offensive_Linemen_Stats_2_0" FromRole="Game_Player_Offensive_Linemen_Stats" ToRole="Game" />
-    <NavigationProperty Name="Player" Relationship="Self.FK_Game_Player_Offensive_Linemen_Stats_0_0" FromRole="Game_Player_Offensive_Linemen_Stats" ToRole="Players" />
-  </EntityType>
-  <EntityType Name="Game_Player_Pass_Defense_Stats">
-    <Key>
-      <PropertyRef Name="Game_ID" />
-      <PropertyRef Name="Player_ID" />
-    </Key>
-    <Property Name="Game_ID" Type="Int64" Nullable="false" />
-    <Property Name="Player_ID" Type="Int64" Nullable="false" />
-    <Property Name="Franchise_ID" Type="Int64" Nullable="false" />
-    <Property Name="Started" Type="Int64" Nullable="false" />
-    <Property Name="Ints" Type="Int64" Nullable="false" />
-    <Property Name="Def_Int_Yards" Type="Int64" Nullable="false" />
-    <Property Name="Def_int_TDs" Type="Int64" Nullable="false" />
-    <Property Name="Def_Pass_Defenses" Type="Int64" Nullable="false" />
-    <Property Name="Tackles" Type="Int64" Nullable="false" />
-    <Property Name="Def_Missed_Tackles" Type="Int64" Nullable="false" />
-    <Property Name="Touchdowns_Surrendered" Type="Int64" Nullable="false" />
-    <Property Name="Forced_Fumbles" Type="Int64" Nullable="false" />
-    <Property Name="Fumble_Recoveries" Type="Int64" Nullable="false" />
-    <Property Name="Fumble_Return_Yards" Type="Int64" Nullable="false" />
-    <Property Name="Fumble_Return_TD" Type="Int64" Nullable="false" />
-    <NavigationProperty Name="Franchise" Relationship="Self.FK_Game_Player_Pass_Defense_Stats_0_0" FromRole="Game_Player_Pass_Defense_Stats" ToRole="Franchise" />
-    <NavigationProperty Name="Game" Relationship="Self.FK_Game_Player_Pass_Defense_Stats_2_0" FromRole="Game_Player_Pass_Defense_Stats" ToRole="Game" />
-    <NavigationProperty Name="Player" Relationship="Self.FK_Game_Player_Pass_Defense_Stats_1_0" FromRole="Game_Player_Pass_Defense_Stats" ToRole="Players" />
-  </EntityType>
-  <EntityType Name="Game_Player_Passing_Stats">
-    <Key>
-      <PropertyRef Name="Game_ID" />
-      <PropertyRef Name="Player_ID" />
-    </Key>
-    <Property Name="Game_ID" Type="Int64" Nullable="false" />
-    <Property Name="Player_ID" Type="Int64" Nullable="false" />
-    <Property Name="Franchise_ID" Type="Int64" Nullable="false" />
-    <Property Name="Started" Type="Int64" Nullable="false" />
-    <Property Name="Fumbles" Type="Int64" Nullable="false" />
-    <Property Name="Fumbles_Lost" Type="Int64" Nullable="false" />
-    <Property Name="Sacked" Type="Int64" Nullable="false" />
-    <Property Name="Pass_Comp" Type="Int64" Nullable="false" />
-    <Property Name="Pass_Att" Type="Int64" Nullable="false" />
-    <Property Name="Pass_Yards" Type="Int64" Nullable="false" />
-    <Property Name="Pass_TDs" Type="Int64" Nullable="false" />
-    <Property Name="Pass_Ints" Type="Int64" Nullable="false" />
-    <Property Name="Long" Type="Int64" Nullable="false" />
-    <Property Name="Passes_Blocks" Type="Int64" Nullable="false" />
-    <NavigationProperty Name="Franchise" Relationship="Self.FK_Game_Player_Passing_Stats_2_0" FromRole="Game_Player_Passing_Stats" ToRole="Franchise" />
-    <NavigationProperty Name="Game" Relationship="Self.FK_Game_Player_Passing_Stats_1_0" FromRole="Game_Player_Passing_Stats" ToRole="Game" />
-    <NavigationProperty Name="Player" Relationship="Self.FK_Game_Player_Passing_Stats_0_0" FromRole="Game_Player_Passing_Stats" ToRole="Players" />
   </EntityType>
   <EntityType Name="Game_Player_Penalty_Stats">
     <Key>
@@ -370,58 +161,7 @@
     <NavigationProperty Name="Player" Relationship="Self.FK_Game_Player_Penalty_Stats_0_0" FromRole="Game_Player_Penalty_Stats" ToRole="Players" />
     <NavigationProperty Name="Penalty" Relationship="Self.FK_Game_Player_Penalty_Stats_1_0" FromRole="Game_Player_Penalty_Stats" ToRole="Penalties" />
   </EntityType>
-  <EntityType Name="Game_Player_Punt_Defenders">
-    <Key>
-      <PropertyRef Name="Game_ID" />
-      <PropertyRef Name="Player_ID" />
-    </Key>
-    <Property Name="Game_ID" Type="Int64" Nullable="false" />
-    <Property Name="Player_ID" Type="Int64" Nullable="false" />
-    <Property Name="Franchise_ID" Type="Int64" Nullable="false" />
-    <Property Name="Forced_Fumbles_Punt" Type="Int64" Nullable="false" />
-    <Property Name="Fumbles_Punt_Recovered" Type="Int64" Nullable="false" />
-    <Property Name="Fumbles_Punt_Recovered_TDs" Type="Int64" Nullable="false" />
-    <Property Name="Fumbles_Punt_Recovered_Yards" Type="Int64" Nullable="false" />
-    <Property Name="Punt_Tackles" Type="Int64" Nullable="false" />
-    <NavigationProperty Name="Franchise" Relationship="Self.FK_Game_Player_Punt_Defenders_0_0" FromRole="Game_Player_Punt_Defenders" ToRole="Franchise" />
-    <NavigationProperty Name="Game" Relationship="Self.FK_Game_Player_Punt_Defenders_1_0" FromRole="Game_Player_Punt_Defenders" ToRole="Game" />
-    <NavigationProperty Name="Player" Relationship="Self.FK_Game_Player_Punt_Defenders_2_0" FromRole="Game_Player_Punt_Defenders" ToRole="Players" />
-  </EntityType>
-  <EntityType Name="Game_Player_Punt_Receiver_Stats">
-    <Key>
-      <PropertyRef Name="Game_ID" />
-      <PropertyRef Name="Player_ID" />
-    </Key>
-    <Property Name="Game_ID" Type="Int64" Nullable="false" />
-    <Property Name="Player_ID" Type="Int64" Nullable="false" />
-    <Property Name="Franchise_ID" Type="Int64" Nullable="false" />
-    <Property Name="Punt_Block" Type="Int64" Nullable="false" />
-    <Property Name="Punt_Block_Recovery" Type="Int64" Nullable="false" />
-    <Property Name="Punt_Block_Recovery_Yards" Type="Int64" Nullable="false" />
-    <Property Name="Punt_Block_Recovery_TDs" Type="Int64" Nullable="false" />
-    <NavigationProperty Name="Franchise" Relationship="Self.FK_Game_Player_Punt_Receiver_Stats_0_0" FromRole="Game_Player_Punt_Receiver_Stats" ToRole="Franchise" />
-    <NavigationProperty Name="Game" Relationship="Self.FK_Game_Player_Punt_Receiver_Stats_2_0" FromRole="Game_Player_Punt_Receiver_Stats" ToRole="Game" />
-    <NavigationProperty Name="Player" Relationship="Self.FK_Game_Player_Punt_Receiver_Stats_1_0" FromRole="Game_Player_Punt_Receiver_Stats" ToRole="Players" />
-  </EntityType>
-  <EntityType Name="Game_Player_Punt_Returner_Stats">
-    <Key>
-      <PropertyRef Name="Game_ID" />
-      <PropertyRef Name="Player_ID" />
-    </Key>
-    <Property Name="Game_ID" Type="Int64" Nullable="false" />
-    <Property Name="Player_ID" Type="Int64" Nullable="false" />
-    <Property Name="Franchise_ID" Type="Int64" Nullable="false" />
-    <Property Name="Punts_Returned" Type="Int64" Nullable="false" />
-    <Property Name="Punts_Returned_Yards" Type="Int64" Nullable="false" />
-    <Property Name="Punts_Returned_TDs" Type="Int64" Nullable="false" />
-    <Property Name="Punt_Returned_Yards_Long" Type="Int64" Nullable="false" />
-    <Property Name="Punts_Returned_Fumbles" Type="Int64" Nullable="false" />
-    <Property Name="Punts_Returned_Fumbles_Lost" Type="Int64" Nullable="false" />
-    <NavigationProperty Name="Franchise" Relationship="Self.FK_Game_Player_Punt_Returner_Stats_0_0" FromRole="Game_Player_Punt_Returner_Stats" ToRole="Franchise" />
-    <NavigationProperty Name="Game" Relationship="Self.FK_Game_Player_Punt_Returner_Stats_1_0" FromRole="Game_Player_Punt_Returner_Stats" ToRole="Game" />
-    <NavigationProperty Name="Player" Relationship="Self.FK_Game_Player_Punt_Returner_Stats_2_0" FromRole="Game_Player_Punt_Returner_Stats" ToRole="Players" />
-  </EntityType>
-  <EntityType Name="Game_Player_Punter_Stats">
+  <EntityType Name="Game_Player_Stats">
     <Key>
       <PropertyRef Name="Game_ID" />
       <PropertyRef Name="Player_ID" />
@@ -430,55 +170,134 @@
     <Property Name="Player_ID" Type="Int64" Nullable="false" />
     <Property Name="Franchise_ID" Type="Int64" Nullable="false" />
     <Property Name="Started" Type="Int64" Nullable="false" />
-    <Property Name="Fumbles" Type="Int64" Nullable="false" />
-    <Property Name="Fumbles_Lost" Type="Int64" Nullable="false" />
-    <Property Name="num_punts" Type="Int64" Nullable="false" />
-    <Property Name="Punt_yards" Type="Int64" Nullable="false" />
-    <Property Name="Punt_Killed_att" Type="Int64" Nullable="false" />
-    <Property Name="Punt_killed_num" Type="Int64" Nullable="false" />
-    <Property Name="Blocked_Punts" Type="Int64" Nullable="false" />
-    <NavigationProperty Name="Franchise" Relationship="Self.FK_Game_Player_Punter_Stats_2_0" FromRole="Game_Player_Punter_Stats" ToRole="Franchise" />
-    <NavigationProperty Name="Game" Relationship="Self.FK_Game_Player_Punter_Stats_0_0" FromRole="Game_Player_Punter_Stats" ToRole="Game" />
-    <NavigationProperty Name="Player" Relationship="Self.FK_Game_Player_Punter_Stats_1_0" FromRole="Game_Player_Punter_Stats" ToRole="Players" />
-  </EntityType>
-  <EntityType Name="Game_Player_Receiving_Stats">
-    <Key>
-      <PropertyRef Name="Game_ID" />
-      <PropertyRef Name="Player_ID" />
-    </Key>
-    <Property Name="Game_ID" Type="Int64" Nullable="false" />
-    <Property Name="Player_ID" Type="Int64" Nullable="false" />
-    <Property Name="Franchise_ID" Type="Int64" Nullable="false" />
-    <Property Name="Started" Type="Int64" Nullable="false" />
-    <Property Name="Fumbles" Type="Int64" Nullable="false" />
-    <Property Name="Fumbles_Lost" Type="Int64" Nullable="false" />
-    <Property Name="Rec_Catches" Type="Int64" Nullable="false" />
-    <Property Name="Rec_Drops" Type="Int64" Nullable="false" />
-    <Property Name="Rec_Yards" Type="Int64" Nullable="false" />
-    <Property Name="Rec_TDs" Type="Int64" Nullable="false" />
-    <Property Name="Long" Type="Int64" Nullable="false" />
-    <NavigationProperty Name="Franchise" Relationship="Self.FK_Game_Player_Receiving_Stats_1_0" FromRole="Game_Player_Receiving_Stats" ToRole="Franchise" />
-    <NavigationProperty Name="Game" Relationship="Self.FK_Game_Player_Receiving_Stats_2_0" FromRole="Game_Player_Receiving_Stats" ToRole="Game" />
-    <NavigationProperty Name="Player" Relationship="Self.FK_Game_Player_Receiving_Stats_0_0" FromRole="Game_Player_Receiving_Stats" ToRole="Players" />
-  </EntityType>
-  <EntityType Name="Game_Player_Rushing_Stats">
-    <Key>
-      <PropertyRef Name="Game_ID" />
-      <PropertyRef Name="Player_ID" />
-    </Key>
-    <Property Name="Game_ID" Type="Int64" Nullable="false" />
-    <Property Name="Player_ID" Type="Int64" Nullable="false" />
-    <Property Name="Franchise_ID" Type="Int64" Nullable="false" />
-    <Property Name="Started" Type="Int64" Nullable="false" />
-    <Property Name="Fumbles" Type="Int64" Nullable="false" />
-    <Property Name="Fumbles_Lost" Type="Int64" Nullable="false" />
-    <Property Name="Rush_Att" Type="Int64" Nullable="false" />
-    <Property Name="Rush_Yards" Type="Int64" Nullable="false" />
-    <Property Name="Rush_TDs" Type="Int64" Nullable="false" />
-    <Property Name="Long" Type="Int64" Nullable="false" />
-    <NavigationProperty Name="Franchise" Relationship="Self.FK_Game_Player_Rushing_Stats_2_0" FromRole="Game_Player_Rushing_Stats" ToRole="Franchise" />
-    <NavigationProperty Name="Game" Relationship="Self.FK_Game_Player_Rushing_Stats_1_0" FromRole="Game_Player_Rushing_Stats" ToRole="Game" />
-    <NavigationProperty Name="Player" Relationship="Self.FK_Game_Player_Rushing_Stats_0_0" FromRole="Game_Player_Rushing_Stats" ToRole="Players" />
+    <Property Name="off_pass_plays" Type="Int64" Nullable="false" />
+    <Property Name="off_pass_fumbles" Type="Int64" Nullable="false" />
+    <Property Name="off_pass_Fumbles_Lost" Type="Int64" Nullable="false" />
+    <Property Name="off_pass_Sacked" Type="Int64" Nullable="false" />
+    <Property Name="off_pass_Pressures" Type="Int64" Nullable="false" />
+    <Property Name="off_pass_Comp" Type="Int64" Nullable="false" />
+    <Property Name="off_pass_Att" Type="Int64" Nullable="false" />
+    <Property Name="off_pass_Yards" Type="Int64" Nullable="false" />
+    <Property Name="off_pass_TDs" Type="Int64" Nullable="false" />
+    <Property Name="off_pass_Ints" Type="Int64" Nullable="false" />
+    <Property Name="off_pass_Long" Type="Int64" Nullable="false" />
+    <Property Name="off_pass_Passes_Blocked" Type="Int64" Nullable="false" />
+    <Property Name="off_rush_plays" Type="Int64" Nullable="false" />
+    <Property Name="off_rush_fumbles" Type="Int64" Nullable="false" />
+    <Property Name="off_rush_fumbles_lost" Type="Int64" Nullable="false" />
+    <Property Name="off_rush_att" Type="Int64" Nullable="false" />
+    <Property Name="off_rush_Yards" Type="Int64" Nullable="false" />
+    <Property Name="off_rush_TDs" Type="Int64" Nullable="false" />
+    <Property Name="off_rush_long" Type="Int64" Nullable="false" />
+    <Property Name="off_rec_plays" Type="Int64" Nullable="false" />
+    <Property Name="off_rec_fumbles" Type="Int64" Nullable="false" />
+    <Property Name="off_rec_fumbles_lost" Type="Int64" Nullable="false" />
+    <Property Name="off_rec_catches" Type="Int64" Nullable="false" />
+    <Property Name="off_rec_drops" Type="Int64" Nullable="false" />
+    <Property Name="off_rec_Yards" Type="Int64" Nullable="false" />
+    <Property Name="off_rec_TDs" Type="Int64" Nullable="false" />
+    <Property Name="off_rec_long" Type="Int64" Nullable="false" />
+    <Property Name="off_line_plays" Type="Int64" Nullable="false" />
+    <Property Name="off_line_sacks_allowed" Type="Int64" Nullable="false" />
+    <Property Name="off_line_Rushing_Loss_Allowed" Type="Int64" Nullable="false" />
+    <Property Name="off_line_missed_block" Type="Int64" Nullable="false" />
+    <Property Name="off_line_pancakes" Type="Int64" Nullable="false" />
+    <Property Name="off_line_was_pancaked" Type="Int64" Nullable="false" />
+    <Property Name="off_line_QB_Pressures_Allowed" Type="Int64" Nullable="false" />
+    <Property Name="def_rush_plays" Type="Int64" Nullable="false" />
+    <Property Name="def_rush_sacks" Type="Int64" Nullable="false" />
+    <Property Name="def_rush_Rushing_Loss" Type="Int64" Nullable="false" />
+    <Property Name="def_rush_tackles" Type="Int64" Nullable="false" />
+    <Property Name="def_rush_Missed_Tackles" Type="Int64" Nullable="false" />
+    <Property Name="def_rush_Safety" Type="Int64" Nullable="false" />
+    <Property Name="def_rush_TDs" Type="Int64" Nullable="false" />
+    <Property Name="def_rush_Forced_Fumbles" Type="Int64" Nullable="false" />
+    <Property Name="def_rush_Recovered_Fumbles" Type="Int64" Nullable="false" />
+    <Property Name="def_rush_QB_Pressures" Type="Int64" Nullable="false" />
+    <Property Name="def_rush_Pass_Blocks" Type="Int64" Nullable="false" />
+    <Property Name="def_rush_pancakes" Type="Int64" Nullable="false" />
+    <Property Name="def_rush_was_pancaked" Type="Int64" Nullable="false" />
+    <Property Name="def_pass_plays" Type="Int64" Nullable="false" />
+    <Property Name="def_pass_Ints" Type="Int64" Nullable="false" />
+    <Property Name="def_pass_Int_Yards" Type="Int64" Nullable="false" />
+    <Property Name="def_pass_Int_TDs" Type="Int64" Nullable="false" />
+    <Property Name="def_pass_Pass_KnockedAway" Type="Int64" Nullable="false" />
+    <Property Name="def_pass_Tackles" Type="Int64" Nullable="false" />
+    <Property Name="def_pass_Missed_Tackles" Type="Int64" Nullable="false" />
+    <Property Name="def_pass_Forced_Fumbles" Type="Int64" Nullable="false" />
+    <Property Name="def_pass_Recovered_Fumbles" Type="Int64" Nullable="false" />
+    <Property Name="def_pass_Recovered_Fumble_Yards" Type="Int64" Nullable="false" />
+    <Property Name="def_pass_Recovered_Fumble_TDs" Type="Int64" Nullable="false" />
+    <Property Name="kicker_plays" Type="Int64" Nullable="false" />
+    <Property Name="XP_Att" Type="Int64" Nullable="false" />
+    <Property Name="XP_Made" Type="Int64" Nullable="false" />
+    <Property Name="FG_Att" Type="Int64" Nullable="false" />
+    <Property Name="FG_Made" Type="Int64" Nullable="false" />
+    <Property Name="FG_Long" Type="Int64" Nullable="false" />
+    <Property Name="FG_Blocked" Type="Int64" Nullable="false" />
+    <Property Name="Kickoffs" Type="Int64" Nullable="false" />
+    <Property Name="Kickoffs_Out_of_Bounds" Type="Int64" Nullable="false" />
+    <Property Name="Kickoff_Touchbacks" Type="Int64" Nullable="false" />
+    <Property Name="Kickoff_Thru_Endzones" Type="Int64" Nullable="false" />
+    <Property Name="Kickoff_Onside_Att" Type="Int64" Nullable="false" />
+    <Property Name="Kickoff_Onside_Succ" Type="Int64" Nullable="false" />
+    <Property Name="ko_ret_plays" Type="Int64" Nullable="false" />
+    <Property Name="ko_ret" Type="Int64" Nullable="false" />
+    <Property Name="ko_ret_yards" Type="Int64" Nullable="false" />
+    <Property Name="ko_ret_TDs" Type="Int64" Nullable="false" />
+    <Property Name="ko_ret_yards_long" Type="Int64" Nullable="false" />
+    <Property Name="ko_ret_touchbacks" Type="Int64" Nullable="false" />
+    <Property Name="ko_ret_Thru_Endzones" Type="Int64" Nullable="false" />
+    <Property Name="ko_fumbles" Type="Int64" Nullable="false" />
+    <Property Name="ko_fumbles_lost" Type="Int64" Nullable="false" />
+    <Property Name="ko_def_plays" Type="Int64" Nullable="false" />
+    <Property Name="ko_def_Forced_Fumbles" Type="Int64" Nullable="false" />
+    <Property Name="ko_def_fumbles_recovered" Type="Int64" Nullable="false" />
+    <Property Name="ko_def_fumbles_recovered_TDs" Type="Int64" Nullable="false" />
+    <Property Name="ko_def_fumbles_recovered_Yards" Type="Int64" Nullable="false" />
+    <Property Name="ko_def_tackles" Type="Int64" Nullable="false" />
+    <Property Name="ko_def_tackles_missed" Type="Int64" Nullable="false" />
+    <Property Name="ko_def_Onside_Kick_Recoveries" Type="Int64" Nullable="false" />
+    <Property Name="ko_rec_plays" Type="Int64" Nullable="false" />
+    <Property Name="ko_rec_Onside_Recovery" Type="Int64" Nullable="false" />
+    <Property Name="ko_rec_fumbles_recovered" Type="Int64" Nullable="false" />
+    <Property Name="fg_def_plays" Type="Int64" Nullable="false" />
+    <Property Name="fg_def_block" Type="Int64" Nullable="false" />
+    <Property Name="fg_def_block_recovered" Type="Int64" Nullable="false" />
+    <Property Name="fg_def_block_recovered_yards" Type="Int64" Nullable="false" />
+    <Property Name="fg_def_block_recovered_TDs" Type="Int64" Nullable="false" />
+    <Property Name="XP_Block" Type="Int64" Nullable="false" />
+    <Property Name="punter_plays" Type="Int64" Nullable="false" />
+    <Property Name="punter_Fumbles" Type="Int64" Nullable="false" />
+    <Property Name="punter_Fumbles_lost" Type="Int64" Nullable="false" />
+    <Property Name="punter_Fumbles_recovered" Type="Int64" Nullable="false" />
+    <Property Name="punter_punts" Type="Int64" Nullable="false" />
+    <Property Name="punter_punt_yards" Type="Int64" Nullable="false" />
+    <Property Name="punter_kill_att" Type="Int64" Nullable="false" />
+    <Property Name="punter_kill_Succ" Type="Int64" Nullable="false" />
+    <Property Name="punter_blocks" Type="Int64" Nullable="false" />
+    <Property Name="punt_ret_plays" Type="Int64" Nullable="false" />
+    <Property Name="punt_ret" Type="Int64" Nullable="false" />
+    <Property Name="punt_ret_yards" Type="Int64" Nullable="false" />
+    <Property Name="punt_ret_TDs" Type="Int64" Nullable="false" />
+    <Property Name="punt_ret_yards_long" Type="Int64" Nullable="false" />
+    <Property Name="punt_ret_fumbles" Type="Int64" Nullable="false" />
+    <Property Name="punt_ret_fumbles_lost" Type="Int64" Nullable="false" />
+    <Property Name="punt_rec_plays" Type="Int64" Nullable="false" />
+    <Property Name="punt_rec_blocks" Type="Int64" Nullable="false" />
+    <Property Name="punt_rec_block_recovery" Type="Int64" Nullable="false" />
+    <Property Name="punt_rec_block_recovery_yards" Type="Int64" Nullable="false" />
+    <Property Name="punt_rec_block_recovery_TDs" Type="Int64" Nullable="false" />
+    <Property Name="punt_def_plays" Type="Int64" Nullable="false" />
+    <Property Name="punt_def_forced_fumbles" Type="Int64" Nullable="false" />
+    <Property Name="punt_def_forced_fumbles_recovered" Type="Int64" Nullable="false" />
+    <Property Name="punt_def_forced_fumbles_recovered_TDs" Type="Int64" Nullable="false" />
+    <Property Name="punt_def_forced_fumbles_recovered_Yards" Type="Int64" Nullable="false" />
+    <Property Name="punt_def_tackles" Type="Int64" Nullable="false" />
+    <Property Name="punt_def_tackles_missed" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="Franchise" Relationship="Self.FK_Game_Player_Stats_1_0" FromRole="Game_Player_Stats" ToRole="Franchise" />
+    <NavigationProperty Name="Game" Relationship="Self.FK_Game_Player_Stats_2_0" FromRole="Game_Player_Stats" ToRole="Game" />
+    <NavigationProperty Name="Player" Relationship="Self.FK_Game_Player_Stats_0_0" FromRole="Game_Player_Stats" ToRole="Players" />
   </EntityType>
   <EntityType Name="Game_Scoring_Summary">
     <Key>
@@ -645,22 +464,8 @@
     <Property Name="Draft_Grade" Type="Double" Nullable="false" />
     <NavigationProperty Name="Drafts" Relationship="Self.FK_Draft_2_0" FromRole="Players" ToRole="Draft" />
     <NavigationProperty Name="Free_Agency" Relationship="Self.FK_Free_Agency_1_0" FromRole="Players" ToRole="Free_Agency" />
-    <NavigationProperty Name="Game_Player_Defense_Stats" Relationship="Self.FK_Game_Player_Defense_Stats_1_0" FromRole="Players" ToRole="Game_Player_Defense_Stats" />
-    <NavigationProperty Name="Game_Player_FG_Defense_Stats" Relationship="Self.FK_Game_Player_FG_Defense_Stats_1_0" FromRole="Players" ToRole="Game_Player_FG_Defense_Stats" />
-    <NavigationProperty Name="Game_Player_Kick_Returner_Stats" Relationship="Self.FK_Game_Player_Kick_Returner_Stats_2_0" FromRole="Players" ToRole="Game_Player_Kick_Returner_Stats" />
-    <NavigationProperty Name="Game_Player_Kicker_Stats" Relationship="Self.FK_Game_Player_Kicker_Stats_2_0" FromRole="Players" ToRole="Game_Player_Kicker_Stats" />
-    <NavigationProperty Name="Game_Player_Kickoff_Defenders" Relationship="Self.FK_Game_Player_Kickoff_Defenders_2_0" FromRole="Players" ToRole="Game_Player_Kickoff_Defenders" />
-    <NavigationProperty Name="Game_Player_Kickoff_Receiver_Stats" Relationship="Self.FK_Game_Player_Kickoff_Receiver_Stats_1_0" FromRole="Players" ToRole="Game_Player_Kickoff_Receiver_Stats" />
-    <NavigationProperty Name="Game_Player_Offensive_Linemen_Stats" Relationship="Self.FK_Game_Player_Offensive_Linemen_Stats_0_0" FromRole="Players" ToRole="Game_Player_Offensive_Linemen_Stats" />
-    <NavigationProperty Name="Game_Player_Pass_Defense_Stats" Relationship="Self.FK_Game_Player_Pass_Defense_Stats_1_0" FromRole="Players" ToRole="Game_Player_Pass_Defense_Stats" />
-    <NavigationProperty Name="Game_Player_Passing_Stats" Relationship="Self.FK_Game_Player_Passing_Stats_0_0" FromRole="Players" ToRole="Game_Player_Passing_Stats" />
     <NavigationProperty Name="Game_Player_Penalty_Stats" Relationship="Self.FK_Game_Player_Penalty_Stats_0_0" FromRole="Players" ToRole="Game_Player_Penalty_Stats" />
-    <NavigationProperty Name="Game_Player_Punt_Defenders" Relationship="Self.FK_Game_Player_Punt_Defenders_2_0" FromRole="Players" ToRole="Game_Player_Punt_Defenders" />
-    <NavigationProperty Name="Game_Player_Punt_Receiver_Stats" Relationship="Self.FK_Game_Player_Punt_Receiver_Stats_1_0" FromRole="Players" ToRole="Game_Player_Punt_Receiver_Stats" />
-    <NavigationProperty Name="Game_Player_Punt_Returner_Stats" Relationship="Self.FK_Game_Player_Punt_Returner_Stats_2_0" FromRole="Players" ToRole="Game_Player_Punt_Returner_Stats" />
-    <NavigationProperty Name="Game_Player_Punter_Stats" Relationship="Self.FK_Game_Player_Punter_Stats_1_0" FromRole="Players" ToRole="Game_Player_Punter_Stats" />
-    <NavigationProperty Name="Game_Player_Receiving_Stats" Relationship="Self.FK_Game_Player_Receiving_Stats_0_0" FromRole="Players" ToRole="Game_Player_Receiving_Stats" />
-    <NavigationProperty Name="Game_Player_Rushing_Stats" Relationship="Self.FK_Game_Player_Rushing_Stats_0_0" FromRole="Players" ToRole="Game_Player_Rushing_Stats" />
+    <NavigationProperty Name="Game_Player_Stats" Relationship="Self.FK_Game_Player_Stats_0_0" FromRole="Players" ToRole="Game_Player_Stats" />
     <NavigationProperty Name="Hall_of_Fame" Relationship="Self.FK_Hall_of_Fame_1_0" FromRole="Players" ToRole="Hall_of_Fame" />
     <NavigationProperty Name="Injuries" Relationship="Self.FK_Injuries_1_0" FromRole="Players" ToRole="Injuries" />
     <NavigationProperty Name="Injury_Log" Relationship="Self.FK_Injury_Log_1_0" FromRole="Players" ToRole="Injury_Log" />
@@ -876,114 +681,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Game_Player_Defense_Stats_2_0">
-    <End Role="Franchise" Type="Self.Franchise" Multiplicity="1" />
-    <End Role="Game_Player_Defense_Stats" Type="Self.Game_Player_Defense_Stats" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Franchise">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Game_Player_Defense_Stats">
-        <PropertyRef Name="Franchise_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Game_Player_FG_Defense_Stats_0_0">
-    <End Role="Franchise" Type="Self.Franchise" Multiplicity="1" />
-    <End Role="Game_Player_FG_Defense_Stats" Type="Self.Game_Player_FG_Defense_Stats" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Franchise">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Game_Player_FG_Defense_Stats">
-        <PropertyRef Name="Franchise_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Game_Player_Kick_Returner_Stats_1_0">
-    <End Role="Franchise" Type="Self.Franchise" Multiplicity="1" />
-    <End Role="Game_Player_Kick_Returner_Stats" Type="Self.Game_Player_Kick_Returner_Stats" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Franchise">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Game_Player_Kick_Returner_Stats">
-        <PropertyRef Name="Franchise_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Game_Player_Kicker_Stats_1_0">
-    <End Role="Franchise" Type="Self.Franchise" Multiplicity="1" />
-    <End Role="Game_Player_Kicker_Stats" Type="Self.Game_Player_Kicker_Stats" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Franchise">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Game_Player_Kicker_Stats">
-        <PropertyRef Name="Franchise_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Game_Player_Kickoff_Defenders_0_0">
-    <End Role="Franchise" Type="Self.Franchise" Multiplicity="1" />
-    <End Role="Game_Player_Kickoff_Defenders" Type="Self.Game_Player_Kickoff_Defenders" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Franchise">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Game_Player_Kickoff_Defenders">
-        <PropertyRef Name="Franchise_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Game_Player_Kickoff_Receiver_Stats_0_0">
-    <End Role="Franchise" Type="Self.Franchise" Multiplicity="1" />
-    <End Role="Game_Player_Kickoff_Receiver_Stats" Type="Self.Game_Player_Kickoff_Receiver_Stats" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Franchise">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Game_Player_Kickoff_Receiver_Stats">
-        <PropertyRef Name="Franchise_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Game_Player_Offensive_Linemen_Stats_1_0">
-    <End Role="Franchise" Type="Self.Franchise" Multiplicity="1" />
-    <End Role="Game_Player_Offensive_Linemen_Stats" Type="Self.Game_Player_Offensive_Linemen_Stats" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Franchise">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Game_Player_Offensive_Linemen_Stats">
-        <PropertyRef Name="Franchise_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Game_Player_Pass_Defense_Stats_0_0">
-    <End Role="Franchise" Type="Self.Franchise" Multiplicity="1" />
-    <End Role="Game_Player_Pass_Defense_Stats" Type="Self.Game_Player_Pass_Defense_Stats" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Franchise">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Game_Player_Pass_Defense_Stats">
-        <PropertyRef Name="Franchise_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Game_Player_Passing_Stats_2_0">
-    <End Role="Franchise" Type="Self.Franchise" Multiplicity="1" />
-    <End Role="Game_Player_Passing_Stats" Type="Self.Game_Player_Passing_Stats" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Franchise">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Game_Player_Passing_Stats">
-        <PropertyRef Name="Franchise_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_Game_Player_Penalty_Stats_3_0">
     <End Role="Franchise" Type="Self.Franchise" Multiplicity="1" />
     <End Role="Game_Player_Penalty_Stats" Type="Self.Game_Player_Penalty_Stats" Multiplicity="*" />
@@ -996,74 +693,14 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Game_Player_Punt_Defenders_0_0">
+  <Association Name="FK_Game_Player_Stats_1_0">
     <End Role="Franchise" Type="Self.Franchise" Multiplicity="1" />
-    <End Role="Game_Player_Punt_Defenders" Type="Self.Game_Player_Punt_Defenders" Multiplicity="*" />
+    <End Role="Game_Player_Stats" Type="Self.Game_Player_Stats" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Franchise">
         <PropertyRef Name="ID" />
       </Principal>
-      <Dependent Role="Game_Player_Punt_Defenders">
-        <PropertyRef Name="Franchise_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Game_Player_Punt_Receiver_Stats_0_0">
-    <End Role="Franchise" Type="Self.Franchise" Multiplicity="1" />
-    <End Role="Game_Player_Punt_Receiver_Stats" Type="Self.Game_Player_Punt_Receiver_Stats" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Franchise">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Game_Player_Punt_Receiver_Stats">
-        <PropertyRef Name="Franchise_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Game_Player_Punt_Returner_Stats_0_0">
-    <End Role="Franchise" Type="Self.Franchise" Multiplicity="1" />
-    <End Role="Game_Player_Punt_Returner_Stats" Type="Self.Game_Player_Punt_Returner_Stats" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Franchise">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Game_Player_Punt_Returner_Stats">
-        <PropertyRef Name="Franchise_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Game_Player_Punter_Stats_2_0">
-    <End Role="Franchise" Type="Self.Franchise" Multiplicity="1" />
-    <End Role="Game_Player_Punter_Stats" Type="Self.Game_Player_Punter_Stats" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Franchise">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Game_Player_Punter_Stats">
-        <PropertyRef Name="Franchise_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Game_Player_Receiving_Stats_1_0">
-    <End Role="Franchise" Type="Self.Franchise" Multiplicity="1" />
-    <End Role="Game_Player_Receiving_Stats" Type="Self.Game_Player_Receiving_Stats" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Franchise">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Game_Player_Receiving_Stats">
-        <PropertyRef Name="Franchise_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Game_Player_Rushing_Stats_2_0">
-    <End Role="Franchise" Type="Self.Franchise" Multiplicity="1" />
-    <End Role="Game_Player_Rushing_Stats" Type="Self.Game_Player_Rushing_Stats" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Franchise">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Game_Player_Rushing_Stats">
+      <Dependent Role="Game_Player_Stats">
         <PropertyRef Name="Franchise_ID" />
       </Dependent>
     </ReferentialConstraint>
@@ -1164,114 +801,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Game_Player_Defense_Stats_0_0">
-    <End Role="Game" Type="Self.Game" Multiplicity="1" />
-    <End Role="Game_Player_Defense_Stats" Type="Self.Game_Player_Defense_Stats" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Game">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Game_Player_Defense_Stats">
-        <PropertyRef Name="Game_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Game_Player_FG_Defense_Stats_2_0">
-    <End Role="Game" Type="Self.Game" Multiplicity="1" />
-    <End Role="Game_Player_FG_Defense_Stats" Type="Self.Game_Player_FG_Defense_Stats" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Game">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Game_Player_FG_Defense_Stats">
-        <PropertyRef Name="Game_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Game_Player_Kick_Returner_Stats_0_0">
-    <End Role="Game" Type="Self.Game" Multiplicity="1" />
-    <End Role="Game_Player_Kick_Returner_Stats" Type="Self.Game_Player_Kick_Returner_Stats" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Game">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Game_Player_Kick_Returner_Stats">
-        <PropertyRef Name="Game_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Game_Player_Kicker_Stats_0_0">
-    <End Role="Game" Type="Self.Game" Multiplicity="1" />
-    <End Role="Game_Player_Kicker_Stats" Type="Self.Game_Player_Kicker_Stats" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Game">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Game_Player_Kicker_Stats">
-        <PropertyRef Name="Game_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Game_Player_Kickoff_Defenders_1_0">
-    <End Role="Game" Type="Self.Game" Multiplicity="1" />
-    <End Role="Game_Player_Kickoff_Defenders" Type="Self.Game_Player_Kickoff_Defenders" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Game">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Game_Player_Kickoff_Defenders">
-        <PropertyRef Name="Game_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Game_Player_Kickoff_Receiver_Stats_2_0">
-    <End Role="Game" Type="Self.Game" Multiplicity="1" />
-    <End Role="Game_Player_Kickoff_Receiver_Stats" Type="Self.Game_Player_Kickoff_Receiver_Stats" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Game">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Game_Player_Kickoff_Receiver_Stats">
-        <PropertyRef Name="Game_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Game_Player_Offensive_Linemen_Stats_2_0">
-    <End Role="Game" Type="Self.Game" Multiplicity="1" />
-    <End Role="Game_Player_Offensive_Linemen_Stats" Type="Self.Game_Player_Offensive_Linemen_Stats" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Game">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Game_Player_Offensive_Linemen_Stats">
-        <PropertyRef Name="Game_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Game_Player_Pass_Defense_Stats_2_0">
-    <End Role="Game" Type="Self.Game" Multiplicity="1" />
-    <End Role="Game_Player_Pass_Defense_Stats" Type="Self.Game_Player_Pass_Defense_Stats" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Game">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Game_Player_Pass_Defense_Stats">
-        <PropertyRef Name="Game_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Game_Player_Passing_Stats_1_0">
-    <End Role="Game" Type="Self.Game" Multiplicity="1" />
-    <End Role="Game_Player_Passing_Stats" Type="Self.Game_Player_Passing_Stats" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Game">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Game_Player_Passing_Stats">
-        <PropertyRef Name="Game_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_Game_Player_Penalty_Stats_2_0">
     <End Role="Game" Type="Self.Game" Multiplicity="1" />
     <End Role="Game_Player_Penalty_Stats" Type="Self.Game_Player_Penalty_Stats" Multiplicity="*" />
@@ -1284,74 +813,14 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Game_Player_Punt_Defenders_1_0">
+  <Association Name="FK_Game_Player_Stats_2_0">
     <End Role="Game" Type="Self.Game" Multiplicity="1" />
-    <End Role="Game_Player_Punt_Defenders" Type="Self.Game_Player_Punt_Defenders" Multiplicity="*" />
+    <End Role="Game_Player_Stats" Type="Self.Game_Player_Stats" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Game">
         <PropertyRef Name="ID" />
       </Principal>
-      <Dependent Role="Game_Player_Punt_Defenders">
-        <PropertyRef Name="Game_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Game_Player_Punt_Receiver_Stats_2_0">
-    <End Role="Game" Type="Self.Game" Multiplicity="1" />
-    <End Role="Game_Player_Punt_Receiver_Stats" Type="Self.Game_Player_Punt_Receiver_Stats" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Game">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Game_Player_Punt_Receiver_Stats">
-        <PropertyRef Name="Game_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Game_Player_Punt_Returner_Stats_1_0">
-    <End Role="Game" Type="Self.Game" Multiplicity="1" />
-    <End Role="Game_Player_Punt_Returner_Stats" Type="Self.Game_Player_Punt_Returner_Stats" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Game">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Game_Player_Punt_Returner_Stats">
-        <PropertyRef Name="Game_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Game_Player_Punter_Stats_0_0">
-    <End Role="Game" Type="Self.Game" Multiplicity="1" />
-    <End Role="Game_Player_Punter_Stats" Type="Self.Game_Player_Punter_Stats" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Game">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Game_Player_Punter_Stats">
-        <PropertyRef Name="Game_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Game_Player_Receiving_Stats_2_0">
-    <End Role="Game" Type="Self.Game" Multiplicity="1" />
-    <End Role="Game_Player_Receiving_Stats" Type="Self.Game_Player_Receiving_Stats" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Game">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Game_Player_Receiving_Stats">
-        <PropertyRef Name="Game_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Game_Player_Rushing_Stats_1_0">
-    <End Role="Game" Type="Self.Game" Multiplicity="1" />
-    <End Role="Game_Player_Rushing_Stats" Type="Self.Game_Player_Rushing_Stats" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Game">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Game_Player_Rushing_Stats">
+      <Dependent Role="Game_Player_Stats">
         <PropertyRef Name="Game_ID" />
       </Dependent>
     </ReferentialConstraint>
@@ -1365,114 +834,6 @@
       </Principal>
       <Dependent Role="Game_Scoring_Summary">
         <PropertyRef Name="Game_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Game_Player_Defense_Stats_1_0">
-    <End Role="Players" Type="Self.Player" Multiplicity="1" />
-    <End Role="Game_Player_Defense_Stats" Type="Self.Game_Player_Defense_Stats" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Players">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Game_Player_Defense_Stats">
-        <PropertyRef Name="Player_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Game_Player_FG_Defense_Stats_1_0">
-    <End Role="Players" Type="Self.Player" Multiplicity="1" />
-    <End Role="Game_Player_FG_Defense_Stats" Type="Self.Game_Player_FG_Defense_Stats" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Players">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Game_Player_FG_Defense_Stats">
-        <PropertyRef Name="Player_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Game_Player_Kick_Returner_Stats_2_0">
-    <End Role="Players" Type="Self.Player" Multiplicity="1" />
-    <End Role="Game_Player_Kick_Returner_Stats" Type="Self.Game_Player_Kick_Returner_Stats" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Players">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Game_Player_Kick_Returner_Stats">
-        <PropertyRef Name="Player_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Game_Player_Kicker_Stats_2_0">
-    <End Role="Players" Type="Self.Player" Multiplicity="1" />
-    <End Role="Game_Player_Kicker_Stats" Type="Self.Game_Player_Kicker_Stats" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Players">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Game_Player_Kicker_Stats">
-        <PropertyRef Name="Player_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Game_Player_Kickoff_Defenders_2_0">
-    <End Role="Players" Type="Self.Player" Multiplicity="1" />
-    <End Role="Game_Player_Kickoff_Defenders" Type="Self.Game_Player_Kickoff_Defenders" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Players">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Game_Player_Kickoff_Defenders">
-        <PropertyRef Name="Player_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Game_Player_Kickoff_Receiver_Stats_1_0">
-    <End Role="Players" Type="Self.Player" Multiplicity="1" />
-    <End Role="Game_Player_Kickoff_Receiver_Stats" Type="Self.Game_Player_Kickoff_Receiver_Stats" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Players">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Game_Player_Kickoff_Receiver_Stats">
-        <PropertyRef Name="Player_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Game_Player_Offensive_Linemen_Stats_0_0">
-    <End Role="Players" Type="Self.Player" Multiplicity="1" />
-    <End Role="Game_Player_Offensive_Linemen_Stats" Type="Self.Game_Player_Offensive_Linemen_Stats" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Players">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Game_Player_Offensive_Linemen_Stats">
-        <PropertyRef Name="Player_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Game_Player_Pass_Defense_Stats_1_0">
-    <End Role="Players" Type="Self.Player" Multiplicity="1" />
-    <End Role="Game_Player_Pass_Defense_Stats" Type="Self.Game_Player_Pass_Defense_Stats" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Players">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Game_Player_Pass_Defense_Stats">
-        <PropertyRef Name="Player_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Game_Player_Passing_Stats_0_0">
-    <End Role="Players" Type="Self.Player" Multiplicity="1" />
-    <End Role="Game_Player_Passing_Stats" Type="Self.Game_Player_Passing_Stats" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Players">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Game_Player_Passing_Stats">
-        <PropertyRef Name="Player_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1500,74 +861,14 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Game_Player_Punt_Defenders_2_0">
+  <Association Name="FK_Game_Player_Stats_0_0">
     <End Role="Players" Type="Self.Player" Multiplicity="1" />
-    <End Role="Game_Player_Punt_Defenders" Type="Self.Game_Player_Punt_Defenders" Multiplicity="*" />
+    <End Role="Game_Player_Stats" Type="Self.Game_Player_Stats" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Players">
         <PropertyRef Name="ID" />
       </Principal>
-      <Dependent Role="Game_Player_Punt_Defenders">
-        <PropertyRef Name="Player_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Game_Player_Punt_Receiver_Stats_1_0">
-    <End Role="Players" Type="Self.Player" Multiplicity="1" />
-    <End Role="Game_Player_Punt_Receiver_Stats" Type="Self.Game_Player_Punt_Receiver_Stats" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Players">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Game_Player_Punt_Receiver_Stats">
-        <PropertyRef Name="Player_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Game_Player_Punt_Returner_Stats_2_0">
-    <End Role="Players" Type="Self.Player" Multiplicity="1" />
-    <End Role="Game_Player_Punt_Returner_Stats" Type="Self.Game_Player_Punt_Returner_Stats" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Players">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Game_Player_Punt_Returner_Stats">
-        <PropertyRef Name="Player_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Game_Player_Punter_Stats_1_0">
-    <End Role="Players" Type="Self.Player" Multiplicity="1" />
-    <End Role="Game_Player_Punter_Stats" Type="Self.Game_Player_Punter_Stats" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Players">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Game_Player_Punter_Stats">
-        <PropertyRef Name="Player_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Game_Player_Receiving_Stats_0_0">
-    <End Role="Players" Type="Self.Player" Multiplicity="1" />
-    <End Role="Game_Player_Receiving_Stats" Type="Self.Game_Player_Receiving_Stats" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Players">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Game_Player_Receiving_Stats">
-        <PropertyRef Name="Player_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Game_Player_Rushing_Stats_0_0">
-    <End Role="Players" Type="Self.Player" Multiplicity="1" />
-    <End Role="Game_Player_Rushing_Stats" Type="Self.Game_Player_Rushing_Stats" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Players">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Game_Player_Rushing_Stats">
+      <Dependent Role="Game_Player_Stats">
         <PropertyRef Name="Player_ID" />
       </Dependent>
     </ReferentialConstraint>
@@ -1809,22 +1110,8 @@
     <EntitySet Name="Franchises" EntityType="Self.Franchise" />
     <EntitySet Name="Free_Agency" EntityType="Self.Free_Agency" />
     <EntitySet Name="Games" EntityType="Self.Game" />
-    <EntitySet Name="Game_Player_Defense_Stats" EntityType="Self.Game_Player_Defense_Stats" />
-    <EntitySet Name="Game_Player_FG_Defense_Stats" EntityType="Self.Game_Player_FG_Defense_Stats" />
-    <EntitySet Name="Game_Player_Kick_Returner_Stats" EntityType="Self.Game_Player_Kick_Returner_Stats" />
-    <EntitySet Name="Game_Player_Kicker_Stats" EntityType="Self.Game_Player_Kicker_Stats" />
-    <EntitySet Name="Game_Player_Kickoff_Defenders" EntityType="Self.Game_Player_Kickoff_Defenders" />
-    <EntitySet Name="Game_Player_Kickoff_Receiver_Stats" EntityType="Self.Game_Player_Kickoff_Receiver_Stats" />
-    <EntitySet Name="Game_Player_Offensive_Linemen_Stats" EntityType="Self.Game_Player_Offensive_Linemen_Stats" />
-    <EntitySet Name="Game_Player_Pass_Defense_Stats" EntityType="Self.Game_Player_Pass_Defense_Stats" />
-    <EntitySet Name="Game_Player_Passing_Stats" EntityType="Self.Game_Player_Passing_Stats" />
     <EntitySet Name="Game_Player_Penalty_Stats" EntityType="Self.Game_Player_Penalty_Stats" />
-    <EntitySet Name="Game_Player_Punt_Defenders" EntityType="Self.Game_Player_Punt_Defenders" />
-    <EntitySet Name="Game_Player_Punt_Receiver_Stats" EntityType="Self.Game_Player_Punt_Receiver_Stats" />
-    <EntitySet Name="Game_Player_Punt_Returner_Stats" EntityType="Self.Game_Player_Punt_Returner_Stats" />
-    <EntitySet Name="Game_Player_Punter_Stats" EntityType="Self.Game_Player_Punter_Stats" />
-    <EntitySet Name="Game_Player_Receiving_Stats" EntityType="Self.Game_Player_Receiving_Stats" />
-    <EntitySet Name="Game_Player_Rushing_Stats" EntityType="Self.Game_Player_Rushing_Stats" />
+    <EntitySet Name="Game_Player_Stats" EntityType="Self.Game_Player_Stats" />
     <EntitySet Name="Game_Scoring_Summary" EntityType="Self.Game_Scoring_Summary" />
     <EntitySet Name="Hall_of_Fame" EntityType="Self.Hall_of_Fame" />
     <EntitySet Name="Injuries" EntityType="Self.Injury" />
@@ -1868,69 +1155,13 @@
       <End Role="Franchise" EntitySet="Franchises" />
       <End Role="Free_Agency" EntitySet="Free_Agency" />
     </AssociationSet>
-    <AssociationSet Name="FK_Game_Player_Defense_Stats_2_0" Association="Self.FK_Game_Player_Defense_Stats_2_0">
-      <End Role="Franchise" EntitySet="Franchises" />
-      <End Role="Game_Player_Defense_Stats" EntitySet="Game_Player_Defense_Stats" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Game_Player_FG_Defense_Stats_0_0" Association="Self.FK_Game_Player_FG_Defense_Stats_0_0">
-      <End Role="Franchise" EntitySet="Franchises" />
-      <End Role="Game_Player_FG_Defense_Stats" EntitySet="Game_Player_FG_Defense_Stats" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Game_Player_Kick_Returner_Stats_1_0" Association="Self.FK_Game_Player_Kick_Returner_Stats_1_0">
-      <End Role="Franchise" EntitySet="Franchises" />
-      <End Role="Game_Player_Kick_Returner_Stats" EntitySet="Game_Player_Kick_Returner_Stats" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Game_Player_Kicker_Stats_1_0" Association="Self.FK_Game_Player_Kicker_Stats_1_0">
-      <End Role="Franchise" EntitySet="Franchises" />
-      <End Role="Game_Player_Kicker_Stats" EntitySet="Game_Player_Kicker_Stats" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Game_Player_Kickoff_Defenders_0_0" Association="Self.FK_Game_Player_Kickoff_Defenders_0_0">
-      <End Role="Franchise" EntitySet="Franchises" />
-      <End Role="Game_Player_Kickoff_Defenders" EntitySet="Game_Player_Kickoff_Defenders" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Game_Player_Kickoff_Receiver_Stats_0_0" Association="Self.FK_Game_Player_Kickoff_Receiver_Stats_0_0">
-      <End Role="Franchise" EntitySet="Franchises" />
-      <End Role="Game_Player_Kickoff_Receiver_Stats" EntitySet="Game_Player_Kickoff_Receiver_Stats" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Game_Player_Offensive_Linemen_Stats_1_0" Association="Self.FK_Game_Player_Offensive_Linemen_Stats_1_0">
-      <End Role="Franchise" EntitySet="Franchises" />
-      <End Role="Game_Player_Offensive_Linemen_Stats" EntitySet="Game_Player_Offensive_Linemen_Stats" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Game_Player_Pass_Defense_Stats_0_0" Association="Self.FK_Game_Player_Pass_Defense_Stats_0_0">
-      <End Role="Franchise" EntitySet="Franchises" />
-      <End Role="Game_Player_Pass_Defense_Stats" EntitySet="Game_Player_Pass_Defense_Stats" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Game_Player_Passing_Stats_2_0" Association="Self.FK_Game_Player_Passing_Stats_2_0">
-      <End Role="Franchise" EntitySet="Franchises" />
-      <End Role="Game_Player_Passing_Stats" EntitySet="Game_Player_Passing_Stats" />
-    </AssociationSet>
     <AssociationSet Name="FK_Game_Player_Penalty_Stats_3_0" Association="Self.FK_Game_Player_Penalty_Stats_3_0">
       <End Role="Franchise" EntitySet="Franchises" />
       <End Role="Game_Player_Penalty_Stats" EntitySet="Game_Player_Penalty_Stats" />
     </AssociationSet>
-    <AssociationSet Name="FK_Game_Player_Punt_Defenders_0_0" Association="Self.FK_Game_Player_Punt_Defenders_0_0">
+    <AssociationSet Name="FK_Game_Player_Stats_1_0" Association="Self.FK_Game_Player_Stats_1_0">
       <End Role="Franchise" EntitySet="Franchises" />
-      <End Role="Game_Player_Punt_Defenders" EntitySet="Game_Player_Punt_Defenders" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Game_Player_Punt_Receiver_Stats_0_0" Association="Self.FK_Game_Player_Punt_Receiver_Stats_0_0">
-      <End Role="Franchise" EntitySet="Franchises" />
-      <End Role="Game_Player_Punt_Receiver_Stats" EntitySet="Game_Player_Punt_Receiver_Stats" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Game_Player_Punt_Returner_Stats_0_0" Association="Self.FK_Game_Player_Punt_Returner_Stats_0_0">
-      <End Role="Franchise" EntitySet="Franchises" />
-      <End Role="Game_Player_Punt_Returner_Stats" EntitySet="Game_Player_Punt_Returner_Stats" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Game_Player_Punter_Stats_2_0" Association="Self.FK_Game_Player_Punter_Stats_2_0">
-      <End Role="Franchise" EntitySet="Franchises" />
-      <End Role="Game_Player_Punter_Stats" EntitySet="Game_Player_Punter_Stats" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Game_Player_Receiving_Stats_1_0" Association="Self.FK_Game_Player_Receiving_Stats_1_0">
-      <End Role="Franchise" EntitySet="Franchises" />
-      <End Role="Game_Player_Receiving_Stats" EntitySet="Game_Player_Receiving_Stats" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Game_Player_Rushing_Stats_2_0" Association="Self.FK_Game_Player_Rushing_Stats_2_0">
-      <End Role="Franchise" EntitySet="Franchises" />
-      <End Role="Game_Player_Rushing_Stats" EntitySet="Game_Player_Rushing_Stats" />
+      <End Role="Game_Player_Stats" EntitySet="Game_Player_Stats" />
     </AssociationSet>
     <AssociationSet Name="FK_Injuries_0_0" Association="Self.FK_Injuries_0_0">
       <End Role="Franchise" EntitySet="Franchises" />
@@ -1964,109 +1195,17 @@
       <End Role="Season" EntitySet="Seasons" />
       <End Role="Game" EntitySet="Games" />
     </AssociationSet>
-    <AssociationSet Name="FK_Game_Player_Defense_Stats_0_0" Association="Self.FK_Game_Player_Defense_Stats_0_0">
-      <End Role="Game" EntitySet="Games" />
-      <End Role="Game_Player_Defense_Stats" EntitySet="Game_Player_Defense_Stats" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Game_Player_FG_Defense_Stats_2_0" Association="Self.FK_Game_Player_FG_Defense_Stats_2_0">
-      <End Role="Game" EntitySet="Games" />
-      <End Role="Game_Player_FG_Defense_Stats" EntitySet="Game_Player_FG_Defense_Stats" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Game_Player_Kick_Returner_Stats_0_0" Association="Self.FK_Game_Player_Kick_Returner_Stats_0_0">
-      <End Role="Game" EntitySet="Games" />
-      <End Role="Game_Player_Kick_Returner_Stats" EntitySet="Game_Player_Kick_Returner_Stats" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Game_Player_Kicker_Stats_0_0" Association="Self.FK_Game_Player_Kicker_Stats_0_0">
-      <End Role="Game" EntitySet="Games" />
-      <End Role="Game_Player_Kicker_Stats" EntitySet="Game_Player_Kicker_Stats" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Game_Player_Kickoff_Defenders_1_0" Association="Self.FK_Game_Player_Kickoff_Defenders_1_0">
-      <End Role="Game" EntitySet="Games" />
-      <End Role="Game_Player_Kickoff_Defenders" EntitySet="Game_Player_Kickoff_Defenders" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Game_Player_Kickoff_Receiver_Stats_2_0" Association="Self.FK_Game_Player_Kickoff_Receiver_Stats_2_0">
-      <End Role="Game" EntitySet="Games" />
-      <End Role="Game_Player_Kickoff_Receiver_Stats" EntitySet="Game_Player_Kickoff_Receiver_Stats" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Game_Player_Offensive_Linemen_Stats_2_0" Association="Self.FK_Game_Player_Offensive_Linemen_Stats_2_0">
-      <End Role="Game" EntitySet="Games" />
-      <End Role="Game_Player_Offensive_Linemen_Stats" EntitySet="Game_Player_Offensive_Linemen_Stats" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Game_Player_Pass_Defense_Stats_2_0" Association="Self.FK_Game_Player_Pass_Defense_Stats_2_0">
-      <End Role="Game" EntitySet="Games" />
-      <End Role="Game_Player_Pass_Defense_Stats" EntitySet="Game_Player_Pass_Defense_Stats" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Game_Player_Passing_Stats_1_0" Association="Self.FK_Game_Player_Passing_Stats_1_0">
-      <End Role="Game" EntitySet="Games" />
-      <End Role="Game_Player_Passing_Stats" EntitySet="Game_Player_Passing_Stats" />
-    </AssociationSet>
     <AssociationSet Name="FK_Game_Player_Penalty_Stats_2_0" Association="Self.FK_Game_Player_Penalty_Stats_2_0">
       <End Role="Game" EntitySet="Games" />
       <End Role="Game_Player_Penalty_Stats" EntitySet="Game_Player_Penalty_Stats" />
     </AssociationSet>
-    <AssociationSet Name="FK_Game_Player_Punt_Defenders_1_0" Association="Self.FK_Game_Player_Punt_Defenders_1_0">
+    <AssociationSet Name="FK_Game_Player_Stats_2_0" Association="Self.FK_Game_Player_Stats_2_0">
       <End Role="Game" EntitySet="Games" />
-      <End Role="Game_Player_Punt_Defenders" EntitySet="Game_Player_Punt_Defenders" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Game_Player_Punt_Receiver_Stats_2_0" Association="Self.FK_Game_Player_Punt_Receiver_Stats_2_0">
-      <End Role="Game" EntitySet="Games" />
-      <End Role="Game_Player_Punt_Receiver_Stats" EntitySet="Game_Player_Punt_Receiver_Stats" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Game_Player_Punt_Returner_Stats_1_0" Association="Self.FK_Game_Player_Punt_Returner_Stats_1_0">
-      <End Role="Game" EntitySet="Games" />
-      <End Role="Game_Player_Punt_Returner_Stats" EntitySet="Game_Player_Punt_Returner_Stats" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Game_Player_Punter_Stats_0_0" Association="Self.FK_Game_Player_Punter_Stats_0_0">
-      <End Role="Game" EntitySet="Games" />
-      <End Role="Game_Player_Punter_Stats" EntitySet="Game_Player_Punter_Stats" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Game_Player_Receiving_Stats_2_0" Association="Self.FK_Game_Player_Receiving_Stats_2_0">
-      <End Role="Game" EntitySet="Games" />
-      <End Role="Game_Player_Receiving_Stats" EntitySet="Game_Player_Receiving_Stats" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Game_Player_Rushing_Stats_1_0" Association="Self.FK_Game_Player_Rushing_Stats_1_0">
-      <End Role="Game" EntitySet="Games" />
-      <End Role="Game_Player_Rushing_Stats" EntitySet="Game_Player_Rushing_Stats" />
+      <End Role="Game_Player_Stats" EntitySet="Game_Player_Stats" />
     </AssociationSet>
     <AssociationSet Name="FK_Game_Scoring_Summary_0_0" Association="Self.FK_Game_Scoring_Summary_0_0">
       <End Role="Game" EntitySet="Games" />
       <End Role="Game_Scoring_Summary" EntitySet="Game_Scoring_Summary" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Game_Player_Defense_Stats_1_0" Association="Self.FK_Game_Player_Defense_Stats_1_0">
-      <End Role="Players" EntitySet="Players" />
-      <End Role="Game_Player_Defense_Stats" EntitySet="Game_Player_Defense_Stats" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Game_Player_FG_Defense_Stats_1_0" Association="Self.FK_Game_Player_FG_Defense_Stats_1_0">
-      <End Role="Players" EntitySet="Players" />
-      <End Role="Game_Player_FG_Defense_Stats" EntitySet="Game_Player_FG_Defense_Stats" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Game_Player_Kick_Returner_Stats_2_0" Association="Self.FK_Game_Player_Kick_Returner_Stats_2_0">
-      <End Role="Players" EntitySet="Players" />
-      <End Role="Game_Player_Kick_Returner_Stats" EntitySet="Game_Player_Kick_Returner_Stats" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Game_Player_Kicker_Stats_2_0" Association="Self.FK_Game_Player_Kicker_Stats_2_0">
-      <End Role="Players" EntitySet="Players" />
-      <End Role="Game_Player_Kicker_Stats" EntitySet="Game_Player_Kicker_Stats" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Game_Player_Kickoff_Defenders_2_0" Association="Self.FK_Game_Player_Kickoff_Defenders_2_0">
-      <End Role="Players" EntitySet="Players" />
-      <End Role="Game_Player_Kickoff_Defenders" EntitySet="Game_Player_Kickoff_Defenders" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Game_Player_Kickoff_Receiver_Stats_1_0" Association="Self.FK_Game_Player_Kickoff_Receiver_Stats_1_0">
-      <End Role="Players" EntitySet="Players" />
-      <End Role="Game_Player_Kickoff_Receiver_Stats" EntitySet="Game_Player_Kickoff_Receiver_Stats" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Game_Player_Offensive_Linemen_Stats_0_0" Association="Self.FK_Game_Player_Offensive_Linemen_Stats_0_0">
-      <End Role="Players" EntitySet="Players" />
-      <End Role="Game_Player_Offensive_Linemen_Stats" EntitySet="Game_Player_Offensive_Linemen_Stats" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Game_Player_Pass_Defense_Stats_1_0" Association="Self.FK_Game_Player_Pass_Defense_Stats_1_0">
-      <End Role="Players" EntitySet="Players" />
-      <End Role="Game_Player_Pass_Defense_Stats" EntitySet="Game_Player_Pass_Defense_Stats" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Game_Player_Passing_Stats_0_0" Association="Self.FK_Game_Player_Passing_Stats_0_0">
-      <End Role="Players" EntitySet="Players" />
-      <End Role="Game_Player_Passing_Stats" EntitySet="Game_Player_Passing_Stats" />
     </AssociationSet>
     <AssociationSet Name="FK_Game_Player_Penalty_Stats_0_0" Association="Self.FK_Game_Player_Penalty_Stats_0_0">
       <End Role="Players" EntitySet="Players" />
@@ -2076,29 +1215,9 @@
       <End Role="Penalties" EntitySet="Penalties" />
       <End Role="Game_Player_Penalty_Stats" EntitySet="Game_Player_Penalty_Stats" />
     </AssociationSet>
-    <AssociationSet Name="FK_Game_Player_Punt_Defenders_2_0" Association="Self.FK_Game_Player_Punt_Defenders_2_0">
+    <AssociationSet Name="FK_Game_Player_Stats_0_0" Association="Self.FK_Game_Player_Stats_0_0">
       <End Role="Players" EntitySet="Players" />
-      <End Role="Game_Player_Punt_Defenders" EntitySet="Game_Player_Punt_Defenders" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Game_Player_Punt_Receiver_Stats_1_0" Association="Self.FK_Game_Player_Punt_Receiver_Stats_1_0">
-      <End Role="Players" EntitySet="Players" />
-      <End Role="Game_Player_Punt_Receiver_Stats" EntitySet="Game_Player_Punt_Receiver_Stats" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Game_Player_Punt_Returner_Stats_2_0" Association="Self.FK_Game_Player_Punt_Returner_Stats_2_0">
-      <End Role="Players" EntitySet="Players" />
-      <End Role="Game_Player_Punt_Returner_Stats" EntitySet="Game_Player_Punt_Returner_Stats" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Game_Player_Punter_Stats_1_0" Association="Self.FK_Game_Player_Punter_Stats_1_0">
-      <End Role="Players" EntitySet="Players" />
-      <End Role="Game_Player_Punter_Stats" EntitySet="Game_Player_Punter_Stats" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Game_Player_Receiving_Stats_0_0" Association="Self.FK_Game_Player_Receiving_Stats_0_0">
-      <End Role="Players" EntitySet="Players" />
-      <End Role="Game_Player_Receiving_Stats" EntitySet="Game_Player_Receiving_Stats" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Game_Player_Rushing_Stats_0_0" Association="Self.FK_Game_Player_Rushing_Stats_0_0">
-      <End Role="Players" EntitySet="Players" />
-      <End Role="Game_Player_Rushing_Stats" EntitySet="Game_Player_Rushing_Stats" />
+      <End Role="Game_Player_Stats" EntitySet="Game_Player_Stats" />
     </AssociationSet>
     <AssociationSet Name="FK_Hall_of_Fame_0_0" Association="Self.FK_Hall_of_Fame_0_0">
       <End Role="Season" EntitySet="Seasons" />

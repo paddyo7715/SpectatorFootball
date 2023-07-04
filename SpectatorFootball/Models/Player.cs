@@ -19,22 +19,8 @@ namespace SpectatorFootball.Models
         {
             this.Drafts = new HashSet<Draft>();
             this.Free_Agency = new HashSet<Free_Agency>();
-            this.Game_Player_Defense_Stats = new HashSet<Game_Player_Defense_Stats>();
-            this.Game_Player_FG_Defense_Stats = new HashSet<Game_Player_FG_Defense_Stats>();
-            this.Game_Player_Kick_Returner_Stats = new HashSet<Game_Player_Kick_Returner_Stats>();
-            this.Game_Player_Kicker_Stats = new HashSet<Game_Player_Kicker_Stats>();
-            this.Game_Player_Kickoff_Defenders = new HashSet<Game_Player_Kickoff_Defenders>();
-            this.Game_Player_Kickoff_Receiver_Stats = new HashSet<Game_Player_Kickoff_Receiver_Stats>();
-            this.Game_Player_Offensive_Linemen_Stats = new HashSet<Game_Player_Offensive_Linemen_Stats>();
-            this.Game_Player_Pass_Defense_Stats = new HashSet<Game_Player_Pass_Defense_Stats>();
-            this.Game_Player_Passing_Stats = new HashSet<Game_Player_Passing_Stats>();
             this.Game_Player_Penalty_Stats = new HashSet<Game_Player_Penalty_Stats>();
-            this.Game_Player_Punt_Defenders = new HashSet<Game_Player_Punt_Defenders>();
-            this.Game_Player_Punt_Receiver_Stats = new HashSet<Game_Player_Punt_Receiver_Stats>();
-            this.Game_Player_Punt_Returner_Stats = new HashSet<Game_Player_Punt_Returner_Stats>();
-            this.Game_Player_Punter_Stats = new HashSet<Game_Player_Punter_Stats>();
-            this.Game_Player_Receiving_Stats = new HashSet<Game_Player_Receiving_Stats>();
-            this.Game_Player_Rushing_Stats = new HashSet<Game_Player_Rushing_Stats>();
+            this.Game_Player_Stats = new HashSet<Game_Player_Stats>();
             this.Hall_of_Fame = new HashSet<Hall_of_Fame>();
             this.Injuries = new HashSet<Injury>();
             this.Injury_Log = new HashSet<Injury_Log>();
@@ -64,37 +50,9 @@ namespace SpectatorFootball.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Free_Agency> Free_Agency { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Game_Player_Defense_Stats> Game_Player_Defense_Stats { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Game_Player_FG_Defense_Stats> Game_Player_FG_Defense_Stats { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Game_Player_Kick_Returner_Stats> Game_Player_Kick_Returner_Stats { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Game_Player_Kicker_Stats> Game_Player_Kicker_Stats { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Game_Player_Kickoff_Defenders> Game_Player_Kickoff_Defenders { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Game_Player_Kickoff_Receiver_Stats> Game_Player_Kickoff_Receiver_Stats { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Game_Player_Offensive_Linemen_Stats> Game_Player_Offensive_Linemen_Stats { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Game_Player_Pass_Defense_Stats> Game_Player_Pass_Defense_Stats { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Game_Player_Passing_Stats> Game_Player_Passing_Stats { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Game_Player_Penalty_Stats> Game_Player_Penalty_Stats { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Game_Player_Punt_Defenders> Game_Player_Punt_Defenders { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Game_Player_Punt_Receiver_Stats> Game_Player_Punt_Receiver_Stats { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Game_Player_Punt_Returner_Stats> Game_Player_Punt_Returner_Stats { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Game_Player_Punter_Stats> Game_Player_Punter_Stats { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Game_Player_Receiving_Stats> Game_Player_Receiving_Stats { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Game_Player_Rushing_Stats> Game_Player_Rushing_Stats { get; set; }
+        public virtual ICollection<Game_Player_Stats> Game_Player_Stats { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Hall_of_Fame> Hall_of_Fame { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

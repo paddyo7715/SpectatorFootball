@@ -251,9 +251,6 @@ namespace SpectatorFootball.GameNS
             if (rnd <= fumble_calc_threshold)
                 r = true;
 
-            //bpo test take out
-            r = true;
-
             return r;
         }
 

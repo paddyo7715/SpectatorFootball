@@ -133,160 +133,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Game_Player_Defense_Stats">
-      <EntityTypeMapping TypeName="LeagueModel.Game_Player_Defense_Stats">
-        <MappingFragment StoreEntitySet="Game_Player_Defense_Stats">
-          <ScalarProperty Name="Game_ID" ColumnName="Game_ID" />
-          <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
-          <ScalarProperty Name="Franchise_ID" ColumnName="Franchise_ID" />
-          <ScalarProperty Name="Started" ColumnName="Started" />
-          <ScalarProperty Name="Def_Sacks" ColumnName="Def_Sacks" />
-          <ScalarProperty Name="Def_Rushing_Loss" ColumnName="Def_Rushing_Loss" />
-          <ScalarProperty Name="Def_Tackles" ColumnName="Def_Tackles" />
-          <ScalarProperty Name="Def_Missed_Tackles" ColumnName="Def_Missed_Tackles" />
-          <ScalarProperty Name="Def_Safety" ColumnName="Def_Safety" />
-          <ScalarProperty Name="Def_TDs" ColumnName="Def_TDs" />
-          <ScalarProperty Name="Forced_Fumbles" ColumnName="Forced_Fumbles" />
-          <ScalarProperty Name="Recovered_Fumbles" ColumnName="Recovered_Fumbles" />
-          <ScalarProperty Name="Fumbles_Return_Yards" ColumnName="Fumbles_Return_Yards" />
-          <ScalarProperty Name="QB_Pressures" ColumnName="QB_Pressures" />
-          <ScalarProperty Name="Pass_Rushes" ColumnName="Pass_Rushes" />
-          <ScalarProperty Name="Pass_Blocks" ColumnName="Pass_Blocks" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Game_Player_FG_Defense_Stats">
-      <EntityTypeMapping TypeName="LeagueModel.Game_Player_FG_Defense_Stats">
-        <MappingFragment StoreEntitySet="Game_Player_FG_Defense_Stats">
-          <ScalarProperty Name="Game_ID" ColumnName="Game_ID" />
-          <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
-          <ScalarProperty Name="Franchise_ID" ColumnName="Franchise_ID" />
-          <ScalarProperty Name="FG_Block" ColumnName="FG_Block" />
-          <ScalarProperty Name="FG_Block_Recovery" ColumnName="FG_Block_Recovery" />
-          <ScalarProperty Name="FG_Block_Recovery_Yards" ColumnName="FG_Block_Recovery_Yards" />
-          <ScalarProperty Name="FG_Block_Recovery_TDs" ColumnName="FG_Block_Recovery_TDs" />
-          <ScalarProperty Name="XP_Block" ColumnName="XP_Block" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Game_Player_Kick_Returner_Stats">
-      <EntityTypeMapping TypeName="LeagueModel.Game_Player_Kick_Returner_Stats">
-        <MappingFragment StoreEntitySet="Game_Player_Kick_Returner_Stats">
-          <ScalarProperty Name="Game_ID" ColumnName="Game_ID" />
-          <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
-          <ScalarProperty Name="Franchise_ID" ColumnName="Franchise_ID" />
-          <ScalarProperty Name="Kickoffs_Returned" ColumnName="Kickoffs_Returned" />
-          <ScalarProperty Name="Kickoffs_Returned_Yards" ColumnName="Kickoffs_Returned_Yards" />
-          <ScalarProperty Name="Kickoffs_Returned_TDs" ColumnName="Kickoffs_Returned_TDs" />
-          <ScalarProperty Name="Kickoff_Return_Yards_Long" ColumnName="Kickoff_Return_Yards_Long" />
-          <ScalarProperty Name="Kickoffs_Returned_Fumbles" ColumnName="Kickoffs_Returned_Fumbles" />
-          <ScalarProperty Name="Kickoffs_Returned_Fumbles_Lost" ColumnName="Kickoffs_Returned_Fumbles_Lost" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Game_Player_Kicker_Stats">
-      <EntityTypeMapping TypeName="LeagueModel.Game_Player_Kicker_Stats">
-        <MappingFragment StoreEntitySet="Game_Player_Kicker_Stats">
-          <ScalarProperty Name="Game_ID" ColumnName="Game_ID" />
-          <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
-          <ScalarProperty Name="Franchise_ID" ColumnName="Franchise_ID" />
-          <ScalarProperty Name="Started" ColumnName="Started" />
-          <ScalarProperty Name="XP_Att" ColumnName="XP_Att" />
-          <ScalarProperty Name="XP_Made" ColumnName="XP_Made" />
-          <ScalarProperty Name="FG_Att" ColumnName="FG_Att" />
-          <ScalarProperty Name="FG_Made" ColumnName="FG_Made" />
-          <ScalarProperty Name="FG_Long" ColumnName="FG_Long" />
-          <ScalarProperty Name="FG_Blocked" ColumnName="FG_Blocked" />
-          <ScalarProperty Name="Kickoffs" ColumnName="Kickoffs" />
-          <ScalarProperty Name="Kickoff_Out_of_Bounds" ColumnName="Kickoff_Out_of_Bounds" />
-          <ScalarProperty Name="Kickoff_Touchback" ColumnName="Kickoff_Touchback" />
-          <ScalarProperty Name="onside_attempt" ColumnName="onside_attempt" />
-          <ScalarProperty Name="onside_successful" ColumnName="onside_successful" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Game_Player_Kickoff_Defenders">
-      <EntityTypeMapping TypeName="LeagueModel.Game_Player_Kickoff_Defenders">
-        <MappingFragment StoreEntitySet="Game_Player_Kickoff_Defenders">
-          <ScalarProperty Name="Game_ID" ColumnName="Game_ID" />
-          <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
-          <ScalarProperty Name="Franchise_ID" ColumnName="Franchise_ID" />
-          <ScalarProperty Name="Forced_Fumbles_Kickoffs" ColumnName="Forced_Fumbles_Kickoffs" />
-          <ScalarProperty Name="Fumbles_Kickoffs_Recovered" ColumnName="Fumbles_Kickoffs_Recovered" />
-          <ScalarProperty Name="Fumbles_Kickoffs_Recovered_TDs" ColumnName="Fumbles_Kickoffs_Recovered_TDs" />
-          <ScalarProperty Name="Fumbles_Kickoffs_Recovered_Yards" ColumnName="Fumbles_Kickoffs_Recovered_Yards" />
-          <ScalarProperty Name="Kickoff_Tackles" ColumnName="Kickoff_Tackles" />
-          <ScalarProperty Name="KickOff_Onside_Kick_Recoveries" ColumnName="KickOff_Onside_Kick_Recoveries" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Game_Player_Kickoff_Receiver_Stats">
-      <EntityTypeMapping TypeName="LeagueModel.Game_Player_Kickoff_Receiver_Stats">
-        <MappingFragment StoreEntitySet="Game_Player_Kickoff_Receiver_Stats">
-          <ScalarProperty Name="Game_ID" ColumnName="Game_ID" />
-          <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
-          <ScalarProperty Name="Franchise_ID" ColumnName="Franchise_ID" />
-          <ScalarProperty Name="Onside_Kickoff_Recovery" ColumnName="Onside_Kickoff_Recovery" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Game_Player_Offensive_Linemen_Stats">
-      <EntityTypeMapping TypeName="LeagueModel.Game_Player_Offensive_Linemen_Stats">
-        <MappingFragment StoreEntitySet="Game_Player_Offensive_Linemen_Stats">
-          <ScalarProperty Name="Game_ID" ColumnName="Game_ID" />
-          <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
-          <ScalarProperty Name="Franchise_ID" ColumnName="Franchise_ID" />
-          <ScalarProperty Name="Started" ColumnName="Started" />
-          <ScalarProperty Name="Oline_Plays" ColumnName="Oline_Plays" />
-          <ScalarProperty Name="OLine_Sacks_Allowed" ColumnName="OLine_Sacks_Allowed" />
-          <ScalarProperty Name="OLine_Rushing_Loss_Allowed" ColumnName="OLine_Rushing_Loss_Allowed" />
-          <ScalarProperty Name="OLine_Missed_Block" ColumnName="OLine_Missed_Block" />
-          <ScalarProperty Name="OLine_Pancakes" ColumnName="OLine_Pancakes" />
-          <ScalarProperty Name="QB_Pressures_Allowed" ColumnName="QB_Pressures_Allowed" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Game_Player_Pass_Defense_Stats">
-      <EntityTypeMapping TypeName="LeagueModel.Game_Player_Pass_Defense_Stats">
-        <MappingFragment StoreEntitySet="Game_Player_Pass_Defense_Stats">
-          <ScalarProperty Name="Game_ID" ColumnName="Game_ID" />
-          <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
-          <ScalarProperty Name="Franchise_ID" ColumnName="Franchise_ID" />
-          <ScalarProperty Name="Started" ColumnName="Started" />
-          <ScalarProperty Name="Ints" ColumnName="Ints" />
-          <ScalarProperty Name="Def_Int_Yards" ColumnName="Def_Int_Yards" />
-          <ScalarProperty Name="Def_int_TDs" ColumnName="Def_int_TDs" />
-          <ScalarProperty Name="Def_Pass_Defenses" ColumnName="Def_Pass_Defenses" />
-          <ScalarProperty Name="Tackles" ColumnName="Tackles" />
-          <ScalarProperty Name="Def_Missed_Tackles" ColumnName="Def_Missed_Tackles" />
-          <ScalarProperty Name="Touchdowns_Surrendered" ColumnName="Touchdowns_Surrendered" />
-          <ScalarProperty Name="Forced_Fumbles" ColumnName="Forced_Fumbles" />
-          <ScalarProperty Name="Fumble_Recoveries" ColumnName="Fumble_Recoveries" />
-          <ScalarProperty Name="Fumble_Return_Yards" ColumnName="Fumble_Return_Yards" />
-          <ScalarProperty Name="Fumble_Return_TD" ColumnName="Fumble_Return_TD" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Game_Player_Passing_Stats">
-      <EntityTypeMapping TypeName="LeagueModel.Game_Player_Passing_Stats">
-        <MappingFragment StoreEntitySet="Game_Player_Passing_Stats">
-          <ScalarProperty Name="Game_ID" ColumnName="Game_ID" />
-          <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
-          <ScalarProperty Name="Franchise_ID" ColumnName="Franchise_ID" />
-          <ScalarProperty Name="Started" ColumnName="Started" />
-          <ScalarProperty Name="Fumbles" ColumnName="Fumbles" />
-          <ScalarProperty Name="Fumbles_Lost" ColumnName="Fumbles_Lost" />
-          <ScalarProperty Name="Sacked" ColumnName="Sacked" />
-          <ScalarProperty Name="Pass_Comp" ColumnName="Pass_Comp" />
-          <ScalarProperty Name="Pass_Att" ColumnName="Pass_Att" />
-          <ScalarProperty Name="Pass_Yards" ColumnName="Pass_Yards" />
-          <ScalarProperty Name="Pass_TDs" ColumnName="Pass_TDs" />
-          <ScalarProperty Name="Pass_Ints" ColumnName="Pass_Ints" />
-          <ScalarProperty Name="Long" ColumnName="Long" />
-          <ScalarProperty Name="Passes_Blocks" ColumnName="Passes_Blocks" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Game_Player_Penalty_Stats">
       <EntityTypeMapping TypeName="LeagueModel.Game_Player_Penalty_Stats">
         <MappingFragment StoreEntitySet="Game_Player_Penalty_Stats">
@@ -299,95 +145,138 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Game_Player_Punt_Defenders">
-      <EntityTypeMapping TypeName="LeagueModel.Game_Player_Punt_Defenders">
-        <MappingFragment StoreEntitySet="Game_Player_Punt_Defenders">
-          <ScalarProperty Name="Game_ID" ColumnName="Game_ID" />
-          <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
-          <ScalarProperty Name="Franchise_ID" ColumnName="Franchise_ID" />
-          <ScalarProperty Name="Forced_Fumbles_Punt" ColumnName="Forced_Fumbles_Punt" />
-          <ScalarProperty Name="Fumbles_Punt_Recovered" ColumnName="Fumbles_Punt_Recovered" />
-          <ScalarProperty Name="Fumbles_Punt_Recovered_TDs" ColumnName="Fumbles_Punt_Recovered_TDs" />
-          <ScalarProperty Name="Fumbles_Punt_Recovered_Yards" ColumnName="Fumbles_Punt_Recovered_Yards" />
-          <ScalarProperty Name="Punt_Tackles" ColumnName="Punt_Tackles" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Game_Player_Punt_Receiver_Stats">
-      <EntityTypeMapping TypeName="LeagueModel.Game_Player_Punt_Receiver_Stats">
-        <MappingFragment StoreEntitySet="Game_Player_Punt_Receiver_Stats">
-          <ScalarProperty Name="Game_ID" ColumnName="Game_ID" />
-          <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
-          <ScalarProperty Name="Franchise_ID" ColumnName="Franchise_ID" />
-          <ScalarProperty Name="Punt_Block" ColumnName="Punt_Block" />
-          <ScalarProperty Name="Punt_Block_Recovery" ColumnName="Punt_Block_Recovery" />
-          <ScalarProperty Name="Punt_Block_Recovery_Yards" ColumnName="Punt_Block_Recovery_Yards" />
-          <ScalarProperty Name="Punt_Block_Recovery_TDs" ColumnName="Punt_Block_Recovery_TDs" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Game_Player_Punt_Returner_Stats">
-      <EntityTypeMapping TypeName="LeagueModel.Game_Player_Punt_Returner_Stats">
-        <MappingFragment StoreEntitySet="Game_Player_Punt_Returner_Stats">
-          <ScalarProperty Name="Game_ID" ColumnName="Game_ID" />
-          <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
-          <ScalarProperty Name="Franchise_ID" ColumnName="Franchise_ID" />
-          <ScalarProperty Name="Punts_Returned" ColumnName="Punts_Returned" />
-          <ScalarProperty Name="Punts_Returned_Yards" ColumnName="Punts_Returned_Yards" />
-          <ScalarProperty Name="Punts_Returned_TDs" ColumnName="Punts_Returned_TDs" />
-          <ScalarProperty Name="Punt_Returned_Yards_Long" ColumnName="Punt_Returned_Yards_Long" />
-          <ScalarProperty Name="Punts_Returned_Fumbles" ColumnName="Punts_Returned_Fumbles" />
-          <ScalarProperty Name="Punts_Returned_Fumbles_Lost" ColumnName="Punts_Returned_Fumbles_Lost" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Game_Player_Punter_Stats">
-      <EntityTypeMapping TypeName="LeagueModel.Game_Player_Punter_Stats">
-        <MappingFragment StoreEntitySet="Game_Player_Punter_Stats">
+    <EntitySetMapping Name="Game_Player_Stats">
+      <EntityTypeMapping TypeName="LeagueModel.Game_Player_Stats">
+        <MappingFragment StoreEntitySet="Game_Player_Stats">
           <ScalarProperty Name="Game_ID" ColumnName="Game_ID" />
           <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
           <ScalarProperty Name="Franchise_ID" ColumnName="Franchise_ID" />
           <ScalarProperty Name="Started" ColumnName="Started" />
-          <ScalarProperty Name="Fumbles" ColumnName="Fumbles" />
-          <ScalarProperty Name="Fumbles_Lost" ColumnName="Fumbles_Lost" />
-          <ScalarProperty Name="num_punts" ColumnName="num_punts" />
-          <ScalarProperty Name="Punt_yards" ColumnName="Punt_yards" />
-          <ScalarProperty Name="Punt_Killed_att" ColumnName="Punt_Killed_att" />
-          <ScalarProperty Name="Punt_killed_num" ColumnName="Punt_killed_num" />
-          <ScalarProperty Name="Blocked_Punts" ColumnName="Blocked_Punts" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Game_Player_Receiving_Stats">
-      <EntityTypeMapping TypeName="LeagueModel.Game_Player_Receiving_Stats">
-        <MappingFragment StoreEntitySet="Game_Player_Receiving_Stats">
-          <ScalarProperty Name="Game_ID" ColumnName="Game_ID" />
-          <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
-          <ScalarProperty Name="Franchise_ID" ColumnName="Franchise_ID" />
-          <ScalarProperty Name="Started" ColumnName="Started" />
-          <ScalarProperty Name="Fumbles" ColumnName="Fumbles" />
-          <ScalarProperty Name="Fumbles_Lost" ColumnName="Fumbles_Lost" />
-          <ScalarProperty Name="Rec_Catches" ColumnName="Rec_Catches" />
-          <ScalarProperty Name="Rec_Drops" ColumnName="Rec_Drops" />
-          <ScalarProperty Name="Rec_Yards" ColumnName="Rec_Yards" />
-          <ScalarProperty Name="Rec_TDs" ColumnName="Rec_TDs" />
-          <ScalarProperty Name="Long" ColumnName="Long" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Game_Player_Rushing_Stats">
-      <EntityTypeMapping TypeName="LeagueModel.Game_Player_Rushing_Stats">
-        <MappingFragment StoreEntitySet="Game_Player_Rushing_Stats">
-          <ScalarProperty Name="Game_ID" ColumnName="Game_ID" />
-          <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
-          <ScalarProperty Name="Franchise_ID" ColumnName="Franchise_ID" />
-          <ScalarProperty Name="Started" ColumnName="Started" />
-          <ScalarProperty Name="Fumbles" ColumnName="Fumbles" />
-          <ScalarProperty Name="Fumbles_Lost" ColumnName="Fumbles_Lost" />
-          <ScalarProperty Name="Rush_Att" ColumnName="Rush_Att" />
-          <ScalarProperty Name="Rush_Yards" ColumnName="Rush_Yards" />
-          <ScalarProperty Name="Rush_TDs" ColumnName="Rush_TDs" />
-          <ScalarProperty Name="Long" ColumnName="Long" />
+          <ScalarProperty Name="off_pass_plays" ColumnName="off_pass_plays" />
+          <ScalarProperty Name="off_pass_fumbles" ColumnName="off_pass_fumbles" />
+          <ScalarProperty Name="off_pass_Fumbles_Lost" ColumnName="off_pass_Fumbles_Lost" />
+          <ScalarProperty Name="off_pass_Sacked" ColumnName="off_pass_Sacked" />
+          <ScalarProperty Name="off_pass_Pressures" ColumnName="off_pass_Pressures" />
+          <ScalarProperty Name="off_pass_Comp" ColumnName="off_pass_Comp" />
+          <ScalarProperty Name="off_pass_Att" ColumnName="off_pass_Att" />
+          <ScalarProperty Name="off_pass_Yards" ColumnName="off_pass_Yards" />
+          <ScalarProperty Name="off_pass_TDs" ColumnName="off_pass_TDs" />
+          <ScalarProperty Name="off_pass_Ints" ColumnName="off_pass_Ints" />
+          <ScalarProperty Name="off_pass_Long" ColumnName="off_pass_Long" />
+          <ScalarProperty Name="off_pass_Passes_Blocked" ColumnName="off_pass_Passes_Blocked" />
+          <ScalarProperty Name="off_rush_plays" ColumnName="off_rush_plays" />
+          <ScalarProperty Name="off_rush_fumbles" ColumnName="off_rush_fumbles" />
+          <ScalarProperty Name="off_rush_fumbles_lost" ColumnName="off_rush_fumbles_lost" />
+          <ScalarProperty Name="off_rush_att" ColumnName="off_rush_att" />
+          <ScalarProperty Name="off_rush_Yards" ColumnName="off_rush_Yards" />
+          <ScalarProperty Name="off_rush_TDs" ColumnName="off_rush_TDs" />
+          <ScalarProperty Name="off_rush_long" ColumnName="off_rush_long" />
+          <ScalarProperty Name="off_rec_plays" ColumnName="off_rec_plays" />
+          <ScalarProperty Name="off_rec_fumbles" ColumnName="off_rec_fumbles" />
+          <ScalarProperty Name="off_rec_fumbles_lost" ColumnName="off_rec_fumbles_lost" />
+          <ScalarProperty Name="off_rec_catches" ColumnName="off_rec_catches" />
+          <ScalarProperty Name="off_rec_drops" ColumnName="off_rec_drops" />
+          <ScalarProperty Name="off_rec_Yards" ColumnName="off_rec_Yards" />
+          <ScalarProperty Name="off_rec_TDs" ColumnName="off_rec_TDs" />
+          <ScalarProperty Name="off_rec_long" ColumnName="off_rec_long" />
+          <ScalarProperty Name="off_line_plays" ColumnName="off_line_plays" />
+          <ScalarProperty Name="off_line_sacks_allowed" ColumnName="off_line_sacks_allowed" />
+          <ScalarProperty Name="off_line_Rushing_Loss_Allowed" ColumnName="off_line_Rushing_Loss_Allowed" />
+          <ScalarProperty Name="off_line_missed_block" ColumnName="off_line_missed_block" />
+          <ScalarProperty Name="off_line_pancakes" ColumnName="off_line_pancakes" />
+          <ScalarProperty Name="off_line_was_pancaked" ColumnName="off_line_was_pancaked" />
+          <ScalarProperty Name="off_line_QB_Pressures_Allowed" ColumnName="off_line_QB_Pressures_Allowed" />
+          <ScalarProperty Name="def_rush_plays" ColumnName="def_rush_plays" />
+          <ScalarProperty Name="def_rush_sacks" ColumnName="def_rush_sacks" />
+          <ScalarProperty Name="def_rush_Rushing_Loss" ColumnName="def_rush_Rushing_Loss" />
+          <ScalarProperty Name="def_rush_tackles" ColumnName="def_rush_tackles" />
+          <ScalarProperty Name="def_rush_Missed_Tackles" ColumnName="def_rush_Missed_Tackles" />
+          <ScalarProperty Name="def_rush_Safety" ColumnName="def_rush_Safety" />
+          <ScalarProperty Name="def_rush_TDs" ColumnName="def_rush_TDs" />
+          <ScalarProperty Name="def_rush_Forced_Fumbles" ColumnName="def_rush_Forced_Fumbles" />
+          <ScalarProperty Name="def_rush_Recovered_Fumbles" ColumnName="def_rush_Recovered_Fumbles" />
+          <ScalarProperty Name="def_rush_QB_Pressures" ColumnName="def_rush_QB_Pressures" />
+          <ScalarProperty Name="def_rush_Pass_Blocks" ColumnName="def_rush_Pass_Blocks" />
+          <ScalarProperty Name="def_rush_pancakes" ColumnName="def_rush_pancakes" />
+          <ScalarProperty Name="def_rush_was_pancaked" ColumnName="def_rush_was_pancaked" />
+          <ScalarProperty Name="def_pass_plays" ColumnName="def_pass_plays" />
+          <ScalarProperty Name="def_pass_Ints" ColumnName="def_pass_Ints" />
+          <ScalarProperty Name="def_pass_Int_Yards" ColumnName="def_pass_Int_Yards" />
+          <ScalarProperty Name="def_pass_Int_TDs" ColumnName="def_pass_Int_TDs" />
+          <ScalarProperty Name="def_pass_Pass_KnockedAway" ColumnName="def_pass_Pass_KnockedAway" />
+          <ScalarProperty Name="def_pass_Tackles" ColumnName="def_pass_Tackles" />
+          <ScalarProperty Name="def_pass_Missed_Tackles" ColumnName="def_pass_Missed_Tackles" />
+          <ScalarProperty Name="def_pass_Forced_Fumbles" ColumnName="def_pass_Forced_Fumbles" />
+          <ScalarProperty Name="def_pass_Recovered_Fumbles" ColumnName="def_pass_Recovered_Fumbles" />
+          <ScalarProperty Name="def_pass_Recovered_Fumble_Yards" ColumnName="def_pass_Recovered_Fumble_Yards" />
+          <ScalarProperty Name="def_pass_Recovered_Fumble_TDs" ColumnName="def_pass_Recovered_Fumble_TDs" />
+          <ScalarProperty Name="kicker_plays" ColumnName="kicker_plays" />
+          <ScalarProperty Name="XP_Att" ColumnName="XP_Att" />
+          <ScalarProperty Name="XP_Made" ColumnName="XP_Made" />
+          <ScalarProperty Name="FG_Att" ColumnName="FG_Att" />
+          <ScalarProperty Name="FG_Made" ColumnName="FG_Made" />
+          <ScalarProperty Name="FG_Long" ColumnName="FG_Long" />
+          <ScalarProperty Name="FG_Blocked" ColumnName="FG_Blocked" />
+          <ScalarProperty Name="Kickoffs" ColumnName="Kickoffs" />
+          <ScalarProperty Name="Kickoffs_Out_of_Bounds" ColumnName="Kickoffs_Out_of_Bounds" />
+          <ScalarProperty Name="Kickoff_Touchbacks" ColumnName="Kickoff_Touchbacks" />
+          <ScalarProperty Name="Kickoff_Thru_Endzones" ColumnName="Kickoff_Thru_Endzones" />
+          <ScalarProperty Name="Kickoff_Onside_Att" ColumnName="Kickoff_Onside_Att" />
+          <ScalarProperty Name="Kickoff_Onside_Succ" ColumnName="Kickoff_Onside_Succ" />
+          <ScalarProperty Name="ko_ret_plays" ColumnName="ko_ret_plays" />
+          <ScalarProperty Name="ko_ret" ColumnName="ko_ret" />
+          <ScalarProperty Name="ko_ret_yards" ColumnName="ko_ret_yards" />
+          <ScalarProperty Name="ko_ret_TDs" ColumnName="ko_ret_TDs" />
+          <ScalarProperty Name="ko_ret_yards_long" ColumnName="ko_ret_yards_long" />
+          <ScalarProperty Name="ko_ret_touchbacks" ColumnName="ko_ret_touchbacks" />
+          <ScalarProperty Name="ko_ret_Thru_Endzones" ColumnName="ko_ret_Thru_Endzones" />
+          <ScalarProperty Name="ko_fumbles" ColumnName="ko_fumbles" />
+          <ScalarProperty Name="ko_fumbles_lost" ColumnName="ko_fumbles_lost" />
+          <ScalarProperty Name="ko_def_plays" ColumnName="ko_def_plays" />
+          <ScalarProperty Name="ko_def_Forced_Fumbles" ColumnName="ko_def_Forced_Fumbles" />
+          <ScalarProperty Name="ko_def_fumbles_recovered" ColumnName="ko_def_fumbles_recovered" />
+          <ScalarProperty Name="ko_def_fumbles_recovered_TDs" ColumnName="ko_def_fumbles_recovered_TDs" />
+          <ScalarProperty Name="ko_def_fumbles_recovered_Yards" ColumnName="ko_def_fumbles_recovered_Yards" />
+          <ScalarProperty Name="ko_def_tackles" ColumnName="ko_def_tackles" />
+          <ScalarProperty Name="ko_def_tackles_missed" ColumnName="ko_def_tackles_missed" />
+          <ScalarProperty Name="ko_def_Onside_Kick_Recoveries" ColumnName="ko_def_Onside_Kick_Recoveries" />
+          <ScalarProperty Name="ko_rec_plays" ColumnName="ko_rec_plays" />
+          <ScalarProperty Name="ko_rec_Onside_Recovery" ColumnName="ko_rec_Onside_Recovery" />
+          <ScalarProperty Name="ko_rec_fumbles_recovered" ColumnName="ko_rec_fumbles_recovered" />
+          <ScalarProperty Name="fg_def_plays" ColumnName="fg_def_plays" />
+          <ScalarProperty Name="fg_def_block" ColumnName="fg_def_block" />
+          <ScalarProperty Name="fg_def_block_recovered" ColumnName="fg_def_block_recovered" />
+          <ScalarProperty Name="fg_def_block_recovered_yards" ColumnName="fg_def_block_recovered_yards" />
+          <ScalarProperty Name="fg_def_block_recovered_TDs" ColumnName="fg_def_block_recovered_TDs" />
+          <ScalarProperty Name="XP_Block" ColumnName="XP_Block" />
+          <ScalarProperty Name="punter_plays" ColumnName="punter_plays" />
+          <ScalarProperty Name="punter_Fumbles" ColumnName="punter_Fumbles" />
+          <ScalarProperty Name="punter_Fumbles_lost" ColumnName="punter_Fumbles_lost" />
+          <ScalarProperty Name="punter_Fumbles_recovered" ColumnName="punter_Fumbles_recovered" />
+          <ScalarProperty Name="punter_punts" ColumnName="punter_punts" />
+          <ScalarProperty Name="punter_punt_yards" ColumnName="punter_punt_yards" />
+          <ScalarProperty Name="punter_kill_att" ColumnName="punter_kill_att" />
+          <ScalarProperty Name="punter_kill_Succ" ColumnName="punter_kill_Succ" />
+          <ScalarProperty Name="punter_blocks" ColumnName="punter_blocks" />
+          <ScalarProperty Name="punt_ret_plays" ColumnName="punt_ret_plays" />
+          <ScalarProperty Name="punt_ret" ColumnName="punt_ret" />
+          <ScalarProperty Name="punt_ret_yards" ColumnName="punt_ret_yards" />
+          <ScalarProperty Name="punt_ret_TDs" ColumnName="punt_ret_TDs" />
+          <ScalarProperty Name="punt_ret_yards_long" ColumnName="punt_ret_yards_long" />
+          <ScalarProperty Name="punt_ret_fumbles" ColumnName="punt_ret_fumbles" />
+          <ScalarProperty Name="punt_ret_fumbles_lost" ColumnName="punt_ret_fumbles_lost" />
+          <ScalarProperty Name="punt_rec_plays" ColumnName="punt_rec_plays" />
+          <ScalarProperty Name="punt_rec_blocks" ColumnName="punt_rec_blocks" />
+          <ScalarProperty Name="punt_rec_block_recovery" ColumnName="punt_rec_block_recovery" />
+          <ScalarProperty Name="punt_rec_block_recovery_yards" ColumnName="punt_rec_block_recovery_yards" />
+          <ScalarProperty Name="punt_rec_block_recovery_TDs" ColumnName="punt_rec_block_recovery_TDs" />
+          <ScalarProperty Name="punt_def_plays" ColumnName="punt_def_plays" />
+          <ScalarProperty Name="punt_def_forced_fumbles" ColumnName="punt_def_forced_fumbles" />
+          <ScalarProperty Name="punt_def_forced_fumbles_recovered" ColumnName="punt_def_forced_fumbles_recovered" />
+          <ScalarProperty Name="punt_def_forced_fumbles_recovered_TDs" ColumnName="punt_def_forced_fumbles_recovered_TDs" />
+          <ScalarProperty Name="punt_def_forced_fumbles_recovered_Yards" ColumnName="punt_def_forced_fumbles_recovered_Yards" />
+          <ScalarProperty Name="punt_def_tackles" ColumnName="punt_def_tackles" />
+          <ScalarProperty Name="punt_def_tackles_missed" ColumnName="punt_def_tackles_missed" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
