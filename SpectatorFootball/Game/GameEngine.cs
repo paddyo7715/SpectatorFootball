@@ -130,23 +130,9 @@ namespace SpectatorFootball.GameNS
             g.Away_Sacks = 0;
             g.Forfeited_Game = 0;
 
-            List<Game_Player_Defense_Stats> Game_Player_Defense_Stats = new List<Game_Player_Defense_Stats>();
-            List<Game_Player_FG_Defense_Stats> Game_Player_FG_Defense_Stats = new List<Game_Player_FG_Defense_Stats>();
-            List<Game_Player_Kick_Returner_Stats> Game_Player_Kick_Returner_Stats = new List<Game_Player_Kick_Returner_Stats>();
-            List<Game_Player_Kicker_Stats> Game_Player_Kicker_Stats = new List<Game_Player_Kicker_Stats>();
-            List<Game_Player_Kickoff_Defenders> Game_Player_Kickoff_Defenders = new List<Game_Player_Kickoff_Defenders>();
-            List<Game_Player_Kickoff_Receiver_Stats> Game_Player_Kickoff_Receiver_Stats = new List<Game_Player_Kickoff_Receiver_Stats>();
-            List<Game_Player_Offensive_Linemen_Stats> Game_Player_Offensive_Linemen_Stats = new List<Game_Player_Offensive_Linemen_Stats>();
-            List<Game_Player_Pass_Defense_Stats> Game_Player_Pass_Defense_Stats = new List<Game_Player_Pass_Defense_Stats>();
-            List<Game_Player_Passing_Stats> Game_Player_Passing_Stats = new List<Game_Player_Passing_Stats>();
             List<Game_Player_Penalty_Stats> Game_Player_Penalty_Stats = new List<Game_Player_Penalty_Stats>();
-            List<Game_Player_Punt_Defenders> Game_Player_Punt_Defenders = new List<Game_Player_Punt_Defenders>();
-            List<Game_Player_Punt_Receiver_Stats> Game_Player_Punt_Receiver_Stats = new List<Game_Player_Punt_Receiver_Stats>();
-            List<Game_Player_Punt_Returner_Stats> Game_Player_Punt_Returner_Stats = new List<Game_Player_Punt_Returner_Stats>();
-            List<Game_Player_Punter_Stats> Game_Player_Punter_Stats = new List<Game_Player_Punter_Stats>();
-            List<Game_Player_Receiving_Stats> Game_Player_Receiving_Stats = new List<Game_Player_Receiving_Stats>();
-            List<Game_Player_Rushing_Stats> Game_Player_Rushing_Stats = new List<Game_Player_Rushing_Stats>();
             List<Game_Scoring_Summary> Game_Scoring_Summary = new List<Game_Scoring_Summary>();
+            List<Game_Player_Stats> Game_Player_Stats = new List<Game_Player_Stats>();
 
             //Add starter records for both teams
             foreach (Player_Pos pp in System.Enum.GetValues(typeof(Player_Pos)))
@@ -154,112 +140,11 @@ namespace SpectatorFootball.GameNS
                 int num_starters = Team_Helper.getNumStartingPlayersByPosition(pp);
                 List<Player_and_Ratings> away_starter_list = Away_Players.Where(x => x.p.Pos == (int)pp).OrderBy(x => x.p.Pos).ThenByDescending(x => x.Overall_Grade).Take(num_starters).ToList();
                 foreach (Player_and_Ratings a in away_starter_list)
-                {
-                    switch ((Player_Pos)a.p.Pos)
-                    {
-                        case Player_Pos.QB:
-                            {
-                                Game_Player_Passing_Stats.Add(new Game_Player_Passing_Stats() { Franchise_ID = at.Franchise_ID, Game_ID = g.ID, Player_ID = a.p.ID, Started = 1 });
-                                break;
-                            }
+                    Game_Player_Stats.Add(new Game_Player_Stats() { Franchise_ID = at.Franchise_ID, Game_ID = g.ID, Player_ID = a.p.ID, Started = 1 });
 
-                        case Player_Pos.RB:
-                            {
-                                Game_Player_Rushing_Stats.Add(new Game_Player_Rushing_Stats() { Franchise_ID = at.Franchise_ID, Game_ID = g.ID, Player_ID = a.p.ID, Started = 1 });
-                                break;
-                            }
-
-                        case Player_Pos.WR:
-                        case Player_Pos.TE:
-                            {
-                                Game_Player_Receiving_Stats.Add(new Game_Player_Receiving_Stats() { Franchise_ID = at.Franchise_ID, Game_ID = g.ID, Player_ID = a.p.ID, Started = 1 });
-                                break;
-                            }
-                        case Player_Pos.OL:
-                            {
-                                Game_Player_Offensive_Linemen_Stats.Add(new Game_Player_Offensive_Linemen_Stats() { Franchise_ID = at.Franchise_ID, Game_ID = g.ID, Player_ID = a.p.ID, Started = 1 });
-                                break;
-                            }
-
-                        case Player_Pos.DL:
-                        case Player_Pos.LB:
-                            {
-                                Game_Player_Defense_Stats.Add(new Game_Player_Defense_Stats() { Franchise_ID = at.Franchise_ID, Game_ID = g.ID, Player_ID = a.p.ID, Started = 1 });
-                                break;
-                            }
-                        case Player_Pos.DB:
-                            {
-                                Game_Player_Pass_Defense_Stats.Add(new Game_Player_Pass_Defense_Stats() { Franchise_ID = at.Franchise_ID, Game_ID = g.ID, Player_ID = a.p.ID, Started = 1 });
-                                break;
-                            }
-
-                        case Player_Pos.K:
-                            {
-                                Game_Player_Kicker_Stats.Add(new Game_Player_Kicker_Stats() { Franchise_ID = at.Franchise_ID, Game_ID = g.ID, Player_ID = a.p.ID, Started = 1 });
-                                break;
-                            }
-
-                        case Player_Pos.P:
-                            {
-                                Game_Player_Punter_Stats.Add(new Game_Player_Punter_Stats() { Franchise_ID = at.Franchise_ID, Game_ID = g.ID, Player_ID = a.p.ID, Started = 1 });
-                                break;
-                            }
-                    }
-                }
                 List<Player_and_Ratings> home_starter_list = Home_Players.Where(x => x.p.Pos == (int)pp).OrderBy(x => x.p.Pos).ThenByDescending(x => x.Overall_Grade).Take(num_starters).ToList();
                 foreach (Player_and_Ratings a in away_starter_list)
-                {
-                    switch ((Player_Pos)a.p.Pos)
-                    {
-                        case Player_Pos.QB:
-                            {
-                                Game_Player_Passing_Stats.Add(new Game_Player_Passing_Stats() { Franchise_ID = ht.Franchise_ID, Game_ID = g.ID, Player_ID = a.p.ID, Started = 1 });
-                                break;
-                            }
-
-                        case Player_Pos.RB:
-                            {
-                                Game_Player_Rushing_Stats.Add(new Game_Player_Rushing_Stats() { Franchise_ID = ht.Franchise_ID, Game_ID = g.ID, Player_ID = a.p.ID, Started = 1 });
-                                break;
-                            }
-
-                        case Player_Pos.WR:
-                        case Player_Pos.TE:
-                            {
-                                Game_Player_Receiving_Stats.Add(new Game_Player_Receiving_Stats() { Franchise_ID = ht.Franchise_ID, Game_ID = g.ID, Player_ID = a.p.ID, Started = 1 });
-                                break;
-                            }
-                        case Player_Pos.OL:
-                            {
-                                Game_Player_Offensive_Linemen_Stats.Add(new Game_Player_Offensive_Linemen_Stats() { Franchise_ID = ht.Franchise_ID, Game_ID = g.ID, Player_ID = a.p.ID, Started = 1 });
-                                break;
-                            }
-
-                        case Player_Pos.DL:
-                        case Player_Pos.LB:
-                            {
-                                Game_Player_Defense_Stats.Add(new Game_Player_Defense_Stats() { Franchise_ID = ht.Franchise_ID, Game_ID = g.ID, Player_ID = a.p.ID, Started = 1 });
-                                break;
-                            }
-                        case Player_Pos.DB:
-                            {
-                                Game_Player_Pass_Defense_Stats.Add(new Game_Player_Pass_Defense_Stats() { Franchise_ID = ht.Franchise_ID, Game_ID = g.ID, Player_ID = a.p.ID, Started = 1 });
-                                break;
-                            }
-
-                        case Player_Pos.K:
-                            {
-                                Game_Player_Kicker_Stats.Add(new Game_Player_Kicker_Stats() { Franchise_ID = ht.Franchise_ID, Game_ID = g.ID, Player_ID = a.p.ID, Started = 1 });
-                                break;
-                            }
-
-                        case Player_Pos.P:
-                            {
-                                Game_Player_Punter_Stats.Add(new Game_Player_Punter_Stats() { Franchise_ID = ht.Franchise_ID, Game_ID = g.ID, Player_ID = a.p.ID, Started = 1 });
-                                break;
-                            }
-                    }
-                }
+                    Game_Player_Stats.Add(new Game_Player_Stats() { Franchise_ID = ht.Franchise_ID, Game_ID = g.ID, Player_ID = a.p.ID, Started = 1 });
             }
 
             //initialize the injuries list
@@ -507,22 +392,8 @@ namespace SpectatorFootball.GameNS
 
                 //acume individual stats
 
-                Accume_Play_Stats(p_result.Game_Player_Defense_Stats,
-                     p_result.Game_Player_FG_Defense_Stats,
-                     p_result.Game_Player_Kick_Returner_Stats,
-                     p_result.Game_Player_Kicker_Stats,
-                     p_result.Game_Player_Kickoff_Defenders,
-                     p_result.Game_Player_Kickoff_Receiver_Stats,
-                     p_result.Game_Player_Offensive_Linemen_Stats,
-                     p_result.Game_Player_Pass_Defense_Stats,
-                     p_result.Game_Player_Passing_Stats,
-                     p_result.Game_Player_Penalty_Stats,
-                     p_result.Game_Player_Punt_Defenders,
-                     p_result.Game_Player_Punt_Receiver_Stats,
-                     p_result.Game_Player_Punt_Returner_Stats,
-                     p_result.Game_Player_Punter_Stats,
-                     p_result.Game_Player_Receiving_Stats,
-                     p_result.Game_Player_Rushing_Stats);
+                Accume_Play_Stats(p_result.Game_Player_Stats,
+                     p_result.Game_Player_Penalty_Stats);
                 logger.Debug("After accum stats");
 
                 //work the injuries
@@ -862,7 +733,7 @@ namespace SpectatorFootball.GameNS
                     if (ps.FG_Long < s.FG_Long) ps.FG_Long = s.FG_Long;
                     ps.FG_Blocked += s.FG_Blocked;
                     ps.Kickoffs += s.Kickoffs;
-                    ps.Kickoffs_Out_of_Bounds += s.;
+                    ps.Kickoffs_Out_of_Bounds += s.Kickoffs_Out_of_Bounds;
                     ps.Kickoff_Touchbacks += s.Kickoff_Touchbacks;
                     ps.Kickoff_Thru_Endzones += s.Kickoff_Thru_Endzones;
                     ps.Kickoff_Onside_Att += s.Kickoff_Onside_Att;

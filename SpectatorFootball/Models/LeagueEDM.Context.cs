@@ -19,7 +19,12 @@ namespace SpectatorFootball.Models
             : base("name=leagueContext")
         {
         }
-    
+
+        public leagueContext(string connString)
+            : base(connString)
+        {
+        }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();

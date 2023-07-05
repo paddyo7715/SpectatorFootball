@@ -19,7 +19,6 @@ namespace SpectatorFootball.Models
         public string Team { get; set; }
         public long Pass_Defenses { get; set; }
         public long Ints { get; set; }
-        public long TDs_Surrendered { get; set; }
         public long Forced_Fumble { get; set; }
         public long Def_int_TDs { get; set; }
         public long Tackles { get; set; }

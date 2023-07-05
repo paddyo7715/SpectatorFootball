@@ -33,23 +33,8 @@ namespace SpectatorFootball.DAO
             using (var context = new leagueContext(con))
             {
                 r = (from g in context.Games
-                                   .Include(x => x.Game_Player_FG_Defense_Stats.Select(s => s.Player ))
-                                   .Include(x => x.Game_Player_Kick_Returner_Stats.Select(s => s.Player))
-                                   .Include(x => x.Game_Player_Kicker_Stats.Select(s => s.Player))
-                                   .Include(x => x.Game_Player_Kickoff_Defenders.Select(s => s.Player))
-                                   .Include(x => x.Game_Player_Kickoff_Receiver_Stats.Select(s => s.Player))
-                                   .Include(x => x.Game_Player_Offensive_Linemen_Stats.Select(s => s.Player))
-                                   .Include(x => x.Game_Player_Pass_Defense_Stats.Select(s => s.Player))
-                                   .Include(x => x.Game_Player_Defense_Stats.Select(s => s.Player))
-                                   .Include(x => x.Game_Player_Passing_Stats.Select(s => s.Player))
+                                   .Include(x => x.Game_Player_Stats.Select(s => s.Player ))
                                    .Include(x => x.Game_Player_Penalty_Stats.Select(s => s.Player))
-                                   .Include(x => x.Game_Player_Penalty_Stats.Select(s => s.Player))
-                                   .Include(x => x.Game_Player_Punt_Defenders.Select(s => s.Player))
-                                   .Include(x => x.Game_Player_Punt_Receiver_Stats.Select(s => s.Player))
-                                   .Include(x => x.Game_Player_Punt_Returner_Stats.Select(s => s.Player))
-                                   .Include(x => x.Game_Player_Punter_Stats.Select(s => s.Player))
-                                   .Include(x => x.Game_Player_Receiving_Stats.Select(s => s.Player))
-                                   .Include(x => x.Game_Player_Rushing_Stats.Select(s => s.Player))
                                    .Include(x => x.Game_Scoring_Summary)
                      join at in context.Teams_by_Season
                      on g.Away_Team_Franchise_ID equals at.Franchise_ID
