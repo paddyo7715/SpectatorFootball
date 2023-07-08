@@ -295,6 +295,7 @@
     <Property Name="punt_def_forced_fumbles_recovered_Yards" Type="Int64" Nullable="false" />
     <Property Name="punt_def_tackles" Type="Int64" Nullable="false" />
     <Property Name="punt_def_tackles_missed" Type="Int64" Nullable="false" />
+    <Property Name="def_pass_TDs_Surrendered" Type="Int64" Nullable="false" />
     <NavigationProperty Name="Franchise" Relationship="Self.FK_Game_Player_Stats_1_0" FromRole="Game_Player_Stats" ToRole="Franchise" />
     <NavigationProperty Name="Game" Relationship="Self.FK_Game_Player_Stats_2_0" FromRole="Game_Player_Stats" ToRole="Game" />
     <NavigationProperty Name="Player" Relationship="Self.FK_Game_Player_Stats_0_0" FromRole="Game_Player_Stats" ToRole="Players" />

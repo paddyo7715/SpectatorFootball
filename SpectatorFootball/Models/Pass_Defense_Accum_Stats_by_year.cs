@@ -23,5 +23,6 @@ namespace SpectatorFootball.Models
         public long Def_int_TDs { get; set; }
         public long Tackles { get; set; }
         public long Missed_Tackles { get; set; }
+        public long TDs_Surrendered { get; set; }
     }
 }

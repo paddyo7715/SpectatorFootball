@@ -182,7 +182,7 @@ namespace SpectatorFootball.Awards
                     (x.Pass_Defenses * app_Constants.DEFENSE_PASS_DEFENSES_MULTIPLYER) +
                     (x.Tackles * app_Constants.DEFENSE_PASS_TACKLES_MULTIPLYER) -
                     (x.Missed_Tackles * app_Constants.DEFENSE_PASS_MISSED_TACKLES_MULTIPLYER) -
-//                    (x.TDs_Surrendered * app_Constants.DEFENSE_PASS_TDS_SURRENDERED_MULTIPLYER) +
+                    (x.TDs_Surrendered * app_Constants.DEFENSE_PASS_TDS_SURRENDERED_MULTIPLYER) +
                     (x.Forced_Fumble * app_Constants.DEFENSE_PASS_FORCED_FUMBLE_MULTIPLYER);
 
                 Award_Rating_Rec a = r.Where(t => t.p.ID == x.p.ID).FirstOrDefault();
@@ -339,7 +339,7 @@ namespace SpectatorFootball.Awards
                     Missed_Tackles = x.def_pass_Missed_Tackles,
                     Pass_Defenses = x.def_pass_Pass_KnockedAway,
                     Tackles = x.def_pass_Tackles,
-//                    TDs_Surrendered = x.Touchdowns_Surrendered
+                    TDs_Surrendered = x.def_pass_TDs_Surrendered
                 });
             }
 

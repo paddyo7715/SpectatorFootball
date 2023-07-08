@@ -269,6 +269,7 @@
     <Property Name="punt_def_forced_fumbles_recovered_Yards" Type="integer" Nullable="false" />
     <Property Name="punt_def_tackles" Type="integer" Nullable="false" />
     <Property Name="punt_def_tackles_missed" Type="integer" Nullable="false" />
+    <Property Name="def_pass_TDs_Surrendered" Type="integer" Nullable="false" />
   </EntityType>
   <EntityType Name="Game_Scoring_Summary">
     <Key>

@@ -216,6 +216,7 @@ namespace SpectatorFootball.DAO
                         p = x.Key,
                         Pass_Defenses = x.Sum(s => s.def_pass_plays),
                         Ints = x.Sum(s => s.def_pass_Ints),
+                        TDs_Surrendered = x.Sum(s => s.def_pass_TDs_Surrendered),
                         Forced_Fumble = x.Sum(s => s.def_pass_Forced_Fumbles)
                     }).OrderByDescending(x => x.Ints).ThenByDescending(x => x.Pass_Defenses).ToList();
 

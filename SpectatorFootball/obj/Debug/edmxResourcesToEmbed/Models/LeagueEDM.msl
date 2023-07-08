@@ -277,6 +277,7 @@
           <ScalarProperty Name="punt_def_forced_fumbles_recovered_Yards" ColumnName="punt_def_forced_fumbles_recovered_Yards" />
           <ScalarProperty Name="punt_def_tackles" ColumnName="punt_def_tackles" />
           <ScalarProperty Name="punt_def_tackles_missed" ColumnName="punt_def_tackles_missed" />
+          <ScalarProperty Name="def_pass_TDs_Surrendered" ColumnName="def_pass_TDs_Surrendered" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -543,6 +543,7 @@ namespace SpectatorFootball
                          Forced_Fumble = x.Sum(s => s.def_pass_Forced_Fumbles),
                         Def_int_TDs = x.Sum(s => s.def_pass_Int_TDs),
                         Tackles = x.Sum(s => s.def_pass_Tackles),
+                        TDs_Surrendered = x.Sum(s => s.def_pass_TDs_Surrendered),
                         Missed_Tackles = x.Sum(s => s.def_pass_Missed_Tackles)
                     }).ToList();
             }

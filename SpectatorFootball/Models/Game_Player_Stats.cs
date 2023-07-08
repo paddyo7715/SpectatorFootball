@@ -143,6 +143,7 @@ namespace SpectatorFootball.Models
         public long punt_def_forced_fumbles_recovered_Yards { get; set; }
         public long punt_def_tackles { get; set; }
         public long punt_def_tackles_missed { get; set; }
+        public long def_pass_TDs_Surrendered { get; set; }
     
         public virtual Franchise Franchise { get; set; }
         public virtual Game Game { get; set; }
