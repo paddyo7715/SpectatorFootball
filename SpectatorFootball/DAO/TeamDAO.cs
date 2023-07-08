@@ -141,89 +141,87 @@ namespace SpectatorFootball.DAO
 
             using (var context = new leagueContext(con))
             {
-                PassStats = context.Game_Player_Passing_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 &&
+                PassStats = context.Game_Player_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 &&
                     (x.Game.Home_Team_Franchise_ID == franchise_id || x.Game.Away_Team_Franchise_ID == franchise_id)
-                    && x.Player.Players_By_Team.Any(a => a.Franchise_ID == franchise_id && a.Season_ID == season_id)).GroupBy(x => x.Player)
+                    && x.Player.Players_By_Team.Any(a => a.Franchise_ID == franchise_id && a.Season_ID == season_id) && x.off_pass_Att > 0).GroupBy(x => x.Player)
                     .Select(x => new Passing_Accum_Stats_by_year
                     {
                         p = x.Key,
-                        Completes = x.Sum(s => s.Pass_Comp),
-                        Ateempts = x.Sum(s => s.Pass_Att),
-                        Yards = x.Sum(s => s.Pass_Yards),
-                        TDs = x.Sum(s => s.Pass_TDs),
-                        Ints = x.Sum(s => s.Pass_Ints),
-                        Fumbles = x.Sum(s => s.Fumbles),
-                        Fumbles_Lost = x.Sum(s => s.Fumbles_Lost),
+                        Completes = x.Sum(s => s.off_pass_Comp),
+                        Ateempts = x.Sum(s => s.off_pass_Att),
+                        Yards = x.Sum(s => s.off_pass_Yards),
+                        TDs = x.Sum(s => s.off_pass_TDs),
+                        Ints = x.Sum(s => s.off_pass_Ints),
+                        Fumbles = x.Sum(s => s.off_pass_fumbles),
+                        Fumbles_Lost = x.Sum(s => s.off_pass_Fumbles_Lost),
                     }).OrderByDescending(x => x.Yards).ThenByDescending(x => x.TDs).ToList();
 
-                RushingStats = context.Game_Player_Rushing_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 &&
+                RushingStats = context.Game_Player_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 &&
                     (x.Game.Home_Team_Franchise_ID == franchise_id || x.Game.Away_Team_Franchise_ID == franchise_id)
-                    && x.Player.Players_By_Team.Any(a => a.Franchise_ID == franchise_id && a.Season_ID == season_id)).GroupBy(x => x.Player)
+                    && x.Player.Players_By_Team.Any(a => a.Franchise_ID == franchise_id && a.Season_ID == season_id) && x.off_rush_att > 0).GroupBy(x => x.Player)
                     .Select(x => new Rushing_Accum_Stats_by_year
                     {
                         p = x.Key,
-                        Rushes = x.Sum(s => s.Rush_Att),
-                        Yards = x.Sum(s => s.Rush_Yards),
-                        TDs = x.Sum(s => s.Rush_TDs),
-                        Fumbles = x.Sum(s => s.Fumbles),
-                        Fumbles_Lost = x.Sum(s => s.Fumbles_Lost)
+                        Rushes = x.Sum(s => s.off_rush_att),
+                        Yards = x.Sum(s => s.off_rush_Yards),
+                        TDs = x.Sum(s => s.off_rush_TDs),
+                        Fumbles = x.Sum(s => s.off_rush_fumbles),
+                        Fumbles_Lost = x.Sum(s => s.off_rush_fumbles_lost)
                     }).OrderByDescending(x => x.Yards).ThenByDescending(x => x.TDs).ToList();
 
-                ReceivingStats = context.Game_Player_Receiving_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 &&
+                ReceivingStats = context.Game_Player_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 &&
                     (x.Game.Home_Team_Franchise_ID == franchise_id || x.Game.Away_Team_Franchise_ID == franchise_id)
-                    && x.Player.Players_By_Team.Any(a => a.Franchise_ID == franchise_id && a.Season_ID == season_id)).GroupBy(x => x.Player)
+                    && x.Player.Players_By_Team.Any(a => a.Franchise_ID == franchise_id && a.Season_ID == season_id) && (x.off_rec_catches > 0 || x.off_rec_drops > 0)).GroupBy(x => x.Player)
                     .Select(x => new Receiving_Accum_Stats_by_year
                     {
                         p = x.Key,
-                        Catches = x.Sum(s => s.Rec_Catches),
-                        Yards = x.Sum(s => s.Rec_Yards),
-                        TDs = x.Sum(s => s.Rec_TDs),
-                        Drops = x.Sum(s => s.Rec_Drops),
-                        Fumbles = x.Sum(s => s.Fumbles),
-                        Fumbles_Lost = x.Sum(s => s.Fumbles_Lost)
+                        Catches = x.Sum(s => s.off_rec_catches),
+                        Yards = x.Sum(s => s.off_rec_Yards),
+                        TDs = x.Sum(s => s.off_rec_TDs),
+                        Drops = x.Sum(s => s.off_rec_drops),
+                        Fumbles = x.Sum(s => s.off_rec_fumbles),
+                        Fumbles_Lost = x.Sum(s => s.off_rec_fumbles_lost)
                     }).OrderByDescending(x => x.Catches).ThenByDescending(x => x.Yards).ToList();
 
-                BlockingStats = context.Game_Player_Offensive_Linemen_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 &&
+                BlockingStats = context.Game_Player_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 &&
                     (x.Game.Home_Team_Franchise_ID == franchise_id || x.Game.Away_Team_Franchise_ID == franchise_id)
-                    && x.Player.Players_By_Team.Any(a => a.Franchise_ID == franchise_id && a.Season_ID == season_id)).GroupBy(x => x.Player)
+                    && x.Player.Players_By_Team.Any(a => a.Franchise_ID == franchise_id && a.Season_ID == season_id) && x.off_line_plays > 0).GroupBy(x => x.Player)
                     .Select(x => new Blocking_Accum_Stats_by_year
                     {
-                        p = x.Key,
-                        Plays = x.Sum(s => s.Oline_Plays),
-                        Pancakes = x.Sum(s => s.OLine_Pancakes),
-                        Sacks_Allowed = x.Sum(s => s.OLine_Sacks_Allowed),
-                        Pressures_Allowed = x.Sum(s => s.QB_Pressures_Allowed)
+                        Plays = x.Sum(s => s.off_line_plays),
+                        Pancakes = x.Sum(s => s.off_line_pancakes),
+                        Sacks_Allowed = x.Sum(s => s.off_line_sacks_allowed),
+                        Pressures_Allowed = x.Sum(s => s.off_line_QB_Pressures_Allowed),
                     }).OrderByDescending(x => x.Pancakes).ThenByDescending(x => x.Plays).ToList();
 
-                DefenseStats = context.Game_Player_Defense_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 &&
+                DefenseStats = context.Game_Player_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 &&
                     (x.Game.Home_Team_Franchise_ID == franchise_id || x.Game.Away_Team_Franchise_ID == franchise_id)
-                    && x.Player.Players_By_Team.Any(a => a.Franchise_ID == franchise_id && a.Season_ID == season_id)).GroupBy(x => x.Player)
+                    && x.Player.Players_By_Team.Any(a => a.Franchise_ID == franchise_id && a.Season_ID == season_id) && x.def_rush_plays > 0).GroupBy(x => x.Player)
                     .Select(x => new Defense_Accum_Stats_by_year
                     {
                         p = x.Key,
-                        Plays = x.Sum(s => s.Pass_Rushes + s.Pass_Blocks),
-                        Tackles = x.Sum(s => s.Def_Tackles),
-                        Sacks = x.Sum(s => s.Def_Sacks),
-                        Pressures = x.Sum(s => s.QB_Pressures),
-                        Run_for_Loss = x.Sum(s => s.Def_Rushing_Loss),
-                        Forced_Fumble = x.Sum(s => s.Forced_Fumbles)
+                        Plays = x.Sum(s => s.def_rush_plays),
+                        Tackles = x.Sum(s => s.def_rush_tackles),
+                        Sacks = x.Sum(s => s.def_rush_sacks),
+                        Pressures = x.Sum(s => s.def_rush_QB_Pressures),
+                        Run_for_Loss = x.Sum(s => s.def_rush_Rushing_Loss),
+                        Forced_Fumble = x.Sum(s => s.def_rush_Forced_Fumbles)
                     }).OrderByDescending(x => x.Tackles).ThenByDescending(x => x.Sacks).ThenByDescending(x => x.Run_for_Loss).ToList();
 
-                PassDefenseStats = context.Game_Player_Pass_Defense_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 &&
+                PassDefenseStats = context.Game_Player_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 &&
                     (x.Game.Home_Team_Franchise_ID == franchise_id || x.Game.Away_Team_Franchise_ID == franchise_id)
-                    && x.Player.Players_By_Team.Any(a => a.Franchise_ID == franchise_id && a.Season_ID == season_id)).GroupBy(x => x.Player)
+                    && x.Player.Players_By_Team.Any(a => a.Franchise_ID == franchise_id && a.Season_ID == season_id) && x.def_pass_plays > 0).GroupBy(x => x.Player)
                     .Select(x => new Pass_Defense_Accum_Stats_by_year
                     {
                         p = x.Key,
-                        Pass_Defenses = x.Sum(s => s.Def_Pass_Defenses),
-                        Ints = x.Sum(s => s.Ints),
-                        TDs_Surrendered = x.Sum(s => s.Touchdowns_Surrendered),
-                        Forced_Fumble = x.Sum(s => s.Forced_Fumbles)
+                        Pass_Defenses = x.Sum(s => s.def_pass_plays),
+                        Ints = x.Sum(s => s.def_pass_Ints),
+                        Forced_Fumble = x.Sum(s => s.def_pass_Forced_Fumbles)
                     }).OrderByDescending(x => x.Ints).ThenByDescending(x => x.Pass_Defenses).ToList();
 
-                KickerStats = context.Game_Player_Kicker_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 &&
+                KickerStats = context.Game_Player_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 &&
                     (x.Game.Home_Team_Franchise_ID == franchise_id || x.Game.Away_Team_Franchise_ID == franchise_id)
-                    && x.Player.Players_By_Team.Any(a => a.Franchise_ID == franchise_id && a.Season_ID == season_id)).GroupBy(x => x.Player)
+                    && x.Player.Players_By_Team.Any(a => a.Franchise_ID == franchise_id && a.Season_ID == season_id) && x.kicker_plays > 0).GroupBy(x => x.Player)
                     .Select(x => new Kicking_Accum_Stats_by_year
                     {
                         p = x.Key,
@@ -234,41 +232,41 @@ namespace SpectatorFootball.DAO
                         XP_Made = x.Sum(s => s.XP_Made)
                     }).OrderByDescending(x => x.FG_Made).ToList();
 
-                PunterStats = context.Game_Player_Punter_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 &&
+                PunterStats = context.Game_Player_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 &&
                     (x.Game.Home_Team_Franchise_ID == franchise_id || x.Game.Away_Team_Franchise_ID == franchise_id)
-                    && x.Player.Players_By_Team.Any(a => a.Franchise_ID == franchise_id && a.Season_ID == season_id)).GroupBy(x => x.Player)
+                    && x.Player.Players_By_Team.Any(a => a.Franchise_ID == franchise_id && a.Season_ID == season_id) && x.punter_plays > 0).GroupBy(x => x.Player)
                     .Select(x => new Punting_Accum_Stats_by_year
                     {
                         p = x.Key,
-                        Punts = x.Sum(s => s.num_punts),
-                        Yards = x.Sum(s => s.Punt_yards),
-                        Coffin_Corners = x.Sum(s => s.Punt_killed_num)
+                        Punts = x.Sum(s => s.punter_plays),
+                        Yards = x.Sum(s => s.punter_punt_yards),
+                        Coffin_Corners = x.Sum(s => s.punter_kill_Succ)
                     }).OrderByDescending(x => x.Punts).ToList();
 
-                KickoffReturnStats = context.Game_Player_Kick_Returner_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 &&
+                KickoffReturnStats = context.Game_Player_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 &&
                     (x.Game.Home_Team_Franchise_ID == franchise_id || x.Game.Away_Team_Franchise_ID == franchise_id)
-                    && x.Player.Players_By_Team.Any(a => a.Franchise_ID == franchise_id && a.Season_ID == season_id)).GroupBy(x => x.Player)
+                    && x.Player.Players_By_Team.Any(a => a.Franchise_ID == franchise_id && a.Season_ID == season_id) && x.ko_ret_plays > 0).GroupBy(x => x.Player)
                     .Select(x => new KickReturn_Accum_Stats_by_year
                     {
                         p = x.Key,
-                        Returns = x.Sum(s => s.Kickoffs_Returned),
-                        Yards = x.Sum(s => s.Kickoffs_Returned_Yards),
-                        Yards_Long = x.Max(s => s.Kickoff_Return_Yards_Long),
-                        TDs = x.Sum(s => s.Kickoffs_Returned_TDs),
-                        Fumbles = x.Sum(s => s.Kickoffs_Returned_Fumbles)
+                        Returns = x.Sum(s => s.ko_ret),
+                        Yards = x.Sum(s => s.ko_ret_yards),
+                        Yards_Long = x.Max(s => s.ko_ret_yards_long),
+                        TDs = x.Sum(s => s.ko_ret_TDs),
+                        Fumbles = x.Sum(s => s.ko_fumbles)
                     }).OrderByDescending(x => x.Returns).ToList();
 
-                PuntReturnStats = context.Game_Player_Punt_Returner_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 &&
+                PuntReturnStats = context.Game_Player_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 &&
                     (x.Game.Home_Team_Franchise_ID == franchise_id || x.Game.Away_Team_Franchise_ID == franchise_id)
-                    && x.Player.Players_By_Team.Any(a => a.Franchise_ID == franchise_id && a.Season_ID == season_id)).GroupBy(x => x.Player)
+                    && x.Player.Players_By_Team.Any(a => a.Franchise_ID == franchise_id && a.Season_ID == season_id) && x.punt_ret_plays > 0).GroupBy(x => x.Player)
                     .Select(x => new PuntReturns_Accum_Stats_by_year
                     {
                         p = x.Key,
-                        Returns = x.Sum(s => s.Punts_Returned),
-                        Yards = x.Sum(s => s.Punts_Returned_Yards),
-                        Yards_Long = x.Max(s => s.Punt_Returned_Yards_Long),
-                        TDs = x.Sum(s => s.Punts_Returned_TDs),
-                        Fumbles = x.Sum(s => s.Punts_Returned_Fumbles)
+                        Returns = x.Sum(s => s.punt_ret),
+                        Yards = x.Sum(s => s.punt_ret_yards),
+                        Yards_Long = x.Max(s => s.punt_ret_yards_long),
+                        TDs = x.Sum(s => s.punt_ret_TDs),
+                        Fumbles = x.Sum(s => s.punt_ret_fumbles)
                     }).OrderByDescending(x => x.Returns).ToList();
 
             }

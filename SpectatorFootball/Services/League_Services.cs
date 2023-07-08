@@ -681,13 +681,13 @@ namespace SpectatorFootball
                                 lStats.Pass_Defense_Stats = lStats.Pass_Defense_Stats.OrderBy(x =>
                                     sort_field == "Pass_Defenses" ? x.Pass_Defenses :
                                     sort_field == "Ints" ? x.Ints :
-                                    sort_field == "TDs_Surrendered" ? x.TDs_Surrendered :
+//                                    sort_field == "TDs_Surrendered" ? x.TDs_Surrendered :
                                     sort_field == "Forced_Fumble" ? x.Forced_Fumble : x.Forced_Fumble).ToList();
                             else
                                 lStats.Pass_Defense_Stats = lStats.Pass_Defense_Stats.OrderByDescending(x =>
                                     sort_field == "Pass_Defenses" ? x.Pass_Defenses :
                                     sort_field == "Ints" ? x.Ints :
-                                    sort_field == "TDs_Surrendered" ? x.TDs_Surrendered :
+//                                    sort_field == "TDs_Surrendered" ? x.TDs_Surrendered :
                                     sort_field == "Forced_Fumble" ? x.Forced_Fumble : x.Forced_Fumble).ToList();
                             break;
                     }

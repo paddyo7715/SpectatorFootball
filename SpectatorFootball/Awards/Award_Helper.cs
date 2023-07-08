@@ -182,7 +182,7 @@ namespace SpectatorFootball.Awards
                     (x.Pass_Defenses * app_Constants.DEFENSE_PASS_DEFENSES_MULTIPLYER) +
                     (x.Tackles * app_Constants.DEFENSE_PASS_TACKLES_MULTIPLYER) -
                     (x.Missed_Tackles * app_Constants.DEFENSE_PASS_MISSED_TACKLES_MULTIPLYER) -
-                    (x.TDs_Surrendered * app_Constants.DEFENSE_PASS_TDS_SURRENDERED_MULTIPLYER) +
+//                    (x.TDs_Surrendered * app_Constants.DEFENSE_PASS_TDS_SURRENDERED_MULTIPLYER) +
                     (x.Forced_Fumble * app_Constants.DEFENSE_PASS_FORCED_FUMBLE_MULTIPLYER);
 
                 Award_Rating_Rec a = r.Where(t => t.p.ID == x.p.ID).FirstOrDefault();
@@ -213,71 +213,71 @@ namespace SpectatorFootball.Awards
 
             //passing stats
             r.Passing_Stats = new List<Passing_Accum_Stats_by_year>();
-            foreach (Game_Player_Passing_Stats x in g.Game_Player_Passing_Stats)
+            foreach (Game_Player_Stats x in g.Game_Player_Stats)
             {
                 r.Passing_Stats.Add(new Passing_Accum_Stats_by_year()
                 {
                     p = x.Player,
-                    Ateempts = x.Pass_Att,
-                    Completes = x.Pass_Comp,
-                    Fumbles_Lost = x.Fumbles_Lost,
-                    Ints = x.Pass_Ints,
-                    TDs = x.Pass_TDs,
+                    Ateempts = x.off_pass_Att,
+                    Completes = x.off_pass_Comp,
+                    Fumbles_Lost = x.off_pass_Fumbles_Lost,
+                    Ints = x.off_pass_Ints,
+                    TDs = x.off_pass_TDs,
                     Pos = x.Player.Pos,
-                    Yards = x.Pass_Yards
+                    Yards = x.off_pass_Yards
                 });
             }
 
             //Rushing stats
             r.Rushing_Stats = new List<Rushing_Accum_Stats_by_year>();
-            foreach (Game_Player_Rushing_Stats x in g.Game_Player_Rushing_Stats)
+            foreach (Game_Player_Stats x in g.Game_Player_Stats)
             {
                 r.Rushing_Stats.Add(new Rushing_Accum_Stats_by_year()
                 {
                     p = x.Player,
                     Pos = x.Player.Pos,
-                    Fumbles_Lost = x.Fumbles_Lost,
-                    Rushes = x.Rush_Att,
-                    TDs = x.Rush_TDs,
-                    Yards = x.Rush_Yards
+                    Fumbles_Lost = x.off_rush_fumbles_lost,
+                    Rushes = x.off_rush_att,
+                    TDs = x.off_rush_TDs,
+                    Yards = x.off_rush_Yards
                 });
             }
 
             //Receiving Stats
             r.Receiving_Stats = new List<Receiving_Accum_Stats_by_year>();
-            foreach (Game_Player_Receiving_Stats x in g.Game_Player_Receiving_Stats)
+            foreach (Game_Player_Stats x in g.Game_Player_Stats)
             {
                 r.Receiving_Stats.Add(new Receiving_Accum_Stats_by_year()
                 {
-                    Catches = x.Rec_Catches,
-                    Drops = x.Rec_Drops,
-                    Fumbles_Lost = x.Fumbles_Lost,
+                    Catches = x.off_rec_catches,
+                    Drops = x.off_rec_drops,
+                    Fumbles_Lost = x.off_rec_fumbles_lost,
                     p = x.Player,
                     Pos = x.Player.Pos,
-                    TDs = x.Rec_TDs,
-                    Yards = x.Rec_Yards
+                    TDs = x.off_rec_TDs,
+                    Yards = x.off_rec_Yards
                 });
             }
 
             //blocking stats
             r.Blocking_Stats = new List<Blocking_Accum_Stats_by_year>();
-            foreach (Game_Player_Offensive_Linemen_Stats x in g.Game_Player_Offensive_Linemen_Stats)
+            foreach (Game_Player_Stats x in g.Game_Player_Stats)
             {
                 r.Blocking_Stats.Add(new Blocking_Accum_Stats_by_year()
                 {
                     p = x.Player,
-                    Pancakes = x.OLine_Pancakes,
-                    Plays = x.Oline_Plays,
+                    Pancakes = x.off_line_pancakes,
+                    Plays = x.off_line_plays,
                     Pos = x.Player.Pos,
-                    Pressures_Allowed = x.QB_Pressures_Allowed,
-                    Rushing_Loss_Allowed = x.OLine_Rushing_Loss_Allowed,
-                    Sacks_Allowed = x.OLine_Sacks_Allowed
+                    Pressures_Allowed = x.off_line_QB_Pressures_Allowed,
+                    Rushing_Loss_Allowed = x.off_line_Rushing_Loss_Allowed,
+                    Sacks_Allowed = x.off_line_sacks_allowed
                 });
             }
 
             //FG
             r.Kicking_Stats = new List<Kicking_Accum_Stats_by_year>();
-            foreach (Game_Player_Kicker_Stats x in g.Game_Player_Kicker_Stats)
+            foreach (Game_Player_Stats x in g.Game_Player_Stats)
             {
                 r.Kicking_Stats.Add(new Kicking_Accum_Stats_by_year()
                 {
@@ -292,54 +292,54 @@ namespace SpectatorFootball.Awards
 
             //Punting
             r.Punting_Stats = new List<Punting_Accum_Stats_by_year>();
-            foreach (Game_Player_Punter_Stats x in g.Game_Player_Punter_Stats)
+            foreach (Game_Player_Stats x in g.Game_Player_Stats)
             {
                 r.Punting_Stats.Add(new Punting_Accum_Stats_by_year()
                 {
                     p = x.Player,
                     Pos = x.Player.Pos,
-                    Coffin_Corners = x.Punt_killed_num,
-                    Punts = x.num_punts,
-                    Yards = x.Punt_yards,
-                    Fumbles_Lost = x.Fumbles_Lost
+                    Coffin_Corners = x.punter_kill_Succ,
+                    Punts = x.punter_punts,
+                    Yards = x.punter_punt_yards,
+                    Fumbles_Lost = x.punter_Fumbles_lost
                 });
             }
 
             //Defense
             r.Defense_Stats = new List<Defense_Accum_Stats_by_year>();
-            foreach (Game_Player_Defense_Stats x in g.Game_Player_Defense_Stats)
+            foreach (Game_Player_Stats x in g.Game_Player_Stats)
             {
                 r.Defense_Stats.Add(new Defense_Accum_Stats_by_year()
                 {
                     p = x.Player,
                     Pos = x.Player.Pos,
-                    Plays = x.Pass_Rushes,
-                    Def_Safety = x.Def_Safety,
-                    Missed_Tackles = x.Def_Missed_Tackles,
-                    Forced_Fumble = x.Forced_Fumbles,
-                    Pressures = x.QB_Pressures,
-                    Run_for_Loss = x.Def_Rushing_Loss,
-                    Sacks = x.Def_Sacks,
-                    Tackles = x.Def_Tackles,
-                    Def_TDs = x.Def_TDs
+                    Plays = x.def_rush_plays,
+                    Def_Safety = x.def_rush_Safety,
+                    Missed_Tackles = x.def_rush_Missed_Tackles,
+                    Forced_Fumble = x.def_rush_Forced_Fumbles,
+                    Pressures = x.def_rush_QB_Pressures,
+                    Run_for_Loss = x.def_rush_Rushing_Loss,
+                    Sacks = x.def_rush_sacks,
+                    Tackles = x.def_rush_tackles,
+                    Def_TDs = x.def_rush_TDs
                 });
             }
 
             //Pass Defense
             r.Pass_Defense_Stats = new List<Pass_Defense_Accum_Stats_by_year>();
-            foreach (Game_Player_Pass_Defense_Stats x in g.Game_Player_Pass_Defense_Stats)
+            foreach (Game_Player_Stats x in g.Game_Player_Stats)
             {
                 r.Pass_Defense_Stats.Add(new Pass_Defense_Accum_Stats_by_year()
                 {
                     p = x.Player,
                     Pos = x.Player.Pos,
-                    Def_int_TDs = x.Def_int_TDs,
-                    Forced_Fumble = x.Forced_Fumbles,
-                    Ints = x.Ints,
-                    Missed_Tackles = x.Def_Missed_Tackles,
-                    Pass_Defenses = x.Def_Pass_Defenses,
-                    Tackles = x.Tackles,
-                    TDs_Surrendered = x.Touchdowns_Surrendered
+                    Def_int_TDs = x.def_pass_Int_TDs,
+                    Forced_Fumble = x.def_pass_Forced_Fumbles,
+                    Ints = x.def_pass_Ints,
+                    Missed_Tackles = x.def_pass_Missed_Tackles,
+                    Pass_Defenses = x.def_pass_Pass_KnockedAway,
+                    Tackles = x.def_pass_Tackles,
+//                    TDs_Surrendered = x.Touchdowns_Surrendered
                 });
             }
 

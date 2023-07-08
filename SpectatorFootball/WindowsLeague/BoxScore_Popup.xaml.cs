@@ -246,14 +246,14 @@ namespace SpectatorFootball.WindowsLeague
             lblHomeBSFirstDowns.Content = bs_rec.Game.Home_FirstDowns;
 
             //get total rushing yars
-            long awayRushYars = bs_rec.Game.Game_Player_Rushing_Stats.Where(x => x.Franchise_ID == bs_rec.Game.Away_Team_Franchise_ID).Sum(x => x.Rush_Yards);
-            long homeRushYars = bs_rec.Game.Game_Player_Rushing_Stats.Where(x => x.Franchise_ID == bs_rec.Game.Home_Team_Franchise_ID).Sum(x => x.Rush_Yards);
+            long awayRushYars = bs_rec.Game.Game_Player_Stats.Where(x => x.Franchise_ID == bs_rec.Game.Away_Team_Franchise_ID).Sum(x => x.off_rush_Yards);
+            long homeRushYars = bs_rec.Game.Game_Player_Stats.Where(x => x.Franchise_ID == bs_rec.Game.Home_Team_Franchise_ID).Sum(x => x.off_rush_Yards);
 
             lblAwayBSRushingYards.Content = awayRushYars;
             lblHomeBSRushingYards.Content = homeRushYars;
 
-            long awayPassYars = bs_rec.Game.Game_Player_Passing_Stats.Where(x => x.Franchise_ID == bs_rec.Game.Away_Team_Franchise_ID).Sum(x => x.Pass_Yards);
-            long homePassYars = bs_rec.Game.Game_Player_Passing_Stats.Where(x => x.Franchise_ID == bs_rec.Game.Home_Team_Franchise_ID).Sum(x => x.Pass_Yards);
+            long awayPassYars = bs_rec.Game.Game_Player_Stats.Where(x => x.Franchise_ID == bs_rec.Game.Away_Team_Franchise_ID).Sum(x => x.off_pass_Yards);
+            long homePassYars = bs_rec.Game.Game_Player_Stats.Where(x => x.Franchise_ID == bs_rec.Game.Home_Team_Franchise_ID).Sum(x => x.off_pass_Yards);
 
             lblAwayBSPassingYards.Content = awayPassYars;
             lblHomeBSPassingYards.Content = homePassYars;
@@ -271,49 +271,49 @@ namespace SpectatorFootball.WindowsLeague
             long home_turnovers = 0;
 
             //add qb interceptions to turnovers
-            away_turnovers += bs_rec.Game.Game_Player_Passing_Stats.Where(x => x.Franchise_ID == bs_rec.Game.Away_Team_Franchise_ID).Sum(x => x.Pass_Ints);
-            home_turnovers += bs_rec.Game.Game_Player_Passing_Stats.Where(x => x.Franchise_ID == bs_rec.Game.Home_Team_Franchise_ID).Sum(x => x.Pass_Ints);
+            away_turnovers += bs_rec.Game.Game_Player_Stats.Where(x => x.Franchise_ID == bs_rec.Game.Away_Team_Franchise_ID).Sum(x => x.off_pass_Ints);
+            home_turnovers += bs_rec.Game.Game_Player_Stats.Where(x => x.Franchise_ID == bs_rec.Game.Home_Team_Franchise_ID).Sum(x => x.off_pass_Ints);
 
             //add qb fumbles lost to turnovers
-            away_turnovers += bs_rec.Game.Game_Player_Passing_Stats.Where(x => x.Franchise_ID == bs_rec.Game.Away_Team_Franchise_ID).Sum(x => x.Fumbles_Lost);
-            home_turnovers += bs_rec.Game.Game_Player_Passing_Stats.Where(x => x.Franchise_ID == bs_rec.Game.Home_Team_Franchise_ID).Sum(x => x.Fumbles_Lost);
+            away_turnovers += bs_rec.Game.Game_Player_Stats.Where(x => x.Franchise_ID == bs_rec.Game.Away_Team_Franchise_ID).Sum(x => x.off_pass_Fumbles_Lost);
+            home_turnovers += bs_rec.Game.Game_Player_Stats.Where(x => x.Franchise_ID == bs_rec.Game.Home_Team_Franchise_ID).Sum(x => x.off_pass_Fumbles_Lost);
 
             //add kickoff returner fumbles lost
-            away_turnovers += bs_rec.Game.Game_Player_Kick_Returner_Stats.Where(x => x.Franchise_ID == bs_rec.Game.Away_Team_Franchise_ID).Sum(x => x.Kickoffs_Returned_Fumbles_Lost);
-            home_turnovers += bs_rec.Game.Game_Player_Kick_Returner_Stats.Where(x => x.Franchise_ID == bs_rec.Game.Home_Team_Franchise_ID).Sum(x => x.Kickoffs_Returned_Fumbles_Lost);
+            away_turnovers += bs_rec.Game.Game_Player_Stats.Where(x => x.Franchise_ID == bs_rec.Game.Away_Team_Franchise_ID).Sum(x => x.ko_fumbles_lost);
+            home_turnovers += bs_rec.Game.Game_Player_Stats.Where(x => x.Franchise_ID == bs_rec.Game.Home_Team_Franchise_ID).Sum(x => x.ko_fumbles_lost);
 
             //add punt returner fumbles lost
-            away_turnovers += bs_rec.Game.Game_Player_Punt_Returner_Stats.Where(x => x.Franchise_ID == bs_rec.Game.Away_Team_Franchise_ID).Sum(x => x.Punts_Returned_Fumbles_Lost);
-            home_turnovers += bs_rec.Game.Game_Player_Punt_Returner_Stats.Where(x => x.Franchise_ID == bs_rec.Game.Home_Team_Franchise_ID).Sum(x => x.Punts_Returned_Fumbles_Lost);
+            away_turnovers += bs_rec.Game.Game_Player_Stats.Where(x => x.Franchise_ID == bs_rec.Game.Away_Team_Franchise_ID).Sum(x => x.punt_ret_fumbles_lost);
+            home_turnovers += bs_rec.Game.Game_Player_Stats.Where(x => x.Franchise_ID == bs_rec.Game.Home_Team_Franchise_ID).Sum(x => x.punt_ret_fumbles_lost);
 
             //add punter fumbles lost
-            away_turnovers += bs_rec.Game.Game_Player_Punter_Stats.Where(x => x.Franchise_ID == bs_rec.Game.Away_Team_Franchise_ID).Sum(x => x.Fumbles_Lost);
-            home_turnovers += bs_rec.Game.Game_Player_Punter_Stats.Where(x => x.Franchise_ID == bs_rec.Game.Home_Team_Franchise_ID).Sum(x => x.Fumbles_Lost);
+            away_turnovers += bs_rec.Game.Game_Player_Stats.Where(x => x.Franchise_ID == bs_rec.Game.Away_Team_Franchise_ID).Sum(x => x.punter_Fumbles_lost);
+            home_turnovers += bs_rec.Game.Game_Player_Stats.Where(x => x.Franchise_ID == bs_rec.Game.Home_Team_Franchise_ID).Sum(x => x.punter_Fumbles_lost);
 
             //add receiver fumbles lost
-            away_turnovers += bs_rec.Game.Game_Player_Receiving_Stats.Where(x => x.Franchise_ID == bs_rec.Game.Away_Team_Franchise_ID).Sum(x => x.Fumbles_Lost);
-            home_turnovers += bs_rec.Game.Game_Player_Receiving_Stats.Where(x => x.Franchise_ID == bs_rec.Game.Home_Team_Franchise_ID).Sum(x => x.Fumbles_Lost);
+            away_turnovers += bs_rec.Game.Game_Player_Stats.Where(x => x.Franchise_ID == bs_rec.Game.Away_Team_Franchise_ID).Sum(x => x.off_rec_fumbles_lost);
+            home_turnovers += bs_rec.Game.Game_Player_Stats.Where(x => x.Franchise_ID == bs_rec.Game.Home_Team_Franchise_ID).Sum(x => x.off_rec_fumbles_lost);
 
             //add rusher fumbles lost
-            away_turnovers += bs_rec.Game.Game_Player_Rushing_Stats.Where(x => x.Franchise_ID == bs_rec.Game.Away_Team_Franchise_ID).Sum(x => x.Fumbles_Lost);
-            home_turnovers += bs_rec.Game.Game_Player_Rushing_Stats.Where(x => x.Franchise_ID == bs_rec.Game.Home_Team_Franchise_ID).Sum(x => x.Fumbles_Lost);
+            away_turnovers += bs_rec.Game.Game_Player_Stats.Where(x => x.Franchise_ID == bs_rec.Game.Away_Team_Franchise_ID).Sum(x => x.off_rush_fumbles_lost);
+            home_turnovers += bs_rec.Game.Game_Player_Stats.Where(x => x.Franchise_ID == bs_rec.Game.Home_Team_Franchise_ID).Sum(x => x.off_rush_fumbles_lost);
 
             lblAwayBSTurnovers.Content = away_turnovers;
             lblHomeBSTurnovers.Content = home_turnovers;
 
-            long awayFGmade = bs_rec.Game.Game_Player_Kicker_Stats.Where(x => x.Franchise_ID == bs_rec.Game.Away_Team_Franchise_ID).Sum(x => x.FG_Made);
+            long awayFGmade = bs_rec.Game.Game_Player_Stats.Where(x => x.Franchise_ID == bs_rec.Game.Away_Team_Franchise_ID).Sum(x => x.FG_Made);
 
-            long awayFGAtt = bs_rec.Game.Game_Player_Kicker_Stats.Where(x => x.Franchise_ID == bs_rec.Game.Away_Team_Franchise_ID).Sum(x => x.FG_Att);
+            long awayFGAtt = bs_rec.Game.Game_Player_Stats.Where(x => x.Franchise_ID == bs_rec.Game.Away_Team_Franchise_ID).Sum(x => x.FG_Att);
 
-            long homeFGmade = bs_rec.Game.Game_Player_Kicker_Stats.Where(x => x.Franchise_ID == bs_rec.Game.Home_Team_Franchise_ID).Sum(x => x.FG_Made);
+            long homeFGmade = bs_rec.Game.Game_Player_Stats.Where(x => x.Franchise_ID == bs_rec.Game.Home_Team_Franchise_ID).Sum(x => x.FG_Made);
 
-            long homeFGAtt = bs_rec.Game.Game_Player_Kicker_Stats.Where(x => x.Franchise_ID == bs_rec.Game.Home_Team_Franchise_ID).Sum(x => x.FG_Att);
+            long homeFGAtt = bs_rec.Game.Game_Player_Stats.Where(x => x.Franchise_ID == bs_rec.Game.Home_Team_Franchise_ID).Sum(x => x.FG_Att);
 
             lblAwayBSFieldGoals.Content = awayFGmade.ToString() + "-" + awayFGAtt.ToString();
             lblHomeBSFieldGoals.Content = awayFGmade.ToString() + "-" + awayFGAtt.ToString();
 
-            lblAwayBSSacks.Content = bs_rec.Game.Game_Player_Defense_Stats.Where(x => x.Franchise_ID == bs_rec.Game.Home_Team_Franchise_ID).Sum(x => x.Def_Sacks);
-            lblHomeBSSacks.Content = bs_rec.Game.Game_Player_Defense_Stats.Where(x => x.Franchise_ID == bs_rec.Game.Away_Team_Franchise_ID).Sum(x => x.Def_Sacks);
+            lblAwayBSSacks.Content = bs_rec.Game.Game_Player_Stats.Where(x => x.Franchise_ID == bs_rec.Game.Home_Team_Franchise_ID).Sum(x => x.def_rush_sacks);
+            lblHomeBSSacks.Content = bs_rec.Game.Game_Player_Stats.Where(x => x.Franchise_ID == bs_rec.Game.Away_Team_Franchise_ID).Sum(x => x.def_rush_sacks);
 
             lblAwayBSTimeofPoss.Content = Game_Helper.getTimestringFromSeconds((long)bs_rec.Game.Away_TOP);
             lblHomeBSTimeofPoss.Content = Game_Helper.getTimestringFromSeconds((long)bs_rec.Game.Home_TOP);
@@ -330,41 +330,41 @@ namespace SpectatorFootball.WindowsLeague
 
             //because ef6 is limited and can not sort or filter subentries (includes), I must do it myself.
             //For example, I do not want to include QBs that don't have any attempts in the stats line
-            List<Game_Player_Passing_Stats> away_Passing_stats = bs_rec.Game.Game_Player_Passing_Stats
-                .Where(x => x.Franchise_ID == bs_rec.Game.Away_Team_Franchise_ID && x.Pass_Att > 0)
-                .OrderByDescending(x => x.Pass_Yards).ToList();
+            List<Game_Player_Stats> away_Passing_stats = bs_rec.Game.Game_Player_Stats
+                .Where(x => x.Franchise_ID == bs_rec.Game.Away_Team_Franchise_ID && x.off_pass_Att > 0)
+                .OrderByDescending(x => x.off_pass_Yards).ToList();
 
-            List<Game_Player_Rushing_Stats> away_Rushing_stats = bs_rec.Game.Game_Player_Rushing_Stats
-                .Where(x => x.Franchise_ID == bs_rec.Game.Away_Team_Franchise_ID && x.Rush_Att > 0)
-                .OrderByDescending(x => x.Rush_Yards).ToList();
+            List<Game_Player_Stats> away_Rushing_stats = bs_rec.Game.Game_Player_Stats
+                .Where(x => x.Franchise_ID == bs_rec.Game.Away_Team_Franchise_ID && x.off_rush_att > 0)
+                .OrderByDescending(x => x.off_rush_Yards).ToList();
 
-            List<Game_Player_Receiving_Stats> away_Receiving_stats = bs_rec.Game.Game_Player_Receiving_Stats
-                .Where(x => x.Franchise_ID == bs_rec.Game.Away_Team_Franchise_ID && (x.Rec_Catches > 0 || x.Rec_Drops > 0))
-                .OrderByDescending(x => x.Rec_Yards).ToList();
+            List<Game_Player_Stats> away_Receiving_stats = bs_rec.Game.Game_Player_Stats
+                .Where(x => x.Franchise_ID == bs_rec.Game.Away_Team_Franchise_ID && (x.off_rec_catches > 0 || x.off_rec_drops > 0))
+                .OrderByDescending(x => x.off_rec_Yards).ToList();
 
-            List<Game_Player_Pass_Defense_Stats> away_Pass_Defense_stats = bs_rec.Game.Game_Player_Pass_Defense_Stats
-                .Where(x => x.Franchise_ID == bs_rec.Game.Away_Team_Franchise_ID && (x.Ints > 0 || x.Def_Pass_Defenses > 0))
-                .OrderByDescending(x => x.Ints).ThenByDescending(x => x.Def_Pass_Defenses).ToList();
+            List<Game_Player_Stats> away_Pass_Defense_stats = bs_rec.Game.Game_Player_Stats
+                .Where(x => x.Franchise_ID == bs_rec.Game.Away_Team_Franchise_ID && (x.def_pass_Ints > 0 || x.def_pass_Pass_KnockedAway > 0))
+                .OrderByDescending(x => x.def_pass_Ints).ThenByDescending(x => x.def_pass_Pass_KnockedAway).ToList();
 
-            List<Game_Player_Defense_Stats> away_Defense_stats = bs_rec.Game.Game_Player_Defense_Stats
-                .Where(x => x.Franchise_ID == bs_rec.Game.Away_Team_Franchise_ID && x.Def_Tackles > 0)
-                .OrderByDescending(x => x.Def_Tackles).ToList();
+            List<Game_Player_Stats> away_Defense_stats = bs_rec.Game.Game_Player_Stats
+                .Where(x => x.Franchise_ID == bs_rec.Game.Away_Team_Franchise_ID && x.def_rush_tackles > 0)
+                .OrderByDescending(x => x.def_rush_tackles).ToList();
 
-            List<Game_Player_Kicker_Stats> away_kicker_stats = bs_rec.Game.Game_Player_Kicker_Stats
+            List<Game_Player_Stats> away_kicker_stats = bs_rec.Game.Game_Player_Stats
                 .Where(x => x.Franchise_ID == bs_rec.Game.Away_Team_Franchise_ID)
                 .OrderByDescending(x => x.FG_Made).ToList();
 
-            List<Game_Player_Punter_Stats> away_punter_stats = bs_rec.Game.Game_Player_Punter_Stats
+            List<Game_Player_Stats> away_punter_stats = bs_rec.Game.Game_Player_Stats
                 .Where(x => x.Franchise_ID == bs_rec.Game.Away_Team_Franchise_ID)
-                .OrderByDescending(x => x.num_punts).ToList();
+                .OrderByDescending(x => x.punter_punts).ToList();
 
-            List<Game_Player_Kick_Returner_Stats> away_KickoffReturns_stats = bs_rec.Game.Game_Player_Kick_Returner_Stats
+            List<Game_Player_Stats> away_KickoffReturns_stats = bs_rec.Game.Game_Player_Stats
                 .Where(x => x.Franchise_ID == bs_rec.Game.Away_Team_Franchise_ID)
-                .OrderByDescending(x => x.Kickoffs_Returned).ToList();
+                .OrderByDescending(x => x.ko_ret).ToList();
 
-            List<Game_Player_Punt_Returner_Stats> away_PuntReturns_stats = bs_rec.Game.Game_Player_Punt_Returner_Stats
+            List<Game_Player_Stats> away_PuntReturns_stats = bs_rec.Game.Game_Player_Stats
                 .Where(x => x.Franchise_ID == bs_rec.Game.Away_Team_Franchise_ID)
-                .OrderByDescending(x => x.Punts_Returned).ToList();
+                .OrderByDescending(x => x.punt_ret).ToList();
 
 
             lstAwayPassing.ItemsSource = away_Passing_stats;
@@ -391,41 +391,41 @@ namespace SpectatorFootball.WindowsLeague
 
             //because ef6 is limited and can not sort or filter subentries (includes), I must do it myself.
             //For example, I do not want to include QBs that don't have any attempts in the stats line
-            List<Game_Player_Passing_Stats> home_Passing_stats = bs_rec.Game.Game_Player_Passing_Stats
-                .Where(x => x.Franchise_ID == bs_rec.Game.Home_Team_Franchise_ID && x.Pass_Att > 0)
-                .OrderByDescending(x => x.Pass_Yards).ToList();
+            List<Game_Player_Stats> home_Passing_stats = bs_rec.Game.Game_Player_Stats
+                .Where(x => x.Franchise_ID == bs_rec.Game.Home_Team_Franchise_ID && x.off_pass_Att > 0)
+                .OrderByDescending(x => x.off_pass_Yards).ToList();
 
-            List<Game_Player_Rushing_Stats> home_Rushing_stats = bs_rec.Game.Game_Player_Rushing_Stats
-                .Where(x => x.Franchise_ID == bs_rec.Game.Home_Team_Franchise_ID && x.Rush_Att > 0)
-                .OrderByDescending(x => x.Rush_Yards).ToList();
+            List<Game_Player_Stats> home_Rushing_stats = bs_rec.Game.Game_Player_Stats
+                .Where(x => x.Franchise_ID == bs_rec.Game.Home_Team_Franchise_ID && x.off_rush_att > 0)
+                .OrderByDescending(x => x.off_rush_Yards).ToList();
 
-            List<Game_Player_Receiving_Stats> home_Receiving_stats = bs_rec.Game.Game_Player_Receiving_Stats
-                .Where(x => x.Franchise_ID == bs_rec.Game.Home_Team_Franchise_ID && x.Rec_Catches > 0)
-                .OrderByDescending(x => x.Rec_Yards).ToList();
+            List<Game_Player_Stats> home_Receiving_stats = bs_rec.Game.Game_Player_Stats
+                .Where(x => x.Franchise_ID == bs_rec.Game.Home_Team_Franchise_ID && (x.off_rec_catches > 0 || x.off_rec_drops > 0))
+                .OrderByDescending(x => x.off_rec_Yards).ToList();
 
-            List<Game_Player_Pass_Defense_Stats> home_Pass_Defense_stats = bs_rec.Game.Game_Player_Pass_Defense_Stats
-                .Where(x => x.Franchise_ID == bs_rec.Game.Home_Team_Franchise_ID && (x.Ints > 0 || x.Def_Pass_Defenses > 0))
-                .OrderByDescending(x => x.Ints).ThenByDescending(x => x.Def_Pass_Defenses).ToList();
+            List<Game_Player_Stats> home_Pass_Defense_stats = bs_rec.Game.Game_Player_Stats
+                .Where(x => x.Franchise_ID == bs_rec.Game.Home_Team_Franchise_ID && (x.def_pass_Ints > 0 || x.def_pass_Pass_KnockedAway > 0))
+                .OrderByDescending(x => x.def_pass_Ints).ThenByDescending(x => x.def_pass_Pass_KnockedAway).ToList();
 
-            List<Game_Player_Defense_Stats> home_Defense_stats = bs_rec.Game.Game_Player_Defense_Stats
-                .Where(x => x.Franchise_ID == bs_rec.Game.Home_Team_Franchise_ID && x.Def_Tackles > 0)
-                .OrderByDescending(x => x.Def_Tackles).ToList();
+            List<Game_Player_Stats> home_Defense_stats = bs_rec.Game.Game_Player_Stats
+                .Where(x => x.Franchise_ID == bs_rec.Game.Home_Team_Franchise_ID && x.def_rush_tackles > 0)
+                .OrderByDescending(x => x.def_rush_tackles).ToList();
 
-            List<Game_Player_Kicker_Stats> home_kicker_stats = bs_rec.Game.Game_Player_Kicker_Stats
+            List<Game_Player_Stats> home_kicker_stats = bs_rec.Game.Game_Player_Stats
                 .Where(x => x.Franchise_ID == bs_rec.Game.Home_Team_Franchise_ID)
                 .OrderByDescending(x => x.FG_Made).ToList();
 
-            List<Game_Player_Punter_Stats> home_punter_stats = bs_rec.Game.Game_Player_Punter_Stats
+            List<Game_Player_Stats> home_punter_stats = bs_rec.Game.Game_Player_Stats
                 .Where(x => x.Franchise_ID == bs_rec.Game.Home_Team_Franchise_ID)
-                .OrderByDescending(x => x.num_punts).ToList();
+                .OrderByDescending(x => x.punter_punts).ToList();
 
-            List<Game_Player_Kick_Returner_Stats> home_KickoffReturns_stats = bs_rec.Game.Game_Player_Kick_Returner_Stats
+            List<Game_Player_Stats> home_KickoffReturns_stats = bs_rec.Game.Game_Player_Stats
                 .Where(x => x.Franchise_ID == bs_rec.Game.Home_Team_Franchise_ID)
-                .OrderByDescending(x => x.Kickoffs_Returned).ToList();
+                .OrderByDescending(x => x.ko_ret).ToList();
 
-            List<Game_Player_Punt_Returner_Stats> home_PuntReturns_stats = bs_rec.Game.Game_Player_Punt_Returner_Stats
+            List<Game_Player_Stats> home_PuntReturns_stats = bs_rec.Game.Game_Player_Stats
                 .Where(x => x.Franchise_ID == bs_rec.Game.Home_Team_Franchise_ID)
-                .OrderByDescending(x => x.Punts_Returned).ToList();
+                .OrderByDescending(x => x.punt_ret).ToList();
 
             lstHomePassing.ItemsSource = home_Passing_stats;
             lstHomeRushing.ItemsSource = home_Rushing_stats;
