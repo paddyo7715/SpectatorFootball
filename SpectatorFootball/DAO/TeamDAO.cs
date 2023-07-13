@@ -254,7 +254,7 @@ namespace SpectatorFootball.DAO
                         Yards = x.Sum(s => s.ko_ret_yards),
                         Yards_Long = x.Max(s => s.ko_ret_yards_long),
                         TDs = x.Sum(s => s.ko_ret_TDs),
-                        Fumbles = x.Sum(s => s.ko_fumbles)
+                        Fumbles = x.Sum(s => s.ko_ret_fumbles)
                     }).OrderByDescending(x => x.Returns).ToList();
 
                 PuntReturnStats = context.Game_Player_Stats.Where(x => x.Game.Season_ID == season_id && x.Game.Week < app_Constants.PLAYOFF_WIDLCARD_WEEK_1 &&

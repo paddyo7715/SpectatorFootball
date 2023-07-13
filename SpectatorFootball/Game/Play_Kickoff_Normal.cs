@@ -1,5 +1,6 @@
 ﻿using log4net;
 using SpectatorFootball.Enum;
+using SpectatorFootball.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,8 @@ namespace SpectatorFootball.GameNS
             r.Kicker = Kickoff_Players[app_Constants.KICKER_INDEX];
             //Get the kicker - kicker and returner must be slot 5 in the formation
             r.Returner = Return_Players[app_Constants.RETURNER_INDEX];
+            List<Game_Player> Missed_Tackles = new List<Game_Player>();
+            double retuner_catches_ball_yl = 0.0;
 
             //for testing print out all the players and their relevant ratings
             logger.Debug("bLefttoRight: " + bLefttoRight.ToString());
@@ -141,10 +144,12 @@ namespace SpectatorFootball.GameNS
 
             gBall.Current_YardLine = Kicking_Helper.SetMaxKickoffYardline(gBall.Current_YardLine);
 
+            retuner_catches_ball_yl = retuner_catches_ball_yl;
+
             r.bKickoff_Out_of_Endzone = r.Returner.isKickOutofEndzone(gBall.Current_YardLine);
             if (r.bKickoff_Out_of_Endzone)
                 r.bTouchback = true;
-
+  
             if (!bSim)
             {
                 if (r.bTouchback)
@@ -255,8 +260,6 @@ namespace SpectatorFootball.GameNS
                             " target_YardLine:" + yardline_Offset * Game_Engine_Helper.HorizontalAdj(bLefttoRight) +
                             " target vertical:" + vert_offset
                             );
-
-
                     }
                     else if (group_2.Contains(id_Players))
                     {
@@ -366,7 +369,6 @@ namespace SpectatorFootball.GameNS
                 //since the returner will catch the ball switch blefttoright
 
                 bLefttoRight = Game_Engine_Helper.Switch_LefttoRight(bLefttoRight);
-                //                r.bSwitchPossession = true;
 
                 //Should the kick be returned
                 r.bTouchback = r.Returner.isTouchback(bLast_Play, group_1);
@@ -487,6 +489,8 @@ namespace SpectatorFootball.GameNS
 
                                 if (bTack)
                                     r.Tackler = Kickoff_Players[tackler_ind];
+                                else
+                                    Missed_Tackles.Add(Kickoff_Players[tackler_ind]);
 
                                 if (r.Tackler != null)
                                     break;
@@ -775,7 +779,7 @@ namespace SpectatorFootball.GameNS
                             getBothGroupSlotPlayers(Kickoff_Players, Return_Players,
                                 pFumble_Rec_Kickoff_Players, pFumble_Rec_Return_Players, closest_players);
                             pFumble_Rec_Return_Players.Add(r.Returner);
-                            Game_Player fumble_recoverer = Playstub_Fumble.Execute(bLefttoRight, gBall,
+                            r.Fumble_Recoverer = Playstub_Fumble.Execute(bLefttoRight, gBall,
                                 Kickoff_Players, Return_Players,
                                 pFumble_Rec_Kickoff_Players, pFumble_Rec_Return_Players,
                                 r.Returner, r.Tackler, bSim);
@@ -848,6 +852,8 @@ namespace SpectatorFootball.GameNS
                         r.Tackler = r.Kicker;
                         logger.Debug("Tackle Made!");
                     }
+                    else
+                        Missed_Tackles.Add(r.Kicker);
 
                     dbetweenVert = app_Constants.KICKOFF_GROUP_VERT_DIST / 2.0;
 
@@ -1031,7 +1037,25 @@ namespace SpectatorFootball.GameNS
                     logger.Debug("");
                 } //not tackled
             }  //Not kicked out of the endzone
-            //===== end of stage six
+               //===== end of stage six
+
+            //Set if touchdown
+            r.bTouchDown = Game_Engine_Helper.isTouchdown(bLefttoRight, r.Returner.Current_YardLine);
+
+            if (r.Returner != null)
+                r.Line_of_Scrimmage = r.Returner.Current_YardLine;
+
+            if (r.bFumble_Lost)
+                r.bSwitchPossession = true;
+
+            //Set the Play stats
+            double yards_gamed = Game_Engine_Helper.getYardsGained(bLefttoRight, retuner_catches_ball_yl, r.Returner.Current_YardLine);
+            //Create a play stats record for every player in this play and set the appropriate play count to 1
+            r.Play_Player_Stats = CreateStatRecords(r.Kicker, r.Returner, Kickoff_Players, Return_Players);
+            SetPlayerStats(r.bTouchback, r.bKickoff_Out_of_Endzone, r.bTouchDown,
+                r.bFumble, r.bFumble_Lost, yards_gamed, r.Kicker, r.Returner, r.Tackler, r.Fumble_Recoverer,
+                Missed_Tackles, r.Play_Player_Stats);
+
             return r;
         }
 
@@ -1245,6 +1269,82 @@ namespace SpectatorFootball.GameNS
                 pFumble_Rec_Kickoff_Players.Add(Kickoff_Players[i]);
                 pFumble_Rec_Return_Players.Add(Return_Players[i]);
             }
+        }
+        public static List<Game_Player_Stats> CreateStatRecords(Game_Player Kicker, Game_Player Returner, List<Game_Player> Kickoff_Players, List<Game_Player> Return_Players)
+        {
+            List<Game_Player_Stats> r = new List<Game_Player_Stats>();
+
+            foreach (Game_Player p in Kickoff_Players)
+                if (p == Kicker)
+                    r.Add(new Game_Player_Stats() {Player_ID = Kicker.p_and_r.pr.First().Player_ID,  Kickoffs = 1 });
+                else
+                    r.Add(new Game_Player_Stats() {Player_ID = p.p_and_r.pr.First().Player_ID, ko_def_plays = 1 });
+
+            foreach (Game_Player p in Return_Players)
+                if (p == Returner)
+                    r.Add(new Game_Player_Stats() {Player_ID = Returner.p_and_r.pr.First().Player_ID, ko_ret_plays = 1 });
+                else
+                    r.Add(new Game_Player_Stats() { Player_ID = p.p_and_r.pr.First().Player_ID, ko_rec_plays = 1 });
+
+            return r;
+        }
+        public static void SetPlayerStats(bool bTouchback, bool bKicked_Out_of_Endzone, bool bTouchdown, 
+            bool bFumble, bool bFumble_Lost, double Yards,
+            Game_Player Kicker, Game_Player Returner, Game_Player Tackler, 
+            Game_Player Forced_Fumble_Recoverer, List<Game_Player> Missed_Tackle, List<Game_Player_Stats> Game_Player_Stats)
+        {
+            long lTDs = bTouchdown ? 1 : 0;
+            long lFubmle = bFumble ? 1 : 0;
+            long lFubmle_Lost = bFumble_Lost ? 1 : 0;
+            long lKickoff_out_of_Endzone = bKicked_Out_of_Endzone ? 1 : 0;
+
+            //if touchback then set those stats
+            if (bTouchback)
+            {
+                Game_Player_Stats ks = Game_Player_Stats.Where(x => x.Player_ID == Kicker.p_and_r.pr.First().Player_ID).First();
+                ks.Kickoff_Touchbacks = 1;
+                ks.Kickoff_Thru_Endzones = lKickoff_out_of_Endzone;
+            }
+
+            if (bKicked_Out_of_Endzone)
+            {
+                Game_Player_Stats koe = Game_Player_Stats.Where(x => x.Player_ID == Returner.p_and_r.pr.First().Player_ID).First();
+                koe.ko_ret_touchbacks = 1;
+                koe.ko_ret_Thru_Endzones = lKickoff_out_of_Endzone;
+            }
+
+            //set the returner stats
+            Game_Player_Stats kr = Game_Player_Stats.Where(x => x.Player_ID == Returner.p_and_r.pr.First().Player_ID).First();
+            kr.ko_ret_TDs = lTDs;
+            kr.ko_ret_fumbles = lFubmle;
+            kr.ko_ret_fumbles_lost = lFubmle_Lost;
+            kr.ko_ret_yards = (long) Math.Round(Yards);
+            kr.ko_ret_yards_long = kr.ko_ret_yards;
+
+            //Set Tackler stats
+            if (Tackler != null)
+            {
+                Game_Player_Stats kt = Game_Player_Stats.Where(x => x.Player_ID == Tackler.p_and_r.pr.First().Player_ID).First();
+                kt.ko_def_tackles = 1;
+
+                if (lFubmle > 0)
+                    kt.ko_def_Forced_Fumbles = 1;
+            }
+
+            //set missed tackles
+            foreach(Game_Player m in Missed_Tackle)
+            {
+                Game_Player_Stats mt = Game_Player_Stats.Where(x => x.Player_ID == m.p_and_r.pr.First().Player_ID).First();
+                mt.ko_def_tackles_missed = 1;
+            }
+
+            //if there is a fumble and it is recovered give credit to the player that recovered it
+            if (Forced_Fumble_Recoverer != null)
+            {
+                Game_Player_Stats fr = Game_Player_Stats.Where(x => x.Player_ID == Forced_Fumble_Recoverer.p_and_r.pr.First().Player_ID).First();
+                fr.ko_def_Forced_Fumbles = 1;
+            }
+
         }
     }
 }

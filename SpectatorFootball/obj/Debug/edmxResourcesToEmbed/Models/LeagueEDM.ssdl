@@ -222,8 +222,8 @@
     <Property Name="ko_ret_yards_long" Type="integer" Nullable="false" />
     <Property Name="ko_ret_touchbacks" Type="integer" Nullable="false" />
     <Property Name="ko_ret_Thru_Endzones" Type="integer" Nullable="false" />
-    <Property Name="ko_fumbles" Type="integer" Nullable="false" />
-    <Property Name="ko_fumbles_lost" Type="integer" Nullable="false" />
+    <Property Name="ko_ret_fumbles" Type="integer" Nullable="false" />
+    <Property Name="ko_ret_fumbles_lost" Type="integer" Nullable="false" />
     <Property Name="ko_def_plays" Type="integer" Nullable="false" />
     <Property Name="ko_def_Forced_Fumbles" Type="integer" Nullable="false" />
     <Property Name="ko_def_fumbles_recovered" Type="integer" Nullable="false" />
@@ -689,18 +689,6 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Game_Player_Stats_1_0">
-    <End Role="Franchise" Type="Self.Franchise" Multiplicity="1" />
-    <End Role="Game_Player_Stats" Type="Self.Game_Player_Stats" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Franchise">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Game_Player_Stats">
-        <PropertyRef Name="Franchise_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Game_Player_Stats_2_0">
     <End Role="Game" Type="Self.Game" Multiplicity="1" />
     <End Role="Game_Player_Stats" Type="Self.Game_Player_Stats" Multiplicity="*" />
     <ReferentialConstraint>
@@ -709,6 +697,18 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
       </Principal>
       <Dependent Role="Game_Player_Stats">
         <PropertyRef Name="Game_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Game_Player_Stats_2_0">
+    <End Role="Franchise" Type="Self.Franchise" Multiplicity="1" />
+    <End Role="Game_Player_Stats" Type="Self.Game_Player_Stats" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Franchise">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Game_Player_Stats">
+        <PropertyRef Name="Franchise_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1107,11 +1107,11 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
       <End Role="Game_Player_Stats" EntitySet="Game_Player_Stats" />
     </AssociationSet>
     <AssociationSet Name="FK_Game_Player_Stats_1_0" Association="Self.FK_Game_Player_Stats_1_0">
-      <End Role="Franchise" EntitySet="Franchise" />
+      <End Role="Game" EntitySet="Game" />
       <End Role="Game_Player_Stats" EntitySet="Game_Player_Stats" />
     </AssociationSet>
     <AssociationSet Name="FK_Game_Player_Stats_2_0" Association="Self.FK_Game_Player_Stats_2_0">
-      <End Role="Game" EntitySet="Game" />
+      <End Role="Franchise" EntitySet="Franchise" />
       <End Role="Game_Player_Stats" EntitySet="Game_Player_Stats" />
     </AssociationSet>
     <AssociationSet Name="FK_Game_Scoring_Summary_0_0" Association="Self.FK_Game_Scoring_Summary_0_0">

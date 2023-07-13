@@ -96,8 +96,8 @@ namespace SpectatorFootball.Models
         public long ko_ret_yards_long { get; set; }
         public long ko_ret_touchbacks { get; set; }
         public long ko_ret_Thru_Endzones { get; set; }
-        public long ko_fumbles { get; set; }
-        public long ko_fumbles_lost { get; set; }
+        public long ko_ret_fumbles { get; set; }
+        public long ko_ret_fumbles_lost { get; set; }
         public long ko_def_plays { get; set; }
         public long ko_def_Forced_Fumbles { get; set; }
         public long ko_def_fumbles_recovered { get; set; }

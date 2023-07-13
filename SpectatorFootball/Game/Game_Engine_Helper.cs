@@ -253,6 +253,41 @@ namespace SpectatorFootball.GameNS
 
             return r;
         }
+        public static double getYardsGained(bool bLefttoRight, double starting_yrdline, double end_yrdline)
+        {
+            double r = 0.0;
+
+            //Don't count the extra yards into the endzone as yards gained
+            if (end_yrdline < 0)
+                end_yrdline = 0;
+            else if (end_yrdline > 100)
+                end_yrdline = 100;
+
+            if (bLefttoRight)
+                r = end_yrdline - starting_yrdline;
+            else
+                r = starting_yrdline - end_yrdline;
+
+            return r;
+        }
+
+        public static bool isTouchdown(bool bLefttoRight, double end_yrdline)
+        {
+            bool r = false;
+
+            if (bLefttoRight)
+            {
+                if (end_yrdline >= 100.0)
+                    r = true;
+            }
+            else
+            {
+                if (end_yrdline >= 0.0)
+                    r = true;
+            }
+
+            return r;
+        }
 
     }
 }

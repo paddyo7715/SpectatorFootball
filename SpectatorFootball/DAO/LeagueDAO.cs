@@ -616,7 +616,7 @@ namespace SpectatorFootball
                         Yards = x.Sum(s => s.ko_ret_yards),
                         Yards_Long = x.Max(s => s.ko_ret_yards_long),
                         TDs = x.Sum(s => s.ko_ret_TDs),
-                        Fumbles = x.Sum(s => s.ko_fumbles)
+                        Fumbles = x.Sum(s => s.ko_ret_fumbles)
                     }).ToList();
             }
 

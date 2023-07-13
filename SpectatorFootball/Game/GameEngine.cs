@@ -392,8 +392,8 @@ namespace SpectatorFootball.GameNS
 
                 //acume individual stats
 
-                Accume_Play_Stats(p_result.Game_Player_Stats,
-                     p_result.Game_Player_Penalty_Stats);
+                Accume_Play_Stats(p_result.Play_Player_Stats,
+                     p_result.Play_Player_Penalty_Stats);
                 logger.Debug("After accum stats");
 
                 //work the injuries
@@ -747,8 +747,8 @@ namespace SpectatorFootball.GameNS
                     if (ps.ko_ret_yards_long < s.ko_ret_yards_long) ps.ko_ret_yards_long = s.ko_ret_yards_long;
                     ps.ko_ret_touchbacks += s.ko_ret_touchbacks;
                     ps.ko_ret_Thru_Endzones += s.ko_ret_Thru_Endzones;
-                    ps.ko_fumbles += s.ko_fumbles;
-                    ps.ko_fumbles_lost += s.ko_fumbles_lost;
+                    ps.ko_ret_fumbles += s.ko_ret_fumbles;
+                    ps.ko_ret_fumbles_lost += s.ko_ret_fumbles_lost;
 
                     //Kickoff Defense
                     ps.ko_def_plays += s.ko_def_plays;

@@ -230,8 +230,8 @@
           <ScalarProperty Name="ko_ret_yards_long" ColumnName="ko_ret_yards_long" />
           <ScalarProperty Name="ko_ret_touchbacks" ColumnName="ko_ret_touchbacks" />
           <ScalarProperty Name="ko_ret_Thru_Endzones" ColumnName="ko_ret_Thru_Endzones" />
-          <ScalarProperty Name="ko_fumbles" ColumnName="ko_fumbles" />
-          <ScalarProperty Name="ko_fumbles_lost" ColumnName="ko_fumbles_lost" />
+          <ScalarProperty Name="ko_ret_fumbles" ColumnName="ko_ret_fumbles" />
+          <ScalarProperty Name="ko_ret_fumbles_lost" ColumnName="ko_ret_fumbles_lost" />
           <ScalarProperty Name="ko_def_plays" ColumnName="ko_def_plays" />
           <ScalarProperty Name="ko_def_Forced_Fumbles" ColumnName="ko_def_Forced_Fumbles" />
           <ScalarProperty Name="ko_def_fumbles_recovered" ColumnName="ko_def_fumbles_recovered" />
