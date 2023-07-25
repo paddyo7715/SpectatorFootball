@@ -32,6 +32,9 @@ namespace SpectatorFootball.GameNS
             int d_index = 0;
             foreach (Game_Player p in Kickoff_Players)
             {
+                if (p != r.Kicker)
+                    r.Kick_Defenders.Add(p);
+
                 string sPos = p.Pos.ToString();
                 long leg_stn = p.p_and_r.pr.First().Kicker_Leg_Power_Rating;
                 long leg_acc = p.p_and_r.pr.First().Kicker_Leg_Accuracy_Rating;
@@ -48,6 +51,9 @@ namespace SpectatorFootball.GameNS
             d_index = 0;
             foreach (Game_Player p in Return_Players)
             {
+                if (p != r.Returner)
+                    r.Kick_Returners.Add(p);
+
                 string sPos = p.Pos.ToString();
                 long spd = p.p_and_r.pr.First().Speed_Rating;
                 long agile = p.p_and_r.pr.First().Agilty_Rating;

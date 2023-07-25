@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SpectatorFootball.PenaltiesNS;
 using SpectatorFootball.Enum;
 using SpectatorFootball.Models;
 using System.Windows.Controls;
@@ -19,6 +20,7 @@ namespace SpectatorFootball.League
         public List<Season> AllSeasons = null;
 
         public List<League_Helmet> Team_Helmets = null;
+        public List<Penalty> PenaltiesData = null;
 
         public BitmapImage getHelmetImg(string f)
         {

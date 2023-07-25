@@ -15,6 +15,7 @@ using SpectatorFootball.Common;
 using SpectatorFootball.WindowsLeague;
 using SpectatorFootball.Enum;
 using System.IO;
+using SpectatorFootball.Services;
 
 namespace SpectatorFootball
 {
@@ -308,7 +309,7 @@ namespace SpectatorFootball
                 Mouse.OverrideCursor = Cursors.Wait;
                 logger.Info("Attempting to Load League " + e.League_Short_Name);
 
-                Loaded_League = new Loaded_League_Structure();
+//                Loaded_League = new Loaded_League_Structure();
 
                 League_Services ls = new League_Services();
                 string[] r = ls.CheckDBVersion((string)e.League_Short_Name);
@@ -330,26 +331,14 @@ namespace SpectatorFootball
                     }
                 }
 
-                //Load the league season.  Null for year parameter mean load the latest year
-                Loaded_League.season = ls.LoadSeason(null, (string)e.League_Short_Name);
-                Loaded_League.Current_Year = Loaded_League.season.Year;
-                Loaded_League.AllSeasons = ls.getAllSeasons((string)e.League_Short_Name);
-
-                //Set league state
-                Loaded_League.LState = ls.getSeasonState(true, Loaded_League.season.ID, (string)e.League_Short_Name);
+                //Load the league
+                Loaded_League = ls.LoadLeague((string)e.League_Short_Name);
 
                 //Set top menu based on league state
                 setMenuonState(Loaded_League.LState, Loaded_League);
 
-                //Load all team Helmet images for efficiency
-                League_Helper lh = new League_Helper();
-                Loaded_League.Team_Helmets = lh.getAllTeamHelmets((string)e.League_Short_Name, Loaded_League.season.Teams_by_Season);
-
                 //Add teams to Main Top Menu
                 SetLeagueTeamsMenu(Loaded_League);
-
-                //Load the league standings
-                Loaded_League.Standings = ls.getLeageStandings(Loaded_League);
 
                 //if league has been loaded then show the league standings window.
                 LStandingsUX = new LeagueStandings(this);

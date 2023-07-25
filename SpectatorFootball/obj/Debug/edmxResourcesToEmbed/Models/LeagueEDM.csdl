@@ -159,7 +159,6 @@
     <NavigationProperty Name="Franchise" Relationship="Self.FK_Game_Player_Penalty_Stats_3_0" FromRole="Game_Player_Penalty_Stats" ToRole="Franchise" />
     <NavigationProperty Name="Game" Relationship="Self.FK_Game_Player_Penalty_Stats_2_0" FromRole="Game_Player_Penalty_Stats" ToRole="Game" />
     <NavigationProperty Name="Player" Relationship="Self.FK_Game_Player_Penalty_Stats_0_0" FromRole="Game_Player_Penalty_Stats" ToRole="Players" />
-    <NavigationProperty Name="Penalty" Relationship="Self.FK_Game_Player_Penalty_Stats_1_0" FromRole="Game_Player_Penalty_Stats" ToRole="Penalties" />
   </EntityType>
   <EntityType Name="Game_Player_Stats">
     <Key>
@@ -378,22 +377,6 @@
     <Property Name="Onside_Kick" Type="Int64" Nullable="false" />
     <Property Name="Home_Advantage" Type="Int64" Nullable="false" />
     <NavigationProperty Name="Season" Relationship="Self.FK_League_Structure_by_Season_0_0" FromRole="League_Structure_by_Season" ToRole="Season" />
-  </EntityType>
-  <EntityType Name="Penalty">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Penalty_Type" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="Declinable" Type="Int64" Nullable="false" />
-    <Property Name="Loss_of_Down" Type="Int64" Nullable="false" />
-    <Property Name="Code" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="Yards" Type="Int64" />
-    <Property Name="Auto_First_Down" Type="Int64" Nullable="false" />
-    <Property Name="Ass_After_Play" Type="Int64" Nullable="false" />
-    <Property Name="Specific_Play_Type" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="Description" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
-    <NavigationProperty Name="Game_Player_Penalty_Stats" Relationship="Self.FK_Game_Player_Penalty_Stats_1_0" FromRole="Penalties" ToRole="Game_Player_Penalty_Stats" />
   </EntityType>
   <EntityType Name="Player_Awards">
     <Key>
@@ -850,18 +833,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Game_Player_Penalty_Stats_1_0">
-    <End Role="Penalties" Type="Self.Penalty" Multiplicity="1" />
-    <End Role="Game_Player_Penalty_Stats" Type="Self.Game_Player_Penalty_Stats" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Penalties">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Game_Player_Penalty_Stats">
-        <PropertyRef Name="Penalty_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_Game_Player_Stats_0_0">
     <End Role="Players" Type="Self.Player" Multiplicity="1" />
     <End Role="Game_Player_Stats" Type="Self.Game_Player_Stats" Multiplicity="*" />
@@ -1118,7 +1089,6 @@
     <EntitySet Name="Injuries" EntityType="Self.Injury" />
     <EntitySet Name="Injury_Log" EntityType="Self.Injury_Log" />
     <EntitySet Name="League_Structure_by_Season" EntityType="Self.League_Structure_by_Season" />
-    <EntitySet Name="Penalties" EntityType="Self.Penalty" />
     <EntitySet Name="Player_Awards" EntityType="Self.Player_Awards" />
     <EntitySet Name="Player_Ratings" EntityType="Self.Player_Ratings" />
     <EntitySet Name="Player_Retiring_Log" EntityType="Self.Player_Retiring_Log" />
@@ -1210,10 +1180,6 @@
     </AssociationSet>
     <AssociationSet Name="FK_Game_Player_Penalty_Stats_0_0" Association="Self.FK_Game_Player_Penalty_Stats_0_0">
       <End Role="Players" EntitySet="Players" />
-      <End Role="Game_Player_Penalty_Stats" EntitySet="Game_Player_Penalty_Stats" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Game_Player_Penalty_Stats_1_0" Association="Self.FK_Game_Player_Penalty_Stats_1_0">
-      <End Role="Penalties" EntitySet="Penalties" />
       <End Role="Game_Player_Penalty_Stats" EntitySet="Game_Player_Penalty_Stats" />
     </AssociationSet>
     <AssociationSet Name="FK_Game_Player_Stats_0_0" Association="Self.FK_Game_Player_Stats_0_0">

@@ -193,8 +193,11 @@
     <Compile Include="Enum\KickOff_Length.cs" />
     <Compile Include="Enum\KickOff_Verticl.cs" />
     <Compile Include="Enum\Movement.cs" />
+    <Compile Include="Enum\Penalty_Codes.cs" />
+    <Compile Include="Enum\Player_Action_Stats.cs" />
     <Compile Include="Enum\Player_States.cs" />
     <Compile Include="Enum\Play_Enum.cs" />
+    <Compile Include="Enum\Penalty_Play_Types.cs" />
     <Compile Include="Enum\Stat_Type.cs" />
     <Compile Include="Free_Agency\FreeAgency_Helper.cs" />
     <Compile Include="Game\Action.cs" />
@@ -316,9 +319,6 @@
     <Compile Include="Models\OneInt2Strings.cs" />
     <Compile Include="Models\Passing_Accum_Stats_by_year.cs" />
     <Compile Include="Models\Pass_Defense_Accum_Stats_by_year.cs" />
-    <Compile Include="Models\Penalty.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Player.cs">
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
@@ -359,6 +359,8 @@
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\WeeklyScheduleRec.cs" />
+    <Compile Include="Penalties\Penalty.cs" />
+    <Compile Include="Penalties\Penalty_Helper.cs" />
     <Compile Include="Player\Player_Card_Data.cs" />
     <Compile Include="Player\Team_Player_Accum_Stats_by_year.cs" />
     <Compile Include="Playoffs\Playoff_Bracket_rec.cs" />

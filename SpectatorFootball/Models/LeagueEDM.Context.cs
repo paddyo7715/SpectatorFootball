@@ -45,7 +45,6 @@ namespace SpectatorFootball.Models
         public virtual DbSet<Injury> Injuries { get; set; }
         public virtual DbSet<Injury_Log> Injury_Log { get; set; }
         public virtual DbSet<League_Structure_by_Season> League_Structure_by_Season { get; set; }
-        public virtual DbSet<Penalty> Penalties { get; set; }
         public virtual DbSet<Player_Awards> Player_Awards { get; set; }
         public virtual DbSet<Player_Ratings> Player_Ratings { get; set; }
         public virtual DbSet<Player_Retiring_Log> Player_Retiring_Log { get; set; }

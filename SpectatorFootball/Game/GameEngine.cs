@@ -6,6 +6,7 @@ using System.Linq;
 using log4net;
 using System.Text;
 using System.Threading.Tasks;
+using SpectatorFootball.PenaltiesNS;
 
 namespace SpectatorFootball.GameNS
 {
@@ -390,8 +391,24 @@ namespace SpectatorFootball.GameNS
                 */
 
 
-                //acume individual stats
+                //Check for Penalties
+                Game_Player Penalized_Player = null;
+                Penalty penalty = null;
+                bool bPenaltyEnforced = false;
+                if (bAllowPenalties)
+                {
+                    Penalized_Player = getPenaltyPlayer(Offensive_Package.Play, Offensive_Players, Defensive_Players, p_result.Passer, p_result.Kicker, p_result.Punter);
+                    if (p_result.Penalized_Player != null)
+                    {
 
+                    }
+//for some reason, I put adding the penalties in the accum method.  Take that out of there and add here.
+//only accum the penalty if it is accepted but still set it in the play result.
+                    
+                }
+
+
+                //acume individual stats
                 Accume_Play_Stats(p_result.Play_Player_Stats,
                      p_result.Play_Player_Penalty_Stats);
                 logger.Debug("After accum stats");
@@ -446,8 +463,6 @@ namespace SpectatorFootball.GameNS
                 g_bGameOver = true;
 
             r.bGameOver = g_bGameOver;
-
-
 
             return r;
         }
@@ -649,7 +664,7 @@ namespace SpectatorFootball.GameNS
 
             foreach (Game_Player_Stats s in Game_Player_Stats)
             {
-                Game_Player_Stats ps = g.Game_Player_Stats.Where(x => x.Player_ID == s.Player_ID).FirstOrDefault();
+                Game_Player_Stats ps = Game_Player_Stats.Where(x => x.Player_ID == s.Player_ID).FirstOrDefault();
                 if (ps == null)
                     g.Game_Player_Stats.Add(s);
                 else
@@ -814,6 +829,34 @@ namespace SpectatorFootball.GameNS
             foreach (Game_Player_Penalty_Stats s in Game_Player_Penalty_Stats)
                 g.Game_Player_Penalty_Stats.Add(s);
 
+        }
+        public Game_Player getPenaltyPlayer(Play_Enum pe, List<Game_Player> Offensive_Players, List<Game_Player> Defensive_Players,
+            Game_Player Passer, Game_Player Kicker, Game_Player Punter)
+        {
+            Game_Player r = null;
+            List<Game_Player> Possible_Players = new List<Game_Player>();
+
+            foreach (Game_Player p in Offensive_Players)
+            {
+                long sp_num;
+
+                if (p == Passer || p == Kicker || p == Punter)
+                    sp_num = app_Constants.SPORTSMANSHIP_ADJUSTER - p.p_and_r.pr.First().Sportsmanship_Ratings / app_Constants.PENALTY_UPPER_LIMIT_ADJ_QB_K;
+                else
+                    sp_num = app_Constants.SPORTSMANSHIP_ADJUSTER - p.p_and_r.pr.First().Sportsmanship_Ratings;
+
+                long rmd = CommonUtils.getRandomNum(1, (int)app_Constants.PENALTY_UPPER_LIMIT);
+                if (rmd <= sp_num)
+                    Possible_Players.Add(p);
+            }
+
+            if (Possible_Players.Count > 0)
+            {
+                int ind = CommonUtils.getRandomIndex(Possible_Players.Count());
+                r = Possible_Players[ind];
+            }
+
+            return r;
         }
     }
 }

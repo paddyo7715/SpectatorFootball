@@ -354,22 +354,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Penalties">
-      <EntityTypeMapping TypeName="LeagueModel.Penalty">
-        <MappingFragment StoreEntitySet="Penalties">
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="Penalty_Type" ColumnName="Penalty_Type" />
-          <ScalarProperty Name="Declinable" ColumnName="Declinable" />
-          <ScalarProperty Name="Loss_of_Down" ColumnName="Loss_of_Down" />
-          <ScalarProperty Name="Code" ColumnName="Code" />
-          <ScalarProperty Name="Yards" ColumnName="Yards" />
-          <ScalarProperty Name="Auto_First_Down" ColumnName="Auto_First_Down" />
-          <ScalarProperty Name="Ass_After_Play" ColumnName="Ass_After_Play" />
-          <ScalarProperty Name="Specific_Play_Type" ColumnName="Specific_Play_Type" />
-          <ScalarProperty Name="Description" ColumnName="Description" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Player_Awards">
       <EntityTypeMapping TypeName="LeagueModel.Player_Awards">
         <MappingFragment StoreEntitySet="Player_Awards">

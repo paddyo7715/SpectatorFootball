@@ -1,4 +1,5 @@
 ﻿using SpectatorFootball.Models;
+using SpectatorFootball.PenaltiesNS;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,8 +20,31 @@ namespace SpectatorFootball.GameNS
         public bool bFumble_Lost = false;
         public bool bRunOutofBounds = false;
 
+        //Penalties
+        public Game_Player Penalized_Player = null;
+        public Penalty Penalty = null;
+        public bool bPenalty_Accepted = false;
+
+        public Game_Player Passer = null;
         public Game_Player Kicker = null;
+        public Game_Player Punter = null;
         public Game_Player Returner = null;
+        public Game_Player Punt_Returner = null;
+        public List<Game_Player> Pass_Catchers = new List<Game_Player>();
+        public List<Game_Player> Ball_Runners = new List<Game_Player>();
+        public List<Game_Player> Pass_Blockers = new List<Game_Player>();
+        public List<Game_Player> Pass_Rushers = new List<Game_Player>();
+        public List<Game_Player> Pass_Defenders = new List<Game_Player>();
+        public List<Game_Player> Run_Blockers = new List<Game_Player>();
+        public List<Game_Player> Run_Defenders = new List<Game_Player>();
+        public List<Game_Player> Kick_Returners = new List<Game_Player>();
+        public List<Game_Player> Kick_Defenders = new List<Game_Player>();
+        public List<Game_Player> Punt_Returners = new List<Game_Player>();
+        public List<Game_Player> Punt_Defenders = new List<Game_Player>();
+        public List<Game_Player> FieldGaol_Kicking_Team = new List<Game_Player>();
+        public List<Game_Player> Field_Goal_Defenders = new List<Game_Player>();
+
+
         public Game_Player Tackler = null;
         public Game_Player Fumble_Recoverer = null;
         public Game_Player Forced_Fumble_Tackler = null;

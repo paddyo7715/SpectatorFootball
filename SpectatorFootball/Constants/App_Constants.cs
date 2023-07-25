@@ -568,5 +568,9 @@ namespace SpectatorFootball
         //Tackling
         public const long TACKLER_ADVANTAGE_MULTIPLIER = 3;
 
+        //Penalties
+        public const long SPORTSMANSHIP_ADJUSTER = 110;
+        public const long PENALTY_UPPER_LIMIT = 1000;
+        public const long PENALTY_UPPER_LIMIT_ADJ_QB_K = 3;  //For QBs or kickers
     }
 }

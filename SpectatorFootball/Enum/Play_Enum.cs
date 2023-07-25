@@ -14,16 +14,7 @@ namespace SpectatorFootball.Enum
         FIELD_GOAL,
         EXTRA_POINT,
         PUNT,
-        RUN_UP_MIDDLE,
-        RUN_LEFT,
-        RUN_RIGHT,
-        SWEEP_LEFT,
-        SWEEP_RIGHT,
-        SCREEN_PASS,
-        SHORT_PASS,
-        MEDIUM_PASS,
-        LONG_PASS,
-        BOMB_PASS,
-        MIXED_PASS
+        RUN,
+        PASS
     }
 }

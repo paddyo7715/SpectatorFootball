@@ -341,21 +341,6 @@
     <Property Name="Onside_Kick" Type="integer" Nullable="false" />
     <Property Name="Home_Advantage" Type="integer" Nullable="false" />
   </EntityType>
-  <EntityType Name="Penalties">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Penalty_Type" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
-    <Property Name="Declinable" Type="integer" Nullable="false" />
-    <Property Name="Loss_of_Down" Type="integer" Nullable="false" />
-    <Property Name="Code" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
-    <Property Name="Yards" Type="integer" />
-    <Property Name="Auto_First_Down" Type="integer" Nullable="false" />
-    <Property Name="Ass_After_Play" Type="integer" Nullable="false" />
-    <Property Name="Specific_Play_Type" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
-    <Property Name="Description" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
-  </EntityType>
   <EntityType Name="Player_Awards">
     <Key>
       <PropertyRef Name="ID" />
@@ -637,18 +622,6 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
       </Principal>
       <Dependent Role="Game_Player_Penalty_Stats">
         <PropertyRef Name="Player_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Game_Player_Penalty_Stats_1_0">
-    <End Role="Penalties" Type="Self.Penalties" Multiplicity="1" />
-    <End Role="Game_Player_Penalty_Stats" Type="Self.Game_Player_Penalty_Stats" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Penalties">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Game_Player_Penalty_Stats">
-        <PropertyRef Name="Penalty_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1040,7 +1013,6 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
     <EntitySet Name="Injuries" EntityType="Self.Injuries" store:Type="Tables" />
     <EntitySet Name="Injury_Log" EntityType="Self.Injury_Log" store:Type="Tables" />
     <EntitySet Name="League_Structure_by_Season" EntityType="Self.League_Structure_by_Season" store:Type="Tables" />
-    <EntitySet Name="Penalties" EntityType="Self.Penalties" store:Type="Tables" />
     <EntitySet Name="Player_Awards" EntityType="Self.Player_Awards" store:Type="Tables" />
     <EntitySet Name="Player_Ratings" EntityType="Self.Player_Ratings" store:Type="Tables" />
     <EntitySet Name="Player_Retiring_Log" EntityType="Self.Player_Retiring_Log" store:Type="Tables" />
@@ -1088,10 +1060,6 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
     </AssociationSet>
     <AssociationSet Name="FK_Game_Player_Penalty_Stats_0_0" Association="Self.FK_Game_Player_Penalty_Stats_0_0">
       <End Role="Players" EntitySet="Players" />
-      <End Role="Game_Player_Penalty_Stats" EntitySet="Game_Player_Penalty_Stats" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Game_Player_Penalty_Stats_1_0" Association="Self.FK_Game_Player_Penalty_Stats_1_0">
-      <End Role="Penalties" EntitySet="Penalties" />
       <End Role="Game_Player_Penalty_Stats" EntitySet="Game_Player_Penalty_Stats" />
     </AssociationSet>
     <AssociationSet Name="FK_Game_Player_Penalty_Stats_2_0" Association="Self.FK_Game_Player_Penalty_Stats_2_0">

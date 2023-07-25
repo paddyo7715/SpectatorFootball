@@ -15,6 +15,7 @@ using System.Security.AccessControl;
 using System.Security.Principal;
 using SpectatorFootball.PlayerNS;
 using SpectatorFootball.Awards;
+using SpectatorFootball.PenaltiesNS;
 
 namespace SpectatorFootball
 {
@@ -299,7 +300,39 @@ namespace SpectatorFootball
 
         }
 
-        public Season LoadSeason(string year,string League_Shortname)
+        public Loaded_League_Structure LoadLeague(string League_Shortname)
+        {
+            Loaded_League_Structure r = new Loaded_League_Structure();
+            string League_con_string = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + League_Shortname + Path.DirectorySeparatorChar + League_Shortname + "." + app_Constants.DB_FILE_EXT;
+            LeagueDAO ld = new LeagueDAO();
+
+            //Load the latest season
+            r.season = ld.LoadSeason(null, League_con_string);
+
+            //Set the current year
+            r.Current_Year = r.season.Year;
+
+            //Get all seasons
+            r.AllSeasons = ld.getAllSeasons(League_con_string);
+
+            //Set league state
+            r.LState = getSeasonState(true, r.season.ID, League_Shortname);
+
+            //Load all team Helmet images for efficiency
+            League_Helper lh = new League_Helper();
+            r.Team_Helmets = lh.getAllTeamHelmets(League_Shortname, r.season.Teams_by_Season);
+
+            //Load Penalty data
+            r.PenaltiesData = Penalty_Helper.ReturnAllPenalties(); 
+
+            //Load the league standings
+            r.Standings = getLeageStandings(r);
+
+            return r;
+        }
+
+
+        public Season LoadSeason(string year, string League_Shortname)
         {
             Season r;
             string League_con_string = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + League_Shortname + Path.DirectorySeparatorChar + League_Shortname + "." + app_Constants.DB_FILE_EXT;
@@ -354,19 +387,6 @@ namespace SpectatorFootball
 
             foreach (Standings_Row sr in r)
                 sr.HelmetImage = lld.getHelmetImg(sr.Helmet_img);  
-
-            return r;
-        }
-
-        public List<Season> getAllSeasons(string League_Shortname)
-        {
-            string DIRPath_League = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + League_Shortname.ToUpper();
-            string helment_img_path = DIRPath_League + Path.DirectorySeparatorChar + app_Constants.LEAGUE_HELMETS_SUBFOLDER;
-            List<Season> r;
-            string League_con_string = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + League_Shortname + Path.DirectorySeparatorChar + League_Shortname + "." + app_Constants.DB_FILE_EXT;
-            LeagueDAO ld = new LeagueDAO();
-
-            r = ld.getAllSeasons(League_con_string);
 
             return r;
         }

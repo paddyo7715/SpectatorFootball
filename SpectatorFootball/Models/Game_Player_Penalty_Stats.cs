@@ -24,6 +24,5 @@ namespace SpectatorFootball.Models
         public virtual Franchise Franchise { get; set; }
         public virtual Game Game { get; set; }
         public virtual Player Player { get; set; }
-        public virtual Penalty Penalty { get; set; }
     }
 }
