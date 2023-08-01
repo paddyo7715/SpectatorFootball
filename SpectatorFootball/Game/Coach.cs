@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SpectatorFootball.PenaltiesNS;
 
 namespace SpectatorFootball.GameNS
 {
@@ -405,6 +406,62 @@ namespace SpectatorFootball.GameNS
                         break;
                     }
             }
+
+            return r;
+        }
+        public bool AcceptDef_Penalty(Play_Result pResult, Play_Enum pe, Penalty penalty, int down, int yards_to_go)
+        {
+            bool r = false;
+
+            setOurThereScore();
+
+            if (pResult.bTouchDown)
+                r = false;
+            else if (pResult.bFGMissed)
+                r = true;
+            else if (pResult.bXPMissed)
+                r = true;
+            else if (pResult.bFGMade && (g.Quarter == 2 || g.Quarter == 4) && g.Time > app_Constants.URGENT_FG_TIME &&
+                yards_to_go > pResult.Yards_Gained)
+                r = true;
+            else if (pResult.bSafety)
+                r = true;
+            else if (pResult.bFumble_Lost || pResult.bInterception)
+                r = true;
+            else if (this.ourScore <= this.theirScore && g.Quarter > 3 && g.Time <= app_Constants.LAST_PLAY_SECONDS)
+                r = true;
+            else if (down == 3 && yards_to_go > pResult.Yards_Gained)
+                r = true;
+            else if (pResult.Yards_Gained <= penalty.Yards)
+                r = true;
+
+            return r;
+        }
+
+        public bool AcceptOff_Penalty(Play_Result pResult, Play_Enum pe, Penalty penalty, int down, int yards_to_go)
+        {
+            bool r = false;
+
+            setOurThereScore();
+
+            if (pResult.bTouchDown)
+                r = true;
+            else if (pResult.bFGMissed)
+                r = false;
+            else if (pResult.bXPMissed)
+                r = false;
+            else if (pResult.bFGMade)
+                r = true;
+            else if (pResult.bSafety)
+                r = false;
+            else if (pResult.bFumble_Lost || pResult.bInterception)
+                r = false;
+            else if (this.ourScore <= this.theirScore && g.Quarter > 3 && g.Time <= app_Constants.LAST_PLAY_SECONDS)
+                r = false;
+            else if (down == 3 && yards_to_go > pResult.Yards_Gained)
+                r = false;
+            else if (pResult.Yards_Gained <= penalty.Yards)
+                r = false;
 
             return r;
         }

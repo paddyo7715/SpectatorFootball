@@ -51,6 +51,8 @@ namespace SpectatorFootball.GameNS
 
         private long Max_TD_Points = 7;
 
+        private List<Penalty> Penalty_List = null;
+
         //Game Settings
         private bool bSureGame = false;
         private bool bAllowKickoffs = false;
@@ -150,6 +152,9 @@ namespace SpectatorFootball.GameNS
 
             //initialize the injuries list
             lInj = new List<Injury>();
+
+            //Get all Penalties
+            Penalty_List = pw.Loaded_League.PenaltiesData;
 
             //set max possible point for 1 touchdown
             if (pw.Loaded_League.season.League_Structure_by_Season[0].Two_Point_Conversion == 1)
@@ -360,7 +365,7 @@ namespace SpectatorFootball.GameNS
                 }
 
                 //set results and accume team stats
-                yards_gained = p_result.yards_gained;
+                yards_gained = p_result.Yards_Gained;
 
                 //                g.Away_Score += p_result.away_points;
                 //                g.Home_Score += p_result.home_points;
@@ -400,11 +405,27 @@ namespace SpectatorFootball.GameNS
                     Penalized_Player = getPenaltyPlayer(Offensive_Package.Play, Offensive_Players, Defensive_Players, p_result.Passer, p_result.Kicker, p_result.Punter);
                     if (p_result.Penalized_Player != null)
                     {
+                        Player_Action_Stats pa_state = Penalty_Helper.getPlayerAction(Penalized_Player, p_result);
+                        penalty = Penalty_Helper.getPenalty(Penalty_List, Offensive_Package.Play, pa_state);
+
+                        bool bAway_Pen_Player = Away_Players.Any(x => x.p == Penalized_Player.p_and_r.p);
+                        bool bHome_Pen_Player = Home_Players.Any(x => x.p == Penalized_Player.p_and_r.p);
+                        Coach Penalty_Coach = null;
+                        if (bAway_Pen_Player)
+                            Penalty_Coach = Home_Coach;
+                        else
+                            Penalty_Coach = Away_Coach;
+
+                        bool bAccept_Peanlty = false;
+                        if ((bAway_Pen_Player && bLefttoRight) || bHome_Pen_Player && !bLefttoRight)
+                            bAccept_Peanlty = Penalty_Coach.AcceptOff_Penalty(p_result, Offensive_Package.Play, penalty, g_Down, g_Yards_to_go);
+                        else
+                            bAccept_Peanlty = Penalty_Coach.AcceptDef_Penalty(p_result, Offensive_Package.Play, penalty, g_Down, g_Yards_to_go);
 
                     }
-//for some reason, I put adding the penalties in the accum method.  Take that out of there and add here.
-//only accum the penalty if it is accepted but still set it in the play result.
-                    
+                    //for some reason, I put adding the penalties in the accum method.  Take that out of there and add here.
+                    //only accum the penalty if it is accepted but still set it in the play result.
+
                 }
 
 

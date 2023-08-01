@@ -482,6 +482,10 @@ namespace SpectatorFootball
         public const string CHAMPIONSHIP_MVP = "CMVP";
         public const double ALL_PRO_PERCENT = 0.10;
 
+        //Time/Clock
+        public const long LAST_PLAY_SECONDS = 6;
+        public const long URGENT_FG_TIME = 20;
+
         //Injuries
         public const int PERCENT_INJURY_ON_A_PLAY = 5;
         public const int PERCENT_OFF_DEF = 50;

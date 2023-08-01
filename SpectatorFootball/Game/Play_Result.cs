@@ -10,7 +10,6 @@ namespace SpectatorFootball.GameNS
 {
     public class Play_Result
     {
-        public long yards_gained = 0;
 
         //Result
         public bool bKickoff_Out_of_Endzone = false;
@@ -19,6 +18,12 @@ namespace SpectatorFootball.GameNS
         public bool bFumble = false;
         public bool bFumble_Lost = false;
         public bool bRunOutofBounds = false;
+        public bool bSafety = false;
+        public bool bInterception = false;
+        public bool bFGMade = false;
+        public bool bFGMissed = false;
+        public bool bXPMade = false;
+        public bool bXPMissed = false;
 
         //Penalties
         public Game_Player Penalized_Player = null;
@@ -50,6 +55,7 @@ namespace SpectatorFootball.GameNS
         public Game_Player Forced_Fumble_Tackler = null;
 
         public double Yards_Gained = 0.0;
+        public double Yards_Returned = 0.0;
 
         //Line_of_Scrimmage will be set in the play, except for the following cases:
         //kickoff touchback, punt touchback or free kick touchback (which should never happen)

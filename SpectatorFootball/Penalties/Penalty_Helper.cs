@@ -152,7 +152,7 @@ namespace SpectatorFootball.PenaltiesNS
                 bDeclinable = true,
                 bAuto_FirstDown = true,
                 bSpot_Found = true,
-                Description = "Illegal Contact"
+                Description = "Pass Interference"
             });
             r.Last().Player_Action_States = new List<Player_Action_Stats>()
             {
@@ -197,7 +197,7 @@ namespace SpectatorFootball.PenaltiesNS
                 code = Penalty_Codes.KIB,
                 Penalty_Play_Type = Penalty_Play_Types.KR,
                 Yards = 15,
-                bDeclinable = true,
+                bDeclinable = false,
                 bAuto_FirstDown = false,
                 bSpot_Found = true,
                 Description = "Illegal Block"
@@ -213,7 +213,7 @@ namespace SpectatorFootball.PenaltiesNS
                 code = Penalty_Codes.PIB,
                 Penalty_Play_Type = Penalty_Play_Types.PTR,
                 Yards = 15,
-                bDeclinable = true,
+                bDeclinable = false,
                 bAuto_FirstDown = false,
                 bSpot_Found = true,
                 Description = "Illegal Block"
@@ -232,7 +232,7 @@ namespace SpectatorFootball.PenaltiesNS
                 code = Penalty_Codes.UC,
                 Penalty_Play_Type = Penalty_Play_Types.A,
                 Yards = 15,
-                bDeclinable = true,
+                bDeclinable = false,
                 bAuto_FirstDown = true,
                 bSpot_Found = true,               
                 Description = "Unsportsmen Like Conduct"
@@ -268,7 +268,7 @@ namespace SpectatorFootball.PenaltiesNS
                 code = Penalty_Codes.UR,
                 Penalty_Play_Type = Penalty_Play_Types.A,
                 Yards = 15,
-                bDeclinable = true,
+                bDeclinable = false,
                 bAuto_FirstDown = true,
                 bSpot_Found = true,
                 Description = "Unnecessary Roughness"
@@ -304,7 +304,7 @@ namespace SpectatorFootball.PenaltiesNS
                 code = Penalty_Codes.FM,
                 Penalty_Play_Type = Penalty_Play_Types.A,
                 Yards = 15,
-                bDeclinable = true,
+                bDeclinable = false,
                 bAuto_FirstDown = true,
                 bSpot_Found = true, 
                 Description = "Facemask"
@@ -333,51 +333,46 @@ namespace SpectatorFootball.PenaltiesNS
 
             return r;
         }
-        public static Player_Action_Stats getPlayerAction(Game_Player Penalty_Player
-         , Game_Player Passer, Game_Player Kicker, Game_Player Punter, Game_Player Returner
-         , Game_Player Punt_Returner, List<Game_Player> Pass_Catchers, List<Game_Player> Ball_Runners
-         , List<Game_Player> Pass_Blockers, List<Game_Player> Pass_Rushers, List<Game_Player> Pass_Defenders
-         , List<Game_Player> Run_Blockers, List<Game_Player> Run_Defenders, List<Game_Player> Kick_Returners
-         , List<Game_Player> Kick_Defenders, List<Game_Player> Punt_Returners, List<Game_Player> Punt_Defenders
-         , List<Game_Player> FieldGaol_Kicking_Team, List<Game_Player> Field_Goal_Defenders)
+        public static Player_Action_Stats getPlayerAction(Game_Player Penalty_Player, Play_Result pResult)
+
         {
             Player_Action_Stats r = Player_Action_Stats.PAS;
 
-            if (Penalty_Player == Passer)
+            if (Penalty_Player == pResult.Passer)
                 r = Player_Action_Stats.PAS;
-            else if ((Penalty_Player == Kicker))
+            else if ((Penalty_Player == pResult.Kicker))
                 r = Player_Action_Stats.K;
-            else if ((Penalty_Player == Punter))
+            else if ((Penalty_Player == pResult.Punter))
                 r = Player_Action_Stats.P;
-            else if ((Penalty_Player == Returner))
+            else if ((Penalty_Player == pResult.Returner))
                 r = Player_Action_Stats.KR;
-            else if ((Penalty_Player == Punt_Returner))
+            else if ((Penalty_Player == pResult.Punt_Returner))
                 r = Player_Action_Stats.PR;
-            else if (Pass_Catchers.Contains(Penalty_Player))
+            else if (pResult.Pass_Catchers.Contains(Penalty_Player))
                 r = Player_Action_Stats.PC;
-            else if (Ball_Runners.Contains(Penalty_Player))
+            else if (pResult.Ball_Runners.Contains(Penalty_Player))
                 r = Player_Action_Stats.BRN;
-            else if (Pass_Blockers.Contains(Penalty_Player))
+            else if (pResult.Pass_Blockers.Contains(Penalty_Player))
                 r = Player_Action_Stats.PB;
-            else if (Pass_Rushers.Contains(Penalty_Player))
+            else if (pResult.Pass_Rushers.Contains(Penalty_Player))
                 r = Player_Action_Stats.PAR;
-            else if (Pass_Defenders.Contains(Penalty_Player))
+            else if (pResult.Pass_Defenders.Contains(Penalty_Player))
                 r = Player_Action_Stats.PD;
-            else if (Run_Blockers.Contains(Penalty_Player))
+            else if (pResult.Run_Blockers.Contains(Penalty_Player))
                 r = Player_Action_Stats.RB;
-            else if (Run_Defenders.Contains(Penalty_Player))
+            else if (pResult.Run_Defenders.Contains(Penalty_Player))
                 r = Player_Action_Stats.RD;
-            else if (Kick_Returners.Contains(Penalty_Player))
+            else if (pResult.Kick_Returners.Contains(Penalty_Player))
                 r = Player_Action_Stats.KRT;
-            else if (Kick_Defenders.Contains(Penalty_Player))
+            else if (pResult.Kick_Defenders.Contains(Penalty_Player))
                 r = Player_Action_Stats.KDT;
-            else if (Punt_Returners.Contains(Penalty_Player))
+            else if (pResult.Punt_Returners.Contains(Penalty_Player))
                 r = Player_Action_Stats.PRT;
-            else if (Punt_Defenders.Contains(Penalty_Player))
+            else if (pResult.Punt_Defenders.Contains(Penalty_Player))
                 r = Player_Action_Stats.PDT;
-            else if (FieldGaol_Kicking_Team.Contains(Penalty_Player))
+            else if (pResult.FieldGaol_Kicking_Team.Contains(Penalty_Player))
                 r = Player_Action_Stats.FGT;
-            else if (Field_Goal_Defenders.Contains(Penalty_Player))
+            else if (pResult.Field_Goal_Defenders.Contains(Penalty_Player))
                 r = Player_Action_Stats.FGD;
             return r;
         }
