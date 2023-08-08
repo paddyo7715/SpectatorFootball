@@ -484,7 +484,8 @@ namespace SpectatorFootball
 
         //Time/Clock
         public const long LAST_PLAY_SECONDS = 6;
-        public const long URGENT_FG_TIME = 20;
+        public const int FG_MADE_URGENCY_FOR_PENALTY_SECONDS = 90;
+
 
         //Injuries
         public const int PERCENT_INJURY_ON_A_PLAY = 5;
@@ -512,6 +513,8 @@ namespace SpectatorFootball
         public const int KICKOFF_MAX_LONG_DISTANCE = 80;
         public const double KICKOFF_MAX_YARDLINE_1  = 109;
         public const double KICKOFF_MAX_YARDLINE_2 = -9;
+        public const double FG_LONGEST_FG_YARDLINE = 45;
+
 
         public const int KICKOFF_TOP_MIN_VERTICAL = 21;
         public const int KICKOFF_BOTTOM_MAX_VERTICAL = 79;
@@ -576,5 +579,6 @@ namespace SpectatorFootball
         public const long SPORTSMANSHIP_ADJUSTER = 110;
         public const long PENALTY_UPPER_LIMIT = 1000;
         public const long PENALTY_UPPER_LIMIT_ADJ_QB_K = 3;  //For QBs or kickers
+
     }
 }

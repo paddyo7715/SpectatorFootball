@@ -409,61 +409,152 @@ namespace SpectatorFootball.GameNS
 
             return r;
         }
-        public bool AcceptDef_Penalty(Play_Result pResult, Play_Enum pe, Penalty penalty, int down, int yards_to_go)
+        public bool AcceptDef_Penalty(Play_Result pResult, Penalty penalty, int yards_to_go, int Line_of_Scrimmage, bool bLefttoRight, bool bLastPlayGame, bool bLasPlayHalf)
         {
             bool r = false;
 
             setOurThereScore();
 
+            //Calc down and line of scrimmage
+
+
+
             if (pResult.bTouchDown)
                 r = false;
-            else if (pResult.bFGMissed)
-                r = true;
-            else if (pResult.bXPMissed)
-                r = true;
-            else if (pResult.bFGMade && (g.Quarter == 2 || g.Quarter == 4) && g.Time > app_Constants.URGENT_FG_TIME &&
-                yards_to_go > pResult.Yards_Gained)
-                r = true;
             else if (pResult.bSafety)
                 r = true;
             else if (pResult.bFumble_Lost || pResult.bInterception)
                 r = true;
-            else if (this.ourScore <= this.theirScore && g.Quarter > 3 && g.Time <= app_Constants.LAST_PLAY_SECONDS)
-                r = true;
-            else if (down == 3 && yards_to_go > pResult.Yards_Gained)
-                r = true;
-            else if (pResult.Yards_Gained <= penalty.Yards)
-                r = true;
-
-            return r;
-        }
-
-        public bool AcceptOff_Penalty(Play_Result pResult, Play_Enum pe, Penalty penalty, int down, int yards_to_go)
-        {
-            bool r = false;
-
-            setOurThereScore();
-
-            if (pResult.bTouchDown)
-                r = true;
-            else if (pResult.bFGMissed)
-                r = false;
             else if (pResult.bXPMissed)
-                r = false;
+                r = true;
             else if (pResult.bFGMade)
+            {
+                int dist_from_GL = Game_Engine_Helper.calcDistanceFromGL(Line_of_Scrimmage, bLefttoRight);
+                r = AcceptPenaltyFGMade(dist_from_GL);
+            }
+            else if (pResult.bOnePntAfterTDMissed)
+                r = true;
+            else if (pResult.bOnePntAfterTDMade)
+                r = false;
+            else if (pResult.bTwoPntAfterTDMissed)
+                r = true;
+            else if (pResult.bTwoPntAfterTDMade)
+                r = false;
+            else if (pResult.bThreePntAfterTDMissed)
+                r = true;
+            else if (pResult.bThreePntAfterTDMade)
+                r = false;
+            else if (this.ourScore <= this.theirScore && (bLastPlayGame || bLasPlayHalf))
+                r = true;
+
+
+            return r;
+        }
+
+        public bool AcceptOff_Penalty(Play_Result pResult, int yards_to_go, double Line_of_Scrimmage, bool bLefttoRight, bool bLastPlayGame, bool bLasPlayHalf)
+        {
+            bool r = false;
+
+            setOurThereScore();
+
+            if (pResult.bTouchDown)
                 r = true;
             else if (pResult.bSafety)
                 r = false;
             else if (pResult.bFumble_Lost || pResult.bInterception)
                 r = false;
+            else if (pResult.bXPMissed)
+                r = false;
+            else if (pResult.bFGMissed)
+                r = false;
+            else if (pResult.bOnePntAfterTDMissed)
+                r = true;
+            else if (pResult.bOnePntAfterTDMade)
+                r = false;
+            else if (pResult.bTwoPntAfterTDMissed)
+                r = true;
+            else if (pResult.bTwoPntAfterTDMade)
+                r = false;
+            else if (pResult.bThreePntAfterTDMissed)
+                r = true;
+            else if (pResult.bThreePntAfterTDMade)
+                r = false;
+
             else if (this.ourScore <= this.theirScore && g.Quarter > 3 && g.Time <= app_Constants.LAST_PLAY_SECONDS)
-                r = false;
-            else if (down == 3 && yards_to_go > pResult.Yards_Gained)
-                r = false;
-            else if (pResult.Yards_Gained <= penalty.Yards)
                 r = false;
 
             return r;
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //This method will determine if when a FG is made and there is a penalty on the defense or offense
+        //Should the penalty be accepted.  The thining here is that if the tteam just ties the score with the game or half ending
+        //and they are a certain distance from the goal line and time left in the game or half,
+        //maybe they want to take the penalty and try to get the TD or maybe they want the FG to count.
+        public bool AcceptPenaltyFGMade(int DistanceFromGL)
+        {
+            bool r = false;
+
+            if (g.Quarter == 2 || g.Quarter > 3)
+            {
+                //the higher this number the closer you are to the GL
+                int temp1 = (int)DistanceFromGL;
+
+                //The higher this number the more time there is left
+                int temp2 = ((int)g.Time <= app_Constants.FG_MADE_URGENCY_FOR_PENALTY_SECONDS ? (int)g.Time : app_Constants.FG_MADE_URGENCY_FOR_PENALTY_SECONDS) /2;
+
+                if (temp1 + temp2 < 50)
+                    r = true;
+            }
+
+            return r;
+        }
+        public Down_and_Yardline NextDownandSpot(Play_Result pResult, int yards_to_go, int Line_of_Scrimmage, bool bLefttoRight)
+        {
+            int new_Down = 0;
+            int new_Line_of_Scrimmage = 0;
+
+            if (pResult.Yards_Gained >= yards_to_go)
+                new_Down = 1;
+
+            new_Line_of_Scrimmage += pResult.Yards_Gained * Game_Engine_Helper.HorizontalAdj(bLefttoRight);
+
+            return new Down_and_Yardline() { Down = new_Down, Yardline = new_Line_of_Scrimmage };
+        }
+
+        public Down_and_Yardline NextDownandSpot_Penalty(Play_Result pResult, Penalty penalty, Play_Enum pe, int yards_to_go, int Line_of_Scrimmage, bool bLefttoRight)
+        {
+            int new_Down = 0;
+            int new_Line_of_Scrimmage = 0;
+
+            //Don't bother with Extra Point kicks, 1,2 or 3 point scrimmage plays
+
+            if (pe == Play_Enum.KICKOFF_NORMAL || pe == Play_Enum.KICKOFF_ONSIDES || pe == Play_Enum.FREE_KICK )
+            {
+                new_Down = 1;
+
+            }
+
+            //Figure out if first down.  This is meaningless for some plays, such as kickoff, xp etc....
+
+
+            return new Down_and_Yardline() { Down = new_Down, Yardline = new_Line_of_Scrimmage };
+        }
+
+
+
+
     }
 }

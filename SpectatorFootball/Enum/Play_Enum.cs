@@ -15,6 +15,9 @@ namespace SpectatorFootball.Enum
         EXTRA_POINT,
         PUNT,
         RUN,
-        PASS
+        PASS,
+        SCRIM_PLAY_1XP,
+        SCRIM_PLAY_2XP,
+        SCRIM_PLAY_3XP
     }
 }

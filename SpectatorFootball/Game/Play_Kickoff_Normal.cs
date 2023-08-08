@@ -152,8 +152,8 @@ namespace SpectatorFootball.GameNS
 
             retuner_catches_ball_yl = retuner_catches_ball_yl;
 
-            r.bKickoff_Out_of_Endzone = r.Returner.isKickOutofEndzone(gBall.Current_YardLine);
-            if (r.bKickoff_Out_of_Endzone)
+            r.bKick_Out_of_Endzone = r.Returner.isKickOutofEndzone(gBall.Current_YardLine);
+            if (r.bKick_Out_of_Endzone)
                 r.bTouchback = true;
   
             if (!bSim)
@@ -305,7 +305,7 @@ namespace SpectatorFootball.GameNS
                     double prev_yl = p.Current_YardLine;
                     double prev_v = p.Current_Vertical_Percent_Pos;
 
-                    if (r.bKickoff_Out_of_Endzone)
+                    if (r.bKick_Out_of_Endzone)
                     {
                         bool babove = CommonUtils.getRandomTrueFalse();
                         double vrt = 0.0;
@@ -358,7 +358,7 @@ namespace SpectatorFootball.GameNS
             logger.Debug("=======================================================");
             logger.Debug("");
 
-            if (!r.bKickoff_Out_of_Endzone)
+            if (!r.bKick_Out_of_Endzone)
             {
                 //============================  Stage Three, four and five ==========================
                 //==== Returner runs to group 1,2 and 3 other players block or attempt to tackle ====
@@ -1048,17 +1048,14 @@ namespace SpectatorFootball.GameNS
             //Set if touchdown
             r.bTouchDown = Game_Engine_Helper.isTouchdown(bLefttoRight, r.Returner.Current_YardLine);
 
-            if (r.Returner != null)
-                r.Line_of_Scrimmage = r.Returner.Current_YardLine;
-
-            if (r.bFumble_Lost)
-                r.bSwitchPossession = true;
+//            if (r.Returner != null)
+//                r.Line_of_Scrimmage = r.Returner.Current_YardLine;
 
             //Set the Play stats
             double yards_gamed = Game_Engine_Helper.getYardsGained(bLefttoRight, retuner_catches_ball_yl, r.Returner.Current_YardLine);
             //Create a play stats record for every player in this play and set the appropriate play count to 1
             r.Play_Player_Stats = CreateStatRecords(r.Kicker, r.Returner, Kickoff_Players, Return_Players);
-            SetPlayerStats(r.bTouchback, r.bKickoff_Out_of_Endzone, r.bTouchDown,
+            SetPlayerStats(r.bTouchback, r.bKick_Out_of_Endzone, r.bTouchDown,
                 r.bFumble, r.bFumble_Lost, yards_gamed, r.Kicker, r.Returner, r.Tackler, r.Fumble_Recoverer,
                 Missed_Tackles, r.Play_Player_Stats);
 

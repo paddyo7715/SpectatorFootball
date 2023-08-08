@@ -22,7 +22,7 @@ namespace SpectatorFootball.PenaltiesNS
                 Yards = 5,
                 bDeclinable = true,
                 bAuto_FirstDown = false,
-                bSpot_Found = false,
+                bSpot_Foul = false,
                 Description = "False Start"
             });
             r.Last().Player_Action_States = new List<Player_Action_Stats>()
@@ -39,7 +39,7 @@ namespace SpectatorFootball.PenaltiesNS
                 Yards = 10,
                 bDeclinable = true,
                 bAuto_FirstDown = false,
-                bSpot_Found = false,
+                bSpot_Foul = false,
                 Description = "Holding"
             });
             r.Last().Player_Action_States = new List<Player_Action_Stats>()
@@ -55,7 +55,7 @@ namespace SpectatorFootball.PenaltiesNS
                 Yards = 10,
                 bDeclinable = true,
                 bAuto_FirstDown = false,
-                bSpot_Found = false,
+                bSpot_Foul = false,
                 Description = "Offensive Pass Interference"
             });
             r.Last().Player_Action_States = new List<Player_Action_Stats>()
@@ -70,8 +70,8 @@ namespace SpectatorFootball.PenaltiesNS
                 Penalty_Play_Type = Penalty_Play_Types.AO,
                 Yards = 5,
                 bDeclinable = true,
-                bAuto_FirstDown = false,
-                bSpot_Found = false,
+                bAuto_FirstDown = true,
+                bSpot_Foul = false,
                 Description = "Offsides"
             });
             r.Last().Player_Action_States = new List<Player_Action_Stats>()
@@ -87,7 +87,7 @@ namespace SpectatorFootball.PenaltiesNS
                 Yards = 5,
                 bDeclinable = true,
                 bAuto_FirstDown = false,
-                bSpot_Found = false,
+                bSpot_Foul = false,
                 Description = "Illegal Formation"
             });
             r.Last().Player_Action_States = new List<Player_Action_Stats>()
@@ -103,7 +103,7 @@ namespace SpectatorFootball.PenaltiesNS
                 Yards = 5,
                 bDeclinable = true,
                 bAuto_FirstDown = false,
-                bSpot_Found = false,
+                bSpot_Foul = false,
                 Description = "Offsides"
             });
             r.Last().Player_Action_States = new List<Player_Action_Stats>()
@@ -119,7 +119,7 @@ namespace SpectatorFootball.PenaltiesNS
                 Yards = 5,
                 bDeclinable = true,
                 bAuto_FirstDown = true,
-                bSpot_Found = false,
+                bSpot_Foul = false,
                 Description = "Holding"
             });
             r.Last().Player_Action_States = new List<Player_Action_Stats>()
@@ -135,7 +135,7 @@ namespace SpectatorFootball.PenaltiesNS
                 Yards = 5,
                 bDeclinable = true,
                 bAuto_FirstDown = true,
-                bSpot_Found = false,
+                bSpot_Foul = false,
                 Description = "Illegal Contact"
             });
             r.Last().Player_Action_States = new List<Player_Action_Stats>()
@@ -151,7 +151,7 @@ namespace SpectatorFootball.PenaltiesNS
                 Yards = 0,
                 bDeclinable = true,
                 bAuto_FirstDown = true,
-                bSpot_Found = true,
+                bSpot_Foul = true,
                 Description = "Pass Interference"
             });
             r.Last().Player_Action_States = new List<Player_Action_Stats>()
@@ -167,7 +167,7 @@ namespace SpectatorFootball.PenaltiesNS
                 Yards = 5,
                 bDeclinable = true,
                 bAuto_FirstDown = true,
-                bSpot_Found = false,
+                bSpot_Foul = false,
                 Description = "Illegal Use of Hands"
             });
             r.Last().Player_Action_States = new List<Player_Action_Stats>()
@@ -183,7 +183,7 @@ namespace SpectatorFootball.PenaltiesNS
                 Yards = 10,
                 bDeclinable = true,
                 bAuto_FirstDown = false,
-                bSpot_Found = false,
+                bSpot_Foul = false,
                 Description = "Illegal Use of Hands"
             });
             r.Last().Player_Action_States = new List<Player_Action_Stats>()
@@ -199,7 +199,7 @@ namespace SpectatorFootball.PenaltiesNS
                 Yards = 15,
                 bDeclinable = false,
                 bAuto_FirstDown = false,
-                bSpot_Found = true,
+                bSpot_Foul = true,
                 Description = "Illegal Block"
             });
             r.Last().Player_Action_States = new List<Player_Action_Stats>()
@@ -215,7 +215,7 @@ namespace SpectatorFootball.PenaltiesNS
                 Yards = 15,
                 bDeclinable = false,
                 bAuto_FirstDown = false,
-                bSpot_Found = true,
+                bSpot_Foul = true,
                 Description = "Illegal Block"
             });
             r.Last().Player_Action_States = new List<Player_Action_Stats>()
@@ -234,7 +234,7 @@ namespace SpectatorFootball.PenaltiesNS
                 Yards = 15,
                 bDeclinable = false,
                 bAuto_FirstDown = true,
-                bSpot_Found = true,               
+                bSpot_Foul = true,               
                 Description = "Unsportsmen Like Conduct"
             });
             r.Last().Player_Action_States = new List<Player_Action_Stats>()
@@ -270,7 +270,7 @@ namespace SpectatorFootball.PenaltiesNS
                 Yards = 15,
                 bDeclinable = false,
                 bAuto_FirstDown = true,
-                bSpot_Found = true,
+                bSpot_Foul = true,
                 Description = "Unnecessary Roughness"
             });
             r.Last().Player_Action_States = new List<Player_Action_Stats>()
@@ -306,7 +306,7 @@ namespace SpectatorFootball.PenaltiesNS
                 Yards = 15,
                 bDeclinable = false,
                 bAuto_FirstDown = true,
-                bSpot_Found = true, 
+                bSpot_Foul = true, 
                 Description = "Facemask"
             });
             r.Last().Player_Action_States = new List<Player_Action_Stats>()
@@ -430,6 +430,46 @@ namespace SpectatorFootball.PenaltiesNS
 
             if (Penalties_for_Play_Player.Count == 0)
                 throw new Exception("Error in getPenalty after play.  No possible penalties found for play " + pe.ToString() + " and player action type " + pa.ToString());
+
+            return r;
+        }
+        public static Game_Player getPenaltyPlayer(Play_Enum pe, List<Game_Player> Offensive_Players, List<Game_Player> Defensive_Players,
+    Game_Player Passer, Game_Player Kicker, Game_Player Punter)
+        {
+            Game_Player r = null;
+            List<Game_Player> Possible_Players = new List<Game_Player>();
+
+            foreach (Game_Player p in Offensive_Players)
+            {
+                long sp_num;
+
+                if (p == Passer || p == Kicker || p == Punter)
+                    sp_num = app_Constants.SPORTSMANSHIP_ADJUSTER - p.p_and_r.pr.First().Sportsmanship_Ratings / app_Constants.PENALTY_UPPER_LIMIT_ADJ_QB_K;
+                else
+                    sp_num = app_Constants.SPORTSMANSHIP_ADJUSTER - p.p_and_r.pr.First().Sportsmanship_Ratings;
+
+                long rmd = CommonUtils.getRandomNum(1, (int)app_Constants.PENALTY_UPPER_LIMIT);
+                if (rmd <= sp_num)
+                    Possible_Players.Add(p);
+            }
+
+            if (Possible_Players.Count > 0)
+            {
+                int ind = CommonUtils.getRandomIndex(Possible_Players.Count());
+                r = Possible_Players[ind];
+            }
+
+            return r;
+        }
+        public static bool isNoPenaltyPlay(Play_Result pResult, Play_Enum pe)
+        {
+            bool r = false;
+
+            if ((pe == Play_Enum.KICKOFF_NORMAL || pe == Play_Enum.FREE_KICK || pe == Play_Enum.PUNT) &&
+                pResult.bTouchback)
+                r = true;
+            else if (pe == Play_Enum.PUNT && (pResult.bKick_Out_of_Bounds || pResult.bKick_Out_of_Endzone))
+                r = true;
 
             return r;
         }

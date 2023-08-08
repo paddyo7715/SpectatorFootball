@@ -12,7 +12,8 @@ namespace SpectatorFootball.GameNS
     {
 
         //Result
-        public bool bKickoff_Out_of_Endzone = false;
+        public bool bKick_Out_of_Endzone = false;
+        public bool bKick_Out_of_Bounds = false;
         public bool bTouchDown = false;
         public bool bTouchback = false;
         public bool bFumble = false;
@@ -24,11 +25,19 @@ namespace SpectatorFootball.GameNS
         public bool bFGMissed = false;
         public bool bXPMade = false;
         public bool bXPMissed = false;
+        public bool bOnePntAfterTDMade = false;
+        public bool bOnePntAfterTDMissed = false;
+        public bool bTwoPntAfterTDMade = false;
+        public bool bTwoPntAfterTDMissed = false;
+        public bool bThreePntAfterTDMade = false;
+        public bool bThreePntAfterTDMissed = false;
 
         //Penalties
         public Game_Player Penalized_Player = null;
         public Penalty Penalty = null;
+        public bool bPenalty_Inforced = false;
         public bool bPenalty_Accepted = false;
+        public bool bPenatly_on_Away_Team = false;
 
         public Game_Player Passer = null;
         public Game_Player Kicker = null;
@@ -49,24 +58,18 @@ namespace SpectatorFootball.GameNS
         public List<Game_Player> FieldGaol_Kicking_Team = new List<Game_Player>();
         public List<Game_Player> Field_Goal_Defenders = new List<Game_Player>();
 
-
         public Game_Player Tackler = null;
         public Game_Player Fumble_Recoverer = null;
         public Game_Player Forced_Fumble_Tackler = null;
 
-        public double Yards_Gained = 0.0;
-        public double Yards_Returned = 0.0;
-
-        //Line_of_Scrimmage will be set in the play, except for the following cases:
-        //kickoff touchback, punt touchback or free kick touchback (which should never happen)
-        //In these special cases, the game engine must set the line of scrimmage for the next play
-        //as the touchback yardline.
-        public double Line_of_Scrimmage = 0.0;
+        public int Yards_Gained = 0;
+        public int Yards_Returned = 0;
+        public int Kick_Out_of_Bounds_Yardline = 0;
 
         //the bSwitchPossession property is ONLY set on a play that has a fumble lost or interception.
         //For kickoffs, punts or free kicks, it is already known that after the play that the teams
         //switch possession, so don't set this to true on those plays except when there is a fumble lost
-        public bool bSwitchPossession = false;
+//        public bool bSwitchPossession = false;
 
         public List<Game_Player_Stats> Play_Player_Stats = new List<Game_Player_Stats>();
         public List<Game_Player_Penalty_Stats> Play_Player_Penalty_Stats = new List<Game_Player_Penalty_Stats>();

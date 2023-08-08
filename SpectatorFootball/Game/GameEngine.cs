@@ -395,33 +395,35 @@ namespace SpectatorFootball.GameNS
                                 }
                 */
 
-
-                //Check for Penalties
-                Game_Player Penalized_Player = null;
-                Penalty penalty = null;
-                bool bPenaltyEnforced = false;
-                if (bAllowPenalties)
+                if (bAllowPenalties && Penalty_Helper.isNoPenaltyPlay(p_result, Offensive_Package.Play))
                 {
-                    Penalized_Player = getPenaltyPlayer(Offensive_Package.Play, Offensive_Players, Defensive_Players, p_result.Passer, p_result.Kicker, p_result.Punter);
+                    p_result.Penalized_Player = Penalty_Helper.getPenaltyPlayer(Offensive_Package.Play, Offensive_Players, Defensive_Players, p_result.Passer, p_result.Kicker, p_result.Punter);
                     if (p_result.Penalized_Player != null)
                     {
-                        Player_Action_Stats pa_state = Penalty_Helper.getPlayerAction(Penalized_Player, p_result);
-                        penalty = Penalty_Helper.getPenalty(Penalty_List, Offensive_Package.Play, pa_state);
+                        Player_Action_Stats pa_state = Penalty_Helper.getPlayerAction(p_result.Penalized_Player, p_result);
+                        p_result.Penalty = Penalty_Helper.getPenalty(Penalty_List, Offensive_Package.Play, pa_state);
 
-                        bool bAway_Pen_Player = Away_Players.Any(x => x.p == Penalized_Player.p_and_r.p);
-                        bool bHome_Pen_Player = Home_Players.Any(x => x.p == Penalized_Player.p_and_r.p);
+                        bool bAway_Pen_Player = Away_Players.Any(x => x.p == p_result.Penalized_Player.p_and_r.p);
+                        bool bHome_Pen_Player = Home_Players.Any(x => x.p == p_result.Penalized_Player.p_and_r.p);
                         Coach Penalty_Coach = null;
                         if (bAway_Pen_Player)
+                        {
+                            p_result.bPenatly_on_Away_Team = true;
                             Penalty_Coach = Home_Coach;
+                        }
                         else
+                        {
+                            p_result.bPenatly_on_Away_Team = false;
                             Penalty_Coach = Away_Coach;
+                        }
 
-                        bool bAccept_Peanlty = false;
-                        if ((bAway_Pen_Player && bLefttoRight) || bHome_Pen_Player && !bLefttoRight)
-                            bAccept_Peanlty = Penalty_Coach.AcceptOff_Penalty(p_result, Offensive_Package.Play, penalty, g_Down, g_Yards_to_go);
-                        else
-                            bAccept_Peanlty = Penalty_Coach.AcceptDef_Penalty(p_result, Offensive_Package.Play, penalty, g_Down, g_Yards_to_go);
-
+                        if (p_result.Penalty.bDeclinable)
+                        {
+                            if ((bAway_Pen_Player && bLefttoRight) || bHome_Pen_Player && !bLefttoRight)
+                                p_result.bPenalty_Accepted = Penalty_Coach.AcceptOff_Penalty(p_result, Offensive_Package.Play, p_result.Penalty, g_Down, g_Yards_to_go);
+                            else
+                                p_result.bPenalty_Accepted = Penalty_Coach.AcceptDef_Penalty(p_result, g_Down, g_Yards_to_go);
+                        }
                     }
                     //for some reason, I put adding the penalties in the accum method.  Take that out of there and add here.
                     //only accum the penalty if it is accepted but still set it in the play result.
@@ -452,7 +454,7 @@ namespace SpectatorFootball.GameNS
                 }
 
                 //if the play resulted in a change of possession then switch possession
-                if (p_result.bSwitchPossession)
+                if (p_result.bFumble_Lost || p_result.bInterception)
                     g_fid_posession = Game_Engine_Helper.Switch_Posession(g_fid_posession, at.Franchise_ID, ht.Franchise_ID);
 
             }
@@ -851,33 +853,6 @@ namespace SpectatorFootball.GameNS
                 g.Game_Player_Penalty_Stats.Add(s);
 
         }
-        public Game_Player getPenaltyPlayer(Play_Enum pe, List<Game_Player> Offensive_Players, List<Game_Player> Defensive_Players,
-            Game_Player Passer, Game_Player Kicker, Game_Player Punter)
-        {
-            Game_Player r = null;
-            List<Game_Player> Possible_Players = new List<Game_Player>();
 
-            foreach (Game_Player p in Offensive_Players)
-            {
-                long sp_num;
-
-                if (p == Passer || p == Kicker || p == Punter)
-                    sp_num = app_Constants.SPORTSMANSHIP_ADJUSTER - p.p_and_r.pr.First().Sportsmanship_Ratings / app_Constants.PENALTY_UPPER_LIMIT_ADJ_QB_K;
-                else
-                    sp_num = app_Constants.SPORTSMANSHIP_ADJUSTER - p.p_and_r.pr.First().Sportsmanship_Ratings;
-
-                long rmd = CommonUtils.getRandomNum(1, (int)app_Constants.PENALTY_UPPER_LIMIT);
-                if (rmd <= sp_num)
-                    Possible_Players.Add(p);
-            }
-
-            if (Possible_Players.Count > 0)
-            {
-                int ind = CommonUtils.getRandomIndex(Possible_Players.Count());
-                r = Possible_Players[ind];
-            }
-
-            return r;
-        }
     }
 }

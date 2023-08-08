@@ -289,5 +289,17 @@ namespace SpectatorFootball.GameNS
             return r;
         }
 
+        public static int calcDistanceFromGL(int line_of_scrimage, bool blefttoright)
+        {
+            int r = 0;
+
+            if (blefttoright)
+                r = 100 - line_of_scrimage;
+            else
+                r = line_of_scrimage;
+
+            return r;
+        }
+
     }
 }
