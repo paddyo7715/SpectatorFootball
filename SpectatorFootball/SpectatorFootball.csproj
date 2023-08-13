@@ -202,7 +202,7 @@
     <Compile Include="Free_Agency\FreeAgency_Helper.cs" />
     <Compile Include="Game\Action.cs" />
     <Compile Include="Game\Coach.cs" />
-    <Compile Include="Game\Down_and_Yardline.cs" />
+    <Compile Include="Game\Next_Play_Situation.cs" />
     <Compile Include="Game\Formation.cs" />
     <Compile Include="Game\Formation_Rec.cs" />
     <Compile Include="Game\GameEngine.cs" />

@@ -34,7 +34,7 @@ namespace SpectatorFootball.GameNS
         //Global state variables
         private long g_fid_posession;
         private int g_Down;
-        private int g_Yards_to_go;
+        private double g_Yards_to_go;
         private Double g_Line_of_Scrimmage;
         public double g_Vertical_Ball_Placement;
         private int g_Away_timeouts = 3;
@@ -282,7 +282,7 @@ namespace SpectatorFootball.GameNS
             r.Before_Away_Score = g.Away_Score.ToString();
             r.Before_Home_Score = g.Home_Score.ToString();
 
-            Down_and_Yards = Game_Helper.getDownAndYardString(g_Down, g_Yards_to_go, g_Vertical_Ball_Placement, bLefttoRight);
+            Down_and_Yards = Game_Helper.getDownAndYardString(g_Down, g_Yards_to_go, g_Line_of_Scrimmage, bLefttoRight);
             r.Before_Down_and_Yards = Down_and_Yards;
             r.Before_Away_Timeouts = g_Away_timeouts.ToString();
             r.Before_Home_Timeouts = g_Home_timeouts.ToString();

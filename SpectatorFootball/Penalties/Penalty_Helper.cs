@@ -473,5 +473,14 @@ namespace SpectatorFootball.PenaltiesNS
 
             return r;
         }
+        public static bool isHalfTheDistance(double penalty_yards, double dist_gl)
+        {
+            bool r = false;
+
+            if (dist_gl / 2 < penalty_yards)
+                r = true;
+
+            return r;
+        }
     }
 }

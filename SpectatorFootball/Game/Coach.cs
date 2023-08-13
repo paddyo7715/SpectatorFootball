@@ -429,7 +429,7 @@ namespace SpectatorFootball.GameNS
                 r = true;
             else if (pResult.bFGMade)
             {
-                int dist_from_GL = Game_Engine_Helper.calcDistanceFromGL(Line_of_Scrimmage, bLefttoRight);
+                double dist_from_GL = Game_Engine_Helper.calcDistanceFromGL(Line_of_Scrimmage, bLefttoRight);
                 r = AcceptPenaltyFGMade(dist_from_GL);
             }
             else if (pResult.bOnePntAfterTDMissed)
@@ -503,17 +503,17 @@ namespace SpectatorFootball.GameNS
         //Should the penalty be accepted.  The thining here is that if the tteam just ties the score with the game or half ending
         //and they are a certain distance from the goal line and time left in the game or half,
         //maybe they want to take the penalty and try to get the TD or maybe they want the FG to count.
-        public bool AcceptPenaltyFGMade(int DistanceFromGL)
+        public bool AcceptPenaltyFGMade(double DistanceFromGL)
         {
             bool r = false;
 
             if (g.Quarter == 2 || g.Quarter > 3)
             {
                 //the higher this number the closer you are to the GL
-                int temp1 = (int)DistanceFromGL;
+                double temp1 = DistanceFromGL;
 
                 //The higher this number the more time there is left
-                int temp2 = ((int)g.Time <= app_Constants.FG_MADE_URGENCY_FOR_PENALTY_SECONDS ? (int)g.Time : app_Constants.FG_MADE_URGENCY_FOR_PENALTY_SECONDS) /2;
+                double temp2 = g.Time <= app_Constants.FG_MADE_URGENCY_FOR_PENALTY_SECONDS ? (int)g.Time : app_Constants.FG_MADE_URGENCY_FOR_PENALTY_SECONDS /2;
 
                 if (temp1 + temp2 < 50)
                     r = true;
@@ -521,36 +521,142 @@ namespace SpectatorFootball.GameNS
 
             return r;
         }
-        public Down_and_Yardline NextDownandSpot(Play_Result pResult, int yards_to_go, int Line_of_Scrimmage, bool bLefttoRight)
+        public Next_Play_Situation NextDownandSpot(Play_Result pResult,int Down, int yards_to_go, int Line_of_Scrimmage, bool bLefttoRight)
         {
             int new_Down = 0;
+            int new_Yards_to_Go = 0;
             int new_Line_of_Scrimmage = 0;
+            bool bTurnover_on_Downs = false;
 
             if (pResult.Yards_Gained >= yards_to_go)
+            {
                 new_Down = 1;
+                new_Yards_to_Go = 10;
+            }
+            else if (Down == 4)
+            {
+                new_Down = 1;
+                new_Yards_to_Go = 10;
+                bTurnover_on_Downs = true;
+            }
+            else
+            {
+                new_Down = Down + 1;
+                new_Yards_to_Go -= pResult.Yards_Gained;
+            }
 
             new_Line_of_Scrimmage += pResult.Yards_Gained * Game_Engine_Helper.HorizontalAdj(bLefttoRight);
 
-            return new Down_and_Yardline() { Down = new_Down, Yardline = new_Line_of_Scrimmage };
+            return new Next_Play_Situation() { Down = new_Down, Yardline = new_Line_of_Scrimmage, bTurnover_On_Downs = bTurnover_on_Downs, Yards_Gained = pResult.Yards_Gained };
         }
 
-        public Down_and_Yardline NextDownandSpot_Penalty(Play_Result pResult, Penalty penalty, Play_Enum pe, int yards_to_go, int Line_of_Scrimmage, bool bLefttoRight)
+        public Next_Play_Situation NextDownandSpot_KickingTeam_Penalty(Play_Result pResult, Penalty penalty, Play_Enum pe, int yards_to_go, int Returner_goalline, bool bLefttoRight)
         {
             int new_Down = 0;
-            int new_Line_of_Scrimmage = 0;
+            double new_yards_to_go = 0;
+            double new_Line_of_Scrimmage = 0;
+            double Returner_Yardline = pResult.Returner.Current_YardLine;
+            double Spot_of_Found_Yardline = pResult.Penalized_Player.Current_YardLine;
+            int Horizonal_Adj = Game_Engine_Helper.HorizontalAdj(bLefttoRight);
+            double Penalty_Yards = 0.0;
+            bool bHalf_the_D = false;
 
-            //Don't bother with Extra Point kicks, 1,2 or 3 point scrimmage plays
+            //All penalties on the kick or punt teams are spot fouls.
+            //so there will never be a penalty to rekick
+            if (!penalty.bSpot_Foul)
+                throw new Exception("Penalty " + penalty.code + " on kick/punt return not allowed because it is not a spot foul.");
 
-            if (pe == Play_Enum.KICKOFF_NORMAL || pe == Play_Enum.KICKOFF_ONSIDES || pe == Play_Enum.FREE_KICK )
+            double point_of_foul_Yardline;
+
+            //first decide the point of fould. .  
+            if (bLefttoRight)
             {
-                new_Down = 1;
-
+                if (Returner_Yardline > Spot_of_Found_Yardline)
+                    point_of_foul_Yardline = Returner_Yardline;
+                else
+                    point_of_foul_Yardline = Spot_of_Found_Yardline;
+            }
+            else
+            {
+                if (Returner_Yardline < Spot_of_Found_Yardline)
+                    point_of_foul_Yardline = Returner_Yardline;
+                else
+                    point_of_foul_Yardline = Spot_of_Found_Yardline;
             }
 
-            //Figure out if first down.  This is meaningless for some plays, such as kickoff, xp etc....
+            //then add or subtract penatly and check for half the distance.
+            double dist_from_GL = Game_Engine_Helper.calcDistanceFromGL(point_of_foul_Yardline, bLefttoRight);
+            bHalf_the_D = Penalty_Helper.isHalfTheDistance(penalty.Yards, dist_from_GL);
+
+            if (bHalf_the_D)
+                new_Line_of_Scrimmage = point_of_foul_Yardline + ((dist_from_GL / 2) * Horizonal_Adj);
+            else
+                new_Line_of_Scrimmage = point_of_foul_Yardline + (penalty.Yards * Horizonal_Adj);
 
 
-            return new Down_and_Yardline() { Down = new_Down, Yardline = new_Line_of_Scrimmage };
+            new_Down = 1;
+            new_yards_to_go = 10;
+
+            return new Next_Play_Situation() { Down = new_Down, Yardline = new_Line_of_Scrimmage, Yards_Gained = pResult.Yards_Gained, Penalty_Yards = Penalty_Yards, bHalf_the_distance = bHalf_the_D };
+        }
+
+
+
+
+
+
+
+
+
+        //bLefttoRight should be from the point of the returning team so use ! when calling
+        public Next_Play_Situation NextDownandSpot_KickReturn_Penalty(Play_Result pResult, Penalty penalty, Play_Enum pe, int yards_to_go, int Returner_goalline, bool bLefttoRight)
+        {
+            int new_Down = 0;
+            double new_yards_to_go = 0;
+            double new_Line_of_Scrimmage = 0;
+            double Returner_Yardline = pResult.Returner.Current_YardLine;
+            double Spot_of_Found_Yardline = pResult.Penalized_Player.Current_YardLine;
+            int Horizonal_Adj = Game_Engine_Helper.HorizontalAdj(bLefttoRight);
+            double Penalty_Yards = 0.0;
+            bool bHalf_the_D = false;
+
+            //All penalties on the kick or punt return teams are spot fouls.
+            //so there will never be a penalty to rekick
+            if (!penalty.bSpot_Foul)
+                throw new Exception("Penalty " + penalty.code + " on kick/punt return not allowed because it is not a spot foul.");
+
+            double point_of_foul_Yardline;
+
+            //first decide the point of fould. .  
+            if (bLefttoRight)
+            {
+                if (Returner_Yardline < Spot_of_Found_Yardline)
+                    point_of_foul_Yardline = Returner_Yardline;
+                else
+                    point_of_foul_Yardline = Spot_of_Found_Yardline;
+            }
+            else
+            {
+                if (Returner_Yardline > Spot_of_Found_Yardline)
+                    point_of_foul_Yardline = Returner_Yardline;
+                else
+                    point_of_foul_Yardline = Spot_of_Found_Yardline;
+            }
+
+            //then add or subtract penatly and check for half the distance.
+            double dist_from_GL = Game_Engine_Helper.calcDistanceFromGL(point_of_foul_Yardline, !bLefttoRight);
+            bHalf_the_D = Penalty_Helper.isHalfTheDistance(penalty.Yards, dist_from_GL);
+
+            if (bHalf_the_D)
+                new_Line_of_Scrimmage = point_of_foul_Yardline - ((dist_from_GL / 2) * Horizonal_Adj);
+            else
+                new_Line_of_Scrimmage = point_of_foul_Yardline - (penalty.Yards * Horizonal_Adj);
+
+
+            new_Down = 1;
+            new_yards_to_go = 10;
+
+            return new Next_Play_Situation() { Down = new_Down, Yardline = new_Line_of_Scrimmage, Yards_Gained = pResult.Yards_Gained, Penalty_Yards = Penalty_Yards, bHalf_the_distance = bHalf_the_D };
         }
 
 

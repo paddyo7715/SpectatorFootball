@@ -49,7 +49,7 @@ namespace SpectatorFootball.GameNS
             return r;
         }
 
-        public static string getDownAndYardString(int Down, int YardstoGo, double BallYardline, bool bLefttoRight)
+        public static string getDownAndYardString(int Down, double YardstoGo, double BallYardline, bool bLefttoRight)
         {
             string r = "";
 
@@ -78,12 +78,15 @@ namespace SpectatorFootball.GameNS
 
                 string toGo = "";
 
-                if (bLefttoRight && (100 - (int) BallYardline) <= YardstoGo)
-                    toGo = "Goal";
-                else if (!bLefttoRight && (int) BallYardline <= YardstoGo)
+                double dist_from_GL = Game_Engine_Helper.calcDistanceFromGL(BallYardline, bLefttoRight);
+                if (dist_from_GL <= YardstoGo)
                     toGo = "Goal";
                 else
+                {
+                    int itogo = (int)YardstoGo;
+                    if (YardstoGo == 0) YardstoGo = 1;
                     toGo = YardstoGo.ToString();
+                }
 
                 r += toGo;
             }
@@ -153,5 +156,6 @@ namespace SpectatorFootball.GameNS
             }
             return f;
         }
+
     }
 }
