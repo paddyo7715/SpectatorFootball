@@ -47,22 +47,6 @@ namespace SpectatorFootball.PenaltiesNS
                 Player_Action_Stats.PB
             };
 
-            //Offensive Pass Interference
-            r.Add(new Penalty()
-            {
-                code = Penalty_Codes.OI,
-                Penalty_Play_Type = Penalty_Play_Types.PO,
-                Yards = 10,
-                bDeclinable = true,
-                bAuto_FirstDown = false,
-                bSpot_Foul = false,
-                Description = "Offensive Pass Interference"
-            });
-            r.Last().Player_Action_States = new List<Player_Action_Stats>()
-            {
-                Player_Action_Stats.PC
-            };
-
             //Offensive offsides
             r.Add(new Penalty()
             {
@@ -137,22 +121,6 @@ namespace SpectatorFootball.PenaltiesNS
                 bAuto_FirstDown = true,
                 bSpot_Foul = false,
                 Description = "Illegal Contact"
-            });
-            r.Last().Player_Action_States = new List<Player_Action_Stats>()
-            {
-                Player_Action_Stats.PD
-            };
-
-            //Defensive Pass Interference
-            r.Add(new Penalty()
-            {
-                code = Penalty_Codes.PI,
-                Penalty_Play_Type = Penalty_Play_Types.PD,
-                Yards = 0,
-                bDeclinable = true,
-                bAuto_FirstDown = true,
-                bSpot_Foul = true,
-                Description = "Pass Interference"
             });
             r.Last().Player_Action_States = new List<Player_Action_Stats>()
             {
@@ -473,14 +441,19 @@ namespace SpectatorFootball.PenaltiesNS
 
             return r;
         }
-        public static bool isHalfTheDistance(double penalty_yards, double dist_gl)
+        public static Tuple<bool, double> isHalfTheDistance(double penalty_yards, double dist_gl)
         {
             bool r = false;
+            double half_the_dist = 0.0;
+            double temp = dist_gl / 2;
 
-            if (dist_gl / 2 < penalty_yards)
+            if (temp < penalty_yards)
+            {
                 r = true;
+                half_the_dist = temp;
+            }
 
-            return r;
+            return new Tuple<bool,double>(r,half_the_dist);
         }
     }
 }

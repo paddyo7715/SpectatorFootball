@@ -409,15 +409,14 @@ namespace SpectatorFootball.GameNS
 
             return r;
         }
-        public bool AcceptDef_Penalty(Play_Result pResult, Penalty penalty, int yards_to_go, int Line_of_Scrimmage, bool bLefttoRight, bool bLastPlayGame, bool bLasPlayHalf)
+        //This is for penalties on the defense that includes kickoff defense
+        public bool AcceptDef_Penalty(Play_Enum pe, Play_Result pResult, Penalty penalty, int yards_to_go, int Line_of_Scrimmage, bool bLefttoRight, bool bLastPlayGame, bool bLasPlayHalf)
         {
             bool r = false;
+            double dist_from_GL = Game_Engine_Helper.calcDistanceFromGL(Line_of_Scrimmage, bLefttoRight);
 
-            setOurThereScore();
-
-            //Calc down and line of scrimmage
-
-
+            if (!penalty.bDeclinable)
+                throw new Exception("Non decidable penalty passed to AcceptDef_Penalty");
 
             if (pResult.bTouchDown)
                 r = false;
@@ -427,11 +426,12 @@ namespace SpectatorFootball.GameNS
                 r = true;
             else if (pResult.bXPMissed)
                 r = true;
+            else if (pResult.bXPMade)
+                r = false;
             else if (pResult.bFGMade)
-            {
-                double dist_from_GL = Game_Engine_Helper.calcDistanceFromGL(Line_of_Scrimmage, bLefttoRight);
+                r = false;
+            else if (pResult.bFGMade)
                 r = AcceptPenaltyFGMade(dist_from_GL);
-            }
             else if (pResult.bOnePntAfterTDMissed)
                 r = true;
             else if (pResult.bOnePntAfterTDMade)
@@ -446,6 +446,33 @@ namespace SpectatorFootball.GameNS
                 r = false;
             else if (this.ourScore <= this.theirScore && (bLastPlayGame || bLasPlayHalf))
                 r = true;
+            else  //all other play situations
+            {
+                int Horizonal_Adj = Game_Engine_Helper.HorizontalAdj(bLefttoRight);
+
+                switch (pe)
+                {
+                    case Play_Enum.FREE_KICK:
+                    case Play_Enum.KICKOFF_NORMAL:
+                    case Play_Enum.KICKOFF_ONSIDES:
+                    case Play_Enum.PUNT:
+                        r = true;
+                        break;
+                    case Play_Enum.RUN:
+                    case Play_Enum.PASS:
+                        r = false;
+                        //                        point_of_foul_Yardline += (pResult.Yards_Gained * Horizonal_Adj);
+                        double before_pen_YL = 0.0;
+
+                        if (penalty.bAuto_FirstDown && pResult.Yards_Gained < yards_to_go)
+                            r = true;
+                        else if (pResult.Yards_Gained > yards_to_go)
+                            r = true;
+                        else
+                            r = false;
+                        break;
+                }
+            }
 
 
             return r;
@@ -454,8 +481,6 @@ namespace SpectatorFootball.GameNS
         public bool AcceptOff_Penalty(Play_Result pResult, int yards_to_go, double Line_of_Scrimmage, bool bLefttoRight, bool bLastPlayGame, bool bLasPlayHalf)
         {
             bool r = false;
-
-            setOurThereScore();
 
             if (pResult.bTouchDown)
                 r = true;
@@ -521,31 +546,41 @@ namespace SpectatorFootball.GameNS
 
             return r;
         }
-        public Next_Play_Situation NextDownandSpot(Play_Result pResult,int Down, int yards_to_go, int Line_of_Scrimmage, bool bLefttoRight)
+/*        public Next_Play_Situation NextDownandSpot(Play_Enum pe, Play_Result pResult, int Down, int yards_to_go, int Line_of_Scrimmage, bool bLefttoRight)
         {
             int new_Down = 0;
             int new_Yards_to_Go = 0;
             int new_Line_of_Scrimmage = 0;
             bool bTurnover_on_Downs = false;
 
-            if (pResult.Yards_Gained >= yards_to_go)
-            {
-                new_Down = 1;
-                new_Yards_to_Go = 10;
+                switch (pe)
+                {
+                case Play_Enum.RUN:
+                case Play_Enum.PASS:
+                    if (pResult.Yards_Gained >= yards_to_go)
+                    {
+                        new_Down = 1;
+                        new_Yards_to_Go = 10;
+                    }
+                    else if (Down == 4)
+                    {
+                        new_Down = 1;
+                        new_Yards_to_Go = 10;
+                        bTurnover_on_Downs = true;
+                    }
+                    else
+                    {
+                        new_Down = Down + 1;
+                        new_Yards_to_Go -= pResult.Yards_Gained;
+                    }
+                    new_Line_of_Scrimmage += pResult.Yards_Gained * Game_Engine_Helper.HorizontalAdj(bLefttoRight);
+                    break;
+                case Play_Enum.EXTRA_POINT:
+                case Play_Enum.SCRIM_PLAY_1XP:
+                case Play_Enum.SCRIM_PLAY_2XP:
+                case Play_Enum.SCRIM_PLAY_3XP:
+                    break;
             }
-            else if (Down == 4)
-            {
-                new_Down = 1;
-                new_Yards_to_Go = 10;
-                bTurnover_on_Downs = true;
-            }
-            else
-            {
-                new_Down = Down + 1;
-                new_Yards_to_Go -= pResult.Yards_Gained;
-            }
-
-            new_Line_of_Scrimmage += pResult.Yards_Gained * Game_Engine_Helper.HorizontalAdj(bLefttoRight);
 
             return new Next_Play_Situation() { Down = new_Down, Yardline = new_Line_of_Scrimmage, bTurnover_On_Downs = bTurnover_on_Downs, Yards_Gained = pResult.Yards_Gained };
         }
@@ -599,7 +634,7 @@ namespace SpectatorFootball.GameNS
 
             return new Next_Play_Situation() { Down = new_Down, Yardline = new_Line_of_Scrimmage, Yards_Gained = pResult.Yards_Gained, Penalty_Yards = Penalty_Yards, bHalf_the_distance = bHalf_the_D };
         }
-
+*/
 
 
 
@@ -609,7 +644,7 @@ namespace SpectatorFootball.GameNS
 
 
         //bLefttoRight should be from the point of the returning team so use ! when calling
-        public Next_Play_Situation NextDownandSpot_KickReturn_Penalty(Play_Result pResult, Penalty penalty, Play_Enum pe, int yards_to_go, int Returner_goalline, bool bLefttoRight)
+/*        public Next_Play_Situation NextDownandSpot_KickReturn_Penalty(Play_Result pResult, Penalty penalty, Play_Enum pe, int yards_to_go, int Returner_goalline, bool bLefttoRight)
         {
             int new_Down = 0;
             double new_yards_to_go = 0;
@@ -658,7 +693,7 @@ namespace SpectatorFootball.GameNS
 
             return new Next_Play_Situation() { Down = new_Down, Yardline = new_Line_of_Scrimmage, Yards_Gained = pResult.Yards_Gained, Penalty_Yards = Penalty_Yards, bHalf_the_distance = bHalf_the_D };
         }
-
+*/
 
 
 

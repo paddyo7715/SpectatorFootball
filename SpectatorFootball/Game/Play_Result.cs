@@ -62,9 +62,9 @@ namespace SpectatorFootball.GameNS
         public Game_Player Fumble_Recoverer = null;
         public Game_Player Forced_Fumble_Tackler = null;
 
-        public int Yards_Gained = 0;
-        public int Yards_Returned = 0;
-        public int Kick_Out_of_Bounds_Yardline = 0;
+        public double Yards_Gained = 0;
+        public double Yards_Returned = 0;
+        public double Kick_Out_of_Bounds_Yardline = 0;
 
         //the bSwitchPossession property is ONLY set on a play that has a fumble lost or interception.
         //For kickoffs, punts or free kicks, it is already known that after the play that the teams
