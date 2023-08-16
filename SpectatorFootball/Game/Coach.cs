@@ -409,6 +409,70 @@ namespace SpectatorFootball.GameNS
 
             return r;
         }
+
+        //This is for penalties on the offense that includes kickoff returns
+        public bool AcceptOff_Penalty(Play_Enum pe, Play_Result pResult, Penalty penalty, int Line_of_Scrimmage, bool bLefttoRight, bool bLastPlayGame, bool bLasPlayHalf)
+        {
+            bool r = false;
+            double dist_from_GL = Game_Engine_Helper.calcDistanceFromGL(Line_of_Scrimmage, bLefttoRight);
+
+            if (!penalty.bDeclinable)
+                throw new Exception("Non decidable penalty passed to AcceptDef_Penalty");
+
+            if (pResult.bFumble_Lost || pResult.bInterception)
+                r = false;
+            if (pResult.bTouchDown)
+                r = true;
+            else if (pResult.bSafety)
+                r = false;
+            else if (pResult.bXPMissed)
+                r = false;
+            else if (pResult.bXPMade)
+                r = true;
+            else if (pResult.bFGMade)
+                r = true;
+            else if (pResult.bFGMade)
+                r = !AcceptPenaltyFGMade(dist_from_GL);
+            else if (pResult.bOnePntAfterTDMissed)
+                r = false;
+            else if (pResult.bOnePntAfterTDMade)
+                r = true;
+            else if (pResult.bTwoPntAfterTDMissed)
+                r = false;
+            else if (pResult.bTwoPntAfterTDMade)
+                r = true;
+            else if (pResult.bThreePntAfterTDMissed)
+                r = false;
+            else if (pResult.bThreePntAfterTDMade)
+                r = true;
+            else if (this.ourScore <= this.theirScore && (bLastPlayGame || bLasPlayHalf))
+                r = true;
+            else  //all other play situations
+            {
+                int Horizonal_Adj = Game_Engine_Helper.HorizontalAdj(bLefttoRight);
+
+                switch (pe)
+                {
+                    case Play_Enum.FREE_KICK:
+                    case Play_Enum.KICKOFF_NORMAL:
+                    case Play_Enum.KICKOFF_ONSIDES:
+                    case Play_Enum.PUNT:
+                        r = true;
+                        break;
+                    case Play_Enum.RUN:
+                    case Play_Enum.PASS:  //stopped here
+                        r = false;
+                        //                        point_of_foul_Yardline += (pResult.Yards_Gained * Horizonal_Adj);
+                        if (pResult.Yards_Gained > 0)
+                            r = true;
+                        break;
+                }
+            }
+
+
+            return r;
+        }
+
         //This is for penalties on the defense that includes kickoff defense
         public bool AcceptDef_Penalty(Play_Enum pe, Play_Result pResult, Penalty penalty, int yards_to_go, int Line_of_Scrimmage, bool bLefttoRight, bool bLastPlayGame, bool bLasPlayHalf)
         {
@@ -418,11 +482,11 @@ namespace SpectatorFootball.GameNS
             if (!penalty.bDeclinable)
                 throw new Exception("Non decidable penalty passed to AcceptDef_Penalty");
 
-            if (pResult.bTouchDown)
+            if (pResult.bFumble_Lost || pResult.bInterception)
+                r = true;
+            else if (pResult.bTouchDown)
                 r = false;
             else if (pResult.bSafety)
-                r = true;
-            else if (pResult.bFumble_Lost || pResult.bInterception)
                 r = true;
             else if (pResult.bXPMissed)
                 r = true;
@@ -478,38 +542,7 @@ namespace SpectatorFootball.GameNS
             return r;
         }
 
-        public bool AcceptOff_Penalty(Play_Result pResult, int yards_to_go, double Line_of_Scrimmage, bool bLefttoRight, bool bLastPlayGame, bool bLasPlayHalf)
-        {
-            bool r = false;
 
-            if (pResult.bTouchDown)
-                r = true;
-            else if (pResult.bSafety)
-                r = false;
-            else if (pResult.bFumble_Lost || pResult.bInterception)
-                r = false;
-            else if (pResult.bXPMissed)
-                r = false;
-            else if (pResult.bFGMissed)
-                r = false;
-            else if (pResult.bOnePntAfterTDMissed)
-                r = true;
-            else if (pResult.bOnePntAfterTDMade)
-                r = false;
-            else if (pResult.bTwoPntAfterTDMissed)
-                r = true;
-            else if (pResult.bTwoPntAfterTDMade)
-                r = false;
-            else if (pResult.bThreePntAfterTDMissed)
-                r = true;
-            else if (pResult.bThreePntAfterTDMade)
-                r = false;
-
-            else if (this.ourScore <= this.theirScore && g.Quarter > 3 && g.Time <= app_Constants.LAST_PLAY_SECONDS)
-                r = false;
-
-            return r;
-        }
 
 
 

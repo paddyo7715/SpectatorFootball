@@ -54,7 +54,7 @@ namespace SpectatorFootball.PenaltiesNS
                 Penalty_Play_Type = Penalty_Play_Types.AO,
                 Yards = 5,
                 bDeclinable = true,
-                bAuto_FirstDown = true,
+                bAuto_FirstDown = false,
                 bSpot_Foul = false,
                 Description = "Offsides"
             });
