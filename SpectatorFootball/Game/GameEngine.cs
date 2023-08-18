@@ -419,10 +419,11 @@ namespace SpectatorFootball.GameNS
 
                         if (p_result.Penalty.bDeclinable)
                         {
-                            if ((bAway_Pen_Player && bLefttoRight) || bHome_Pen_Player && !bLefttoRight)
-                                p_result.bPenalty_Accepted = Penalty_Coach.AcceptOff_Penalty(p_result, Offensive_Package.Play, p_result.Penalty, g_Down, g_Yards_to_go);
+                            bool isBallCarryingTeam = Game_Engine_Helper.isBallTeamPenalty(p_result);
+                            if (isBallCarryingTeam)
+                                p_result.bPenalty_Accepted = Penalty_Coach.AcceptOff_Penalty(Offensive_Package.Play, p_result, g_Line_of_Scrimmage, bLefttoRight, false, false);
                             else
-                                p_result.bPenalty_Accepted = Penalty_Coach.AcceptDef_Penalty(p_result, g_Down, g_Yards_to_go);
+                                p_result.bPenalty_Accepted = Penalty_Coach.AcceptDef_Penalty(Offensive_Package.Play, p_result, g_Yards_to_go ,g_Line_of_Scrimmage, bLefttoRight, false, false);
                         }
                     }
                     //for some reason, I put adding the penalties in the accum method.  Take that out of there and add here.

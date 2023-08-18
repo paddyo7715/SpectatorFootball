@@ -411,10 +411,12 @@ namespace SpectatorFootball.GameNS
         }
 
         //This is for penalties on the offense that includes kickoff returns
-        public bool AcceptOff_Penalty(Play_Enum pe, Play_Result pResult, Penalty penalty, int Line_of_Scrimmage, bool bLefttoRight, bool bLastPlayGame, bool bLasPlayHalf)
+        public bool AcceptOff_Penalty(Play_Enum pe, Play_Result pResult, double Line_of_Scrimmage, bool bLefttoRight, bool bLastPlayGame, bool bLasPlayHalf)
         {
             bool r = false;
             double dist_from_GL = Game_Engine_Helper.calcDistanceFromGL(Line_of_Scrimmage, bLefttoRight);
+
+            Penalty penalty = pResult.Penalty;
 
             if (!penalty.bDeclinable)
                 throw new Exception("Non decidable penalty passed to AcceptDef_Penalty");
@@ -474,10 +476,12 @@ namespace SpectatorFootball.GameNS
         }
 
         //This is for penalties on the defense that includes kickoff defense
-        public bool AcceptDef_Penalty(Play_Enum pe, Play_Result pResult, Penalty penalty, int yards_to_go, int Line_of_Scrimmage, bool bLefttoRight, bool bLastPlayGame, bool bLasPlayHalf)
+        public bool AcceptDef_Penalty(Play_Enum pe, Play_Result pResult,double yards_to_go, double Line_of_Scrimmage, bool bLefttoRight, bool bLastPlayGame, bool bLasPlayHalf)
         {
             bool r = false;
             double dist_from_GL = Game_Engine_Helper.calcDistanceFromGL(Line_of_Scrimmage, bLefttoRight);
+
+            Penalty penalty = pResult.Penalty;
 
             if (!penalty.bDeclinable)
                 throw new Exception("Non decidable penalty passed to AcceptDef_Penalty");
@@ -541,21 +545,6 @@ namespace SpectatorFootball.GameNS
 
             return r;
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         //This method will determine if when a FG is made and there is a penalty on the defense or offense
         //Should the penalty be accepted.  The thining here is that if the tteam just ties the score with the game or half ending

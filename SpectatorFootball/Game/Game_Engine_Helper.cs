@@ -301,5 +301,28 @@ namespace SpectatorFootball.GameNS
             return r;
         }
 
+        public static bool isBallTeamPenalty(Play_Result pResult)
+        {
+            bool r = false;
+
+            Game_Player p = pResult.Penalized_Player;
+
+            if (pResult.Passer == p || pResult.Pass_Catchers.Contains(p) || pResult.Ball_Runners.Contains(p) ||
+                pResult.Pass_Blockers.Contains(p))
+                r = true;
+            else if (pResult.Returner == p || pResult.Punt_Returner == p || pResult.Kick_Returners.Contains(p) ||
+                pResult.Punt_Returners.Contains(p) || pResult.FieldGaol_Kicking_Team.Contains(p))
+                r = true;
+            else if (pResult.Pass_Rushers.Contains(p) || pResult.Pass_Defenders.Contains(p) ||
+                pResult.Run_Defenders.Contains(p))
+                r = false;
+            else if (pResult.Kicker == p || pResult.Punter == p || pResult.Kick_Defenders.Contains(p) ||
+                pResult.Punt_Defenders.Contains(p) || pResult.Field_Goal_Defenders.Contains(p))
+                r = false;
+            else
+                throw new Exception("isBallTeamPenalty error can't determine penalty team!");
+            return r;
+        }
+
     }
 }
