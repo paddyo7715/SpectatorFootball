@@ -17,6 +17,6 @@ namespace SpectatorFootball.PenaltiesNS
         public bool bSpot_Foul { get; set; }
         public string Description { get; set; }
 
-        public List<Player_Action_Stats> Player_Action_States = new List<Player_Action_Stats>();
+        public List<Player_Action_State> Player_Action_States = new List<Player_Action_State>();
     }
 }

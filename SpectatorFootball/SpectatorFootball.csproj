@@ -194,7 +194,7 @@
     <Compile Include="Enum\KickOff_Verticl.cs" />
     <Compile Include="Enum\Movement.cs" />
     <Compile Include="Enum\Penalty_Codes.cs" />
-    <Compile Include="Enum\Player_Action_Stats.cs" />
+    <Compile Include="Enum\Player_Action_State.cs" />
     <Compile Include="Enum\Player_States.cs" />
     <Compile Include="Enum\Play_Enum.cs" />
     <Compile Include="Enum\Penalty_Play_Types.cs" />

@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28010.2046
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29519.87
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpectatorFootball", "SpectatorFootball\SpectatorFootball.csproj", "{AE5A5F7D-D3CF-4C0C-9CAB-627D9FF45FE4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpectatorFootball.unitTests", "SpectatorFootball.unitTests\SpectatorFootball.unitTests.csproj", "{B7AA76D4-99A5-4E3C-8980-6862A3A88275}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{AE5A5F7D-D3CF-4C0C-9CAB-627D9FF45FE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AE5A5F7D-D3CF-4C0C-9CAB-627D9FF45FE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AE5A5F7D-D3CF-4C0C-9CAB-627D9FF45FE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7AA76D4-99A5-4E3C-8980-6862A3A88275}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7AA76D4-99A5-4E3C-8980-6862A3A88275}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7AA76D4-99A5-4E3C-8980-6862A3A88275}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7AA76D4-99A5-4E3C-8980-6862A3A88275}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

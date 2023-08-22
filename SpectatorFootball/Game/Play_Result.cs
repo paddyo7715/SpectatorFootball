@@ -35,8 +35,7 @@ namespace SpectatorFootball.GameNS
         //Penalties
         public Game_Player Penalized_Player = null;
         public Penalty Penalty = null;
-        public bool bPenalty_Inforced = false;
-        public bool bPenalty_Accepted = false;
+        public bool bPenalty_Rejected = false;
         public bool bPenatly_on_Away_Team = false;
 
         public Game_Player Passer = null;

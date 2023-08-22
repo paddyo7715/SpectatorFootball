@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SpectatorFootball.PenaltiesNS
 {
-    class Penalty_Helper
+    public class Penalty_Helper
     {
         public static List<Penalty> ReturnAllPenalties()
         {
@@ -25,10 +25,10 @@ namespace SpectatorFootball.PenaltiesNS
                 bSpot_Foul = false,
                 Description = "False Start"
             });
-            r.Last().Player_Action_States = new List<Player_Action_Stats>()
+            r.Last().Player_Action_States = new List<Player_Action_State>()
             { 
-                Player_Action_Stats.PAS,Player_Action_Stats.PC,Player_Action_Stats.BRN,
-                Player_Action_Stats.PB
+                Player_Action_State.PAS,Player_Action_State.PC,Player_Action_State.BRN,
+                Player_Action_State.PB
             };
 
             //Offensive Holidng
@@ -42,9 +42,9 @@ namespace SpectatorFootball.PenaltiesNS
                 bSpot_Foul = false,
                 Description = "Holding"
             });
-            r.Last().Player_Action_States = new List<Player_Action_Stats>()
+            r.Last().Player_Action_States = new List<Player_Action_State>()
             {
-                Player_Action_Stats.PB
+                Player_Action_State.PB
             };
 
             //Offensive offsides
@@ -58,9 +58,9 @@ namespace SpectatorFootball.PenaltiesNS
                 bSpot_Foul = false,
                 Description = "Offsides"
             });
-            r.Last().Player_Action_States = new List<Player_Action_Stats>()
+            r.Last().Player_Action_States = new List<Player_Action_State>()
             {
-                Player_Action_Stats.PB,Player_Action_Stats.FGT
+                Player_Action_State.PB,Player_Action_State.FGT
             };
 
             //Illegal Formation
@@ -74,9 +74,9 @@ namespace SpectatorFootball.PenaltiesNS
                 bSpot_Foul = false,
                 Description = "Illegal Formation"
             });
-            r.Last().Player_Action_States = new List<Player_Action_Stats>()
+            r.Last().Player_Action_States = new List<Player_Action_State>()
             {
-                Player_Action_Stats.PB
+                Player_Action_State.PB
             };
 
             //Defense offsides
@@ -90,9 +90,9 @@ namespace SpectatorFootball.PenaltiesNS
                 bSpot_Foul = false,
                 Description = "Offsides"
             });
-            r.Last().Player_Action_States = new List<Player_Action_Stats>()
+            r.Last().Player_Action_States = new List<Player_Action_State>()
             {
-                Player_Action_Stats.PAR, Player_Action_Stats.RD, Player_Action_Stats.FGD
+                Player_Action_State.PAR, Player_Action_State.RD, Player_Action_State.FGD
             };
 
             //Defense Holding
@@ -106,9 +106,9 @@ namespace SpectatorFootball.PenaltiesNS
                 bSpot_Foul = false,
                 Description = "Holding"
             });
-            r.Last().Player_Action_States = new List<Player_Action_Stats>()
+            r.Last().Player_Action_States = new List<Player_Action_State>()
             {
-                Player_Action_Stats.PAR, Player_Action_Stats.RD, Player_Action_Stats.PD
+                Player_Action_State.PAR, Player_Action_State.RD, Player_Action_State.PD
             };
 
             //Illegal Contact
@@ -122,9 +122,9 @@ namespace SpectatorFootball.PenaltiesNS
                 bSpot_Foul = false,
                 Description = "Illegal Contact"
             });
-            r.Last().Player_Action_States = new List<Player_Action_Stats>()
+            r.Last().Player_Action_States = new List<Player_Action_State>()
             {
-                Player_Action_Stats.PD
+                Player_Action_State.PD
             };
 
             //Illegal Use of Hands (defense)
@@ -138,9 +138,9 @@ namespace SpectatorFootball.PenaltiesNS
                 bSpot_Foul = false,
                 Description = "Illegal Use of Hands"
             });
-            r.Last().Player_Action_States = new List<Player_Action_Stats>()
+            r.Last().Player_Action_States = new List<Player_Action_State>()
             {
-                Player_Action_Stats.PAR, Player_Action_Stats.RD
+                Player_Action_State.PAR, Player_Action_State.RD
             };
 
             //Illegal Use of Hands Offense
@@ -154,9 +154,9 @@ namespace SpectatorFootball.PenaltiesNS
                 bSpot_Foul = false,
                 Description = "Illegal Use of Hands"
             });
-            r.Last().Player_Action_States = new List<Player_Action_Stats>()
+            r.Last().Player_Action_States = new List<Player_Action_State>()
             {
-                Player_Action_Stats.PB, Player_Action_Stats.PC, Player_Action_Stats.BRN
+                Player_Action_State.PB, Player_Action_State.PC, Player_Action_State.BRN
             };
 
             //Illegal Block Kickoff
@@ -170,9 +170,9 @@ namespace SpectatorFootball.PenaltiesNS
                 bSpot_Foul = true,
                 Description = "Illegal Block"
             });
-            r.Last().Player_Action_States = new List<Player_Action_Stats>()
+            r.Last().Player_Action_States = new List<Player_Action_State>()
             {
-                Player_Action_Stats.KRT
+                Player_Action_State.KRT
             };
 
             //Illegal Block Punt
@@ -186,9 +186,9 @@ namespace SpectatorFootball.PenaltiesNS
                 bSpot_Foul = true,
                 Description = "Illegal Block"
             });
-            r.Last().Player_Action_States = new List<Player_Action_Stats>()
+            r.Last().Player_Action_States = new List<Player_Action_State>()
             {
-                Player_Action_Stats.PRT
+                Player_Action_State.PRT
             };
 
             //Unsportsmen Like Conduct 
@@ -205,26 +205,26 @@ namespace SpectatorFootball.PenaltiesNS
                 bSpot_Foul = true,               
                 Description = "Unsportsmen Like Conduct"
             });
-            r.Last().Player_Action_States = new List<Player_Action_Stats>()
+            r.Last().Player_Action_States = new List<Player_Action_State>()
             {
-                Player_Action_Stats.PAS,
-                Player_Action_Stats.PC,
-                Player_Action_Stats.BRN,
-                Player_Action_Stats.PB,
-                Player_Action_Stats.PAR,
-                Player_Action_Stats.PD,
-                Player_Action_Stats.RB,
-                Player_Action_Stats.RD,
-                Player_Action_Stats.K,
-                Player_Action_Stats.KR,
-                Player_Action_Stats.KRT,
-                Player_Action_Stats.KDT,
-                Player_Action_Stats.P,
-                Player_Action_Stats.PR,
-                Player_Action_Stats.PRT,
-                Player_Action_Stats.PDT,
-                Player_Action_Stats.FGT,
-                Player_Action_Stats.FGD 
+                Player_Action_State.PAS,
+                Player_Action_State.PC,
+                Player_Action_State.BRN,
+                Player_Action_State.PB,
+                Player_Action_State.PAR,
+                Player_Action_State.PD,
+                Player_Action_State.RB,
+                Player_Action_State.RD,
+                Player_Action_State.K,
+                Player_Action_State.KR,
+                Player_Action_State.KRT,
+                Player_Action_State.KDT,
+                Player_Action_State.P,
+                Player_Action_State.PR,
+                Player_Action_State.PRT,
+                Player_Action_State.PDT,
+                Player_Action_State.FGT,
+                Player_Action_State.FGD 
             };
 
             //Unnecessary Roughness
@@ -241,26 +241,26 @@ namespace SpectatorFootball.PenaltiesNS
                 bSpot_Foul = true,
                 Description = "Unnecessary Roughness"
             });
-            r.Last().Player_Action_States = new List<Player_Action_Stats>()
+            r.Last().Player_Action_States = new List<Player_Action_State>()
             {
-                Player_Action_Stats.PAS,
-                Player_Action_Stats.PC,
-                Player_Action_Stats.BRN,
-                Player_Action_Stats.PB,
-                Player_Action_Stats.PAR,
-                Player_Action_Stats.PD,
-                Player_Action_Stats.RB,
-                Player_Action_Stats.RD,
-                Player_Action_Stats.K,
-                Player_Action_Stats.KR,
-                Player_Action_Stats.KRT,
-                Player_Action_Stats.KDT,
-                Player_Action_Stats.P,
-                Player_Action_Stats.PR,
-                Player_Action_Stats.PRT,
-                Player_Action_Stats.PDT,
-                Player_Action_Stats.FGT,
-                Player_Action_Stats.FGD
+                Player_Action_State.PAS,
+                Player_Action_State.PC,
+                Player_Action_State.BRN,
+                Player_Action_State.PB,
+                Player_Action_State.PAR,
+                Player_Action_State.PD,
+                Player_Action_State.RB,
+                Player_Action_State.RD,
+                Player_Action_State.K,
+                Player_Action_State.KR,
+                Player_Action_State.KRT,
+                Player_Action_State.KDT,
+                Player_Action_State.P,
+                Player_Action_State.PR,
+                Player_Action_State.PRT,
+                Player_Action_State.PDT,
+                Player_Action_State.FGT,
+                Player_Action_State.FGD
             };
 
             //Facemask
@@ -277,77 +277,75 @@ namespace SpectatorFootball.PenaltiesNS
                 bSpot_Foul = true, 
                 Description = "Facemask"
             });
-            r.Last().Player_Action_States = new List<Player_Action_Stats>()
+            r.Last().Player_Action_States = new List<Player_Action_State>()
             {
-                Player_Action_Stats.PAS,
-                Player_Action_Stats.PC,
-                Player_Action_Stats.BRN,
-                Player_Action_Stats.PB,
-                Player_Action_Stats.PAR,
-                Player_Action_Stats.PD,
-                Player_Action_Stats.RB,
-                Player_Action_Stats.RD,
-                Player_Action_Stats.K,
-                Player_Action_Stats.KR,
-                Player_Action_Stats.KRT,
-                Player_Action_Stats.KDT,
-                Player_Action_Stats.P,
-                Player_Action_Stats.PR,
-                Player_Action_Stats.PRT,
-                Player_Action_Stats.PDT,
-                Player_Action_Stats.FGT,
-                Player_Action_Stats.FGD
+                Player_Action_State.PAS,
+                Player_Action_State.PC,
+                Player_Action_State.BRN,
+                Player_Action_State.PB,
+                Player_Action_State.PAR,
+                Player_Action_State.PD,
+                Player_Action_State.RB,
+                Player_Action_State.RD,
+                Player_Action_State.K,
+                Player_Action_State.KR,
+                Player_Action_State.KRT,
+                Player_Action_State.KDT,
+                Player_Action_State.P,
+                Player_Action_State.PR,
+                Player_Action_State.PRT,
+                Player_Action_State.PDT,
+                Player_Action_State.FGT,
+                Player_Action_State.FGD
             };
 
             return r;
         }
-        public static Player_Action_Stats getPlayerAction(Game_Player Penalty_Player, Play_Result pResult)
+        public static Player_Action_State getPlayerAction(Game_Player Penalty_Player, Play_Result pResult)
 
         {
-            Player_Action_Stats r = Player_Action_Stats.PAS;
+            Player_Action_State r = Player_Action_State.PAS;
 
             if (Penalty_Player == pResult.Passer)
-                r = Player_Action_Stats.PAS;
+                r = Player_Action_State.PAS;
             else if ((Penalty_Player == pResult.Kicker))
-                r = Player_Action_Stats.K;
+                r = Player_Action_State.K;
             else if ((Penalty_Player == pResult.Punter))
-                r = Player_Action_Stats.P;
+                r = Player_Action_State.P;
             else if ((Penalty_Player == pResult.Returner))
-                r = Player_Action_Stats.KR;
+                r = Player_Action_State.KR;
             else if ((Penalty_Player == pResult.Punt_Returner))
-                r = Player_Action_Stats.PR;
+                r = Player_Action_State.PR;
             else if (pResult.Pass_Catchers.Contains(Penalty_Player))
-                r = Player_Action_Stats.PC;
+                r = Player_Action_State.PC;
             else if (pResult.Ball_Runners.Contains(Penalty_Player))
-                r = Player_Action_Stats.BRN;
+                r = Player_Action_State.BRN;
             else if (pResult.Pass_Blockers.Contains(Penalty_Player))
-                r = Player_Action_Stats.PB;
+                r = Player_Action_State.PB;
             else if (pResult.Pass_Rushers.Contains(Penalty_Player))
-                r = Player_Action_Stats.PAR;
+                r = Player_Action_State.PAR;
             else if (pResult.Pass_Defenders.Contains(Penalty_Player))
-                r = Player_Action_Stats.PD;
+                r = Player_Action_State.PD;
             else if (pResult.Run_Blockers.Contains(Penalty_Player))
-                r = Player_Action_Stats.RB;
+                r = Player_Action_State.RB;
             else if (pResult.Run_Defenders.Contains(Penalty_Player))
-                r = Player_Action_Stats.RD;
+                r = Player_Action_State.RD;
             else if (pResult.Kick_Returners.Contains(Penalty_Player))
-                r = Player_Action_Stats.KRT;
+                r = Player_Action_State.KRT;
             else if (pResult.Kick_Defenders.Contains(Penalty_Player))
-                r = Player_Action_Stats.KDT;
+                r = Player_Action_State.KDT;
             else if (pResult.Punt_Returners.Contains(Penalty_Player))
-                r = Player_Action_Stats.PRT;
+                r = Player_Action_State.PRT;
             else if (pResult.Punt_Defenders.Contains(Penalty_Player))
-                r = Player_Action_Stats.PDT;
+                r = Player_Action_State.PDT;
             else if (pResult.FieldGaol_Kicking_Team.Contains(Penalty_Player))
-                r = Player_Action_Stats.FGT;
+                r = Player_Action_State.FGT;
             else if (pResult.Field_Goal_Defenders.Contains(Penalty_Player))
-                r = Player_Action_Stats.FGD;
+                r = Player_Action_State.FGD;
             return r;
         }
-        public static Penalty getPenalty(List<Penalty> pList, Play_Enum pe, Player_Action_Stats pa)
+        public static Penalty getPenalty(List<Penalty> pList, Play_Enum pe, Player_Action_State pa)
         {
-            Penalty r = null;
-
             List<Penalty> Penalties_for_Play = null;
             List<Penalty> Penalties_for_Play_Player = null;
 
@@ -358,7 +356,7 @@ namespace SpectatorFootball.PenaltiesNS
                 case Play_Enum.FREE_KICK:
                     Penalties_for_Play = pList.Where(x => x.Penalty_Play_Type == Penalty_Play_Types.A ||
                     x.Penalty_Play_Type == Penalty_Play_Types.KR ||
-                    x.Penalty_Play_Type == Penalty_Play_Types.KD).ToList();
+                    x.Penalty_Play_Type == Penalty_Play_Types.KRT).ToList();
                     break;
                 case Play_Enum.KICKOFF_ONSIDES:
                     Penalties_for_Play = pList.Where(x => x.Penalty_Play_Type == Penalty_Play_Types.A).ToList();
@@ -399,7 +397,9 @@ namespace SpectatorFootball.PenaltiesNS
             if (Penalties_for_Play_Player.Count == 0)
                 throw new Exception("Error in getPenalty after play.  No possible penalties found for play " + pe.ToString() + " and player action type " + pa.ToString());
 
-            return r;
+            int ind = CommonUtils.getRandomIndex(Penalties_for_Play_Player.Count);
+
+            return Penalties_for_Play_Player[ind];
         }
         public static Game_Player getPenaltyPlayer(Play_Enum pe, List<Game_Player> Offensive_Players, List<Game_Player> Defensive_Players,
     Game_Player Passer, Game_Player Kicker, Game_Player Punter)

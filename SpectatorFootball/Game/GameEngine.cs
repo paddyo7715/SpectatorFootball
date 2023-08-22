@@ -400,7 +400,7 @@ namespace SpectatorFootball.GameNS
                     p_result.Penalized_Player = Penalty_Helper.getPenaltyPlayer(Offensive_Package.Play, Offensive_Players, Defensive_Players, p_result.Passer, p_result.Kicker, p_result.Punter);
                     if (p_result.Penalized_Player != null)
                     {
-                        Player_Action_Stats pa_state = Penalty_Helper.getPlayerAction(p_result.Penalized_Player, p_result);
+                        Player_Action_State pa_state = Penalty_Helper.getPlayerAction(p_result.Penalized_Player, p_result);
                         p_result.Penalty = Penalty_Helper.getPenalty(Penalty_List, Offensive_Package.Play, pa_state);
 
                         bool bAway_Pen_Player = Away_Players.Any(x => x.p == p_result.Penalized_Player.p_and_r.p);
@@ -421,9 +421,9 @@ namespace SpectatorFootball.GameNS
                         {
                             bool isBallCarryingTeam = Game_Engine_Helper.isBallTeamPenalty(p_result);
                             if (isBallCarryingTeam)
-                                p_result.bPenalty_Accepted = Penalty_Coach.AcceptOff_Penalty(Offensive_Package.Play, p_result, g_Line_of_Scrimmage, bLefttoRight, false, false);
+                                p_result.bPenalty_Rejected = !Penalty_Coach.AcceptOff_Penalty(Offensive_Package.Play, p_result, g_Line_of_Scrimmage, bLefttoRight, false, false);
                             else
-                                p_result.bPenalty_Accepted = Penalty_Coach.AcceptDef_Penalty(Offensive_Package.Play, p_result, g_Yards_to_go ,g_Line_of_Scrimmage, bLefttoRight, false, false);
+                                p_result.bPenalty_Rejected = !Penalty_Coach.AcceptDef_Penalty(Offensive_Package.Play, p_result, g_Yards_to_go ,g_Line_of_Scrimmage, bLefttoRight, false, false);
                         }
                     }
                     //for some reason, I put adding the penalties in the accum method.  Take that out of there and add here.

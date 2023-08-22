@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SpectatorFootball.Enum
 {
-    public enum Player_Action_Stats
+    public enum Player_Action_State
     {
         PAS, // Passer
         PC, //Pass catcher

@@ -16,7 +16,7 @@ namespace SpectatorFootball.Enum
         PD, //Pass Defensive Plays
         PR, //Rush Defensive Plays
         KR, //kickoff returns
-        KD, //kickoff defense
+        KRT, //kickoff Return Team
         PTR, //Punt returns
         PTD, //Punt defense
         FGO, //Field Goal Kicking Team
