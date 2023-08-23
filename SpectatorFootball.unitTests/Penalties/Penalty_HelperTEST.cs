@@ -241,5 +241,64 @@ namespace SpectatorFootball.unitTests.Penalties
 
             Assert.IsTrue(!bWrong);
         }
+
+        [TestCategory("Penalties")]
+        [TestMethod]
+        public void getPenalty_Kickoff_Kickoff_Kicker()
+        {
+            bool bWrong = false;
+            int Num_Tries = 300;
+
+            for (int i = 0; i < Num_Tries; i++)
+            {
+                int n = CommonUtils.getRandomNum(1, 2);
+                Play_Enum pe = Play_Enum.KICKOFF_NORMAL;
+                switch (n)
+                {
+                    case 1:
+                        pe = Play_Enum.KICKOFF_NORMAL;
+                        break;
+                    case 2:
+                        pe = Play_Enum.FREE_KICK;
+                        break;
+                }
+
+                Penalty p = Penalty_Helper.getPenalty(this.penaltyList, pe, Player_Action_State.K);
+                if (p.code != Penalty_Codes.UC && p.code != Penalty_Codes.UR && p.code != Penalty_Codes.FM)
+                    bWrong = true;
+            }
+
+            Assert.IsTrue(!bWrong);
+        }
+
+
+        [TestCategory("Penalties")]
+        [TestMethod]
+        public void getPenalty_Kickoff_Kickoff_Defense()
+        {
+            bool bWrong = false;
+            int Num_Tries = 300;
+
+            for (int i = 0; i < Num_Tries; i++)
+            {
+                int n = CommonUtils.getRandomNum(1, 2);
+                Play_Enum pe = Play_Enum.KICKOFF_NORMAL;
+                switch (n)
+                {
+                    case 1:
+                        pe = Play_Enum.KICKOFF_NORMAL;
+                        break;
+                    case 2:
+                        pe = Play_Enum.FREE_KICK;
+                        break;
+                }
+
+                Penalty p = Penalty_Helper.getPenalty(this.penaltyList, pe, Player_Action_State.KDT);
+                if (p.code != Penalty_Codes.UC && p.code != Penalty_Codes.UR && p.code != Penalty_Codes.FM)
+                    bWrong = true;
+            }
+
+            Assert.IsTrue(!bWrong);
+        }
     }
 }
