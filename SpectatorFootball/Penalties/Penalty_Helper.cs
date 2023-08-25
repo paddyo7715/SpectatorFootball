@@ -373,6 +373,9 @@ namespace SpectatorFootball.PenaltiesNS
                     x.Penalty_Play_Type == Penalty_Play_Types.PTD).ToList();
                     break;
                 case Play_Enum.RUN:
+                case Play_Enum.SCRIM_PLAY_1XP_RUN:
+                case Play_Enum.SCRIM_PLAY_2XP_RUN:
+                case Play_Enum.SCRIM_PLAY_3XP_RUN:
                     Penalties_for_Play = pList.Where(x => x.Penalty_Play_Type == Penalty_Play_Types.A ||
                     x.Penalty_Play_Type == Penalty_Play_Types.AO ||
                     x.Penalty_Play_Type == Penalty_Play_Types.RO ||
@@ -380,6 +383,9 @@ namespace SpectatorFootball.PenaltiesNS
                     x.Penalty_Play_Type == Penalty_Play_Types.PR).ToList();
                     break;
                 case Play_Enum.PASS:
+                case Play_Enum.SCRIM_PLAY_1XP_PASS:
+                case Play_Enum.SCRIM_PLAY_2XP_PASS:
+                case Play_Enum.SCRIM_PLAY_3XP_PASS:
                     Penalties_for_Play = pList.Where(x => x.Penalty_Play_Type == Penalty_Play_Types.A ||
                     x.Penalty_Play_Type == Penalty_Play_Types.AO ||
                     x.Penalty_Play_Type == Penalty_Play_Types.PO ||

@@ -192,7 +192,7 @@ namespace SpectatorFootball.unitTests.Penalties
 
             for (int i = 0; i < Num_Tries; i++)
             {
-                int n = CommonUtils.getRandomNum(1, 2);
+                int n = CommonUtils.getRandomNum(1, 3);
                 Play_Enum pe = Play_Enum.KICKOFF_NORMAL;
                 switch (n)
                 {
@@ -201,6 +201,9 @@ namespace SpectatorFootball.unitTests.Penalties
                         break;
                     case 2:
                         pe = Play_Enum.FREE_KICK;
+                        break;
+                    case 3:
+                        pe = Play_Enum.KICKOFF_ONSIDES;
                         break;
                 }
 
@@ -222,7 +225,7 @@ namespace SpectatorFootball.unitTests.Penalties
 
             for (int i = 0; i < Num_Tries; i++)
             {
-                int n = CommonUtils.getRandomNum(1, 2);
+                int n = CommonUtils.getRandomNum(1, 3);
                 Play_Enum pe = Play_Enum.KICKOFF_NORMAL;
                 switch (n)
                 {
@@ -231,6 +234,9 @@ namespace SpectatorFootball.unitTests.Penalties
                         break;
                     case 2:
                         pe = Play_Enum.FREE_KICK;
+                        break;
+                    case 3:
+                        pe = Play_Enum.KICKOFF_ONSIDES;
                         break;
                 }
 
@@ -251,7 +257,7 @@ namespace SpectatorFootball.unitTests.Penalties
 
             for (int i = 0; i < Num_Tries; i++)
             {
-                int n = CommonUtils.getRandomNum(1, 2);
+                int n = CommonUtils.getRandomNum(1, 3);
                 Play_Enum pe = Play_Enum.KICKOFF_NORMAL;
                 switch (n)
                 {
@@ -260,6 +266,9 @@ namespace SpectatorFootball.unitTests.Penalties
                         break;
                     case 2:
                         pe = Play_Enum.FREE_KICK;
+                        break;
+                    case 3:
+                        pe = Play_Enum.KICKOFF_ONSIDES;
                         break;
                 }
 
@@ -281,7 +290,7 @@ namespace SpectatorFootball.unitTests.Penalties
 
             for (int i = 0; i < Num_Tries; i++)
             {
-                int n = CommonUtils.getRandomNum(1, 2);
+                int n = CommonUtils.getRandomNum(1, 3);
                 Play_Enum pe = Play_Enum.KICKOFF_NORMAL;
                 switch (n)
                 {
@@ -290,6 +299,9 @@ namespace SpectatorFootball.unitTests.Penalties
                         break;
                     case 2:
                         pe = Play_Enum.FREE_KICK;
+                        break;
+                    case 3:
+                        pe = Play_Enum.KICKOFF_ONSIDES;
                         break;
                 }
 
@@ -300,5 +312,145 @@ namespace SpectatorFootball.unitTests.Penalties
 
             Assert.IsTrue(!bWrong);
         }
+        [TestCategory("Penalties")]
+        [TestMethod]
+        public void getPenalty_Punt_Retun_Team()
+        {
+            bool bWrong = false;
+            int Num_Tries = 300;
+
+            for (int i = 0; i < Num_Tries; i++)
+            {
+                Play_Enum pe = Play_Enum.PUNT;
+
+                Penalty p = Penalty_Helper.getPenalty(this.penaltyList, pe, Player_Action_State.PRT);
+                if (p.code != Penalty_Codes.PIB && p.code != Penalty_Codes.UC && p.code != Penalty_Codes.UR && p.code != Penalty_Codes.FM)
+                    bWrong = true;
+            }
+
+            Assert.IsTrue(!bWrong);
+        }
+
+        [TestCategory("Penalties")]
+        [TestMethod]
+        public void getPenalty_Punt_Retuner()
+        {
+            bool bWrong = false;
+            int Num_Tries = 300;
+
+            for (int i = 0; i < Num_Tries; i++)
+            {
+                Play_Enum pe = Play_Enum.PUNT;
+
+                Penalty p = Penalty_Helper.getPenalty(this.penaltyList, pe, Player_Action_State.PR);
+                if (p.code != Penalty_Codes.UC && p.code != Penalty_Codes.UR && p.code != Penalty_Codes.FM)
+                    bWrong = true;
+            }
+
+            Assert.IsTrue(!bWrong);
+        }
+        [TestCategory("Penalties")]
+        [TestMethod]
+        public void getPenalty_Punt_Tackling_Team()
+        {
+            bool bWrong = false;
+            int Num_Tries = 300;
+
+            for (int i = 0; i < Num_Tries; i++)
+            {
+                Play_Enum pe = Play_Enum.PUNT;
+
+                Penalty p = Penalty_Helper.getPenalty(this.penaltyList, pe, Player_Action_State.PDT);
+                if (p.code != Penalty_Codes.UC && p.code != Penalty_Codes.UR && p.code != Penalty_Codes.FM)
+                    bWrong = true;
+            }
+
+            Assert.IsTrue(!bWrong);
+        }
+        [TestCategory("Penalties")]
+        [TestMethod]
+        public void getPenalty_FG_FG_Team()
+        {
+            bool bWrong = false;
+            int Num_Tries = 300;
+
+            for (int i = 0; i < Num_Tries; i++)
+            {
+                int n = CommonUtils.getRandomNum(1, 2);
+                Play_Enum pe = Play_Enum.KICKOFF_NORMAL;
+                switch (n)
+                {
+                    case 1:
+                        pe = Play_Enum.FIELD_GOAL;
+                        break;
+                    case 2:
+                        pe = Play_Enum.EXTRA_POINT;
+                        break;
+                }
+
+                Penalty p = Penalty_Helper.getPenalty(this.penaltyList, pe, Player_Action_State.FGT);
+                if (p.code != Penalty_Codes.OO && p.code != Penalty_Codes.UC && p.code != Penalty_Codes.UR && p.code != Penalty_Codes.FM)
+                    bWrong = true;
+            }
+
+            Assert.IsTrue(!bWrong);
+        }
+        [TestCategory("Penalties")]
+        [TestMethod]
+        public void getPenalty_FG_Kicker()
+        {
+            bool bWrong = false;
+            int Num_Tries = 300;
+
+            for (int i = 0; i < Num_Tries; i++)
+            {
+                int n = CommonUtils.getRandomNum(1, 2);
+                Play_Enum pe = Play_Enum.KICKOFF_NORMAL;
+                switch (n)
+                {
+                    case 1:
+                        pe = Play_Enum.FIELD_GOAL;
+                        break;
+                    case 2:
+                        pe = Play_Enum.EXTRA_POINT;
+                        break;
+                }
+
+                Penalty p = Penalty_Helper.getPenalty(this.penaltyList, pe, Player_Action_State.K);
+                if (p.code != Penalty_Codes.UC && p.code != Penalty_Codes.UR && p.code != Penalty_Codes.FM)
+                    bWrong = true;
+            }
+
+            Assert.IsTrue(!bWrong);
+        }
+        [TestCategory("Penalties")]
+        [TestMethod]
+        public void getPenalty_FG_FG_Defense()
+        {
+            bool bWrong = false;
+            int Num_Tries = 300;
+
+            for (int i = 0; i < Num_Tries; i++)
+            {
+                int n = CommonUtils.getRandomNum(1, 2);
+                Play_Enum pe = Play_Enum.KICKOFF_NORMAL;
+                switch (n)
+                {
+                    case 1:
+                        pe = Play_Enum.FIELD_GOAL;
+                        break;
+                    case 2:
+                        pe = Play_Enum.EXTRA_POINT;
+                        break;
+                }
+
+                Penalty p = Penalty_Helper.getPenalty(this.penaltyList, pe, Player_Action_State.FGD);
+                if (p.code != Penalty_Codes.DO && p.code != Penalty_Codes.UC && p.code != Penalty_Codes.UR && p.code != Penalty_Codes.FM)
+                    bWrong = true;
+            }
+
+            Assert.IsTrue(!bWrong);
+        }
+
     }
 }
