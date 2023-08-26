@@ -28,7 +28,7 @@ namespace SpectatorFootball.PenaltiesNS
             r.Last().Player_Action_States = new List<Player_Action_State>()
             { 
                 Player_Action_State.PAS,Player_Action_State.PC,Player_Action_State.BRN,
-                Player_Action_State.PB
+                Player_Action_State.PB, Player_Action_State.RB, Player_Action_State.PB
             };
 
             //Offensive Holidng
@@ -60,7 +60,23 @@ namespace SpectatorFootball.PenaltiesNS
             });
             r.Last().Player_Action_States = new List<Player_Action_State>()
             {
-                Player_Action_State.PB,Player_Action_State.FGT
+                Player_Action_State.PB,Player_Action_State.RB
+            };
+
+            //Offensive offsides (FG)
+            r.Add(new Penalty()
+            {
+                code = Penalty_Codes.OO,
+                Penalty_Play_Type = Penalty_Play_Types.FG,
+                Yards = 5,
+                bDeclinable = true,
+                bAuto_FirstDown = false,
+                bSpot_Foul = false,
+                Description = "Offsides"
+            });
+            r.Last().Player_Action_States = new List<Player_Action_State>()
+            {
+                Player_Action_State.FGT
             };
 
             //Illegal Formation
@@ -76,7 +92,7 @@ namespace SpectatorFootball.PenaltiesNS
             });
             r.Last().Player_Action_States = new List<Player_Action_State>()
             {
-                Player_Action_State.PB
+                Player_Action_State.PB,Player_Action_State.RB
             };
 
             //Defense offsides
@@ -92,7 +108,22 @@ namespace SpectatorFootball.PenaltiesNS
             });
             r.Last().Player_Action_States = new List<Player_Action_State>()
             {
-                Player_Action_State.PAR, Player_Action_State.RD, Player_Action_State.FGD
+                Player_Action_State.PAR, Player_Action_State.RD
+            };
+            //Defense offsides (FG)
+            r.Add(new Penalty()
+            {
+                code = Penalty_Codes.DO,
+                Penalty_Play_Type = Penalty_Play_Types.A,
+                Yards = 5,
+                bDeclinable = true,
+                bAuto_FirstDown = false,
+                bSpot_Foul = false,
+                Description = "Offsides"
+            });
+            r.Last().Player_Action_States = new List<Player_Action_State>()
+            {
+                Player_Action_State.FGD
             };
 
             //Defense Holding
@@ -115,7 +146,7 @@ namespace SpectatorFootball.PenaltiesNS
             r.Add(new Penalty()
             {
                 code = Penalty_Codes.IC,
-                Penalty_Play_Type = Penalty_Play_Types.PD,
+                Penalty_Play_Type = Penalty_Play_Types.PO,
                 Yards = 5,
                 bDeclinable = true,
                 bAuto_FirstDown = true,
@@ -156,7 +187,7 @@ namespace SpectatorFootball.PenaltiesNS
             });
             r.Last().Player_Action_States = new List<Player_Action_State>()
             {
-                Player_Action_State.PB, Player_Action_State.PC, Player_Action_State.BRN
+                Player_Action_State.PB,Player_Action_State.RB, Player_Action_State.PC, Player_Action_State.BRN
             };
 
             //Illegal Block Kickoff
@@ -364,13 +395,11 @@ namespace SpectatorFootball.PenaltiesNS
                 case Play_Enum.FIELD_GOAL:
                 case Play_Enum.EXTRA_POINT:
                     Penalties_for_Play = pList.Where(x => x.Penalty_Play_Type == Penalty_Play_Types.A ||
-                    x.Penalty_Play_Type == Penalty_Play_Types.FGO ||
-                    x.Penalty_Play_Type == Penalty_Play_Types.FGD).ToList();
+                    x.Penalty_Play_Type == Penalty_Play_Types.FG).ToList();
                     break;
                 case Play_Enum.PUNT:
                     Penalties_for_Play = pList.Where(x => x.Penalty_Play_Type == Penalty_Play_Types.A ||
-                    x.Penalty_Play_Type == Penalty_Play_Types.PTR ||
-                    x.Penalty_Play_Type == Penalty_Play_Types.PTD).ToList();
+                    x.Penalty_Play_Type == Penalty_Play_Types.PTR).ToList();
                     break;
                 case Play_Enum.RUN:
                 case Play_Enum.SCRIM_PLAY_1XP_RUN:
@@ -378,9 +407,7 @@ namespace SpectatorFootball.PenaltiesNS
                 case Play_Enum.SCRIM_PLAY_3XP_RUN:
                     Penalties_for_Play = pList.Where(x => x.Penalty_Play_Type == Penalty_Play_Types.A ||
                     x.Penalty_Play_Type == Penalty_Play_Types.AO ||
-                    x.Penalty_Play_Type == Penalty_Play_Types.RO ||
-                    x.Penalty_Play_Type == Penalty_Play_Types.AD ||
-                    x.Penalty_Play_Type == Penalty_Play_Types.PR).ToList();
+                    x.Penalty_Play_Type == Penalty_Play_Types.RO).ToList();
                     break;
                 case Play_Enum.PASS:
                 case Play_Enum.SCRIM_PLAY_1XP_PASS:
@@ -388,9 +415,7 @@ namespace SpectatorFootball.PenaltiesNS
                 case Play_Enum.SCRIM_PLAY_3XP_PASS:
                     Penalties_for_Play = pList.Where(x => x.Penalty_Play_Type == Penalty_Play_Types.A ||
                     x.Penalty_Play_Type == Penalty_Play_Types.AO ||
-                    x.Penalty_Play_Type == Penalty_Play_Types.PO ||
-                    x.Penalty_Play_Type == Penalty_Play_Types.AD ||
-                    x.Penalty_Play_Type == Penalty_Play_Types.PD).ToList();
+                    x.Penalty_Play_Type == Penalty_Play_Types.PO).ToList();
                     break;
             }
 

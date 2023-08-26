@@ -13,13 +13,10 @@ namespace SpectatorFootball.Enum
         PO, //Pass Offensive Plays
         RO, //Rush Offensive Plays
         AD, //All Defensive Plays
-        PD, //Pass Defensive Plays
-        PR, //Rush Defensive Plays
         KR, //kickoff returns
         KRT, //kickoff Return Team
         PTR, //Punt returns
-        PTD, //Punt defense
-        FGO, //Field Goal Kicking Team
-        FGD //Feild Goal Defending Team
+//        PTD, //Punt defense
+        FG, //Field Goal Kicking Team
     }
 }
