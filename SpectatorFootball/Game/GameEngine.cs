@@ -397,7 +397,7 @@ namespace SpectatorFootball.GameNS
 
                 if (bAllowPenalties && Penalty_Helper.isNoPenaltyPlay(p_result, Offensive_Package.Play))
                 {
-                    p_result.Penalized_Player = Penalty_Helper.getPenaltyPlayer(Offensive_Package.Play, Offensive_Players, Defensive_Players, p_result.Passer, p_result.Kicker, p_result.Punter);
+                    p_result.Penalized_Player = Penalty_Helper.getPenaltyPlayer(Offensive_Players, Defensive_Players, p_result.Passer, p_result.Kicker, p_result.Punter);
                     if (p_result.Penalized_Player != null)
                     {
                         Player_Action_State pa_state = Penalty_Helper.getPlayerAction(p_result.Penalized_Player, p_result);

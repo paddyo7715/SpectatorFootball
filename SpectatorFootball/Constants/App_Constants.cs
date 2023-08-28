@@ -576,9 +576,10 @@ namespace SpectatorFootball
         public const long TACKLER_ADVANTAGE_MULTIPLIER = 3;
 
         //Penalties
-        public const long SPORTSMANSHIP_ADJUSTER = 110;
-        public const long PENALTY_UPPER_LIMIT = 1000;
-        public const long PENALTY_UPPER_LIMIT_ADJ_QB_K = 3;  //For QBs or kickers
+        public const long SPORTSMANSHIP_ADJUSTER = 130;
+        public const long PENALTY_UPPER_LIMIT = 14000;
+        public const double PENALTY_UPPER_LIMIT_ADJ_QB = 1.75;  //For QBs or kickers
+        public const double PENALTY_UPPER_LIMIT_ADJ_K = 2.0;  //For QBs or kickers
 
     }
 }
