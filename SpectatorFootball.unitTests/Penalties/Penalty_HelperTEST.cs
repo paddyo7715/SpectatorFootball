@@ -1345,5 +1345,105 @@ namespace SpectatorFootball.unitTests.Penalties
 
             Assert.IsTrue(true);
         }
+        [TestCategory("Penalties")]
+        [TestMethod]
+        public void isNoPenaltyPlay_True()
+        {
+            Play_Result pResult = new Play_Result() { bTouchback = true };
+            Play_Enum pe = Play_Enum.KICKOFF_NORMAL;
+            bool bWrong = false;
+
+            int numtries = 100;
+            for (int i= 0; i < numtries; i++)
+            {
+                int n = CommonUtils.getRandomNum(1, 3);
+                switch (n)
+                {
+                    case 1:
+                        pe = Play_Enum.KICKOFF_NORMAL;
+                        break;
+                    case 2:
+                        pe = Play_Enum.FREE_KICK;
+                        break;
+                    case 3:
+                        pe = Play_Enum.PUNT;
+                        break;
+                }
+                bool bNotPenaltyPlay = Penalty_Helper.isNoPenaltyPlay(pResult, pe);
+                if (!bNotPenaltyPlay)
+                {
+                    bWrong = true;
+                    break;
+                }
+
+            }
+
+            Assert.IsTrue(!bWrong);
+        }
+        [TestCategory("Penalties")]
+        [TestMethod]
+        public void isNoPenaltyPlay_False()
+        {
+            Play_Result pResult = new Play_Result() { bTouchback = false };
+            Play_Enum pe = Play_Enum.KICKOFF_NORMAL;
+            bool bWrong = false;
+
+            int numtries = 100;
+            for (int i = 0; i < numtries; i++)
+            {
+                int n = CommonUtils.getRandomNum(1, 6);
+                switch (n)
+                {
+                    case 1:
+                        pe = Play_Enum.KICKOFF_NORMAL;
+                        break;
+                    case 2:
+                        pe = Play_Enum.FREE_KICK;
+                        break;
+                    case 3:
+                        pe = Play_Enum.PUNT;
+                        break;
+                    case 4:
+                        pe = Play_Enum.RUN;
+                        break;
+                    case 5:
+                        pe = Play_Enum.PASS;
+                        break;
+                    case 6:
+                        pe = Play_Enum.FIELD_GOAL;
+                        break;
+
+                }
+                bool bNotPenaltyPlay = Penalty_Helper.isNoPenaltyPlay(pResult, pe);
+                if (bNotPenaltyPlay)
+                {
+                    bWrong = true;
+                    break;
+                }
+
+            }
+
+            Assert.IsTrue(!bWrong);
+        }
+        [TestCategory("Penalties")]
+        [TestMethod]
+        public void isHalfTheDistance_true()
+        {
+            Tuple<bool, double> t = Penalty_Helper.isHalfTheDistance(15, 14);
+            bool bhalfDis = t.Item1;
+            double yl = t.Item2;
+
+            Assert.IsTrue(bhalfDis && yl == 7.0);
+        }
+        [TestCategory("Penalties")]
+        [TestMethod]
+        public void isHalfTheDistance_false()
+        {
+            Tuple<bool, double> t = Penalty_Helper.isHalfTheDistance(5, 14);
+            bool bhalfDis = t.Item1;
+            double yl = t.Item2;
+
+            Assert.IsTrue(!bhalfDis);
+        }
     }
 }
