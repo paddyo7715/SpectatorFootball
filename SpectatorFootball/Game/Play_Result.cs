@@ -31,6 +31,9 @@ namespace SpectatorFootball.GameNS
         public bool bTwoPntAfterTDMissed = false;
         public bool bThreePntAfterTDMade = false;
         public bool bThreePntAfterTDMissed = false;
+        public bool bCoffinCornerAttemt = false;
+        public bool bCoffinCornerMade = false;
+
 
         //Penalties
         public Game_Player Penalized_Player = null;

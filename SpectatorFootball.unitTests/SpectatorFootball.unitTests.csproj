@@ -49,6 +49,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Coach\CoachTEST.cs" />
     <Compile Include="Penalties\Penalty_HelperTEST.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

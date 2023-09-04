@@ -9,14 +9,13 @@ using SpectatorFootball.PenaltiesNS;
 
 namespace SpectatorFootball.GameNS
 {
-    class Coach
+    public class Coach
     {
         private long Franchise_id { get; set; }
         private Game g;
 
         private long ourScore = 0;
         private long theirScore = 0;
-
         private long Max_TD_Points;
 
         private List<Player_and_Ratings> Our_Players = null;
@@ -47,7 +46,9 @@ namespace SpectatorFootball.GameNS
             List<Formation_Rec> fList = null;
             Formation formation = null;
 
-            setOurThereScore();
+            Tuple<long, long> t = setOurThereScore();
+            ourScore = t.Item1;
+            theirScore = t.Item2;
 
             long scoreDiff = ourScore - theirScore;
 
@@ -88,7 +89,7 @@ namespace SpectatorFootball.GameNS
 
             return new Play_Package() { Formation = formation, Play = p } ;
         }
-        private void setOurThereScore()
+        public Tuple<long, long> setOurThereScore()
         {
             if (Franchise_id == g.Away_Team_Franchise_ID)
             {
@@ -100,6 +101,8 @@ namespace SpectatorFootball.GameNS
                 ourScore = (long)g.Home_Score;
                 theirScore = (long)g.Away_Score;
             }
+
+            return new Tuple<long, long>(ourScore, theirScore);
         }
 
         public Formation Call_Def_Formation(Play_Package pp, double PossessionAdjuster)
@@ -107,7 +110,9 @@ namespace SpectatorFootball.GameNS
             Formations_Enum r;
             Formation fList = null;
 
-            setOurThereScore();
+            Tuple<long, long> t = setOurThereScore();
+            ourScore = t.Item1;
+            theirScore = t.Item2;
 
             long scoreDiff = ourScore - theirScore;
 
@@ -433,8 +438,8 @@ namespace SpectatorFootball.GameNS
                 r = true;
             else if (pResult.bFGMade)
                 r = true;
-            else if (pResult.bFGMade)
-                r = !AcceptPenaltyFGMade(dist_from_GL);
+//            else if (pResult.bFGMade)
+//                r = !AcceptPenaltyFGMade(dist_from_GL);
             else if (pResult.bOnePntAfterTDMissed)
                 r = false;
             else if (pResult.bOnePntAfterTDMade)
@@ -464,7 +469,6 @@ namespace SpectatorFootball.GameNS
                     case Play_Enum.RUN:
                     case Play_Enum.PASS:  //stopped here
                         r = false;
-                        //                        point_of_foul_Yardline += (pResult.Yards_Gained * Horizonal_Adj);
                         if (pResult.Yards_Gained > 0)
                             r = true;
                         break;
@@ -496,10 +500,28 @@ namespace SpectatorFootball.GameNS
                 r = true;
             else if (pResult.bXPMade)
                 r = false;
+            else if (pResult.bFGMissed)
+                r = true;
             else if (pResult.bFGMade)
-                r = false;
-            else if (pResult.bFGMade)
-                r = AcceptPenaltyFGMade(dist_from_GL);
+                if (!Penalty_Helper.isFirstDowwithPenalty(penalty, yards_to_go, dist_from_GL))
+                    r = false;
+                else
+                {
+                    r = true;
+                    if (g.Quarter == 2 || g.Quarter > 3)
+                    {
+                        if (g.Time <= 10)
+                            r = false;
+                        else if (g.Time <= 20 && dist_from_GL >= 15)
+                            r = false;
+                        else if (g.Time <= 30 && dist_from_GL > 25)
+                            r = false;
+                        else if (g.Time <= 40 && dist_from_GL > 30)
+                            r = false;
+                        else
+                            r = true;
+                    }
+                }
             else if (pResult.bOnePntAfterTDMissed)
                 r = true;
             else if (pResult.bOnePntAfterTDMade)
@@ -520,19 +542,21 @@ namespace SpectatorFootball.GameNS
 
                 switch (pe)
                 {
+                    case Play_Enum.PUNT:
+                        if (!pResult.bCoffinCornerMade)
+                            r = true;
+                        break;
                     case Play_Enum.FREE_KICK:
                     case Play_Enum.KICKOFF_NORMAL:
                     case Play_Enum.KICKOFF_ONSIDES:
-                    case Play_Enum.PUNT:
                         r = true;
                         break;
                     case Play_Enum.RUN:
                     case Play_Enum.PASS:
                         r = false;
-                        //                        point_of_foul_Yardline += (pResult.Yards_Gained * Horizonal_Adj);
-                        double before_pen_YL = 0.0;
+                        bool bFirstDown = Penalty_Helper.isFirstDowwithPenalty(penalty, yards_to_go, dist_from_GL);
 
-                        if (penalty.bAuto_FirstDown && pResult.Yards_Gained < yards_to_go)
+                        if (bFirstDown && pResult.Yards_Gained < yards_to_go)
                             r = true;
                         else if (pResult.Yards_Gained > yards_to_go)
                             r = true;
@@ -546,28 +570,6 @@ namespace SpectatorFootball.GameNS
             return r;
         }
 
-        //This method will determine if when a FG is made and there is a penalty on the defense or offense
-        //Should the penalty be accepted.  The thining here is that if the tteam just ties the score with the game or half ending
-        //and they are a certain distance from the goal line and time left in the game or half,
-        //maybe they want to take the penalty and try to get the TD or maybe they want the FG to count.
-        public bool AcceptPenaltyFGMade(double DistanceFromGL)
-        {
-            bool r = false;
-
-            if (g.Quarter == 2 || g.Quarter > 3)
-            {
-                //the higher this number the closer you are to the GL
-                double temp1 = DistanceFromGL;
-
-                //The higher this number the more time there is left
-                double temp2 = g.Time <= app_Constants.FG_MADE_URGENCY_FOR_PENALTY_SECONDS ? (int)g.Time : app_Constants.FG_MADE_URGENCY_FOR_PENALTY_SECONDS /2;
-
-                if (temp1 + temp2 < 50)
-                    r = true;
-            }
-
-            return r;
-        }
 /*        public Next_Play_Situation NextDownandSpot(Play_Enum pe, Play_Result pResult, int Down, int yards_to_go, int Line_of_Scrimmage, bool bLefttoRight)
         {
             int new_Down = 0;
