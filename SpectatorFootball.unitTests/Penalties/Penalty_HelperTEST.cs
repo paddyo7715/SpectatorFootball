@@ -1245,7 +1245,7 @@ namespace SpectatorFootball.unitTests.Penalties
             Game_Player Punter = null;
             int[] o_arr = new int[11];
             int[] d_arr = new int[11];
-            int non_special_min = 30000;
+            int non_special_min = 100000;
             int non_special_max = 0;
             bool bPass = false;
 
@@ -1451,9 +1451,8 @@ namespace SpectatorFootball.unitTests.Penalties
         {
             Penalty p = new Penalty() { bAuto_FirstDown = true };
             double yards_to_go = 10.0;
-            double dist_from_gl = 50;
 
-            bool bFD = Penalty_Helper.isFirstDowwithPenalty(p, yards_to_go, dist_from_gl);
+            bool bFD = Penalty_Helper.isFirstDowwithPenalty(p, yards_to_go, false, 0.0);
 
             Assert.IsTrue(bFD);
         }
@@ -1463,9 +1462,8 @@ namespace SpectatorFootball.unitTests.Penalties
         {
             Penalty p = new Penalty() { bAuto_FirstDown = false, Yards = 10 };
             double yards_to_go = 9.0;
-            double dist_from_gl = 15;
 
-            bool bFD = Penalty_Helper.isFirstDowwithPenalty(p, yards_to_go, dist_from_gl);
+            bool bFD = Penalty_Helper.isFirstDowwithPenalty(p, yards_to_go, true, 7.5);
 
             Assert.IsTrue(!bFD);
         }
@@ -1478,7 +1476,7 @@ namespace SpectatorFootball.unitTests.Penalties
             double yards_to_go = 3.0;
             double dist_from_gl = 18;
 
-            bool bFD = Penalty_Helper.isFirstDowwithPenalty(p, yards_to_go, dist_from_gl);
+            bool bFD = Penalty_Helper.isFirstDowwithPenalty(p, yards_to_go, true, 9.0);
 
             Assert.IsTrue(bFD);
         }
@@ -1491,7 +1489,7 @@ namespace SpectatorFootball.unitTests.Penalties
             double yards_to_go = 3.0;
             double dist_from_gl = 40;
 
-            bool bFD = Penalty_Helper.isFirstDowwithPenalty(p, yards_to_go, dist_from_gl);
+            bool bFD = Penalty_Helper.isFirstDowwithPenalty(p, yards_to_go, false, 0.0);
 
             Assert.IsTrue(bFD);
         }
@@ -1503,7 +1501,7 @@ namespace SpectatorFootball.unitTests.Penalties
             double yards_to_go = 9.0;
             double dist_from_gl = 40;
 
-            bool bFD = Penalty_Helper.isFirstDowwithPenalty(p, yards_to_go, dist_from_gl);
+            bool bFD = Penalty_Helper.isFirstDowwithPenalty(p, yards_to_go, false, 0.0);
 
             Assert.IsTrue(!bFD);
         }

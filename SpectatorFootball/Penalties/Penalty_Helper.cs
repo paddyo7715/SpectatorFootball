@@ -560,19 +560,15 @@ namespace SpectatorFootball.PenaltiesNS
 
             return new Tuple<bool,double>(r,half_the_dist);
         }
-        public static bool isFirstDowwithPenalty(Penalty p, double yards_to_go, double dist_from_GL)
+        public static bool isFirstDowwithPenalty(Penalty p, double yards_to_go,  bool bHlaft_the_dist, double half_dist_yards)
         {
             bool r = false;
-
-            Tuple<bool, double> t = isHalfTheDistance(p.Yards, dist_from_GL);
-            bool bHlaft_the_dist = t.Item1;
-            double half_the_dist = t.Item2;
 
             if (p.bAuto_FirstDown)
                 r = true;
             else if (bHlaft_the_dist)
             {
-                if (half_the_dist >= yards_to_go)
+                if (half_dist_yards >= yards_to_go)
                     r = true;
             }
             else
@@ -581,7 +577,7 @@ namespace SpectatorFootball.PenaltiesNS
                     r = true;
             }
 
-                    return r;
+            return r;
         }
     }
 }
