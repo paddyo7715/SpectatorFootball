@@ -589,5 +589,84 @@ namespace SpectatorFootball.GameNS
         }
 
 
+
+        //This is for penalties on the offensethat includes kickoff return team, but for punts, the punting
+        //team is considered the offense
+        public bool AcceptOff_Penalty(Play_Enum pe, Play_Result pResult, double yards_to_go, double Line_of_Scrimmage, bool bLefttoRight, bool bLastPlayGame, bool bLasPlayHalf)
+        {
+            bool r = false;
+            double dist_from_GL = Game_Engine_Helper.calcDistanceFromGL(Line_of_Scrimmage, bLefttoRight);
+            Tuple<long, long> t = setOurThereScore();
+            ourScore = t.Item1;
+            theirScore = t.Item2;
+
+            Penalty penalty = pResult.Penalty;
+
+            if (!penalty.bDeclinable)
+                throw new Exception("Non decidable penalty passed to AcceptOff_Penalty");
+
+            if (pResult.bFumble_Lost || pResult.bInterception)
+                r = false;
+            else if (pResult.bTouchDown)
+                r = true;
+            else if (pResult.bSafety)
+                r = false;
+            else if (pResult.bXPMissed)
+                r = false;
+            else if (pResult.bXPMade)
+                r = true;
+            else if (pResult.bFGMissed)
+                r = false;
+            else if (pResult.bFGMade)  //different then def penalty
+                r = true;
+            else if (pResult.bOnePntAfterTDMissed)
+                r = false;
+            else if (pResult.bOnePntAfterTDMade)
+                r = true;
+            else if (pResult.bTwoPntAfterTDMissed)
+                r = false;
+            else if (pResult.bTwoPntAfterTDMade)
+                r = true;
+            else if (pResult.bThreePntAfterTDMissed)
+                r = false;
+            else if (pResult.bThreePntAfterTDMade)
+                r = true;
+            else if (this.ourScore <= this.theirScore && (bLastPlayGame || bLasPlayHalf))
+                r = true;
+            else  //all other play situations
+            {  
+                int Horizonal_Adj = Game_Engine_Helper.HorizontalAdj(bLefttoRight);
+
+                switch (pe)
+                {
+                    case Play_Enum.PUNT:  //different
+                        if (pResult.bCoffinCornerMade)
+                            r = true;
+                        else
+                        {
+                            if (pResult.Yards_Returned > 20.0)  //different
+                                r = false;
+                            else
+                                r = true;
+                        }
+                        break;
+                    case Play_Enum.FREE_KICK:
+                    case Play_Enum.KICKOFF_NORMAL:
+                    case Play_Enum.KICKOFF_ONSIDES:
+                        r = false;  //stopped here
+                        break;
+                    case Play_Enum.RUN:  //different
+                    case Play_Enum.PASS:
+                        r = true;
+                        if (pResult.Yards_Gained <= -4)
+                            r = false;
+                        break;
+                }
+            }
+
+
+            return r;
+        }
+
     }
 }

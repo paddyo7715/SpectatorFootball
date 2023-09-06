@@ -54,7 +54,7 @@ namespace SpectatorFootball.unitTests.CoachTest
 
         [TestCategory("Penalties")]
         [TestMethod]
-        public void AcceptOff_Penalty_TD()
+        public void AcceptDef_Penalty_TD()
         {
             int Yards_to_go = 5;
             double Line_of_Scrimmage = 50.0;
@@ -69,7 +69,7 @@ namespace SpectatorFootball.unitTests.CoachTest
 
         [TestCategory("Penalties")]
         [TestMethod]
-        public void AcceptOff_Penalty_Safety()
+        public void AcceptDef_Penalty_Safety()
         {
             int Yards_to_go = 5;
             double Line_of_Scrimmage = 50.0;
@@ -84,7 +84,7 @@ namespace SpectatorFootball.unitTests.CoachTest
 
         [TestCategory("Penalties")]
         [TestMethod]
-        public void AcceptOff_Penalty_xpmissed()
+        public void AcceptDef_Penalty_xpmissed()
         {
             int Yards_to_go = 5;
             double Line_of_Scrimmage = 50.0;
@@ -99,7 +99,7 @@ namespace SpectatorFootball.unitTests.CoachTest
 
         [TestCategory("Penalties")]
         [TestMethod]
-        public void AcceptOff_Penalty_xpmade()
+        public void AcceptDef_Penalty_xpmade()
         {
             int Yards_to_go = 5;
             double Line_of_Scrimmage = 50.0;
@@ -114,7 +114,7 @@ namespace SpectatorFootball.unitTests.CoachTest
 
         [TestCategory("Penalties")]
         [TestMethod]
-        public void AcceptOff_Penalty_FGMissed()
+        public void AcceptDef_Penalty_FGMissed()
         {
             int Yards_to_go = 5;
             double Line_of_Scrimmage = 50.0;
@@ -129,7 +129,7 @@ namespace SpectatorFootball.unitTests.CoachTest
 
         [TestCategory("Penalties")]
         [TestMethod]
-        public void AcceptOff_Penalty_FGMade_no_FD()
+        public void AcceptDef_Penalty_FGMade_no_FD()
         {
             int Yards_to_go = 10;
             double Line_of_Scrimmage = 35.0;
@@ -144,7 +144,7 @@ namespace SpectatorFootball.unitTests.CoachTest
 
         [TestCategory("Penalties")]
         [TestMethod]
-        public void AcceptOff_Penalty_FGMade_FD()
+        public void AcceptDef_Penalty_FGMade_FD()
         {
             int Yards_to_go = 10;
             double Line_of_Scrimmage = 35.0;
@@ -158,7 +158,7 @@ namespace SpectatorFootball.unitTests.CoachTest
         }
         [TestCategory("Penalties")]
         [TestMethod]
-        public void AcceptOff_Penalty_FGMade_FD_near_end_of_half_or_game_dont_take1()
+        public void AcceptDef_Penalty_FGMade_FD_near_end_of_half_or_game_dont_take1()
         {
             int Yards_to_go = 10;
             double Line_of_Scrimmage = 24.0;
@@ -173,7 +173,7 @@ namespace SpectatorFootball.unitTests.CoachTest
 
         [TestCategory("Penalties")]
         [TestMethod]
-        public void AcceptOff_Penalty_FGMade_FD_near_end_of_half_or_game_dont_take2()
+        public void AcceptDef_Penalty_FGMade_FD_near_end_of_half_or_game_dont_take2()
         {
             int Yards_to_go = 10;
             double Line_of_Scrimmage = 80.0;
@@ -188,7 +188,7 @@ namespace SpectatorFootball.unitTests.CoachTest
 
         [TestCategory("Penalties")]
         [TestMethod]
-        public void AcceptOff_Penalty_FGMade_FD_near_end_of_half_or_game_dont_take3()
+        public void AcceptDef_Penalty_FGMade_FD_near_end_of_half_or_game_dont_take3()
         {
             int Yards_to_go = 10;
             double Line_of_Scrimmage = 70.0;
@@ -203,7 +203,7 @@ namespace SpectatorFootball.unitTests.CoachTest
 
         [TestCategory("Penalties")]
         [TestMethod]
-        public void AcceptOff_Penalty_FGMade_FD_near_end_of_half_or_game_dont_take4()
+        public void AcceptDef_Penalty_FGMade_FD_near_end_of_half_or_game_dont_take4()
         {
             int Yards_to_go = 10;
             double Line_of_Scrimmage = 60.0;
@@ -218,7 +218,7 @@ namespace SpectatorFootball.unitTests.CoachTest
 
         [TestCategory("Penalties")]
         [TestMethod]
-        public void AcceptOff_Penalty_FGMade_FD_near_end_of_half_or_game_less_urgent_take_penalty()
+        public void AcceptDef_Penalty_FGMade_FD_near_end_of_half_or_game_less_urgent_take_penalty()
         {
             int Yards_to_go = 2;
             double Line_of_Scrimmage = 88.0;
@@ -232,7 +232,7 @@ namespace SpectatorFootball.unitTests.CoachTest
         }
         [TestCategory("Penalties")]
         [TestMethod]
-        public void AcceptOff_Penalty_bOnePntAfterTDMissed()
+        public void AcceptDef_Penalty_bOnePntAfterTDMissed()
         {
             int Yards_to_go = 2;
             double Line_of_Scrimmage = 88.0;
@@ -246,7 +246,7 @@ namespace SpectatorFootball.unitTests.CoachTest
         }
         [TestCategory("Penalties")]
         [TestMethod]
-        public void AcceptOff_Penalty_bOnePntAfterTDMade()
+        public void AcceptDef_Penalty_bOnePntAfterTDMade()
         {
             int Yards_to_go = 2;
             double Line_of_Scrimmage = 88.0;
@@ -261,7 +261,7 @@ namespace SpectatorFootball.unitTests.CoachTest
 
         [TestCategory("Penalties")]
         [TestMethod]
-        public void AcceptOff_Penalty_bTwoPntAfterTDMissed()
+        public void AcceptDef_Penalty_bTwoPntAfterTDMissed()
         {
             int Yards_to_go = 2;
             double Line_of_Scrimmage = 88.0;
@@ -275,7 +275,7 @@ namespace SpectatorFootball.unitTests.CoachTest
         }
         [TestCategory("Penalties")]
         [TestMethod]
-        public void AcceptOff_Penalty_bTwoPntAfterTDMade()
+        public void AcceptDef_Penalty_bTwoPntAfterTDMade()
         {
             int Yards_to_go = 2;
             double Line_of_Scrimmage = 88.0;
@@ -290,7 +290,7 @@ namespace SpectatorFootball.unitTests.CoachTest
 
         [TestCategory("Penalties")]
         [TestMethod]
-        public void AcceptOff_Penalty_bThreePntAfterTDMissed()
+        public void AcceptDef_Penalty_bThreePntAfterTDMissed()
         {
             int Yards_to_go = 2;
             double Line_of_Scrimmage = 88.0;
@@ -304,7 +304,7 @@ namespace SpectatorFootball.unitTests.CoachTest
         }
         [TestCategory("Penalties")]
         [TestMethod]
-        public void AcceptOff_Penalty_bThreePntAfterTDMade()
+        public void AcceptDef_Penalty_bThreePntAfterTDMade()
         {
             int Yards_to_go = 2;
             double Line_of_Scrimmage = 88.0;
@@ -318,7 +318,7 @@ namespace SpectatorFootball.unitTests.CoachTest
         }
         [TestCategory("Penalties")]
         [TestMethod]
-        public void AcceptOff_Penalty_LastPlay_NoScoreorTurnover_not_winning_Accept()
+        public void AcceptDef_Penalty_LastPlay_NoScoreorTurnover_not_winning_Accept()
         {
             int Yards_to_go = 2;
             double Line_of_Scrimmage = 88.0;
@@ -332,7 +332,7 @@ namespace SpectatorFootball.unitTests.CoachTest
         }
         [TestCategory("Penalties")]
         [TestMethod]
-        public void AcceptOff_Penalty_Punt_Coffin_Corner_dont_accept()
+        public void AcceptDef_Penalty_Punt_Coffin_Corner_dont_accept()
         {
             int Yards_to_go = 2;
             double Line_of_Scrimmage = 88.0;
@@ -347,7 +347,7 @@ namespace SpectatorFootball.unitTests.CoachTest
 
         [TestCategory("Penalties")]
         [TestMethod]
-        public void AcceptOff_Penalty_Punt_not_Coffin_Corner_accept()
+        public void AcceptDef_Penalty_Punt_not_Coffin_Corner_accept()
         {
             int Yards_to_go = 2;
             double Line_of_Scrimmage = 88.0;
@@ -362,7 +362,7 @@ namespace SpectatorFootball.unitTests.CoachTest
 
         [TestCategory("Penalties")]
         [TestMethod]
-        public void AcceptOff_Penalty_kickoff_accept()
+        public void AcceptDef_Penalty_kickoff_accept()
         {
             int Yards_to_go = 2;
             double Line_of_Scrimmage = 88.0;
@@ -377,7 +377,7 @@ namespace SpectatorFootball.unitTests.CoachTest
 
         [TestCategory("Penalties")]
         [TestMethod]
-        public void AcceptOff_not_FD_Penalty_on_RunFD()
+        public void AcceptDef_not_FD_Penalty_on_RunFD()
         {
             int Yards_to_go = 10;
             double Line_of_Scrimmage = 50.0;
@@ -392,7 +392,7 @@ namespace SpectatorFootball.unitTests.CoachTest
 
         [TestCategory("Penalties")]
         [TestMethod]
-        public void AcceptOff_not_FD_Penalty_on_RunFD_half_the_dist()
+        public void AcceptDef_not_FD_Penalty_on_RunFD_half_the_dist()
         {
             int Yards_to_go = 10;
             double Line_of_Scrimmage = 85.0;
@@ -406,7 +406,7 @@ namespace SpectatorFootball.unitTests.CoachTest
         }
         [TestCategory("Penalties")]
         [TestMethod]
-        public void AcceptOff_FD_Penalty_on_long_pass_complete_dont_accept()
+        public void AcceptDef_FD_Penalty_on_long_pass_complete_dont_accept()
         {
             int Yards_to_go = 10;
             double Line_of_Scrimmage = 15.0;
@@ -421,7 +421,7 @@ namespace SpectatorFootball.unitTests.CoachTest
 
         [TestCategory("Penalties")]
         [TestMethod]
-        public void AcceptOff_auto_FD_Penalty_on_short_run_accept()
+        public void AcceptDef_auto_FD_Penalty_on_short_run_accept()
         {
             int Yards_to_go = 10;
             double Line_of_Scrimmage = 15.0;
@@ -436,7 +436,7 @@ namespace SpectatorFootball.unitTests.CoachTest
 
         [TestCategory("Penalties")]
         [TestMethod]
-        public void AcceptOff_FD_Penalty_on_short_run_accept()
+        public void AcceptDef_FD_Penalty_on_short_run_accept()
         {
             int Yards_to_go = 10;
             double Line_of_Scrimmage = 15.0;
@@ -451,7 +451,7 @@ namespace SpectatorFootball.unitTests.CoachTest
 
         [TestCategory("Penalties")]
         [TestMethod]
-        public void AcceptOff_FD_Penalty_on_FD_Pass_accept()
+        public void AcceptDef_FD_Penalty_on_FD_Pass_accept()
         {
             int Yards_to_go = 10;
             double Line_of_Scrimmage = 15.0;
@@ -466,7 +466,7 @@ namespace SpectatorFootball.unitTests.CoachTest
 
         [TestCategory("Penalties")]
         [TestMethod]
-        public void AcceptOff_FD_Penalty_on_FD_Pass_dont_accept()
+        public void AcceptDef_FD_Penalty_on_FD_Pass_dont_accept()
         {
             int Yards_to_go = 8;
             double Line_of_Scrimmage = 15.0;
@@ -481,7 +481,7 @@ namespace SpectatorFootball.unitTests.CoachTest
 
         [TestCategory("Penalties")]
         [TestMethod]
-        public void AcceptOff_auto_FD_Penalty_on_FD_run_dont_accept()
+        public void AcceptDef_auto_FD_Penalty_on_FD_run_dont_accept()
         {
             int Yards_to_go = 6;
             double Line_of_Scrimmage = 90.0;
@@ -490,6 +490,103 @@ namespace SpectatorFootball.unitTests.CoachTest
             Game g = new Game() { Home_Score = 0, Away_Score = 0, Quarter = 4, Time = 0 };
             Coach c = new Coach(11, g, 7, new List<Player_and_Ratings>(), new List<Player_and_Ratings>(), new List<Injury>());
             bool bAccept = c.AcceptDef_Penalty(Enum.Play_Enum.RUN, pResult, Yards_to_go, Line_of_Scrimmage, true, false, false);
+
+            Assert.IsTrue(!bAccept);
+        }
+
+
+
+
+
+
+
+        [TestCategory("Penalties")]
+        [TestMethod]
+        public void AcceptOff_Penalty_Turnover()
+        {
+            int Yards_to_go = 5;
+            double Line_of_Scrimmage = 50.0;
+            Penalty p = new Penalty() { bDeclinable = true };
+            Play_Result pResult = new Play_Result() { Yards_Gained = 0, bInterception = true, Penalty = p };
+            Game g = new Game() { Home_Score = 0, Away_Score = 0 };
+            Coach c = new Coach(11, g, 7, new List<Player_and_Ratings>(), new List<Player_and_Ratings>(), new List<Injury>());
+            bool bAccept = c.AcceptOff_Penalty(Enum.Play_Enum.RUN, pResult, Yards_to_go, Line_of_Scrimmage, true, false, false);
+
+
+            Assert.IsTrue(!bAccept);
+        }
+
+        [TestCategory("Penalties")]
+        [TestMethod]
+        public void AcceptOff_Penalty_TD()
+        {
+            int Yards_to_go = 5;
+            double Line_of_Scrimmage = 50.0;
+            Penalty p = new Penalty() { bDeclinable = true };
+            Play_Result pResult = new Play_Result() { Yards_Gained = 50, bTouchDown = true, Penalty = p };
+            Game g = new Game() { Home_Score = 0, Away_Score = 0 };
+            Coach c = new Coach(11, g, 7, new List<Player_and_Ratings>(), new List<Player_and_Ratings>(), new List<Injury>());
+            bool bAccept = c.AcceptOff_Penalty(Enum.Play_Enum.RUN, pResult, Yards_to_go, Line_of_Scrimmage, true, false, false);
+
+            Assert.IsTrue(bAccept);
+        }
+
+        [TestCategory("Penalties")]
+        [TestMethod]
+        public void AcceptOff_Penalty_Safety()
+        {
+            int Yards_to_go = 5;
+            double Line_of_Scrimmage = 50.0;
+            Penalty p = new Penalty() { bDeclinable = true };
+            Play_Result pResult = new Play_Result() { Yards_Gained = 50, bSafety = true, Penalty = p };
+            Game g = new Game() { Home_Score = 0, Away_Score = 0 };
+            Coach c = new Coach(11, g, 7, new List<Player_and_Ratings>(), new List<Player_and_Ratings>(), new List<Injury>());
+            bool bAccept = c.AcceptOff_Penalty(Enum.Play_Enum.PASS, pResult, Yards_to_go, Line_of_Scrimmage, true, false, false);
+
+            Assert.IsTrue(!bAccept);
+        }
+
+        [TestCategory("Penalties")]
+        [TestMethod]
+        public void AcceptOff_Penalty_xpmissed()
+        {
+            int Yards_to_go = 5;
+            double Line_of_Scrimmage = 50.0;
+            Penalty p = new Penalty() { bDeclinable = true };
+            Play_Result pResult = new Play_Result() { Yards_Gained = 50, bXPMissed = true, Penalty = p };
+            Game g = new Game() { Home_Score = 0, Away_Score = 0 };
+            Coach c = new Coach(11, g, 7, new List<Player_and_Ratings>(), new List<Player_and_Ratings>(), new List<Injury>());
+            bool bAccept = c.AcceptOff_Penalty(Enum.Play_Enum.EXTRA_POINT, pResult, Yards_to_go, Line_of_Scrimmage, true, false, false);
+
+            Assert.IsTrue(!bAccept);
+        }
+
+        [TestCategory("Penalties")]
+        [TestMethod]
+        public void AcceptOff_Penalty_xpmade()
+        {
+            int Yards_to_go = 5;
+            double Line_of_Scrimmage = 50.0;
+            Penalty p = new Penalty() { bDeclinable = true };
+            Play_Result pResult = new Play_Result() { Yards_Gained = 50, bXPMade = true, Penalty = p };
+            Game g = new Game() { Home_Score = 0, Away_Score = 0 };
+            Coach c = new Coach(11, g, 7, new List<Player_and_Ratings>(), new List<Player_and_Ratings>(), new List<Injury>());
+            bool bAccept = c.AcceptOff_Penalty(Enum.Play_Enum.EXTRA_POINT, pResult, Yards_to_go, Line_of_Scrimmage, true, false, false);
+
+            Assert.IsTrue(bAccept);
+        }
+
+        [TestCategory("Penalties")]
+        [TestMethod]
+        public void AcceptOff_Penalty_FGMissed()
+        {
+            int Yards_to_go = 5;
+            double Line_of_Scrimmage = 50.0;
+            Penalty p = new Penalty() { bDeclinable = true };
+            Play_Result pResult = new Play_Result() { Yards_Gained = 50, bFGMissed = true, Penalty = p };
+            Game g = new Game() { Home_Score = 0, Away_Score = 0 };
+            Coach c = new Coach(11, g, 7, new List<Player_and_Ratings>(), new List<Player_and_Ratings>(), new List<Injury>());
+            bool bAccept = c.AcceptOff_Penalty(Enum.Play_Enum.FIELD_GOAL, pResult, Yards_to_go, Line_of_Scrimmage, true, false, false);
 
             Assert.IsTrue(!bAccept);
         }
