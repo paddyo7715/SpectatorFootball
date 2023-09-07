@@ -644,7 +644,7 @@ namespace SpectatorFootball.GameNS
                             r = true;
                         else
                         {
-                            if (pResult.Yards_Returned > 20.0)  //different
+                            if (pResult.Yards_Returned >= app_Constants.RETURN_YARDS_TO_DECLINE_PENALTY)  //different
                                 r = false;
                             else
                                 r = true;
@@ -653,12 +653,12 @@ namespace SpectatorFootball.GameNS
                     case Play_Enum.FREE_KICK:
                     case Play_Enum.KICKOFF_NORMAL:
                     case Play_Enum.KICKOFF_ONSIDES:
-                        r = false;  //stopped here
+                        r = false;  
                         break;
                     case Play_Enum.RUN:  //different
                     case Play_Enum.PASS:
                         r = true;
-                        if (pResult.Yards_Gained <= -4)
+                        if (pResult.Yards_Gained <= app_Constants.YARDS_LOST_TO_NOT_ACCET_PENALTY)
                             r = false;
                         break;
                 }
