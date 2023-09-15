@@ -421,7 +421,7 @@ namespace SpectatorFootball.GameNS
                         {
                             bool isBallCarryingTeam = Game_Engine_Helper.isBallTeamPenalty(p_result);
                             if (isBallCarryingTeam)
-                                p_result.bPenalty_Rejected = !Penalty_Coach.AcceptOff_Penalty(Offensive_Package.Play, p_result, g_Line_of_Scrimmage, bLefttoRight, false, false);
+                                p_result.bPenalty_Rejected = !Penalty_Coach.AcceptOff_Penalty(Offensive_Package.Play, p_result, g_Yards_to_go, g_Line_of_Scrimmage, bLefttoRight, false, false);
                             else
                                 p_result.bPenalty_Rejected = !Penalty_Coach.AcceptDef_Penalty(Offensive_Package.Play, p_result, g_Yards_to_go ,g_Line_of_Scrimmage, bLefttoRight, false, false);
                         }
@@ -855,5 +855,114 @@ namespace SpectatorFootball.GameNS
 
         }
 
-    }
+        //This method will update the play_result object and return other values to
+        //indicate the final result of the play taking into account the penalty
+        //The next yardline will be set to 0 in the case the next play is a kickoff, freekick or extra point,
+        //That is because the executeplay method sets the yardline for that.  
+        public Play_Result setPlayOutCome(bool isBallCarryingTeam,
+            Play_Enum PE, long Down, double Yards_to_Go, Play_Result pResult,
+            double original_Yardline, bool bLefttoRgiht, Play_Result pResulte)
+        {
+            Play_Result r = pResult;
+            bool bSwitchPossession = false;
+            bool bAccum = false;
+            long new_Down = 0;
+            double new_yard_to_go = 0;
+            bool bNextPlayXP = false;
+            bool bNextPlayKickoff = false;
+            bool bNextPlayFreeKick = false;
+            double dist_from_GL;
+            double new_Added_Penalty_Yards = 0;
+
+            //The play will count
+            if (pResult.bPenalty_Rejected || pResult.Penalty.bSpot_Foul)
+            {
+                bAccum = true;
+
+                dist_from_GL = Game_Engine_Helper.calcDistanceFromGL(pResult.end_of_play_yardline, bLefttoRgiht);
+
+                if (pResult.bTouchDown)
+                {
+                    bNextPlayXP = true;
+                }
+                else if (pResult.bFGMade || pResult.bXPMade || pResult.bXPMissed ||
+                    pResult.bOnePntAfterTDMade || pResult.bOnePntAfterTDMissed ||
+                    pResult.bTwoPntAfterTDMade || pResult.bTwoPntAfterTDMissed ||
+                    pResult.bThreePntAfterTDMade || pResult.bThreePntAfterTDMissed)
+                {
+                    bNextPlayKickoff = true;
+                }
+                else if (pResult.bSafety)
+                    bNextPlayFreeKick = true;
+                else if (pResult.bTouchback)
+                {
+                    new_Down = 1;
+                    new_yard_to_go = dist_from_GL > 10.0 ? 10.0 : dist_from_GL;
+                }
+                else if (pResult.bFGMissed)
+                {
+                    new_Down = 1;
+                    new_yard_to_go = dist_from_GL > 10.0 ? 10.0 : dist_from_GL;
+                    new_yard_to_go = original_Yardline;
+                }
+                //These plays normally switch possession
+                else if (PE == Play_Enum.FREE_KICK || PE == Play_Enum.KICKOFF_NORMAL || PE == Play_Enum.KICKOFF_ONSIDES || PE == Play_Enum.PUNT)
+                {
+                    bSwitchPossession = true;
+                }
+                else
+                {
+                    //Add in possible spot foul
+                    if (pResult.Penalty != null) 
+                    {
+                        Tuple<bool, double> t = Penalty_Helper.isHalfTheDistance(pResult.Penalty.Yards, dist_from_GL);
+                        if (t.Item1)
+                            new_Added_Penalty_Yards = t.Item2;
+                        else
+                            new_Added_Penalty_Yards = pResult.Penalty.Yards;
+                    }
+
+
+                    if ((pResult.Yards_Gained + new_Added_Penalty_Yards) >= Yards_to_Go)
+                    {
+                        new_Down = 1;
+                        new_yard_to_go = 10;
+                    }
+                    else if (Down == 4)
+                    {
+                        new_Down = 1;
+                        new_yard_to_go = 10;
+                        bSwitchPossession = true;
+                    }
+                    else
+                    {
+                        new_Down = Down + 1;
+                        new_yard_to_go = Yards_to_Go - pResult.Yards_Gained + new_Added_Penalty_Yards;
+                    }
+
+                    if (pResult.bFumble_Lost || pResult.bInterception)
+                    {
+                        new_Down = 1;
+                        new_yard_to_go = 10;
+                        bSwitchPossession = true;
+                    }
+
+                    pResult.end_of_play_yardline +=  (pResult.Yards_Gained + new_Added_Penalty_Yards)  * Game_Engine_Helper.HorizontalAdj(bLefttoRight);
+                }
+
+            }
+            else  //the play won't count because of penalty
+            {
+                bAccum = false;
+            }
+
+
+
+
+
+
+
+            }
+
+        }
 }

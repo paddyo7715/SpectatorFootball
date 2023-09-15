@@ -416,6 +416,7 @@ namespace SpectatorFootball.GameNS
         }
 
         //This is for penalties on the offense that includes kickoff returns
+   /*
         public bool AcceptOff_Penalty(Play_Enum pe, Play_Result pResult, double Line_of_Scrimmage, bool bLefttoRight, bool bLastPlayGame, bool bLasPlayHalf)
         {
             bool r = false;
@@ -478,6 +479,7 @@ namespace SpectatorFootball.GameNS
 
             return r;
         }
+*/
 
         //This is for penalties on the defense that includes kickoff defense, but for punts, the returning
         //team is considered the defense

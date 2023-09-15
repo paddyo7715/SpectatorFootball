@@ -67,11 +67,7 @@ namespace SpectatorFootball.GameNS
         public double Yards_Gained = 0;
         public double Yards_Returned = 0;
         public double Kick_Out_of_Bounds_Yardline = 0;
-
-        //the bSwitchPossession property is ONLY set on a play that has a fumble lost or interception.
-        //For kickoffs, punts or free kicks, it is already known that after the play that the teams
-        //switch possession, so don't set this to true on those plays except when there is a fumble lost
-//        public bool bSwitchPossession = false;
+        public double end_of_play_yardline = 0;
 
         public List<Game_Player_Stats> Play_Player_Stats = new List<Game_Player_Stats>();
         public List<Game_Player_Penalty_Stats> Play_Player_Penalty_Stats = new List<Game_Player_Penalty_Stats>();

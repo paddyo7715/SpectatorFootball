@@ -1,5 +1,6 @@
 ﻿using SpectatorFootball.Enum;
 using SpectatorFootball.Models;
+using SpectatorFootball.PenaltiesNS;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,7 +54,7 @@ namespace SpectatorFootball.GameNS
         {
             string r = "";
 
-            switch(Down)
+            switch (Down)
             {
                 case 1:
                     r = "1st";
@@ -156,6 +157,7 @@ namespace SpectatorFootball.GameNS
             }
             return f;
         }
+
 
     }
 }

@@ -1048,8 +1048,8 @@ namespace SpectatorFootball.GameNS
             //Set if touchdown
             r.bTouchDown = Game_Engine_Helper.isTouchdown(bLefttoRight, r.Returner.Current_YardLine);
 
-//            if (r.Returner != null)
-//                r.Line_of_Scrimmage = r.Returner.Current_YardLine;
+            if (r.Returner != null)
+                r.end_of_play_yardline = r.Returner.Current_YardLine;
 
             //Set the Play stats
             double yards_gamed = Game_Engine_Helper.getYardsGained(bLefttoRight, retuner_catches_ball_yl, r.Returner.Current_YardLine);
