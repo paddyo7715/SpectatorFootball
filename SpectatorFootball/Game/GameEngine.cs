@@ -859,9 +859,9 @@ namespace SpectatorFootball.GameNS
         //indicate the final result of the play taking into account the penalty
         //The next yardline will be set to 0 in the case the next play is a kickoff, freekick or extra point,
         //That is because the executeplay method sets the yardline for that.  
-        public Play_Result setPlayOutCome(bool isBallCarryingTeam,
+        public Play_Result setPlayOutCome(bool penOnBallCarryingTeam,
             Play_Enum PE, long Down, double Yards_to_Go, Play_Result pResult,
-            double original_Yardline, bool bLefttoRgiht, Play_Result pResulte)
+            double original_Yardline, bool bLefttoRgiht)
         {
             Play_Result r = pResult;
             bool bSwitchPossession = false;
@@ -874,12 +874,12 @@ namespace SpectatorFootball.GameNS
             double dist_from_GL;
             double new_Added_Penalty_Yards = 0;
 
-            //The play will count
-            if (pResult.bPenalty_Rejected || pResult.Penalty.bSpot_Foul)
+            //If there was not a penalty or it was rejected or if it was a spot fould on the team without the ball
+            if (pResult.Penalty == null || pResult.bPenalty_Rejected || (pResult.Penalty.bSpot_Foul && !penOnBallCarryingTeam))
             {
                 bAccum = true;
 
-                dist_from_GL = Game_Engine_Helper.calcDistanceFromGL(pResult.end_of_play_yardline, bLefttoRgiht);
+                dist_from_GL = Game_Engine_Helper.calcDistanceFromOpponentGL(pResult.end_of_play_yardline, bLefttoRgiht);
 
                 if (pResult.bTouchDown)
                 {
@@ -913,7 +913,7 @@ namespace SpectatorFootball.GameNS
                 else
                 {
                     //Add in possible spot foul
-                    if (pResult.Penalty != null) 
+                    if (pResult.Penalty != null)
                     {
                         Tuple<bool, double> t = Penalty_Helper.isHalfTheDistance(pResult.Penalty.Yards, dist_from_GL);
                         if (t.Item1)
@@ -939,7 +939,6 @@ namespace SpectatorFootball.GameNS
                         new_Down = Down + 1;
                         new_yard_to_go = Yards_to_Go - pResult.Yards_Gained + new_Added_Penalty_Yards;
                     }
-
                     if (pResult.bFumble_Lost || pResult.bInterception)
                     {
                         new_Down = 1;
@@ -947,13 +946,53 @@ namespace SpectatorFootball.GameNS
                         bSwitchPossession = true;
                     }
 
-                    pResult.end_of_play_yardline +=  (pResult.Yards_Gained + new_Added_Penalty_Yards)  * Game_Engine_Helper.HorizontalAdj(bLefttoRight);
+                    pResult.end_of_play_yardline += (pResult.Yards_Gained + new_Added_Penalty_Yards) * Game_Engine_Helper.HorizontalAdj(bLefttoRgiht);
                 }
 
             }
-            else  //the play won't count because of penalty
+            else if (penOnBallCarryingTeam)
+            {
+                if (PE == Play_Enum.KICKOFF_NORMAL)
+                {
+                    if (!pResult.Penalty.bSpot_Foul)
+                        throw new Exception("Error in setPlayOutCome, non spot penalty!");
+
+                    double ret_dist = Game_Engine_Helper.calcDistanceFromMyGL(pResult.end_of_play_yardline, bLefttoRgiht);
+                    double penPlayer_dist = Game_Engine_Helper.calcDistanceFromMyGL(pResult.Penalized_Player.Current_YardLine, bLefttoRgiht);
+                    //now decide the less of these two and then apply the penalty to that one.
+                }
+            }
+            else if (!penOnBallCarryingTeam)
             {
                 bAccum = false;
+                dist_from_GL = Game_Engine_Helper.calcDistanceFromOpponentGL(original_Yardline, bLefttoRgiht);
+                Tuple<bool, double> t = Penalty_Helper.isHalfTheDistance(pResult.Penalty.Yards, dist_from_GL);
+                if (t.Item1)
+                    new_Added_Penalty_Yards = t.Item2;
+                else
+                    new_Added_Penalty_Yards = pResult.Penalty.Yards;
+
+                pResult.end_of_play_yardline += new_Added_Penalty_Yards * Game_Engine_Helper.HorizontalAdj(bLefttoRgiht);
+
+                if (pResult.Penalty.bAuto_FirstDown || new_Added_Penalty_Yards >= Yards_to_Go)
+                {
+                    new_Down = 1;
+                    new_yard_to_go = 10;
+                }
+                else if (Down == 4)
+                {
+                    new_Down = 1;
+                    new_yard_to_go = 10;
+                    bSwitchPossession = true;
+                }
+                else
+                {
+                    new_Down = Down + 1;
+                    new_yard_to_go = Yards_to_Go - new_Added_Penalty_Yards;
+                }
+            }
+
+
             }
 
 
@@ -962,7 +1001,7 @@ namespace SpectatorFootball.GameNS
 
 
 
-            }
+        }
 
         }
 }

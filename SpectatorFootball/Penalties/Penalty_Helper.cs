@@ -23,7 +23,7 @@ namespace SpectatorFootball.PenaltiesNS
                 bAuto_FirstDown = false,
                 bSpot_Foul = false,
                 Description = "False Start"
-            }); ;
+            }); 
             r.Last().Penalty_Play_Types = new List<Play_Enum>()
             {
                 Play_Enum.RUN,
@@ -41,7 +41,7 @@ namespace SpectatorFootball.PenaltiesNS
             r.Last().Player_Action_States = new List<Player_Action_State>()
             { 
                 Player_Action_State.PAS,Player_Action_State.PC,Player_Action_State.BRN,
-                Player_Action_State.PB, Player_Action_State.RB, Player_Action_State.PB,
+                Player_Action_State.PB, Player_Action_State.RB, 
                 Player_Action_State.PDT, Player_Action_State.FGT
             };
 
@@ -54,7 +54,7 @@ namespace SpectatorFootball.PenaltiesNS
                 bAuto_FirstDown = false,
                 bSpot_Foul = false,
                 Description = "Holding"
-            }); ;
+            }); 
             r.Last().Penalty_Play_Types = new List<Play_Enum>()
             {
                 Play_Enum.PASS,

@@ -289,7 +289,7 @@ namespace SpectatorFootball.GameNS
             return r;
         }
 
-        public static double calcDistanceFromGL(double line_of_scrimage, bool blefttoright)
+        public static double calcDistanceFromOpponentGL(double line_of_scrimage, bool blefttoright)
         {
             double r = 0;
 
@@ -300,6 +300,22 @@ namespace SpectatorFootball.GameNS
 
             return r;
         }
+
+        public static double calcDistanceFromMyGL(double line_of_scrimage, bool blefttoright)
+        {
+            double r = 0;
+
+            blefttoright = !blefttoright;
+
+            if (blefttoright)
+                r = 100 - line_of_scrimage;
+            else
+                r = line_of_scrimage;
+
+            return r;
+        }
+
+
 
         public static bool isBallTeamPenalty(Play_Result pResult)
         {
