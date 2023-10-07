@@ -140,7 +140,7 @@
           <ScalarProperty Name="Game_ID" ColumnName="Game_ID" />
           <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
           <ScalarProperty Name="Franchise_ID" ColumnName="Franchise_ID" />
-          <ScalarProperty Name="Penalty_ID" ColumnName="Penalty_ID" />
+          <ScalarProperty Name="Penalty_Code" ColumnName="Penalty_Code" />
           <ScalarProperty Name="Penalty_Yards" ColumnName="Penalty_Yards" />
         </MappingFragment>
       </EntityTypeMapping>

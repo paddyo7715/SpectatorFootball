@@ -10,6 +10,14 @@ namespace SpectatorFootball.GameNS
 {
     public class Play_Result
     {
+        //for kickoff, onside kics, free kick and punt this is the return team.  For all other plays,
+        //it is the team that starts off with the ball.
+        public long BallPossessing_Team_Id;
+
+        public long NonbBallPossessing_Team_Id;
+
+        public long at;
+        public long ht;
 
         //Result
         public bool bKick_Out_of_Endzone = false;
@@ -21,6 +29,8 @@ namespace SpectatorFootball.GameNS
         public bool bRunOutofBounds = false;
         public bool bSafety = false;
         public bool bInterception = false;
+        public bool bPassAttemted = false;
+        public bool bPassComplete = false;
         public bool bFGMade = false;
         public bool bFGMissed = false;
         public bool bXPMade = false;
@@ -40,6 +50,7 @@ namespace SpectatorFootball.GameNS
         public bool bPenalty_Rejected = false;
         public bool bPenatly_on_Away_Team = false;
 
+//Used for determining who might have commit a penalty and stats
         public Game_Player Passer = null;
         public Game_Player Kicker = null;
         public Game_Player Punter = null;
@@ -58,7 +69,9 @@ namespace SpectatorFootball.GameNS
         public List<Game_Player> Punt_Defenders = new List<Game_Player>();
         public List<Game_Player> FieldGaol_Kicking_Team = new List<Game_Player>();
         public List<Game_Player> Field_Goal_Defenders = new List<Game_Player>();
+//===================================================
 
+//Used for Initial stats and players before penalty
         public Game_Player Tackler = null;
         public Game_Player Fumble_Recoverer = null;
         public Game_Player Forced_Fumble_Tackler = null;
@@ -67,8 +80,75 @@ namespace SpectatorFootball.GameNS
         public double Yards_Returned = 0;
         public double Kick_Out_of_Bounds_Yardline = 0;
         public double end_of_play_yardline = 0;
+//=============================================
+
+//Final play results after accounting for possible penalties
+        public bool bFinal_SwitchPossession = false;
+        public bool bPlay_Stands = false;
+        public int Final_Down = 0;
+        public double Final_yard_to_go = 0;
+        public double Final_end_of_Play_Yardline = 0;
+        public bool bFinal_NextPlayXP = false;
+        public bool bFinal_NextPlayKickoff = false;
+        public bool bFinal_NextPlayFreeKick = false;
+        public double Final_Added_Penalty_Yards = 0;
+        public bool bFinal_PenaltyIgnored = false;
+
+        public bool bAwayTD = false;
+        public bool bAwayFG = false;
+        public bool bAwayXP = false;
+        public bool bAwaySafetyFor = false;
+        public bool bAwayXP1 = false;
+        public bool bAwayXP2 = false;
+        public bool bAwayXP3 = false;
+
+        public bool bHomeTD = false;
+        public bool bHomeFG = false;
+        public bool bHomeXP = false;
+        public bool bHomeSafetyFor = false;
+        public bool bHomeXP1 = false;
+        public bool bHomeXP2 = false;
+        public bool bHomeXP3 = false;
+
+        public long AwayFirstDowns = 0;
+        public long Away3rdDownAtt = 0;
+        public long Away3rdDownMade = 0;
+        public long Away4thDownAtt = 0;
+        public long Away4thDownMade = 0;
+        public long AwayXP1Attempt = 0;
+        public long AwayXP1Made = 0;
+        public long AwayXP2Attempt = 0;
+        public long AwayXP2Made = 0;
+        public long AwayXP3Attempt = 0;
+        public long AwayXP3Made = 0;
+        public double AwayPassingYards = 0.0;
+        public double AwayRushingYards = 0.0;
+        public long AwayTurnoers = 0;
+        public long AwaySacks = 0;
+        public long AwayTOP = 0;
+
+        public long HomeFirstDowns = 0;
+        public long Home3rdDownAtt = 0;
+        public long Home3rdDownMade = 0;
+        public long Home4thDownAtt = 0;
+        public long Home4thDownMade = 0;
+        public long HomeXP1Attempt = 0;
+        public long HomeXP1Made = 0;
+        public long HomeXP2Attempt = 0;
+        public long HomeXP2Made = 0;
+        public long HomeXP3Attempt = 0;
+        public long HomeXP3Made = 0;
+        public double HomePassingYards = 0.0;
+        public double HomeRushingYards = 0.0;
+        public long HomeTurnoers = 0;
+        public long HomeSacks = 0;
+        public long HomeTOP = 0;
+        //==============================================
+
 
         public List<Game_Player_Stats> Play_Player_Stats = new List<Game_Player_Stats>();
         public List<Game_Player_Penalty_Stats> Play_Player_Penalty_Stats = new List<Game_Player_Penalty_Stats>();
+
+
     }
 }

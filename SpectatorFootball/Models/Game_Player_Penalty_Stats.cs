@@ -18,7 +18,7 @@ namespace SpectatorFootball.Models
         public long Game_ID { get; set; }
         public long Player_ID { get; set; }
         public long Franchise_ID { get; set; }
-        public long Penalty_ID { get; set; }
+        public string Penalty_Code { get; set; }
         public long Penalty_Yards { get; set; }
     
         public virtual Franchise Franchise { get; set; }

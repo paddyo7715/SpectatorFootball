@@ -13,10 +13,16 @@ namespace SpectatorFootball.GameNS
     {
         private static ILog logger = LogManager.GetLogger("RollingFile");
 
-        public static Play_Result Execute(Game_Ball gBall, List<Game_Player> Kickoff_Players, List<Game_Player> Return_Players, bool bLefttoRight, bool FreeKic, bool bSim, bool bLast_Play)
+        public static Play_Result Execute(long Possessing_Team_Id, long at, long ht, Game_Ball gBall, List<Game_Player> Kickoff_Players, List<Game_Player> Return_Players, bool bLefttoRight, bool FreeKic, bool bSim, bool bLast_Play)
         {
             Play_Result r = new Play_Result();
             List<string> Play_Stages = new List<string>();
+
+            r.BallPossessing_Team_Id =  Possessing_Team_Id == at ? ht : at;
+            r.NonbBallPossessing_Team_Id = Possessing_Team_Id == at ? at : ht;
+            r.at = at;
+            r.ht = ht;
+
             r.Tackler = null;
             r.Kicker = Kickoff_Players[app_Constants.KICKER_INDEX];
             //Get the kicker - kicker and returner must be slot 5 in the formation

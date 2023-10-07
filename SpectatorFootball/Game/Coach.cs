@@ -486,7 +486,7 @@ namespace SpectatorFootball.GameNS
         public bool AcceptDef_Penalty(Play_Enum pe, Play_Result pResult,double yards_to_go, double Line_of_Scrimmage, bool bLefttoRight, bool bLastPlayGame, bool bLasPlayHalf)
         {
             bool r = false;
-            double dist_from_GL = Game_Engine_Helper.calcDistanceFromGL(Line_of_Scrimmage, bLefttoRight);
+            double dist_from_GL = Game_Engine_Helper.calcDistanceFromOpponentGL(Line_of_Scrimmage, bLefttoRight);
             Tuple<long, long> t = setOurThereScore();
             ourScore = t.Item1;
             theirScore = t.Item2;
@@ -597,7 +597,7 @@ namespace SpectatorFootball.GameNS
         public bool AcceptOff_Penalty(Play_Enum pe, Play_Result pResult, double yards_to_go, double Line_of_Scrimmage, bool bLefttoRight, bool bLastPlayGame, bool bLasPlayHalf)
         {
             bool r = false;
-            double dist_from_GL = Game_Engine_Helper.calcDistanceFromGL(Line_of_Scrimmage, bLefttoRight);
+            double dist_from_GL = Game_Engine_Helper.calcDistanceFromOpponentGL(Line_of_Scrimmage, bLefttoRight);
             Tuple<long, long> t = setOurThereScore();
             ourScore = t.Item1;
             theirScore = t.Item2;

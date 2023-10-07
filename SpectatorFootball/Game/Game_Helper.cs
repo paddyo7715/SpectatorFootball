@@ -79,7 +79,7 @@ namespace SpectatorFootball.GameNS
 
                 string toGo = "";
 
-                double dist_from_GL = Game_Engine_Helper.calcDistanceFromGL(BallYardline, bLefttoRight);
+                double dist_from_GL = Game_Engine_Helper.calcDistanceFromOpponentGL(BallYardline, bLefttoRight);
                 if (dist_from_GL <= YardstoGo)
                     toGo = "Goal";
                 else

@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="022a7f159d814857ab9239b108d397ed" Name="Diagram1">
+      <Diagram DiagramId="03a3bf2318b1400a8c287f7aff8dfd18" Name="Diagram1">
         <EntityTypeShape EntityType="LeagueModel.Award" Width="1.5" PointX="8.75" PointY="43.625" IsExpanded="true" />
         <EntityTypeShape EntityType="LeagueModel.Conference" Width="1.5" PointX="3" PointY="41.5" IsExpanded="true" />
         <EntityTypeShape EntityType="LeagueModel.DBVersion" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
@@ -36,7 +36,7 @@
         <AssociationConnector Association="LeagueModel.FK_Draft_1_0" ManuallyRouted="false" />
         <AssociationConnector Association="LeagueModel.FK_Draft_2_0" ManuallyRouted="false" />
         <AssociationConnector Association="LeagueModel.FK_Free_Agency_2_0" ManuallyRouted="false" />
-        <AssociationConnector Association="LeagueModel.FK_Game_Player_Penalty_Stats_3_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Game_Player_Penalty_Stats_0_0" ManuallyRouted="false" />
         <AssociationConnector Association="LeagueModel.FK_Game_Player_Stats_2_0" ManuallyRouted="false" />
         <AssociationConnector Association="LeagueModel.FK_Injuries_0_0" ManuallyRouted="false" />
         <AssociationConnector Association="LeagueModel.FK_Players_By_Team_2_0" ManuallyRouted="false" />
@@ -49,7 +49,7 @@
         <AssociationConnector Association="LeagueModel.FK_Game_Player_Penalty_Stats_2_0" ManuallyRouted="false" />
         <AssociationConnector Association="LeagueModel.FK_Game_Player_Stats_1_0" ManuallyRouted="false" />
         <AssociationConnector Association="LeagueModel.FK_Game_Scoring_Summary_0_0" ManuallyRouted="false" />
-        <AssociationConnector Association="LeagueModel.FK_Game_Player_Penalty_Stats_0_0" ManuallyRouted="false" />
+        <AssociationConnector Association="LeagueModel.FK_Game_Player_Penalty_Stats_1_0" ManuallyRouted="false" />
         <AssociationConnector Association="LeagueModel.FK_Game_Player_Stats_0_0" ManuallyRouted="false" />
         <AssociationConnector Association="LeagueModel.FK_Hall_of_Fame_0_0" ManuallyRouted="false" />
         <AssociationConnector Association="LeagueModel.FK_Hall_of_Fame_1_0" ManuallyRouted="false" />

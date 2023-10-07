@@ -137,7 +137,7 @@
           <Property Name="Game_ID" Type="integer" Nullable="false" />
           <Property Name="Player_ID" Type="integer" Nullable="false" />
           <Property Name="Franchise_ID" Type="integer" Nullable="false" />
-          <Property Name="Penalty_ID" Type="integer" Nullable="false" />
+          <Property Name="Penalty_Code" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
           <Property Name="Penalty_Yards" Type="integer" Nullable="false" />
         </EntityType>
         <EntityType Name="Game_Player_Stats">
@@ -619,6 +619,18 @@ warning 6035: The relationship 'FK_Game_1_0' has columns that are not part of th
 warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
         <Association Name="FK_Game_2_0" />-->
         <Association Name="FK_Game_Player_Penalty_Stats_0_0">
+          <End Role="Franchise" Type="Self.Franchise" Multiplicity="1" />
+          <End Role="Game_Player_Penalty_Stats" Type="Self.Game_Player_Penalty_Stats" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Franchise">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Game_Player_Penalty_Stats">
+              <PropertyRef Name="Franchise_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Game_Player_Penalty_Stats_1_0">
           <End Role="Players" Type="Self.Players" Multiplicity="1" />
           <End Role="Game_Player_Penalty_Stats" Type="Self.Game_Player_Penalty_Stats" Multiplicity="*" />
           <ReferentialConstraint>
@@ -639,18 +651,6 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
             </Principal>
             <Dependent Role="Game_Player_Penalty_Stats">
               <PropertyRef Name="Game_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Game_Player_Penalty_Stats_3_0">
-          <End Role="Franchise" Type="Self.Franchise" Multiplicity="1" />
-          <End Role="Game_Player_Penalty_Stats" Type="Self.Game_Player_Penalty_Stats" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Franchise">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Game_Player_Penalty_Stats">
-              <PropertyRef Name="Franchise_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1064,15 +1064,15 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
             <End Role="Game" EntitySet="Game" />
           </AssociationSet>
           <AssociationSet Name="FK_Game_Player_Penalty_Stats_0_0" Association="Self.FK_Game_Player_Penalty_Stats_0_0">
+            <End Role="Franchise" EntitySet="Franchise" />
+            <End Role="Game_Player_Penalty_Stats" EntitySet="Game_Player_Penalty_Stats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Game_Player_Penalty_Stats_1_0" Association="Self.FK_Game_Player_Penalty_Stats_1_0">
             <End Role="Players" EntitySet="Players" />
             <End Role="Game_Player_Penalty_Stats" EntitySet="Game_Player_Penalty_Stats" />
           </AssociationSet>
           <AssociationSet Name="FK_Game_Player_Penalty_Stats_2_0" Association="Self.FK_Game_Player_Penalty_Stats_2_0">
             <End Role="Game" EntitySet="Game" />
-            <End Role="Game_Player_Penalty_Stats" EntitySet="Game_Player_Penalty_Stats" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Game_Player_Penalty_Stats_3_0" Association="Self.FK_Game_Player_Penalty_Stats_3_0">
-            <End Role="Franchise" EntitySet="Franchise" />
             <End Role="Game_Player_Penalty_Stats" EntitySet="Game_Player_Penalty_Stats" />
           </AssociationSet>
           <AssociationSet Name="FK_Game_Player_Stats_0_0" Association="Self.FK_Game_Player_Stats_0_0">
@@ -1257,7 +1257,7 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
           <Property Name="Name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Drafts" Relationship="Self.FK_Draft_1_0" FromRole="Franchise" ToRole="Draft" />
           <NavigationProperty Name="Free_Agency" Relationship="Self.FK_Free_Agency_2_0" FromRole="Franchise" ToRole="Free_Agency" />
-          <NavigationProperty Name="Game_Player_Penalty_Stats" Relationship="Self.FK_Game_Player_Penalty_Stats_3_0" FromRole="Franchise" ToRole="Game_Player_Penalty_Stats" />
+          <NavigationProperty Name="Game_Player_Penalty_Stats" Relationship="Self.FK_Game_Player_Penalty_Stats_0_0" FromRole="Franchise" ToRole="Game_Player_Penalty_Stats" />
           <NavigationProperty Name="Game_Player_Stats" Relationship="Self.FK_Game_Player_Stats_2_0" FromRole="Franchise" ToRole="Game_Player_Stats" />
           <NavigationProperty Name="Injuries" Relationship="Self.FK_Injuries_0_0" FromRole="Franchise" ToRole="Injuries" />
           <NavigationProperty Name="Players_By_Team" Relationship="Self.FK_Players_By_Team_2_0" FromRole="Franchise" ToRole="Players_By_Team" />
@@ -1351,11 +1351,11 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
           <Property Name="Game_ID" Type="Int64" Nullable="false" />
           <Property Name="Player_ID" Type="Int64" Nullable="false" />
           <Property Name="Franchise_ID" Type="Int64" Nullable="false" />
-          <Property Name="Penalty_ID" Type="Int64" Nullable="false" />
+          <Property Name="Penalty_Code" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Penalty_Yards" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="Franchise" Relationship="Self.FK_Game_Player_Penalty_Stats_3_0" FromRole="Game_Player_Penalty_Stats" ToRole="Franchise" />
+          <NavigationProperty Name="Franchise" Relationship="Self.FK_Game_Player_Penalty_Stats_0_0" FromRole="Game_Player_Penalty_Stats" ToRole="Franchise" />
           <NavigationProperty Name="Game" Relationship="Self.FK_Game_Player_Penalty_Stats_2_0" FromRole="Game_Player_Penalty_Stats" ToRole="Game" />
-          <NavigationProperty Name="Player" Relationship="Self.FK_Game_Player_Penalty_Stats_0_0" FromRole="Game_Player_Penalty_Stats" ToRole="Players" />
+          <NavigationProperty Name="Player" Relationship="Self.FK_Game_Player_Penalty_Stats_1_0" FromRole="Game_Player_Penalty_Stats" ToRole="Players" />
         </EntityType>
         <EntityType Name="Game_Player_Stats">
           <Key>
@@ -1645,7 +1645,7 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
           <Property Name="Draft_Grade" Type="Double" Nullable="false" />
           <NavigationProperty Name="Drafts" Relationship="Self.FK_Draft_2_0" FromRole="Players" ToRole="Draft" />
           <NavigationProperty Name="Free_Agency" Relationship="Self.FK_Free_Agency_1_0" FromRole="Players" ToRole="Free_Agency" />
-          <NavigationProperty Name="Game_Player_Penalty_Stats" Relationship="Self.FK_Game_Player_Penalty_Stats_0_0" FromRole="Players" ToRole="Game_Player_Penalty_Stats" />
+          <NavigationProperty Name="Game_Player_Penalty_Stats" Relationship="Self.FK_Game_Player_Penalty_Stats_1_0" FromRole="Players" ToRole="Game_Player_Penalty_Stats" />
           <NavigationProperty Name="Game_Player_Stats" Relationship="Self.FK_Game_Player_Stats_0_0" FromRole="Players" ToRole="Game_Player_Stats" />
           <NavigationProperty Name="Hall_of_Fame" Relationship="Self.FK_Hall_of_Fame_1_0" FromRole="Players" ToRole="Hall_of_Fame" />
           <NavigationProperty Name="Injuries" Relationship="Self.FK_Injuries_1_0" FromRole="Players" ToRole="Injuries" />
@@ -1862,7 +1862,7 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Game_Player_Penalty_Stats_3_0">
+        <Association Name="FK_Game_Player_Penalty_Stats_0_0">
           <End Role="Franchise" Type="Self.Franchise" Multiplicity="1" />
           <End Role="Game_Player_Penalty_Stats" Type="Self.Game_Player_Penalty_Stats" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2018,7 +2018,7 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Game_Player_Penalty_Stats_0_0">
+        <Association Name="FK_Game_Player_Penalty_Stats_1_0">
           <End Role="Players" Type="Self.Player" Multiplicity="1" />
           <End Role="Game_Player_Penalty_Stats" Type="Self.Game_Player_Penalty_Stats" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2323,7 +2323,7 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
             <End Role="Franchise" EntitySet="Franchises" />
             <End Role="Free_Agency" EntitySet="Free_Agency" />
           </AssociationSet>
-          <AssociationSet Name="FK_Game_Player_Penalty_Stats_3_0" Association="Self.FK_Game_Player_Penalty_Stats_3_0">
+          <AssociationSet Name="FK_Game_Player_Penalty_Stats_0_0" Association="Self.FK_Game_Player_Penalty_Stats_0_0">
             <End Role="Franchise" EntitySet="Franchises" />
             <End Role="Game_Player_Penalty_Stats" EntitySet="Game_Player_Penalty_Stats" />
           </AssociationSet>
@@ -2375,7 +2375,7 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
             <End Role="Game" EntitySet="Games" />
             <End Role="Game_Scoring_Summary" EntitySet="Game_Scoring_Summary" />
           </AssociationSet>
-          <AssociationSet Name="FK_Game_Player_Penalty_Stats_0_0" Association="Self.FK_Game_Player_Penalty_Stats_0_0">
+          <AssociationSet Name="FK_Game_Player_Penalty_Stats_1_0" Association="Self.FK_Game_Player_Penalty_Stats_1_0">
             <End Role="Players" EntitySet="Players" />
             <End Role="Game_Player_Penalty_Stats" EntitySet="Game_Player_Penalty_Stats" />
           </AssociationSet>
@@ -2605,7 +2605,7 @@ warning 6035: The relationship 'FK_Game_2_0' has columns that are not part of th
                 <ScalarProperty Name="Game_ID" ColumnName="Game_ID" />
                 <ScalarProperty Name="Player_ID" ColumnName="Player_ID" />
                 <ScalarProperty Name="Franchise_ID" ColumnName="Franchise_ID" />
-                <ScalarProperty Name="Penalty_ID" ColumnName="Penalty_ID" />
+                <ScalarProperty Name="Penalty_Code" ColumnName="Penalty_Code" />
                 <ScalarProperty Name="Penalty_Yards" ColumnName="Penalty_Yards" />
               </MappingFragment>
             </EntityTypeMapping>
