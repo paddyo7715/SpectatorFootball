@@ -92,7 +92,6 @@ namespace SpectatorFootball.GameNS
         public bool bFinal_NextPlayKickoff = false;
         public bool bFinal_NextPlayFreeKick = false;
         public double Final_Added_Penalty_Yards = 0;
-        public bool bFinal_PenaltyIgnored = false;
 
         public bool bAwayTD = false;
         public bool bAwayFG = false;
@@ -144,7 +143,6 @@ namespace SpectatorFootball.GameNS
         public long HomeSacks = 0;
         public long HomeTOP = 0;
         //==============================================
-
 
         public List<Game_Player_Stats> Play_Player_Stats = new List<Game_Player_Stats>();
         public List<Game_Player_Penalty_Stats> Play_Player_Penalty_Stats = new List<Game_Player_Penalty_Stats>();

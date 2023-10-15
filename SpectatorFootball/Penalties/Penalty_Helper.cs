@@ -246,7 +246,7 @@ namespace SpectatorFootball.PenaltiesNS
             {
                 code = Penalty_Codes.KIB,
                 Yards = 15,
-                bDeclinable = false,
+                bDeclinable = true,
                 bAuto_FirstDown = false,
                 bSpot_Foul = true,
                 Description = "Illegal Block"
@@ -266,7 +266,7 @@ namespace SpectatorFootball.PenaltiesNS
             {
                 code = Penalty_Codes.PIB,
                 Yards = 15,
-                bDeclinable = false,
+                bDeclinable = true,
                 bAuto_FirstDown = false,
                 bSpot_Foul = true,
                 Description = "Illegal Block"
@@ -288,7 +288,7 @@ namespace SpectatorFootball.PenaltiesNS
             {
                 code = Penalty_Codes.UC,
                 Yards = 15,
-                bDeclinable = false,
+                bDeclinable = true,
                 bAuto_FirstDown = true,
                 bSpot_Foul = true,               
                 Description = "Unsportsmen Like Conduct"
@@ -340,7 +340,7 @@ namespace SpectatorFootball.PenaltiesNS
             {
                 code = Penalty_Codes.UR,
                 Yards = 15,
-                bDeclinable = false,
+                bDeclinable = true,
                 bAuto_FirstDown = true,
                 bSpot_Foul = true,
                 Description = "Unnecessary Roughness"
@@ -392,7 +392,7 @@ namespace SpectatorFootball.PenaltiesNS
             {
                 code = Penalty_Codes.FM,
                 Yards = 15,
-                bDeclinable = false,
+                bDeclinable = true,
                 bAuto_FirstDown = true,
                 bSpot_Foul = true, 
                 Description = "Facemask"
