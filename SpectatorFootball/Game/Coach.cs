@@ -415,73 +415,7 @@ namespace SpectatorFootball.GameNS
             return r;
         }
 
-        //This is for penalties on the offense that includes kickoff returns
-   /*
-        public bool AcceptOff_Penalty(Play_Enum pe, Play_Result pResult, double Line_of_Scrimmage, bool bLefttoRight, bool bLastPlayGame, bool bLasPlayHalf)
-        {
-            bool r = false;
-            double dist_from_GL = Game_Engine_Helper.calcDistanceFromGL(Line_of_Scrimmage, bLefttoRight);
-
-            Penalty penalty = pResult.Penalty;
-
-            if (!penalty.bDeclinable)
-                throw new Exception("Non decidable penalty passed to AcceptDef_Penalty");
-
-            if (pResult.bFumble_Lost || pResult.bInterception)
-                r = false;
-            if (pResult.bTouchDown)
-                r = true;
-            else if (pResult.bSafety)
-                r = false;
-            else if (pResult.bXPMissed)
-                r = false;
-            else if (pResult.bXPMade)
-                r = true;
-            else if (pResult.bFGMade)
-                r = true;
-//            else if (pResult.bFGMade)
-//                r = !AcceptPenaltyFGMade(dist_from_GL);
-            else if (pResult.bOnePntAfterTDMissed)
-                r = false;
-            else if (pResult.bOnePntAfterTDMade)
-                r = true;
-            else if (pResult.bTwoPntAfterTDMissed)
-                r = false;
-            else if (pResult.bTwoPntAfterTDMade)
-                r = true;
-            else if (pResult.bThreePntAfterTDMissed)
-                r = false;
-            else if (pResult.bThreePntAfterTDMade)
-                r = true;
-            else if (this.ourScore <= this.theirScore && (bLastPlayGame || bLasPlayHalf))
-                r = true;
-            else  //all other play situations
-            {
-                int Horizonal_Adj = Game_Engine_Helper.HorizontalAdj(bLefttoRight);
-
-                switch (pe)
-                {
-                    case Play_Enum.FREE_KICK:
-                    case Play_Enum.KICKOFF_NORMAL:
-                    case Play_Enum.KICKOFF_ONSIDES:
-                    case Play_Enum.PUNT:
-                        r = true;
-                        break;
-                    case Play_Enum.RUN:
-                    case Play_Enum.PASS:  //stopped here
-                        r = false;
-                        if (pResult.Yards_Gained > 0)
-                            r = true;
-                        break;
-                }
-            }
-
-
-            return r;
-        }
-*/
-
-        //This is for penalties on the defense that includes kickoff defense, but for punts, the returning
+         //This is for penalties on the defense that includes kickoff defense, but for punts, the returning
         //team is considered the defense
         public bool AcceptDef_Penalty(Play_Enum pe, Play_Result pResult,double yards_to_go, double Line_of_Scrimmage, bool bLefttoRight, bool bLastPlayGame, bool bLasPlayHalf)
         {
@@ -554,7 +488,9 @@ namespace SpectatorFootball.GameNS
                 switch (pe)
                 {
                     case Play_Enum.PUNT:
-                        if (pResult.bCoffinCornerMade)
+                        if (pResult.Penalty.bSpot_Foul)
+                            r = true;
+                        else if (pResult.bCoffinCornerMade)
                             r = false;
                         else
                             r = true;
@@ -642,7 +578,7 @@ namespace SpectatorFootball.GameNS
                 switch (pe)
                 {
                     case Play_Enum.PUNT:  //different
-                        if (pResult.bCoffinCornerMade)
+                        if (pResult.bCoffinCornerMade || pResult.Penalty.bSpot_Foul)
                             r = true;
                         else
                         {

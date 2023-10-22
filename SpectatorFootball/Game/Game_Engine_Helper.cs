@@ -9,6 +9,18 @@ namespace SpectatorFootball.GameNS
 {
     public class Game_Engine_Helper
     {
+        public static long CoinToss(int rnum, long ht_id, long at_id)
+        {
+            long r = 0;
+
+            if (rnum <= 50)
+                r = ht_id;
+            else
+                r = at_id;
+
+            return r;
+        }
+
         public static int HorizontalAdj(bool b)
         {
             int r = 1;
@@ -282,7 +294,7 @@ namespace SpectatorFootball.GameNS
             }
             else
             {
-                if (end_yrdline >= 0.0)
+                if (end_yrdline <= 0.0)
                     r = true;
             }
 
@@ -314,9 +326,6 @@ namespace SpectatorFootball.GameNS
 
             return r;
         }
-
-
-
         public static bool isBallTeamPenalty(Play_Result pResult)
         {
             bool r = false;

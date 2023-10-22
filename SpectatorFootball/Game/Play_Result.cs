@@ -49,6 +49,7 @@ namespace SpectatorFootball.GameNS
         public Penalty Penalty = null;
         public bool bPenalty_Rejected = false;
         public bool bPenatly_on_Away_Team = false;
+        public bool bIgnorePenalty = false;
 
 //Used for determining who might have commit a penalty and stats
         public Game_Player Passer = null;
