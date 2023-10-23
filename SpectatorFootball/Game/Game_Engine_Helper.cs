@@ -349,5 +349,67 @@ namespace SpectatorFootball.GameNS
             return r;
         }
 
+        public static bool isGameEnd(long Playoffs, long Quarter, long Time, long Away_Score, long Home_Score)
+        {
+            bool r = false;
+
+            if (Quarter == 4 && Time == 0 && Away_Score != Home_Score)
+                r = true;
+            else if (Quarter > 4 && Away_Score != Home_Score)
+                r = true;
+            else if (Playoffs == 0 && Quarter == 5 && Time == 0)
+                r = true;
+            else
+                r = false;
+
+            return r;
+        }
+        public static double getScrimmageLine(double y, bool bLefttoRight)
+        {
+            double yardLine = y;
+
+            if (!bLefttoRight)
+                yardLine = 100 - y;
+
+            return yardLine;
+        }
+        public static Play_Result setScoringBool(Play_Result r, bool bTurnover)
+        {
+            Play_Result pResult = r;
+
+            if (pResult.BallPossessing_Team_Id == pResult.at)
+            {
+                if (bTurnover)
+                    pResult.bHomeTD = pResult.bTouchDown;
+                else
+                    pResult.bAwayTD = pResult.bTouchDown;
+
+                pResult.bAwayFG = pResult.bFGMade;
+                pResult.bAwayXP = pResult.bXPMade;
+                pResult.bAwayXP1 = pResult.bOnePntAfterTDMade;
+                pResult.bAwayXP2 = pResult.bTwoPntAfterTDMade;
+                pResult.bAwayXP3 = pResult.bThreePntAfterTDMade;
+
+                pResult.bHomeSafetyFor = pResult.bSafety;
+            }
+            else
+            {
+                if (bTurnover)
+                    pResult.bAwayTD = pResult.bTouchDown;
+                else
+                    pResult.bHomeTD = pResult.bTouchDown;
+
+                pResult.bHomeFG = pResult.bFGMade;
+                pResult.bHomeXP = pResult.bXPMade;
+                pResult.bHomeXP1 = pResult.bOnePntAfterTDMade;
+                pResult.bHomeXP2 = pResult.bTwoPntAfterTDMade;
+                pResult.bHomeXP3 = pResult.bThreePntAfterTDMade;
+
+                pResult.bAwaySafetyFor = pResult.bSafety;
+            }
+
+            return r;
+        }
+
     }
 }

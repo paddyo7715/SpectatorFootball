@@ -372,6 +372,326 @@ namespace SpectatorFootball.unitTests.GameEngineTEST
             bool b = Game_Engine_Helper.isBallTeamPenalty(pResult);
             Assert.IsTrue(!b);
         }
+        [TestCategory("Game_Engine_Helper")]
+        [TestMethod]
+        public void isGameEnd__Regualr_3rdQuarterTied_false()
+        {
+            Assert.IsTrue(Game_Engine_Helper.isGameEnd(0, 3, 100, 10, 10) == false);
+        }
+        [TestCategory("Game_Engine_Helper")]
+        [TestMethod]
+        public void isGameEnd_Regualr_EndofGameTied_False()
+        {
+            Assert.IsTrue(Game_Engine_Helper.isGameEnd(0 ,4, 0, 10, 10) == false);
+        }
+        [TestCategory("Game_Engine_Helper")]
+        [TestMethod]
+        public void isGameEnd_Playeroffs_EndofGame_true()
+        {
+            Assert.IsTrue(Game_Engine_Helper.isGameEnd(1, 4, 0, 10, 20) == true);
+        }
+        [TestCategory("Game_Engine_Helper")]
+        [TestMethod]
+        public void isGameEnd_playoffs_OertimeTied_true()
+        {
+            Assert.IsTrue(Game_Engine_Helper.isGameEnd(1, 6, 100, 20, 20) == false);
+        }
+        [TestCategory("Game_Engine_Helper")]
+        [TestMethod]
+        public void isGameEnd_playoffs_FirstOertimeTied_true()
+        {
+            Assert.IsTrue(Game_Engine_Helper.isGameEnd(1, 5, 0, 20, 20) == false);
+        }
+        [TestCategory("Game_Engine_Helper")]
+        [TestMethod]
+        public void isGameEnd_Regualr_FirstOertimeTied_true()
+        {
+            Assert.IsTrue(Game_Engine_Helper.isGameEnd(0, 5, 0, 20, 20) == true);
+        }
+        [TestCategory("Game_Engine_Helper")]
+        [TestMethod]
+        public void getScrimmageLine_left_20()
+        {
+            Assert.IsTrue(Game_Engine_Helper.getScrimmageLine(20.0, true) == 20.0);
+        }
+        [TestCategory("Game_Engine_Helper")]
+        [TestMethod]
+        public void getScrimmageLine_right_20()
+        {
+            Assert.IsTrue(Game_Engine_Helper.getScrimmageLine(20.0, false) == 80.0);
+        }
+        [TestCategory("Game_Engine_Helper")]
+        [TestMethod]
+        public void setScoringBool_home_team_TD()
+        {
+            Play_Result pResult = new Play_Result()
+            { BallPossessing_Team_Id = 11, ht = 11, at = 22, bTouchDown = true };
 
+            pResult = Game_Engine_Helper.setScoringBool(pResult, false);
+
+            Assert.IsTrue(pResult.bHomeTD == true && pResult.bHomeFG == false && pResult.bHomeXP == false &&
+                pResult.bHomeXP1 == false && pResult.bHomeXP2 == false && pResult.bHomeXP3 == false &&
+                pResult.bHomeSafetyFor == false &&
+                pResult.bAwayTD == false && pResult.bAwayFG == false && pResult.bAwayXP == false &&
+                pResult.bAwayXP1 == false && pResult.bAwayXP2 == false && pResult.bAwayXP3 == false &&
+                pResult.bAwaySafetyFor == false);
+        }
+
+        [TestCategory("Game_Engine_Helper")]
+        [TestMethod]
+        public void setScoringBool_away_team_TD()
+        {
+            Play_Result pResult = new Play_Result()
+            { BallPossessing_Team_Id = 22, ht = 11, at = 22, bTouchDown = true };
+
+            pResult = Game_Engine_Helper.setScoringBool(pResult, false);
+
+            Assert.IsTrue(pResult.bHomeTD == false && pResult.bHomeFG == false && pResult.bHomeXP == false &&
+                pResult.bHomeXP1 == false && pResult.bHomeXP2 == false && pResult.bHomeXP3 == false &&
+                pResult.bHomeSafetyFor == false &&
+                pResult.bAwayTD == true && pResult.bAwayFG == false && pResult.bAwayXP == false &&
+                pResult.bAwayXP1 == false && pResult.bAwayXP2 == false && pResult.bAwayXP3 == false &&
+                pResult.bAwaySafetyFor == false);
+        }
+
+
+        [TestCategory("Game_Engine_Helper")]
+        [TestMethod]
+        public void setScoringBool_home_team_TD_Turnover()
+        {
+            Play_Result pResult = new Play_Result()
+            { BallPossessing_Team_Id = 22, ht = 11, at = 22, bTouchDown = true};
+
+            pResult = Game_Engine_Helper.setScoringBool(pResult, true);
+
+            Assert.IsTrue(pResult.bHomeTD == true && pResult.bHomeFG == false && pResult.bHomeXP == false &&
+                pResult.bHomeXP1 == false && pResult.bHomeXP2 == false && pResult.bHomeXP3 == false &&
+                pResult.bHomeSafetyFor == false &&
+                pResult.bAwayTD == false && pResult.bAwayFG == false && pResult.bAwayXP == false &&
+                pResult.bAwayXP1 == false && pResult.bAwayXP2 == false && pResult.bAwayXP3 == false &&
+                pResult.bAwaySafetyFor == false);
+        }
+
+        [TestCategory("Game_Engine_Helper")]
+        [TestMethod]
+        public void setScoringBool_away_team_TD_Turnover()
+        {
+            Play_Result pResult = new Play_Result()
+            { BallPossessing_Team_Id = 11, ht = 11, at = 22, bTouchDown = true };
+
+            pResult = Game_Engine_Helper.setScoringBool(pResult, true);
+
+            Assert.IsTrue(pResult.bHomeTD == false && pResult.bHomeFG == false && pResult.bHomeXP == false &&
+                pResult.bHomeXP1 == false && pResult.bHomeXP2 == false && pResult.bHomeXP3 == false &&
+                pResult.bHomeSafetyFor == false &&
+                pResult.bAwayTD == true && pResult.bAwayFG == false && pResult.bAwayXP == false &&
+                pResult.bAwayXP1 == false && pResult.bAwayXP2 == false && pResult.bAwayXP3 == false &&
+                pResult.bAwaySafetyFor == false);
+        }
+
+        [TestCategory("Game_Engine_Helper")]
+        [TestMethod]
+        public void setScoringBool_Home_team_FG()
+        {
+            Play_Result pResult = new Play_Result()
+            { BallPossessing_Team_Id = 11, ht = 11, at = 22, bFGMade = true };
+
+            pResult = Game_Engine_Helper.setScoringBool(pResult, false);
+
+            Assert.IsTrue(pResult.bHomeTD == false && pResult.bHomeFG == true && pResult.bHomeXP == false &&
+                pResult.bHomeXP1 == false && pResult.bHomeXP2 == false && pResult.bHomeXP3 == false &&
+                pResult.bHomeSafetyFor == false &&
+                pResult.bAwayTD == false && pResult.bAwayFG == false && pResult.bAwayXP == false &&
+                pResult.bAwayXP1 == false && pResult.bAwayXP2 == false && pResult.bAwayXP3 == false &&
+                pResult.bAwaySafetyFor == false);
+        }
+
+        [TestCategory("Game_Engine_Helper")]
+        [TestMethod]
+        public void setScoringBool_Away_team_FG()
+        {
+            Play_Result pResult = new Play_Result()
+            { BallPossessing_Team_Id = 22, ht = 11, at = 22, bFGMade = true };
+
+            pResult = Game_Engine_Helper.setScoringBool(pResult, false);
+
+            Assert.IsTrue(pResult.bHomeTD == false && pResult.bHomeFG == false && pResult.bHomeXP == false &&
+                pResult.bHomeXP1 == false && pResult.bHomeXP2 == false && pResult.bHomeXP3 == false &&
+                pResult.bHomeSafetyFor == false &&
+                pResult.bAwayTD == false && pResult.bAwayFG == true && pResult.bAwayXP == false &&
+                pResult.bAwayXP1 == false && pResult.bAwayXP2 == false && pResult.bAwayXP3 == false &&
+                pResult.bAwaySafetyFor == false);
+        }
+
+        [TestCategory("Game_Engine_Helper")]
+        [TestMethod]
+        public void setScoringBool_Home_team_XP()
+        {
+            Play_Result pResult = new Play_Result()
+            { BallPossessing_Team_Id = 11, ht = 11, at = 22, bXPMade = true };
+
+            pResult = Game_Engine_Helper.setScoringBool(pResult, false);
+
+            Assert.IsTrue(pResult.bHomeTD == false && pResult.bHomeFG == false && pResult.bHomeXP == true &&
+                pResult.bHomeXP1 == false && pResult.bHomeXP2 == false && pResult.bHomeXP3 == false &&
+                pResult.bHomeSafetyFor == false &&
+                pResult.bAwayTD == false && pResult.bAwayFG == false && pResult.bAwayXP == false &&
+                pResult.bAwayXP1 == false && pResult.bAwayXP2 == false && pResult.bAwayXP3 == false &&
+                pResult.bAwaySafetyFor == false);
+        }
+
+        [TestCategory("Game_Engine_Helper")]
+        [TestMethod]
+        public void setScoringBool_Away_team_XP()
+        {
+            Play_Result pResult = new Play_Result()
+            { BallPossessing_Team_Id = 22, ht = 11, at = 22, bXPMade = true };
+
+            pResult = Game_Engine_Helper.setScoringBool(pResult, false);
+
+            Assert.IsTrue(pResult.bHomeTD == false && pResult.bHomeFG == false && pResult.bHomeXP == false &&
+                pResult.bHomeXP1 == false && pResult.bHomeXP2 == false && pResult.bHomeXP3 == false &&
+                pResult.bHomeSafetyFor == false &&
+                pResult.bAwayTD == false && pResult.bAwayFG == false && pResult.bAwayXP == true &&
+                pResult.bAwayXP1 == false && pResult.bAwayXP2 == false && pResult.bAwayXP3 == false &&
+                pResult.bAwaySafetyFor == false);
+        }
+
+
+        [TestCategory("Game_Engine_Helper")]
+        [TestMethod]
+        public void setScoringBool_Home_team_XP1()
+        {
+            Play_Result pResult = new Play_Result()
+            { BallPossessing_Team_Id = 11, ht = 11, at = 22, bOnePntAfterTDMade = true };
+
+            pResult = Game_Engine_Helper.setScoringBool(pResult, false);
+
+            Assert.IsTrue(pResult.bHomeTD == false && pResult.bHomeFG == false && pResult.bHomeXP == false &&
+                pResult.bHomeXP1 == true && pResult.bHomeXP2 == false && pResult.bHomeXP3 == false &&
+                pResult.bHomeSafetyFor == false &&
+                pResult.bAwayTD == false && pResult.bAwayFG == false && pResult.bAwayXP == false &&
+                pResult.bAwayXP1 == false && pResult.bAwayXP2 == false && pResult.bAwayXP3 == false &&
+                pResult.bAwaySafetyFor == false);
+        }
+
+        [TestCategory("Game_Engine_Helper")]
+        [TestMethod]
+        public void setScoringBool_Away_team_XP1()
+        {
+            Play_Result pResult = new Play_Result()
+            { BallPossessing_Team_Id = 22, ht = 11, at = 22, bOnePntAfterTDMade = true };
+
+            pResult = Game_Engine_Helper.setScoringBool(pResult, false);
+
+            Assert.IsTrue(pResult.bHomeTD == false && pResult.bHomeFG == false && pResult.bHomeXP == false &&
+                pResult.bHomeXP1 == false && pResult.bHomeXP2 == false && pResult.bHomeXP3 == false &&
+                pResult.bHomeSafetyFor == false &&
+                pResult.bAwayTD == false && pResult.bAwayFG == false && pResult.bAwayXP == false &&
+                pResult.bAwayXP1 == true && pResult.bAwayXP2 == false && pResult.bAwayXP3 == false &&
+                pResult.bAwaySafetyFor == false);
+        }
+
+        [TestCategory("Game_Engine_Helper")]
+        [TestMethod]
+        public void setScoringBool_Home_team_XP2()
+        {
+            Play_Result pResult = new Play_Result()
+            { BallPossessing_Team_Id = 11, ht = 11, at = 22, bTwoPntAfterTDMade = true };
+
+            pResult = Game_Engine_Helper.setScoringBool(pResult, false);
+
+            Assert.IsTrue(pResult.bHomeTD == false && pResult.bHomeFG == false && pResult.bHomeXP == false &&
+                pResult.bHomeXP1 == false && pResult.bHomeXP2 == true && pResult.bHomeXP3 == false &&
+                pResult.bHomeSafetyFor == false &&
+                pResult.bAwayTD == false && pResult.bAwayFG == false && pResult.bAwayXP == false &&
+                pResult.bAwayXP1 == false && pResult.bAwayXP2 == false && pResult.bAwayXP3 == false &&
+                pResult.bAwaySafetyFor == false);
+        }
+
+        [TestCategory("Game_Engine_Helper")]
+        [TestMethod]
+        public void setScoringBool_Away_team_XP2()
+        {
+            Play_Result pResult = new Play_Result()
+            { BallPossessing_Team_Id = 22, ht = 11, at = 22, bTwoPntAfterTDMade = true };
+
+            pResult = Game_Engine_Helper.setScoringBool(pResult, false);
+
+            Assert.IsTrue(pResult.bHomeTD == false && pResult.bHomeFG == false && pResult.bHomeXP == false &&
+                pResult.bHomeXP1 == false && pResult.bHomeXP2 == false && pResult.bHomeXP3 == false &&
+                pResult.bHomeSafetyFor == false &&
+                pResult.bAwayTD == false && pResult.bAwayFG == false && pResult.bAwayXP == false &&
+                pResult.bAwayXP1 == false && pResult.bAwayXP2 == true && pResult.bAwayXP3 == false &&
+                pResult.bAwaySafetyFor == false);
+        }
+
+        [TestCategory("Game_Engine_Helper")]
+        [TestMethod]
+        public void setScoringBool_Home_team_XP3()
+        {
+            Play_Result pResult = new Play_Result()
+            { BallPossessing_Team_Id = 11, ht = 11, at = 22, bThreePntAfterTDMade = true };
+
+            pResult = Game_Engine_Helper.setScoringBool(pResult, false);
+
+            Assert.IsTrue(pResult.bHomeTD == false && pResult.bHomeFG == false && pResult.bHomeXP == false &&
+                pResult.bHomeXP1 == false && pResult.bHomeXP2 == false && pResult.bHomeXP3 == true &&
+                pResult.bHomeSafetyFor == false &&
+                pResult.bAwayTD == false && pResult.bAwayFG == false && pResult.bAwayXP == false &&
+                pResult.bAwayXP1 == false && pResult.bAwayXP2 == false && pResult.bAwayXP3 == false &&
+                pResult.bAwaySafetyFor == false);
+        }
+
+        [TestCategory("Game_Engine_Helper")]
+        [TestMethod]
+        public void setScoringBool_Away_team_XP3()
+        {
+            Play_Result pResult = new Play_Result()
+            { BallPossessing_Team_Id = 22, ht = 11, at = 22, bThreePntAfterTDMade = true };
+
+            pResult = Game_Engine_Helper.setScoringBool(pResult, false);
+
+            Assert.IsTrue(pResult.bHomeTD == false && pResult.bHomeFG == false && pResult.bHomeXP == false &&
+                pResult.bHomeXP1 == false && pResult.bHomeXP2 == false && pResult.bHomeXP3 == false &&
+                pResult.bHomeSafetyFor == false &&
+                pResult.bAwayTD == false && pResult.bAwayFG == false && pResult.bAwayXP == false &&
+                pResult.bAwayXP1 == false && pResult.bAwayXP2 == false && pResult.bAwayXP3 == true &&
+                pResult.bAwaySafetyFor == false);
+        }
+
+        [TestCategory("Game_Engine_Helper")]
+        [TestMethod]
+        public void setScoringBool_Home_team_Safety()
+        {
+            Play_Result pResult = new Play_Result()
+            { BallPossessing_Team_Id = 22, ht = 11, at = 22, bSafety = true };
+
+            pResult = Game_Engine_Helper.setScoringBool(pResult, false);
+
+            Assert.IsTrue(pResult.bHomeTD == false && pResult.bHomeFG == false && pResult.bHomeXP == false &&
+                pResult.bHomeXP1 == false && pResult.bHomeXP2 == false && pResult.bHomeXP3 == false &&
+                pResult.bHomeSafetyFor == true &&
+                pResult.bAwayTD == false && pResult.bAwayFG == false && pResult.bAwayXP == false &&
+                pResult.bAwayXP1 == false && pResult.bAwayXP2 == false && pResult.bAwayXP3 == false &&
+                pResult.bAwaySafetyFor == false);
+        }
+
+        [TestCategory("Game_Engine_Helper")]
+        [TestMethod]
+        public void setScoringBool_Away_team_Safety()
+        {
+            Play_Result pResult = new Play_Result()
+            { BallPossessing_Team_Id = 11, ht = 11, at = 22, bSafety = true };
+
+            pResult = Game_Engine_Helper.setScoringBool(pResult, false);
+
+            Assert.IsTrue(pResult.bHomeTD == false && pResult.bHomeFG == false && pResult.bHomeXP == false &&
+                pResult.bHomeXP1 == false && pResult.bHomeXP2 == false && pResult.bHomeXP3 == false &&
+                pResult.bHomeSafetyFor == false &&
+                pResult.bAwayTD == false && pResult.bAwayFG == false && pResult.bAwayXP == false &&
+                pResult.bAwayXP1 == false && pResult.bAwayXP2 == false && pResult.bAwayXP3 == false &&
+                pResult.bAwaySafetyFor == true);
+        }
     }
 }

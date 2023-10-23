@@ -242,12 +242,12 @@ namespace SpectatorFootball.GameNS
             }
             else if (bKickoff)             //if this play is a kickoff then set where to kickoff from
             {
-                g_Line_of_Scrimmage = getScrimmageLine(KickoffYardline, bLefttoRight);
+                g_Line_of_Scrimmage = Game_Engine_Helper.getScrimmageLine(KickoffYardline, bLefttoRight);
                 g_Vertical_Ball_Placement = 50.0;
             }
             else if (bFreeKick)
             {
-                g_Line_of_Scrimmage = getScrimmageLine(KickoffYardline, bLefttoRight);
+                g_Line_of_Scrimmage = Game_Engine_Helper.getScrimmageLine(KickoffYardline, bLefttoRight);
                 g_Vertical_Ball_Placement = 50.0;
             }
 
@@ -419,9 +419,6 @@ namespace SpectatorFootball.GameNS
                     bFreeKick = p_result.bFinal_NextPlayFreeKick;
                     bExtraPoint = p_result.bFinal_NextPlayXP;
 
-
-
-
                     if (p_result.bFinal_SwitchPossession)
                         bswitchPossession = true;
 
@@ -462,7 +459,7 @@ namespace SpectatorFootball.GameNS
 
             }
 
-            GameEnd();
+            g_bGameOver = Game_Engine_Helper.isGameEnd((long) g.Playoff_Game, (long) g.Quarter, (long) g.Time, (long) g.Away_Score, (long) g.Home_Score);
 
             r.Offensive_Players = Offensive_Players;
             r.Defensive_Players = Defensive_Players;
@@ -491,26 +488,6 @@ namespace SpectatorFootball.GameNS
             r.bGameOver = g_bGameOver;
 
             return r;
-        }
-        private void GameEnd()
-        {
-
-            //If we are in overtime and one team has a higher score then the game is over
-            if (g.Quarter > 4 && g.Away_Score != g.Home_Score)
-                g_bGameOver = true;
-            else if (g.Quarter == 4 && g.Time <= 0 && g.Away_Score != g.Home_Score)
-                g_bGameOver = true;
-            else
-                g_bGameOver = false;
-        }
-        private double getScrimmageLine(double y, bool bLefttoRight)
-        {
-            double yardLine = y;
-
-            if (!bLefttoRight)
-                yardLine = YardsInField - y;
-
-            return yardLine;
         }
         private string getForfeit_Message(Teams_by_Season at, Teams_by_Season ht, long away_score, long home_score)
         {
@@ -887,13 +864,13 @@ namespace SpectatorFootball.GameNS
                         r.bFinal_SwitchPossession = true;
                         r.Final_Down = 1;
                         r.Final_yard_to_go = 10;
-                        r.Final_end_of_Play_Yardline = getScrimmageLine(TouchBack_Yardline, bLefttoRgiht);
+                        r.Final_end_of_Play_Yardline = Game_Engine_Helper.getScrimmageLine(TouchBack_Yardline, bLefttoRgiht);
                     }
                     else if (r.Penalty == null || r.bPenalty_Rejected || (r.Penalty.bSpot_Foul && !penOnBallCarryingTeam))
                     {
                         r.bPlay_Stands = true;
                         r.bFinal_SwitchPossession = true;
-                        setScoringBool(r, bTurnover);
+                        r = Game_Engine_Helper.setScoringBool(r, bTurnover);
                         dist_from_GL = Game_Engine_Helper.calcDistanceFromOpponentGL(r.end_of_play_yardline, bLefttoRgiht);
 
                         if (r.Penalty != null && !r.bPenalty_Rejected)
@@ -952,7 +929,7 @@ namespace SpectatorFootball.GameNS
                     if (r.Penalty == null || r.bPenalty_Rejected)
                     {
                         r.bPlay_Stands = true;
-                        setScoringBool(r, bTurnover);
+                        r = Game_Engine_Helper.setScoringBool(r, bTurnover);
                         UpdateScore(r, g);
                         if (r.bFGMade)
                         {
@@ -990,7 +967,7 @@ namespace SpectatorFootball.GameNS
                     if (r.Penalty == null || r.bPenalty_Rejected)
                     {
                         r.bPlay_Stands = true;
-                        setScoringBool(r, bTurnover);
+                        r = Game_Engine_Helper.setScoringBool(r, bTurnover);
                         UpdateScore(r, g);
 
                         r.bFinal_NextPlayKickoff = true; 
@@ -1115,7 +1092,7 @@ namespace SpectatorFootball.GameNS
                     {
                         r.bPlay_Stands = true;
                         r.bFinal_SwitchPossession = true;
-                        setScoringBool(r, bTurnover);
+                        r = Game_Engine_Helper.setScoringBool(r, bTurnover);
                         dist_from_GL = Game_Engine_Helper.calcDistanceFromOpponentGL(r.end_of_play_yardline, bLefttoRgiht);
 
                         if (r.Penalty != null && !r.bPenalty_Rejected)
@@ -1172,7 +1149,7 @@ namespace SpectatorFootball.GameNS
                             r.bFinal_SwitchPossession = true;
                             setTurnoverGameStat(r);
                             if (r.bTouchback)
-                                r.Final_end_of_Play_Yardline = getScrimmageLine(TouchBack_Yardline, !bLefttoRgiht);
+                                r.Final_end_of_Play_Yardline = Game_Engine_Helper.getScrimmageLine(TouchBack_Yardline, !bLefttoRgiht);
                         }
 
                     }
@@ -1191,39 +1168,7 @@ namespace SpectatorFootball.GameNS
             return r;
             }
 
-            public void setScoringBool(Play_Result pResult, bool bTurnover)
-            {
-                if (pResult.BallPossessing_Team_Id == pResult.at)
-                {
-                    if (bTurnover)
-                        pResult.bHomeTD = pResult.bTouchDown;
-                    else
-                        pResult.bAwayTD = pResult.bTouchDown;
 
-                    pResult.bAwayFG = pResult.bFGMade;
-                    pResult.bAwayXP = pResult.bXPMade;
-                    pResult.bAwayXP1 = pResult.bOnePntAfterTDMade;
-                    pResult.bAwayXP2 = pResult.bTwoPntAfterTDMade;
-                    pResult.bAwayXP3 = pResult.bThreePntAfterTDMade;
-
-                    pResult.bHomeSafetyFor = pResult.bSafety;
-                }
-                else
-                {
-                    if (bTurnover)
-                        pResult.bAwayTD = pResult.bTouchDown;
-                    else
-                        pResult.bHomeTD = pResult.bTouchDown;
-
-                    pResult.bHomeFG = pResult.bFGMade;
-                    pResult.bHomeXP = pResult.bXPMade;
-                    pResult.bHomeXP1 = pResult.bOnePntAfterTDMade;
-                    pResult.bHomeXP2 = pResult.bTwoPntAfterTDMade;
-                    pResult.bHomeXP3 = pResult.bThreePntAfterTDMade;
-
-                    pResult.bAwaySafetyFor = pResult.bSafety;
-                }
-            }
 
             public void UpdateScore(Play_Result pResult, Game g)
             {
