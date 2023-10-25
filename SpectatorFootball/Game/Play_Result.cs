@@ -51,7 +51,13 @@ namespace SpectatorFootball.GameNS
         public bool bPenatly_on_Away_Team = false;
         public bool bIgnorePenalty = false;
 
-//Used for determining who might have commit a penalty and stats
+        //Used for Possible Special Penalties on the Defense
+        public Game_Player Defender_Close_to_QB = null;  //Possible Roughing the Passer
+        public Game_Player Defender_Close_to_Kicker = null;  //Possible Roughing or Running into the kicker
+        public Game_Player Defender_Close_to_Receiver = null;  //Possible Defensive Pass Interference
+        public double Defender_Close_to_Receiver_Yardline; //Possible Defensive Pass Interference
+
+        //Used for determining who might have commit a penalty and stats
         public Game_Player Passer = null;
         public Game_Player Kicker = null;
         public Game_Player Punter = null;

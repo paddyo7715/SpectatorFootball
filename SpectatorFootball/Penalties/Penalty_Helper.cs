@@ -14,16 +14,50 @@ namespace SpectatorFootball.PenaltiesNS
         {
             List<Penalty> r = new List<Penalty>();
 
+//Pre-Snap Penalties
+//==================================================
+            //Delay of Game
+            r.Add(new Penalty()
+            {
+                code = Penalty_Codes.DG,
+                Yards = 5,
+                bDeclinable = false,
+                bAuto_FirstDown = false,
+                bSpot_Foul = false,
+                Play_Timing = Play_Snap_Timing.BEFORE_SNAP,
+                Frequency_Rating = 200,
+                Description = "Delay of Game"
+            }); 
+            r.Last().Penalty_Play_Types = new List<Play_Enum>()
+            {
+                Play_Enum.RUN,
+                Play_Enum.PASS,
+                Play_Enum.SCRIM_PLAY_1XP_PASS,
+                Play_Enum.SCRIM_PLAY_1XP_RUN,
+                Play_Enum.SCRIM_PLAY_2XP_PASS,
+                Play_Enum.SCRIM_PLAY_2XP_RUN,
+                Play_Enum.SCRIM_PLAY_3XP_PASS,
+                Play_Enum.SCRIM_PLAY_3XP_RUN,
+                Play_Enum.PUNT,
+                Play_Enum.FIELD_GOAL,
+                Play_Enum.EXTRA_POINT
+            };
+            r.Last().Player_Action_States = new List<Player_Action_State>()
+            {
+                Player_Action_State.PAS
+            };
             //False Start
             r.Add(new Penalty()
             {
                 code = Penalty_Codes.FS,
                 Yards = 5,
-                bDeclinable = true,
+                bDeclinable = false,
                 bAuto_FirstDown = false,
                 bSpot_Foul = false,
+                Play_Timing = Play_Snap_Timing.BEFORE_SNAP,
+                Frequency_Rating = 800,
                 Description = "False Start"
-            }); 
+            });  
             r.Last().Penalty_Play_Types = new List<Play_Enum>()
             {
                 Play_Enum.RUN,
@@ -44,38 +78,17 @@ namespace SpectatorFootball.PenaltiesNS
                 Player_Action_State.PB, Player_Action_State.RB, 
                 Player_Action_State.PDT, Player_Action_State.FGT
             };
-
-            //Offensive Holidng
+            //Illegal Formation
             r.Add(new Penalty()
             {
-                code = Penalty_Codes.OH,
-                Yards = 10,
-                bDeclinable = true,
-                bAuto_FirstDown = false,
-                bSpot_Foul = false,
-                Description = "Holding"
-            }); 
-            r.Last().Penalty_Play_Types = new List<Play_Enum>()
-            {
-                Play_Enum.PASS,
-                Play_Enum.SCRIM_PLAY_1XP_PASS,
-                Play_Enum.SCRIM_PLAY_2XP_PASS,
-                Play_Enum.SCRIM_PLAY_3XP_PASS
-            };
-            r.Last().Player_Action_States = new List<Player_Action_State>()
-            {
-                Player_Action_State.PB
-            };
-
-            //Offensive offsides
-            r.Add(new Penalty()
-            {
-                code = Penalty_Codes.OO,
+                code = Penalty_Codes.IF,
                 Yards = 5,
-                bDeclinable = true,
+                bDeclinable = false,
                 bAuto_FirstDown = false,
                 bSpot_Foul = false,
-                Description = "Offsides"
+                Play_Timing = Play_Snap_Timing.BEFORE_SNAP,
+                Frequency_Rating = 100,
+                Description = "Illegal Formation"
             }); ;
             r.Last().Penalty_Play_Types = new List<Play_Enum>()
             {
@@ -93,30 +106,98 @@ namespace SpectatorFootball.PenaltiesNS
             };
             r.Last().Player_Action_States = new List<Player_Action_State>()
             {
-                Player_Action_State.PB,Player_Action_State.RB,Player_Action_State.PDT, Player_Action_State.FGT
+                Player_Action_State.PB,Player_Action_State.RB, Player_Action_State.PC
             };
-
-            //Illegal Formation
+            //Illegal Motion
             r.Add(new Penalty()
             {
                 code = Penalty_Codes.IF,
-
                 Yards = 5,
-                bDeclinable = true,
+                bDeclinable = false,
                 bAuto_FirstDown = false,
                 bSpot_Foul = false,
-                Description = "Illegal Formation"
+                Play_Timing = Play_Snap_Timing.BEFORE_SNAP,
+                Frequency_Rating = 20,
+                Description = "Illegal Motion"
             }); ;
             r.Last().Penalty_Play_Types = new List<Play_Enum>()
             {
                 Play_Enum.RUN,
-                Play_Enum.PASS
+                Play_Enum.PASS,
+                Play_Enum.SCRIM_PLAY_1XP_PASS,
+                Play_Enum.SCRIM_PLAY_1XP_RUN,
+                Play_Enum.SCRIM_PLAY_2XP_PASS,
+                Play_Enum.SCRIM_PLAY_2XP_RUN,
+                Play_Enum.SCRIM_PLAY_3XP_PASS,
+                Play_Enum.SCRIM_PLAY_3XP_RUN
             };
             r.Last().Player_Action_States = new List<Player_Action_State>()
             {
-                Player_Action_State.PB,Player_Action_State.RB, Player_Action_State.PC
+                Player_Action_State.PC
             };
-            //Defense offsides
+            //Neutral zone infraction 
+            r.Add(new Penalty()
+            {
+                code = Penalty_Codes.NZ,
+                Yards = 5,
+                bDeclinable = false,
+                bAuto_FirstDown = false,
+                bSpot_Foul = false,
+                Play_Timing = Play_Snap_Timing.BEFORE_SNAP,
+                Frequency_Rating = 300,
+                Description = "Neutral zone infraction"
+            });
+            r.Last().Penalty_Play_Types = new List<Play_Enum>()
+            {
+                Play_Enum.RUN,
+                Play_Enum.PASS,
+                Play_Enum.SCRIM_PLAY_1XP_PASS,
+                Play_Enum.SCRIM_PLAY_1XP_RUN,
+                Play_Enum.SCRIM_PLAY_2XP_PASS,
+                Play_Enum.SCRIM_PLAY_2XP_RUN,
+                Play_Enum.SCRIM_PLAY_3XP_PASS,
+                Play_Enum.SCRIM_PLAY_3XP_RUN,
+                Play_Enum.PUNT,
+                Play_Enum.FIELD_GOAL,
+                Play_Enum.EXTRA_POINT
+            };
+            r.Last().Player_Action_States = new List<Player_Action_State>()
+            {
+                Player_Action_State.PAR,Player_Action_State.PDT, Player_Action_State.FGD,
+                Player_Action_State.RD
+            };
+            //Encroachment 
+            r.Add(new Penalty()
+            {
+                code = Penalty_Codes.EN,
+                Yards = 5,
+                bDeclinable = false,
+                bAuto_FirstDown = false,
+                bSpot_Foul = false,
+                Play_Timing = Play_Snap_Timing.BEFORE_SNAP,
+                Frequency_Rating = 150,
+                Description = "Encroachment"
+            });
+            r.Last().Penalty_Play_Types = new List<Play_Enum>()
+            {
+                Play_Enum.RUN,
+                Play_Enum.PASS,
+                Play_Enum.SCRIM_PLAY_1XP_PASS,
+                Play_Enum.SCRIM_PLAY_1XP_RUN,
+                Play_Enum.SCRIM_PLAY_2XP_PASS,
+                Play_Enum.SCRIM_PLAY_2XP_RUN,
+                Play_Enum.SCRIM_PLAY_3XP_PASS,
+                Play_Enum.SCRIM_PLAY_3XP_RUN,
+                Play_Enum.PUNT,
+                Play_Enum.FIELD_GOAL,
+                Play_Enum.EXTRA_POINT
+            };
+            r.Last().Player_Action_States = new List<Player_Action_State>()
+            {
+                Player_Action_State.PAR,Player_Action_State.PDT, Player_Action_State.FGD,
+                Player_Action_State.RD
+            };
+            //Offsides (Defense)
             r.Add(new Penalty()
             {
                 code = Penalty_Codes.DO,
@@ -124,7 +205,9 @@ namespace SpectatorFootball.PenaltiesNS
                 bDeclinable = true,
                 bAuto_FirstDown = false,
                 bSpot_Foul = false,
-                Description = "Defensive Offsides"
+                Play_Timing = Play_Snap_Timing.BEFORE_SNAP,
+                Frequency_Rating = 700,
+                Description = "Offsides"
             });
             r.Last().Penalty_Play_Types = new List<Play_Enum>()
             {
@@ -145,7 +228,10 @@ namespace SpectatorFootball.PenaltiesNS
                 Player_Action_State.PAR, Player_Action_State.RD,  Player_Action_State.FGD, Player_Action_State.PRT
             };
 
-            //Defense Holding
+            //During Play Penalties
+            //==================================================
+
+            //Holding (Defense)
             r.Add(new Penalty()
             {
                 code = Penalty_Codes.DH,
@@ -153,6 +239,8 @@ namespace SpectatorFootball.PenaltiesNS
                 bDeclinable = true,
                 bAuto_FirstDown = true,
                 bSpot_Foul = false,
+                Play_Timing = Play_Snap_Timing.DURING_PLAY,
+                Frequency_Rating = 400,
                 Description = "Defensive Holding"
             });
             r.Last().Penalty_Play_Types = new List<Play_Enum>()
@@ -175,6 +263,8 @@ namespace SpectatorFootball.PenaltiesNS
                 bDeclinable = true,
                 bAuto_FirstDown = true,
                 bSpot_Foul = false,
+                Play_Timing = Play_Snap_Timing.DURING_PLAY,
+                Frequency_Rating = 80,
                 Description = "Illegal Contact"
             });
             r.Last().Penalty_Play_Types = new List<Play_Enum>()
@@ -197,6 +287,8 @@ namespace SpectatorFootball.PenaltiesNS
                 bDeclinable = true,
                 bAuto_FirstDown = true,
                 bSpot_Foul = false,
+                Play_Timing = Play_Snap_Timing.DURING_PLAY,
+                Frequency_Rating = 50,
                 Description = "Illegal Use of Hands"
             });
             r.Last().Penalty_Play_Types = new List<Play_Enum>()
@@ -223,6 +315,8 @@ namespace SpectatorFootball.PenaltiesNS
                 bDeclinable = true,
                 bAuto_FirstDown = false,
                 bSpot_Foul = false,
+                Play_Timing = Play_Snap_Timing.DURING_PLAY,
+                Frequency_Rating = 20,
                 Description = "Illegal Use of Hands"
             });
             r.Last().Penalty_Play_Types = new List<Play_Enum>()
@@ -249,6 +343,8 @@ namespace SpectatorFootball.PenaltiesNS
                 bDeclinable = true,
                 bAuto_FirstDown = false,
                 bSpot_Foul = true,
+                Play_Timing = Play_Snap_Timing.BEFORE_SNAP,
+                Frequency_Rating = 750,
                 Description = "Illegal Block"
             });
             r.Last().Penalty_Play_Types = new List<Play_Enum>()
@@ -269,6 +365,8 @@ namespace SpectatorFootball.PenaltiesNS
                 bDeclinable = true,
                 bAuto_FirstDown = false,
                 bSpot_Foul = true,
+                Play_Timing = Play_Snap_Timing.BEFORE_SNAP,
+                Frequency_Rating = 750,
                 Description = "Illegal Block"
             });
             r.Last().Penalty_Play_Types = new List<Play_Enum>()
@@ -290,7 +388,9 @@ namespace SpectatorFootball.PenaltiesNS
                 Yards = 15,
                 bDeclinable = true,
                 bAuto_FirstDown = true,
-                bSpot_Foul = true,               
+                bSpot_Foul = true,
+                Play_Timing = Play_Snap_Timing.BEFORE_SNAP,
+                Frequency_Rating = 750,
                 Description = "Unsportsmen Like Conduct"
             });
             r.Last().Penalty_Play_Types = new List<Play_Enum>()
@@ -343,6 +443,8 @@ namespace SpectatorFootball.PenaltiesNS
                 bDeclinable = true,
                 bAuto_FirstDown = true,
                 bSpot_Foul = true,
+                Play_Timing = Play_Snap_Timing.BEFORE_SNAP,
+                Frequency_Rating = 750,
                 Description = "Unnecessary Roughness"
             });
             r.Last().Penalty_Play_Types = new List<Play_Enum>()
@@ -394,7 +496,9 @@ namespace SpectatorFootball.PenaltiesNS
                 Yards = 15,
                 bDeclinable = true,
                 bAuto_FirstDown = true,
-                bSpot_Foul = true, 
+                bSpot_Foul = true,
+                Play_Timing = Play_Snap_Timing.BEFORE_SNAP,
+                Frequency_Rating = 750,
                 Description = "Facemask"
             });
             r.Last().Penalty_Play_Types = new List<Play_Enum>()

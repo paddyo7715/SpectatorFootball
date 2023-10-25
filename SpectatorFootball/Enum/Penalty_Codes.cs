@@ -8,24 +8,25 @@ namespace SpectatorFootball.Enum
 {
     public enum Penalty_Codes
     {
+        DG, //Delay of Game
         FS, //False Start
-        OH, //Offensive Holding
-        OI, //Offensive Pass Interference
-        OO, //Offensive Offsides 
         IF, //Illegal Formation
+        IM, //Illegal Motion
+        NZ, //Neutral Zone Infraction
+        EN, //Encroachment
+        OI, //Offensive Pass Interference
         DO, //Defensive Offsides
         DH, //Defensive Holding
         IC, //Illegal Contact
         PI, //Pass Interference
         IH, //Illegal Use of Hands
         IHO, //Illegal use of Hands (offense)
-        NZ, //Neutral Zone Infraction
         KIB, //Illegal Block (Kickoff)
         FIB, //Illegal Block (Field Goal)
         PIB, //Illegal Block (Punt)
         UC, //Unsportsman Like Contract
         UR, //Unnecessary Roughness
         FM, //Facemask
-        EN, //Encroachment
+
     }
 }

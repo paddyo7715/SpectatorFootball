@@ -197,6 +197,7 @@
     <Compile Include="Enum\Player_Action_State.cs" />
     <Compile Include="Enum\Player_States.cs" />
     <Compile Include="Enum\Play_Enum.cs" />
+    <Compile Include="Enum\Play_Snap_Timing.cs" />
     <Compile Include="Enum\Stat_Type.cs" />
     <Compile Include="Free_Agency\FreeAgency_Helper.cs" />
     <Compile Include="Game\Action.cs" />
