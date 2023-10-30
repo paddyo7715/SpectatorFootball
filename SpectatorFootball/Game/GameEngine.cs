@@ -343,10 +343,19 @@ namespace SpectatorFootball.GameNS
                 Play_Result p_result = null;
                 double yards_gained = 0.0;
 
-                logger.Debug("Before  kickoff play");
-                if (bKickoff && Offensive_Package.Play == Play_Enum.KICKOFF_NORMAL)
-                    p_result = Play_Kickoff_Normal.Execute(g_fid_posession, at.Franchise_ID, ht.Franchise_ID, Game_Ball, Offensive_Players, Defensive_Players, bLefttoRight, false, bSimGame, false);
-                logger.Debug("AFter  kickoff play");
+                switch (Offensive_Package.Play)
+                {
+                    case Play_Enum.KICKOFF_NORMAL:
+                        Play_Kickoff_Normal Kickoff_k = new Play_Kickoff_Normal(g_fid_posession, at.Franchise_ID, ht.Franchise_ID, Game_Ball, Offensive_Players, Defensive_Players, bLefttoRight, false, bSimGame, false);
+                        Kickoff_k.init();
+                        p_result = Kickoff_k.Execute();
+                        break;
+                    case Play_Enum.FREE_KICK:
+                        Play_Kickoff_Normal Kickoff_fk = new Play_Kickoff_Normal(g_fid_posession, at.Franchise_ID, ht.Franchise_ID, Game_Ball, Offensive_Players, Defensive_Players, bLefttoRight, true, bSimGame, false);
+                        Kickoff_fk.init();
+                        p_result = Kickoff_fk.Execute();
+                        break;
+                }
 
                 int ball_stages = Game_Ball.Stages.Count();
                 for(int pind = 0; pind < Offensive_Players.Count(); pind++)

@@ -13,12 +13,35 @@ namespace SpectatorFootball.GameNS
     {
         private static ILog logger = LogManager.GetLogger("RollingFile");
 
-        public static Play_Result Execute(long Possessing_Team_Id, long at, long ht, Game_Ball gBall, List<Game_Player> Kickoff_Players, List<Game_Player> Return_Players, bool bLefttoRight, bool FreeKic, bool bSim, bool bLast_Play)
-        {
-            Play_Result r = new Play_Result();
-            List<string> Play_Stages = new List<string>();
+        private long Possessing_Team_Id;
+        private long at;
+        private long ht;
+        private Game_Ball gBall;
+        private List<Game_Player> Kickoff_Players;
+        private List<Game_Player> Return_Players;
+        private bool bLefttoRight;
+        private bool FreeKic;
+        private bool bSim;
+        private bool bLast_Play;
+        private Play_Result r = new Play_Result();
 
-            r.BallPossessing_Team_Id =  Possessing_Team_Id == at ? ht : at;
+        public Play_Kickoff_Normal(long Possessing_Team_Id, long at, long ht, Game_Ball gBall, List<Game_Player> Kickoff_Players, List<Game_Player> Return_Players, bool bLefttoRight, bool FreeKic, bool bSim, bool bLast_Play)
+        {
+            this.Possessing_Team_Id = Possessing_Team_Id;
+            this.at = at;
+            this.ht = ht;
+            this.gBall = gBall;
+            this.Kickoff_Players = Kickoff_Players;
+            this.Return_Players = Return_Players;
+            this.bLefttoRight = bLefttoRight;
+            this.FreeKic = FreeKic;
+            this.bSim = bSim;
+            this.bLast_Play = bLast_Play;
+        }
+
+        public void init()
+        {
+            r.BallPossessing_Team_Id = Possessing_Team_Id == at ? ht : at;
             r.NonbBallPossessing_Team_Id = Possessing_Team_Id == at ? at : ht;
             r.at = at;
             r.ht = ht;
@@ -27,8 +50,6 @@ namespace SpectatorFootball.GameNS
             r.Kicker = Kickoff_Players[app_Constants.KICKER_INDEX];
             //Get the kicker - kicker and returner must be slot 5 in the formation
             r.Returner = Return_Players[app_Constants.RETURNER_INDEX];
-            List<Game_Player> Missed_Tackles = new List<Game_Player>();
-            double retuner_catches_ball_yl = 0.0;
 
             //for testing print out all the players and their relevant ratings
             logger.Debug("bLefttoRight: " + bLefttoRight.ToString());
@@ -76,7 +97,13 @@ namespace SpectatorFootball.GameNS
             }
             logger.Debug(" ");
             //=============================================
+        }
 
+        public Play_Result Execute()
+        {
+            List<string> Play_Stages = new List<string>();
+            List<Game_Player> Missed_Tackles = new List<Game_Player>();
+            double retuner_catches_ball_yl = 0.0;
             //================================  Stage One =======================================
             logger.Debug("Stage 1");
             logger.Debug("=====================================================");

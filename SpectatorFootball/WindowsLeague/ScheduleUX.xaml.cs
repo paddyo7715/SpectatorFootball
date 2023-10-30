@@ -1,5 +1,7 @@
 ﻿using log4net;
+using SpectatorFootball.Enum;
 using SpectatorFootball.Models;
+using SpectatorFootball.PenaltiesNS;
 using SpectatorFootball.Services;
 using System;
 using System.Collections.Generic;
