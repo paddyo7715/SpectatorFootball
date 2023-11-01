@@ -521,7 +521,6 @@ namespace SpectatorFootball.unitTests.Penalties
             int UC = 0;
             int UR = 0;
             int FM = 0;
-            int FS = 0;
  
             for (int i = 0; i < Num_Tries; i++)
             {
@@ -544,13 +543,11 @@ namespace SpectatorFootball.unitTests.Penalties
                     UR++;
                 else if (p.code == Penalty_Codes.FM)
                     FM++;
-                else if (p.code == Penalty_Codes.FS)
-                    FS++;
                 else
                     throw new Exception("Incorrect Penalty Code");
             }
 
-            Assert.IsTrue(FS > 0 && UC > 0 && UR > 0 && FM > 0);
+            Assert.IsTrue(UC > 0 && UR > 0 && FM > 0);
         }
 
         [TestCategory("Penalties")]
@@ -595,7 +592,6 @@ namespace SpectatorFootball.unitTests.Penalties
         public void getPenalty_FG_FG_Defense()
         {
             int Num_Tries = 300;
-            int DO = 0;
             int UC = 0;
             int UR = 0;
             int FM = 0;
@@ -615,9 +611,7 @@ namespace SpectatorFootball.unitTests.Penalties
                 }
 
                 Penalty p = Penalty_Helper.getPenalty(this.penaltyList, pe, Player_Action_State.FGD);
-                if (p.code == Penalty_Codes.DO)
-                    DO++;
-                else if (p.code == Penalty_Codes.UC)
+                if (p.code == Penalty_Codes.UC)
                     UC++;
                 else if (p.code == Penalty_Codes.UR)
                     UR++;
@@ -627,7 +621,7 @@ namespace SpectatorFootball.unitTests.Penalties
                     throw new Exception("Incorrect Penalty Code");
             }
 
-            Assert.IsTrue(DO > 0 && UC > 0 && UR > 0 && FM > 0);
+            Assert.IsTrue(UC > 0 && UR > 0 && FM > 0);
         }
 
         [TestCategory("Penalties")]
@@ -635,7 +629,6 @@ namespace SpectatorFootball.unitTests.Penalties
         public void getPenalty_Run_Offense_Play_Passer()
         {
             int Num_Tries = 300;
-            int FS = 0;
             int UC = 0;
             int UR = 0;
             int FM = 0;
@@ -661,9 +654,7 @@ namespace SpectatorFootball.unitTests.Penalties
                 }
 
                 Penalty p = Penalty_Helper.getPenalty(this.penaltyList, pe, Player_Action_State.PAS);
-                if (p.code == Penalty_Codes.FS)
-                    FS++;
-                else if (p.code == Penalty_Codes.UC)
+                if (p.code == Penalty_Codes.UC)
                     UC++;
                 else if (p.code == Penalty_Codes.UR)
                     UR++;
@@ -673,7 +664,7 @@ namespace SpectatorFootball.unitTests.Penalties
                     throw new Exception("Incorrect Penalty Code");
             }
 
-            Assert.IsTrue(FS > 0 && UC > 0 && UR > 0 && FM > 0);
+            Assert.IsTrue(UC > 0 && UR > 0 && FM > 0);
         }
         [TestCategory("Penalties")]
         [TestMethod]
@@ -971,7 +962,6 @@ namespace SpectatorFootball.unitTests.Penalties
         public void getPenalty_Pass_Offense_Play_Ball_Runners()
         {
             int Num_Tries = 300;
-            int FS = 0;
             int UC = 0;
             int UR = 0;
             int FM = 0;
@@ -998,9 +988,7 @@ namespace SpectatorFootball.unitTests.Penalties
                 }
 
                 Penalty p = Penalty_Helper.getPenalty(this.penaltyList, pe, Player_Action_State.BRN);
-                if (p.code == Penalty_Codes.FS)
-                    FS++;
-                else if (p.code == Penalty_Codes.UC)
+                if (p.code == Penalty_Codes.UC)
                     UC++;
                 else if (p.code == Penalty_Codes.UR)
                     UR++;
@@ -1012,7 +1000,7 @@ namespace SpectatorFootball.unitTests.Penalties
                     throw new Exception("Incorrect Penalty Code");
             }
 
-            Assert.IsTrue(IHO > 0 && FS > 0 && UC > 0 && UR > 0 && FM > 0);
+            Assert.IsTrue(IHO > 0 && UC > 0 && UR > 0 && FM > 0);
         }
 
         [TestCategory("Penalties")]
@@ -1072,9 +1060,7 @@ namespace SpectatorFootball.unitTests.Penalties
         public void getPenalty_Pass_Offense_Play_Pass_Blockers()
         {
             int Num_Tries = 300;
-            int FS = 0;
-            int OH = 0;
-            int IF = 0;
+              int OH = 0;
             int IHO = 0;
             int UC = 0;
             int UR = 0;
@@ -1101,9 +1087,7 @@ namespace SpectatorFootball.unitTests.Penalties
                 }
 
                 Penalty p = Penalty_Helper.getPenalty(this.penaltyList, pe, Player_Action_State.PB);
-                if (p.code == Penalty_Codes.FS)
-                    FS++;
-                else if (p.code == Penalty_Codes.UC)
+                if (p.code == Penalty_Codes.UC)
                     UC++;
                 else if (p.code == Penalty_Codes.UR)
                     UR++;
@@ -1111,15 +1095,13 @@ namespace SpectatorFootball.unitTests.Penalties
                     FM++;
                 else if (p.code == Penalty_Codes.IHO)
                     IHO++;
-                else if (p.code == Penalty_Codes.IF)
-                    IF++;
                 else if (p.code == Penalty_Codes.OH)
                     OH++;
                 else
                     throw new Exception("Incorrect Penalty Code");
             }
 
-            Assert.IsTrue(OH > 0 && IF > 0 && IHO > 0 && FS > 0 && UC > 0 && UR > 0 && FM > 0);
+            Assert.IsTrue(OH > 0 && IHO > 0 && UC > 0 && UR > 0 && FM > 0);
         }
 
         [TestCategory("Penalties")]
@@ -1249,12 +1231,12 @@ namespace SpectatorFootball.unitTests.Penalties
             //often.  and players 9 and 10 get rare penalties and the most penalties
             for (int i = 0; i < 11; i++)
             {
-                long sportsmanship = 70;
+                long sportsmanship = 65;
 
                 if (i == 9)
                     sportsmanship = 99;
                 else if (i == 10)
-                    sportsmanship = 35;
+                    sportsmanship = 25;
 
                 Game_Player gpo = new Game_Player() { Pos = Player_Pos.LB };
                 Player_and_Ratings p_and_Ro = new Player_and_Ratings();
@@ -1493,24 +1475,6 @@ namespace SpectatorFootball.unitTests.Penalties
         [TestMethod]
         public void isFirstDowwithPenalty_NOTHalftheDist_NotFD()
         {
-            Penalty p = new Penalty() { bAuto_FirstDown = false, Yards = 5 };
-            double yards_to_go = 9.0;
-            double dist_from_gl = 40;
-
-            bool bFD = Penalty_Helper.isFirstDowwithPenalty(p, yards_to_go, false, 0.0);
-
-            Assert.IsTrue(!bFD);
-        }
-        [TestCategory("Penalties")]
-        [TestMethod]
-        public void test_NOTHalftheDist_NotFD()
-        {
-            List<Penalty> pList = Penalty_Helper.ReturnAllPenalties();
-
-            List<Player_Action_State> pStates = Penalty_Helper.testmethod(pList);
-
-            Console.WriteLine("Player States Count: " + String.Join(",", pStates));
-
             Penalty p = new Penalty() { bAuto_FirstDown = false, Yards = 5 };
             double yards_to_go = 9.0;
             double dist_from_gl = 40;

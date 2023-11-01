@@ -762,14 +762,12 @@ namespace SpectatorFootball.PenaltiesNS
         {
             List<Penalty> Penalties_for_Play_Player = null;
 
-            Penalties_for_Play_Player = pList.Where(x => x.Penalty_Play_Types.Contains(pe) && x.Player_Action_States.Contains(pa)).ToList();
+            Penalties_for_Play_Player = pList.Where(x => x.Play_Timing == Play_Snap_Timing.DURING_PLAY && x.Penalty_Play_Types.Contains(pe) && x.Player_Action_States.Contains(pa)).ToList();
 
             if (Penalties_for_Play_Player.Count == 0)
                 throw new Exception("Error in getPenalty after play.  No possible penalties found for play " + pe.ToString() + " and player action type " + pa.ToString());
 
-            int ind = CommonUtils.getRandomIndex(Penalties_for_Play_Player.Count);
-
-            return Penalties_for_Play_Player[ind];
+            return Select_Penalty_by_Frequency(Penalties_for_Play_Player); 
         }
         public static Game_Player getPenaltyPlayer(List<Game_Player> Offensive_Players, List<Game_Player> Defensive_Players,
     Game_Player Passer, Game_Player Kicker, Game_Player Punter)
@@ -857,26 +855,16 @@ namespace SpectatorFootball.PenaltiesNS
             return r;
         }
 
-        public static List<Player_Action_State> testmethod(List<Penalty> Penalty_List)
+        public static Tuple<Game_Player, Penalty> Presnap_Penalty(Play_Enum pe, List<Penalty> Penalty_List,
+            List<Game_Player> Offensive_Players, List<Game_Player> Defensive_Players, Play_Result pResult)
         {
             Game_Player Penalty_Player = null;
-            Penalty Penalty = null;
-
-            //Get all possible positions for presnap and this play
-                        List<Player_Action_State> Poss_Play_Types_List = Penalty_List.Where(x => x.Play_Timing == Play_Snap_Timing.BEFORE_SNAP &&
-                         x.Penalty_Play_Types.Contains(Play_Enum.KICKOFF_NORMAL)).SelectMany(d => d.Player_Action_States).Distinct().ToList();
-
-            return Poss_Play_Types_List;
-            //First we need to check if there was a delay of game
-
-        }
-
-        public static Tuple<Game_Player, Penalty> Presnap_Penalty(Play_Enum pe, Play_Result pResult, List<Penalty> Penalty_List)
-        {
-            Game_Player Penalty_Player = null;
+            List<Game_Player> Possible_Players = new List<Game_Player>();
+            List<Penalty> Possible_Penalties = null;
             Penalty Penalty = null;
             int Upper_Limit_Regular_Play_DOG = 700;
             int Upper_Limit_Other_Play_DOG = 1400;
+            List<Game_Player> Player_list = new List<Game_Player>();
 
             //Get all possible positions for presnap and this play
             List<Player_Action_State> Poss_Play_Types_List = Penalty_List.Where(x => x.Play_Timing == Play_Snap_Timing.BEFORE_SNAP &&
@@ -889,7 +877,7 @@ namespace SpectatorFootball.PenaltiesNS
                 //Next let's check for possible delay of game penalty
                 if (pResult.Passer != null)
                 {
-                    int t = (int) (101 - pResult.Passer.p_and_r.pr.First().Decision_Making_Rating));
+                    int t = (int) (101 - pResult.Passer.p_and_r.pr.First().Decision_Making_Rating);
                     int rnd = CommonUtils.getRandomNum(1, Upper_Limit_Regular_Play_DOG);
                     if (rnd <= t)
                     {
@@ -900,7 +888,7 @@ namespace SpectatorFootball.PenaltiesNS
                 else if (pResult.Kicker != null || pResult.Punter != null)
                 {
                     Game_Player gp = pResult.Kicker != null ? pResult.Kicker : pResult.Punter;
-                    int t = (int)(101 - gp.p_and_r.pr.First().Sportsmanship_Ratings));
+                    int t = (int)(101 - gp.p_and_r.pr.First().Sportsmanship_Ratings);
                     int rnd = CommonUtils.getRandomNum(1, Upper_Limit_Other_Play_DOG);
                     if (rnd <= t)
                     {
@@ -909,16 +897,73 @@ namespace SpectatorFootball.PenaltiesNS
                     }
                 }
 
-
-
+                //No delay of game so llook for another presnap penalty
                 if (Penalty == null)
                 {
+                    Player_list.AddRange(Offensive_Players);
+                    Player_list.AddRange(Defensive_Players);
+                    Player_list = CommonUtils.ShufleList(Player_list);
+
+                    foreach (Game_Player p in Player_list)
+                    {
+                        long sp_num;
+
+                        if (p == pResult.Passer)
+                            sp_num = (int)(app_Constants.SPORTSMANSHIP_ADJUSTER - p.p_and_r.pr.First().Sportsmanship_Ratings * app_Constants.PENALTY_UPPER_LIMIT_ADJ_QB);
+                        else if (p == pResult.Kicker || p == pResult.Punter)
+                            sp_num = (int)(app_Constants.SPORTSMANSHIP_ADJUSTER - p.p_and_r.pr.First().Sportsmanship_Ratings * app_Constants.PENALTY_UPPER_LIMIT_ADJ_K);
+                        else
+                            sp_num = app_Constants.SPORTSMANSHIP_ADJUSTER - p.p_and_r.pr.First().Sportsmanship_Ratings;
+
+                        long rmd = CommonUtils.getRandomNum(1, (int)app_Constants.PENALTY_UPPER_LIMIT);
+                        if (rmd <= sp_num)
+                            Possible_Players.Add(p);
+                    }
+
+                    if (Possible_Players.Count > 0)
+                    {
+                        int ind = CommonUtils.getRandomIndex(Possible_Players.Count());
+                        Penalty_Player = Possible_Players[ind];
+
+                        Player_Action_State pa = getPlayerAction(Penalty_Player, pResult);
+
+                        Possible_Penalties = Penalty_List.Where(x => x.Penalty_Play_Types.Contains(pe) && x.Player_Action_States.Contains(pa)).ToList();
+
+                        if (Possible_Penalties.Count == 0)
+                            throw new Exception("Error in Presnap_Penalty after play.  No possible penalties found for play " + pe.ToString() + " and player action type " + pa.ToString());
+
+                        Penalty = Select_Penalty_by_Frequency(Possible_Penalties);
+                    }
 
                 }
 
             }
 
             return new Tuple<Game_Player, Penalty>(Penalty_Player, Penalty);
+        }
+
+        public static Penalty Select_Penalty_by_Frequency(List<Penalty> p_list)
+        {
+            int UPPER_LIMIT = 1000;
+            Penalty r = null;
+            int rndindex = 0;
+
+            for (int i = 0; i < 1000; i++)
+            {
+                rndindex = CommonUtils.getRandomIndex(p_list.Count());
+                int rnd = CommonUtils.getRandomNum(1, UPPER_LIMIT);
+
+                if (p_list[rndindex].Frequency_Rating <= rnd)
+                {
+                    r = p_list[rndindex];
+                    break;
+                }
+            }
+
+            if (r == null)
+                r = p_list[rndindex]; ;
+
+            return r;
         }
 
 
