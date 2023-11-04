@@ -758,56 +758,133 @@ namespace SpectatorFootball.PenaltiesNS
                 r = Player_Action_State.FGD;
             return r;
         }
-        public static Penalty getPenalty(List<Penalty> pList, Play_Enum pe, Player_Action_State pa)
+        public static Tuple<Game_Player, Penalty> PostSnap_Penalty(Play_Enum pe, List<Penalty> Penalty_List,
+            List<Game_Player> Offensive_Players, List<Game_Player> Defensive_Players, Play_Result pResult)
         {
-            List<Penalty> Penalties_for_Play_Player = null;
-
-            Penalties_for_Play_Player = pList.Where(x => x.Play_Timing == Play_Snap_Timing.DURING_PLAY && x.Penalty_Play_Types.Contains(pe) && x.Player_Action_States.Contains(pa)).ToList();
-
-            if (Penalties_for_Play_Player.Count == 0)
-                throw new Exception("Error in getPenalty after play.  No possible penalties found for play " + pe.ToString() + " and player action type " + pa.ToString());
-
-            return Select_Penalty_by_Frequency(Penalties_for_Play_Player); 
-        }
-        public static Game_Player getPenaltyPlayer(List<Game_Player> Offensive_Players, List<Game_Player> Defensive_Players,
-    Game_Player Passer, Game_Player Kicker, Game_Player Punter)
-        {
-            Game_Player r = null;
+            Game_Player Penalty_Player = null;
             List<Game_Player> Possible_Players = new List<Game_Player>();
-            List<Game_Player> Players;
+            List<Penalty> Possible_Penalties = null;
+            Penalty Penalty = null;
+            int Upper_Limit_Roughing_Passer = 500;
+            int Upper_Pass_Defender_Interference = 500;
+            int Upper_Pass_Receiver_Interference = 1500;
+            int Upper_Roughing_the_kicker = 1500;
+            int Upper_Running_into_the_kciker = 1500;
+            List<Game_Player> Player_list = new List<Game_Player>();
 
+            //Get all possible positions for presnap and this play
+            List<Player_Action_State> Poss_Play_Types_List = Penalty_List.Where(x => x.Play_Timing == Play_Snap_Timing.DURING_PLAY &&
+             x.Penalty_Play_Types.Contains(pe)).SelectMany(d => d.Player_Action_States).Distinct().ToList();
 
-            for (int x = 0; x < 2; x++)
+            //Only try to find a penalty if there is a penalty for this situation
+            if (Poss_Play_Types_List == null && Poss_Play_Types_List.Count() > 0)
             {
-                if (x == 0)
-                    Players = Offensive_Players;
-                else
-                    Players = Defensive_Players;
+                Penalty Roughing_The_Passer = Penalty_List.Where(x => x.code == Penalty_Codes.RD).First();
+                Penalty Pass_Interference_Def = Penalty_List.Where(x => x.code == Penalty_Codes.PI).First();
+                Penalty Pass_Interference_Off = Penalty_List.Where(x => x.code == Penalty_Codes.OI).First();
+                Penalty Roughing_The_Kicker = Penalty_List.Where(x => x.code == Penalty_Codes.RK).First();
+                Penalty Running_Into_the_Kicker = Penalty_List.Where(x => x.code == Penalty_Codes.RIK).First();
 
-                foreach (Game_Player p in Players)
+                //Next let's check for possible Roughing the Passer
+                if (pResult.Defender_Knocks_Down_QB != null)
                 {
-                    long sp_num;
-
-                    if (p == Passer)
-                        sp_num = (int)(app_Constants.SPORTSMANSHIP_ADJUSTER - p.p_and_r.pr.First().Sportsmanship_Ratings * app_Constants.PENALTY_UPPER_LIMIT_ADJ_QB);
-                    else if (p == Kicker || p == Punter)
-                        sp_num = (int) (app_Constants.SPORTSMANSHIP_ADJUSTER - p.p_and_r.pr.First().Sportsmanship_Ratings * app_Constants.PENALTY_UPPER_LIMIT_ADJ_K);
-                    else
-                        sp_num = app_Constants.SPORTSMANSHIP_ADJUSTER - p.p_and_r.pr.First().Sportsmanship_Ratings;
-
-                    long rmd = CommonUtils.getRandomNum(1, (int)app_Constants.PENALTY_UPPER_LIMIT);
-                    if (rmd <= sp_num)
-                        Possible_Players.Add(p);
+                    int t = (int) (101 - pResult.Defender_Knocks_Down_QB.p_and_r.pr.First().Sportsmanship_Ratings);
+                    int rnd = CommonUtils.getRandomNum(1, Upper_Limit_Roughing_Passer);
+                    if (rnd <= t)
+                    {
+                        Penalty_Player = pResult.Defender_Knocks_Down_QB;
+                        Penalty = Roughing_The_Passer;
+                    }
                 }
+                else if (pResult.Defender_Close_to_Receiver != null)
+                {
+                    int t = 0;
+                    int rnd = 0;
+                    t = (int)(101 - pResult.Defender_Close_to_Receiver.p_and_r.pr.First().Sportsmanship_Ratings);
+                    rnd = CommonUtils.getRandomNum(1, Upper_Pass_Defender_Interference);
+                    if (rnd <= t)
+                    {
+                        Penalty_Player = pResult.Defender_Close_to_Receiver;
+                        Penalty = Pass_Interference_Def;
+                    }
+                    else
+                    {
+                        t = (int)(101 - pResult.Targeted_Receiver.p_and_r.pr.First().Sportsmanship_Ratings);
+                        rnd = CommonUtils.getRandomNum(1, Upper_Pass_Receiver_Interference);
+                        if (rnd <= t)
+                        {
+                            Penalty_Player = pResult.Targeted_Receiver;
+                            Penalty = Pass_Interference_Off;
+                        }
+                    }
+                }
+                else if (pResult.Defender_Close_to_Kicker != null)
+                {
+                    int t = 0;
+                    int rnd = 0;
+                    t = (int)(101 - pResult.Defender_Close_to_Kicker.p_and_r.pr.First().Sportsmanship_Ratings);
+                    rnd = CommonUtils.getRandomNum(1, Upper_Roughing_the_kicker);
+                    if (rnd <= t)
+                    {
+                        Penalty_Player = pResult.Defender_Close_to_Kicker;
+                        Penalty = Roughing_The_Kicker;
+                    }
+                    else
+                    {
+                        t = (int)(101 - pResult.Defender_Close_to_Kicker.p_and_r.pr.First().Sportsmanship_Ratings);
+                        rnd = CommonUtils.getRandomNum(1, Upper_Running_into_the_kciker);
+                        if (rnd <= t)
+                        {
+                            Penalty_Player = pResult.Defender_Close_to_Kicker;
+                            Penalty = Running_Into_the_Kicker;
+                        }
+                    }
+                }
+
+
+                //No delay of game so llook for another presnap penalty
+                if (Penalty == null)
+                {
+                    Player_list.AddRange(Offensive_Players);
+                    Player_list.AddRange(Defensive_Players);
+                    Player_list = CommonUtils.ShufleList(Player_list);
+
+                    foreach (Game_Player p in Player_list)
+                    {
+                        long sp_num;
+
+                        if (p == pResult.Passer)
+                            sp_num = (int)(app_Constants.SPORTSMANSHIP_ADJUSTER - p.p_and_r.pr.First().Sportsmanship_Ratings * app_Constants.PENALTY_UPPER_LIMIT_ADJ_QB);
+                        else if (p == pResult.Kicker || p == pResult.Punter)
+                            sp_num = (int)(app_Constants.SPORTSMANSHIP_ADJUSTER - p.p_and_r.pr.First().Sportsmanship_Ratings * app_Constants.PENALTY_UPPER_LIMIT_ADJ_K);
+                        else
+                            sp_num = app_Constants.SPORTSMANSHIP_ADJUSTER - p.p_and_r.pr.First().Sportsmanship_Ratings;
+
+                        long rmd = CommonUtils.getRandomNum(1, (int)app_Constants.PENALTY_UPPER_LIMIT);
+                        if (rmd <= sp_num)
+                            Possible_Players.Add(p);
+                    }
+
+                    if (Possible_Players.Count > 0)
+                    {
+                        int ind = CommonUtils.getRandomIndex(Possible_Players.Count());
+                        Penalty_Player = Possible_Players[ind];
+
+                        Player_Action_State pa = getPlayerAction(Penalty_Player, pResult);
+
+                        Possible_Penalties = Penalty_List.Where(x => x.Play_Timing == Play_Snap_Timing.DURING_PLAY && x.Penalty_Play_Types.Contains(pe) && x.Player_Action_States.Contains(pa)).ToList();
+
+                        if (Possible_Penalties.Count == 0)
+                            throw new Exception("Error in PostSnap_Penalty after play.  No possible penalties found for play " + pe.ToString() + " and player action type " + pa.ToString());
+
+                        Penalty = Select_Penalty_by_Frequency(Possible_Penalties);
+                    }
+
+                }
+
             }
 
-            if (Possible_Players.Count > 0)
-            {
-                int ind = CommonUtils.getRandomIndex(Possible_Players.Count());
-                r = Possible_Players[ind];
-            }
-
-            return r;
+            return new Tuple<Game_Player, Penalty>(Penalty_Player, Penalty);
         }
         public static bool isNoPenaltyPlay(Play_Result pResult, Play_Enum pe)
         {
@@ -927,7 +1004,7 @@ namespace SpectatorFootball.PenaltiesNS
 
                         Player_Action_State pa = getPlayerAction(Penalty_Player, pResult);
 
-                        Possible_Penalties = Penalty_List.Where(x => x.Penalty_Play_Types.Contains(pe) && x.Player_Action_States.Contains(pa)).ToList();
+                        Possible_Penalties = Penalty_List.Where(x => x.Play_Timing == Play_Snap_Timing.BEFORE_SNAP && x.Penalty_Play_Types.Contains(pe) && x.Player_Action_States.Contains(pa)).ToList();
 
                         if (Possible_Penalties.Count == 0)
                             throw new Exception("Error in Presnap_Penalty after play.  No possible penalties found for play " + pe.ToString() + " and player action type " + pa.ToString());

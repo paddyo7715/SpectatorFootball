@@ -52,7 +52,7 @@ namespace SpectatorFootball.GameNS
         public bool bIgnorePenalty = false;
 
         //Used for Possible Special Penalties on the Defense
-        public Game_Player Defender_Close_to_QB = null;  //Possible Roughing the Passer
+        public Game_Player Defender_Knocks_Down_QB = null;  //Possible Roughing the Passer
         public Game_Player Defender_Close_to_Kicker = null;  //Possible Roughing or Running into the kicker
         public Game_Player Defender_Close_to_Receiver = null;  //Possible Defensive Pass Interference
         public double Defender_Close_to_Receiver_Yardline; //Possible Defensive Pass Interference
@@ -63,6 +63,9 @@ namespace SpectatorFootball.GameNS
         public Game_Player Punter = null;
         public Game_Player Returner = null;
         public Game_Player Punt_Returner = null;
+        public Game_Player Targeted_Receiver = null; //Targeted Pass Catcher
+        public Game_Player Running_Back = null;  //Running back with ball or running QB
+
         public List<Game_Player> Pass_Catchers = new List<Game_Player>();
         public List<Game_Player> Ball_Runners = new List<Game_Player>();
         public List<Game_Player> Pass_Blockers = new List<Game_Player>();
