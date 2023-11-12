@@ -99,10 +99,7 @@ namespace SpectatorFootball.PenaltiesNS
                 Play_Enum.SCRIM_PLAY_2XP_PASS,
                 Play_Enum.SCRIM_PLAY_2XP_RUN,
                 Play_Enum.SCRIM_PLAY_3XP_PASS,
-                Play_Enum.SCRIM_PLAY_3XP_RUN,
-                Play_Enum.PUNT,
-                Play_Enum.FIELD_GOAL,
-                Play_Enum.EXTRA_POINT
+                Play_Enum.SCRIM_PLAY_3XP_RUN
             };
             r.Last().Player_Action_States = new List<Player_Action_State>()
             {
@@ -852,7 +849,7 @@ namespace SpectatorFootball.PenaltiesNS
                     {
                         long sp_num;
 
-                        Player_Action_State pa = getPlayerAction(Penalty_Player, pResult);
+                        Player_Action_State pa = getPlayerAction(p, pResult);
 
                         if (!Poss_Play_Types_List.Contains(pa))
                             continue;
@@ -948,11 +945,11 @@ namespace SpectatorFootball.PenaltiesNS
             List<Game_Player> Player_list = new List<Game_Player>();
 
             //Get all possible positions for presnap and this play
-            List<Player_Action_State> Poss_Play_Types_List = Penalty_List.Where(x => x.Play_Timing == Play_Snap_Timing.BEFORE_SNAP &&
+            List<Player_Action_State> Poss_Player_states_List = Penalty_List.Where(x => x.Play_Timing == Play_Snap_Timing.BEFORE_SNAP &&
              x.Penalty_Play_Types.Contains(pe)).SelectMany(d => d.Player_Action_States).Distinct().ToList();
 
             //Only try to find a penalty if there is a penalty for this situation
-            if (Poss_Play_Types_List != null && Poss_Play_Types_List.Count() > 0)
+            if (Poss_Player_states_List != null && Poss_Player_states_List.Count() > 0)
             {
                 Penalty Delay_of_Game = Penalty_List.Where(x => x.code == Penalty_Codes.DG).First();
                 //Next let's check for possible delay of game penalty
@@ -989,9 +986,9 @@ namespace SpectatorFootball.PenaltiesNS
                     {
                         long sp_num;
 
-                        Player_Action_State pa = getPlayerAction(Penalty_Player, pResult);
+                        Player_Action_State pa = getPlayerAction(p, pResult);
 
-                        if (!Poss_Play_Types_List.Contains(pa))
+                        if (!Poss_Player_states_List.Contains(pa))
                             continue;
 
                         if (p == pResult.Passer)

@@ -185,6 +185,464 @@ namespace SpectatorFootball.unitTests.Penalties
             Assert.IsTrue(pa == Player_Action_State.FGD);
         }
 
+
+
+
+
+        [TestCategory("Penalties")]
+        [TestMethod]
+        public void getPreSnapPenalty_Kickoff_Freekick()
+        {
+            Play_Result pResult = new Play_Result() { at = 11, ht = 22 };
+            int Num_Tries = 1000;
+            Penalty penalty = null;
+            Game_Player Penalty_Player = null;
+
+            List<Game_Player> Offensive_Players = Help_Class.getRandomPlayersforPlay(11);
+            List<Game_Player> Defensive_Players = Help_Class.getRandomPlayersforPlay(22);
+
+            for (int i = 0; i < 11; i++)
+            {
+                if (i == 0)
+                {
+                    pResult.Kicker = Defensive_Players[i];
+                    pResult.Returner = Offensive_Players[i];
+                }
+                else
+                {
+                    pResult.Kick_Returners.Add(Defensive_Players[i]);
+                    pResult.Kick_Defenders.Add(Offensive_Players[i]);
+                }
+            }
+
+            for (int i = 0; i < Num_Tries; i++)
+            {
+                int n = CommonUtils.getRandomNum(1, 2);
+                Play_Enum pe = Play_Enum.KICKOFF_NORMAL;
+                switch (n)
+                {
+                    case 1:
+                        pe = Play_Enum.KICKOFF_NORMAL;
+                        break;
+                    case 2:
+                        pe = Play_Enum.FREE_KICK;
+                        break;
+                }
+
+                Tuple<Game_Player, Penalty> t = Penalty_Helper.Presnap_Penalty(pe, this.penaltyList,
+                    Offensive_Players, Defensive_Players, pResult);
+                Penalty_Player = t.Item1;
+                penalty = t.Item2;
+
+                if (penalty != null)
+                    throw new Exception("No presnap penalties on kickoffs");
+            }
+
+            Assert.IsTrue(true);
+        }
+        [TestCategory("Penalties")]
+        [TestMethod]
+        public void getPreSnapPenalty_Onside_Kickoff()
+        {
+            Play_Result pResult = new Play_Result() { at = 11, ht = 22 };
+            int Num_Tries = 1000;
+            Penalty penalty = null;
+            Game_Player Penalty_Player = null;
+
+            List<Game_Player> Offensive_Players = Help_Class.getRandomPlayersforPlay(11);
+            List<Game_Player> Defensive_Players = Help_Class.getRandomPlayersforPlay(22);
+
+            for (int i = 0; i < 11; i++)
+            {
+                if (i == 0)
+                {
+                    pResult.Kicker = Defensive_Players[i];
+                    pResult.Returner = Offensive_Players[i];
+                }
+                else
+                {
+                    pResult.Kick_Returners.Add(Defensive_Players[i]);
+                    pResult.Kick_Defenders.Add(Offensive_Players[i]);
+                }
+            }
+
+            for (int i = 0; i < Num_Tries; i++)
+            {
+                Play_Enum pe = Play_Enum.KICKOFF_ONSIDES;
+
+
+                Tuple<Game_Player, Penalty> t = Penalty_Helper.Presnap_Penalty(pe, this.penaltyList,
+                    Offensive_Players, Defensive_Players, pResult);
+                Penalty_Player = t.Item1;
+                penalty = t.Item2;
+
+                if (penalty != null)
+                    throw new Exception("No presnap penalties on kickoffs");
+            }
+
+            Assert.IsTrue(true);
+        }
+        [TestCategory("Penalties")]
+        [TestMethod]
+        public void getPreSnapPenalty_Punt()
+        {
+            int DG = 0;
+            int FS = 0;
+            int NZ = 0;
+            int EN = 0;
+            int DO = 0;
+
+            Play_Result pResult = new Play_Result() { at = 11, ht = 22 };
+            int Num_Tries = 1000;
+            Penalty penalty = null;
+            Game_Player Penalty_Player = null;
+
+            List<Game_Player> Offensive_Players = Help_Class.getRandomPlayersforPlay(11);
+            List<Game_Player> Defensive_Players = Help_Class.getRandomPlayersforPlay(22);
+
+            for (int i = 0; i < 11; i++)
+            {
+                if (i == 0)
+                    pResult.Punter = Defensive_Players[i];
+                else
+                    pResult.Punt_Defenders.Add(Defensive_Players[i]);
+            }
+
+            for (int i = 0; i < 11; i++)
+            {
+                if (i == 0)
+                    pResult.Punt_Returner = Offensive_Players[i];
+                else
+                    pResult.Punt_Returners.Add(Offensive_Players[i]);
+            }
+
+            for (int i = 0; i < Num_Tries; i++)
+            {
+                Play_Enum pe = Play_Enum.PUNT;
+  
+                Tuple<Game_Player, Penalty> t = Penalty_Helper.Presnap_Penalty(pe, this.penaltyList,
+                    Offensive_Players, Defensive_Players, pResult);
+                Penalty_Player = t.Item1;
+                penalty = t.Item2;
+
+                if (penalty == null) continue;
+
+                if (penalty.code == Penalty_Codes.DG)
+                    DG++;
+                else if (penalty.code == Penalty_Codes.FS)
+                    FS++;
+                else if (penalty.code == Penalty_Codes.NZ)
+                    NZ++;
+                else if (penalty.code == Penalty_Codes.EN)
+                    EN++;
+                else if (penalty.code == Penalty_Codes.DO)
+                    DO++;
+                else
+                    throw new Exception("Not all penalties encountered");
+
+                if (!penalty.Penalty_Play_Types.Contains(pe))
+                    throw new Exception("Not all penalties encountered");
+
+                if (penalty.Play_Timing != Play_Snap_Timing.BEFORE_SNAP)
+                    throw new Exception("Penalty is not presnap");
+
+                Player_Action_State pa = Penalty_Helper.getPlayerAction(Penalty_Player, pResult);
+                if (!penalty.Player_Action_States.Contains(pa))
+                    throw new Exception("Penalty player should not have gotten this penalty");
+            }
+
+            if (DG == 0 || FS == 0 || NZ == 0 || EN == 0 || DO == 0)
+                throw new Exception("Incorrect Penalty Code");
+
+            Assert.IsTrue(true);
+        }
+        [TestCategory("Penalties")]
+        [TestMethod]
+        public void getPreSnapPenalty_FG_XP()
+        {
+            int DG = 0;
+            int FS = 0;
+            int NZ = 0;
+            int EN = 0;
+            int DO = 0;
+
+            Play_Result pResult = new Play_Result() { at = 11, ht = 22 };
+            int Num_Tries = 1000;
+            Penalty penalty = null;
+            Game_Player Penalty_Player = null;
+
+            List<Game_Player> Offensive_Players = Help_Class.getRandomPlayersforPlay(11);
+            List<Game_Player> Defensive_Players = Help_Class.getRandomPlayersforPlay(22);
+
+            for (int i = 0; i < 11; i++)
+            {
+                if (i == 0)
+                    pResult.Kicker = Offensive_Players[i];
+                else
+                    pResult.FieldGaol_Kicking_Team.Add(Offensive_Players[i]);
+            }
+
+            for (int i = 0; i < 11; i++)
+            {
+                    pResult.Field_Goal_Defenders.Add(Defensive_Players[i]);
+            }
+
+            for (int i = 0; i < Num_Tries; i++)
+            {
+                int n = CommonUtils.getRandomNum(1, 2);
+                Play_Enum pe = Play_Enum.KICKOFF_NORMAL;
+                switch (n)
+                {
+                    case 1:
+                        pe = Play_Enum.FIELD_GOAL;
+                        break;
+                    case 2:
+                        pe = Play_Enum.EXTRA_POINT;
+                        break;
+                }
+
+                Tuple<Game_Player, Penalty> t = Penalty_Helper.Presnap_Penalty(pe, this.penaltyList,
+                    Offensive_Players, Defensive_Players, pResult);
+                Penalty_Player = t.Item1;
+                penalty = t.Item2;
+
+                if (penalty == null) continue;
+
+                if (penalty.code == Penalty_Codes.DG)
+                    DG++;
+                else if (penalty.code == Penalty_Codes.FS)
+                    FS++;
+                else if (penalty.code == Penalty_Codes.NZ)
+                    NZ++;
+                else if (penalty.code == Penalty_Codes.EN)
+                    EN++;
+                else if (penalty.code == Penalty_Codes.DO)
+                    DO++;
+                else
+                    throw new Exception("Not all penalties encountered");
+
+                if (!penalty.Penalty_Play_Types.Contains(pe))
+                    throw new Exception("Not all penalties encountered");
+
+                if (penalty.Play_Timing != Play_Snap_Timing.BEFORE_SNAP)
+                    throw new Exception("Penalty is not presnap");
+
+                Player_Action_State pa = Penalty_Helper.getPlayerAction(Penalty_Player, pResult);
+                if (!penalty.Player_Action_States.Contains(pa))
+                    throw new Exception("Penalty player should not have gotten this penalty");
+            }
+
+            if (DG == 0 || FS == 0 || NZ == 0 || EN == 0 || DO == 0)
+                throw new Exception("Incorrect Penalty Code");
+
+            Assert.IsTrue(true);
+        }
+        [TestCategory("Penalties")]
+        [TestMethod]
+        public void getPreSnapPenalty_RUN()
+        {
+            int DG = 0;
+            int FS = 0;
+            int NZ = 0;
+            int EN = 0;
+            int DO = 0;
+            int IF = 0;
+            int IM = 0;
+
+            Play_Result pResult = new Play_Result() { at = 11, ht = 22 };
+            int Num_Tries = 1000;
+            Penalty penalty = null;
+            Game_Player Penalty_Player = null;
+
+            List<Game_Player> Offensive_Players = Help_Class.getRandomPlayersforPlay(11);
+            List<Game_Player> Defensive_Players = Help_Class.getRandomPlayersforPlay(22);
+
+            for (int i = 0; i < 11; i++)
+            {
+                if (i == 0)
+                    pResult.Passer = Offensive_Players[i];
+                else if (i == 2 || i == 3)
+                    pResult.Ball_Runners.Add(Offensive_Players[i]);
+                else if (i == 4 || i == 5)
+                    pResult.Pass_Catchers.Add(Offensive_Players[i]);
+                else
+                    pResult.Run_Blockers.Add(Offensive_Players[i]);
+            }
+
+            for (int i = 0; i < 11; i++)
+            {
+                if (i < 6)
+                    pResult.Pass_Defenders.Add(Defensive_Players[i]);
+                else
+                    pResult.Run_Defenders.Add(Defensive_Players[i]);
+            }
+
+            for (int i = 0; i < Num_Tries; i++)
+            {
+                int n = CommonUtils.getRandomNum(1, 4);
+                Play_Enum pe = Play_Enum.KICKOFF_NORMAL;
+                switch (n)
+                {
+                    case 1:
+                        pe = Play_Enum.RUN;
+                        break;
+                    case 2:
+                        pe = Play_Enum.SCRIM_PLAY_1XP_RUN;
+                        break;
+                    case 3:
+                        pe = Play_Enum.SCRIM_PLAY_2XP_RUN;
+                        break;
+                    case 4:
+                        pe = Play_Enum.SCRIM_PLAY_3XP_RUN;
+                        break;
+                }
+
+                Tuple<Game_Player, Penalty> t = Penalty_Helper.Presnap_Penalty(pe, this.penaltyList,
+                    Offensive_Players, Defensive_Players, pResult);
+                Penalty_Player = t.Item1;
+                penalty = t.Item2;
+
+                if (penalty == null) continue;
+
+                if (penalty.code == Penalty_Codes.DG)
+                    DG++;
+                else if (penalty.code == Penalty_Codes.FS)
+                    FS++;
+                else if (penalty.code == Penalty_Codes.NZ)
+                    NZ++;
+                else if (penalty.code == Penalty_Codes.EN)
+                    EN++;
+                else if (penalty.code == Penalty_Codes.DO)
+                    DO++;
+                else if (penalty.code == Penalty_Codes.IF)
+                    IF++;
+                else if (penalty.code == Penalty_Codes.IM)
+                    IM++;
+                else
+                    throw new Exception("Not all penalties encountered");
+
+                if (!penalty.Penalty_Play_Types.Contains(pe))
+                    throw new Exception("Not all penalties encountered");
+
+                if (penalty.Play_Timing != Play_Snap_Timing.BEFORE_SNAP)
+                    throw new Exception("Penalty is not presnap");
+
+                Player_Action_State pa = Penalty_Helper.getPlayerAction(Penalty_Player, pResult);
+                if (!penalty.Player_Action_States.Contains(pa))
+                    throw new Exception("Penalty player should not have gotten this penalty");
+            }
+
+            if (IF == 0 || IM == 0 || DG == 0 || FS == 0 || NZ == 0 || EN == 0 || DO == 0)
+                throw new Exception("Incorrect Penalty Code");
+
+            Assert.IsTrue(true);
+        }
+
+        [TestCategory("Penalties")]
+        [TestMethod]
+        public void getPreSnapPenalty_PASS()
+        {
+            int DG = 0;
+            int FS = 0;
+            int NZ = 0;
+            int EN = 0;
+            int DO = 0;
+            int IF = 0;
+            int IM = 0;
+
+            Play_Result pResult = new Play_Result() { at = 11, ht = 22 };
+            int Num_Tries = 1000;
+            Penalty penalty = null;
+            Game_Player Penalty_Player = null;
+
+            List<Game_Player> Offensive_Players = Help_Class.getRandomPlayersforPlay(11);
+            List<Game_Player> Defensive_Players = Help_Class.getRandomPlayersforPlay(22);
+
+            for (int i = 0; i < 11; i++)
+            {
+                if (i == 0)
+                    pResult.Passer = Offensive_Players[i];
+                else if (i == 2 || i == 3)
+                    pResult.Ball_Runners.Add(Offensive_Players[i]);
+                else if (i == 4 || i == 5)
+                    pResult.Pass_Catchers.Add(Offensive_Players[i]);
+                else
+                    pResult.Pass_Blockers.Add(Offensive_Players[i]);
+            }
+
+            for (int i = 0; i < 11; i++)
+            {
+                if (i < 6)
+                    pResult.Pass_Defenders.Add(Defensive_Players[i]);
+                else
+                    pResult.Pass_Rushers.Add(Defensive_Players[i]);
+            }
+
+            for (int i = 0; i < Num_Tries; i++)
+            {
+                int n = CommonUtils.getRandomNum(1, 4);
+                Play_Enum pe = Play_Enum.KICKOFF_NORMAL;
+                switch (n)
+                {
+                    case 1:
+                        pe = Play_Enum.PASS;
+                        break;
+                    case 2:
+                        pe = Play_Enum.SCRIM_PLAY_1XP_PASS;
+                        break;
+                    case 3:
+                        pe = Play_Enum.SCRIM_PLAY_2XP_PASS;
+                        break;
+                    case 4:
+                        pe = Play_Enum.SCRIM_PLAY_3XP_PASS;
+                        break;
+
+                }
+
+                Tuple<Game_Player, Penalty> t = Penalty_Helper.Presnap_Penalty(pe, this.penaltyList,
+                    Offensive_Players, Defensive_Players, pResult);
+                Penalty_Player = t.Item1;
+                penalty = t.Item2;
+
+                if (penalty == null) continue;
+
+                if (penalty.code == Penalty_Codes.DG)
+                    DG++;
+                else if (penalty.code == Penalty_Codes.FS)
+                    FS++;
+                else if (penalty.code == Penalty_Codes.NZ)
+                    NZ++;
+                else if (penalty.code == Penalty_Codes.EN)
+                    EN++;
+                else if (penalty.code == Penalty_Codes.DO)
+                    DO++;
+                else if (penalty.code == Penalty_Codes.IF)
+                    IF++;
+                else if (penalty.code == Penalty_Codes.IM)
+                    IM++;
+                else
+                    throw new Exception("Not all penalties encountered");
+
+                if (!penalty.Penalty_Play_Types.Contains(pe))
+                    throw new Exception("Not all penalties encountered");
+
+                if (penalty.Play_Timing != Play_Snap_Timing.BEFORE_SNAP)
+                    throw new Exception("Penalty is not presnap");
+
+                Player_Action_State pa = Penalty_Helper.getPlayerAction(Penalty_Player, pResult);
+                if (!penalty.Player_Action_States.Contains(pa))
+                    throw new Exception("Penalty player should not have gotten this penalty");
+            }
+
+            if (IF == 0 || IM == 0 || DG == 0 || FS == 0 || NZ == 0 || EN == 0 || DO == 0)
+                throw new Exception("Incorrect Penalty Code");
+
+            Assert.IsTrue(true);
+        }
+
+
+
+
         [TestCategory("Penalties")]
         [TestMethod]
         public void getPostSnapPenalty_Kickoff_Freekick()
