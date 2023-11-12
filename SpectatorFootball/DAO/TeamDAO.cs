@@ -303,43 +303,43 @@ namespace SpectatorFootball.DAO
                        ifnull(SUM(CASE WHEN Home_Team_Franchise_ID <> @Franchise_ID then Away_fourthdown_conversions else Away_fourthdown_conversions end),0) as Opp_fourth_Downs_Made,
                        ifnull(SUM(CASE WHEN Home_Team_Franchise_ID = @Franchise_ID then Home_fourthdowns else Away_fourthdowns end),0) as Team_fourth_Downs_Att,
                        ifnull(SUM(CASE WHEN Home_Team_Franchise_ID <> @Franchise_ID then Away_fourthdowns else Away_fourthdowns end),0) as Opp_fourth_Downs_Att,
-                       ((select ifnull(sum(p.pass_yards),0) from Game g, Game_Player_Passing_Stats p where g.Season_ID = @Season_ID  and  g.Home_Team_Franchise_ID = @Franchise_ID and g.ID = p.Game_ID) +
-	                   (select ifnull(sum(p.pass_yards),0) from Game g, Game_Player_Passing_Stats p where g.Season_ID = @Season_ID  and g.Away_Team_Franchise_ID = @Franchise_ID and g.ID = p.Game_ID)) as Team_Passing_Yards,
-                       ((select ifnull(sum(p.pass_yards),0) from Game g, Game_Player_Passing_Stats p where g.Season_ID = @Season_ID  and g.Home_Team_Franchise_ID <> @Franchise_ID and g.ID = p.Game_ID) +
-	                   (select ifnull(sum(p.pass_yards),0) from Game g, Game_Player_Passing_Stats p where g.Season_ID = @Season_ID  and g.Away_Team_Franchise_ID <> @Franchise_ID and g.ID = p.Game_ID)) as Opp_Passing_Yards,
-                        ((select ifnull(sum(p.rush_yards),0) from Game g, Game_Player_Rushing_Stats p where g.Season_ID = @Season_ID  and g.Home_Team_Franchise_ID = @Franchise_ID and g.ID = p.Game_ID) +
-	                   (select ifnull(sum(p.rush_yards),0) from Game g, Game_Player_Rushing_Stats p where g.Season_ID = @Season_ID  and g.Away_Team_Franchise_ID = @Franchise_ID and g.ID = p.Game_ID)) as Team_Rushing_Yards,
-                       ((select ifnull(sum(p.rush_yards),0) from Game g, Game_Player_Rushing_Stats p where g.Season_ID = @Season_ID  and g.Home_Team_Franchise_ID <> @Franchise_ID and g.ID = p.Game_ID) +
-	                   (select ifnull(sum(p.rush_yards),0) from Game g, Game_Player_Rushing_Stats p where g.Season_ID = @Season_ID  and g.Away_Team_Franchise_ID <> @Franchise_ID and g.ID = p.Game_ID)) as Opp_Rushing_Yards,
-                         ((select ifnull(sum(p.Def_Sacks),0) from Game g, Game_Player_Defense_Stats p where g.Season_ID = @Season_ID  and g.Home_Team_Franchise_ID = @Franchise_ID and g.ID = p.Game_ID) +
-	                   (select ifnull(sum(p.Def_Sacks),0) from Game g, Game_Player_Defense_Stats p where g.Season_ID = @Season_ID  and g.Away_Team_Franchise_ID = @Franchise_ID and g.ID = p.Game_ID)) as Team_Sacks,
-                       ((select ifnull(sum(p.Def_Sacks),0) from Game g, Game_Player_Defense_Stats p where g.Season_ID = @Season_ID  and g.Home_Team_Franchise_ID <> @Franchise_ID and g.ID = p.Game_ID) +
-	                   (select ifnull(sum(p.Def_Sacks),0) from Game g, Game_Player_Defense_Stats p where g.Season_ID = @Season_ID  and g.Away_Team_Franchise_ID <> @Franchise_ID and g.ID = p.Game_ID)) as Opp_Sacks,
-                          ((select ifnull(sum(p.Kickoffs_Returned_Fumbles_Lost),0) from Game g, Game_Player_Kick_Returner_Stats p where g.Season_ID = @Season_ID  and g.Home_Team_Franchise_ID = @Franchise_ID and g.ID = p.Game_ID) +
-	                   (select ifnull(sum(p.Kickoffs_Returned_Fumbles_Lost),0) from Game g, Game_Player_Kick_Returner_Stats p where g.Season_ID = @Season_ID  and g.Away_Team_Franchise_ID = @Franchise_ID and g.ID = p.Game_ID) +
-	                (select ifnull(sum(p.Fumbles_Lost),0) from Game g, Game_Player_Passing_Stats p where g.Season_ID = @Season_ID  and g.Home_Team_Franchise_ID = @Franchise_ID and g.ID = p.Game_ID) +
-	                   (select ifnull(sum(p.Fumbles_Lost),0) from Game g, Game_Player_Passing_Stats p where g.Season_ID = @Season_ID  and g.Away_Team_Franchise_ID = @Franchise_ID and g.ID = p.Game_ID) +
-	                (select ifnull(sum(p.Punts_Returned_Fumbles_Lost),0) from Game g, Game_Player_Punt_Returner_Stats p where g.Season_ID = @Season_ID  and g.Home_Team_Franchise_ID = @Franchise_ID and g.ID = p.Game_ID) +
-	                   (select ifnull(sum(p.Punts_Returned_Fumbles_Lost),0) from Game g, Game_Player_Punt_Returner_Stats p where g.Season_ID = @Season_ID  and g.Away_Team_Franchise_ID = @Franchise_ID and g.ID = p.Game_ID) +
-	                (select ifnull(sum(p.Fumbles_Lost),0) from Game g, Game_Player_Punter_Stats p where g.Season_ID = @Season_ID  and g.Home_Team_Franchise_ID = @Franchise_ID and g.ID = p.Game_ID) +
-	                   (select ifnull(sum(p.Fumbles_Lost),0) from Game g, Game_Player_Punter_Stats p where g.Season_ID = @Season_ID  and g.Away_Team_Franchise_ID = @Franchise_ID and g.ID = p.Game_ID) +
-	                (select ifnull(sum(p.Fumbles_Lost),0) from Game g, Game_Player_Receiving_Stats p where g.Season_ID = @Season_ID  and g.Home_Team_Franchise_ID = @Franchise_ID and g.ID = p.Game_ID) +
-	                   (select ifnull(sum(p.Fumbles_Lost),0) from Game g, Game_Player_Receiving_Stats p where g.Season_ID = @Season_ID  and g.Away_Team_Franchise_ID = @Franchise_ID and g.ID = p.Game_ID) +
-	                (select ifnull(sum(p.Fumbles_Lost),0) from Game g, Game_Player_Rushing_Stats p where g.Season_ID = @Season_ID  and g.Home_Team_Franchise_ID = @Franchise_ID and g.ID = p.Game_ID) +
-	                   (select ifnull(sum(p.Fumbles_Lost),0) from Game g, Game_Player_Rushing_Stats p where g.Season_ID = @Season_ID  and g.Away_Team_Franchise_ID = @Franchise_ID and g.ID = p.Game_ID)
+                       ((select ifnull(sum(p.off_pass_yards),0) from Game g, Game_Player_Stats p where g.Season_ID = @Season_ID  and  g.Home_Team_Franchise_ID = @Franchise_ID and g.ID = p.Game_ID) +
+	                   (select ifnull(sum(p.off_pass_yards),0) from Game g, Game_Player_Stats p where g.Season_ID = @Season_ID  and g.Away_Team_Franchise_ID = @Franchise_ID and g.ID = p.Game_ID)) as Team_Passing_Yards,
+                       ((select ifnull(sum(p.off_pass_yards),0) from Game g, Game_Player_Stats p where g.Season_ID = @Season_ID  and g.Home_Team_Franchise_ID <> @Franchise_ID and g.ID = p.Game_ID) +
+	                   (select ifnull(sum(p.off_pass_yards),0) from Game g, Game_Player_Stats p where g.Season_ID = @Season_ID  and g.Away_Team_Franchise_ID <> @Franchise_ID and g.ID = p.Game_ID)) as Opp_Passing_Yards,
+                        ((select ifnull(sum(p.off_rush_yards),0) from Game g, Game_Player_Stats p where g.Season_ID = @Season_ID  and g.Home_Team_Franchise_ID = @Franchise_ID and g.ID = p.Game_ID) +
+	                   (select ifnull(sum(p.off_rush_yards),0) from Game g, Game_Player_Stats p where g.Season_ID = @Season_ID  and g.Away_Team_Franchise_ID = @Franchise_ID and g.ID = p.Game_ID)) as Team_Rushing_Yards,
+                       ((select ifnull(sum(p.off_rush_yards),0) from Game g, Game_Player_Stats p where g.Season_ID = @Season_ID  and g.Home_Team_Franchise_ID <> @Franchise_ID and g.ID = p.Game_ID) +
+	                   (select ifnull(sum(p.off_rush_yards),0) from Game g, Game_Player_Stats p where g.Season_ID = @Season_ID  and g.Away_Team_Franchise_ID <> @Franchise_ID and g.ID = p.Game_ID)) as Opp_Rushing_Yards,
+                         ((select ifnull(sum(p.Def_Rush_Sacks),0) from Game g, Game_Player_Stats p where g.Season_ID = @Season_ID  and g.Home_Team_Franchise_ID = @Franchise_ID and g.ID = p.Game_ID) +
+	                   (select ifnull(sum(p.Def_Rush_Sacks),0) from Game g, Game_Player_Stats p where g.Season_ID = @Season_ID  and g.Away_Team_Franchise_ID = @Franchise_ID and g.ID = p.Game_ID)) as Team_Sacks,
+                       ((select ifnull(sum(p.Def_Rush_Sacks),0) from Game g, Game_Player_Stats p where g.Season_ID = @Season_ID  and g.Home_Team_Franchise_ID <> @Franchise_ID and g.ID = p.Game_ID) +
+	                   (select ifnull(sum(p.Def_Rush_Sacks),0) from Game g, Game_Player_Stats p where g.Season_ID = @Season_ID  and g.Away_Team_Franchise_ID <> @Franchise_ID and g.ID = p.Game_ID)) as Opp_Sacks,
+                          ((select ifnull(sum(p.ko_Ret_Fumbles_Lost),0) from Game g, Game_Player_Stats p where g.Season_ID = @Season_ID  and g.Home_Team_Franchise_ID = @Franchise_ID and g.ID = p.Game_ID) +
+	                   (select ifnull(sum(p.ko_Ret_Fumbles_Lost),0) from Game g, Game_Player_Stats p where g.Season_ID = @Season_ID  and g.Away_Team_Franchise_ID = @Franchise_ID and g.ID = p.Game_ID) +
+	                (select ifnull(sum(p.off_Pass_Fumbles_Lost),0) from Game g, Game_Player_Stats p where g.Season_ID = @Season_ID  and g.Home_Team_Franchise_ID = @Franchise_ID and g.ID = p.Game_ID) +
+	                   (select ifnull(sum(p.off_Pass_Fumbles_Lost),0) from Game g, Game_Player_Stats p where g.Season_ID = @Season_ID  and g.Away_Team_Franchise_ID = @Franchise_ID and g.ID = p.Game_ID) +
+	                (select ifnull(sum(p.punt_ret_Fumbles_Lost),0) from Game g, Game_Player_Stats p where g.Season_ID = @Season_ID  and g.Home_Team_Franchise_ID = @Franchise_ID and g.ID = p.Game_ID) +
+	                   (select ifnull(sum(p.punt_ret_Fumbles_Lost),0) from Game g, Game_Player_Stats p where g.Season_ID = @Season_ID  and g.Away_Team_Franchise_ID = @Franchise_ID and g.ID = p.Game_ID) +
+	                (select ifnull(sum(p.punter_fumbles_lost),0) from Game g, Game_Player_Stats p where g.Season_ID = @Season_ID  and g.Home_Team_Franchise_ID = @Franchise_ID and g.ID = p.Game_ID) +
+	                   (select ifnull(sum(p.punter_fumbles_lost),0) from Game g, Game_Player_Stats p where g.Season_ID = @Season_ID  and g.Away_Team_Franchise_ID = @Franchise_ID and g.ID = p.Game_ID) +
+	                (select ifnull(sum(p.off_rec_fumbles_lost),0) from Game g, Game_Player_Stats p where g.Season_ID = @Season_ID  and g.Home_Team_Franchise_ID = @Franchise_ID and g.ID = p.Game_ID) +
+	                   (select ifnull(sum(p.off_rec_fumbles_lost),0) from Game g, Game_Player_Stats p where g.Season_ID = @Season_ID  and g.Away_Team_Franchise_ID = @Franchise_ID and g.ID = p.Game_ID) +
+	                (select ifnull(sum(p.off_rush_fumbles_lost),0) from Game g, Game_Player_Stats p where g.Season_ID = @Season_ID  and g.Home_Team_Franchise_ID = @Franchise_ID and g.ID = p.Game_ID) +
+	                   (select ifnull(sum(p.off_rush_fumbles_lost),0) from Game g, Game_Player_Stats p where g.Season_ID = @Season_ID  and g.Away_Team_Franchise_ID = @Franchise_ID and g.ID = p.Game_ID)
 	                ) as Team_Turnovers,
-                          ((select ifnull(sum(p.Kickoffs_Returned_Fumbles_Lost),0) from Game g, Game_Player_Kick_Returner_Stats p where g.Season_ID = @Season_ID  and g.Home_Team_Franchise_ID <> @Franchise_ID and g.ID = p.Game_ID) +
-	                   (select ifnull(sum(p.Kickoffs_Returned_Fumbles_Lost),0) from Game g, Game_Player_Kick_Returner_Stats p where g.Season_ID = @Season_ID  and g.Away_Team_Franchise_ID <> @Franchise_ID and g.ID = p.Game_ID) +
-	                (select ifnull(sum(p.Fumbles_Lost),0) from Game g, Game_Player_Passing_Stats p where g.Season_ID = @Season_ID  and g.Home_Team_Franchise_ID <> @Franchise_ID and g.ID = p.Game_ID) +
-	                   (select ifnull(sum(p.Fumbles_Lost),0) from Game g, Game_Player_Passing_Stats p where g.Season_ID = @Season_ID  and g.Away_Team_Franchise_ID <> @Franchise_ID and g.ID = p.Game_ID) +
-	                (select ifnull(sum(p.Punts_Returned_Fumbles_Lost),0) from Game g, Game_Player_Punt_Returner_Stats p where g.Season_ID = @Season_ID  and g.Home_Team_Franchise_ID <> @Franchise_ID and g.ID = p.Game_ID) +
-	                   (select ifnull(sum(p.Punts_Returned_Fumbles_Lost),0) from Game g, Game_Player_Punt_Returner_Stats p where g.Season_ID = @Season_ID  and g.Away_Team_Franchise_ID <> @Franchise_ID and g.ID = p.Game_ID) +
-	                (select ifnull(sum(p.Fumbles_Lost),0) from Game g, Game_Player_Punter_Stats p where g.Season_ID = @Season_ID  and g.Home_Team_Franchise_ID <> @Franchise_ID and g.ID = p.Game_ID) +
-	                   (select ifnull(sum(p.Fumbles_Lost),0) from Game g, Game_Player_Punter_Stats p where g.Season_ID = @Season_ID  and g.Away_Team_Franchise_ID <> @Franchise_ID and g.ID = p.Game_ID) +
-	                (select ifnull(sum(p.Fumbles_Lost),0) from Game g, Game_Player_Receiving_Stats p where g.Season_ID = @Season_ID  and g.Home_Team_Franchise_ID <> @Franchise_ID and g.ID = p.Game_ID) +
-	                   (select ifnull(sum(p.Fumbles_Lost),0) from Game g, Game_Player_Receiving_Stats p where g.Season_ID = @Season_ID  and g.Away_Team_Franchise_ID <> @Franchise_ID and g.ID = p.Game_ID) +
-	                (select ifnull(sum(p.Fumbles_Lost),0) from Game g, Game_Player_Rushing_Stats p where g.Season_ID = @Season_ID  and g.Home_Team_Franchise_ID <> @Franchise_ID and g.ID = p.Game_ID) +
-	                   (select ifnull(sum(p.Fumbles_Lost),0) from Game g, Game_Player_Rushing_Stats p where g.Season_ID = @Season_ID  and g.Away_Team_Franchise_ID <> @Franchise_ID and g.ID = p.Game_ID)
+                          ((select ifnull(sum(p.ko_ret_fumbles_lost),0) from Game g, Game_Player_Stats p where g.Season_ID = @Season_ID  and g.Home_Team_Franchise_ID <> @Franchise_ID and g.ID = p.Game_ID) +
+	                   (select ifnull(sum(p.ko_ret_fumbles_lost),0) from Game g, Game_Player_Stats p where g.Season_ID = @Season_ID  and g.Away_Team_Franchise_ID <> @Franchise_ID and g.ID = p.Game_ID) +
+	                (select ifnull(sum(p.off_Pass_Fumbles_Lost),0) from Game g, Game_Player_Stats p where g.Season_ID = @Season_ID  and g.Home_Team_Franchise_ID <> @Franchise_ID and g.ID = p.Game_ID) +
+	                   (select ifnull(sum(p.off_Pass_Fumbles_Lost),0) from Game g, Game_Player_Stats p where g.Season_ID = @Season_ID  and g.Away_Team_Franchise_ID <> @Franchise_ID and g.ID = p.Game_ID) +
+	                (select ifnull(sum(p.punt_ret_Fumbles_Lost),0) from Game g, Game_Player_Stats p where g.Season_ID = @Season_ID  and g.Home_Team_Franchise_ID <> @Franchise_ID and g.ID = p.Game_ID) +
+	                   (select ifnull(sum(p.punt_ret_Fumbles_Lost),0) from Game g, Game_Player_Stats p where g.Season_ID = @Season_ID  and g.Away_Team_Franchise_ID <> @Franchise_ID and g.ID = p.Game_ID) +
+	                (select ifnull(sum(p.punter_fumbles_lost),0) from Game g, Game_Player_Stats p where g.Season_ID = @Season_ID  and g.Home_Team_Franchise_ID <> @Franchise_ID and g.ID = p.Game_ID) +
+	                   (select ifnull(sum(p.punter_fumbles_lost),0) from Game g, Game_Player_Stats p where g.Season_ID = @Season_ID  and g.Away_Team_Franchise_ID <> @Franchise_ID and g.ID = p.Game_ID) +
+	                (select ifnull(sum(p.off_rec_fumbles_lost),0) from Game g, Game_Player_Stats p where g.Season_ID = @Season_ID  and g.Home_Team_Franchise_ID <> @Franchise_ID and g.ID = p.Game_ID) +
+	                   (select ifnull(sum(p.off_rec_fumbles_lost),0) from Game g, Game_Player_Stats p where g.Season_ID = @Season_ID  and g.Away_Team_Franchise_ID <> @Franchise_ID and g.ID = p.Game_ID) +
+	                (select ifnull(sum(p.off_rush_fumbles_lost),0) from Game g, Game_Player_Stats p where g.Season_ID = @Season_ID  and g.Home_Team_Franchise_ID <> @Franchise_ID and g.ID = p.Game_ID) +
+	                   (select ifnull(sum(p.off_rush_fumbles_lost),0) from Game g, Game_Player_Stats p where g.Season_ID = @Season_ID  and g.Away_Team_Franchise_ID <> @Franchise_ID and g.ID = p.Game_ID)
 	                ) as Opp_Turnovers
                     from Game where Season_ID = @Season_ID  and (Home_Team_Franchise_ID = @Franchise_ID or Away_Team_Franchise_ID = @Franchise_ID) and Week < 1000 and Game_Done = 1; ;";
 

@@ -92,7 +92,9 @@ namespace SpectatorFootball.League
 
                 logger.Debug("i=" + i + " Pos=" + Pos.ToString());
 
-                Player p = Player_Helper.CreatePlayer(Pos, bNewLeage, false,true, season_id);
+                Player_NamesDAO pnDAO = new Player_NamesDAO();
+                HomeTownsDAO htDAO = new HomeTownsDAO();
+                Player p = Player_Helper.CreatePlayer(Pos, bNewLeage, false,true, season_id, pnDAO, htDAO);
                 r.Add(p);
             }
 

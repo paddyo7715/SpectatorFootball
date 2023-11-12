@@ -674,7 +674,7 @@ namespace SpectatorFootball
             catch (Exception ex)
             {
                 Mouse.OverrideCursor = null;
-                logger.Error("Error Creating the Schedule form");
+                logger.Error("Error Showing Team Detail");
                 logger.Error(ex);
                 MessageBox.Show(CommonUtils.substr(ex.Message, 0, 100), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }

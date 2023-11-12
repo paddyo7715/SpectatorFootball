@@ -5,10 +5,11 @@ using System.Collections.Generic;
 using SpectatorFootball.Models;
 using System.Linq;
 using System.Data.Entity;
+using SpectatorFootball.DAO.Interfaces;
 
 namespace SpectatorFootball
 {
-    public class Player_NamesDAO
+    public class Player_NamesDAO : IPlayer_NamesDAO
     {
 
         public int AddFirstName(List<Potential_First_Names> FirstNames)

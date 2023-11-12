@@ -772,12 +772,12 @@ namespace SpectatorFootball.PenaltiesNS
             int Upper_Running_into_the_kciker = 1500;
             List<Game_Player> Player_list = new List<Game_Player>();
 
-            //Get all possible positions for presnap and this play
+            //Get all possible positions for post snap and this play
             List<Player_Action_State> Poss_Play_Types_List = Penalty_List.Where(x => x.Play_Timing == Play_Snap_Timing.DURING_PLAY &&
              x.Penalty_Play_Types.Contains(pe)).SelectMany(d => d.Player_Action_States).Distinct().ToList();
 
             //Only try to find a penalty if there is a penalty for this situation
-            if (Poss_Play_Types_List == null && Poss_Play_Types_List.Count() > 0)
+            if (Poss_Play_Types_List != null && Poss_Play_Types_List.Count() > 0)
             {
                 Penalty Roughing_The_Passer = Penalty_List.Where(x => x.code == Penalty_Codes.RD).First();
                 Penalty Pass_Interference_Def = Penalty_List.Where(x => x.code == Penalty_Codes.PI).First();
@@ -786,7 +786,7 @@ namespace SpectatorFootball.PenaltiesNS
                 Penalty Running_Into_the_Kicker = Penalty_List.Where(x => x.code == Penalty_Codes.RIK).First();
 
                 //Next let's check for possible Roughing the Passer
-                if (pResult.Defender_Knocks_Down_QB != null)
+                if (pResult.Defender_Knocks_Down_QB != null && pe == Play_Enum.PASS)
                 {
                     int t = (int) (101 - pResult.Defender_Knocks_Down_QB.p_and_r.pr.First().Sportsmanship_Ratings);
                     int rnd = CommonUtils.getRandomNum(1, Upper_Limit_Roughing_Passer);
@@ -796,7 +796,7 @@ namespace SpectatorFootball.PenaltiesNS
                         Penalty = Roughing_The_Passer;
                     }
                 }
-                else if (pResult.Defender_Close_to_Receiver != null)
+                else if (pResult.Defender_Close_to_Receiver != null && pe == Play_Enum.PASS)
                 {
                     int t = 0;
                     int rnd = 0;
@@ -818,7 +818,7 @@ namespace SpectatorFootball.PenaltiesNS
                         }
                     }
                 }
-                else if (pResult.Defender_Close_to_Kicker != null)
+                else if (pResult.Defender_Close_to_Kicker != null && pe == Play_Enum.PUNT)
                 {
                     int t = 0;
                     int rnd = 0;
@@ -841,8 +841,7 @@ namespace SpectatorFootball.PenaltiesNS
                     }
                 }
 
-
-                //No delay of game so llook for another presnap penalty
+                //No special penalty, so look for another presnap penalty
                 if (Penalty == null)
                 {
                     Player_list.AddRange(Offensive_Players);
@@ -852,6 +851,11 @@ namespace SpectatorFootball.PenaltiesNS
                     foreach (Game_Player p in Player_list)
                     {
                         long sp_num;
+
+                        Player_Action_State pa = getPlayerAction(Penalty_Player, pResult);
+
+                        if (!Poss_Play_Types_List.Contains(pa))
+                            continue;
 
                         if (p == pResult.Passer)
                             sp_num = (int)(app_Constants.SPORTSMANSHIP_ADJUSTER - p.p_and_r.pr.First().Sportsmanship_Ratings * app_Constants.PENALTY_UPPER_LIMIT_ADJ_QB);
@@ -948,7 +952,7 @@ namespace SpectatorFootball.PenaltiesNS
              x.Penalty_Play_Types.Contains(pe)).SelectMany(d => d.Player_Action_States).Distinct().ToList();
 
             //Only try to find a penalty if there is a penalty for this situation
-            if (Poss_Play_Types_List == null && Poss_Play_Types_List.Count() > 0)
+            if (Poss_Play_Types_List != null && Poss_Play_Types_List.Count() > 0)
             {
                 Penalty Delay_of_Game = Penalty_List.Where(x => x.code == Penalty_Codes.DG).First();
                 //Next let's check for possible delay of game penalty
@@ -984,6 +988,11 @@ namespace SpectatorFootball.PenaltiesNS
                     foreach (Game_Player p in Player_list)
                     {
                         long sp_num;
+
+                        Player_Action_State pa = getPlayerAction(Penalty_Player, pResult);
+
+                        if (!Poss_Play_Types_List.Contains(pa))
+                            continue;
 
                         if (p == pResult.Passer)
                             sp_num = (int)(app_Constants.SPORTSMANSHIP_ADJUSTER - p.p_and_r.pr.First().Sportsmanship_Ratings * app_Constants.PENALTY_UPPER_LIMIT_ADJ_QB);

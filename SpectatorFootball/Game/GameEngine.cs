@@ -367,12 +367,13 @@ namespace SpectatorFootball.GameNS
 
                 if (bAllowPenalties && Penalty_Helper.isNoPenaltyPlay(p_result, Offensive_Package.Play))
                 {
-                    p_result.Penalized_Player = Penalty_Helper.getPenaltyPlayer(Offensive_Players, Defensive_Players, p_result.Passer, p_result.Kicker, p_result.Punter);
+                    Tuple<Game_Player, Penalty> t = Penalty_Helper.PostSnap_Penalty(Offensive_Package.Play, Penalty_List,
+                        Offensive_Players, Defensive_Players, p_result);
+                    p_result.Penalized_Player = t.Item1;
+                    p_result.Penalty = t.Item2;
+
                     if (p_result.Penalized_Player != null)
                     {
-                        Player_Action_State pa_state = Penalty_Helper.getPlayerAction(p_result.Penalized_Player, p_result);
-                        p_result.Penalty = Penalty_Helper.getPenalty(Penalty_List, Offensive_Package.Play, pa_state);
-
                         bool bAway_Pen_Player = Away_Players.Any(x => x.p == p_result.Penalized_Player.p_and_r.p);
                         bool bHome_Pen_Player = Home_Players.Any(x => x.p == p_result.Penalized_Player.p_and_r.p);
                         Coach Penalty_Coach = null;

@@ -113,7 +113,10 @@ namespace SpectatorFootball.Services
                 //If a player could not be found then assign a new not very good, player
                 if (r == null)
                 {
-                    Player new_player = Player_Helper.CreatePlayer(Needed_pos[0], true,true,false, lls.season.ID);
+                    Player_NamesDAO pnDAO = new Player_NamesDAO();
+                    HomeTownsDAO htDAO = new HomeTownsDAO();
+
+                    Player new_player = Player_Helper.CreatePlayer(Needed_pos[0], true,true,false, lls.season.ID, pnDAO, htDAO);
                     //Set the season id on the player_rating, since it is not
                     //set from the method
                     Player_Ratings pr = new_player.Player_Ratings.First();

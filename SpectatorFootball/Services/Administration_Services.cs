@@ -89,33 +89,6 @@ namespace SpectatorFootball
             return r;
         }
 
-        public string getRandomHomeTown()
-        {
-            string r = null;
 
-            var htDAO = new HomeTownsDAO();
-            int tot_hometowns = htDAO.getTotalHomeTowns();
-
-            int tot_range = 0;
-            for (int i = 1; i <= tot_hometowns; i++)
-                tot_range += (tot_hometowns - i) + 1;
-
-            int rnd = CommonUtils.getRandomNum(1, tot_range);
-
-            int record_num = 0;
-            for (int i = 1; i <= tot_hometowns; i++)
-            {
-                record_num += (tot_hometowns - i) + 1;
-                if (rnd <= record_num)
-                {
-                    record_num = i;
-                    break;
-                }
-            }
-
-            r = htDAO.getHomeTownbyRecNum(record_num);
-
-            return r;
-        }
     }
 }

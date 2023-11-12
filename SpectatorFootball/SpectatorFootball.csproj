@@ -175,6 +175,8 @@
     <Compile Include="DAO\GameDAO.cs" />
     <Compile Include="DAO\HomeTownsDAO.cs" />
     <Compile Include="DAO\InjuriesDAO.cs" />
+    <Compile Include="DAO\Interfaces\IHomeTownsDAO.cs" />
+    <Compile Include="DAO\Interfaces\IPlayer_NamesDAO.cs" />
     <Compile Include="DAO\PlayoffsDAO.cs" />
     <Compile Include="DAO\ScheduleDAO.cs" />
     <Compile Include="DAO\TeamDAO.cs" />
@@ -215,7 +217,7 @@
     <Compile Include="Game\Graphics_Game_Player.cs" />
     <Compile Include="Game\Kicking_Helper.cs" />
     <Compile Include="Game\Playstub_Fumble.cs" />
-    <Compile Include="Game\Play_Kickoff_Normal.cs" />
+    <Compile Include="Game\Plays\Play_Kickoff_Normal.cs" />
     <Compile Include="Game\Play_Result.cs" />
     <Compile Include="Game\Play_Stage.cs" />
     <Compile Include="Game\Play_Struct.cs" />

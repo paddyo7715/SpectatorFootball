@@ -4,6 +4,7 @@ using SpectatorFootball.Models;
 using SpectatorFootball.Enum;
 using log4net;
 using SpectatorFootball.Common;
+using SpectatorFootball.DAO.Interfaces;
 
 namespace SpectatorFootball.PlayerNS
 {
@@ -11,13 +12,11 @@ namespace SpectatorFootball.PlayerNS
     public class Player_Helper
     {
         private static ILog logger = LogManager.GetLogger("RollingFile");
-        public static Player CreatePlayer(Player_Pos pos, Boolean bNewLeage,bool bCrappify,bool bDraftable, long season_id)
+        public static Player CreatePlayer(Player_Pos pos, Boolean bNewLeage,bool bCrappify,bool bDraftable, long season_id, IPlayer_NamesDAO pnDAO, IHomeTownsDAO ht_DAO)
         {
             Player r = new Player();
 
             string[] PlayerName = null;
-
-            Player_NamesDAO pnDAO = new Player_NamesDAO();
 
             // Create a player name and only leave the while loop when the first name
             // does not equal the last name
@@ -26,7 +25,6 @@ namespace SpectatorFootball.PlayerNS
                 PlayerName = pnDAO.CreatePlayerName();
                 if (PlayerName[0].ToUpper() == PlayerName[1].ToUpper())
                     continue;
-
                 break;
             }
 
@@ -56,6 +54,7 @@ namespace SpectatorFootball.PlayerNS
 
             logger.Debug("Player Height and Weight Created");
 
+            
             r.Handedness = getHandedness();
 
             r.First_Name = PlayerName[0];
@@ -63,9 +62,8 @@ namespace SpectatorFootball.PlayerNS
 
             r.Age = age;
             r.Pos = (int)pos;
-            
-            Administration_Services adms = new Administration_Services();
-            string HomeTown = adms.getRandomHomeTown();
+
+            string HomeTown = getRandomHomeTown(ht_DAO);
 
             r.HomeTown = HomeTown;
 
@@ -1095,5 +1093,33 @@ namespace SpectatorFootball.PlayerNS
 
             return r;
         }
+        public static string getRandomHomeTown(IHomeTownsDAO htDAO)
+        {
+            string r = null;
+
+            int tot_hometowns = htDAO.getTotalHomeTowns();
+
+            int tot_range = 0;
+            for (int i = 1; i <= tot_hometowns; i++)
+                tot_range += (tot_hometowns - i) + 1;
+
+            int rnd = CommonUtils.getRandomNum(1, tot_range);
+
+            int record_num = 0;
+            for (int i = 1; i <= tot_hometowns; i++)
+            {
+                record_num += (tot_hometowns - i) + 1;
+                if (rnd <= record_num)
+                {
+                    record_num = i;
+                    break;
+                }
+            }
+
+            r = htDAO.getHomeTownbyRecNum(record_num);
+
+            return r;
+        }
+
     }
 }

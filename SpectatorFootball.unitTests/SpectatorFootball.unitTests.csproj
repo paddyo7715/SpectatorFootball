@@ -47,9 +47,13 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Coach\CoachTEST.cs" />
+    <Compile Include="DAOStubs\HomeTownsDAOTEST.cs" />
+    <Compile Include="DAOStubs\Player_NamesDAOTEST.cs" />
     <Compile Include="Game_Engine_Helper\Game_Engine_HelperTEST.cs" />
     <Compile Include="Helper_Classes\Help_Class.cs" />
     <Compile Include="Penalties\Penalty_HelperTEST.cs" />

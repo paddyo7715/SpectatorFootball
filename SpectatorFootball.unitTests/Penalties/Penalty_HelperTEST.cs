@@ -8,6 +8,7 @@ using SpectatorFootball.PlayerNS;
 using SpectatorFootball.Enum;
 using SpectatorFootball.GameNS;
 using System.Linq;
+using SpectatorFootball.unitTests.Helper_ClassesNS;
 
 namespace SpectatorFootball.unitTests.Penalties
 {
@@ -186,14 +187,35 @@ namespace SpectatorFootball.unitTests.Penalties
 
         [TestCategory("Penalties")]
         [TestMethod]
-        public void getPenalty_Kickoff_Kickoff_Return_Team()
+        public void getPostSnapPenalty_Kickoff_Freekick()
         {
-            int Num_Tries = 300;
             int KIB = 0;
             int UC = 0;
             int UR = 0;
             int FM = 0;
 
+            Play_Result pResult = new Play_Result(){ at = 11, ht = 22 };
+            int Num_Tries = 1000;
+            Penalty penalty = null;
+            Game_Player Penalty_Player = null;
+
+            List<Game_Player> Offensive_Players = Help_Class.getRandomPlayersforPlay(11);
+            List<Game_Player> Defensive_Players = Help_Class.getRandomPlayersforPlay(22);
+
+            for (int i = 0; i < 11; i++)
+            {
+                if (i == 0)
+                {
+                    pResult.Kicker = Defensive_Players[i];
+                    pResult.Returner = Offensive_Players[i];
+                }
+                else
+                {
+                    pResult.Kick_Returners.Add(Defensive_Players[i]);
+                    pResult.Kick_Defenders.Add(Offensive_Players[i]);
+                }
+            }
+
             for (int i = 0; i < Num_Tries; i++)
             {
                 int n = CommonUtils.getRandomNum(1, 2);
@@ -208,344 +230,217 @@ namespace SpectatorFootball.unitTests.Penalties
                         break;
                 }
 
-                Penalty p = Penalty_Helper.getPenalty(this.penaltyList, pe, Player_Action_State.KRT);
+                Tuple<Game_Player, Penalty> t = Penalty_Helper.PostSnap_Penalty(pe, this.penaltyList,
+                    Offensive_Players, Defensive_Players, pResult);
+                Penalty_Player = t.Item1;
+                penalty = t.Item2;
 
-                if (p.code == Penalty_Codes.KIB)
+                if (penalty == null) continue;
+
+                if (penalty.code == Penalty_Codes.KIB)
                     KIB++;
-                else if (p.code == Penalty_Codes.UC)
+                else if (penalty.code == Penalty_Codes.UC)
                     UC++;
-                else if (p.code == Penalty_Codes.UR)
+                else if (penalty.code == Penalty_Codes.UR)
                     UR++;
-                else if (p.code == Penalty_Codes.FM)
+                else if (penalty.code == Penalty_Codes.FM)
                     FM++;
                 else
-                    throw new Exception("Incorrect Penalty Code");
+                    throw new Exception("Not all penalties encountered");
+
+                if (!penalty.Penalty_Play_Types.Contains(pe))
+                    throw new Exception("Not all penalties encountered");
+
+                if (penalty.Play_Timing != Play_Snap_Timing.DURING_PLAY)
+                    throw new Exception("Penalty is not presnap");
+
+                Player_Action_State pa = Penalty_Helper.getPlayerAction(Penalty_Player, pResult);
+                if (!penalty.Player_Action_States.Contains(pa))
+                    throw new Exception("Penalty player should not have gotten this penalty");
             }
 
-            Assert.IsTrue(KIB > 0 && UC > 0 && UR > 0 && FM > 0);
+            if (KIB == 0 || UC == 0 || UR == 0 || FM == 0)
+                throw new Exception("Incorrect Penalty Code");
+
+            Assert.IsTrue(true);
         }
+
         [TestCategory("Penalties")]
         [TestMethod]
-        public void getPenalty_Kickoff_Kickoff_Returner()
+        public void getPostSnapPenalty_OnsideKickoff()
         {
-            int Num_Tries = 300;
             int UC = 0;
             int UR = 0;
             int FM = 0;
 
-            for (int i = 0; i < Num_Tries; i++)
+            Play_Result pResult = new Play_Result() { at = 11, ht = 22 };
+            int Num_Tries = 1000;
+            Penalty penalty = null;
+            Game_Player Penalty_Player = null;
+
+            List<Game_Player> Offensive_Players = Help_Class.getRandomPlayersforPlay(11);
+            List<Game_Player> Defensive_Players = Help_Class.getRandomPlayersforPlay(22);
+
+            for (int i = 0; i < 11; i++)
             {
-                int n = CommonUtils.getRandomNum(1, 2);
-                Play_Enum pe = Play_Enum.KICKOFF_NORMAL;
-                switch (n)
+                if (i == 0)
                 {
-                    case 1:
-                        pe = Play_Enum.KICKOFF_NORMAL;
-                        break;
-                    case 2:
-                        pe = Play_Enum.FREE_KICK;
-                        break;
+                    pResult.Kicker = Defensive_Players[i];
+                    pResult.Returner = Offensive_Players[i];
                 }
-
-                Penalty p = Penalty_Helper.getPenalty(this.penaltyList, pe, Player_Action_State.KR);
-
-                if (p.code == Penalty_Codes.UC)
-                    UC++;
-                else if (p.code == Penalty_Codes.UR)
-                    UR++;
-                else if (p.code == Penalty_Codes.FM)
-                    FM++;
                 else
-                    throw new Exception("Incorrect Penalty Code");
-            }
-
-            Assert.IsTrue(UC > 0 && UR > 0 && FM > 0);
-        }
-
-        [TestCategory("Penalties")]
-        [TestMethod]
-        public void getPenalty_Kickoff_Kickoff_Kicker()
-        {
-            int Num_Tries = 300;
-            int UC = 0;
-            int UR = 0;
-            int FM = 0;
-
-            for (int i = 0; i < Num_Tries; i++)
-            {
-                int n = CommonUtils.getRandomNum(1, 2);
-                Play_Enum pe = Play_Enum.KICKOFF_NORMAL;
-                switch (n)
                 {
-                    case 1:
-                        pe = Play_Enum.KICKOFF_NORMAL;
-                        break;
-                    case 2:
-                        pe = Play_Enum.FREE_KICK;
-                        break;
+                    pResult.Kick_Returners.Add(Defensive_Players[i]);
+                    pResult.Kick_Defenders.Add(Offensive_Players[i]);
                 }
-
-                Penalty p = Penalty_Helper.getPenalty(this.penaltyList, pe, Player_Action_State.K);
-                if (p.code == Penalty_Codes.UC)
-                    UC++;
-                else if (p.code == Penalty_Codes.UR)
-                    UR++;
-                else if (p.code == Penalty_Codes.FM)
-                    FM++;
-                else
-                    throw new Exception("Incorrect Penalty Code");
             }
-
-            Assert.IsTrue(UC > 0 && UR > 0 && FM > 0);
-        }
-        [TestCategory("Penalties")]
-        [TestMethod]
-        public void getPenalty_Kickoff_Kickoff_Defense()
-        {
-            int Num_Tries = 300;
-            int UC = 0;
-            int UR = 0;
-            int FM = 0;
-
-            for (int i = 0; i < Num_Tries; i++)
-            {
-                int n = CommonUtils.getRandomNum(1, 2);
-                Play_Enum pe = Play_Enum.KICKOFF_NORMAL;
-                switch (n)
-                {
-                    case 1:
-                        pe = Play_Enum.KICKOFF_NORMAL;
-                        break;
-                    case 2:
-                        pe = Play_Enum.FREE_KICK;
-                        break;
-                }
-
-                Penalty p = Penalty_Helper.getPenalty(this.penaltyList, pe, Player_Action_State.KDT);
-                if (p.code == Penalty_Codes.UC)
-                    UC++;
-                else if (p.code == Penalty_Codes.UR)
-                    UR++;
-                else if (p.code == Penalty_Codes.FM)
-                    FM++;
-                else
-                    throw new Exception("Incorrect Penalty Code");
-            }
-
-            Assert.IsTrue(UC > 0 && UR > 0 && FM > 0);
-        }
-        [TestCategory("Penalties")]
-        [TestMethod]
-        public void getPenalty_Onside_kickoff_Returner()
-        {
-            int Num_Tries = 300;
-            int UC = 0;
-            int UR = 0;
-            int FM = 0;
 
             for (int i = 0; i < Num_Tries; i++)
             {
                 Play_Enum pe = Play_Enum.KICKOFF_ONSIDES;
-                Penalty p = Penalty_Helper.getPenalty(this.penaltyList, pe, Player_Action_State.KR);
 
-                if (p.code == Penalty_Codes.UC)
+                Tuple<Game_Player, Penalty> t = Penalty_Helper.PostSnap_Penalty(pe, this.penaltyList,
+                    Offensive_Players, Defensive_Players, pResult);
+                Penalty_Player = t.Item1;
+                penalty = t.Item2;
+
+                if (penalty == null) continue;
+
+                if (penalty.code == Penalty_Codes.UC)
                     UC++;
-                else if (p.code == Penalty_Codes.UR)
+                else if (penalty.code == Penalty_Codes.UR)
                     UR++;
-                else if (p.code == Penalty_Codes.FM)
+                else if (penalty.code == Penalty_Codes.FM)
                     FM++;
                 else
-                    throw new Exception("Incorrect Penalty Code");
+                    throw new Exception("Not all penalties encountered");
+
+                if (!penalty.Penalty_Play_Types.Contains(pe))
+                    throw new Exception("Not all penalties encountered");
+
+                if (penalty.Play_Timing != Play_Snap_Timing.DURING_PLAY)
+                    throw new Exception("Penalty is not presnap");
+
+                Player_Action_State pa = Penalty_Helper.getPlayerAction(Penalty_Player, pResult);
+                if (!penalty.Player_Action_States.Contains(pa))
+                    throw new Exception("Penalty player should not have gotten this penalty");
             }
 
-            Assert.IsTrue(UC > 0 && UR > 0 && FM > 0);
+            if (UC == 0 || UR == 0 || FM == 0)
+                throw new Exception("Incorrect Penalty Code");
+
+            Assert.IsTrue(true);
         }
 
         [TestCategory("Penalties")]
         [TestMethod]
-        public void getPenalty_Onside_Kickoff_Kicker()
+        public void getPostSnapPenalty_Punt()
         {
-            int Num_Tries = 300;
-            int UC = 0;
-            int UR = 0;
-            int FM = 0;
-
-            for (int i = 0; i < Num_Tries; i++)
-            {
-                Play_Enum pe = Play_Enum.KICKOFF_NORMAL;
-                Penalty p = Penalty_Helper.getPenalty(this.penaltyList, pe, Player_Action_State.K);
-                if (p.code == Penalty_Codes.UC)
-                    UC++;
-                else if (p.code == Penalty_Codes.UR)
-                    UR++;
-                else if (p.code == Penalty_Codes.FM)
-                    FM++;
-                else
-                    throw new Exception("Incorrect Penalty Code");
-            }
-
-            Assert.IsTrue(UC > 0 && UR > 0 && FM > 0);
-        }
-        [TestCategory("Penalties")]
-        [TestMethod]
-        public void getPenalty_Onside_Kickoff_Defense()
-        {
-            int Num_Tries = 300;
-            int UC = 0;
-            int UR = 0;
-            int FM = 0;
-
-            for (int i = 0; i < Num_Tries; i++)
-            {
-                Play_Enum pe = Play_Enum.KICKOFF_ONSIDES;
-                Penalty p = Penalty_Helper.getPenalty(this.penaltyList, pe, Player_Action_State.KDT);
-                if (p.code == Penalty_Codes.UC)
-                    UC++;
-                else if (p.code == Penalty_Codes.UR)
-                    UR++;
-                else if (p.code == Penalty_Codes.FM)
-                    FM++;
-                else
-                    throw new Exception("Incorrect Penalty Code");
-            }
-
-            Assert.IsTrue(UC > 0 && UR > 0 && FM > 0);
-        }
-        [TestCategory("Penalties")]
-        [TestMethod]
-        public void getPenalty_Punt_Return_Team()
-        {
-            int Num_Tries = 300;
             int PIB = 0;
-            int UC = 0;
-            int UR = 0;
-            int FM = 0;
             int RK = 0;
             int RIK = 0;
+            int UC = 0;
+            int UR = 0;
+            int FM = 0;
+
+            Play_Result pResult = new Play_Result() { at = 11, ht = 22 };
+            int Num_Tries = 10000;
+            Penalty penalty = null;
+            Game_Player Penalty_Player = null;
+
+            List<Game_Player> Offensive_Players = Help_Class.getRandomPlayersforPlay(11);
+            List<Game_Player> Defensive_Players = Help_Class.getRandomPlayersforPlay(22);
+
+            for (int i = 0; i < 11; i++)
+            {
+                if (i == 0)
+                    pResult.Punter = Defensive_Players[i];
+                else
+                    pResult.Punt_Defenders.Add(Defensive_Players[i]);
+            }
+
+            for (int i = 0; i < 11; i++)
+            {
+                if (i == 0)
+                    pResult.Returner = Offensive_Players[i];
+                else
+                    pResult.Punt_Returners.Add(Offensive_Players[i]);
+            }
 
             for (int i = 0; i < Num_Tries; i++)
             {
                 Play_Enum pe = Play_Enum.PUNT;
 
-                Penalty p = Penalty_Helper.getPenalty(this.penaltyList, pe, Player_Action_State.PRT);
-                if (p.code == Penalty_Codes.PIB)
+                if (i % 10 == 0)
+                    pResult.Defender_Close_to_Kicker = Offensive_Players[8];
+
+                Tuple<Game_Player, Penalty> t = Penalty_Helper.PostSnap_Penalty(pe, this.penaltyList,
+                    Offensive_Players, Defensive_Players, pResult);
+                Penalty_Player = t.Item1;
+                penalty = t.Item2;
+
+                if (penalty == null) continue;
+
+                if (penalty.code == Penalty_Codes.PIB)
                     PIB++;
-                else if (p.code == Penalty_Codes.UC)
-                    UC++;
-                else if (p.code == Penalty_Codes.UR)
-                    UR++;
-                else if (p.code == Penalty_Codes.FM)
-                    FM++;
-                else if (p.code == Penalty_Codes.RK)
+                else if (penalty.code == Penalty_Codes.RK)
                     RK++;
-                else if (p.code == Penalty_Codes.RIK)
+                else if (penalty.code == Penalty_Codes.RIK)
                     RIK++;
-                else
-                    throw new Exception("Incorrect Penalty Code");
-            }
-
-            Assert.IsTrue(RIK > 0 && RK > 0 && PIB > 0 && UC > 0 && UR > 0 && FM > 0);
-        }
-
-        [TestCategory("Penalties")]
-        [TestMethod]
-        public void getPenalty_Punt_Retuner()
-        {
-            int Num_Tries = 300;
-            int UC = 0;
-            int UR = 0;
-            int FM = 0;
-
-            for (int i = 0; i < Num_Tries; i++)
-            {
-                Play_Enum pe = Play_Enum.PUNT;
-
-                Penalty p = Penalty_Helper.getPenalty(this.penaltyList, pe, Player_Action_State.PR);
-                if (p.code == Penalty_Codes.UC)
+                else if (penalty.code == Penalty_Codes.UC)
                     UC++;
-                else if (p.code == Penalty_Codes.UR)
+                else if (penalty.code == Penalty_Codes.UR)
                     UR++;
-                else if (p.code == Penalty_Codes.FM)
+                else if (penalty.code == Penalty_Codes.FM)
                     FM++;
                 else
-                    throw new Exception("Incorrect Penalty Code");
+                    throw new Exception("Not all penalties encountered");
+
+                if (!penalty.Penalty_Play_Types.Contains(pe))
+                    throw new Exception("Not all penalties encountered");
+
+                if (penalty.Play_Timing != Play_Snap_Timing.DURING_PLAY)
+                    throw new Exception("Penalty is not presnap");
+
+                Player_Action_State pa = Penalty_Helper.getPlayerAction(Penalty_Player, pResult);
+                if (!penalty.Player_Action_States.Contains(pa))
+                    throw new Exception("Penalty player should not have gotten this penalty");
             }
 
-            Assert.IsTrue(UC > 0 && UR > 0 && FM > 0);
+            if (PIB == 0 || RK == 0 || RIK == 0 || UC == 0 || UR == 0 || FM == 0)
+                throw new Exception("Incorrect Penalty Code");
+
+            Assert.IsTrue(true);
         }
 
         [TestCategory("Penalties")]
         [TestMethod]
-        public void getPenalty_Punt_Tackling_Team()
+        public void getPostSnapPenalty_FGXP()
         {
-            int Num_Tries = 300;
             int UC = 0;
             int UR = 0;
             int FM = 0;
 
-            for (int i = 0; i < Num_Tries; i++)
+            Play_Result pResult = new Play_Result() { at = 11, ht = 22 };
+            int Num_Tries = 10000;
+            Penalty penalty = null;
+            Game_Player Penalty_Player = null;
+
+            List<Game_Player> Offensive_Players = Help_Class.getRandomPlayersforPlay(11);
+            List<Game_Player> Defensive_Players = Help_Class.getRandomPlayersforPlay(22);
+
+            for (int i = 0; i < 11; i++)
             {
-                Play_Enum pe = Play_Enum.PUNT;
-
-                Penalty p = Penalty_Helper.getPenalty(this.penaltyList, pe, Player_Action_State.PDT);
-                if (p.code == Penalty_Codes.UC)
-                    UC++;
-                else if (p.code == Penalty_Codes.UR)
-                    UR++;
-                else if (p.code == Penalty_Codes.FM)
-                    FM++;
+                if (i == 0)
+                    pResult.Kicker = Defensive_Players[i];
                 else
-                    throw new Exception("Incorrect Penalty Code");
+                    pResult.FieldGaol_Kicking_Team.Add(Defensive_Players[i]);
             }
 
-            Assert.IsTrue(UC > 0 && UR > 0 && FM > 0);
-        }
-
-        [TestCategory("Penalties")]
-        [TestMethod]
-        public void getPenalty_FG_FG_Team()
-        {
-            int Num_Tries = 300;
-            int UC = 0;
-            int UR = 0;
-            int FM = 0;
- 
-            for (int i = 0; i < Num_Tries; i++)
+            for (int i = 0; i < 11; i++)
             {
-                int n = CommonUtils.getRandomNum(1, 2);
-                Play_Enum pe = Play_Enum.FIELD_GOAL;
-                switch (n)
-                {
-                    case 1:
-                        pe = Play_Enum.FIELD_GOAL;
-                        break;
-                    case 2:
-                        pe = Play_Enum.EXTRA_POINT;
-                        break;
-                }
-
-                Penalty p = Penalty_Helper.getPenalty(this.penaltyList, pe, Player_Action_State.FGT);
-                if (p.code == Penalty_Codes.UC)
-                    UC++;
-                else if (p.code == Penalty_Codes.UR)
-                    UR++;
-                else if (p.code == Penalty_Codes.FM)
-                    FM++;
-                else
-                    throw new Exception("Incorrect Penalty Code");
+                   pResult.Field_Goal_Defenders.Add(Offensive_Players[i]);
             }
-
-            Assert.IsTrue(UC > 0 && UR > 0 && FM > 0);
-        }
-
-        [TestCategory("Penalties")]
-        [TestMethod]
-        public void getPenalty_FG_Kicker()
-        {
-            int Num_Tries = 300;
-            int UC = 0;
-            int UR = 0;
-            int FM = 0;
 
             for (int i = 0; i < Num_Tries; i++)
             {
@@ -561,587 +456,87 @@ namespace SpectatorFootball.unitTests.Penalties
                         break;
                 }
 
-                Penalty p = Penalty_Helper.getPenalty(this.penaltyList, pe, Player_Action_State.K);
-                if (p.code == Penalty_Codes.UC)
+                Tuple<Game_Player, Penalty> t = Penalty_Helper.PostSnap_Penalty(pe, this.penaltyList,
+                    Offensive_Players, Defensive_Players, pResult);
+                Penalty_Player = t.Item1;
+                penalty = t.Item2;
+
+                if (penalty == null) continue;
+
+                if (penalty.code == Penalty_Codes.UC)
                     UC++;
-                else if (p.code == Penalty_Codes.UR)
+                else if (penalty.code == Penalty_Codes.UR)
                     UR++;
-                else if (p.code == Penalty_Codes.FM)
+                else if (penalty.code == Penalty_Codes.FM)
                     FM++;
                 else
-                    throw new Exception("Incorrect Penalty Code");
+                    throw new Exception("Not all penalties encountered");
+
+                if (!penalty.Penalty_Play_Types.Contains(pe))
+                    throw new Exception("Not all penalties encountered");
+
+                if (penalty.Play_Timing != Play_Snap_Timing.DURING_PLAY)
+                    throw new Exception("Penalty is not presnap");
+
+                Player_Action_State pa = Penalty_Helper.getPlayerAction(Penalty_Player, pResult);
+                if (!penalty.Player_Action_States.Contains(pa))
+                    throw new Exception("Penalty player should not have gotten this penalty");
             }
 
-            Assert.IsTrue(UC > 0 && UR > 0 && FM > 0);
+            if (UC == 0 || UR == 0 || FM == 0)
+                throw new Exception("Incorrect Penalty Code");
+
+            Assert.IsTrue(true);
         }
 
         [TestCategory("Penalties")]
         [TestMethod]
-        public void getPenalty_FG_FG_Defense()
+        public void getPostSnapPenalty_PASS()
         {
-            int Num_Tries = 300;
-            int UC = 0;
-            int UR = 0;
-            int FM = 0;
-
-            for (int i = 0; i < Num_Tries; i++)
-            {
-                int n = CommonUtils.getRandomNum(1, 2);
-                Play_Enum pe = Play_Enum.KICKOFF_NORMAL;
-                switch (n)
-                {
-                    case 1:
-                        pe = Play_Enum.FIELD_GOAL;
-                        break;
-                    case 2:
-                        pe = Play_Enum.EXTRA_POINT;
-                        break;
-                }
-
-                Penalty p = Penalty_Helper.getPenalty(this.penaltyList, pe, Player_Action_State.FGD);
-                if (p.code == Penalty_Codes.UC)
-                    UC++;
-                else if (p.code == Penalty_Codes.UR)
-                    UR++;
-                else if (p.code == Penalty_Codes.FM)
-                    FM++;
-                else
-                    throw new Exception("Incorrect Penalty Code");
-            }
-
-            Assert.IsTrue(UC > 0 && UR > 0 && FM > 0);
-        }
-
-        [TestCategory("Penalties")]
-        [TestMethod]
-        public void getPenalty_Run_Offense_Play_Passer()
-        {
-            int Num_Tries = 300;
-            int UC = 0;
-            int UR = 0;
-            int FM = 0;
-
-            for (int i = 0; i < Num_Tries; i++)
-            {
-                int n = CommonUtils.getRandomNum(1, 4);
-                Play_Enum pe = Play_Enum.RUN;
-                switch (n)
-                {
-                    case 1:
-                        pe = Play_Enum.RUN;
-                        break;
-                    case 2:
-                        pe = Play_Enum.SCRIM_PLAY_1XP_RUN;
-                        break;
-                    case 3:
-                        pe = Play_Enum.SCRIM_PLAY_2XP_RUN;
-                        break;
-                    case 4:
-                        pe = Play_Enum.SCRIM_PLAY_3XP_RUN;
-                        break;
-                }
-
-                Penalty p = Penalty_Helper.getPenalty(this.penaltyList, pe, Player_Action_State.PAS);
-                if (p.code == Penalty_Codes.UC)
-                    UC++;
-                else if (p.code == Penalty_Codes.UR)
-                    UR++;
-                else if (p.code == Penalty_Codes.FM)
-                    FM++;
-                else
-                    throw new Exception("Incorrect Penalty Code");
-            }
-
-            Assert.IsTrue(UC > 0 && UR > 0 && FM > 0);
-        }
-        [TestCategory("Penalties")]
-        [TestMethod]
-        public void getPenalty_Run_Offense_Play_Ball_Runners()
-        {
-            int Num_Tries = 300;
-            int UC = 0;
-            int UR = 0;
-            int FM = 0;
-            int IHO = 0;
-
-            for (int i = 0; i < Num_Tries; i++)
-            {
-                int n = CommonUtils.getRandomNum(1, 4);
-                Play_Enum pe = Play_Enum.RUN;
-                switch (n)
-                {
-                    case 1:
-                        pe = Play_Enum.RUN;
-                        break;
-                    case 2:
-                        pe = Play_Enum.SCRIM_PLAY_1XP_RUN;
-                        break;
-                    case 3:
-                        pe = Play_Enum.SCRIM_PLAY_2XP_RUN;
-                        break;
-                    case 4:
-                        pe = Play_Enum.SCRIM_PLAY_3XP_RUN;
-                        break;
-                }
-
-                Penalty p = Penalty_Helper.getPenalty(this.penaltyList, pe, Player_Action_State.BRN);
-                if (p.code == Penalty_Codes.UC)
-                    UC++;
-                else if (p.code == Penalty_Codes.UR)
-                    UR++;
-                else if (p.code == Penalty_Codes.FM)
-                    FM++;
-                else if (p.code == Penalty_Codes.IHO)
-                    IHO++;
-                else
-                    throw new Exception("Incorrect Penalty Code");
-            }
-
-            Assert.IsTrue(IHO > 0 && UC > 0 && UR > 0 && FM > 0);
-        }
-
-        [TestCategory("Penalties")]
-        [TestMethod]
-        public void getPenalty_Run_Offense_Play_Pass_Catchers()
-        {
-            int Num_Tries = 300;
-            int UC = 0;
-            int UR = 0;
-            int FM = 0;
-            int IHO = 0;
-
-            for (int i = 0; i < Num_Tries; i++)
-            {
-                int n = CommonUtils.getRandomNum(1, 4);
-                Play_Enum pe = Play_Enum.RUN;
-                switch (n)
-                {
-                    case 1:
-                        pe = Play_Enum.RUN;
-                        break;
-                    case 2:
-                        pe = Play_Enum.SCRIM_PLAY_1XP_RUN;
-                        break;
-                    case 3:
-                        pe = Play_Enum.SCRIM_PLAY_2XP_RUN;
-                        break;
-                    case 4:
-                        pe = Play_Enum.SCRIM_PLAY_3XP_RUN;
-                        break;
-                }
-
-                Penalty p = Penalty_Helper.getPenalty(this.penaltyList, pe, Player_Action_State.PC);
-                if (p.code == Penalty_Codes.UC)
-                    UC++;
-                else if (p.code == Penalty_Codes.UR)
-                    UR++;
-                else if (p.code == Penalty_Codes.FM)
-                    FM++;
-                else if (p.code == Penalty_Codes.IHO)
-                    IHO++;
-                else
-                    throw new Exception("Incorrect Penalty Code");
-            }
-
-            Assert.IsTrue(IHO > 0 && UC > 0 && UR > 0 && FM > 0);
-        }
-
-        [TestCategory("Penalties")]
-        [TestMethod]
-        public void getPenalty_Run_Offense_Play_Rush_Blockers()
-        {
-            int Num_Tries = 300;
-             int IHO = 0;
-            int UC = 0;
-            int UR = 0;
-            int FM = 0;
-
-            for (int i = 0; i < Num_Tries; i++)
-            {
-                int n = CommonUtils.getRandomNum(1, 4);
-                Play_Enum pe = Play_Enum.RUN;
-                switch (n)
-                {
-                    case 1:
-                        pe = Play_Enum.RUN;
-                        break;
-                    case 2:
-                        pe = Play_Enum.SCRIM_PLAY_1XP_RUN;
-                        break;
-                    case 3:
-                        pe = Play_Enum.SCRIM_PLAY_2XP_RUN;
-                        break;
-                    case 4:
-                        pe = Play_Enum.SCRIM_PLAY_3XP_RUN;
-                        break;
-                }
-
-                Penalty p = Penalty_Helper.getPenalty(this.penaltyList, pe, Player_Action_State.RB);
-                if (p.code == Penalty_Codes.UC)
-                    UC++;
-                else if (p.code == Penalty_Codes.UR)
-                    UR++;
-                else if (p.code == Penalty_Codes.FM)
-                    FM++;
-                else if (p.code == Penalty_Codes.IHO)
-                    IHO++;
-                else
-                    throw new Exception("Incorrect Penalty Code");
-            }
-
-            Assert.IsTrue(IHO > 0 && UC > 0 && UR > 0 && FM > 0);
-        }
-
-        [TestCategory("Penalties")]
-        [TestMethod]
-        public void getPenalty_Run_Offense_Play_Rush_Defenders()
-        {
-            int Num_Tries = 300;
-             int IH = 0;
-            int UC = 0;
-            int UR = 0;
-            int FM = 0;
-
-            for (int i = 0; i < Num_Tries; i++)
-            {
-                int n = CommonUtils.getRandomNum(1, 4);
-                Play_Enum pe = Play_Enum.RUN;
-                switch (n)
-                {
-                    case 1:
-                        pe = Play_Enum.RUN;
-                        break;
-                    case 2:
-                        pe = Play_Enum.SCRIM_PLAY_1XP_RUN;
-                        break;
-                    case 3:
-                        pe = Play_Enum.SCRIM_PLAY_2XP_RUN;
-                        break;
-                    case 4:
-                        pe = Play_Enum.SCRIM_PLAY_3XP_RUN;
-                        break;
-                }
-
-                Penalty p = Penalty_Helper.getPenalty(this.penaltyList, pe, Player_Action_State.RD);
-                if (p.code == Penalty_Codes.UC)
-                    UC++;
-                else if (p.code == Penalty_Codes.UR)
-                    UR++;
-                else if (p.code == Penalty_Codes.FM)
-                    FM++;
-                else if (p.code == Penalty_Codes.IH)
-                    IH++;
-                else
-                    throw new Exception("Incorrect Penalty Code");
-            }
-
-            Assert.IsTrue(IH > 0 && UC > 0 && UR > 0 && FM > 0);
-        }
-
-        [TestCategory("Penalties")]
-        [TestMethod]
-        public void getPenalty_Run_Offense_Play_Pass_Defenders()
-        {
-            int Num_Tries = 300;
-               int UC = 0;
-            int UR = 0;
-            int FM = 0;
-
-            for (int i = 0; i < Num_Tries; i++)
-            {
-                int n = CommonUtils.getRandomNum(1, 4);
-                Play_Enum pe = Play_Enum.RUN;
-                switch (n)
-                {
-                    case 1:
-                        pe = Play_Enum.RUN;
-                        break;
-                    case 2:
-                        pe = Play_Enum.SCRIM_PLAY_1XP_RUN;
-                        break;
-                    case 3:
-                        pe = Play_Enum.SCRIM_PLAY_2XP_RUN;
-                        break;
-                    case 4:
-                        pe = Play_Enum.SCRIM_PLAY_3XP_RUN;
-                        break;
-                }
-
-                Penalty p = Penalty_Helper.getPenalty(this.penaltyList, pe, Player_Action_State.PD);
-                if (p.code == Penalty_Codes.UC)
-                    UC++;
-                else if (p.code == Penalty_Codes.UR)
-                    UR++;
-                else if (p.code == Penalty_Codes.FM)
-                    FM++;
-                else
-                    throw new Exception("Incorrect Penalty Code");
-            }
-
-            Assert.IsTrue(UC > 0 && UR > 0 && FM > 0);
-        }
-
-        [TestCategory("Penalties")]
-        [TestMethod]
-        public void getPenalty_Pass_Offense_Play_Passer()
-        {
-            int Num_Tries = 300;
-            int UC = 0;
-            int UR = 0;
-            int FM = 0;
-
-            for (int i = 0; i < Num_Tries; i++)
-            {
-                int n = CommonUtils.getRandomNum(1, 4);
-                Play_Enum pe = Play_Enum.PASS;
-                switch (n)
-                {
-                    case 1:
-                        pe = Play_Enum.PASS;
-                        break;
-                    case 2:
-                        pe = Play_Enum.SCRIM_PLAY_1XP_PASS;
-                        break;
-                    case 3:
-                        pe = Play_Enum.SCRIM_PLAY_2XP_PASS;
-                        break;
-                    case 4:
-                        pe = Play_Enum.SCRIM_PLAY_3XP_PASS;
-                        break;
-                }
-
-                Penalty p = Penalty_Helper.getPenalty(this.penaltyList, pe, Player_Action_State.PAS);
-                if (p.code == Penalty_Codes.UC)
-                    UC++;
-                else if (p.code == Penalty_Codes.UR)
-                    UR++;
-                else if (p.code == Penalty_Codes.FM)
-                    FM++;
-                else
-                    throw new Exception("Incorrect Penalty Code");
-            }
-
-            Assert.IsTrue(UC > 0 && UR > 0 && FM > 0);
-        }
-
-        [TestCategory("Penalties")]
-        [TestMethod]
-        public void getPenalty_Pass_Offense_Play_Ball_Runners()
-        {
-            int Num_Tries = 300;
-            int UC = 0;
-            int UR = 0;
-            int FM = 0;
-            int IHO = 0;
-
-            for (int i = 0; i < Num_Tries; i++)
-            {
-                int n = CommonUtils.getRandomNum(1, 4);
-                Play_Enum pe = Play_Enum.PASS;
-                switch (n)
-                {
-                    case 1:
-                        pe = Play_Enum.PASS;
-                        break;
-                    case 2:
-                        pe = Play_Enum.SCRIM_PLAY_1XP_PASS;
-                        break;
-                    case 3:
-                        pe = Play_Enum.SCRIM_PLAY_2XP_PASS;
-                        break;
-                    case 4:
-                        pe = Play_Enum.SCRIM_PLAY_3XP_PASS;
-                        break;
-                }
-
-                Penalty p = Penalty_Helper.getPenalty(this.penaltyList, pe, Player_Action_State.BRN);
-                if (p.code == Penalty_Codes.UC)
-                    UC++;
-                else if (p.code == Penalty_Codes.UR)
-                    UR++;
-                else if (p.code == Penalty_Codes.FM)
-                    FM++;
-                else if (p.code == Penalty_Codes.IHO)
-                    IHO++;
-                else
-                    throw new Exception("Incorrect Penalty Code");
-            }
-
-            Assert.IsTrue(IHO > 0 && UC > 0 && UR > 0 && FM > 0);
-        }
-
-        [TestCategory("Penalties")]
-        [TestMethod]
-        public void getPenalty_Pass_Offense_Play_Pass_Catchers()
-        {
-            int Num_Tries = 300;
             int UC = 0;
             int UR = 0;
             int FM = 0;
             int IHO = 0;
             int OI = 0;
-
-            for (int i = 0; i < Num_Tries; i++)
-            {
-                int n = CommonUtils.getRandomNum(1, 4);
-                Play_Enum pe = Play_Enum.PASS;
-                switch (n)
-                {
-                    case 1:
-                        pe = Play_Enum.PASS;
-                        break;
-                    case 2:
-                        pe = Play_Enum.SCRIM_PLAY_1XP_PASS;
-                        break;
-                    case 3:
-                        pe = Play_Enum.SCRIM_PLAY_2XP_PASS;
-                        break;
-                    case 4:
-                        pe = Play_Enum.SCRIM_PLAY_3XP_PASS;
-                        break;
-                }
-
-                Penalty p = Penalty_Helper.getPenalty(this.penaltyList, pe, Player_Action_State.PC);
-                if (p.code == Penalty_Codes.UC)
-                    UC++;
-                else if (p.code == Penalty_Codes.UR)
-                    UR++;
-                else if (p.code == Penalty_Codes.FM)
-                    FM++;
-                else if (p.code == Penalty_Codes.IHO)
-                    IHO++;
-                else if (p.code == Penalty_Codes.OI)
-                    OI++;
-                else
-                    throw new Exception("Incorrect Penalty Code");
-            }
-
-            Assert.IsTrue(OI > 0 && IHO > 0 && UC > 0 && UR > 0 && FM > 0);
-        }
-
-        [TestCategory("Penalties")]
-        [TestMethod]
-        public void getPenalty_Pass_Offense_Play_Pass_Blockers()
-        {
-            int Num_Tries = 300;
-            int IHO = 0;
-            int UC = 0;
-            int UR = 0;
-            int FM = 0;
             int OH = 0;
             int IR = 0;
             int IB = 0;
-
-            for (int i = 0; i < Num_Tries; i++)
-            {
-                int n = CommonUtils.getRandomNum(1, 4);
-                Play_Enum pe = Play_Enum.PASS;
-                switch (n)
-                {
-                    case 1:
-                        pe = Play_Enum.PASS;
-                        break;
-                    case 2:
-                        pe = Play_Enum.SCRIM_PLAY_1XP_PASS;
-                        break;
-                    case 3:
-                        pe = Play_Enum.SCRIM_PLAY_2XP_PASS;
-                        break;
-                    case 4:
-                        pe = Play_Enum.SCRIM_PLAY_3XP_PASS;
-                        break;
-                }
-
-                Penalty p = Penalty_Helper.getPenalty(this.penaltyList, pe, Player_Action_State.PB);
-                if (p.code == Penalty_Codes.UC)
-                    UC++;
-                else if (p.code == Penalty_Codes.UR)
-                    UR++;
-                else if (p.code == Penalty_Codes.FM)
-                    FM++;
-                else if (p.code == Penalty_Codes.IHO)
-                    IHO++;
-                else if (p.code == Penalty_Codes.OH)
-                    OH++;
-                else if (p.code == Penalty_Codes.IR)
-                    IR++;
-                else if (p.code == Penalty_Codes.IB)
-                    IB++;
-                else
-                    throw new Exception("Incorrect Penalty Code");
-            }
-
-            Assert.IsTrue(IB > 0 && IR > 0 && OH > 0 && IHO > 0 && UC > 0 && UR > 0 && FM > 0);
-        }
-
-        [TestCategory("Penalties")]
-        [TestMethod]
-        public void getPenalty_Pass_Offense_Play_Pass_Rushers()
-        {
-            int Num_Tries = 300;
-            int DH = 0;
-            int IH = 0;
-            int UC = 0;
-            int UR = 0;
-            int FM = 0;
-            int RD = 0;
-
-            for (int i = 0; i < Num_Tries; i++)
-            {
-                int n = CommonUtils.getRandomNum(1, 4);
-                Play_Enum pe = Play_Enum.RUN;
-                switch (n)
-                {
-                    case 1:
-                        pe = Play_Enum.PASS;
-                        break;
-                    case 2:
-                        pe = Play_Enum.SCRIM_PLAY_1XP_PASS;
-                        break;
-                    case 3:
-                        pe = Play_Enum.SCRIM_PLAY_2XP_PASS;
-                        break;
-                    case 4:
-                        pe = Play_Enum.SCRIM_PLAY_3XP_PASS;
-                        break;
-                }
-
-                Penalty p = Penalty_Helper.getPenalty(this.penaltyList, pe, Player_Action_State.PAR);
-                if (p.code == Penalty_Codes.UC)
-                    UC++;
-                else if (p.code == Penalty_Codes.UR)
-                    UR++;
-                else if (p.code == Penalty_Codes.FM)
-                    FM++;
-                else if (p.code == Penalty_Codes.IH)
-                    IH++;
-                else if (p.code == Penalty_Codes.DH)
-                    DH++;
-                else if (p.code == Penalty_Codes.RD)
-                    RD++;
-                else
-                    throw new Exception("Incorrect Penalty Code");
-            }
-
-            Assert.IsTrue(RD > 0 && DH > 0 && IH > 0 && UC > 0 && UR > 0 && FM > 0);
-        }
-
-        [TestCategory("Penalties")]
-        [TestMethod]
-        public void getPenalty_Pass_Offense_Play_Pass_Defenders()
-        {
-            int Num_Tries = 300;
-            int DH = 0;
             int IC = 0;
-            int UC = 0;
-            int UR = 0;
-            int FM = 0;
+            int IH = 0;
+            int DH = 0;
+            int RD = 0;
             int PI = 0;
 
+            Play_Result pResult = new Play_Result() { at = 11, ht = 22 };
+            int Num_Tries = 10000;
+            Penalty penalty = null;
+            Game_Player Penalty_Player = null;
+
+            List<Game_Player> Offensive_Players = Help_Class.getRandomPlayersforPlay(11);
+            List<Game_Player> Defensive_Players = Help_Class.getRandomPlayersforPlay(22);
+
+            for (int i = 0; i < 11; i++)
+            {
+                if (i == 0)
+                    pResult.Passer = Offensive_Players[i];
+                else if (i == 2 || i == 3)
+                    pResult.Pass_Catchers.Add(Offensive_Players[i]);
+                else
+                    pResult.Pass_Blockers.Add(Offensive_Players[i]);
+            }
+
+            for (int i = 0; i < 11; i++)
+            {
+                if (i < 6)
+                    pResult.Pass_Rushers.Add(Defensive_Players[i]); 
+                else
+                    pResult.Pass_Defenders.Add(Defensive_Players[i]);
+            }
+
             for (int i = 0; i < Num_Tries; i++)
             {
                 int n = CommonUtils.getRandomNum(1, 4);
-                Play_Enum pe = Play_Enum.PASS;
+                Play_Enum pe = Play_Enum.KICKOFF_NORMAL;
                 switch (n)
                 {
                     case 1:
@@ -1158,144 +553,155 @@ namespace SpectatorFootball.unitTests.Penalties
                         break;
                 }
 
-                Penalty p = Penalty_Helper.getPenalty(this.penaltyList, pe, Player_Action_State.PD);
-                if (p.code == Penalty_Codes.UC)
+                if (i % 10 == 0)
+                    pResult.Defender_Knocks_Down_QB = Defensive_Players[2];
+                else if (i % 8 == 0)
+                    pResult.Defender_Close_to_Receiver = Defensive_Players[8];
+
+                Tuple<Game_Player, Penalty> t = Penalty_Helper.PostSnap_Penalty(pe, this.penaltyList,
+                    Offensive_Players, Defensive_Players, pResult);
+                Penalty_Player = t.Item1;
+                penalty = t.Item2;
+
+                if (penalty == null) continue;
+
+                if (penalty.code == Penalty_Codes.UC)
                     UC++;
-                else if (p.code == Penalty_Codes.UR)
+                else if (penalty.code == Penalty_Codes.UR)
                     UR++;
-                else if (p.code == Penalty_Codes.FM)
+                else if (penalty.code == Penalty_Codes.FM)
                     FM++;
-                else if (p.code == Penalty_Codes.DH)
-                    DH++;
-                else if (p.code == Penalty_Codes.IC)
+                else if (penalty.code == Penalty_Codes.IHO)
+                    IHO++;
+                else if (penalty.code == Penalty_Codes.OI)
+                    OI++;
+                else if (penalty.code == Penalty_Codes.OH)
+                    OH++;
+                else if (penalty.code == Penalty_Codes.IR)
+                    IR++;
+                else if (penalty.code == Penalty_Codes.IB)
+                    IB++;
+                else if (penalty.code == Penalty_Codes.IC)
                     IC++;
-                else if (p.code == Penalty_Codes.PI)
+                else if (penalty.code == Penalty_Codes.IH)
+                    IH++;
+                else if (penalty.code == Penalty_Codes.DH)
+                    DH++;
+                else if (penalty.code == Penalty_Codes.RD)
+                    RD++;
+                else if (penalty.code == Penalty_Codes.PI)
                     PI++;
                 else
-                    throw new Exception("Incorrect Penalty Code");
+                    throw new Exception("Not all penalties encountered");
+
+                if (!penalty.Penalty_Play_Types.Contains(pe))
+                    throw new Exception("Not all penalties encountered");
+
+                if (penalty.Play_Timing != Play_Snap_Timing.DURING_PLAY)
+                    throw new Exception("Penalty is not presnap");
+
+                Player_Action_State pa = Penalty_Helper.getPlayerAction(Penalty_Player, pResult);
+                if (!penalty.Player_Action_States.Contains(pa))
+                    throw new Exception("Penalty player should not have gotten this penalty");
             }
 
-            Assert.IsTrue(PI > 0 && DH > 0 && IC > 0 && UC > 0 && UR > 0 && FM > 0);
-        }
-        [TestCategory("Penalties")]
-        [TestMethod]
-        public void getPenaltyPlayer_Prevelence()
-        {
-            //This test method will test that certain positions, such as QB, Kick, Punter will rarely
-            //be charged with a penalty and other positions will depend of the player's
-            //sportsmanship rating.
-
-            //First get the offensive and defensive teams.  Note that they
-            //positions would never made up a play but the method we are testing
-            //doesn't care about that.
-
-            List<Game_Player> Offensive_Players = new List<Game_Player>();
-            List<Game_Player> Defensive_Players = new List<Game_Player>();
-            Game_Player Passer = null;
-            Game_Player Kicker = null;
-            Game_Player Punter = null;
-            int[] o_arr = new int[11];
-            int[] d_arr = new int[11];
-            int non_special_min = 100000;
-            int non_special_max = 0;
-            bool bPass = false;
-
-            //Populate the offensive and defensive players players 0,1 and 2 do not get penalties 
-            //often.  and players 9 and 10 get rare penalties and the most penalties
-            for (int i = 0; i < 11; i++)
-            {
-                long sportsmanship = 65;
-
-                if (i == 9)
-                    sportsmanship = 99;
-                else if (i == 10)
-                    sportsmanship = 25;
-
-                Game_Player gpo = new Game_Player() { Pos = Player_Pos.LB };
-                Player_and_Ratings p_and_Ro = new Player_and_Ratings();
-                p_and_Ro.p = new Player() { First_Name = "Fname", Last_Name = "LName", ID = 1 };
-                p_and_Ro.pr = new List<Player_Ratings>() { new Player_Ratings() { Sportsmanship_Ratings = sportsmanship } };
-                gpo.p_and_r = p_and_Ro;
-
-                if (i == 0)
-                    Passer = gpo;
-                else if (i == 1)
-                    Kicker = gpo;
-                else if (i == 2)
-                    Punter = gpo;
-
-                Game_Player gpa = new Game_Player() { Pos = Player_Pos.LB };
-                Player_and_Ratings p_and_Ra = new Player_and_Ratings();
-                p_and_Ra.p = new Player() { First_Name = "Fname", Last_Name = "LName", ID = 1 };
-                p_and_Ra.pr = new List<Player_Ratings>() { new Player_Ratings() { Sportsmanship_Ratings = sportsmanship } };
-                gpa.p_and_r = p_and_Ra;
-
-                Offensive_Players.Add(gpo);
-                Defensive_Players.Add(gpa);
-            }
-
-            int numTries = 10000;
-
-            for (int j=0; j<= numTries; j++)
-            {
-                Game_Player penalty_player = Penalty_Helper.getPenaltyPlayer(Offensive_Players, Defensive_Players, Passer, Kicker, Punter);
-                bool bOff = false;
-
-                int rt;
-                if (penalty_player == null)
-                    continue;
-
-                if (Offensive_Players.Contains(penalty_player))
-                    bOff = true;
-                else
-                    bOff = false;
-
-                if (bOff)
-                {
-                    int oi = Offensive_Players.FindIndex(x => x == penalty_player);
-                    o_arr[oi]++;
-                }
-                else
-                {
-                    int ai = Defensive_Players.FindIndex(x => x == penalty_player);
-                    d_arr[ai]++;
-                }
-            }
-
-            //git min and max
-            for (int i = 0; i < 11; i++)
-            {
-                if (i == 9 || i == 10)
-                    continue;
-                else if (i == 0 || i == 1 || i == 2)
-                {
-                    if (d_arr[i] < non_special_min) non_special_min = d_arr[i];
-                    if (d_arr[i] > non_special_max) non_special_max = d_arr[i];
-                }
-                else
-                {
-                    if (d_arr[i] < non_special_min) non_special_min = d_arr[i];
-                    if (d_arr[i] > non_special_max) non_special_max = d_arr[i];
-                    if (o_arr[i] < non_special_min) non_special_min = o_arr[i];
-                    if (o_arr[i] > non_special_max) non_special_max = o_arr[i];
-                }
-            }
-
-            if (o_arr[0] > non_special_min || o_arr[0] < o_arr[1] || o_arr[0] < o_arr[2] ||
-                o_arr[1] > non_special_min || o_arr[2] > non_special_min)
-                throw new Exception("Secial position penalty total wrong");
-
-            if (o_arr[9] > non_special_min || o_arr[10] < non_special_max &&
-                d_arr[9] > non_special_min || d_arr[10] < non_special_max)
-                throw new Exception("Number of high low sportsmanship penalties not correct");
-
-            int total_penalties = o_arr.Sum() + d_arr.Sum();
-
-            if (total_penalties < 600 || total_penalties > 950)
-                throw new Exception("Too few or too many penalties");
+            if (UC == 0 || UR == 0 || FM == 0 || IHO == 0 || OI == 0 || OH == 0 || IR == 0 || IB == 0
+                 || IC == 0 || IH == 0 || DH == 0 || PI == 0 || RD == 0)
+                throw new Exception("Incorrect Penalty Code");
 
             Assert.IsTrue(true);
         }
+
+        [TestCategory("Penalties")]
+        [TestMethod]
+        public void getPostSnapPenalty_RUN()
+        {
+            int UC = 0;
+            int UR = 0;
+            int FM = 0;
+            int IHO = 0;
+            int IH = 0;
+
+            Play_Result pResult = new Play_Result() { at = 11, ht = 22 };
+            int Num_Tries = 10000;
+            Penalty penalty = null;
+            Game_Player Penalty_Player = null;
+
+            List<Game_Player> Offensive_Players = Help_Class.getRandomPlayersforPlay(11);
+            List<Game_Player> Defensive_Players = Help_Class.getRandomPlayersforPlay(22);
+
+            for (int i = 0; i < 11; i++)
+            {
+                if (i == 0)
+                    pResult.Passer = Offensive_Players[i];
+                else if (i == 2 || i == 3)
+                    pResult.Ball_Runners.Add(Offensive_Players[i]);
+                else
+                    pResult.Run_Blockers.Add(Offensive_Players[i]);
+            }
+
+            for (int i = 0; i < 11; i++)
+            {
+                    pResult.Run_Defenders.Add(Defensive_Players[i]);
+            }
+
+            for (int i = 0; i < Num_Tries; i++)
+            {
+                int n = CommonUtils.getRandomNum(1, 4);
+                Play_Enum pe = Play_Enum.KICKOFF_NORMAL;
+                switch (n)
+                {
+                    case 1:
+                        pe = Play_Enum.RUN;
+                        break;
+                    case 2:
+                        pe = Play_Enum.SCRIM_PLAY_1XP_RUN;
+                        break;
+                    case 3:
+                        pe = Play_Enum.SCRIM_PLAY_2XP_RUN;
+                        break;
+                    case 4:
+                        pe = Play_Enum.SCRIM_PLAY_3XP_RUN;
+                        break;
+                }
+
+                Tuple<Game_Player, Penalty> t = Penalty_Helper.PostSnap_Penalty(pe, this.penaltyList,
+                    Offensive_Players, Defensive_Players, pResult);
+                Penalty_Player = t.Item1;
+                penalty = t.Item2;
+
+                if (penalty == null) continue;
+
+                if (penalty.code == Penalty_Codes.UC)
+                    UC++;
+                else if (penalty.code == Penalty_Codes.UR)
+                    UR++;
+                else if (penalty.code == Penalty_Codes.FM)
+                    FM++;
+                else if (penalty.code == Penalty_Codes.IHO)
+                    IHO++;
+                else if (penalty.code == Penalty_Codes.IH)
+                    IH++;
+                else
+                    throw new Exception("Not all penalties encountered");
+
+                if (!penalty.Penalty_Play_Types.Contains(pe))
+                    throw new Exception("Not all penalties encountered");
+
+                if (penalty.Play_Timing != Play_Snap_Timing.DURING_PLAY)
+                    throw new Exception("Penalty is not presnap");
+
+                Player_Action_State pa = Penalty_Helper.getPlayerAction(Penalty_Player, pResult);
+                if (!penalty.Player_Action_States.Contains(pa))
+                    throw new Exception("Penalty player should not have gotten this penalty");
+            }
+
+            if (UC == 0 || UR == 0 || FM == 0 || IHO == 0 || IH == 0)
+                throw new Exception("Incorrect Penalty Code");
+
+            Assert.IsTrue(true);
+        }
+
         [TestCategory("Penalties")]
         [TestMethod]
         public void isNoPenaltyPlay_True()
