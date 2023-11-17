@@ -49,6 +49,10 @@ namespace SpectatorFootball.GameNS
             r = setPlayerActions(Kickoff_Players, Return_Players,r);
         }
 
+        public Play_Result getPLayResult()
+        {
+            return r;
+        }
 
         public Play_Result Execute()
         {

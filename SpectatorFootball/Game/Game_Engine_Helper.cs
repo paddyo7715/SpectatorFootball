@@ -9,18 +9,6 @@ namespace SpectatorFootball.GameNS
 {
     public class Game_Engine_Helper
     {
-        public static long CoinToss(int rnum, long ht_id, long at_id)
-        {
-            long r = 0;
-
-            if (rnum <= 50)
-                r = ht_id;
-            else
-                r = at_id;
-
-            return r;
-        }
-
         public static int HorizontalAdj(bool b)
         {
             int r = 1;
@@ -196,29 +184,7 @@ namespace SpectatorFootball.GameNS
 
             return r;
         }
-        public static bool isPlayWithReturner(Play_Enum p_enum)
-        {
-            bool r = false;
-            if (p_enum == Play_Enum.KICKOFF_NORMAL ||
-                p_enum == Play_Enum.PUNT ||
-                p_enum == Play_Enum.FREE_KICK)
-                r = true;
-
-            return r;
-        }
-        public static long Switch_Posession(long Current_possession, long at, long ht)
-        {
-            long r = Current_possession;
-
-            if (Current_possession == at)
-                r = ht;
-            else
-                r = at;
-
-            return r;
-        }
-
-        public static bool Switch_LefttoRight(bool bLefttoRight)
+         public static bool Switch_LefttoRight(bool bLefttoRight)
         {
             bool r;
 
@@ -300,19 +266,6 @@ namespace SpectatorFootball.GameNS
 
             return r;
         }
-
-        public static double calcDistanceFromOpponentGL(double line_of_scrimage, bool blefttoright)
-        {
-            double r = 0;
-
-            if (blefttoright)
-                r = 100 - line_of_scrimage;
-            else
-                r = line_of_scrimage;
-
-            return r;
-        }
-
         public static double calcDistanceFromMyGL(double line_of_scrimage, bool blefttoright)
         {
             double r = 0;
@@ -326,87 +279,14 @@ namespace SpectatorFootball.GameNS
 
             return r;
         }
-        public static bool isBallTeamPenalty(Play_Result pResult)
+        public static double calcDistanceFromOpponentGL(double line_of_scrimage, bool blefttoright)
         {
-            bool r = false;
+            double r = 0;
 
-            Game_Player p = pResult.Penalized_Player;
-
-            if (pResult.Passer == p || pResult.Pass_Catchers.Contains(p) || pResult.Ball_Runners.Contains(p) ||
-                pResult.Pass_Blockers.Contains(p))
-                r = true;
-            else if (pResult.Returner == p || pResult.Punt_Returner == p || pResult.Kick_Returners.Contains(p) ||
-                pResult.Punt_Returners.Contains(p) || pResult.FieldGaol_Kicking_Team.Contains(p))
-                r = true;
-            else if (pResult.Pass_Rushers.Contains(p) || pResult.Pass_Defenders.Contains(p) ||
-                pResult.Run_Defenders.Contains(p))
-                r = false;
-            else if (pResult.Kicker == p || pResult.Punter == p || pResult.Kick_Defenders.Contains(p) ||
-                pResult.Punt_Defenders.Contains(p) || pResult.Field_Goal_Defenders.Contains(p))
-                r = false;
+            if (blefttoright)
+                r = 100 - line_of_scrimage;
             else
-                throw new Exception("isBallTeamPenalty error can't determine penalty team!");
-            return r;
-        }
-
-        public static bool isGameEnd(long Playoffs, long Quarter, long Time, long Away_Score, long Home_Score)
-        {
-            bool r = false;
-
-            if (Quarter == 4 && Time == 0 && Away_Score != Home_Score)
-                r = true;
-            else if (Quarter > 4 && Away_Score != Home_Score)
-                r = true;
-            else if (Playoffs == 0 && Quarter == 5 && Time == 0)
-                r = true;
-            else
-                r = false;
-
-            return r;
-        }
-        public static double getScrimmageLine(double y, bool bLefttoRight)
-        {
-            double yardLine = y;
-
-            if (!bLefttoRight)
-                yardLine = 100 - y;
-
-            return yardLine;
-        }
-        public static Play_Result setScoringBool(Play_Result r, bool bTurnover)
-        {
-            Play_Result pResult = r;
-
-            if (pResult.BallPossessing_Team_Id == pResult.at)
-            {
-                if (bTurnover)
-                    pResult.bHomeTD = pResult.bTouchDown;
-                else
-                    pResult.bAwayTD = pResult.bTouchDown;
-
-                pResult.bAwayFG = pResult.bFGMade;
-                pResult.bAwayXP = pResult.bXPMade;
-                pResult.bAwayXP1 = pResult.bOnePntAfterTDMade;
-                pResult.bAwayXP2 = pResult.bTwoPntAfterTDMade;
-                pResult.bAwayXP3 = pResult.bThreePntAfterTDMade;
-
-                pResult.bHomeSafetyFor = pResult.bSafety;
-            }
-            else
-            {
-                if (bTurnover)
-                    pResult.bAwayTD = pResult.bTouchDown;
-                else
-                    pResult.bHomeTD = pResult.bTouchDown;
-
-                pResult.bHomeFG = pResult.bFGMade;
-                pResult.bHomeXP = pResult.bXPMade;
-                pResult.bHomeXP1 = pResult.bOnePntAfterTDMade;
-                pResult.bHomeXP2 = pResult.bTwoPntAfterTDMade;
-                pResult.bHomeXP3 = pResult.bThreePntAfterTDMade;
-
-                pResult.bAwaySafetyFor = pResult.bSafety;
-            }
+                r = line_of_scrimage;
 
             return r;
         }

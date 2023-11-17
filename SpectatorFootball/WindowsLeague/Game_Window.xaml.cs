@@ -174,8 +174,13 @@ namespace SpectatorFootball.WindowsLeague
                 Can_Width = (int)CANVAS_WIDTH;
                 Can_Height = (int) MyCanvas.Height;
 
-                ge = new GameEngine(pw, g, (Teams_by_Season)at, (List<Player_and_Ratings>)Away_Players,
-                    (Teams_by_Season)ht, (List<Player_and_Ratings>)Home_Players, false);
+                ge = new GameEngine(g, (Teams_by_Season)at, (List<Player_and_Ratings>)Away_Players,
+                    (Teams_by_Season)ht, (List<Player_and_Ratings>)Home_Players, false,
+                    pw.Loaded_League.PenaltiesData, pw.Loaded_League.season.League_Structure_by_Season[0].Two_Point_Conversion,
+                    pw.Loaded_League.season.League_Structure_by_Season[0].Three_Point_Conversion,
+                    pw.Loaded_League.season.League_Structure_by_Season[0].Kickoff_Type,
+                    pw.Loaded_League.season.League_Structure_by_Season[0].Injuries,
+                    pw.Loaded_League.season.League_Structure_by_Season[0].Penalties);
 
                 VIEW_EDGE_PIXELS = Yardline_to_Pixel(VIEW_EDGE_OFFSET_YARDLINE, false);
                 CANVAS_WIDTH = MyCanvas.Width - RIGHT_PIXEL_FUDGE;

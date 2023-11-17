@@ -161,6 +161,5 @@ namespace SpectatorFootball.unitTests.Helper_ClassesNS
 
             return r;
         }
-
     }
 }
