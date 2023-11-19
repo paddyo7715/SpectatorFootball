@@ -290,6 +290,28 @@ namespace SpectatorFootball.GameNS
 
             return r;
         }
+        public static double GreaterYardline(double Yardline1, double Yardline2, bool blefttoright)
+        {
+            double r = 0;
+
+            if (blefttoright)
+                r = Yardline1 > Yardline2 ? Yardline1 : Yardline2;
+            else
+                r = Yardline1 < Yardline2 ? Yardline1 : Yardline2;
+
+            return r;
+        }
+        public static double LessYardline(double Yardline1, double Yardline2, bool blefttoright)
+        {
+            double r = 0;
+
+            if (!blefttoright)
+                r = Yardline1 < Yardline2 ? Yardline1 : Yardline2;
+            else
+                r = Yardline1 > Yardline2 ? Yardline1 : Yardline2;
+
+            return r;
+        }
 
     }
 }

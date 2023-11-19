@@ -880,15 +880,23 @@ namespace SpectatorFootball.GameNS
                         r.bPlay_Stands = true;
                         r.bFinal_SwitchPossession = true;
                         r = setScoringBool(r, bTurnover);
-                        dist_from_GL = Game_Engine_Helper.calcDistanceFromOpponentGL(r.end_of_play_yardline, bLefttoRgiht);
 
                         if (r.Penalty != null && !r.bPenalty_Rejected)
                         {
+                            double greater_yl = Game_Engine_Helper.GreaterYardline(r.end_of_play_yardline, r.Penalized_Player.Current_YardLine, bLefttoRgiht);
+                            dist_from_GL = Game_Engine_Helper.calcDistanceFromOpponentGL(greater_yl, bLefttoRgiht);
                             Tuple<bool, double> t = Penalty_Helper.isHalfTheDistance(r.Penalty.Yards, dist_from_GL);
                             if (t.Item1)
                                 r.Final_Added_Penalty_Yards = t.Item2;
                             else
                                 r.Final_Added_Penalty_Yards = r.Penalty.Yards;
+
+                            r.Final_end_of_Play_Yardline = greater_yl + (r.Final_Added_Penalty_Yards * Game_Engine_Helper.HorizontalAdj(bLefttoRgiht));
+                        }
+                        else
+                        {
+                            dist_from_GL = Game_Engine_Helper.calcDistanceFromOpponentGL(r.end_of_play_yardline, bLefttoRgiht);
+                            r.Final_end_of_Play_Yardline = r.end_of_play_yardline;
                         }
 
                         //set possible next mandatory play

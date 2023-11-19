@@ -185,16 +185,12 @@ namespace SpectatorFootball.unitTests.Penalties
             Assert.IsTrue(pa == Player_Action_State.FGD);
         }
 
-
-
-
-
         [TestCategory("Penalties")]
         [TestMethod]
         public void getPreSnapPenalty_Kickoff_Freekick()
         {
             Play_Result pResult = new Play_Result() { at = 11, ht = 22 };
-            int Num_Tries = 1000;
+            int Num_Tries = 2000;
             Penalty penalty = null;
             Game_Player Penalty_Player = null;
 
@@ -245,7 +241,7 @@ namespace SpectatorFootball.unitTests.Penalties
         public void getPreSnapPenalty_Onside_Kickoff()
         {
             Play_Result pResult = new Play_Result() { at = 11, ht = 22 };
-            int Num_Tries = 1000;
+            int Num_Tries = 2000;
             Penalty penalty = null;
             Game_Player Penalty_Player = null;
 
@@ -293,7 +289,7 @@ namespace SpectatorFootball.unitTests.Penalties
             int DO = 0;
 
             Play_Result pResult = new Play_Result() { at = 11, ht = 22 };
-            int Num_Tries = 1000;
+            int Num_Tries = 2000;
             Penalty penalty = null;
             Game_Player Penalty_Player = null;
 
@@ -367,7 +363,7 @@ namespace SpectatorFootball.unitTests.Penalties
             int DO = 0;
 
             Play_Result pResult = new Play_Result() { at = 11, ht = 22 };
-            int Num_Tries = 1000;
+            int Num_Tries = 2000;
             Penalty penalty = null;
             Game_Player Penalty_Player = null;
 
@@ -450,7 +446,7 @@ namespace SpectatorFootball.unitTests.Penalties
             int IM = 0;
 
             Play_Result pResult = new Play_Result() { at = 11, ht = 22 };
-            int Num_Tries = 1000;
+            int Num_Tries = 2000;
             Penalty penalty = null;
             Game_Player Penalty_Player = null;
 
@@ -551,7 +547,7 @@ namespace SpectatorFootball.unitTests.Penalties
             int IM = 0;
 
             Play_Result pResult = new Play_Result() { at = 11, ht = 22 };
-            int Num_Tries = 1000;
+            int Num_Tries = 2000;
             Penalty penalty = null;
             Game_Player Penalty_Player = null;
 
@@ -640,9 +636,6 @@ namespace SpectatorFootball.unitTests.Penalties
             Assert.IsTrue(true);
         }
 
-
-
-
         [TestCategory("Penalties")]
         [TestMethod]
         public void getPostSnapPenalty_Kickoff_Freekick()
@@ -653,7 +646,7 @@ namespace SpectatorFootball.unitTests.Penalties
             int FM = 0;
 
             Play_Result pResult = new Play_Result(){ at = 11, ht = 22 };
-            int Num_Tries = 1000;
+            int Num_Tries = 10000;
             Penalty penalty = null;
             Game_Player Penalty_Player = null;
 
@@ -732,7 +725,7 @@ namespace SpectatorFootball.unitTests.Penalties
             int FM = 0;
 
             Play_Result pResult = new Play_Result() { at = 11, ht = 22 };
-            int Num_Tries = 1000;
+            int Num_Tries = 500;
             Penalty penalty = null;
             Game_Player Penalty_Player = null;
 
