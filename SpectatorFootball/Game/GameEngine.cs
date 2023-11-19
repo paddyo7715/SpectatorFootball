@@ -402,7 +402,7 @@ namespace SpectatorFootball.GameNS
                 bool bswitchPossession = false;
                 double penalty_yards = 0;
                 p_result = setPlayOutCome(isBallCarryingTeam, Offensive_Package.Play, g_Down,
-                    g_Yards_to_go, p_result, g_Line_of_Scrimmage, bLefttoRight, g, TouchbackYardline);
+                    g_Yards_to_go, p_result, g_Line_of_Scrimmage, bLefttoRight, TouchbackYardline);
 
                 //Add penalty if applicable
                 if (p_result.Penalty != null && !p_result.bPenalty_Rejected)
@@ -851,7 +851,7 @@ namespace SpectatorFootball.GameNS
         //of the next play
         public static Play_Result setPlayOutCome(bool penOnBallCarryingTeam,
             Play_Enum PE, int Down, double Yards_to_Go, Play_Result pResult,
-            double original_Yardline, bool bLefttoRgiht, Game g, double TouchBack_Yardline)
+            double original_Yardline, bool bLefttoRgiht, double TouchBack_Yardline)
         {
             Play_Result r = pResult;
             bool bTurnover = r.bInterception || r.bFumble_Lost ? true : false;
@@ -891,8 +891,6 @@ namespace SpectatorFootball.GameNS
                                 r.Final_Added_Penalty_Yards = r.Penalty.Yards;
                         }
 
-                        //Update Score
-                        UpdateScore(r, g);
                         //set possible next mandatory play
                         bool bnextSpecial = setNextPLay(r);
 
@@ -939,7 +937,6 @@ namespace SpectatorFootball.GameNS
                     {
                         r.bPlay_Stands = true;
                         r = setScoringBool(r, bTurnover);
-                        UpdateScore(r, g);
                         if (r.bFGMade)
                         {
                             r.bFinal_NextPlayFreeKick = true; ;
@@ -977,7 +974,6 @@ namespace SpectatorFootball.GameNS
                     {
                         r.bPlay_Stands = true;
                         r = setScoringBool(r, bTurnover);
-                        UpdateScore(r, g);
 
                         r.bFinal_NextPlayKickoff = true; 
                         r.Final_Down = 0;
@@ -1115,8 +1111,6 @@ namespace SpectatorFootball.GameNS
                             bAutoFirstDown = Penalty_Helper.isFirstDowwithPenalty(r.Penalty, Yards_to_Go, bHalft_the_dist, r.Final_Added_Penalty_Yards);
                         }
 
-                        //Update Score
-                        UpdateScore(r, g);
                         //set possible next mandatory play
                         bool bnextSpecial = setNextPLay(r);
 
@@ -1271,7 +1265,7 @@ namespace SpectatorFootball.GameNS
         }
 
         //This method returns a true if the next play dows not have a down or ytg
-        public static bool setNextPLay(Play_Result pResult)
+        private static bool setNextPLay(Play_Result pResult)
         {
             bool r = true;
 
@@ -1288,7 +1282,7 @@ namespace SpectatorFootball.GameNS
 
             return r;
         }
-        public static void setFirstDownStat(Play_Result pR)
+        private static void setFirstDownStat(Play_Result pR)
         {
             if (pR.BallPossessing_Team_Id == pR.at)
                 pR.AwayFirstDowns++;
@@ -1296,7 +1290,7 @@ namespace SpectatorFootball.GameNS
                 pR.HomeFirstDowns++;
         }
 
-        public static void setThirdDownStat(Play_Result pR, bool b3rdMade)
+        private static void setThirdDownStat(Play_Result pR, bool b3rdMade)
         {
             if (pR.BallPossessing_Team_Id == pR.at)
             {
@@ -1310,7 +1304,7 @@ namespace SpectatorFootball.GameNS
             }
         }
 
-        public static void setFourthDownStat(Play_Result pR, bool b3rdMade)
+        private static void setFourthDownStat(Play_Result pR, bool b3rdMade)
         {
             if (pR.BallPossessing_Team_Id == pR.at)
             {
@@ -1324,7 +1318,7 @@ namespace SpectatorFootball.GameNS
             }
         }
 
-        public static void setTurnoverGameStat(Play_Result pR)
+        private static void setTurnoverGameStat(Play_Result pR)
         {
             if (pR.BallPossessing_Team_Id == pR.at)
                 pR.AwayTurnoers++;
@@ -1332,7 +1326,7 @@ namespace SpectatorFootball.GameNS
                 pR.HomeTurnoers++;
         }
 
-        public static void setDefenseNonSpotPenalty(Play_Result r, bool bLefttoRgiht,int Down, double Yards_to_Go)
+        private static void setDefenseNonSpotPenalty(Play_Result r, bool bLefttoRgiht,int Down, double Yards_to_Go)
         {
             bool bHalft_the_dist = false;
             double Penalty_Yards;
@@ -1359,7 +1353,7 @@ namespace SpectatorFootball.GameNS
             r.Final_end_of_Play_Yardline += (r.Yards_Gained + Penalty_Yards) * Game_Engine_Helper.HorizontalAdj(bLefttoRgiht);
             r.Final_Added_Penalty_Yards = Penalty_Yards;
         }
-        public static void setScrimPlayDefensePenaltyNonSpot(Play_Result r, bool bLefttoRgiht, int Down, double Yards_to_Go)
+        private static void setScrimPlayDefensePenaltyNonSpot(Play_Result r, bool bLefttoRgiht, int Down, double Yards_to_Go)
         {
             double Penalty_Yards;
              double dist_from_GL = Game_Engine_Helper.calcDistanceFromMyGL(r.end_of_play_yardline, bLefttoRgiht);

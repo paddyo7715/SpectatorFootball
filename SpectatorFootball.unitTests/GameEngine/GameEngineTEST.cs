@@ -1210,5 +1210,76 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(g.Away_Score == 0 && g.Home_Score == 6 && g.Away_Score_OT == 0 &&
                 g.Home_Score_OT == 6);
         }
+
+        [TestCategory("GameEngine")]
+        [TestMethod]
+        public void setPlayOutCome_NomralKickoff_ReturntoOwn20_no_Penalty()
+        {
+            bool penOnBallCarryingTeam = false;
+            Play_Enum PE = Play_Enum.KICKOFF_NORMAL;
+            int Down = 0;
+            double Yards_to_Go = 0.0;
+            Play_Result pResult = new Play_Result()
+            {
+                at = 11,
+                ht = 22,
+                BallPossessing_Team_Id = 11,
+                NonbBallPossessing_Team_Id = 22,
+                Yards_Returned = 20.0,
+                bTouchback = false,
+                bTouchDown = false,
+                end_of_play_yardline = 20.0,
+                Penalty = null,
+                Penalized_Player = null,
+                bPenalty_Rejected = false
+            };
+            double original_Yardline = 0.0;
+            bool bLefttoRgiht = true;
+            double TouchBack_Yardline = 25.0;
+
+            Play_Result r = GameEngine.setPlayOutCome(penOnBallCarryingTeam, PE, Down, Yards_to_Go,
+                pResult, original_Yardline, bLefttoRgiht, TouchBack_Yardline);
+
+            //There should be a change in possession
+            if (!r.bFinal_SwitchPossession)
+                throw new Exception("Possession should have been swtich because of kickoff");
+
+            if (!r.bPlay_Stands)
+                throw new Exception("This Play must stand");
+
+            //Check for next play
+            if (r.Final_Down != 1 && r.Final_yard_to_go != 10)
+                throw new Exception("The next Play must be first and ten");
+
+            //Check for next play
+            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+                throw new Exception("There should not be a special play on the next play");
+
+            if (r.Final_Added_Penalty_Yards > 0)
+                throw new Exception("There was no penalty on this play");
+
+            if (r.bAwayTD || r.bAwayFG || r.bAwayXP || r.bAwaySafetyFor || r.bAwayXP1 || r.bAwayXP2 || r.bAwayXP3 ||
+                r.bHomeTD || r.bHomeFG || r.bHomeXP || r.bHomeSafetyFor || r.bHomeXP1 || r.bHomeXP2 || r.bHomeXP3)
+                throw new Exception("There should have been no scoring on this play");
+
+            if (r.AwayFirstDowns > 0 || r.Away3rdDownAtt > 0 || r.Away3rdDownMade > 0 ||
+                    r.Away4thDownAtt > 0 || r.Away4thDownMade > 0 || r.AwayXP1Attempt > 0 ||
+                    r.AwayXP1Made > 0 || r.AwayXP2Attempt > 0 || r.AwayXP2Made > 0 ||
+                    r.AwayXP3Attempt > 0 || r.AwayXP3Made > 0 || r.AwayPassingYards > 0 ||
+                    r.AwayRushingYards > 0 || r.AwayTurnoers > 0 || r.AwaySacks > 0 ||
+                    r.AwayTOP > 0 ||
+                    r.HomeFirstDowns > 0 || r.Home3rdDownAtt > 0 || r.Home3rdDownMade > 0 ||
+                    r.Home4thDownAtt > 0 || r.Home4thDownMade > 0 || r.HomeXP1Attempt > 0 ||
+                    r.HomeXP1Made > 0 || r.HomeXP2Attempt > 0 || r.HomeXP2Made > 0 ||
+                    r.HomeXP3Attempt > 0 || r.HomeXP3Made > 0 || r.HomePassingYards > 0 ||
+                    r.HomeRushingYards > 0 || r.HomeTurnoers > 0 || r.HomeSacks > 0 ||
+                    r.HomeTOP > 0)
+                throw new Exception("None of these should be greater than 0");
+
+
+
+            Assert.IsTrue(true);
+        }
+
     }
 }
