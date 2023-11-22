@@ -866,11 +866,12 @@ namespace SpectatorFootball.GameNS
                 case Play_Enum.FREE_KICK:
                 case Play_Enum.KICKOFF_ONSIDES:
 
+                    r.bFinal_SwitchPossession = true;
+                    r.bPlay_Stands = true;
+
                     //No penalties or turnoers on touchbacks
                     if (r.bTouchback && r.Penalty == null) 
                     {
-                        r.bPlay_Stands = true;
-                        r.bFinal_SwitchPossession = true;
                         r.Final_Down = 1;
                         r.Final_yard_to_go = 10;
                         r.Final_end_of_Play_Yardline = getScrimmageLine(TouchBack_Yardline, bLefttoRgiht);
@@ -936,18 +937,17 @@ namespace SpectatorFootball.GameNS
                     }
                     else if ((r.Penalty.bSpot_Foul && penOnBallCarryingTeam))
                     {
-                        r.bPlay_Stands = false;
-                        double ret_dist = Game_Engine_Helper.calcDistanceFromMyGL(r.end_of_play_yardline, bLefttoRgiht);
-                        double penPlayer_dist = Game_Engine_Helper.calcDistanceFromMyGL(r.Penalized_Player.Current_YardLine, bLefttoRgiht);
-                        double spot_of_foul = ret_dist <= penPlayer_dist ? ret_dist : penPlayer_dist;
-                        Tuple<bool, double> t = Penalty_Helper.isHalfTheDistance(r.Penalty.Yards, spot_of_foul);
-                        if (t.Item1)
-                            r.Final_Added_Penalty_Yards = r.Penalty.Yards;
-                        else
-                            r.Final_Added_Penalty_Yards = t.Item2;
+                        r.bPlay_Stands = true;
 
-                        r.end_of_play_yardline -= r.Final_Added_Penalty_Yards * Game_Engine_Helper.HorizontalAdj(bLefttoRgiht);
-                        r.Final_end_of_Play_Yardline = r.end_of_play_yardline;
+                        double lower_yl = Game_Engine_Helper.LessYardline(r.end_of_play_yardline, r.Penalized_Player.Current_YardLine, bLefttoRgiht);
+                        dist_from_GL = Game_Engine_Helper.calcDistanceFromMyGL(lower_yl, bLefttoRgiht);
+                        Tuple<bool, double> t = Penalty_Helper.isHalfTheDistance(r.Penalty.Yards, dist_from_GL);
+                        if (t.Item1)
+                            r.Final_Added_Penalty_Yards = t.Item2;
+                        else
+                            r.Final_Added_Penalty_Yards = r.Penalty.Yards;
+
+                        r.Final_end_of_Play_Yardline = lower_yl - (r.Final_Added_Penalty_Yards * Game_Engine_Helper.HorizontalAdj(bLefttoRgiht));
                         r.Final_Down = 1;
                         r.Final_yard_to_go = 10;
                     }

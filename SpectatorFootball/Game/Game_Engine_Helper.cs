@@ -305,7 +305,7 @@ namespace SpectatorFootball.GameNS
         {
             double r = 0;
 
-            if (!blefttoright)
+            if (blefttoright)
                 r = Yardline1 < Yardline2 ? Yardline1 : Yardline2;
             else
                 r = Yardline1 > Yardline2 ? Yardline1 : Yardline2;
