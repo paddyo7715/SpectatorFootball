@@ -312,6 +312,24 @@ namespace SpectatorFootball.GameNS
 
             return r;
         }
+        public static double Yards_to_Reduce(double Yardline1, double Yardline2, bool blefttoright)
+        {
+            double r = 0;
+
+            double d = Yardline1;
+            if (Yardline1 < 0)
+                d = 0;
+            else if (Yardline1 > 100)
+                d = 100;
+
+
+            if (blefttoright && d > Yardline2)
+                  r = d - Yardline2;
+            else if (!blefttoright && d < Yardline2)
+                r = Math.Abs(d - Yardline2);
+
+            return r;
+        }
 
     }
 }

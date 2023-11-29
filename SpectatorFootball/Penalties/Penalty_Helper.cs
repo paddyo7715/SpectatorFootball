@@ -913,6 +913,7 @@ namespace SpectatorFootball.PenaltiesNS
 
             return new Tuple<bool,double>(r,half_the_dist);
         }
+
         public static bool isFirstDowwithPenalty(Penalty p, double yards_to_go,  bool bHlaft_the_dist, double half_dist_yards)
         {
             bool r = false;

@@ -1,0 +1,726 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.3.0\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.3.0\build\EntityFramework.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{AE5A5F7D-D3CF-4C0C-9CAB-627D9FF45FE4}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>SpectatorFootball</RootNamespace>
+    <AssemblyName>SpectatorFootball</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>626EF202C8CBE96E0154E2FC2F88060D27B64F19</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>SpectatorFootball_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Awards\Award_Helper.cs" />
+    <Compile Include="Awards\Award_Rating_Rec.cs" />
+    <Compile Include="BindingConverters\ActiveRetiredConverter.cs" />
+    <Compile Include="BindingConverters\avgYardsConverter.cs" />
+    <Compile Include="BindingConverters\ColorConverter.cs" />
+    <Compile Include="BindingConverters\DoubleConverter1d.cs" />
+    <Compile Include="BindingConverters\DoubleFormatConverter.cs" />
+    <Compile Include="BindingConverters\handednessConverter.cs" />
+    <Compile Include="BindingConverters\HasAnyConverter.cs" />
+    <Compile Include="BindingConverters\ImageConverter.cs" />
+    <Compile Include="BindingConverters\InjuryStatusConverter.cs" />
+    <Compile Include="BindingConverters\inttoWeight.cs" />
+    <Compile Include="BindingConverters\iPosConverter.cs" />
+    <Compile Include="BindingConverters\isNullConverter.cs" />
+    <Compile Include="BindingConverters\IsPlayertoWatchConverter.cs" />
+    <Compile Include="BindingConverters\longiPosConverter.cs" />
+    <Compile Include="BindingConverters\OverallConverter.cs" />
+    <Compile Include="BindingConverters\qtrConverter.cs" />
+    <Compile Include="BindingConverters\SpeedInttoString.cs" />
+    <Compile Include="BindingConverters\StadiumImageConverter.cs" />
+    <Compile Include="BindingConverters\StatusConverter.cs" />
+    <Compile Include="BindingConverters\StockHelmetConverter.cs" />
+    <Compile Include="BindingConverters\TextConverter.cs" />
+    <Compile Include="BindingConverters\timeConverter.cs" />
+    <Compile Include="Common\LeageConnection.cs" />
+    <Compile Include="Common\List_and_Default.cs" />
+    <Compile Include="Common\LoadLeagueEventArgs.cs" />
+    <Compile Include="Common\Long_and_Long.cs" />
+    <Compile Include="Common\Long_and_String.cs" />
+    <Compile Include="Common\PointXY.cs" />
+    <Compile Include="Common\SettingsConnection.cs" />
+    <Compile Include="Common\Validator.cs" />
+    <Compile Include="CustomControls\CustomTextBox.cs" />
+    <Compile Include="DAO\AwardsDAO.cs" />
+    <Compile Include="DAO\DBVersionDAO.cs" />
+    <Compile Include="DAO\DraftDAO.cs" />
+    <Compile Include="DAO\FreeAgencyDAO.cs" />
+    <Compile Include="DAO\GameDAO.cs" />
+    <Compile Include="DAO\HomeTownsDAO.cs" />
+    <Compile Include="DAO\InjuriesDAO.cs" />
+    <Compile Include="DAO\Interfaces\IHomeTownsDAO.cs" />
+    <Compile Include="DAO\Interfaces\IPlayer_NamesDAO.cs" />
+    <Compile Include="DAO\PlayoffsDAO.cs" />
+    <Compile Include="DAO\ScheduleDAO.cs" />
+    <Compile Include="DAO\TeamDAO.cs" />
+    <Compile Include="DAO\TrainingCampDAO.cs" />
+    <Compile Include="Draft\Draft_Helper.cs" />
+    <Compile Include="Draft\Draft_Pos_Importance.cs" />
+    <Compile Include="Enum\Ball_Carry_Actions.cs" />
+    <Compile Include="Enum\Ball_Speed.cs" />
+    <Compile Include="Enum\Ball_States.cs" />
+    <Compile Include="Enum\block_result.cs" />
+    <Compile Include="Enum\Formations_Enum.cs" />
+    <Compile Include="Enum\Game_Object_Types.cs" />
+    <Compile Include="Enum\Game_Sounds.cs" />
+    <Compile Include="Enum\Graphics_Ball_Stats.cs" />
+    <Compile Include="Enum\Graphics_Player_States.cs" />
+    <Compile Include="Enum\KickOff_Length.cs" />
+    <Compile Include="Enum\KickOff_Verticl.cs" />
+    <Compile Include="Enum\Movement.cs" />
+    <Compile Include="Enum\Penalty_Codes.cs" />
+    <Compile Include="Enum\Player_Action_State.cs" />
+    <Compile Include="Enum\Player_States.cs" />
+    <Compile Include="Enum\Play_Enum.cs" />
+    <Compile Include="Enum\Play_Snap_Timing.cs" />
+    <Compile Include="Enum\Stat_Type.cs" />
+    <Compile Include="Free_Agency\FreeAgency_Helper.cs" />
+    <Compile Include="Game\Action.cs" />
+    <Compile Include="Game\Coach.cs" />
+    <Compile Include="Game\Next_Play_Situation.cs" />
+    <Compile Include="Game\Formation.cs" />
+    <Compile Include="Game\Formation_Rec.cs" />
+    <Compile Include="Game\GameEngine.cs" />
+    <Compile Include="Free_Agency\Pos_and_Count.cs" />
+    <Compile Include="Game\Game_Ball.cs" />
+    <Compile Include="Game\Game_Engine_Helper.cs" />
+    <Compile Include="Game\Game_Player.cs" />
+    <Compile Include="Game\Graphics_Game_Ball.cs" />
+    <Compile Include="Game\Game_Helper.cs" />
+    <Compile Include="Game\Graphics_Game_Player.cs" />
+    <Compile Include="Game\Kicking_Helper.cs" />
+    <Compile Include="Game\Playstub_Fumble.cs" />
+    <Compile Include="Game\Plays\Play_Kickoff_Normal.cs" />
+    <Compile Include="Game\Play_Result.cs" />
+    <Compile Include="Game\Play_Stage.cs" />
+    <Compile Include="Game\Play_Struct.cs" />
+    <Compile Include="Game\Play_Package.cs" />
+    <Compile Include="Game\PointPlotter.cs" />
+    <Compile Include="Help_Forms\Help_Champions.xaml.cs">
+      <DependentUpon>Help_Champions.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Help_Forms\Help_Draft.xaml.cs">
+      <DependentUpon>Help_Draft.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Help_Forms\Help_FreeAgency.xaml.cs">
+      <DependentUpon>Help_FreeAgency.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Help_Forms\Help_LeagueInjuries.xaml.cs">
+      <DependentUpon>Help_LeagueInjuries.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Help_Forms\Help_PlayerStats.xaml.cs">
+      <DependentUpon>Help_PlayerStats.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Help_Forms\Help_Schedule.xaml.cs">
+      <DependentUpon>Help_Schedule.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Help_Forms\Help_TeamDetail.xaml.cs">
+      <DependentUpon>Help_TeamDetail.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Help_Forms\Help_TeamStats.xaml.cs">
+      <DependentUpon>Help_TeamStats.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Help_Forms\Help_TrainingCamp.xaml.cs">
+      <DependentUpon>Help_TrainingCamp.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="League\League_Stats.cs" />
+    <Compile Include="League\Team_Wins_Loses_rec.cs" />
+    <Compile Include="Models\Award.cs">
+      <DependentUpon>LeagueEDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Blocking_Accum_Stats_by_year.cs" />
+    <Compile Include="Models\BoxScore.cs" />
+    <Compile Include="Models\Conference.cs">
+      <DependentUpon>LeagueEDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DBVersion.cs">
+      <DependentUpon>LeagueEDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Defense_Accum_Stats_by_year.cs" />
+    <Compile Include="Models\Division.cs">
+      <DependentUpon>LeagueEDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Draft.cs">
+      <DependentUpon>LeagueEDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Franchise.cs">
+      <DependentUpon>LeagueEDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FreeAgencyTrans.cs" />
+    <Compile Include="Models\Free_Agency.cs">
+      <DependentUpon>LeagueEDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Game.cs">
+      <DependentUpon>LeagueEDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Game_Player_Penalty_Stats.cs">
+      <DependentUpon>LeagueEDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Game_Player_Stats.cs">
+      <DependentUpon>LeagueEDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Game_Scoring_Summary.cs">
+      <DependentUpon>LeagueEDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Hall_of_Fame.cs">
+      <DependentUpon>LeagueEDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Injury.cs">
+      <DependentUpon>LeagueEDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Injury_Log.cs">
+      <DependentUpon>LeagueEDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Kicking_Accum_Stats_by_year.cs" />
+    <Compile Include="Models\KickReturn_Accum_Stats_by_year.cs" />
+    <Compile Include="Models\LeagueEDM.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LeagueEDM.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LeagueEDM.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LeagueEDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LeagueEDM.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LeagueEDM.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\League_Injuries.cs" />
+    <Compile Include="Models\League_Structure_by_Season.cs">
+      <DependentUpon>LeagueEDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\OneInt2Strings.cs" />
+    <Compile Include="Models\Passing_Accum_Stats_by_year.cs" />
+    <Compile Include="Models\Pass_Defense_Accum_Stats_by_year.cs" />
+    <Compile Include="Models\Player.cs">
+      <DependentUpon>LeagueEDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Players_By_Team.cs">
+      <DependentUpon>LeagueEDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Player_and_Ratings.cs" />
+    <Compile Include="Models\Player_and_Ratings_and_Draft.cs" />
+    <Compile Include="Models\Player_Awards.cs">
+      <DependentUpon>LeagueEDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Player_Ratings.cs">
+      <DependentUpon>LeagueEDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Player_Retiring_Log.cs">
+      <DependentUpon>LeagueEDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Playoff_Teams_by_Season.cs">
+      <DependentUpon>LeagueEDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Punting_Accum_Stats_by_year.cs" />
+    <Compile Include="Models\PuntReturns_Accum_Stats_by_year.cs" />
+    <Compile Include="Models\Receiving_Accum_Stats_by_year.cs" />
+    <Compile Include="Models\Roster_rec.cs" />
+    <Compile Include="Models\Rushing_Accum_Stats_by_year.cs" />
+    <Compile Include="Models\Sched_Week_With_Name.cs" />
+    <Compile Include="Models\Season.cs">
+      <DependentUpon>LeagueEDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TeamStatsRaw.cs" />
+    <Compile Include="Models\Teams_by_Season.cs">
+      <DependentUpon>LeagueEDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Team_Stat_Rec.cs" />
+    <Compile Include="Models\TrainingCampResults.cs" />
+    <Compile Include="Models\TrainingCampStatus.cs" />
+    <Compile Include="Models\Training_Camp_by_Season.cs">
+      <DependentUpon>LeagueEDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WeeklyScheduleRec.cs" />
+    <Compile Include="Penalties\Penalty.cs" />
+    <Compile Include="Penalties\Penalty_Helper.cs" />
+    <Compile Include="Player\Player_Card_Data.cs" />
+    <Compile Include="Player\Team_Player_Accum_Stats_by_year.cs" />
+    <Compile Include="Playoffs\Playoff_Bracket_rec.cs" />
+    <Compile Include="Playoffs\Playoff_Helper.cs" />
+    <Compile Include="Services\FreeAgency_Services.cs" />
+    <Compile Include="Draft\Draft_Need.cs" />
+    <Compile Include="Services\Game_Services.cs" />
+    <Compile Include="Services\Injuries_Services.cs" />
+    <Compile Include="Services\Player_Services.cs" />
+    <Compile Include="Services\Playoff_Services.cs" />
+    <Compile Include="Services\Schedule_Services.cs" />
+    <Compile Include="Services\TrainingCamp_Services.cs" />
+    <Compile Include="Team\Team_History_Row.cs" />
+    <Compile Include="Team\Team_Player_Accum_Stats.cs" />
+    <Compile Include="Team\Three_Coll_List.cs" />
+    <Compile Include="Team\Two_Coll_List.cs" />
+    <Compile Include="Training_Camp\TrainingCamp_Helper.cs" />
+    <Compile Include="WindowsLeague\BoxScore_Popup.xaml.cs">
+      <DependentUpon>BoxScore_Popup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsLeague\ChampionsUX.xaml.cs">
+      <DependentUpon>ChampionsUX.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsLeague\Draft_Profile_Popup.xaml.cs">
+      <DependentUpon>Draft_Profile_Popup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Enum\League_State.cs" />
+    <Compile Include="Enum\Player_Pos.cs" />
+    <Compile Include="Help_Forms\Help_LeagueStandings.xaml.cs">
+      <DependentUpon>Help_LeagueStandings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Help_Forms\Next_Standings.xaml.cs">
+      <DependentUpon>Next_Standings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="League\League_Helmet.cs" />
+    <Compile Include="League\League_Helper.cs" />
+    <Compile Include="League\Loaded_League_Structure.cs" />
+    <Compile Include="League\New_League_Structure.cs" />
+    <Compile Include="Models\DraftPick.cs" />
+    <Compile Include="Models\Standings_Row.cs" />
+    <Compile Include="Models\Standing_Streak.cs" />
+    <Compile Include="LoadLeague.xaml.cs">
+      <DependentUpon>LoadLeague.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainMenuUC.xaml.cs">
+      <DependentUpon>MainMenuUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HomeTown.cs">
+      <DependentUpon>SettingsEDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Potential_First_Names.cs">
+      <DependentUpon>SettingsEDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Potential_Last_Names.cs">
+      <DependentUpon>SettingsEDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SettingsEDM.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SettingsEDM.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SettingsEDM.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SettingsEDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SettingsEDM.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SettingsEDM.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Stock_Teams.cs">
+      <DependentUpon>SettingsEDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NarrationAndText\ScoutingReport.cs" />
+    <Compile Include="NewLeagueUC.xaml.cs">
+      <DependentUpon>NewLeagueUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="New_Team_DetailUC.xaml.cs">
+      <DependentUpon>New_Team_DetailUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PlayerNamesUC.xaml.cs">
+      <DependentUpon>PlayerNamesUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Player\Draft_Profile.cs" />
+    <Compile Include="Progress_Dialog.xaml.cs">
+      <DependentUpon>Progress_Dialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Schedule\Schedule.cs" />
+    <Compile Include="Schedule\Validate_Sched.cs" />
+    <Compile Include="Services\Administration_Services.cs" />
+    <Compile Include="Services\Draft_Services.cs" />
+    <Compile Include="Services\League_Services.cs" />
+    <Compile Include="Services\StockTeams_Services.cs" />
+    <Compile Include="Services\Team_Services.cs" />
+    <Compile Include="StockTeamsUC.xaml.cs">
+      <DependentUpon>StockTeamsUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Stock_Team_detail.xaml.cs">
+      <DependentUpon>Stock_Team_detail.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Team\Pos_Player_Tot.cs" />
+    <Compile Include="Team\Team_Helper.cs" />
+    <Compile Include="Team\Uniform.cs" />
+    <Compile Include="Team\Uniform_Image.cs" />
+    <Compile Include="Versioning\App_Version.cs" />
+    <Compile Include="WindowsLeague\Game_Options_Dialog.xaml.cs">
+      <DependentUpon>Game_Options_Dialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsLeague\Game_Window.xaml.cs">
+      <DependentUpon>Game_Window.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsLeague\LeagueDraftUX.xaml.cs">
+      <DependentUpon>LeagueDraftUX.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsLeague\LeagueFreeAgencyUX.xaml.cs">
+      <DependentUpon>LeagueFreeAgencyUX.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsLeague\LeagueInjuriesUX.xaml.cs">
+      <DependentUpon>LeagueInjuriesUX.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsLeague\LeagueStandingsUX.xaml.cs">
+      <DependentUpon>LeagueStandingsUX.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsLeague\PlayerCard_Popup.xaml.cs">
+      <DependentUpon>PlayerCard_Popup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsLeague\PlayoffsUX.xaml.cs">
+      <DependentUpon>PlayoffsUX.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsLeague\Progress_Dialog_Season_End.xaml.cs">
+      <DependentUpon>Progress_Dialog_Season_End.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsLeague\ScheduleUX.xaml.cs">
+      <DependentUpon>ScheduleUX.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsLeague\StatsUX.xaml.cs">
+      <DependentUpon>StatsUX.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsLeague\TeamStatsUX.xaml.cs">
+      <DependentUpon>TeamStatsUX.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsLeague\Team_DetailUX.xaml.cs">
+      <DependentUpon>Team_DetailUX.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsLeague\TrainingCampUX.xaml.cs">
+      <DependentUpon>TrainingCampUX.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsLeague\TrainingCamp_Results_Popup.xaml.cs">
+      <DependentUpon>TrainingCamp_Results_Popup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Common\CommonUtils.cs" />
+    <Compile Include="Common\StockteamEventArgs.cs" />
+    <Compile Include="Common\teamEventArgs.cs" />
+    <Compile Include="Common\TeamUpdatedEventArgs.cs" />
+    <Compile Include="Constants\App_Constants.cs" />
+    <Compile Include="DAO\LeagueDAO.cs" />
+    <Compile Include="DAO\Player_DAO.cs" />
+    <Compile Include="DAO\Player_NamesDAO.cs" />
+    <Compile Include="DAO\Stock_TeamsDAO.cs" />
+    <Compile Include="Help_Forms\Help_NewLeague.xaml.cs">
+      <DependentUpon>Help_NewLeague.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Help_Forms\Help_NewTeam.xaml.cs">
+      <DependentUpon>Help_NewTeam.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Player\Player_Helper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <None Include="Database\BlankDB.db" />
+    <None Include="Database\Settings.db" />
+    <None Include="ImageSource\blankUniform.xcf" />
+    <EntityDeploy Include="Models\SettingsEDM.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>SettingsEDM.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Images\Source\Field_Templates\Field_Template.xcf" />
+    <None Include="Images\Source\Field_Templates\Template.xcf" />
+    <None Include="Images\Source\misc\Goalposts.xcf" />
+    <None Include="Images\Source\Players\L_FG_KICK.xcf" />
+    <None Include="Images\Source\Players\L_Kick_About_to_Catch.xcf" />
+    <None Include="Images\Source\Players\L_kneel1_With_Ball.xcf" />
+    <None Include="Images\Source\Players\L_Kneel2_With_Ball.xcf" />
+    <None Include="Images\Source\Players\L_Kneel3_With_Ball.xcf" />
+    <None Include="Images\Source\Players\L_On_Back.xcf" />
+    <None Include="Images\Source\Players\L_Run1_Down_No_Ball.xcf" />
+    <None Include="Images\Source\Players\L_Run1_Down_With_Ball.xcf" />
+    <None Include="Images\Source\Players\L_Run1_No_Ball.xcf" />
+    <None Include="Images\Source\Players\L_Run1_Up_No_Ball.xcf" />
+    <None Include="Images\Source\Players\L_Run1_Up_With_Ball.xcf" />
+    <None Include="Images\Source\Players\L_Run1_With_Ball.xcf" />
+    <None Include="Images\Source\Players\L_Run2_Down_No_Ball.xcf" />
+    <None Include="Images\Source\Players\L_Run2_Down_With_Ball.xcf" />
+    <None Include="Images\Source\Players\L_Run2_No_Ball.xcf" />
+    <None Include="Images\Source\Players\L_Run2_Up_No_Ball.xcf" />
+    <None Include="Images\Source\Players\L_Run2_Up_With_Ball.xcf" />
+    <None Include="Images\Source\Players\L_Run2_With_Ball.xcf" />
+    <None Include="Images\Source\Players\L_Stand_Player.xcf" />
+    <None Include="Images\Source\Players\L_Tackled.xcf" />
+    <None Include="Images\Source\Players\L_Upright_Block1.xcf" />
+    <None Include="Images\Source\Players\L_Upright_Block2.xcf" />
+    <None Include="Images\Source\Players\Player_Sprite_Sheet.xcf" />
+    <None Include="Images\Source\Players\R_FG_KICK.xcf" />
+    <None Include="Images\Source\Players\R_Kick_About_to_Catch.xcf" />
+    <None Include="Images\Source\Players\R_kneel1_With_Ball.xcf" />
+    <None Include="Images\Source\Players\R_kneel2_With_Ball.xcf" />
+    <None Include="Images\Source\Players\R_Kneel3_With_Ball.xcf" />
+    <None Include="Images\Source\Players\R_On_Back.xcf" />
+    <None Include="Images\Source\Players\R_Run1_Down_No_Ball.xcf" />
+    <None Include="Images\Source\Players\R_Run1_Down_With_Ball.xcf" />
+    <None Include="Images\Source\Players\R_Run1_No_Ball.xcf" />
+    <None Include="Images\Source\Players\R_Run1_Up_No_Ball.xcf" />
+    <None Include="Images\Source\Players\R_Run1_Up_With_Ball.xcf" />
+    <None Include="Images\Source\Players\R_Run1_With_Ball.xcf" />
+    <None Include="Images\Source\Players\R_Run2_Down_No_Ball.xcf" />
+    <None Include="Images\Source\Players\R_Run2_Down_With_Ball.xcf" />
+    <None Include="Images\Source\Players\R_Run2_No_Ball.xcf" />
+    <None Include="Images\Source\Players\R_Run2_Up_No_Ball.xcf" />
+    <None Include="Images\Source\Players\R_Run2_Up_With_Ball.xcf" />
+    <None Include="Images\Source\Players\R_Run2_With_Ball.xcf" />
+    <None Include="Images\Source\Players\R_Stand_Player.xcf" />
+    <None Include="Images\Source\Players\R_Tackled.xcf" />
+    <None Include="Images\Source\Players\R_Upright_Block.xcf" />
+    <None Include="Images\Source\Players\R_Upright_Block1.xcf" />
+    <None Include="Images\Source\Players\R_Upright_Block2.xcf" />
+    <EntityDeploy Include="Models\LeagueEDM.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>LeagueEDM.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Models\LeagueEDM.edmx.diagram">
+      <DependentUpon>LeagueEDM.edmx</DependentUpon>
+    </None>
+    <None Include="Models\SettingsEDM.edmx.diagram">
+      <DependentUpon>SettingsEDM.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="SpectatorFootball_TemporaryKey.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Models\LeagueEDM.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>LeagueEDM.edmx</DependentUpon>
+      <LastGenOutput>LeagueEDM.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\LeagueEDM.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>LeagueEDM.edmx</DependentUpon>
+      <LastGenOutput>LeagueEDM.cs</LastGenOutput>
+    </Content>
+    <Content Include="Sounds\Booing_Long.mp3" />
+    <Content Include="Sounds\Booing_Short.mp3" />
+    <Content Include="Sounds\Cheers_long.mp3" />
+    <Content Include="Sounds\Cheer_Short.mp3" />
+    <Content Include="Sounds\Doink.mp3" />
+    <Content Include="Sounds\huthut.mp3" />
+    <Content Include="Sounds\kickball.mp3" />
+    <Content Include="Sounds\Players_Colliding.mp3" />
+    <Content Include="Sounds\Tackle.mp3" />
+    <Content Include="Sounds\Whistle.mp3" />
+    <Content Include="Models\SettingsEDM.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SettingsEDM.edmx</DependentUpon>
+      <LastGenOutput>SettingsEDM.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\SettingsEDM.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SettingsEDM.edmx</DependentUpon>
+      <LastGenOutput>SettingsEDM.cs</LastGenOutput>
+    </Content>
+    <Content Include="Log4Net.Config.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.6.1 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.3.0\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.3.0\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.3.0\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.3.0\build\EntityFramework.targets'))" />
+    <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.113.1\build\net46\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.113.1\build\net46\System.Data.SQLite.Core.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.3.0\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.3.0\build\EntityFramework.targets')" />
+  <Import Project="..\packages\System.Data.SQLite.Core.1.0.113.1\build\net46\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.113.1\build\net46\System.Data.SQLite.Core.targets')" />
+  <ItemGroup>
+    <ReferencePath Include="C:\Users\Brenden\source\repos\SpectatorFootball\packages\EntityFramework.6.3.0\lib\net45\EntityFramework.dll" />
+    <ReferencePath Include="C:\Users\Brenden\source\repos\SpectatorFootball\packages\EntityFramework.6.3.0\lib\net45\EntityFramework.SqlServer.dll" />
+    <ReferencePath Include="C:\Users\Brenden\source\repos\SpectatorFootball\packages\log4net.2.0.8\lib\net45-full\log4net.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\Microsoft.CSharp.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\mscorlib.dll" />
+    <ReferencePath Include="C:\Users\Brenden\source\repos\SpectatorFootball\packages\OxyPlot.Core.2.0.0\lib\net45\OxyPlot.dll" />
+    <ReferencePath Include="C:\Users\Brenden\source\repos\SpectatorFootball\packages\OxyPlot.Wpf.2.0.0\lib\net45\OxyPlot.Wpf.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\PresentationCore.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\PresentationFramework.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\ReachFramework.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\System.ComponentModel.DataAnnotations.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\System.Configuration.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\System.Configuration.Install.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\System.Core.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\System.Data.DataSetExtensions.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\System.Data.dll" />
+    <ReferencePath Include="C:\Users\Brenden\source\repos\SpectatorFootball\packages\System.Data.SQLite.Core.1.0.113.1\lib\net46\System.Data.SQLite.dll" />
+    <ReferencePath Include="C:\Users\Brenden\source\repos\SpectatorFootball\packages\System.Data.SQLite.EF6.1.0.113.0\lib\net46\System.Data.SQLite.EF6.dll" />
+    <ReferencePath Include="C:\Users\Brenden\source\repos\SpectatorFootball\packages\System.Data.SQLite.Linq.1.0.113.0\lib\net46\System.Data.SQLite.Linq.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\System.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\System.Drawing.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\System.Management.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\System.Net.Http.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\System.Printing.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\System.Runtime.Serialization.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\System.Security.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\System.Windows.Forms.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\System.Xaml.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\System.Xml.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\System.Xml.Linq.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\WindowsBase.dll" />
+    <ReferencePath Include="C:\Users\Brenden\source\repos\SpectatorFootball\packages\Extended.Wpf.Toolkit.3.6.0\lib\net40\Xceed.Wpf.AvalonDock.dll" />
+    <ReferencePath Include="C:\Users\Brenden\source\repos\SpectatorFootball\packages\Extended.Wpf.Toolkit.3.6.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll" />
+    <ReferencePath Include="C:\Users\Brenden\source\repos\SpectatorFootball\packages\Extended.Wpf.Toolkit.3.6.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll" />
+    <ReferencePath Include="C:\Users\Brenden\source\repos\SpectatorFootball\packages\Extended.Wpf.Toolkit.3.6.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll" />
+    <ReferencePath Include="C:\Users\Brenden\source\repos\SpectatorFootball\packages\Extended.Wpf.Toolkit.3.6.0\lib\net40\Xceed.Wpf.Toolkit.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\Help_Forms\Help_Champions.g.cs" />
+    <Compile Include="C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\Help_Forms\Help_Draft.g.cs" />
+    <Compile Include="C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\Help_Forms\Help_FreeAgency.g.cs" />
+    <Compile Include="C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\Help_Forms\Help_LeagueInjuries.g.cs" />
+    <Compile Include="C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\Help_Forms\Help_PlayerStats.g.cs" />
+    <Compile Include="C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\Help_Forms\Help_Schedule.g.cs" />
+    <Compile Include="C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\Help_Forms\Help_TeamDetail.g.cs" />
+    <Compile Include="C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\Help_Forms\Help_TeamStats.g.cs" />
+    <Compile Include="C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\Help_Forms\Help_TrainingCamp.g.cs" />
+    <Compile Include="C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\WindowsLeague\BoxScore_Popup.g.cs" />
+    <Compile Include="C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\WindowsLeague\ChampionsUX.g.cs" />
+    <Compile Include="C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\WindowsLeague\Draft_Profile_Popup.g.cs" />
+    <Compile Include="C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\Help_Forms\Help_LeagueStandings.g.cs" />
+    <Compile Include="C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\Help_Forms\Help_NewLeague.g.cs" />
+    <Compile Include="C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\Help_Forms\Help_NewTeam.g.cs" />
+    <Compile Include="C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\Help_Forms\Next_Standings.g.cs" />
+    <Compile Include="C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\LoadLeague.g.cs" />
+    <Compile Include="C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\MainMenuUC.g.cs" />
+    <Compile Include="C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\MainWindow.g.cs" />
+    <Compile Include="C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\NewLeagueUC.g.cs" />
+    <Compile Include="C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\New_Team_DetailUC.g.cs" />
+    <Compile Include="C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\PlayerNamesUC.g.cs" />
+    <Compile Include="C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\Progress_Dialog.g.cs" />
+    <Compile Include="C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\StockTeamsUC.g.cs" />
+    <Compile Include="C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\Stock_Team_detail.g.cs" />
+    <Compile Include="C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\WindowsLeague\Game_Options_Dialog.g.cs" />
+    <Compile Include="C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\WindowsLeague\Game_Window.g.cs" />
+    <Compile Include="C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\WindowsLeague\LeagueDraftUX.g.cs" />
+    <Compile Include="C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\WindowsLeague\LeagueFreeAgencyUX.g.cs" />
+    <Compile Include="C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\WindowsLeague\LeagueInjuriesUX.g.cs" />
+    <Compile Include="C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\WindowsLeague\LeagueStandingsUX.g.cs" />
+    <Compile Include="C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\WindowsLeague\PlayerCard_Popup.g.cs" />
+    <Compile Include="C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\WindowsLeague\PlayoffsUX.g.cs" />
+    <Compile Include="C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\WindowsLeague\Progress_Dialog_Season_End.g.cs" />
+    <Compile Include="C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\WindowsLeague\ScheduleUX.g.cs" />
+    <Compile Include="C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\WindowsLeague\StatsUX.g.cs" />
+    <Compile Include="C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\WindowsLeague\TeamStatsUX.g.cs" />
+    <Compile Include="C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\WindowsLeague\Team_DetailUX.g.cs" />
+    <Compile Include="C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\WindowsLeague\TrainingCampUX.g.cs" />
+    <Compile Include="C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\WindowsLeague\TrainingCamp_Results_Popup.g.cs" />
+    <Compile Include="C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\App.g.cs" />
+    <Compile Include="C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\SpectatorFootball_Content.g.cs" />
+    <Compile Include="C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\GeneratedInternalTypeHelper.g.cs" />
+  </ItemGroup>
+</Project>

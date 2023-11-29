@@ -866,8 +866,14 @@ namespace SpectatorFootball.GameNS
                 case Play_Enum.FREE_KICK:
                 case Play_Enum.KICKOFF_ONSIDES:
 
-                    r.bFinal_SwitchPossession = true;
                     r.bPlay_Stands = true;
+                    r.bFinal_SwitchPossession = true;
+
+                    if (bTurnover)
+                    {
+                        r.bFinal_SwitchPossession = !r.bFinal_SwitchPossession;
+                        setTurnoverGameStat(r);
+                    }
 
                     //No penalties or turnoers on touchbacks
                     if (r.bTouchback && r.Penalty == null) 
@@ -878,14 +884,10 @@ namespace SpectatorFootball.GameNS
                     }
                     else if (r.Penalty == null || r.bPenalty_Rejected || (r.Penalty.bSpot_Foul && !penOnBallCarryingTeam))
                     {
-                        r.bPlay_Stands = true;
+                        r = setScoringBool(r, bTurnover);
 
                         if (r.bTouchDown)
                             r.bFinal_SwitchPossession = false;
-                        else
-                           r.bFinal_SwitchPossession = true;
-                        
-                        r = setScoringBool(r, bTurnover);
 
                         if (r.Penalty != null && !r.bPenalty_Rejected)
                         {
@@ -928,17 +930,9 @@ namespace SpectatorFootball.GameNS
                             r.Final_Down = 1;
                             r.Final_yard_to_go = 10;
                         }
-
-                        if (bTurnover)
-                        {
-                            r.bFinal_SwitchPossession = true;
-                            setTurnoverGameStat(r);
-                        }
                     }
                     else if ((r.Penalty.bSpot_Foul && penOnBallCarryingTeam))
                     {
-                        r.bPlay_Stands = true;
-
                         double lower_yl = Game_Engine_Helper.LessYardline(r.end_of_play_yardline, r.Penalized_Player.Current_YardLine, bLefttoRgiht);
                         dist_from_GL = Game_Engine_Helper.calcDistanceFromMyGL(lower_yl, bLefttoRgiht);
                         Tuple<bool, double> t = Penalty_Helper.isHalfTheDistance(r.Penalty.Yards, dist_from_GL);
@@ -950,6 +944,13 @@ namespace SpectatorFootball.GameNS
                         r.Final_end_of_Play_Yardline = lower_yl - (r.Final_Added_Penalty_Yards * Game_Engine_Helper.HorizontalAdj(bLefttoRgiht));
                         r.Final_Down = 1;
                         r.Final_yard_to_go = 10;
+
+                        //If need be reset returner stats because penalty may have altered them
+                        double reduce_yards = Game_Engine_Helper.Yards_to_Reduce(r.end_of_play_yardline, r.Penalized_Player.Current_YardLine, bLefttoRgiht);
+                        Game_Player_Stats a_stat = pResult.Play_Player_Stats.Where(x => x.Player_ID == r.Returner.p_and_r.p.ID).First();
+                        a_stat.ko_ret_TDs = 0;
+                        a_stat.ko_ret_yards -= (long) (reduce_yards + 0.5);
+                        a_stat.ko_ret_yards_long = a_stat.ko_ret_yards;
                     }
                     else
                         throw new Exception("Error in setPlayOutCome, non spot penalty on kickoffs!");
