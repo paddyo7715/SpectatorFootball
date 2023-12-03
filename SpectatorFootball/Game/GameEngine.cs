@@ -945,12 +945,15 @@ namespace SpectatorFootball.GameNS
                         r.Final_Down = 1;
                         r.Final_yard_to_go = 10;
 
-                        //If need be reset returner stats because penalty may have altered them
-                        double reduce_yards = Game_Engine_Helper.Yards_to_Reduce(r.end_of_play_yardline, r.Penalized_Player.Current_YardLine, bLefttoRgiht);
-                        Game_Player_Stats a_stat = pResult.Play_Player_Stats.Where(x => x.Player_ID == r.Returner.p_and_r.p.ID).First();
-                        a_stat.ko_ret_TDs = 0;
-                        a_stat.ko_ret_yards -= (long) (reduce_yards + 0.5);
-                        a_stat.ko_ret_yards_long = a_stat.ko_ret_yards;
+                        //Not for onside kick, If need be reset returner stats because penalty may have altered them
+                        if (PE != Play_Enum.KICKOFF_ONSIDES)
+                        {
+                            double reduce_yards = Game_Engine_Helper.Yards_to_Reduce(r.end_of_play_yardline, r.Penalized_Player.Current_YardLine, bLefttoRgiht);
+                            Game_Player_Stats a_stat = pResult.Play_Player_Stats.Where(x => x.Player_ID == r.Returner.p_and_r.p.ID).First();
+                            a_stat.ko_ret_TDs = 0;
+                            a_stat.ko_ret_yards -= (long)(reduce_yards + 0.5);
+                            a_stat.ko_ret_yards_long = a_stat.ko_ret_yards;
+                        }
                     }
                     else
                         throw new Exception("Error in setPlayOutCome, non spot penalty on kickoffs!");
@@ -963,7 +966,7 @@ namespace SpectatorFootball.GameNS
                         r = setScoringBool(r, bTurnover);
                         if (r.bFGMade)
                         {
-                            r.bFinal_NextPlayFreeKick = true; ;
+                            r.bFinal_NextPlayKickoff = true; ;
                             r.Final_Down = 0;
                             r.Final_yard_to_go = 0;
                         }
