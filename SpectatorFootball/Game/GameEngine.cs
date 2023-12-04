@@ -966,7 +966,7 @@ namespace SpectatorFootball.GameNS
                         r = setScoringBool(r, bTurnover);
                         if (r.bFGMade)
                         {
-                            r.bFinal_NextPlayKickoff = true; ;
+                            r.bFinal_NextPlayKickoff = true; 
                             r.Final_Down = 0;
                             r.Final_yard_to_go = 0;
                         }
@@ -984,7 +984,7 @@ namespace SpectatorFootball.GameNS
                     }
                     else if (penOnBallCarryingTeam)
                     {
-                        setScrimPlayDefensePenaltyNonSpot(r, bLefttoRgiht, Down, Yards_to_Go);
+                        setOffensePenaltyNonSpot(r, bLefttoRgiht, Down, Yards_to_Go);
                     }
                     else
                         throw new Exception("Error in setPlayOutCome, FG unknown situation!");
@@ -1132,7 +1132,7 @@ namespace SpectatorFootball.GameNS
                     }
                     else if (penOnBallCarryingTeam)
                     {
-                        setScrimPlayDefensePenaltyNonSpot(r, bLefttoRgiht, Down, Yards_to_Go);
+                        setOffensePenaltyNonSpot(r, bLefttoRgiht, Down, Yards_to_Go);
                     }
                     break;
                 case Play_Enum.RUN:
@@ -1218,7 +1218,7 @@ namespace SpectatorFootball.GameNS
                     }
                     else if (penOnBallCarryingTeam)
                     {
-                        setScrimPlayDefensePenaltyNonSpot(r, bLefttoRgiht, Down, Yards_to_Go);
+                        setOffensePenaltyNonSpot(r, bLefttoRgiht, Down, Yards_to_Go);
                     }
                     break;
 
@@ -1411,13 +1411,13 @@ namespace SpectatorFootball.GameNS
                 else
                 {
                     r.Final_Down = Down;
-                    r.Final_yard_to_go -= Penalty_Yards;
+                    r.Final_yard_to_go = Yards_to_Go - Penalty_Yards;
                 }
-                r.Final_end_of_Play_Yardline += (r.Yards_Gained + Penalty_Yards) * Game_Engine_Helper.HorizontalAdj(bLefttoRgiht);
+                r.Final_end_of_Play_Yardline = r.end_of_play_yardline + (Penalty_Yards * Game_Engine_Helper.HorizontalAdj(bLefttoRgiht));
                 r.Final_Added_Penalty_Yards = Penalty_Yards;
             }
         }
-        private static void setScrimPlayDefensePenaltyNonSpot(Play_Result r, bool bLefttoRgiht, int Down, double Yards_to_Go)
+        private static void setOffensePenaltyNonSpot(Play_Result r, bool bLefttoRgiht, int Down, double Yards_to_Go)
         {
             double Penalty_Yards;
              double dist_from_GL = Game_Engine_Helper.calcDistanceFromMyGL(r.end_of_play_yardline, bLefttoRgiht);
@@ -1428,8 +1428,8 @@ namespace SpectatorFootball.GameNS
                 Penalty_Yards = r.Penalty.Yards;
 
             r.Final_Down = Down;
-            r.Final_yard_to_go += Penalty_Yards;
-            r.Final_end_of_Play_Yardline += (r.Yards_Gained + Penalty_Yards) * Game_Engine_Helper.HorizontalAdj(bLefttoRgiht);
+            r.Final_yard_to_go = Yards_to_Go + Penalty_Yards;
+            r.Final_end_of_Play_Yardline = r.end_of_play_yardline - (Penalty_Yards * Game_Engine_Helper.HorizontalAdj(bLefttoRgiht));
             r.Final_Added_Penalty_Yards = Penalty_Yards;
         }
         public static long CoinToss(int rnum, long ht_id, long at_id)
