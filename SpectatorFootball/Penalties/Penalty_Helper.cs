@@ -576,9 +576,7 @@ namespace SpectatorFootball.PenaltiesNS
                 Play_Enum.SCRIM_PLAY_2XP_RUN,
                 Play_Enum.SCRIM_PLAY_3XP_PASS,
                 Play_Enum.SCRIM_PLAY_3XP_RUN,
-                Play_Enum.PUNT,
-                Play_Enum.FIELD_GOAL,
-                Play_Enum.EXTRA_POINT
+                Play_Enum.PUNT
             };
             r.Last().Player_Action_States = new List<Player_Action_State>()
             {
@@ -597,9 +595,7 @@ namespace SpectatorFootball.PenaltiesNS
                 Player_Action_State.P,
                 Player_Action_State.PR,
                 Player_Action_State.PRT,
-                Player_Action_State.PDT,
-                Player_Action_State.FGT,
-                Player_Action_State.FGD 
+                Player_Action_State.PDT
             };
 
             //Unnecessary Roughness
@@ -630,9 +626,7 @@ namespace SpectatorFootball.PenaltiesNS
                 Play_Enum.SCRIM_PLAY_2XP_RUN,
                 Play_Enum.SCRIM_PLAY_3XP_PASS,
                 Play_Enum.SCRIM_PLAY_3XP_RUN,
-                Play_Enum.PUNT,
-                Play_Enum.FIELD_GOAL,
-                Play_Enum.EXTRA_POINT
+                Play_Enum.PUNT
             };
             r.Last().Player_Action_States = new List<Player_Action_State>()
             {
@@ -651,9 +645,7 @@ namespace SpectatorFootball.PenaltiesNS
                 Player_Action_State.P,
                 Player_Action_State.PR,
                 Player_Action_State.PRT,
-                Player_Action_State.PDT,
-                Player_Action_State.FGT,
-                Player_Action_State.FGD
+                Player_Action_State.PDT
             };
 
             //Facemask
@@ -684,9 +676,7 @@ namespace SpectatorFootball.PenaltiesNS
                 Play_Enum.SCRIM_PLAY_2XP_RUN,
                 Play_Enum.SCRIM_PLAY_3XP_PASS,
                 Play_Enum.SCRIM_PLAY_3XP_RUN,
-                Play_Enum.PUNT,
-                Play_Enum.FIELD_GOAL,
-                Play_Enum.EXTRA_POINT
+                Play_Enum.PUNT
             };
             r.Last().Player_Action_States = new List<Player_Action_State>()
             {
@@ -705,9 +695,7 @@ namespace SpectatorFootball.PenaltiesNS
                 Player_Action_State.P,
                 Player_Action_State.PR,
                 Player_Action_State.PRT,
-                Player_Action_State.PDT,
-                Player_Action_State.FGT,
-                Player_Action_State.FGD
+                Player_Action_State.PDT
             };
 
             return r;

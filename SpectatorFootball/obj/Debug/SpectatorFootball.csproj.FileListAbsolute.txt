@@ -34,7 +34,6 @@ C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\bin\Debug\ro\X
 C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\bin\Debug\ru\Xceed.Wpf.AvalonDock.resources.dll
 C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\bin\Debug\sv\Xceed.Wpf.AvalonDock.resources.dll
 C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\bin\Debug\zh-Hans\Xceed.Wpf.AvalonDock.resources.dll
-C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\SpectatorFootball.csprojAssemblyReference.cache
 C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\Help_Forms\Help_Champions.g.cs
 C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\Help_Forms\Help_Draft.g.cs
 C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\Help_Forms\Help_FreeAgency.g.cs
