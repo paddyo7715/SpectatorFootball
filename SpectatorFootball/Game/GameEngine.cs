@@ -1002,7 +1002,8 @@ namespace SpectatorFootball.GameNS
                         r.bPlay_Stands = true;
                         r = setScoringBool(r, bTurnover);
 
-                        r.bFinal_NextPlayKickoff = true; 
+                        r.bFinal_SwitchPossession = false;
+                        r.bFinal_NextPlayKickoff = true;
                         r.Final_Down = 0;
                         r.Final_yard_to_go = 0;
 
@@ -1028,7 +1029,7 @@ namespace SpectatorFootball.GameNS
                             r.Final_Down = 0;
                             r.Final_yard_to_go = 0;
 
-                            r.Final_end_of_Play_Yardline += (r.Yards_Gained + Penalty_Yards) * Game_Engine_Helper.HorizontalAdj(bLefttoRgiht);
+                            r.Final_end_of_Play_Yardline = r.end_of_play_yardline + ((r.Yards_Gained + Penalty_Yards) * Game_Engine_Helper.HorizontalAdj(bLefttoRgiht));
                             r.Final_Added_Penalty_Yards = Penalty_Yards;
                         }
                     }
@@ -1042,11 +1043,18 @@ namespace SpectatorFootball.GameNS
                             Penalty_Yards = pResult.Penalty.Yards;
                         r.Final_Down = 0;
                         r.Final_yard_to_go = 0;
-                        r.Final_end_of_Play_Yardline += (r.Yards_Gained + Penalty_Yards) * Game_Engine_Helper.HorizontalAdj(bLefttoRgiht);
+                        r.Final_end_of_Play_Yardline = r.end_of_play_yardline -  ((r.Yards_Gained + Penalty_Yards) * Game_Engine_Helper.HorizontalAdj(bLefttoRgiht));
                         r.Final_Added_Penalty_Yards = Penalty_Yards;
                     }
                     else
                         throw new Exception("Error in setPlayOutCome, FG unknown situation!");
+
+                    if (!r.bPlay_Stands)
+                    {
+                        r.bFinal_NextPlayFreeKick = false;
+                        r.bFinal_NextPlayKickoff = false;
+                        r.bFinal_NextPlayXP = true;
+                    }
 
                     break;
 //Spot fouls assessed after the ball is kicked, all other penalties before the kick

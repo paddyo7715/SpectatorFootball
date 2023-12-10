@@ -128,3 +128,4 @@ C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\Spec
 C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\SpectatorFootball.csproj.CopyComplete
 C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\SpectatorFootball.exe
 C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\SpectatorFootball.pdb
+C:\Users\Brenden\source\repos\SpectatorFootball\SpectatorFootball\obj\Debug\SpectatorFootball.csprojAssemblyReference.cache
