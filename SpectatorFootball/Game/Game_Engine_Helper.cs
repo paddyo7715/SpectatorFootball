@@ -297,7 +297,7 @@ namespace SpectatorFootball.GameNS
             if (blefttoright)
                 r = Yardline1 > Yardline2 ? Yardline1 : Yardline2;
             else
-                r = Yardline1 < Yardline2 ? Yardline1 : Yardline2;
+                r = Yardline1 > Yardline2 ? Yardline2 : Yardline1;
 
             return r;
         }
@@ -308,7 +308,7 @@ namespace SpectatorFootball.GameNS
             if (blefttoright)
                 r = Yardline1 < Yardline2 ? Yardline1 : Yardline2;
             else
-                r = Yardline1 > Yardline2 ? Yardline1 : Yardline2;
+                r = Yardline1 < Yardline2 ? Yardline2 : Yardline1;
 
             return r;
         }

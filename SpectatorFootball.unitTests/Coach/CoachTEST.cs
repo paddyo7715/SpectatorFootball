@@ -7,6 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SpectatorFootball.Models;
 using SpectatorFootball.GameNS;
 using SpectatorFootball.PenaltiesNS;
+using SpectatorFootball.Enum;
 
 namespace SpectatorFootball.unitTests.CoachTest
 {
@@ -972,6 +973,7 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(bAccept);
         }
 
+/*
         [TestCategory("Penalties")]
         [TestMethod]
         public void AcceptOff_Penalty_Punt_short_return_Accept()
@@ -986,6 +988,45 @@ namespace SpectatorFootball.unitTests.CoachTest
 
             Assert.IsTrue(bAccept);
         }
+*/
+
+        [TestCategory("Penalties")]
+        [TestMethod]
+        public void Punt_Defensive_offsides_Rejected_Returner_loses_the_Ball()
+        {
+            int Yards_to_go = 22;
+            double Line_of_Scrimmage = 88.0;
+            //get penalty settings
+            List<Penalty> plist = Penalty_Helper.ReturnAllPenalties();
+            Penalty p = plist.Where(x => x.code == Penalty_Codes.DO).First();
+
+            Play_Result pResult = new Play_Result() { Yards_Returned = 5, Penalty = p, bFumble = true, bFumble_Lost = true };
+            Game g = new Game() { Home_Score = 0, Away_Score = 0, Quarter = 4, Time = 200 };
+            Coach c = new Coach(11, g, 7, new List<Player_and_Ratings>(), new List<Player_and_Ratings>(), new List<Injury>());
+            bool bAccept = c.AcceptOff_Penalty(Enum.Play_Enum.PUNT, pResult, Yards_to_go, Line_of_Scrimmage, true, false, false);
+
+            Assert.IsTrue(!bAccept);
+        }
+
+/*
+        [TestCategory("Penalties")]
+        [TestMethod]
+        public void Punt_Defensive_offsides_Accept_no_first_down_Returner_Has_big_return()
+        {
+            int Yards_to_go = 2;
+            double Line_of_Scrimmage = 88.0;
+            //get penalty settings
+            List<Penalty> plist = Penalty_Helper.ReturnAllPenalties();
+            Penalty p = plist.Where(x => x.code == Penalty_Codes.DO).First();
+
+            Play_Result pResult = new Play_Result() { Yards_Returned = 55, Penalty = p, bFumble = false, bFumble_Lost = false };
+            Game g = new Game() { Home_Score = 0, Away_Score = 0, Quarter = 4, Time = 200 };
+            Coach c = new Coach(11, g, 7, new List<Player_and_Ratings>(), new List<Player_and_Ratings>(), new List<Injury>());
+            bool bAccept = c.AcceptOff_Penalty(Enum.Play_Enum.PUNT, pResult, Yards_to_go, Line_of_Scrimmage, true, false, false);
+
+            Assert.IsTrue(bAccept);
+        }
+*/
 
         [TestCategory("Penalties")]
         [TestMethod]

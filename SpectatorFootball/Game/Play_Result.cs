@@ -89,6 +89,7 @@ namespace SpectatorFootball.GameNS
         public double Yards_Gained = 0;
         public double Yards_Returned = 0;
         public double Kick_Out_of_Bounds_Yardline = 0;
+        public double Play_Start_Yardline = 0;
         public double end_of_play_yardline = 0;
 //=============================================
 

@@ -528,8 +528,8 @@ namespace SpectatorFootball.GameNS
 
 
 
-        //This is for penalties on the offensethat includes kickoff return team, but for punts, the punting
-        //team is considered the offense
+        //This is for penalties on the offense that includes kickoff return team, but for punts, the punting
+        //team is considered the defense
         public bool AcceptOff_Penalty(Play_Enum pe, Play_Result pResult, double yards_to_go, double Line_of_Scrimmage, bool bLefttoRight, bool bLastPlayGame, bool bLasPlayHalf)
         {
             bool r = false;

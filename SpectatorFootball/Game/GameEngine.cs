@@ -858,6 +858,8 @@ namespace SpectatorFootball.GameNS
             double dist_from_GL;
             double Penalty_Yards;
             bool bHalft_the_dist = false;
+            Tuple<long, long> tp = null;
+
 
             //Determine outcome by play type
             switch (PE)
@@ -866,13 +868,18 @@ namespace SpectatorFootball.GameNS
                 case Play_Enum.FREE_KICK:
                 case Play_Enum.KICKOFF_ONSIDES:
 
+                    //Switch the ball possessing team on certain plays and situations
+                    tp = setBAllPossessionTeam(pResult);
+                    pResult.BallPossessing_Team_Id = tp.Item1;
+                    pResult.NonbBallPossessing_Team_Id = tp.Item2;
+
                     r.bPlay_Stands = true;
                     r.bFinal_SwitchPossession = true;
 
                     if (bTurnover)
                     {
-                        r.bFinal_SwitchPossession = !r.bFinal_SwitchPossession;
                         setTurnoverGameStat(r);
+                        r.bFinal_SwitchPossession = false;
                     }
 
                     //No penalties or turnoers on touchbacks
@@ -880,11 +887,11 @@ namespace SpectatorFootball.GameNS
                     {
                         r.Final_Down = 1;
                         r.Final_yard_to_go = 10;
-                        r.Final_end_of_Play_Yardline = getScrimmageLine(TouchBack_Yardline, bLefttoRgiht);
+                        r.Final_end_of_Play_Yardline = getScrimmageLine(TouchBack_Yardline, !bLefttoRgiht);
                     }
                     else if (r.Penalty == null || r.bPenalty_Rejected || (r.Penalty.bSpot_Foul && !penOnBallCarryingTeam))
                     {
-                        r = setScoringBool(r, bTurnover);
+                        r = setScoringBool(r);
 
                         if (r.bTouchDown)
                             r.bFinal_SwitchPossession = false;
@@ -963,7 +970,7 @@ namespace SpectatorFootball.GameNS
                     if (r.Penalty == null || r.bPenalty_Rejected)
                     {
                         r.bPlay_Stands = true;
-                        r = setScoringBool(r, bTurnover);
+                        r = setScoringBool(r);
                         if (r.bFGMade)
                         {
                             r.bFinal_NextPlayKickoff = true; 
@@ -1000,7 +1007,7 @@ namespace SpectatorFootball.GameNS
                     if (r.Penalty == null || r.bPenalty_Rejected)
                     {
                         r.bPlay_Stands = true;
-                        r = setScoringBool(r, bTurnover);
+                        r = setScoringBool(r);
 
                         r.bFinal_SwitchPossession = false;
                         r.bFinal_NextPlayKickoff = true;
@@ -1059,19 +1066,35 @@ namespace SpectatorFootball.GameNS
                     break;
 //Spot fouls assessed after the ball is kicked, all other penalties before the kick
                 case Play_Enum.PUNT:
-                    //No penalties or turnoers on touchbacks or out of bounds
-                    if ((r.bTouchback || r.bRunOutofBounds))
+
+                    r.bFinal_SwitchPossession = true;
+
+                    if (r.bTouchback)
                     {
                         r.bPlay_Stands = true;
                         r.Final_Down = 1;
                         r.Final_yard_to_go = 10;
+                        r.bFinal_SwitchPossession = true;
+                        r.Final_end_of_Play_Yardline = getScrimmageLine(TouchBack_Yardline, !bLefttoRgiht);
+
                     }
                     else if (r.Penalty == null || r.bPenalty_Rejected)
                     {
                         r.bPlay_Stands = true;
 
+                        //Switch the ball possessing team on certain plays and situations
+                        tp = setBAllPossessionTeam(pResult);
+                        pResult.BallPossessing_Team_Id = tp.Item1;
+                        pResult.NonbBallPossessing_Team_Id = tp.Item2;
+
                         //set possible next mandatory play
                         bool bnextSpecial = setNextPLay(r);
+
+                        if (bTurnover)
+                        {
+                            r.bFinal_SwitchPossession = false;
+                            setTurnoverGameStat(r);
+                        }
 
                         if (bnextSpecial)
                         {
@@ -1085,42 +1108,64 @@ namespace SpectatorFootball.GameNS
                             r.Final_end_of_Play_Yardline = r.end_of_play_yardline;
                         }
 
-                        if (bTurnover)
-                        {
-                            r.bFinal_SwitchPossession = true;
-                            setTurnoverGameStat(r);
-                        }
+                        r = setScoringBool(r);
 
                     }
                     else if (r.Penalty.bSpot_Foul && !penOnBallCarryingTeam)
                     {
-                        bool bIgnorePeanlty = IgnorePenalty(r);
+                        r.bPlay_Stands = true;
+                        //Switch the ball possessing team on certain plays and situations
+                        tp = setBAllPossessionTeam(pResult);
+                        pResult.BallPossessing_Team_Id = tp.Item1;
+                        pResult.NonbBallPossessing_Team_Id = tp.Item2;
 
+                        if (bTurnover)
+                        {
+                            r.bFinal_SwitchPossession = false;
+                            setTurnoverGameStat(r);
+                        }
+
+                        bool bIgnorePeanlty = IgnorePenalty(r);
                         if (bIgnorePeanlty)
                         {
                             r.bIgnorePenalty = true;
                             r.Final_Added_Penalty_Yards = 0.0;
+
+                            r = setScoringBool(r);
+                            //set possible next mandatory play
+                            setNextPLay(r);
                         }
                         else
                         {
-                            dist_from_GL = Game_Engine_Helper.calcDistanceFromOpponentGL(original_Yardline, bLefttoRgiht);
-                            Tuple<bool, double> t = Penalty_Helper.isHalfTheDistance(pResult.Penalty.Yards, dist_from_GL);
+                            double greater_yl = Game_Engine_Helper.GreaterYardline(r.end_of_play_yardline, r.Penalized_Player.Current_YardLine, !bLefttoRgiht);
+                            dist_from_GL = Game_Engine_Helper.calcDistanceFromOpponentGL(greater_yl, !bLefttoRgiht);
+                            Tuple<bool, double> t = Penalty_Helper.isHalfTheDistance(r.Penalty.Yards, dist_from_GL);
                             if (t.Item1)
-                                Penalty_Yards = t.Item2;
+                                r.Final_Added_Penalty_Yards = t.Item2;
                             else
-                                Penalty_Yards = pResult.Penalty.Yards;
+                                r.Final_Added_Penalty_Yards = r.Penalty.Yards;
 
+                            r.Final_end_of_Play_Yardline = greater_yl + (r.Final_Added_Penalty_Yards * Game_Engine_Helper.HorizontalAdj(!bLefttoRgiht));
                             r.Final_Down = 1;
                             r.Final_yard_to_go = 10;
-
-                            r.Final_Added_Penalty_Yards = Penalty_Yards;
-                            r.end_of_play_yardline += Penalty_Yards * Game_Engine_Helper.HorizontalAdj(bLefttoRgiht);
-                            r.Final_end_of_Play_Yardline = r.end_of_play_yardline;
                         }
                     }
                     else if (r.Penalty.bSpot_Foul && penOnBallCarryingTeam)
                     {
-                        dist_from_GL = Game_Engine_Helper.calcDistanceFromMyGL(original_Yardline, bLefttoRgiht);
+                        r.bPlay_Stands = true;
+                        //Switch the ball possessing team on certain plays and situations
+                        tp = setBAllPossessionTeam(pResult);
+                        pResult.BallPossessing_Team_Id = tp.Item1;
+                        pResult.NonbBallPossessing_Team_Id = tp.Item2;
+
+                        if (bTurnover)
+                        {
+                            r.bFinal_SwitchPossession = false;
+                            setTurnoverGameStat(r);
+                        }
+
+                        double lesser_yl = Game_Engine_Helper.LessYardline(r.end_of_play_yardline, r.Penalized_Player.Current_YardLine, !bLefttoRgiht);
+                        dist_from_GL = Game_Engine_Helper.calcDistanceFromMyGL(lesser_yl, !bLefttoRgiht);
                         Tuple<bool, double> t = Penalty_Helper.isHalfTheDistance(pResult.Penalty.Yards, dist_from_GL);
                         if (t.Item1)
                             Penalty_Yards = t.Item2;
@@ -1131,15 +1176,28 @@ namespace SpectatorFootball.GameNS
                         r.Final_yard_to_go = 10;
 
                         r.Final_Added_Penalty_Yards = Penalty_Yards;
-                        r.end_of_play_yardline -= Penalty_Yards * Game_Engine_Helper.HorizontalAdj(bLefttoRgiht);
-                        r.Final_end_of_Play_Yardline = r.end_of_play_yardline;
-                    }
-                    else if (!penOnBallCarryingTeam)
-                    {
-                        setDefenseNonSpotPenalty(r, bLefttoRgiht, Down, Yards_to_Go);
+                        r.Final_end_of_Play_Yardline = lesser_yl -  (Penalty_Yards * Game_Engine_Helper.HorizontalAdj(!bLefttoRgiht));
+
+                        double reduce_yards = Game_Engine_Helper.Yards_to_Reduce(r.end_of_play_yardline, r.Penalized_Player.Current_YardLine, !bLefttoRgiht);
+                        Game_Player_Stats a_stat = pResult.Play_Player_Stats.Where(x => x.Player_ID == r.Punt_Returner.p_and_r.p.ID).First();
+                        a_stat.punt_ret_TDs = 0;
+                        a_stat.punt_ret_yards -= (long)(reduce_yards + 0.5);
+                        a_stat.punt_ret_yards_long = a_stat.punt_ret_yards;
+
                     }
                     else if (penOnBallCarryingTeam)
                     {
+                        r.bFinal_SwitchPossession = false;
+                        setDefenseNonSpotPenalty(r, bLefttoRgiht, Down, Yards_to_Go);
+                    }
+                    else if (!penOnBallCarryingTeam)
+                    {
+                        //Switch the ball possessing team on certain plays and situations
+                        tp = setBAllPossessionTeam(pResult);
+                        pResult.BallPossessing_Team_Id = tp.Item1;
+                        pResult.NonbBallPossessing_Team_Id = tp.Item2;
+
+                        r.bFinal_SwitchPossession = false;
                         setOffensePenaltyNonSpot(r, bLefttoRgiht, Down, Yards_to_Go);
                     }
                     break;
@@ -1151,7 +1209,7 @@ namespace SpectatorFootball.GameNS
                     {
                         r.bPlay_Stands = true;
                         r.bFinal_SwitchPossession = true;
-                        r = setScoringBool(r, bTurnover);
+                        r = setScoringBool(r);
                         dist_from_GL = Game_Engine_Helper.calcDistanceFromOpponentGL(r.end_of_play_yardline, bLefttoRgiht);
 
                         if (r.Penalty != null && !r.bPenalty_Rejected)
@@ -1401,7 +1459,7 @@ namespace SpectatorFootball.GameNS
             }
             else
             {
-                double dist_from_GL = Game_Engine_Helper.calcDistanceFromOpponentGL(r.end_of_play_yardline, bLefttoRgiht);
+                double dist_from_GL = Game_Engine_Helper.calcDistanceFromOpponentGL(r.Play_Start_Yardline, bLefttoRgiht);
                 Tuple<bool, double> t = Penalty_Helper.isHalfTheDistance(r.Penalty.Yards, dist_from_GL);
                 bHalft_the_dist = t.Item1;
                 if (t.Item1)
@@ -1421,14 +1479,14 @@ namespace SpectatorFootball.GameNS
                     r.Final_Down = Down;
                     r.Final_yard_to_go = Yards_to_Go - Penalty_Yards;
                 }
-                r.Final_end_of_Play_Yardline = r.end_of_play_yardline + (Penalty_Yards * Game_Engine_Helper.HorizontalAdj(bLefttoRgiht));
+                r.Final_end_of_Play_Yardline = r.Play_Start_Yardline + (Penalty_Yards * Game_Engine_Helper.HorizontalAdj(bLefttoRgiht));
                 r.Final_Added_Penalty_Yards = Penalty_Yards;
             }
         }
         private static void setOffensePenaltyNonSpot(Play_Result r, bool bLefttoRgiht, int Down, double Yards_to_Go)
         {
             double Penalty_Yards;
-             double dist_from_GL = Game_Engine_Helper.calcDistanceFromMyGL(r.end_of_play_yardline, bLefttoRgiht);
+             double dist_from_GL = Game_Engine_Helper.calcDistanceFromMyGL(r.Play_Start_Yardline, bLefttoRgiht);
             Tuple<bool, double> t = Penalty_Helper.isHalfTheDistance(r.Penalty.Yards, dist_from_GL);
             if (t.Item1)
                 Penalty_Yards = t.Item2;
@@ -1437,7 +1495,7 @@ namespace SpectatorFootball.GameNS
 
             r.Final_Down = Down;
             r.Final_yard_to_go = Yards_to_Go + Penalty_Yards;
-            r.Final_end_of_Play_Yardline = r.end_of_play_yardline - (Penalty_Yards * Game_Engine_Helper.HorizontalAdj(bLefttoRgiht));
+            r.Final_end_of_Play_Yardline = r.Play_Start_Yardline - (Penalty_Yards * Game_Engine_Helper.HorizontalAdj(bLefttoRgiht));
             r.Final_Added_Penalty_Yards = Penalty_Yards;
         }
         public static long CoinToss(int rnum, long ht_id, long at_id)
@@ -1518,17 +1576,15 @@ namespace SpectatorFootball.GameNS
 
             return yardLine;
         }
-        public static Play_Result setScoringBool(Play_Result r, bool bTurnover)
+        public static Play_Result setScoringBool(Play_Result r)
         {
             Play_Result pResult = r;
+           
+
 
             if (pResult.BallPossessing_Team_Id == pResult.at)
             {
-                if (bTurnover)
-                    pResult.bHomeTD = pResult.bTouchDown;
-                else
-                    pResult.bAwayTD = pResult.bTouchDown;
-
+                pResult.bAwayTD = pResult.bTouchDown;
                 pResult.bAwayFG = pResult.bFGMade;
                 pResult.bAwayXP = pResult.bXPMade;
                 pResult.bAwayXP1 = pResult.bOnePntAfterTDMade;
@@ -1539,11 +1595,7 @@ namespace SpectatorFootball.GameNS
             }
             else
             {
-                if (bTurnover)
-                    pResult.bAwayTD = pResult.bTouchDown;
-                else
-                    pResult.bHomeTD = pResult.bTouchDown;
-
+                pResult.bHomeTD = pResult.bTouchDown;
                 pResult.bHomeFG = pResult.bFGMade;
                 pResult.bHomeXP = pResult.bXPMade;
                 pResult.bHomeXP1 = pResult.bOnePntAfterTDMade;
@@ -1565,6 +1617,23 @@ namespace SpectatorFootball.GameNS
                 r = true;
 
             return r;
+        }
+
+        private static Tuple<long, long> setBAllPossessionTeam(Play_Result pResult)
+        {
+            long BallPossessingTeam = pResult.BallPossessing_Team_Id;
+            long NonBallPossessingTeam = pResult.NonbBallPossessing_Team_Id;
+
+            //for a punt, switch the ball possessing team as technically the returners are
+            //considered the ball possessiong team
+            if (pResult.Returner != null || pResult.Punt_Returner != null ||
+                pResult.bInterception || pResult.bFumble_Lost)
+            {
+                BallPossessingTeam = pResult.at == pResult.BallPossessing_Team_Id ? pResult.ht : pResult.at;
+                NonBallPossessingTeam = BallPossessingTeam == pResult.at ? pResult.ht : pResult.at;
+            }
+
+            return new Tuple<long, long>(BallPossessingTeam, NonBallPossessingTeam);
         }
 
     }
