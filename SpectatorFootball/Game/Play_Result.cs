@@ -65,6 +65,7 @@ namespace SpectatorFootball.GameNS
         public Game_Player Punt_Returner = null;
         public Game_Player Targeted_Receiver = null; //Targeted Pass Catcher
         public Game_Player Running_Back = null;  //Running back with ball or running QB
+        public Game_Player Receiver = null;  //WR, TE or RB that is targeted with the pass
 
         public List<Game_Player> Pass_Catchers = new List<Game_Player>();
         public List<Game_Player> Ball_Runners = new List<Game_Player>();
