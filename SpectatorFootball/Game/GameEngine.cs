@@ -1257,12 +1257,23 @@ namespace SpectatorFootball.GameNS
                             }
                         }
 
-                        bool bnextSpecial = setNextPLay(r);
 
+
+                        bool bnextSpecial = setNextPLay(r);
                         if (bnextSpecial)
                         {
                             r.Final_Down = 0;
                             r.Final_yard_to_go = 0;
+
+                            if (Down > 0 && pResult.Yards_Gained + r.Final_Added_Penalty_Yards >= Yards_to_Go)
+                            {
+                                bFirstDown = true;
+                                setFirstDownStat(r);
+                                if (Down == 3)
+                                    setThirdDownStat(r, bFirstDown);
+                                else if (Down == 4)
+                                    setFourthDownStat(r, bFirstDown);
+                            }
                         }
                         else
                         {
@@ -1284,6 +1295,12 @@ namespace SpectatorFootball.GameNS
                                 r.Final_Down = Down + 1;
                                 r.Final_yard_to_go = Yards_to_Go - pResult.Yards_Gained + r.Final_Added_Penalty_Yards;
                             }
+
+                            if (Down == 3)
+                                setThirdDownStat(r, bFirstDown);
+                            else if (Down == 4)
+                                setFourthDownStat(r, bFirstDown);
+
                             r.Final_end_of_Play_Yardline = r.Play_Start_Yardline + (r.Yards_Gained * Game_Engine_Helper.HorizontalAdj(bLefttoRgiht)) + (r.Final_Added_Penalty_Yards * Game_Engine_Helper.HorizontalAdj(bLefttoRgiht));
                         }
 
@@ -1294,10 +1311,7 @@ namespace SpectatorFootball.GameNS
                             r.Final_yard_to_go = 10;
                             setTurnoverGameStat(r);
                         }
-                        else if (Down == 3)
-                            setThirdDownStat(r, bFirstDown);
-                       else if (Down == 4)
-                            setFourthDownStat(r, bFirstDown);
+
 
       
                         r = setRushPassYards(r, Original_Ball_Possessing_team);
