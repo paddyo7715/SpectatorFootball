@@ -1255,7 +1255,7 @@ namespace SpectatorFootball.GameNS
                                     r.Final_Added_Penalty_Yards = r.Penalty.Yards;
                                 Penalty_yards = -r.Final_Added_Penalty_Yards;
                             }
-                        }
+                        }  //there was a spot foul penalty
 
 
 
@@ -1279,10 +1279,10 @@ namespace SpectatorFootball.GameNS
                         {
                             if (bAutoFirstDown || (pResult.Yards_Gained + r.Final_Added_Penalty_Yards) >= Yards_to_Go)
                             {
-                                bFirstDown = true;
+                                bFirstDown = bTurnover ? false : true;
                                 r.Final_Down = 1;
                                 r.Final_yard_to_go = 10;
-                                setFirstDownStat(r);
+                                if (bFirstDown) setFirstDownStat(r);
                             }
                             else if (Down == 4)
                             {
@@ -1301,7 +1301,10 @@ namespace SpectatorFootball.GameNS
                             else if (Down == 4)
                                 setFourthDownStat(r, bFirstDown);
 
-                            r.Final_end_of_Play_Yardline = r.Play_Start_Yardline + (r.Yards_Gained * Game_Engine_Helper.HorizontalAdj(bLefttoRgiht)) + (r.Final_Added_Penalty_Yards * Game_Engine_Helper.HorizontalAdj(bLefttoRgiht));
+                            if (r.bInterception)
+                                r.Final_end_of_Play_Yardline = r.end_of_play_yardline + (r.Final_Added_Penalty_Yards * Game_Engine_Helper.HorizontalAdj(bLefttoRgiht));
+                            else
+                                r.Final_end_of_Play_Yardline = r.Play_Start_Yardline + (r.Yards_Gained * Game_Engine_Helper.HorizontalAdj(bLefttoRgiht)) + (r.Final_Added_Penalty_Yards * Game_Engine_Helper.HorizontalAdj(bLefttoRgiht));
                         }
 
                         if (bTurnover)
