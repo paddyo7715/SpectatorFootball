@@ -28,6 +28,7 @@ namespace SpectatorFootball.GameNS
         public bool bFumble_Lost = false;
         public bool bRunOutofBounds = false;
         public bool bSafety = false;
+        public bool bSack = false;
         public bool bInterception = false;
         public bool bPassAttemted = false;
         public bool bPassComplete = false;
@@ -136,6 +137,7 @@ namespace SpectatorFootball.GameNS
         public double AwayRushingYards = 0.0;
         public long AwayTurnoers = 0;
         public long AwaySacks = 0;
+        public double AwaySackYards = 0;
         public long AwayTOP = 0;
 
         public long HomeFirstDowns = 0;
@@ -153,6 +155,7 @@ namespace SpectatorFootball.GameNS
         public double HomeRushingYards = 0.0;
         public long HomeTurnoers = 0;
         public long HomeSacks = 0;
+        public double HomeSackYards = 0;
         public long HomeTOP = 0;
         //==============================================
 

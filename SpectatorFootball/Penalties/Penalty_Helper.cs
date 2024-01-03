@@ -450,7 +450,7 @@ namespace SpectatorFootball.PenaltiesNS
                 Yards = 15,
                 bDeclinable = true,
                 bAuto_FirstDown = true,
-                bSpot_Foul = true,
+                bSpot_Foul = false,
                 Play_Timing = Play_Snap_Timing.DURING_PLAY,
                 Frequency_Rating = 700,
                 Description = "Pass Interference"
