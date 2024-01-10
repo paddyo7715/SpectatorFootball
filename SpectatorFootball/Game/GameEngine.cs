@@ -860,7 +860,6 @@ namespace SpectatorFootball.GameNS
             bool bHalft_the_dist = false;
             Tuple<long, long> tp = null;
 
-
             //Determine outcome by play type
             switch (PE)
             {
@@ -1266,6 +1265,8 @@ namespace SpectatorFootball.GameNS
                     bool bAutoFirstDown = false;
                     bool bFirstDown = false;
                     long Original_Ball_Possessing_team = pResult.BallPossessing_Team_Id;
+                    double yardsGained = r.Yards_Gained;
+                    double lesser_yl_rp = r.end_of_play_yardline;
 
                     if (pResult.Penalty == null || pResult.bPenalty_Rejected || pResult.Penalty.bSpot_Foul)
                     {
@@ -1298,7 +1299,8 @@ namespace SpectatorFootball.GameNS
                         }
                         if (pResult.Penalty != null && pResult.Penalty.bSpot_Foul && penOnBallCarryingTeam)
                         {
-                            dist_from_GL = Game_Engine_Helper.calcDistanceFromMyGL(r.Play_Start_Yardline, bLefttoRgiht);
+                            lesser_yl_rp = Game_Engine_Helper.LessYardline(r.end_of_play_yardline, r.Penalized_Player.Current_YardLine, bLefttoRgiht);
+                            dist_from_GL = Game_Engine_Helper.calcDistanceFromMyGL(lesser_yl_rp, bLefttoRgiht);
                             bool bIgnorePeanlty = bTurnover;
 
                             if (bIgnorePeanlty)
@@ -1313,7 +1315,32 @@ namespace SpectatorFootball.GameNS
                                     r.Final_Added_Penalty_Yards = t.Item2;
                                 else
                                     r.Final_Added_Penalty_Yards = r.Penalty.Yards;
-                                Penalty_yards = -r.Final_Added_Penalty_Yards;
+
+                                double reduce_yards = Game_Engine_Helper.Yards_to_Reduce(r.end_of_play_yardline, r.Penalized_Player.Current_YardLine, bLefttoRgiht);
+                                yardsGained -= reduce_yards;
+                                if (PE == Play_Enum.PASS)
+                                {
+                                    Game_Player_Stats QB_stat = pResult.Play_Player_Stats.Where(x => x.Player_ID == r.Passer.p_and_r.p.ID).FirstOrDefault();
+                                    QB_stat.off_pass_TDs = 0;
+                                    QB_stat.off_pass_Yards -= (long)(reduce_yards + 0.5);
+                                    QB_stat.off_pass_Long = QB_stat.off_pass_Yards;
+
+                                    Game_Player_Stats WR_stat = pResult.Play_Player_Stats.Where(x => x.Player_ID == r.Receiver.p_and_r.p.ID).FirstOrDefault();
+                                    WR_stat.off_rec_TDs = 0;
+                                    WR_stat.off_rec_Yards -= (long)(reduce_yards + 0.5);
+                                    WR_stat.off_rec_long = WR_stat.off_rec_Yards;
+                                }
+
+                                if (PE == Play_Enum.RUN)
+                                {
+                                    Game_Player_Stats RB_stat = pResult.Play_Player_Stats.Where(x => x.Player_ID == r.Running_Back.p_and_r.p.ID).FirstOrDefault();
+                                    RB_stat.off_rush_TDs = 0;
+                                    RB_stat.off_rush_Yards -= (long)(reduce_yards + 0.5);
+                                    RB_stat.off_rush_long = RB_stat.off_rush_Yards;
+                                }
+
+ 
+
                             }
                         }  //there was a spot foul penalty
 
@@ -1331,7 +1358,7 @@ namespace SpectatorFootball.GameNS
                                 else if (Down == 4)
                                     setFourthDownStat(r, bFirstDown);
                             }
-                            else if (pResult.Yards_Gained + r.Final_Added_Penalty_Yards >= Yards_to_Go)
+                            else if (yardsGained - r.Final_Added_Penalty_Yards >= Yards_to_Go)
                             {
                                 bFirstDown = true;
                                 setFirstDownStat(r);
@@ -1344,7 +1371,7 @@ namespace SpectatorFootball.GameNS
                         }
                         else
                         {
-                            if (bAutoFirstDown || (pResult.Yards_Gained + r.Final_Added_Penalty_Yards) >= Yards_to_Go)
+                            if (bAutoFirstDown || (yardsGained - r.Final_Added_Penalty_Yards) >= Yards_to_Go)
                             {
                                 bFirstDown = bTurnover ? false : true;
                                 r.Final_Down = 1;
@@ -1360,7 +1387,7 @@ namespace SpectatorFootball.GameNS
                             else
                             {
                                 r.Final_Down = Down + 1;
-                                r.Final_yard_to_go = Yards_to_Go - pResult.Yards_Gained + r.Final_Added_Penalty_Yards;
+                                r.Final_yard_to_go = Yards_to_Go - yardsGained + r.Final_Added_Penalty_Yards;
                             }
 
                             if (Down == 3)
@@ -1371,12 +1398,12 @@ namespace SpectatorFootball.GameNS
                             if (r.bInterception)
                             {
                                 if (!r.bTouchback)
-                                    r.Final_end_of_Play_Yardline = r.end_of_play_yardline + (r.Final_Added_Penalty_Yards * Game_Engine_Helper.HorizontalAdj(bLefttoRgiht));
+                                    r.Final_end_of_Play_Yardline = lesser_yl_rp + (r.Final_Added_Penalty_Yards * Game_Engine_Helper.HorizontalAdj(bLefttoRgiht));
                                 else
                                     r.Final_end_of_Play_Yardline = getScrimmageLine(TouchBack_Yardline, !bLefttoRgiht);
                             }
                             else
-                                r.Final_end_of_Play_Yardline = r.Play_Start_Yardline + (r.Yards_Gained * Game_Engine_Helper.HorizontalAdj(bLefttoRgiht)) + (r.Final_Added_Penalty_Yards * Game_Engine_Helper.HorizontalAdj(bLefttoRgiht));
+                                r.Final_end_of_Play_Yardline = r.Play_Start_Yardline + (yardsGained * Game_Engine_Helper.HorizontalAdj(bLefttoRgiht)) + (r.Final_Added_Penalty_Yards * Game_Engine_Helper.HorizontalAdj(!bLefttoRgiht));
                         }
 
                         if (bTurnover || r.bSafety)
