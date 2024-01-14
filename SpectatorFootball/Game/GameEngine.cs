@@ -71,9 +71,9 @@ namespace SpectatorFootball.GameNS
         private long non_forfeit_win_score = 2;
         private long forfeit_lose_score = 0;
 
- 
+
         public GameEngine(Game g, Teams_by_Season at, List<Player_and_Ratings> Away_Players,
-            Teams_by_Season ht, List<Player_and_Ratings> Home_Players, bool bSimGame, 
+            Teams_by_Season ht, List<Player_and_Ratings> Home_Players, bool bSimGame,
             List<Penalty> PenaltiesData, long two_point_con, long three_point_conv,
             long Kickoff_Type, long Injuries, long Penalties)
         {
@@ -357,7 +357,7 @@ namespace SpectatorFootball.GameNS
                 }
 
                 int ball_stages = Game_Ball.Stages.Count();
-                for(int pind = 0; pind < Offensive_Players.Count(); pind++)
+                for (int pind = 0; pind < Offensive_Players.Count(); pind++)
                 {
                     if (Offensive_Players[pind].Stages.Count() != ball_stages ||
                         Defensive_Players[pind].Stages.Count() != ball_stages)
@@ -393,7 +393,7 @@ namespace SpectatorFootball.GameNS
                             if (isBallCarryingTeam)
                                 p_result.bPenalty_Rejected = !Penalty_Coach.AcceptOff_Penalty(Offensive_Package.Play, p_result, g_Yards_to_go, g_Line_of_Scrimmage, bLefttoRight, false, false);
                             else
-                                p_result.bPenalty_Rejected = !Penalty_Coach.AcceptDef_Penalty(Offensive_Package.Play, p_result, g_Yards_to_go ,g_Line_of_Scrimmage, bLefttoRight, false, false);
+                                p_result.bPenalty_Rejected = !Penalty_Coach.AcceptDef_Penalty(Offensive_Package.Play, p_result, g_Yards_to_go, g_Line_of_Scrimmage, bLefttoRight, false, false);
                         }
                     }
                 }
@@ -468,7 +468,7 @@ namespace SpectatorFootball.GameNS
 
             }
 
-            g_bGameOver = isGameEnd((long) g.Playoff_Game, (long) g.Quarter, (long) g.Time, (long) g.Away_Score, (long) g.Home_Score);
+            g_bGameOver = isGameEnd((long)g.Playoff_Game, (long)g.Quarter, (long)g.Time, (long)g.Away_Score, (long)g.Home_Score);
 
             r.Offensive_Players = Offensive_Players;
             r.Defensive_Players = Defensive_Players;
@@ -882,7 +882,7 @@ namespace SpectatorFootball.GameNS
                     }
 
                     //No penalties or turnoers on touchbacks
-                    if (r.bTouchback && r.Penalty == null) 
+                    if (r.bTouchback && r.Penalty == null)
                     {
                         r.Final_Down = 1;
                         r.Final_yard_to_go = 10;
@@ -972,7 +972,7 @@ namespace SpectatorFootball.GameNS
                         r = setScoringBool(r);
                         if (r.bFGMade)
                         {
-                            r.bFinal_NextPlayKickoff = true; 
+                            r.bFinal_NextPlayKickoff = true;
                             r.Final_Down = 0;
                             r.Final_yard_to_go = 0;
                         }
@@ -1109,7 +1109,7 @@ namespace SpectatorFootball.GameNS
                             Penalty_Yards = pResult.Penalty.Yards;
                         r.Final_Down = 0;
                         r.Final_yard_to_go = 0;
-                        r.Final_end_of_Play_Yardline = r.end_of_play_yardline -  ((r.Yards_Gained + Penalty_Yards) * Game_Engine_Helper.HorizontalAdj(bLefttoRgiht));
+                        r.Final_end_of_Play_Yardline = r.end_of_play_yardline - ((r.Yards_Gained + Penalty_Yards) * Game_Engine_Helper.HorizontalAdj(bLefttoRgiht));
                         r.Final_Added_Penalty_Yards = Penalty_Yards;
                     }
                     else
@@ -1123,7 +1123,7 @@ namespace SpectatorFootball.GameNS
                     }
 
                     break;
-//Spot fouls assessed after the ball is kicked, all other penalties before the kick
+                //Spot fouls assessed after the ball is kicked, all other penalties before the kick
                 case Play_Enum.PUNT:
 
                     r.bFinal_SwitchPossession = true;
@@ -1235,7 +1235,7 @@ namespace SpectatorFootball.GameNS
                         r.Final_yard_to_go = 10;
 
                         r.Final_Added_Penalty_Yards = Penalty_Yards;
-                        r.Final_end_of_Play_Yardline = lesser_yl -  (Penalty_Yards * Game_Engine_Helper.HorizontalAdj(!bLefttoRgiht));
+                        r.Final_end_of_Play_Yardline = lesser_yl - (Penalty_Yards * Game_Engine_Helper.HorizontalAdj(!bLefttoRgiht));
 
                         double reduce_yards = Game_Engine_Helper.Yards_to_Reduce(r.end_of_play_yardline, r.Penalized_Player.Current_YardLine, !bLefttoRgiht);
                         Game_Player_Stats a_stat = pResult.Play_Player_Stats.Where(x => x.Player_ID == r.Punt_Returner.p_and_r.p.ID).First();
@@ -1267,18 +1267,22 @@ namespace SpectatorFootball.GameNS
                     long Original_Ball_Possessing_team = pResult.BallPossessing_Team_Id;
                     double yardsGained = r.Yards_Gained;
                     double lesser_yl_rp = r.end_of_play_yardline;
+                    double end_yardline;
 
                     if (pResult.Penalty == null || pResult.bPenalty_Rejected || pResult.Penalty.bSpot_Foul)
                     {
                         r.bPlay_Stands = true;
                         r.bFinal_SwitchPossession = false;
                         r = setScoringBool(r);
+                        end_yardline = r.end_of_play_yardline;
+                        if (r.bTouchback)
+                            end_yardline = getScrimmageLine(TouchBack_Yardline, !bLefttoRgiht);
 
                         double Penalty_yards = 0.0;
                         if (pResult.Penalty != null && pResult.Penalty.bSpot_Foul && !penOnBallCarryingTeam)
                         {
-                            dist_from_GL = Game_Engine_Helper.calcDistanceFromOpponentGL(r.end_of_play_yardline, bLefttoRgiht);
-                            bool bIgnorePeanlty = IgnorePenalty(r);
+                            dist_from_GL = Game_Engine_Helper.calcDistanceFromOpponentGL(end_yardline, bLefttoRgiht);
+                            bool bIgnorePeanlty = IgnorePenaltyRun_or_Pass(r);
 
                             if (bIgnorePeanlty)
                             {
@@ -1299,9 +1303,12 @@ namespace SpectatorFootball.GameNS
                         }
                         if (pResult.Penalty != null && pResult.Penalty.bSpot_Foul && penOnBallCarryingTeam)
                         {
-                            lesser_yl_rp = Game_Engine_Helper.LessYardline(r.end_of_play_yardline, r.Penalized_Player.Current_YardLine, bLefttoRgiht);
+                            if (r.bTouchback)
+                                lesser_yl_rp = getScrimmageLine(TouchBack_Yardline, !bLefttoRgiht);
+                            else
+                                lesser_yl_rp = Game_Engine_Helper.LessYardline(r.end_of_play_yardline, r.Penalized_Player.Current_YardLine, bLefttoRgiht);
                             dist_from_GL = Game_Engine_Helper.calcDistanceFromMyGL(lesser_yl_rp, bLefttoRgiht);
-                            bool bIgnorePeanlty = bTurnover;
+                            bool bIgnorePeanlty = IgnorePenaltyRun_or_Pass(r);
 
                             if (bIgnorePeanlty)
                             {
@@ -1318,7 +1325,7 @@ namespace SpectatorFootball.GameNS
 
                                 double reduce_yards = Game_Engine_Helper.Yards_to_Reduce(r.end_of_play_yardline, r.Penalized_Player.Current_YardLine, bLefttoRgiht);
                                 yardsGained -= reduce_yards;
-                                if (PE == Play_Enum.PASS)
+                                if (PE == Play_Enum.PASS && pResult.bPassComplete)
                                 {
                                     Game_Player_Stats QB_stat = pResult.Play_Player_Stats.Where(x => x.Player_ID == r.Passer.p_and_r.p.ID).FirstOrDefault();
                                     QB_stat.off_pass_TDs = 0;
@@ -1339,7 +1346,7 @@ namespace SpectatorFootball.GameNS
                                     RB_stat.off_rush_long = RB_stat.off_rush_Yards;
                                 }
 
- 
+
 
                             }
                         }  //there was a spot foul penalty
@@ -1400,10 +1407,11 @@ namespace SpectatorFootball.GameNS
                                 if (!r.bTouchback)
                                     r.Final_end_of_Play_Yardline = lesser_yl_rp + (r.Final_Added_Penalty_Yards * Game_Engine_Helper.HorizontalAdj(bLefttoRgiht));
                                 else
-                                    r.Final_end_of_Play_Yardline = getScrimmageLine(TouchBack_Yardline, !bLefttoRgiht);
+                                    r.Final_end_of_Play_Yardline = getScrimmageLine(TouchBack_Yardline, !bLefttoRgiht) + r.Final_Added_Penalty_Yards * Game_Engine_Helper.HorizontalAdj(bLefttoRgiht ^ penOnBallCarryingTeam);
                             }
                             else
-                                r.Final_end_of_Play_Yardline = r.Play_Start_Yardline + (yardsGained * Game_Engine_Helper.HorizontalAdj(bLefttoRgiht)) + (r.Final_Added_Penalty_Yards * Game_Engine_Helper.HorizontalAdj(!bLefttoRgiht));
+                                r.Final_end_of_Play_Yardline = r.Play_Start_Yardline + (yardsGained * Game_Engine_Helper.HorizontalAdj(bLefttoRgiht)) + (r.Final_Added_Penalty_Yards * Game_Engine_Helper.HorizontalAdj(bLefttoRgiht ^ penOnBallCarryingTeam));
+
                         }
 
                         if (bTurnover || r.bSafety)
@@ -1425,7 +1433,7 @@ namespace SpectatorFootball.GameNS
 
                         if (!r.bSack)
                             r = setRushPassYards(r, Original_Ball_Possessing_team);
-                        else 
+                        else
                             r = setSacks(r);
 
                     }
@@ -1448,7 +1456,7 @@ namespace SpectatorFootball.GameNS
                             r.Final_end_of_Play_Yardline = getScrimmageLine(PI_Endzone_Yardline, bLefttoRgiht);
                         else
                             r.Final_end_of_Play_Yardline = pen_yardline;
-                     
+
                         r.Final_Added_Penalty_Yards = Game_Engine_Helper.getYardsGained(bLefttoRgiht, r.Play_Start_Yardline, r.Final_end_of_Play_Yardline);
                     }
                     else if (!penOnBallCarryingTeam)
@@ -1460,17 +1468,17 @@ namespace SpectatorFootball.GameNS
             }
 
             return r;
-            }
-            public static void UpdateScore(Play_Result pResult, Game g)
-            {
-                //Scoring
-                const long TOUCHDOWN_POINTS = 6;
-                const long FIELDGOAL_POINTS = 3;
-                const long SAFETY_POINTS = 2;
-                const long EXTRA_POINT_POINTS = 1;
-                const long EXTRA_POINT_1_POINTS = 1;
-                const long EXTRA_POINT_2_POINTS = 2;
-                const long EXTRA_POINT_3_POINTS = 3;
+        }
+        public static void UpdateScore(Play_Result pResult, Game g)
+        {
+            //Scoring
+            const long TOUCHDOWN_POINTS = 6;
+            const long FIELDGOAL_POINTS = 3;
+            const long SAFETY_POINTS = 2;
+            const long EXTRA_POINT_POINTS = 1;
+            const long EXTRA_POINT_1_POINTS = 1;
+            const long EXTRA_POINT_2_POINTS = 2;
+            const long EXTRA_POINT_3_POINTS = 3;
 
             long Away_Score_Add = 0;
             long Home_Score_Add = 0;
@@ -1528,28 +1536,28 @@ namespace SpectatorFootball.GameNS
             g.Home_Score += Home_Score_Add;
 
             switch (g.Quarter)
-                {
-                    case 1:
-                        g.Away_Score_Q1 += Away_Score_Add;
-                        g.Home_Score_Q1 += Home_Score_Add;
-                        break;
-                    case 2:
-                        g.Away_Score_Q2 += Away_Score_Add;
-                        g.Home_Score_Q2 += Home_Score_Add;
-                        break;
-                    case 3:
-                        g.Away_Score_Q3 += Away_Score_Add;
-                        g.Home_Score_Q3 += Home_Score_Add;
-                        break;
-                    case 4:
-                        g.Away_Score_Q4 += Away_Score_Add;
-                        g.Home_Score_Q4 += Home_Score_Add;
-                        break;
-                    default:
-                        g.Away_Score_OT += Away_Score_Add;
-                        g.Home_Score_OT += Home_Score_Add;
-                        break;
-                }
+            {
+                case 1:
+                    g.Away_Score_Q1 += Away_Score_Add;
+                    g.Home_Score_Q1 += Home_Score_Add;
+                    break;
+                case 2:
+                    g.Away_Score_Q2 += Away_Score_Add;
+                    g.Home_Score_Q2 += Home_Score_Add;
+                    break;
+                case 3:
+                    g.Away_Score_Q3 += Away_Score_Add;
+                    g.Home_Score_Q3 += Home_Score_Add;
+                    break;
+                case 4:
+                    g.Away_Score_Q4 += Away_Score_Add;
+                    g.Home_Score_Q4 += Home_Score_Add;
+                    break;
+                default:
+                    g.Away_Score_OT += Away_Score_Add;
+                    g.Home_Score_OT += Home_Score_Add;
+                    break;
+            }
         }
 
         //This method returns a true if the next play dows not have a down or ytg
@@ -1629,7 +1637,7 @@ namespace SpectatorFootball.GameNS
                 pR.HomeTurnoers++;
         }
 
-        private static void setDefenseNonSpotPenalty(Play_Result r, bool bLefttoRgiht,int Down, double Yards_to_Go)
+        private static void setDefenseNonSpotPenalty(Play_Result r, bool bLefttoRgiht, int Down, double Yards_to_Go)
         {
             bool bHalft_the_dist = false;
             double Penalty_Yards;
@@ -1670,7 +1678,7 @@ namespace SpectatorFootball.GameNS
         private static void setOffensePenaltyNonSpot(Play_Result r, bool bLefttoRgiht, int Down, double Yards_to_Go)
         {
             double Penalty_Yards;
-             double dist_from_GL = Game_Engine_Helper.calcDistanceFromMyGL(r.Play_Start_Yardline, bLefttoRgiht);
+            double dist_from_GL = Game_Engine_Helper.calcDistanceFromMyGL(r.Play_Start_Yardline, bLefttoRgiht);
             Tuple<bool, double> t = Penalty_Helper.isHalfTheDistance(r.Penalty.Yards, dist_from_GL);
             if (t.Item1)
                 Penalty_Yards = t.Item2;
@@ -1824,7 +1832,23 @@ namespace SpectatorFootball.GameNS
 
             if (pResult.bTouchDown || pResult.bFGMade || pResult.bXPMade ||
                 pResult.bOnePntAfterTDMade || pResult.bTwoPntAfterTDMade || pResult.bThreePntAfterTDMade)
+                
                 r = true;
+
+
+            return r;
+        }
+
+        private static bool IgnorePenaltyRun_or_Pass(Play_Result pResult)
+        {
+            bool r = false;
+
+            if ((pResult.Penalty.code == Penalty_Codes.FM ||
+                pResult.Penalty.code == Penalty_Codes.UC ||
+                pResult.Penalty.code == Penalty_Codes.UR) &&
+                (pResult.bTouchDown || pResult.bSafety))
+                r = true;
+
 
             return r;
         }
