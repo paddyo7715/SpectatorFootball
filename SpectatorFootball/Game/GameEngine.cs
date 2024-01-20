@@ -1076,14 +1076,6 @@ namespace SpectatorFootball.GameNS
                         r = setScoringBool(r);
                         r.bFinal_NextPlayKickoff = true;
                     }
-                    else if (!penOnBallCarryingTeam)
-                    {
-                        setDefenseNonSpotPenalty(r, bLefttoRgiht, Down, Yards_to_Go);
-                    }
-                    else if (penOnBallCarryingTeam)
-                    {
-                        setOffensePenaltyNonSpot(r, bLefttoRgiht, Down, Yards_to_Go);
-                    }
                     //Defensive Pass Interference is special
                     else if (!penOnBallCarryingTeam && r.Penalty.code == Penalty_Codes.PI)
                     {
@@ -1101,6 +1093,14 @@ namespace SpectatorFootball.GameNS
                             r.Final_end_of_Play_Yardline = pen_yardline;
 
                         r.Final_Added_Penalty_Yards = Game_Engine_Helper.getYardsGained(bLefttoRgiht, r.Play_Start_Yardline, r.Final_end_of_Play_Yardline);
+                    }
+                    else if (!penOnBallCarryingTeam)
+                    {
+                        setDefenseNonSpotPenalty(r, bLefttoRgiht, Down, Yards_to_Go);
+                    }
+                    else if (penOnBallCarryingTeam)
+                    {
+                        setOffensePenaltyNonSpot(r, bLefttoRgiht, Down, Yards_to_Go);
                     }
                     else
                         throw new Exception("Error in setPlayOutCome, Extra Pont 1,2,3 unknown situation!");
@@ -1661,7 +1661,7 @@ namespace SpectatorFootball.GameNS
                     Penalty_Yards = r.Penalty.Yards;
                 bool bFirstDown = Penalty_Helper.isFirstDowwithPenalty(r.Penalty, Yards_to_Go, bHalft_the_dist, Penalty_Yards);
 
-                if (bFirstDown)
+                if (bFirstDown && Down > 0)
                 {
                     r.Final_Down = 1;
                     r.Final_yard_to_go = 10;
