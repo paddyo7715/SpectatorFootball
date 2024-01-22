@@ -981,7 +981,7 @@ namespace SpectatorFootball.GameNS
                             r.bFinal_SwitchPossession = true;
                             r.Final_Down = 1;
                             r.Final_yard_to_go = 10;
-                            r.Final_end_of_Play_Yardline = r.end_of_play_yardline;
+                            r.Final_end_of_Play_Yardline = r.Play_Start_Yardline;
                         }
                     }
                     else if (!penOnBallCarryingTeam)

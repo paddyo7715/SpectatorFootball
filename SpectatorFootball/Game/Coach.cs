@@ -452,7 +452,7 @@ namespace SpectatorFootball.GameNS
                 else
                 {
                     r = true;
-                    if (g.Quarter == 2 || g.Quarter > 3)
+                    if (g.Quarter == 2 || (g.Quarter > 3 && (ourScore-3) < theirScore))
                     {
                         if (g.Time <= 10)
                             r = false;
@@ -591,7 +591,7 @@ namespace SpectatorFootball.GameNS
                     case Play_Enum.FREE_KICK:
                     case Play_Enum.KICKOFF_NORMAL:
                     case Play_Enum.KICKOFF_ONSIDES:
-                        r = false;  
+                        r = true;
                         break;
                     case Play_Enum.RUN:  //different
                     case Play_Enum.PASS:
