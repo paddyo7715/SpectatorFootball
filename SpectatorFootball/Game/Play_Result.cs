@@ -93,6 +93,7 @@ namespace SpectatorFootball.GameNS
         public double Kick_Out_of_Bounds_Yardline = 0;
         public double Play_Start_Yardline = 0;
         public double end_of_play_yardline = 0;
+        public double Punt_Yards = 0;
 //=============================================
 
 //Final play results after accounting for possible penalties

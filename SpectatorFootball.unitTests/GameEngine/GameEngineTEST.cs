@@ -280,18 +280,6 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
         [TestCategory("GameEngine")]
         [TestMethod]
-        public void getScrimmageLine_left_20()
-        {
-            Assert.IsTrue(GameEngine.getScrimmageLine(20.0, true) == 20.0);
-        }
-        [TestCategory("GameEngine")]
-        [TestMethod]
-        public void getScrimmageLine_right_20()
-        {
-            Assert.IsTrue(GameEngine.getScrimmageLine(20.0, false) == 80.0);
-        }
-        [TestCategory("GameEngine")]
-        [TestMethod]
         public void setScoringBool_home_team_TD()
         {
             Play_Result pResult = new Play_Result()

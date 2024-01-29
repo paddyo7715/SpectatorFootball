@@ -66,7 +66,11 @@ namespace SpectatorFootball.GameNS
         private double YardsInField = 100.0;
         private double KickoffYardline = 35.0;
         private double FreeKickYardline = 20.0;
-        private double TouchbackYardline = 25.0;
+
+        private double Kickoff_TouchbackYardline = 25;
+        private double Other_TouchbackYardline = 20;
+
+        private double g_TouchbackYardline = 0.0;
         private double nonKickoff_StartingYardline = 20.0;
         private long non_forfeit_win_score = 2;
         private long forfeit_lose_score = 0;
@@ -241,12 +245,12 @@ namespace SpectatorFootball.GameNS
             }
             else if (bKickoff)             //if this play is a kickoff then set where to kickoff from
             {
-                g_Line_of_Scrimmage = getScrimmageLine(KickoffYardline, bLefttoRight);
+                g_Line_of_Scrimmage = Game_Engine_Helper.getScrimmageLine(KickoffYardline, bLefttoRight);
                 g_Vertical_Ball_Placement = 50.0;
             }
             else if (bFreeKick)
             {
-                g_Line_of_Scrimmage = getScrimmageLine(KickoffYardline, bLefttoRight);
+                g_Line_of_Scrimmage = Game_Engine_Helper.getScrimmageLine(KickoffYardline, bLefttoRight);
                 g_Vertical_Ball_Placement = 50.0;
             }
 
@@ -342,6 +346,8 @@ namespace SpectatorFootball.GameNS
                 Play_Result p_result = null;
                 double yards_gained = 0.0;
 
+                g_TouchbackYardline = getTouchBackYL(Offensive_Package.Play, Kickoff_TouchbackYardline, Other_TouchbackYardline);
+
                 switch (Offensive_Package.Play)
                 {
                     case Play_Enum.KICKOFF_NORMAL:
@@ -391,9 +397,9 @@ namespace SpectatorFootball.GameNS
                         if (p_result.Penalty.bDeclinable)
                         {
                             if (isBallCarryingTeam)
-                                p_result.bPenalty_Rejected = !Penalty_Coach.AcceptOff_Penalty(Offensive_Package.Play, p_result, g_Yards_to_go, g_Line_of_Scrimmage, bLefttoRight, false, false);
+                                p_result.bPenalty_Rejected = !Penalty_Coach.AcceptOff_Penalty(Offensive_Package.Play, p_result, g_Yards_to_go, bLefttoRight, false, false, g_TouchbackYardline);
                             else
-                                p_result.bPenalty_Rejected = !Penalty_Coach.AcceptDef_Penalty(Offensive_Package.Play, p_result, g_Yards_to_go, g_Line_of_Scrimmage, bLefttoRight, false, false);
+                                p_result.bPenalty_Rejected = !Penalty_Coach.AcceptDef_Penalty(Offensive_Package.Play, p_result, g_Yards_to_go, bLefttoRight, false, false, g_TouchbackYardline);
                         }
                     }
                 }
@@ -402,7 +408,7 @@ namespace SpectatorFootball.GameNS
                 bool bswitchPossession = false;
                 double penalty_yards = 0;
                 p_result = setPlayOutCome(isBallCarryingTeam, Offensive_Package.Play, g_Down,
-                    g_Yards_to_go, p_result, bLefttoRight, TouchbackYardline);
+                    g_Yards_to_go, p_result, bLefttoRight, g_TouchbackYardline);
 
                 //Add penalty if applicable
                 if (p_result.Penalty != null && !p_result.bPenalty_Rejected)
@@ -886,7 +892,7 @@ namespace SpectatorFootball.GameNS
                     {
                         r.Final_Down = 1;
                         r.Final_yard_to_go = 10;
-                        r.Final_end_of_Play_Yardline = getScrimmageLine(TouchBack_Yardline, !bLefttoRgiht);
+                        r.Final_end_of_Play_Yardline = Game_Engine_Helper.getScrimmageLine(TouchBack_Yardline, !bLefttoRgiht);
                     }
                     else if (r.Penalty == null || r.bPenalty_Rejected || (r.Penalty.bSpot_Foul && !penOnBallCarryingTeam))
                     {
@@ -1088,7 +1094,7 @@ namespace SpectatorFootball.GameNS
                         //if penalty was in the endzone then it must come out to the 1 yardline
                         double pen_yardline = r.Penalized_Player.Current_YardLine;
                         if (pen_yardline <= 0 || pen_yardline >= 100)
-                            r.Final_end_of_Play_Yardline = getScrimmageLine(PI_Endzone_Yardline, bLefttoRgiht);
+                            r.Final_end_of_Play_Yardline = Game_Engine_Helper.getScrimmageLine(PI_Endzone_Yardline, bLefttoRgiht);
                         else
                             r.Final_end_of_Play_Yardline = pen_yardline;
 
@@ -1135,7 +1141,7 @@ namespace SpectatorFootball.GameNS
                         r.Final_Down = 1;
                         r.Final_yard_to_go = 10;
                         r.bFinal_SwitchPossession = true;
-                        r.Final_end_of_Play_Yardline = getScrimmageLine(TouchBack_Yardline, !bLefttoRgiht);
+                        r.Final_end_of_Play_Yardline = Game_Engine_Helper.getScrimmageLine(TouchBack_Yardline, !bLefttoRgiht);
 
                     }
                     else if (r.Penalty == null || r.bPenalty_Rejected)
@@ -1277,7 +1283,7 @@ namespace SpectatorFootball.GameNS
                         r = setScoringBool(r);
                         end_yardline = r.end_of_play_yardline;
                         if (r.bTouchback)
-                            end_yardline = getScrimmageLine(TouchBack_Yardline, !bLefttoRgiht);
+                            end_yardline = Game_Engine_Helper.getScrimmageLine(TouchBack_Yardline, !bLefttoRgiht);
 
                         double Penalty_yards = 0.0;
                         if (pResult.Penalty != null && pResult.Penalty.bSpot_Foul && !penOnBallCarryingTeam)
@@ -1305,7 +1311,7 @@ namespace SpectatorFootball.GameNS
                         if (pResult.Penalty != null && pResult.Penalty.bSpot_Foul && penOnBallCarryingTeam)
                         {
                             if (r.bTouchback)
-                                lesser_yl_rp = getScrimmageLine(TouchBack_Yardline, !bLefttoRgiht);
+                                lesser_yl_rp = Game_Engine_Helper.getScrimmageLine(TouchBack_Yardline, !bLefttoRgiht);
                             else
                                 lesser_yl_rp = Game_Engine_Helper.LessYardline(r.end_of_play_yardline, r.Penalized_Player.Current_YardLine, bLefttoRgiht);
                             dist_from_GL = Game_Engine_Helper.calcDistanceFromMyGL(lesser_yl_rp, bLefttoRgiht);
@@ -1408,7 +1414,7 @@ namespace SpectatorFootball.GameNS
                                 if (!r.bTouchback)
                                     r.Final_end_of_Play_Yardline = lesser_yl_rp + (r.Final_Added_Penalty_Yards * Game_Engine_Helper.HorizontalAdj(bLefttoRgiht));
                                 else
-                                    r.Final_end_of_Play_Yardline = getScrimmageLine(TouchBack_Yardline, !bLefttoRgiht) + r.Final_Added_Penalty_Yards * Game_Engine_Helper.HorizontalAdj(bLefttoRgiht ^ penOnBallCarryingTeam);
+                                    r.Final_end_of_Play_Yardline = Game_Engine_Helper.getScrimmageLine(TouchBack_Yardline, !bLefttoRgiht) + r.Final_Added_Penalty_Yards * Game_Engine_Helper.HorizontalAdj(bLefttoRgiht ^ penOnBallCarryingTeam);
                             }
                             else
                                 r.Final_end_of_Play_Yardline = r.Play_Start_Yardline + (yardsGained * Game_Engine_Helper.HorizontalAdj(bLefttoRgiht)) + (r.Final_Added_Penalty_Yards * Game_Engine_Helper.HorizontalAdj(bLefttoRgiht ^ penOnBallCarryingTeam));
@@ -1454,7 +1460,7 @@ namespace SpectatorFootball.GameNS
                         //if penalty was in the endzone then it must come out to the 1 yardline
                         double pen_yardline = r.Penalized_Player.Current_YardLine;
                         if (pen_yardline <= 0 || pen_yardline >= 100)
-                            r.Final_end_of_Play_Yardline = getScrimmageLine(PI_Endzone_Yardline, bLefttoRgiht);
+                            r.Final_end_of_Play_Yardline = Game_Engine_Helper.getScrimmageLine(PI_Endzone_Yardline, bLefttoRgiht);
                         else
                             r.Final_end_of_Play_Yardline = pen_yardline;
 
@@ -1760,15 +1766,6 @@ namespace SpectatorFootball.GameNS
 
             return r;
         }
-        public static double getScrimmageLine(double y, bool bLefttoRight)
-        {
-            double yardLine = y;
-
-            if (!bLefttoRight)
-                yardLine = 100 - y;
-
-            return yardLine;
-        }
         public static Play_Result setScoringBool(Play_Result r)
         {
             Play_Result pResult = r;
@@ -1869,6 +1866,15 @@ namespace SpectatorFootball.GameNS
             }
 
             return new Tuple<long, long>(BallPossessingTeam, NonBallPossessingTeam);
+        }
+
+        private double getTouchBackYL(Play_Enum pe, double kickoff_TB, double Normal_TB)
+        {
+            double r = Normal_TB;
+            if (pe == Play_Enum.KICKOFF_NORMAL || pe == Play_Enum.FREE_KICK || pe == Play_Enum.KICKOFF_ONSIDES)
+                r = kickoff_TB;
+
+            return r;
         }
 
     }

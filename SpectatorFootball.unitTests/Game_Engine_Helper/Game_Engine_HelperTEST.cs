@@ -142,6 +142,18 @@ namespace SpectatorFootball.unitTests.GameEngine_HelperTEST
         {
             Assert.IsTrue(Game_Engine_Helper.calcDistanceFromOpponentGL(85, false) == 85);
         }
+        [TestCategory("Game_Engine_Helper")]
+        [TestMethod]
+        public void getScrimmageLine_left_20()
+        {
+            Assert.IsTrue(Game_Engine_Helper.getScrimmageLine(20.0, true) == 20.0);
+        }
+        [TestCategory("Game_Engine_Helper")]
+        [TestMethod]
+        public void getScrimmageLine_right_20()
+        {
+            Assert.IsTrue(Game_Engine_Helper.getScrimmageLine(20.0, false) == 80.0);
+        }
 
     }
 }

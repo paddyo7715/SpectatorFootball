@@ -471,7 +471,7 @@ namespace SpectatorFootball.PenaltiesNS
             {
                 code = Penalty_Codes.KIB,
                 Yards = 15,
-                bDeclinable = true,
+                bDeclinable = false,
                 bAuto_FirstDown = false,
                 bSpot_Foul = true,
                 Play_Timing = Play_Snap_Timing.DURING_PLAY,
@@ -492,7 +492,7 @@ namespace SpectatorFootball.PenaltiesNS
             {
                 code = Penalty_Codes.PIB,
                 Yards = 15,
-                bDeclinable = true,
+                bDeclinable = false,
                 bAuto_FirstDown = false,
                 bSpot_Foul = true,
                 Play_Timing = Play_Snap_Timing.DURING_PLAY,

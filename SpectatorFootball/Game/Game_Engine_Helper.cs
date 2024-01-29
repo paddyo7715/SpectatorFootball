@@ -231,6 +231,15 @@ namespace SpectatorFootball.GameNS
 
             return r;
         }
+        public static double getScrimmageLine(double y, bool bLefttoRight)
+        {
+            double yardLine = y;
+
+            if (!bLefttoRight)
+                yardLine = 100 - y;
+
+            return yardLine;
+        }
         public static double getYardsGained(bool bLefttoRight, double starting_yrdline, double end_yrdline)
         {
             double r = 0.0;
