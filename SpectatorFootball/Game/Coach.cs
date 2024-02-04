@@ -431,8 +431,8 @@ namespace SpectatorFootball.GameNS
 
             Penalty penalty = pResult.Penalty;
 
-            if (!penalty.bDeclinable)
-                throw new Exception("Non decidable penalty passed to AcceptDef_Penalty");
+            if (!penalty.bDeclinable || penalty.bSpot_Foul)
+                throw new Exception("Non decidable or spot penalty passed to AcceptDef_Penalty");
 
             if (pResult.bFumble_Lost || pResult.bInterception)
             {
@@ -530,6 +530,8 @@ namespace SpectatorFootball.GameNS
                     case Play_Enum.PASS:
                         r = false;
 
+                        double More_Yard_to_not_Accept_Penalty = 4.0;
+
                         if (pResult.Penalty.code == Penalty_Codes.PI)
                         {
                             double greaterYL = Game_Engine_Helper.GreaterYardline(pResult.Penalized_Player.Current_YardLine, pResult.end_of_play_yardline, bLefttoRight);
@@ -556,6 +558,8 @@ namespace SpectatorFootball.GameNS
                                 r = false;
                             else if (pResult.Yards_Gained >= yards_to_go && pResult.Yards_Gained >= pen_yards)
                                 r = false;
+                            else if (pResult.Yards_Gained >= pen_yards + More_Yard_to_not_Accept_Penalty)
+                                r = false;
                             else
                                 r = true;
                         }
@@ -566,8 +570,6 @@ namespace SpectatorFootball.GameNS
 
             return r;
         }
-
-
 
         //This is for penalties on the offense that includes kickoff return team, but for punts, the punting
         //team is considered the defense
@@ -582,8 +584,8 @@ namespace SpectatorFootball.GameNS
 
             Penalty penalty = pResult.Penalty;
 
-            if (!penalty.bDeclinable)
-                throw new Exception("Non decidable penalty passed to AcceptOff_Penalty");
+            if (!penalty.bDeclinable || penalty.bSpot_Foul)
+                throw new Exception("Non decidable or spot penalty passed to AcceptOff_Penalty");
 
             if (pResult.bFumble_Lost || pResult.bInterception)
             {
@@ -613,7 +615,7 @@ namespace SpectatorFootball.GameNS
                 r = false;
             else if (pResult.bOnePntAfterTDMade || pResult.bTwoPntAfterTDMade || pResult.bThreePntAfterTDMade)
                 r = true;
-            else if (this.ourScore <= this.theirScore && (bLastPlayGame || bLasPlayHalf))
+            else if (this.ourScore < this.theirScore && (bLastPlayGame || bLasPlayHalf))
                 r = true;
             else  //all other play situations
             {
@@ -646,7 +648,17 @@ namespace SpectatorFootball.GameNS
                     case Play_Enum.RUN:  //different
                     case Play_Enum.PASS:
                         r = true;
-                        if (pResult.Yards_Gained <= app_Constants.YARDS_LOST_TO_NOT_ACCET_PENALTY)
+
+                        dist_from_GL = Game_Engine_Helper.calcDistanceFromOpponentGL(pResult.Play_Start_Yardline, bLefttoRight);
+                        Tuple<bool, double> t2 = Penalty_Helper.isHalfTheDistance(penalty.Yards, dist_from_GL);
+                        bool bHalft = t2.Item1;
+                        double Penalty_Yards = t2.Item2;
+
+                        double pen_yards = penalty.Yards;
+                        if (bHalft)
+                            pen_yards = Penalty_Yards;
+
+                        if (pResult.Yards_Gained <= pen_yards * 0.5)
                             r = false;
                         break;
                 }

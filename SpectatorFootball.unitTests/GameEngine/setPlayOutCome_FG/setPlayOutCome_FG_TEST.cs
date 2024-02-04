@@ -58,7 +58,6 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 FG_Made = 1
             });
 
-            double original_Yardline = 0.0;
             bool bLefttoRgiht = true;
             double TouchBack_Yardline = 25.0;
 
@@ -151,7 +150,6 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 FG_Made = 0
             });
 
-            double original_Yardline = 0.0;
             bool bLefttoRgiht = true;
             double TouchBack_Yardline = 25.0;
 
