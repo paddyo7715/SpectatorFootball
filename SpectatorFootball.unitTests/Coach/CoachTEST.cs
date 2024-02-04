@@ -401,12 +401,12 @@ namespace SpectatorFootball.unitTests.CoachTest
         {
             int Yards_to_go = 2;
             Penalty p = new Penalty() { bDeclinable = true, Yards = 10 };
-            Play_Result pResult = new Play_Result() { end_of_play_yardline = 88, bThreePntAfterTDMade = true, Penalty = p };
+            Play_Result pResult = new Play_Result() { end_of_play_yardline = 88, bThreePntAfterTDMade = false, Penalty = p };
             Game g = new Game() { Home_Score = 0, Away_Score = 0, Quarter = 4, Time = 0 };
             Coach c = new Coach(11, g, 7, new List<Player_and_Ratings>(), new List<Player_and_Ratings>(), new List<Injury>());
-            bool bAccept = c.AcceptDef_Penalty(Enum.Play_Enum.SCRIM_PLAY_3XP_PASS, pResult, Yards_to_go, true, true, false, 25);
+            bool bAccept = c.AcceptDef_Penalty(Enum.Play_Enum.PASS, pResult, Yards_to_go, true, true, false, 25);
 
-            Assert.IsTrue(!bAccept);
+            Assert.IsTrue(bAccept);
         }
 
         [TestCategory("Penalties")]
@@ -897,7 +897,7 @@ namespace SpectatorFootball.unitTests.CoachTest
         }
         [TestCategory("Penalties")]
         [TestMethod]
-        public void AcceptOff_Penalty_bThreePntAfterTDMade()
+        public void AcceptOff_FG_Penalty_bThreePntAfterTDMade()
         {
             int Yards_to_go = 2;
             Penalty p = new Penalty() { bDeclinable = true, Yards = 10 };
@@ -1112,6 +1112,87 @@ namespace SpectatorFootball.unitTests.CoachTest
             Game g = new Game() { Home_Score = 7, Away_Score = 0, Quarter = 4, Time = 0 };
             Coach c = new Coach(11, g, 7, new List<Player_and_Ratings>(), new List<Player_and_Ratings>(), new List<Injury>());
             bool bAccept = c.AcceptOff_Penalty(Enum.Play_Enum.PASS, pResult, Yards_to_go, true, true, false, 25);
+
+            Assert.IsTrue(bAccept);
+        }
+
+        [TestCategory("Penalties")]
+        [TestMethod]
+        public void AcceptOff_Penalty_bOnePntAfterTDMissed()
+        {
+            int Yards_to_go = 2;
+            Penalty p = new Penalty() { bDeclinable = true, Yards = 10 };
+            Play_Result pResult = new Play_Result() { end_of_play_yardline = 88, bOnePntAfterTDMissed = true, Penalty = p };
+            Game g = new Game() { Home_Score = 0, Away_Score = 0, Quarter = 4, Time = 100 };
+            Coach c = new Coach(11, g, 7, new List<Player_and_Ratings>(), new List<Player_and_Ratings>(), new List<Injury>());
+            bool bAccept = c.AcceptOff_Penalty(Enum.Play_Enum.SCRIM_PLAY_1XP_RUN, pResult, Yards_to_go, true, false, false, 25);
+
+            Assert.IsTrue(!bAccept);
+        }
+        [TestCategory("Penalties")]
+        [TestMethod]
+        public void AcceptOff_Penalty_bOnePntAfterTDMade()
+        {
+            int Yards_to_go = 2;
+            Penalty p = new Penalty() { bDeclinable = true, Yards = 10 };
+            Play_Result pResult = new Play_Result() { end_of_play_yardline = 88, bOnePntAfterTDMade = true, Penalty = p };
+            Game g = new Game() { Home_Score = 0, Away_Score = 0, Quarter = 4, Time = 100 };
+            Coach c = new Coach(11, g, 7, new List<Player_and_Ratings>(), new List<Player_and_Ratings>(), new List<Injury>());
+            bool bAccept = c.AcceptOff_Penalty(Enum.Play_Enum.SCRIM_PLAY_1XP_PASS, pResult, Yards_to_go, true, false, false, 25);
+
+            Assert.IsTrue(bAccept);
+        }
+
+        [TestCategory("Penalties")]
+        [TestMethod]
+        public void AcceptOff_Penalty_bTwoPntAfterTDMissed()
+        {
+            int Yards_to_go = 2;
+            Penalty p = new Penalty() { bDeclinable = true, Yards = 10 };
+            Play_Result pResult = new Play_Result() { end_of_play_yardline = 88, bTwoPntAfterTDMissed = true, Penalty = p };
+            Game g = new Game() { Home_Score = 0, Away_Score = 0, Quarter = 4, Time = 100 };
+            Coach c = new Coach(11, g, 7, new List<Player_and_Ratings>(), new List<Player_and_Ratings>(), new List<Injury>());
+            bool bAccept = c.AcceptOff_Penalty(Enum.Play_Enum.SCRIM_PLAY_2XP_RUN, pResult, Yards_to_go, true, false, false, 25);
+
+            Assert.IsTrue(!bAccept);
+        }
+        [TestCategory("Penalties")]
+        [TestMethod]
+        public void AcceptOff_Penalty_bTwoPntAfterTDMade()
+        {
+            int Yards_to_go = 2;
+            Penalty p = new Penalty() { bDeclinable = true, Yards = 10 };
+            Play_Result pResult = new Play_Result() { end_of_play_yardline = 88, bTwoPntAfterTDMade = true, Penalty = p };
+            Game g = new Game() { Home_Score = 0, Away_Score = 0, Quarter = 4, Time = 100 };
+            Coach c = new Coach(11, g, 7, new List<Player_and_Ratings>(), new List<Player_and_Ratings>(), new List<Injury>());
+            bool bAccept = c.AcceptOff_Penalty(Enum.Play_Enum.SCRIM_PLAY_2XP_PASS, pResult, Yards_to_go, true, false, false, 25);
+
+            Assert.IsTrue(bAccept);
+        }
+
+        [TestCategory("Penalties")]
+        [TestMethod]
+        public void AcceptOff_Penalty_bThreePntAfterTDMissed()
+        {
+            int Yards_to_go = 2;
+            Penalty p = new Penalty() { bDeclinable = true, Yards = 10 };
+            Play_Result pResult = new Play_Result() { end_of_play_yardline = 88, bThreePntAfterTDMissed = true, Penalty = p };
+            Game g = new Game() { Home_Score = 0, Away_Score = 0, Quarter = 4, Time = 100 };
+            Coach c = new Coach(11, g, 7, new List<Player_and_Ratings>(), new List<Player_and_Ratings>(), new List<Injury>());
+            bool bAccept = c.AcceptOff_Penalty(Enum.Play_Enum.SCRIM_PLAY_2XP_RUN, pResult, Yards_to_go, true, false, false, 25);
+
+            Assert.IsTrue(!bAccept);
+        }
+        [TestCategory("Penalties")]
+        [TestMethod]
+        public void AcceptOff_Penalty_bThreePntAfterTDMade()
+        {
+            int Yards_to_go = 2;
+            Penalty p = new Penalty() { bDeclinable = true, Yards = 10 };
+            Play_Result pResult = new Play_Result() { end_of_play_yardline = 88, bThreePntAfterTDMade = true, Penalty = p };
+            Game g = new Game() { Home_Score = 0, Away_Score = 0, Quarter = 4, Time = 100 };
+            Coach c = new Coach(11, g, 7, new List<Player_and_Ratings>(), new List<Player_and_Ratings>(), new List<Injury>());
+            bool bAccept = c.AcceptOff_Penalty(Enum.Play_Enum.SCRIM_PLAY_3XP_RUN, pResult, Yards_to_go, true, false, false, 25);
 
             Assert.IsTrue(bAccept);
         }

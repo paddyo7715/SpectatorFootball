@@ -2700,7 +2700,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
         [TestCategory("GameEngine")]
         [TestMethod]
-        public void setPlayOutCome_Punt_Right_Delay_of_Game_From_6()
+        public void setPlayOutCome_Punt_Right_Delay_of_Game_rom_94()
         {
             bool penOnBallCarryingTeam = false;
             Play_Enum PE = Play_Enum.PUNT;
@@ -2804,7 +2804,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
         [TestCategory("GameEngine")]
         [TestMethod]
-        public void setPlayOutCome_Punt_Right_Delay_of_Game_From_20()
+        public void setPlayOutCome_Punt_Right_Delay_of_Game_From_80()
         {
             bool penOnBallCarryingTeam = false;
             Play_Enum PE = Play_Enum.PUNT;
@@ -3226,7 +3226,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
         [TestCategory("GameEngine")]
         [TestMethod]
-        public void setPlayOutCome_Punt_Right_Sport_Penalty_on_94_Returned_to_80()
+        public void setPlayOutCome_Punt_Right_Sport_Penalty_on_94_Returned_to_20()
         {
             bool penOnBallCarryingTeam = true;
             Play_Enum PE = Play_Enum.PUNT;
@@ -3329,7 +3329,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
         [TestCategory("GameEngine")]
         [TestMethod]
-        public void setPlayOutCome_Punt_Right_Sport_Penalty_on_80_Returned_to_94()
+        public void setPlayOutCome_Punt_Right_Sport_Penalty_on_80_Returned_to_6()
         {
             bool penOnBallCarryingTeam = true;
             Play_Enum PE = Play_Enum.PUNT;
@@ -3431,7 +3431,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
         [TestCategory("GameEngine")]
         [TestMethod]
-        public void setPlayOutCome_Punt_Right_Sport_Penalty_on_95_Returned_to_94_Fumble_Lost()
+        public void setPlayOutCome_Punt_Right_Sport_Penalty_on_95_Returned_to_6_Fumble_Lost()
         {
             bool penOnBallCarryingTeam = true;
             Play_Enum PE = Play_Enum.PUNT;
@@ -3538,7 +3538,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
         [TestCategory("GameEngine")]
         [TestMethod]
-        public void setPlayOutCome_Punt_Right_Sport_Penalty_on_10_Returned_to_8()
+        public void setPlayOutCome_Punt_Right_Sport_Penalty_on_10_Returned_to_92()
         {
             bool penOnBallCarryingTeam = false;
             Play_Enum PE = Play_Enum.PUNT;
@@ -3645,7 +3645,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
         [TestCategory("GameEngine")]
         [TestMethod]
-        public void setPlayOutCome_Punt_Right_Sport_Penalty_on_45_Returned_to_50()
+        public void setPlayOutCome_Punt_Right_Sport_Penalty_on_45_Returned_to_92()
         {
             bool penOnBallCarryingTeam = false;
             Play_Enum PE = Play_Enum.PUNT;
@@ -3752,7 +3752,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
         [TestCategory("GameEngine")]
         [TestMethod]
-        public void setPlayOutCome_Punt_Right_Sport_Penalty_on_95_Defensders_Returned_to_94_Fumble_Lost()
+        public void setPlayOutCome_Punt_Right_Sport_Penalty_on_95_Defensders_Returned_to_6_Fumble_Lost()
         {
             bool penOnBallCarryingTeam = false;
             Play_Enum PE = Play_Enum.PUNT;
@@ -3859,7 +3859,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
         [TestCategory("GameEngine")]
         [TestMethod]
-        public void setPlayOutCome_Punt_Right_Sport_Penalty_on_15_Defensders_Returned_to_10_Fumble_Lost()
+        public void setPlayOutCome_Punt_Right_Sport_Penalty_on_15_Defensders_Returned_to_90_Fumble_Lost()
         {
             bool penOnBallCarryingTeam = false;
             Play_Enum PE = Play_Enum.PUNT;
