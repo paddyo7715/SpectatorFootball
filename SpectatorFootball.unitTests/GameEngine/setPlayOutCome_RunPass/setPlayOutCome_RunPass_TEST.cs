@@ -13253,10 +13253,9 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        //bpo stopped here
         [TestCategory("GameEngine")]
         [TestMethod]
-        public void setPlayOutCome_Run_Right_3rd_and3_from_27_Def_Off_Penalty_on_Def_Declined()
+        public void setPlayOutCome_Run_Right_3rd_and3_from_73_Def_Off_Penalty_on_Def_Declined()
         {
             bool penOnBallCarryingTeam = false;
             Play_Enum PE = Play_Enum.RUN;
@@ -13266,12 +13265,12 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player QB = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 22
+                Current_YardLine = 78
             };
             Game_Player RB = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 39
+                Current_YardLine = 61
             };
 
             //get penalty settings
@@ -13280,7 +13279,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player Penalized_Player = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 15
+                Current_YardLine = 85
             };
 
             Play_Result pResult = new Play_Result()
@@ -13289,8 +13288,8 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 ht = 22,
                 BallPossessing_Team_Id = 11,
                 NonbBallPossessing_Team_Id = 22,
-                end_of_play_yardline = 39,
-                Play_Start_Yardline = 27,
+                end_of_play_yardline = 61,
+                Play_Start_Yardline = 73,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
                 Passer = QB,
@@ -13323,7 +13322,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must not stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10.0 || r.Final_end_of_Play_Yardline != 39.0)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10.0 || r.Final_end_of_Play_Yardline != 61.0)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -13362,7 +13361,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
         [TestCategory("GameEngine")]
         [TestMethod]
-        public void setPlayOutCome_Pass_Right_3rd_and3_from_27_Def_Off_Penalty_on_Def_Declined()
+        public void setPlayOutCome_Pass_Right_3rd_and3_from_73_Def_Off_Penalty_on_Def_Declined()
         {
             bool penOnBallCarryingTeam = false;
             Play_Enum PE = Play_Enum.PASS;
@@ -13372,12 +13371,12 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player QB = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 22
+                Current_YardLine = 78
             };
             Game_Player Receiver = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 39
+                Current_YardLine = 61
             };
 
             //get penalty settings
@@ -13386,7 +13385,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player Penalized_Player = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 27
+                Current_YardLine = 73
             };
 
             Play_Result pResult = new Play_Result()
@@ -13395,8 +13394,8 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 ht = 22,
                 BallPossessing_Team_Id = 11,
                 NonbBallPossessing_Team_Id = 22,
-                end_of_play_yardline = 39,
-                Play_Start_Yardline = 27,
+                end_of_play_yardline = 61,
+                Play_Start_Yardline = 73,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
                 Passer = QB,
@@ -13428,7 +13427,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must not stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10.0 || r.Final_end_of_Play_Yardline != 39.0)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10.0 || r.Final_end_of_Play_Yardline != 61.0)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -13467,7 +13466,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
         [TestCategory("GameEngine")]
         [TestMethod]
-        public void setPlayOutCome_Run_Right_1st_and_10_from_20_5_yard_game_UC_Penalty_on_Offense()
+        public void setPlayOutCome_Run_Right_1st_and_10_from_80_5_yard_game_UC_Penalty_on_Offense()
         {
             bool penOnBallCarryingTeam = true;
             Play_Enum PE = Play_Enum.RUN;
@@ -13477,12 +13476,12 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player QB = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 15
+                Current_YardLine = 85
             };
             Game_Player RB = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 25
+                Current_YardLine = 75
             };
 
             //get penalty settings
@@ -13491,7 +13490,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player Penalized_Player = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 23
+                Current_YardLine = 77
             };
 
             Play_Result pResult = new Play_Result()
@@ -13500,8 +13499,8 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 ht = 22,
                 BallPossessing_Team_Id = 11,
                 NonbBallPossessing_Team_Id = 22,
-                end_of_play_yardline = 25,
-                Play_Start_Yardline = 20,
+                end_of_play_yardline = 75,
+                Play_Start_Yardline = 80,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
                 Passer = QB,
@@ -13544,7 +13543,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must not stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 2 || r.Final_yard_to_go != 18.5 || r.Final_end_of_Play_Yardline != 11.5)
+            if (r.Final_Down != 2 || r.Final_yard_to_go != 18.5 || r.Final_end_of_Play_Yardline != 88.5)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -13582,7 +13581,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
         [TestCategory("GameEngine")]
         [TestMethod]
-        public void setPlayOutCome_Pass_Right_1st_and_10_from_20_5_yard_game_UC_Penalty_on_Offense()
+        public void setPlayOutCome_Pass_Right_1st_and_10_from_80_5_yard_game_UC_Penalty_on_Offense()
         {
             bool penOnBallCarryingTeam = true;
             Play_Enum PE = Play_Enum.PASS;
@@ -13592,13 +13591,13 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player QB = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 15
+                Current_YardLine = 85
             };
 
             Game_Player Receiver = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 2 } },
-                Current_YardLine = 25
+                Current_YardLine = 75
             };
 
             //get penalty settings
@@ -13607,7 +13606,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player Penalized_Player = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 23
+                Current_YardLine = 77
             };
 
             Play_Result pResult = new Play_Result()
@@ -13616,8 +13615,8 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 ht = 22,
                 BallPossessing_Team_Id = 11,
                 NonbBallPossessing_Team_Id = 22,
-                end_of_play_yardline = 25,
-                Play_Start_Yardline = 20,
+                end_of_play_yardline = 75,
+                Play_Start_Yardline = 80,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
                 Passer = QB,
@@ -13669,7 +13668,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must not stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 2 || r.Final_yard_to_go != 18.5 || r.Final_end_of_Play_Yardline != 11.5)
+            if (r.Final_Down != 2 || r.Final_yard_to_go != 18.5 || r.Final_end_of_Play_Yardline != 88.5)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -13713,7 +13712,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
         [TestCategory("GameEngine")]
         [TestMethod]
-        public void setPlayOutCome_Run_Right_1st_and_10_from_40_0_yard_game_FM_Penalty_on_Offense()
+        public void setPlayOutCome_Run_Right_1st_and_10_from_60_0_yard_game_FM_Penalty_on_Offense()
         {
             bool penOnBallCarryingTeam = true;
             Play_Enum PE = Play_Enum.RUN;
@@ -13723,12 +13722,12 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player QB = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 35
+                Current_YardLine = 65
             };
             Game_Player RB = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 40
+                Current_YardLine = 60
             };
 
             //get penalty settings
@@ -13737,7 +13736,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player Penalized_Player = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 43
+                Current_YardLine = 57
             };
 
             Play_Result pResult = new Play_Result()
@@ -13746,8 +13745,8 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 ht = 22,
                 BallPossessing_Team_Id = 11,
                 NonbBallPossessing_Team_Id = 22,
-                end_of_play_yardline = 40,
-                Play_Start_Yardline = 40,
+                end_of_play_yardline = 60,
+                Play_Start_Yardline = 60,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
                 Passer = QB,
@@ -13790,7 +13789,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must not stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 2 || r.Final_yard_to_go != 25 || r.Final_end_of_Play_Yardline != 25)
+            if (r.Final_Down != 2 || r.Final_yard_to_go != 25 || r.Final_end_of_Play_Yardline != 75)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -13828,7 +13827,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
         [TestCategory("GameEngine")]
         [TestMethod]
-        public void setPlayOutCome_Pass_Right_1st_and_10_from_40_0_yard_game_FM_Penalty_on_Offense()
+        public void setPlayOutCome_Pass_Right_1st_and_10_from_60_0_yard_game_FM_Penalty_on_Offense()
         {
             bool penOnBallCarryingTeam = true;
             Play_Enum PE = Play_Enum.PASS;
@@ -13838,7 +13837,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player QB = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 35
+                Current_YardLine = 65
             };
 
             Game_Player Receiver = new Game_Player()
@@ -13853,7 +13852,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player Penalized_Player = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 43
+                Current_YardLine = 57
             };
 
             Play_Result pResult = new Play_Result()
@@ -13862,8 +13861,8 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 ht = 22,
                 BallPossessing_Team_Id = 11,
                 NonbBallPossessing_Team_Id = 22,
-                end_of_play_yardline = 40,
-                Play_Start_Yardline = 40,
+                end_of_play_yardline = 60,
+                Play_Start_Yardline = 60,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
                 Passer = QB,
@@ -13915,7 +13914,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must not stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 2 || r.Final_yard_to_go != 25 || r.Final_end_of_Play_Yardline != 25)
+            if (r.Final_Down != 2 || r.Final_yard_to_go != 25 || r.Final_end_of_Play_Yardline != 75)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -13959,7 +13958,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
         [TestCategory("GameEngine")]
         [TestMethod]
-        public void setPlayOutCome_Run_Right_1st_and_10_from_40_0_yard_game_FM_Penalty_on_Offense_at_39()
+        public void setPlayOutCome_Run_Right_1st_and_10_from_60_0_yard_game_FM_Penalty_on_Offense_at_61()
         {
             bool penOnBallCarryingTeam = true;
             Play_Enum PE = Play_Enum.RUN;
@@ -13969,12 +13968,12 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player QB = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 35
+                Current_YardLine = 65
             };
             Game_Player RB = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 40
+                Current_YardLine = 60
             };
 
             //get penalty settings
@@ -13983,7 +13982,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player Penalized_Player = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 39
+                Current_YardLine = 61
             };
 
             Play_Result pResult = new Play_Result()
@@ -13992,8 +13991,8 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 ht = 22,
                 BallPossessing_Team_Id = 11,
                 NonbBallPossessing_Team_Id = 22,
-                end_of_play_yardline = 40,
-                Play_Start_Yardline = 40,
+                end_of_play_yardline = 60,
+                Play_Start_Yardline = 60,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
                 Passer = QB,
@@ -14036,7 +14035,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must not stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 2 || r.Final_yard_to_go != 26 || r.Final_end_of_Play_Yardline != 24)
+            if (r.Final_Down != 2 || r.Final_yard_to_go != 26 || r.Final_end_of_Play_Yardline != 76)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -14074,7 +14073,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
         [TestCategory("GameEngine")]
         [TestMethod]
-        public void setPlayOutCome_Pass_Right_1st_and_10_from_40_0_yard_game_FM_Penalty_on_Offense_at_39()
+        public void setPlayOutCome_Pass_Right_1st_and_10_from_60_0_yard_game_FM_Penalty_on_Offense_at_39()
         {
             bool penOnBallCarryingTeam = true;
             Play_Enum PE = Play_Enum.PASS;
@@ -14084,7 +14083,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player QB = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 35
+                Current_YardLine = 65
             };
 
             Game_Player Receiver = new Game_Player()
@@ -14099,7 +14098,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player Penalized_Player = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 39
+                Current_YardLine = 61
             };
 
             Play_Result pResult = new Play_Result()
@@ -14108,8 +14107,8 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 ht = 22,
                 BallPossessing_Team_Id = 11,
                 NonbBallPossessing_Team_Id = 22,
-                end_of_play_yardline = 40,
-                Play_Start_Yardline = 40,
+                end_of_play_yardline = 60,
+                Play_Start_Yardline = 60,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
                 Passer = QB,
@@ -14161,7 +14160,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must not stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 2 || r.Final_yard_to_go != 26 || r.Final_end_of_Play_Yardline != 24)
+            if (r.Final_Down != 2 || r.Final_yard_to_go != 26 || r.Final_end_of_Play_Yardline != 76)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -14205,7 +14204,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
         [TestCategory("GameEngine")]
         [TestMethod]
-        public void setPlayOutCome_Run_Right_1st_and_10_from_40_0_yard_game_FM_Penalty_on_Offense_at_5()
+        public void setPlayOutCome_Run_Right_1st_and_10_from_60_0_yard_game_FM_Penalty_on_Offense_at_5()
         {
             bool penOnBallCarryingTeam = true;
             Play_Enum PE = Play_Enum.RUN;
@@ -14215,12 +14214,12 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player QB = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 0
+                Current_YardLine = 100
             };
             Game_Player RB = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 5
+                Current_YardLine = 95
             };
 
             //get penalty settings
@@ -14229,7 +14228,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player Penalized_Player = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 5
+                Current_YardLine = 95
             };
 
             Play_Result pResult = new Play_Result()
@@ -14238,8 +14237,8 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 ht = 22,
                 BallPossessing_Team_Id = 11,
                 NonbBallPossessing_Team_Id = 22,
-                end_of_play_yardline = 5,
-                Play_Start_Yardline = 5,
+                end_of_play_yardline = 95,
+                Play_Start_Yardline = 95,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
                 Passer = QB,
@@ -14282,7 +14281,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must not stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 2 || r.Final_yard_to_go != 12.5 || r.Final_end_of_Play_Yardline != 2.5)
+            if (r.Final_Down != 2 || r.Final_yard_to_go != 12.5 || r.Final_end_of_Play_Yardline != 97.5)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -14320,7 +14319,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
         [TestCategory("GameEngine")]
         [TestMethod]
-        public void setPlayOutCome_Pass_Right_1st_and_10_from_40_0_yard_game_FM_Penalty_on_Offense_at_5()
+        public void setPlayOutCome_Pass_Right_1st_and_10_from_60_0_yard_game_FM_Penalty_on_Offense_at_5()
         {
             bool penOnBallCarryingTeam = true;
             Play_Enum PE = Play_Enum.PASS;
@@ -14330,13 +14329,13 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player QB = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 0
+                Current_YardLine = 100
             };
 
             Game_Player Receiver = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 2 } },
-                Current_YardLine = 10
+                Current_YardLine = 90
             };
 
             //get penalty settings
@@ -14345,7 +14344,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player Penalized_Player = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 5
+                Current_YardLine = 95
             };
 
             Play_Result pResult = new Play_Result()
@@ -14354,8 +14353,8 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 ht = 22,
                 BallPossessing_Team_Id = 11,
                 NonbBallPossessing_Team_Id = 22,
-                end_of_play_yardline = 5,
-                Play_Start_Yardline = 5,
+                end_of_play_yardline = 95,
+                Play_Start_Yardline = 95,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
                 Passer = QB,
@@ -14407,7 +14406,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must not stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 2 || r.Final_yard_to_go != 12.5 || r.Final_end_of_Play_Yardline != 2.5)
+            if (r.Final_Down != 2 || r.Final_yard_to_go != 12.5 || r.Final_end_of_Play_Yardline != 97.5)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -14451,7 +14450,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
         [TestCategory("GameEngine")]
         [TestMethod]
-        public void setPlayOutCome_Run_Right_1st_and_10_from_40_0_yard_game_FM_Penalty_on_Defense()
+        public void setPlayOutCome_Run_Right_1st_and_10_from_60_0_yard_game_FM_Penalty_on_Defense()
         {
             bool penOnBallCarryingTeam = false;
             Play_Enum PE = Play_Enum.RUN;
@@ -14461,12 +14460,12 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player QB = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 35
+                Current_YardLine = 65
             };
             Game_Player RB = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 40
+                Current_YardLine = 60
             };
 
             //get penalty settings
@@ -14475,7 +14474,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player Penalized_Player = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 43
+                Current_YardLine = 57
             };
 
             Play_Result pResult = new Play_Result()
@@ -14484,8 +14483,8 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 ht = 22,
                 BallPossessing_Team_Id = 11,
                 NonbBallPossessing_Team_Id = 22,
-                end_of_play_yardline = 40,
-                Play_Start_Yardline = 40,
+                end_of_play_yardline = 60,
+                Play_Start_Yardline = 60,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
                 Passer = QB,
@@ -14528,7 +14527,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must not stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 55)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 45)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -14566,7 +14565,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
         [TestCategory("GameEngine")]
         [TestMethod]
-        public void setPlayOutCome_Pass_Right_1st_and_10_from_40_0_yard_game_FM_Penalty_on_Defense()
+        public void setPlayOutCome_Pass_Right_1st_and_10_from_60_0_yard_game_FM_Penalty_on_Defense()
         {
             bool penOnBallCarryingTeam = false;
             Play_Enum PE = Play_Enum.PASS;
@@ -14576,7 +14575,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player QB = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 35
+                Current_YardLine = 65
             };
 
             Game_Player Receiver = new Game_Player()
@@ -14591,7 +14590,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player Penalized_Player = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 43
+                Current_YardLine = 57
             };
 
             Play_Result pResult = new Play_Result()
@@ -14600,8 +14599,8 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 ht = 22,
                 BallPossessing_Team_Id = 11,
                 NonbBallPossessing_Team_Id = 22,
-                end_of_play_yardline = 40,
-                Play_Start_Yardline = 40,
+                end_of_play_yardline = 60,
+                Play_Start_Yardline = 60,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
                 Passer = QB,
@@ -14653,7 +14652,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must not stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 55)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 45)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -14697,7 +14696,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
         [TestCategory("GameEngine")]
         [TestMethod]
-        public void setPlayOutCome_Run_Right_4th_and_5_from_80_10_yard_game_Fumble_lost_FM_Penalty_on_Defense()
+        public void setPlayOutCome_Run_Right_4th_and_5_from_20_10_yard_game_Fumble_lost_FM_Penalty_on_Defense()
         {
             bool penOnBallCarryingTeam = false;
             Play_Enum PE = Play_Enum.RUN;
@@ -14707,12 +14706,12 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player QB = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 75
+                Current_YardLine = 25
             };
             Game_Player RB = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 90
+                Current_YardLine = 10
             };
 
             //get penalty settings
@@ -14721,7 +14720,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player Penalized_Player = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 80
+                Current_YardLine = 20
             };
 
             Play_Result pResult = new Play_Result()
@@ -14730,8 +14729,8 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 ht = 22,
                 BallPossessing_Team_Id = 11,
                 NonbBallPossessing_Team_Id = 22,
-                end_of_play_yardline = 90,
-                Play_Start_Yardline = 80,
+                end_of_play_yardline = 10,
+                Play_Start_Yardline = 20,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
                 Passer = QB,
@@ -14774,7 +14773,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must not stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 95)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 5)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -14812,7 +14811,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
         [TestCategory("GameEngine")]
         [TestMethod]
-        public void setPlayOutCome_Pass_Right_3rd_and_10_from_80_TD_FM_Penalty_on_Defense_Ignored()
+        public void setPlayOutCome_Pass_Right_3rd_and_10_from_20_TD_FM_Penalty_on_Defense_Ignored()
         {
             bool penOnBallCarryingTeam = false;
             Play_Enum PE = Play_Enum.PASS;
@@ -14822,13 +14821,13 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player QB = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 75
+                Current_YardLine = 25
             };
 
             Game_Player Receiver = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 2 } },
-                Current_YardLine = 105
+                Current_YardLine = -5
             };
 
             //get penalty settings
@@ -14837,7 +14836,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player Penalized_Player = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 80
+                Current_YardLine = 20
             };
 
             Play_Result pResult = new Play_Result()
@@ -14846,8 +14845,8 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 ht = 22,
                 BallPossessing_Team_Id = 11,
                 NonbBallPossessing_Team_Id = 22,
-                end_of_play_yardline = 105,
-                Play_Start_Yardline = 80,
+                end_of_play_yardline = -5,
+                Play_Start_Yardline = 20,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
                 Passer = QB,
@@ -14944,7 +14943,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
         [TestCategory("GameEngine")]
         [TestMethod]
-        public void setPlayOutCome_Pass_Right_3rd_and_10_from_80_TD_FM_Penalty_on_Offense()
+        public void setPlayOutCome_Pass_Right_3rd_and_10_from_20_TD_FM_Penalty_on_Offense()
         {
             bool penOnBallCarryingTeam = true;
             Play_Enum PE = Play_Enum.PASS;
@@ -14954,13 +14953,13 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player QB = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 75
+                Current_YardLine = 25
             };
 
             Game_Player Receiver = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 2 } },
-                Current_YardLine = 105
+                Current_YardLine = -5
             };
 
             //get penalty settings
@@ -14969,7 +14968,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player Penalized_Player = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 80
+                Current_YardLine = 20
             };
 
             Play_Result pResult = new Play_Result()
@@ -14978,8 +14977,8 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 ht = 22,
                 BallPossessing_Team_Id = 11,
                 NonbBallPossessing_Team_Id = 22,
-                end_of_play_yardline = 105,
-                Play_Start_Yardline = 80,
+                end_of_play_yardline = -5,
+                Play_Start_Yardline = 20,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
                 Passer = QB,
@@ -15075,7 +15074,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
         [TestCategory("GameEngine")]
         [TestMethod]
-        public void setPlayOutCome_Pass_Right_4th_and_10_from_80_Interception_in_Endzone_FM_on_Offense()
+        public void setPlayOutCome_Pass_Right_4th_and_10_from_20_Interception_in_Endzone_FM_on_Offense()
         {
             bool penOnBallCarryingTeam = true;
             Play_Enum PE = Play_Enum.PASS;
@@ -15085,12 +15084,12 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player QB = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 75
+                Current_YardLine = 25
             };
             Game_Player Receiver = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 105
+                Current_YardLine = -5
             };
 
             //get penalty settings
@@ -15099,7 +15098,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player Penalized_Player = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 80
+                Current_YardLine = 20
             };
 
             Play_Result pResult = new Play_Result()
@@ -15108,8 +15107,8 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 ht = 22,
                 BallPossessing_Team_Id = 11,
                 NonbBallPossessing_Team_Id = 22,
-                end_of_play_yardline = 105.0,
-                Play_Start_Yardline = 80,
+                end_of_play_yardline = -5.0,
+                Play_Start_Yardline = 20,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
                 Passer = QB,
@@ -15139,7 +15138,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must not stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 60)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 40)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -15178,7 +15177,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
         [TestCategory("GameEngine")]
         [TestMethod]
-        public void setPlayOutCome_Pass_Right_4th_and_10_from_80_Interception_in_Endzone_FM_on_Defense()
+        public void setPlayOutCome_Pass_Right_4th_and_10_from_20_Interception_in_Endzone_FM_on_Defense()
         {
             bool penOnBallCarryingTeam = false;
             Play_Enum PE = Play_Enum.PASS;
@@ -15188,12 +15187,12 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player QB = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 75
+                Current_YardLine = 25
             };
             Game_Player Receiver = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 105
+                Current_YardLine = -5
             };
 
             //get penalty settings
@@ -15202,7 +15201,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player Penalized_Player = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 80
+                Current_YardLine = 20
             };
 
             Play_Result pResult = new Play_Result()
@@ -15211,8 +15210,8 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 ht = 22,
                 BallPossessing_Team_Id = 11,
                 NonbBallPossessing_Team_Id = 22,
-                end_of_play_yardline = 105.0,
-                Play_Start_Yardline = 80,
+                end_of_play_yardline = -5.0,
+                Play_Start_Yardline = 20,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
                 Passer = QB,
@@ -15242,7 +15241,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must not stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 87.5)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 12.5)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
