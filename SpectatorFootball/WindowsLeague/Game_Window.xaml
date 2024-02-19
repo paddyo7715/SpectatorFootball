@@ -5,14 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SpectatorFootball.WindowsLeague"
         mc:Ignorable="d"
-        Height="780" Width="1220" WindowStyle="None"  ResizeMode="NoResize"  ShowInTaskbar="False" Topmost="False">
+         WindowStyle="None"  ResizeMode="NoResize"  ShowInTaskbar="False" Topmost="false">
         <Border Style="{StaticResource popupBD}" BorderThickness="5"> 
         <StackPanel Orientation="Vertical">
         <StackPanel Name="Game_intro_pnl" Style="{StaticResource popupSP}" Height="770" Width="1210" Orientation="Vertical" >
-            <StackPanel.Background>
-                <ImageBrush ImageSource="..\Images\Game_Intro_Background.jpg" />
-            </StackPanel.Background>
-            <Label Style="{StaticResource GameIntro_LeagueName}" Height="50" Width="1210" />
+                <StackPanel.Background>
+                    <ImageBrush ImageSource="..\Images\Game_Intro_Background.jpg" />
+                </StackPanel.Background>
+                <Label Style="{StaticResource GameIntro_LeagueName}" Height="50" Width="1210" />
             <Label Name="lblLeague" Style="{StaticResource GameIntro_LeagueName}" Height="60" Width="1210" >
                 <Label.Effect>
                     <DropShadowEffect Color="White" Direction="320" ShadowDepth="3" Opacity="1" />
@@ -122,11 +122,9 @@
                     </StackPanel>
                 </Grid>
             <StackPanel HorizontalAlignment="right">
-<!--                <Border BorderThickness="5" BorderBrush="Black"> -->
                     <Canvas Name="MyCanvas" Focusable="True" ClipToBounds="True" Background="LightBlue"  Height="710" Width="1210" >
                         <Rectangle Name="background" Height="1480" Width="2880" Stretch="Fill" Canvas.Top="0"  Canvas.Left="0" /> 
                     </Canvas>
-<!--                </Border> --> 
             </StackPanel>
             </StackPanel>
         </StackPanel>

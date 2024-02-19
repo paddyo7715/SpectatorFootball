@@ -20,7 +20,6 @@ using SpectatorFootball.GameNS;
 using System.Windows.Shapes;
 using SpectatorFootball.Enum;
 
-
 namespace SpectatorFootball.WindowsLeague
 {
     /// <summary>
@@ -44,9 +43,6 @@ namespace SpectatorFootball.WindowsLeague
 
         private string Field_File = "";
 
-        private int Can_Width;
-        private int Can_Height;
-
         private int back_width = 2880;
         private int back_height = 1480;
         private int Field_Border = 240;
@@ -55,6 +51,9 @@ namespace SpectatorFootball.WindowsLeague
 
         private int Width_dir = -1;
         private int Height_dir = -1;
+
+        private int Screen_Res_Width;
+        private int Screen_Res_Height;
 
         //this is the model 
         private Game g = null;
@@ -83,7 +82,7 @@ namespace SpectatorFootball.WindowsLeague
 
         private const int PLAYER_SIZE = 50;
         private const int PLAYER_BALL_SIZE_DIFF = 30;
-        private const double MID_FIELD_ART_OPACITY = .97;
+        private const double MID_FIELD_ART_OPACITY = .94;
 
         private const int GOALPOST_WIDTH = 50;
         private const int GOALPOST_HEIGHT = 160;
@@ -111,9 +110,6 @@ namespace SpectatorFootball.WindowsLeague
         private int VIEW_EDGE_PIXELS;
 
         private const int PLAYER_IN_SPRITE_ROW = 25;
-
-//        private ImageBrush A_Player_Sheet = new ImageBrush();
-//        private ImageBrush H_Player_Sheet = new ImageBrush();
 
         private BitmapImage[] A_Player_Sprites = null;
         private BitmapImage[] H_Player_Sprites = null;
@@ -148,6 +144,33 @@ namespace SpectatorFootball.WindowsLeague
 
             try
             {
+
+                //Get the screen resolution of the primary monitor
+                Screen_Res_Width = (int)System.Windows.SystemParameters.PrimaryScreenWidth;
+                Screen_Res_Height = (int)System.Windows.SystemParameters.PrimaryScreenHeight;
+
+                this.Width = Screen_Res_Width -10;
+                this.Height = Screen_Res_Height - 100;
+                this.Top = 0;
+                this.Left = 0;
+
+                MyCanvas.Height = this.Height - 70;
+                MyCanvas.Width = this.Width - 10;
+
+
+                Gamepnl.Width = this.Width - 10;
+                Gamepnl.Height = this.Height - 10;
+
+
+                Game_intro_pnl.Width = this.Width - 10;
+                Game_intro_pnl.Height = this.Height - 10;
+
+
+                Canvas.SetLeft(background, 0);
+                Canvas.SetTop(background, 0);
+                background.Height = 1480;
+                background.Width = 2880;
+
                 lblLeague.Content = pw.Loaded_League.season.League_Structure_by_Season[0].Long_Name;
                 at = pw.Loaded_League.season.Teams_by_Season.Where(x => x.Franchise_ID == g.Away_Team_Franchise_ID).First();
                 ht = pw.Loaded_League.season.Teams_by_Season.Where(x => x.Franchise_ID == g.Home_Team_Franchise_ID).First();
@@ -170,9 +193,6 @@ namespace SpectatorFootball.WindowsLeague
 
                 Away_Players = gs.GetTeamPlayersForGame(at.Franchise_ID, g.Week, pw.Loaded_League);
                 Home_Players = gs.GetTeamPlayersForGame(ht.Franchise_ID, g.Week, pw.Loaded_League);
-
-                Can_Width = (int)CANVAS_WIDTH;
-                Can_Height = (int) MyCanvas.Height;
 
                 ge = new GameEngine(g, (Teams_by_Season)at, (List<Player_and_Ratings>)Away_Players,
                     (Teams_by_Season)ht, (List<Player_and_Ratings>)Home_Players, false,
@@ -337,7 +357,7 @@ namespace SpectatorFootball.WindowsLeague
             lblHomeTeam.Background = new SolidColorBrush(CommonUtils.getColorfromHex(m2[0]));
 
             GameTimer.Tick += Play_Game;
-            GameTimer.Interval = TimeSpan.FromMilliseconds(00);
+            GameTimer.Interval = TimeSpan.FromMilliseconds(700);
             GameTimer.Start();
 
             logger.Debug("CloseGameInfo ended");
@@ -483,7 +503,8 @@ namespace SpectatorFootball.WindowsLeague
 
             //set the top edge
             double vertTemp1 = VertPercent_to_Pixel(vert_percent, 0);
-            double halfCanHeight = Can_Height / 2;
+            double halfCanHeight = CANVAS_HEIGHT / 2;
+
             view_edge_top = vertTemp1 - halfCanHeight - TOP_PIXEL_FUDGE;
             view_edge_top *= -1;
 
