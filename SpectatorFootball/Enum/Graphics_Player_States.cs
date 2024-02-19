@@ -11,6 +11,7 @@ namespace SpectatorFootball.Enum
         STANDING,
         RUNNING_1,
         RUNNING_2,
+        RUNNING_3,
         FG_KICK,
         ABOUT_TO_CATCH_KICK,
         RUNNING_WITH_BALL_1,

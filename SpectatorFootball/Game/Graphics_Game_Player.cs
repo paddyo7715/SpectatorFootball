@@ -62,10 +62,12 @@ namespace SpectatorFootball.GameNS
                         else
                             r = Graphics_Player_States.RUNNING_WITH_BALL_2;
                     else
-                        if (graph_pState != Graphics_Player_States.RUNNING_1)
-                            r = Graphics_Player_States.RUNNING_1;
-                        else
+                        if (graph_pState == Graphics_Player_States.RUNNING_1)
                             r = Graphics_Player_States.RUNNING_2;
+                        else if (graph_pState == Graphics_Player_States.RUNNING_2)
+                            r = Graphics_Player_States.RUNNING_3;
+                        else
+                        r = Graphics_Player_States.RUNNING_1;
                     break;
                 case Player_States.FG_KICK:
                     r = Graphics_Player_States.FG_KICK;

@@ -109,7 +109,7 @@ namespace SpectatorFootball.WindowsLeague
 
         private int VIEW_EDGE_PIXELS;
 
-        private const int PLAYER_IN_SPRITE_ROW = 25;
+        private const int PLAYER_IN_SPRITE_ROW = 26;
 
         private BitmapImage[] A_Player_Sprites = null;
         private BitmapImage[] H_Player_Sprites = null;
@@ -357,7 +357,7 @@ namespace SpectatorFootball.WindowsLeague
             lblHomeTeam.Background = new SolidColorBrush(CommonUtils.getColorfromHex(m2[0]));
 
             GameTimer.Tick += Play_Game;
-            GameTimer.Interval = TimeSpan.FromMilliseconds(700);
+            GameTimer.Interval = TimeSpan.FromMilliseconds(5000);
             GameTimer.Start();
 
             logger.Debug("CloseGameInfo ended");
