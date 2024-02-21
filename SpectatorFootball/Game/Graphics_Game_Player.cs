@@ -67,7 +67,7 @@ namespace SpectatorFootball.GameNS
                         else if (graph_pState == Graphics_Player_States.RUNNING_2)
                             r = Graphics_Player_States.RUNNING_3;
                         else
-                        r = Graphics_Player_States.RUNNING_1;
+                            r = Graphics_Player_States.RUNNING_1;
                     break;
                 case Player_States.FG_KICK:
                     r = Graphics_Player_States.FG_KICK;
@@ -115,10 +115,12 @@ namespace SpectatorFootball.GameNS
                     r = Graphics_Player_States.ON_BACK;
                     break;
                 case Player_States.RUNNING_BACKWORDS:
-                    if (graph_pState != Graphics_Player_States.RUNNING_BACKWORDS_1)
-                        r = Graphics_Player_States.RUNNING_BACKWORDS_1;
-                    else
-                        r = Graphics_Player_States.RUNNING_BACKWORDS_2;
+                     if (graph_pState == Graphics_Player_States.RUNNING_BACKWORDS_1)
+                            r = Graphics_Player_States.RUNNING_BACKWORDS_2;
+                        else if (graph_pState == Graphics_Player_States.RUNNING_BACKWORDS_2)
+                            r = Graphics_Player_States.RUNNING_BACKWORDS_3;
+                        else
+                            r = Graphics_Player_States.RUNNING_BACKWORDS_1;
                     break;
                 case Player_States.KNEELING:
                     if (graph_pState == Graphics_Player_States.ABOUT_TO_CATCH_KICK)

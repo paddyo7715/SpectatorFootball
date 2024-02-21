@@ -31,6 +31,7 @@ namespace SpectatorFootball.Enum
         ON_BACK,
         RUNNING_BACKWORDS_1,
         RUNNING_BACKWORDS_2,
+        RUNNING_BACKWORDS_3,
         KNEELING_1,
         KNEELING_2,
         KNEELING_3
