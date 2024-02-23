@@ -12,6 +12,7 @@ namespace SpectatorFootball.Enum
         RUNNING_1,
         RUNNING_2,
         RUNNING_3,
+        RUNNING_4,
         FG_KICK,
         ABOUT_TO_CATCH_KICK,
         RUNNING_WITH_BALL_1,
@@ -32,6 +33,7 @@ namespace SpectatorFootball.Enum
         RUNNING_BACKWORDS_1,
         RUNNING_BACKWORDS_2,
         RUNNING_BACKWORDS_3,
+        RUNNING_BACKWORDS_4,
         KNEELING_1,
         KNEELING_2,
         KNEELING_3

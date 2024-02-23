@@ -66,7 +66,9 @@ namespace SpectatorFootball.GameNS
                             r = Graphics_Player_States.RUNNING_2;
                         else if (graph_pState == Graphics_Player_States.RUNNING_2)
                             r = Graphics_Player_States.RUNNING_3;
-                        else
+                        else if (graph_pState == Graphics_Player_States.RUNNING_3)
+                            r = Graphics_Player_States.RUNNING_4;
+                    else
                             r = Graphics_Player_States.RUNNING_1;
                     break;
                 case Player_States.FG_KICK:
@@ -119,6 +121,8 @@ namespace SpectatorFootball.GameNS
                             r = Graphics_Player_States.RUNNING_BACKWORDS_2;
                         else if (graph_pState == Graphics_Player_States.RUNNING_BACKWORDS_2)
                             r = Graphics_Player_States.RUNNING_BACKWORDS_3;
+                        else if (graph_pState == Graphics_Player_States.RUNNING_BACKWORDS_3)
+                            r = Graphics_Player_States.RUNNING_BACKWORDS_4;
                         else
                             r = Graphics_Player_States.RUNNING_BACKWORDS_1;
                     break;
