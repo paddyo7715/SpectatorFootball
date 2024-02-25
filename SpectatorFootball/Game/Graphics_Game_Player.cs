@@ -57,10 +57,14 @@ namespace SpectatorFootball.GameNS
                     break;
                 case Player_States.RUNNING_FORWARD:
                     if (bCarringBall)
-                        if (graph_pState != Graphics_Player_States.RUNNING_WITH_BALL_1)
-                            r = Graphics_Player_States.RUNNING_WITH_BALL_1;
-                        else
+                        if (graph_pState == Graphics_Player_States.RUNNING_WITH_BALL_1)
                             r = Graphics_Player_States.RUNNING_WITH_BALL_2;
+                        else if (graph_pState == Graphics_Player_States.RUNNING_WITH_BALL_2)
+                            r = Graphics_Player_States.RUNNING_WITH_BALL_3;
+                        else if (graph_pState == Graphics_Player_States.RUNNING_WITH_BALL_3)
+                            r = Graphics_Player_States.RUNNING_WITH_BALL_4;
+                        else
+                            r = Graphics_Player_States.RUNNING_WITH_BALL_1;
                     else
                         if (graph_pState == Graphics_Player_States.RUNNING_1)
                             r = Graphics_Player_States.RUNNING_2;
@@ -68,7 +72,7 @@ namespace SpectatorFootball.GameNS
                             r = Graphics_Player_States.RUNNING_3;
                         else if (graph_pState == Graphics_Player_States.RUNNING_3)
                             r = Graphics_Player_States.RUNNING_4;
-                    else
+                        else
                             r = Graphics_Player_States.RUNNING_1;
                     break;
                 case Player_States.FG_KICK:
@@ -85,27 +89,43 @@ namespace SpectatorFootball.GameNS
                     break;
                 case Player_States.RUNNING_UP:
                     if (bCarringBall)
-                        if (graph_pState != Graphics_Player_States.RUNNING_UP_WITH_BALL_1)
-                            r = Graphics_Player_States.RUNNING_UP_WITH_BALL_1;
-                        else
+                        if (graph_pState == Graphics_Player_States.RUNNING_UP_WITH_BALL_1)
                             r = Graphics_Player_States.RUNNING_UP_WITH_BALL_2;
+                        else if (graph_pState == Graphics_Player_States.RUNNING_UP_WITH_BALL_2)
+                            r = Graphics_Player_States.RUNNING_UP_WITH_BALL_3;
+                        else if (graph_pState == Graphics_Player_States.RUNNING_UP_WITH_BALL_3)
+                            r = Graphics_Player_States.RUNNING_UP_WITH_BALL_4;
+                        else
+                            r = Graphics_Player_States.RUNNING_UP_WITH_BALL_1;
                     else
-                        if (graph_pState != Graphics_Player_States.RUNNING_UP_1)
-                        r = Graphics_Player_States.RUNNING_UP_1;
-                    else
+                      if (graph_pState == Graphics_Player_States.RUNNING_UP_1)
                         r = Graphics_Player_States.RUNNING_UP_2;
+                      else if (graph_pState == Graphics_Player_States.RUNNING_UP_2)
+                        r = Graphics_Player_States.RUNNING_UP_3;
+                      else if (graph_pState == Graphics_Player_States.RUNNING_UP_3)
+                        r = Graphics_Player_States.RUNNING_UP_4;
+                      else
+                        r = Graphics_Player_States.RUNNING_UP_1;
                     break;
                 case Player_States.RUNNING_DOWN:
                     if (bCarringBall)
-                        if (graph_pState != Graphics_Player_States.RUNNING_DOWN_WITH_BALL_1)
-                            r = Graphics_Player_States.RUNNING_DOWN_WITH_BALL_1;
-                        else
+                        if (graph_pState == Graphics_Player_States.RUNNING_DOWN_WITH_BALL_1)
                             r = Graphics_Player_States.RUNNING_DOWN_WITH_BALL_2;
+                        else if (graph_pState == Graphics_Player_States.RUNNING_DOWN_WITH_BALL_2)
+                            r = Graphics_Player_States.RUNNING_DOWN_WITH_BALL_3;
+                        else if (graph_pState == Graphics_Player_States.RUNNING_DOWN_WITH_BALL_3)
+                            r = Graphics_Player_States.RUNNING_DOWN_WITH_BALL_4;
+                        else
+                            r = Graphics_Player_States.RUNNING_DOWN_WITH_BALL_1;
                     else
-                        if (graph_pState != Graphics_Player_States.RUNNING_DOWN_1)
-                        r = Graphics_Player_States.RUNNING_DOWN_1;
-                    else
-                        r = Graphics_Player_States.RUNNING_DOWN_2;
+                        if (graph_pState == Graphics_Player_States.RUNNING_DOWN_1)
+                            r = Graphics_Player_States.RUNNING_DOWN_2;
+                        else if (graph_pState == Graphics_Player_States.RUNNING_DOWN_2)
+                            r = Graphics_Player_States.RUNNING_DOWN_3;
+                        else if (graph_pState == Graphics_Player_States.RUNNING_DOWN_3)
+                            r = Graphics_Player_States.RUNNING_DOWN_4;
+                        else
+                            r = Graphics_Player_States.RUNNING_DOWN_1;
                     break;
                 case Player_States.TACKLING:
                     r = Graphics_Player_States.TACKLING;
