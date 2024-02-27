@@ -21,6 +21,7 @@ namespace SpectatorFootball.Enum
         RUNNING_WITH_BALL_4,
         BLOCKING_1,
         BLOCKING_2,
+        BLOCKING_3,
         RUNNING_UP_1,
         RUNNING_UP_2,
         RUNNING_UP_3,

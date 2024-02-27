@@ -82,10 +82,16 @@ namespace SpectatorFootball.GameNS
                     r = Graphics_Player_States.ABOUT_TO_CATCH_KICK;
                     break;
                 case Player_States.BLOCKING:
-                    if (graph_pState != Graphics_Player_States.BLOCKING_1)
-                        r = Graphics_Player_States.BLOCKING_1;
+                    if (graph_pState == Graphics_Player_States.BLOCKING_1)
+                    {
+                        bool bYesNo = CommonUtils.getRandomTrueFalse();
+                        if (bYesNo)
+                            r = Graphics_Player_States.BLOCKING_3;
+                        else
+                            r = Graphics_Player_States.BLOCKING_2;
+                    }
                     else
-                        r = Graphics_Player_States.BLOCKING_2;
+                        r = Graphics_Player_States.BLOCKING_1;
                     break;
                 case Player_States.RUNNING_UP:
                     if (bCarringBall)

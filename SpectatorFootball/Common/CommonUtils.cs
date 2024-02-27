@@ -86,7 +86,7 @@ namespace SpectatorFootball
         {
             bool r;
 
-            int andnum = random.Next(1, 2);
+            int andnum = random.Next(1, 3);
             if (andnum == 1)
                 r = true;
             else
