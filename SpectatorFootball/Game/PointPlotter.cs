@@ -86,8 +86,7 @@ namespace SpectatorFootball.GameNS
                 r.Add(new PointXY() { x = new_x / 10.0, y = new_y / 10.0 });
             }
 
-            if (addEndpoint)
-                r.Add(new PointXY() { x = ex, y = ey });
+            r.Add(new PointXY() { x = ex, y = ey });
 
             return r;
         }

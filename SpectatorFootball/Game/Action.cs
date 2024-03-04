@@ -27,7 +27,7 @@ namespace SpectatorFootball.GameNS
 
         public Action(Game_Object_Types type, double start_yardline, double start_vertical,
          double end_yardline, double end_vertical, bool bPossesses_Ball,
-         bool bEndofStageAction, Player_States? p_state, Ball_States? b_state,
+         Player_States? p_state, Ball_States? b_state,
          Game_Sounds? Sound, Movement? MoveType, Ball_Speed? Ball_Speed, bool bnoSkip)
         {
             this.type = type;
@@ -36,7 +36,6 @@ namespace SpectatorFootball.GameNS
             this.end_yardline = end_yardline;
             this.end_vertical = end_vertical;
             this.bPossesses_Ball = bPossesses_Ball;
-            this.bEndofStageAction = bEndofStageAction;
             this.p_state = p_state;
             this.b_state = b_state;
             this.Sound = Sound;
