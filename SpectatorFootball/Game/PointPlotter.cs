@@ -105,11 +105,11 @@ namespace SpectatorFootball.GameNS
             return r;
 
         }
-        public static List<PointXY> PlotFakeMoves(double x, double y)
+        public static List<PointXY> PlotFakeMoves(double x, double y, int Fake_Movement_Points)
         {
             List<PointXY> r = new List<PointXY>();
 
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < Fake_Movement_Points; i++)
             {
                 r.Add(new PointXY() { x = x, y = y });
             }

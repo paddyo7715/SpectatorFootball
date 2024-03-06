@@ -138,7 +138,7 @@ namespace SpectatorFootball.GameNS
 
             gBall.Current_YardLine = Kicking_Helper.SetMaxKickoffYardline(gBall.Current_YardLine);
 
-            retuner_catches_ball_yl = retuner_catches_ball_yl;
+//            retuner_catches_ball_yl = retuner_catches_ball_yl;
 
             r.bKick_Out_of_Endzone = r.Returner.isKickOutofEndzone(gBall.Current_YardLine);
             if (r.bKick_Out_of_Endzone)
@@ -757,7 +757,7 @@ namespace SpectatorFootball.GameNS
                         long ball_safety_rating = r.Returner.p_and_r.pr.First().Ball_Safety_Rating;
                         long tackle_rating = r.Tackler.p_and_r.pr.First().Tackle_Rating;
                         long run_attack_rating = r.Tackler.p_and_r.pr.First().Run_Attack_Rating;
-
+                        
                         r.bFumble = Game_Engine_Helper.DoesBallCarrierFumble(
                                    Ball_Carry_Actions.KICK_RETURN,
                                    ball_safety_rating, tackle_rating, run_attack_rating);

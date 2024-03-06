@@ -22,7 +22,7 @@ namespace SpectatorFootball.GameNS
         public void TeeUp()
         {
             State = Ball_States.TEED_UP;
-            Action bas = new Action(Game_Object_Types.B, Current_YardLine, Current_Vertical_Percent_Pos, 0.0, 0.0, false, null, Ball_States.TEED_UP, null, Movement.NONE, null, false);
+            Action bas = new Action(Game_Object_Types.B, Current_YardLine, Current_Vertical_Percent_Pos, 0.0, 0.0, false, null, Ball_States.TEED_UP, null, Movement.NONE, null, false,0);
             Play_Stage bStage = new Play_Stage();
             bStage.Main_Object = false;
             bStage.Actions.Add(bas);
@@ -32,7 +32,7 @@ namespace SpectatorFootball.GameNS
         public void End_Over_End_Thru_Air()
         {
             State = Ball_States.END_OVER_END;
-            Action bas = new Action(Game_Object_Types.B, Starting_YardLine, Starting_Vertical_Percent_Pos, Current_YardLine, Current_Vertical_Percent_Pos, false, null, Ball_States.END_OVER_END, null, Movement.LINE, Ball_Speed.SLOW, false);
+            Action bas = new Action(Game_Object_Types.B, Starting_YardLine, Starting_Vertical_Percent_Pos, Current_YardLine, Current_Vertical_Percent_Pos, false, null, Ball_States.END_OVER_END, null, Movement.LINE, Ball_Speed.SLOW, false,0);
             Play_Stage bStage = new Play_Stage();
             bStage.Main_Object = true;
             bStage.Actions.Add(bas);
@@ -52,19 +52,19 @@ namespace SpectatorFootball.GameNS
             PointXY new_end_point = null; 
 
             State = Ball_States.END_OVER_END;
-            Action bas = new Action(Game_Object_Types.B, prev_yardline, prev_vert, Current_YardLine, Current_Vertical_Percent_Pos, false, null, Ball_States.END_OVER_END, null, Movement.LINE, Ball_Speed.SLOW, false);
+            Action bas = new Action(Game_Object_Types.B, prev_yardline, prev_vert, Current_YardLine, Current_Vertical_Percent_Pos, false, null, Ball_States.END_OVER_END, null, Movement.LINE, Ball_Speed.SLOW, false, 0);
 
             //Get the end point for bouncing ball
             new_end_point = PointPlotter.getExtendedEndpoint(prev_yardline, prev_vert, Current_YardLine, Current_Vertical_Percent_Pos, BOUNCE_LENGTH * dlefttoRight);
 
             State = Ball_States.BOUNCING;
-            Action bas2 = new Action(Game_Object_Types.B, Current_YardLine, Current_Vertical_Percent_Pos, new_end_point.x, new_end_point.y, false, null, Ball_States.BOUNCING, null, Movement.LINE, Ball_Speed.SLOW, false);
+            Action bas2 = new Action(Game_Object_Types.B, Current_YardLine, Current_Vertical_Percent_Pos, new_end_point.x, new_end_point.y, false, null, Ball_States.BOUNCING, null, Movement.LINE, Ball_Speed.SLOW, false, 0);
 
             //Get the end point for rolling ball
             PointXY rolling_end_point = PointPlotter.getExtendedEndpoint(prev_yardline, prev_vert, new_end_point.x, new_end_point.y, ROLL_LENGTH * dlefttoRight);
 
             State = Ball_States.ROLLING;
-            Action bas3 = new Action(Game_Object_Types.B, new_end_point.x, new_end_point.y, rolling_end_point.x, rolling_end_point.y, false, null, Ball_States.ROLLING, null, Movement.LINE, Ball_Speed.SLOW, false);
+            Action bas3 = new Action(Game_Object_Types.B, new_end_point.x, new_end_point.y, rolling_end_point.x, rolling_end_point.y, false, null, Ball_States.ROLLING, null, Movement.LINE, Ball_Speed.SLOW, false, 0);
 
             Play_Stage bStage = new Play_Stage();
             bStage.Main_Object = true;
@@ -75,7 +75,7 @@ namespace SpectatorFootball.GameNS
         }
         public void Carried(double prev_yl, double prev_v)
         {
-            Action bas = new Action(Game_Object_Types.B, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, true, null, Ball_States.CARRIED, null, Movement.LINE, Ball_Speed.SLOW, false);
+            Action bas = new Action(Game_Object_Types.B, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, true, null, Ball_States.CARRIED, null, Movement.LINE, Ball_Speed.SLOW, false, 0);
             Play_Stage bStage = new Play_Stage();
             bStage.Main_Object = true;
             bStage.Actions.Add(bas);
@@ -85,15 +85,9 @@ namespace SpectatorFootball.GameNS
         public void Carried_Fake_Movement(int n)
         {
             Play_Stage bStage = new Play_Stage();
-            bStage.Main_Object = true;
-
-            for (int i=0; i < n; i++)
-            {
-                Action bas = new Action(Game_Object_Types.B, Current_YardLine, Current_Vertical_Percent_Pos, Current_YardLine, Current_Vertical_Percent_Pos, true, null, Ball_States.CARRIED, null, Movement.FAKE_MOVEMENT, Ball_Speed.SLOW, false);
-                bStage.Actions.Add(bas);
-            }
-
-
+            bStage.Main_Object = false;
+            Action bas = new Action(Game_Object_Types.B, Current_YardLine, Current_Vertical_Percent_Pos, Current_YardLine, Current_Vertical_Percent_Pos, true, null, Ball_States.CARRIED, null, Movement.FAKE_MOVEMENT, Ball_Speed.SLOW, false, n);
+            bStage.Actions.Add(bas);
             Stages.Add(bStage);
         }
 
@@ -108,12 +102,12 @@ namespace SpectatorFootball.GameNS
 
             PointXY new_end_point = null;
 
-            Action bas = new Action(Game_Object_Types.B, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, true, null, Ball_States.CARRIED, null, Movement.LINE, Ball_Speed.SLOW, false);
+            Action bas = new Action(Game_Object_Types.B, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, true, null, Ball_States.CARRIED, null, Movement.LINE, Ball_Speed.SLOW, false, 0);
 
             //Get the end point for the layer running out of bounds
             new_end_point = PointPlotter.getExtendedEndpoint(prev_v, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, (app_Constants.OUT_OF_BOUNDS_LEN + top_adjustment) * dlefttoRight);
 
-            Action bas2 = new Action(Game_Object_Types.B, Current_YardLine, Current_Vertical_Percent_Pos, new_end_point.x, new_end_point.y, true, null, Ball_States.CARRIED, null, Movement.LINE, Ball_Speed.SLOW, false);
+            Action bas2 = new Action(Game_Object_Types.B, Current_YardLine, Current_Vertical_Percent_Pos, new_end_point.x, new_end_point.y, true, null, Ball_States.CARRIED, null, Movement.LINE, Ball_Speed.SLOW, false, 0);
             Play_Stage bStage = new Play_Stage();
             bStage.Main_Object = true;
             bStage.Actions.Add(bas);
