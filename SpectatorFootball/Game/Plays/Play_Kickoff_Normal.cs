@@ -678,12 +678,18 @@ namespace SpectatorFootball.GameNS
                                 {
                                     Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos);
                                     if (r.Tackler != null)
+                                    {
                                         p.Run_and_Tackled(moving_ps, prev_yl, prev_v);
+                                        gBall.Carried_Tackled(prev_yl, prev_v);
+                                    }
                                     else
+                                    {
                                         p.Run(moving_ps, prev_yl, prev_v);
+                                        //for the ball
+                                        gBall.Carried(prev_yl, prev_v);
+                                    }
 
-                                    //for the ball
-                                    gBall.Carried(prev_yl, prev_v);
+
                                 }
                             }
                             else

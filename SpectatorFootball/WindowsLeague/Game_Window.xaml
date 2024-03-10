@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SpectatorFootball.WindowsLeague"
         mc:Ignorable="d"
-         WindowStyle="None"  ResizeMode="NoResize"  ShowInTaskbar="False" Topmost="True">
+         WindowStyle="None"  ResizeMode="NoResize"  ShowInTaskbar="False" Topmost="false">
         <Border Style="{StaticResource popupBD}" BorderThickness="5"> 
         <StackPanel Orientation="Vertical">
         <StackPanel Name="Game_intro_pnl" Style="{StaticResource popupSP}" Height="770" Width="1210" Orientation="Vertical" >

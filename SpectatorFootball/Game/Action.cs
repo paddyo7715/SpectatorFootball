@@ -57,7 +57,7 @@ namespace SpectatorFootball.GameNS
                     PointXY = PointPlotter.PlotLine(bBall, start_yardline, start_vertical, end_yardline, end_vertical, bEndofStageAction, Ball_Speed, b_state, bnoSkip);
                     break;
                 case Movement.FAKE_MOVEMENT:
-                    PointXY = PointPlotter.PlotFakeMoves(start_yardline, start_vertical, Fake_Movement_Points);
+                    PointXY = PointPlotter.PlotFakeMoves(end_yardline, end_vertical, Fake_Movement_Points);
                     break;
             }
 

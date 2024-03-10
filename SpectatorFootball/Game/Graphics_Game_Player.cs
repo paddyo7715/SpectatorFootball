@@ -142,7 +142,13 @@ namespace SpectatorFootball.GameNS
                         r = Graphics_Player_States.TACKLING_3;
                     break;
                 case Player_States.TACKLED:
-                    r = Graphics_Player_States.TACKLED;
+                    if (!graph_pState.ToString().ToUpper().StartsWith("TACKLED_"))
+                        r = Graphics_Player_States.TACKLED_1;
+                    else if (graph_pState == Graphics_Player_States.TACKLED_1)
+                        r = Graphics_Player_States.TACKLED_2;
+                    else if (graph_pState == Graphics_Player_States.TACKLED_2 ||
+                        graph_pState == Graphics_Player_States.TACKLED_3)
+                        r = Graphics_Player_States.TACKLED_3;
                     break;
                 case Player_States.ON_BACK:
                     r = Graphics_Player_States.ON_BACK;

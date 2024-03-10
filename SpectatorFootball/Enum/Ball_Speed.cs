@@ -9,6 +9,7 @@ namespace SpectatorFootball.Enum
     public enum Ball_Speed
     {
         SLOW,
-        NORMAL
+        NORMAL,
+        CARRIED
     }
 }

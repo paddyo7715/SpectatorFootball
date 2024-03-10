@@ -11,7 +11,7 @@ namespace SpectatorFootball.GameNS
     public class PointPlotter
     {
         private static int BALL_NORMAL_SKIP = 12;
-        private static int BALL_SLOW_SKIP = 8;
+        private static int BALL_SLOW_SKIP = 6;
         private static int PLAYER_SKIP = 8;
         private static int STARTING_KICK_SKIP = 24;
         private static int ENDING_KICK_SKIP = 6;
@@ -30,7 +30,9 @@ namespace SpectatorFootball.GameNS
             int skip_count;
             if (bBall)
             {
-                if ((b_state == Ball_States.END_OVER_END || b_state == Ball_States.SPIRAL))
+                if (b_state == Ball_States.CARRIED)
+                    skip_count = PLAYER_SKIP;
+                else if ((b_state == Ball_States.END_OVER_END || b_state == Ball_States.SPIRAL))
                     skip_count = STARTING_KICK_SKIP;
                 else if (Ball_Speed == Enum.Ball_Speed.SLOW)
                     skip_count = BALL_SLOW_SKIP;

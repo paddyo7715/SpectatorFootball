@@ -503,7 +503,7 @@ namespace SpectatorFootball
 
         //Kickers
         public const double OFFCENTER_YARDS_LESS = 0.1;
-        public const int KICKOFF_MIN_SUPER_SHORT_DIST = 45;
+        public const int KICKOFF_MIN_SUPER_SHORT_DIST = 47;
         public const int KICKOFF_MAX_SUPER_SHORT_DIST = 54;
         public const int KICKOFF_MIN_SHORT_DISTANCE = 55;
         public const int KICKOFF_MAX_SHORT_DISTANCE = 62;
