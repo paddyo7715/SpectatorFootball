@@ -166,6 +166,7 @@
     <Compile Include="Common\Long_and_String.cs" />
     <Compile Include="Common\PointXY.cs" />
     <Compile Include="Common\SettingsConnection.cs" />
+    <Compile Include="Common\sysInfor.cs" />
     <Compile Include="Common\Validator.cs" />
     <Compile Include="CustomControls\CustomTextBox.cs" />
     <Compile Include="DAO\AwardsDAO.cs" />
@@ -362,6 +363,8 @@
       <DependentUpon>LeagueEDM.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\WeeklyScheduleRec.cs" />
+    <Compile Include="NarrationAndText\NarratorandText_Helper.cs" />
+    <Compile Include="NarrationAndText\ScoringSummary.cs" />
     <Compile Include="Penalties\Penalty.cs" />
     <Compile Include="Penalties\Penalty_Helper.cs" />
     <Compile Include="Player\Player_Card_Data.cs" />
@@ -759,9 +762,16 @@
     <None Include="Images\Source\Players\L_Run4_Up_With_Ball.xcf" />
     <None Include="Images\Source\Players\L_Run4_With_Ball.xcf" />
     <None Include="Images\Source\Players\L_Stand_Player.xcf" />
+    <None Include="Images\Source\Players\L_Tackle1.xcf" />
+    <None Include="Images\Source\Players\L_Tackle2.xcf" />
+    <None Include="Images\Source\Players\L_Tackle3.xcf" />
     <None Include="Images\Source\Players\L_Tackled.xcf" />
+    <None Include="Images\Source\Players\L_Tackled1.xcf" />
+    <None Include="Images\Source\Players\L_Tackled2.xcf" />
+    <None Include="Images\Source\Players\L_Tackled3.xcf" />
     <None Include="Images\Source\Players\L_Upright_Block1.xcf" />
     <None Include="Images\Source\Players\L_Upright_Block2.xcf" />
+    <None Include="Images\Source\Players\L_Upright_Block3.xcf" />
     <None Include="Images\Source\Players\new_L_Run2_No_Ball.xcf" />
     <None Include="Images\Source\Players\new_R_Run2_No_Ball.xcf" />
     <None Include="Images\Source\Players\old_Player_Sprite_Sheet.xcf" />
@@ -797,7 +807,13 @@
     <None Include="Images\Source\Players\R_Run4_Up_With_Ball.xcf" />
     <None Include="Images\Source\Players\R_Run4_With_Ball.xcf" />
     <None Include="Images\Source\Players\R_Stand_Player.xcf" />
+    <None Include="Images\Source\Players\R_Tackle1.xcf" />
+    <None Include="Images\Source\Players\R_Tackle2.xcf" />
+    <None Include="Images\Source\Players\R_Tackle3.xcf" />
     <None Include="Images\Source\Players\R_Tackled.xcf" />
+    <None Include="Images\Source\Players\R_Tackled1.xcf" />
+    <None Include="Images\Source\Players\R_Tackled2.xcf" />
+    <None Include="Images\Source\Players\R_Tackled3.xcf" />
     <None Include="Images\Source\Players\R_Upright_Block.xcf" />
     <None Include="Images\Source\Players\R_Upright_Block1.xcf" />
     <None Include="Images\Source\Players\R_Upright_Block2.xcf" />
@@ -805,6 +821,7 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>LeagueEDM.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="Images\Source\Players\R_Upright_Block3.xcf" />
     <None Include="Models\LeagueEDM.edmx.diagram">
       <DependentUpon>LeagueEDM.edmx</DependentUpon>
     </None>

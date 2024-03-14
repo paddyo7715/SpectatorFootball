@@ -52,7 +52,11 @@ namespace SpectatorFootball.DAO
             return r;
         }
         public void SaveGame(Game g,List<Injury> lInj, List<Injury_Log> inj_log, List<Playoff_Teams_by_Season> Playoff_Teams, List<Game> Playoff_Schedule, 
-            Player_Awards pa, string league_filepath)
+            Player_Awards pa,
+        List<Game_Player_Penalty_Stats> Game_Penalty_Stats,
+        List<Game_Player_Stats> Game_Player_Stats, 
+        List<Game_Scoring_Summary> Game_Scoring_Summary,
+        string league_filepath)
         {
             string con = Common.LeageConnection.Connect(league_filepath);
 
@@ -60,8 +64,16 @@ namespace SpectatorFootball.DAO
             {
                 using (var dbContextTransaction = context.Database.BeginTransaction())
                 {
+
+
                     //Save the player record
                     context.Games.Add(g);
+
+                    //Add stats to the game object
+                    g.Game_Player_Stats = Game_Player_Stats;
+                    g.Game_Player_Penalty_Stats = Game_Penalty_Stats;
+                    g.Game_Scoring_Summary = Game_Scoring_Summary;
+
                     context.Entry(g).State = System.Data.Entity.EntityState.Modified;
                     context.SaveChanges();
 

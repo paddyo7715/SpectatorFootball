@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SpectatorFootball.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,6 +25,12 @@ namespace SpectatorFootball.WindowsLeague
         public Game_Options_Dialog(string ball_Colors, string ThreeDee)
         {
             InitializeComponent();
+
+            //Get the screen resolution of the primary monitor
+            Tuple<int, int> Screen_Res = sysInfor.getScreenResolution();
+            this.Width = Screen_Res.Item1 * .35;
+            this.Height = Screen_Res.Item2 * .3;
+
             string[] m = ball_Colors.Split('|');
             ball_Color1 = m[0];
             ball_Color2 = m[1];

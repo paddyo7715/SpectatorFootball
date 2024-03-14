@@ -160,6 +160,7 @@ namespace SpectatorFootball.GameNS
         public long HomeTOP = 0;
         //==============================================
 
+        public Game_Scoring_Summary play_scoring_summary = null;
         public List<Game_Player_Stats> Play_Player_Stats = new List<Game_Player_Stats>();
         public List<Game_Player_Penalty_Stats> Play_Player_Penalty_Stats = new List<Game_Player_Penalty_Stats>();
 

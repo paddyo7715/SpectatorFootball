@@ -30,7 +30,9 @@ namespace SpectatorFootball.Services
 
             return r;
         }
-        public void SaveGame(Game g, List<Injury> lInj , Loaded_League_Structure lls)
+        public void SaveGame(Game g, List<Injury> lInj, Loaded_League_Structure lls,
+            List<Game_Player_Penalty_Stats> Game_Penalty_Stats,
+            List<Game_Player_Stats> Game_Player_Stats, List<Game_Scoring_Summary> Game_Scoring_Summary)
         {
             string DIRPath_League = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + lls.season.League_Structure_by_Season[0].Short_Name.ToUpper();
             string League_con_string = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + lls.season.League_Structure_by_Season[0].Short_Name.ToUpper() + Path.DirectorySeparatorChar + lls.season.League_Structure_by_Season[0].Short_Name.ToUpper() + "." + app_Constants.DB_FILE_EXT;
@@ -176,7 +178,8 @@ namespace SpectatorFootball.Services
             foreach (Injury ij in lInj)
                 inj_log.Add(new Injury_Log() { Injured = 1, Season_ID = lls.season.ID, Player_ID = ij.Player_ID, Week = g.Week });
 
-            gdao.SaveGame(g, lInj, inj_log, Playoff_Teams, Playoff_Schedule, Championship_MVP, League_con_string);
+            gdao.SaveGame(g, lInj, inj_log, Playoff_Teams, Playoff_Schedule, Championship_MVP, Game_Penalty_Stats,
+                Game_Player_Stats, Game_Scoring_Summary, League_con_string);
         }
         public BoxScore getGameandStatsfromID(long game_id, Loaded_League_Structure lls)
         {

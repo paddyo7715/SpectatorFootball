@@ -21,6 +21,9 @@ namespace SpectatorFootball.GameNS
         private List<Player_and_Ratings> Home_Players = null;
         private Game g = null;
         private List<Injury> lInj = null;
+        private List<Game_Player_Penalty_Stats> Game_Penalty_Stats = new List<Game_Player_Penalty_Stats>();
+        private List<Game_Player_Stats> Game_Player_Stats = new List<Game_Player_Stats>();
+        private List<Game_Scoring_Summary> Game_Scoring_Summary = new List<Game_Scoring_Summary>();
 
         private Play_Struct play;
 
@@ -437,9 +440,13 @@ namespace SpectatorFootball.GameNS
                     if (p_result.bFinal_SwitchPossession)
                         bswitchPossession = true;
 
+                    //if there was a score on the play, set the Quarter and 
+                    p_result.play_scoring_summary.Quarter = (long) g.Quarter;
+                    p_result.play_scoring_summary.Time = (long) g.Time;
+
                     //acume individual stats
-                    Accume_Play_Stats(p_result.Play_Player_Stats,
-                         p_result.Play_Player_Penalty_Stats);
+                    Accume_Play_Stats(Game_Player_Stats, Game_Penalty_Stats, Game_Scoring_Summary, p_result.Play_Player_Stats,
+                         p_result.Play_Player_Penalty_Stats, p_result.play_scoring_summary);
                     logger.Debug("After accum stats");
                 }
 
@@ -677,10 +684,14 @@ namespace SpectatorFootball.GameNS
             return r;
         }
         public void Accume_Play_Stats(List<Game_Player_Stats> Game_Player_Stats,
-         List<Game_Player_Penalty_Stats> Game_Player_Penalty_Stats)
+            List<Game_Player_Penalty_Stats> Game_Penalty_Stats,
+            List<Game_Scoring_Summary> Game_Scoring_Summary,
+            List<Game_Player_Stats> Play_Player_Stats,
+            List<Game_Player_Penalty_Stats> Play_Penalty_Stats,
+            Game_Scoring_Summary Play_Game_Summary)
         {
 
-            foreach (Game_Player_Stats s in Game_Player_Stats)
+            foreach (Game_Player_Stats s in Play_Player_Stats)
             {
                 Game_Player_Stats ps = Game_Player_Stats.Where(x => x.Player_ID == s.Player_ID).FirstOrDefault();
                 if (ps == null)
@@ -844,8 +855,12 @@ namespace SpectatorFootball.GameNS
                 }
             }
 
-            foreach (Game_Player_Penalty_Stats s in Game_Player_Penalty_Stats)
-                g.Game_Player_Penalty_Stats.Add(s);
+            foreach (Game_Player_Penalty_Stats s in Play_Penalty_Stats)
+                Game_Penalty_Stats.Add(s);
+
+            if (Play_Game_Summary != null)
+                Game_Scoring_Summary.Add(Play_Game_Summary);
+
 
         }
 

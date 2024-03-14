@@ -19,6 +19,7 @@ using System.Windows.Threading;
 using SpectatorFootball.GameNS;
 using System.Windows.Shapes;
 using SpectatorFootball.Enum;
+using SpectatorFootball.Common;
 
 namespace SpectatorFootball.WindowsLeague
 {
@@ -144,10 +145,10 @@ namespace SpectatorFootball.WindowsLeague
 
             try
             {
-
                 //Get the screen resolution of the primary monitor
-                Screen_Res_Width = (int)System.Windows.SystemParameters.PrimaryScreenWidth;
-                Screen_Res_Height = (int)System.Windows.SystemParameters.PrimaryScreenHeight;
+                Tuple<int, int> Screen_Res = sysInfor.getScreenResolution();
+                Screen_Res_Width = Screen_Res.Item1;
+                Screen_Res_Height = Screen_Res.Item2;
 
                 this.Width = Screen_Res_Width -10;
                 this.Height = Screen_Res_Height - 100;
