@@ -7,6 +7,7 @@ using log4net;
 using System.Text;
 using System.Threading.Tasks;
 using SpectatorFootball.PenaltiesNS;
+using SpectatorFootball.NarrationAndText;
 
 namespace SpectatorFootball.GameNS
 {
@@ -441,9 +442,12 @@ namespace SpectatorFootball.GameNS
                         bswitchPossession = true;
 
                     //if there was a score on the play, set the Quarter and 
-                    p_result.play_scoring_summary.Quarter = (long) g.Quarter;
-                    p_result.play_scoring_summary.Time = (long) g.Time;
-
+                    if (p_result.isScore())
+                    {
+                        p_result.play_scoring_summary.Quarter = (long)g.Quarter;
+                        p_result.play_scoring_summary.Time = (long)g.Time;
+                        p_result.play_scoring_summary.Scoring_Summary = ScoringSummary.CreateScoringSummaryEntry(Offensive_Package.Play, p_result);
+                    }
                     //acume individual stats
                     Accume_Play_Stats(Game_Player_Stats, Game_Penalty_Stats, Game_Scoring_Summary, p_result.Play_Player_Stats,
                          p_result.Play_Player_Penalty_Stats, p_result.play_scoring_summary);

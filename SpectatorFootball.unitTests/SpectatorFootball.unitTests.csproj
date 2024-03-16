@@ -65,6 +65,7 @@
     <Compile Include="GameEngine\setPlayOutCome_XP\setPlayOutCome_XP_TEST.cs" />
     <Compile Include="Game_Engine_Helper\Game_Engine_HelperTEST.cs" />
     <Compile Include="Helper_Classes\Help_Class.cs" />
+    <Compile Include="NarrationAndText\ScoringSummaryTEST.cs" />
     <Compile Include="Penalties\Penalty_HelperTEST.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

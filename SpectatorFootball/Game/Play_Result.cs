@@ -67,6 +67,7 @@ namespace SpectatorFootball.GameNS
         public Game_Player Targeted_Receiver = null; //Targeted Pass Catcher
         public Game_Player Running_Back = null;  //Running back with ball or running QB
         public Game_Player Receiver = null;  //WR, TE or RB that is targeted with the pass
+        public Game_Player Sacker = null;
 
         public List<Game_Player> Pass_Catchers = new List<Game_Player>();
         public List<Game_Player> Ball_Runners = new List<Game_Player>();
@@ -94,6 +95,7 @@ namespace SpectatorFootball.GameNS
         public double Play_Start_Yardline = 0;
         public double end_of_play_yardline = 0;
         public double Punt_Yards = 0;
+        public double Field_Goal_Attempt_Length;
 //=============================================
 
 //Final play results after accounting for possible penalties
@@ -164,6 +166,17 @@ namespace SpectatorFootball.GameNS
         public List<Game_Player_Stats> Play_Player_Stats = new List<Game_Player_Stats>();
         public List<Game_Player_Penalty_Stats> Play_Player_Penalty_Stats = new List<Game_Player_Penalty_Stats>();
 
+        public bool isScore()
+        {
+            bool r = false;
 
+            if (bAwayTD || bAwayFG || bAwayXP || bAwaySafetyFor ||
+                bAwayXP1 || bAwayXP2 || bAwayXP3 ||
+                bHomeTD || bHomeFG || bHomeXP || bHomeSafetyFor ||
+                bHomeXP1 || bHomeXP2 || bHomeXP3)
+                r = true;
+
+            return r;
+        }
     }
 }
