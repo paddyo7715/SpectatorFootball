@@ -200,6 +200,19 @@ namespace SpectatorFootball.GameNS
 
             return r;
         }
-       
+        public bool arePointsDone()
+        {
+            bool r = true;
+
+            if (!Stages[current_Stage].Main_Object && current_Stage < Stages.Count && current_action < Stages[current_Stage].Actions.Count)
+            {
+                int pCount = Stages[current_Stage].Actions[current_action].PointXY.Count;
+                if ((current_point + 1) < pCount)
+                    r = false;
+            }
+
+            return r;
+        }
+
     }
 }

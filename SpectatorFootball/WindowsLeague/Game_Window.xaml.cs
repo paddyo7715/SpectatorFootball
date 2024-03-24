@@ -20,6 +20,10 @@ using SpectatorFootball.GameNS;
 using System.Windows.Shapes;
 using SpectatorFootball.Enum;
 using SpectatorFootball.Common;
+using System.IO;
+using System.Media;
+using System.Runtime.InteropServices.WindowsRuntime;
+using OxyPlot.Wpf;
 
 namespace SpectatorFootball.WindowsLeague
 {
@@ -130,11 +134,16 @@ namespace SpectatorFootball.WindowsLeague
 
         private System.Drawing.Bitmap goalpost_sheet = null;
 
+        private SoundPlayer splayer = null;
+
         public Game_Window(MainWindow pw, Game g)
         {
             InitializeComponent();
 
             logger.Debug("Game Window Constructor started");
+
+            //Needed to prime the media player
+            Play_Sound(Game_Sounds.SILENCE);
 
             this.pw = pw;
             this.g = g;
@@ -379,91 +388,107 @@ namespace SpectatorFootball.WindowsLeague
 
             background.Fill = backgroundField;
 
-            bool bGameEneded = false;
-            Play = null;
-
-            while (!bGameEneded)
+            for (int iii = 0; iii < 5; iii++)
             {
-                gGame_Ball = null;
-                Offensive_Players = null;
-                Defensive_Players = null;
-                logger.Debug("Play_Game before executePlay");
-                Play = ge.ExecutePlay();
-                logger.Debug("Play_Game End executePlay");
 
-                //play.game_ball is null error
-                gGame_Ball = new Graphics_Game_Ball(Play.Game_Ball.Initial_State, Play.Game_Ball.Starting_YardLine, Play.Game_Ball.Starting_Vertical_Percent_Pos, Play.Game_Ball.Stages, ThreeDee_ball);
+                bool bGameEneded = false;
+                Play = null;
 
-                Offensive_Players = CreateGamePlayersLIst(Play.Offensive_Players);
-                Defensive_Players = CreateGamePlayersLIst(Play.Defensive_Players);
-
-                //set the left edge of the view
-                a_edge = setViewEdge(gGame_Ball.YardLine, Play.bLefttoRight, gGame_Ball.Vertical_Percent_Pos);
-                ShowGraphicObjects(a_edge, gGame_Ball, Offensive_Players, Defensive_Players, Play.bLefttoRight);
-
-
-                //Set all graphics objects including setting the view edges
-//                ShowGraphicObjects(a_edge, gGame_Ball, Offensive_Players, Defensive_Players, Play.bLefttoRight);
-
-                //Set the scoreboard before the play
-                setScoreboard(Play.Before_Away_Score, Play.Before_Home_Score, Play.Before_Display_Time, Play.Before_Display_QTR, Play.Before_Away_Timeouts, Play.Before_Home_Timeouts, Play.Before_Down_and_Yards);
-
-                //go thru the play stages.  The ball and all players have the same number of stages.
-                for (int stg = 0; stg < gGame_Ball.Stages.Count; stg++)
+                while (!bGameEneded)
                 {
-                    bool bStageFinished = false;
-                    gGame_Ball.ChangeStage(stg);
-                    do
+                    gGame_Ball = null;
+                    Offensive_Players = null;
+                    Defensive_Players = null;
+                    logger.Debug("Play_Game before executePlay");
+                    Play = ge.ExecutePlay();
+                    logger.Debug("Play_Game End executePlay");
+
+                    //play.game_ball is null error
+                    gGame_Ball = new Graphics_Game_Ball(Play.Game_Ball.Initial_State, Play.Game_Ball.Starting_YardLine, Play.Game_Ball.Starting_Vertical_Percent_Pos, Play.Game_Ball.Stages, ThreeDee_ball);
+
+                    Offensive_Players = CreateGamePlayersLIst(Play.Offensive_Players);
+                    Defensive_Players = CreateGamePlayersLIst(Play.Defensive_Players);
+
+                    //set the left edge of the view
+                    a_edge = setViewEdge(gGame_Ball.YardLine, Play.bLefttoRight, gGame_Ball.Vertical_Percent_Pos);
+                    ShowGraphicObjects(a_edge, gGame_Ball, Offensive_Players, Defensive_Players, Play.bLefttoRight);
+
+
+                    //Set all graphics objects including setting the view edges
+                    //                ShowGraphicObjects(a_edge, gGame_Ball, Offensive_Players, Defensive_Players, Play.bLefttoRight);
+
+                    //Set the scoreboard before the play
+                    setScoreboard(Play.Before_Away_Score, Play.Before_Home_Score, Play.Before_Display_Time, Play.Before_Display_QTR, Play.Before_Away_Timeouts, Play.Before_Home_Timeouts, Play.Before_Down_and_Yards);
+
+                    //go thru the play stages.  The ball and all players have the same number of stages.
+                    for (int stg = 0; stg < gGame_Ball.Stages.Count; stg++)
                     {
-                        //set the ball position and state
-                        gGame_Ball.Update();
+                        bool bStageFinished = false;
+                        gGame_Ball.ChangeStage(stg);
+                        do
+                        {
+                            //set the ball position and state
+                            gGame_Ball.Update();
 
-//                        if (gGame_Ball.bStageFinished)
-//                            bStageFinished = true;
+                            //                        if (gGame_Ball.bStageFinished)
+                            //                            bStageFinished = true;
 
-                        //Go thru all offensive and def players and place them
+                            //Go thru all offensive and def players and place them
+                            for (int pSlot = 0; pSlot < Offensive_Players.Count(); pSlot++)
+                            {
+                                Offensive_Players[pSlot].ChangeStage(stg);
+                                Defensive_Players[pSlot].ChangeStage(stg);
+
+                                Offensive_Players[pSlot].Update();
+                                Defensive_Players[pSlot].Update();
+
+                                if (Offensive_Players[pSlot].bStageFinished || Defensive_Players[pSlot].bStageFinished)
+                                    bStageFinished = true;
+                            }
+                            Thread.Sleep(sleepfor);
+                            //Show graphic objects
+                            a_edge = setViewEdge(gGame_Ball.YardLine, Play.bLefttoRight, gGame_Ball.Vertical_Percent_Pos);
+
+                            //bpo test
+                            //                        logger.Debug("Ball x: " + gGame_Ball.YardLine + "y: " + gGame_Ball.Vertical_Percent_Pos);
+                            //                        logger.Debug("L to R: " + Play.bLefttoRight + " Yardline: " + gGame_Ball.YardLine + " Vertical: " + gGame_Ball.Vertical_Percent_Pos + " left: " + a_edge[0] + " top " + a_edge[1] + " visiblity: " + Gamepnl.Visibility.ToString());
+                            //
+
+                            ShowGraphicObjects(a_edge, gGame_Ball, Offensive_Players, Defensive_Players, Play.bLefttoRight);
+                            if (gGame_Ball.bStageFinished)
+                                bStageFinished = true;
+                        } while (!bStageFinished);
+
+                        if (!gGame_Ball.arePointsDone())
+                            logger.Debug("Points Not Done Ball");
+
                         for (int pSlot = 0; pSlot < Offensive_Players.Count(); pSlot++)
                         {
-                            Offensive_Players[pSlot].ChangeStage(stg);
-                            Defensive_Players[pSlot].ChangeStage(stg);
-
-                            Offensive_Players[pSlot].Update();
-                            Defensive_Players[pSlot].Update();
-
-                            if (Offensive_Players[pSlot].bStageFinished || Defensive_Players[pSlot].bStageFinished)
-                                bStageFinished = true;
+                            if (!Offensive_Players[pSlot].arePointsDone())
+                                logger.Debug("Points Not Offensive Players");
+                            if (!Defensive_Players[pSlot].arePointsDone())
+                                logger.Debug("Points Not Defensive Players");
                         }
-                        Thread.Sleep(sleepfor);
-                        //Show graphic objects
-                        a_edge = setViewEdge(gGame_Ball.YardLine, Play.bLefttoRight, gGame_Ball.Vertical_Percent_Pos);
 
-                        //bpo test
-                        logger.Debug("Ball x: " + gGame_Ball.YardLine + "y: " + gGame_Ball.Vertical_Percent_Pos);
-                        //                        logger.Debug("L to R: " + Play.bLefttoRight + " Yardline: " + gGame_Ball.YardLine + " Vertical: " + gGame_Ball.Vertical_Percent_Pos + " left: " + a_edge[0] + " top " + a_edge[1] + " visiblity: " + Gamepnl.Visibility.ToString());
-                        //
 
-                        ShowGraphicObjects(a_edge, gGame_Ball, Offensive_Players, Defensive_Players, Play.bLefttoRight);
-                        if (gGame_Ball.bStageFinished)
-                           bStageFinished = true;
-                    } while (!bStageFinished);
+                    }  // for loop stage
 
-                }  // for loop stage
+                    //                bGameEneded = Play.bGameOver;
+                    //just to test one play take this out.
+                    bGameEneded = true;
 
-                //                bGameEneded = Play.bGameOver;
-                //just to test one play take this out.
-                bGameEneded = true;
+                }  //Game ended
 
-            }  //Game ended
+                //Set this in case a team scores on the last play of the game
 
-            //Set this in case a team scores on the last play of the game
+                //End of game not sure where this should go
+                //gs.SaveGame(g, g.injuries, pw.Loaded_League);
+                //Game done see if the state of the league has changed
+                //Set_TopMenu?.Invoke(this, new EventArgs());
+                //this.Close();
 
-            //End of game not sure where this should go
-            //gs.SaveGame(g, g.injuries, pw.Loaded_League);
-            //Game done see if the state of the league has changed
-            //Set_TopMenu?.Invoke(this, new EventArgs());
-            //this.Close();
-
-            logger.Debug("Play_Game ended");
+                logger.Debug("Play_Game ended");
+            }
         }
 
         private double[] setViewEdge(double YardLIne, bool bLefttoRight, double vert_percent)
@@ -786,7 +811,7 @@ namespace SpectatorFootball.WindowsLeague
             DoEvents();
 
         }
-    private void Play_Sound(Game_Sounds gs)
+        private void Play_Sound(Game_Sounds gs)
         {
             string s = CommonUtils.getAppPath() + "\\Sounds\\";
             try
@@ -794,6 +819,9 @@ namespace SpectatorFootball.WindowsLeague
 
                 switch (gs)
                 {
+                    case Game_Sounds.SILENCE:
+                        s += "silence.mp3";
+                        break;
                     case Game_Sounds.BALL_HITS_GOALPOST:
                         s += "Doink.mp3";
                         break;

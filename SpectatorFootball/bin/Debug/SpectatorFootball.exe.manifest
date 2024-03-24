@@ -102,14 +102,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SpectatorFootball.exe" size="17316864">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SpectatorFootball.exe" size="17317888">
       <assemblyIdentity name="SpectatorFootball" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>81dNDz8Npjd7KPxXlyMjIayKi/N705sfzQ/GQfavsos=</dsig:DigestValue>
+        <dsig:DigestValue>dkja+Nfca4lO3hDzRiiE1/WntqhEUF5eZbHLkkCzyrw=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -428,13 +428,13 @@
       <dsig:DigestValue>6h5uwqfV79VE/TMdqEAL6rBJuZQsCBvTW3FZhbr1AZ0=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Sounds\kickball.mp3" size="5739">
+  <file name="Sounds\kickball.mp3" size="26112">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>ZbQtqYI3LWCpKIkRsJHj6x8Ey17fzFMsWZMoj0J7Pmc=</dsig:DigestValue>
+      <dsig:DigestValue>s/MuLnHg8kEYTr9aeUuVRwEHVsceybNs/Ja1PybT7eg=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Sounds\Players_Colliding.mp3" size="82499">
@@ -444,6 +444,15 @@
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
       <dsig:DigestValue>z1gAwlvXIKUw31v4EaWlByy5feXiYF+FlkVCnmcdoBs=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Sounds\silence.mp3" size="9868">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>BAr7p4MH0YhJAop3qNFccbvZ1TvcFONV1+m0q36KDgc=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Sounds\Tackle.mp3" size="9128">

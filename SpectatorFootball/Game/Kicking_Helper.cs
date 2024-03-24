@@ -9,23 +9,6 @@ namespace SpectatorFootball.GameNS
 {
     public class Kicking_Helper
     {
-        public double old_AdjustKickLength(bool bRgihttoLeft, double x, double y)
-        {
-            double r;
-            double a;
-            if (y >= 20.0 && y <= 90.0)
-                a = Math.Abs(y - 50.0) * app_Constants.OFFCENTER_YARDS_LESS;
-            else
-                a = 20;
-
-            if (bRgihttoLeft)
-                a *= -1;
-
-            r = y + a;
-
-            return r;
-        }
-
         public static double AdjustKickLength(double len, double vert)
         {
             double r;
@@ -33,7 +16,7 @@ namespace SpectatorFootball.GameNS
             if (vert >= 20.0 && vert <= 80.0)
                 a = Math.Abs(vert - 50.0) * app_Constants.OFFCENTER_YARDS_LESS;
             else
-                a = 20;
+                a = 5;
             r = len - a;
 
             return r;

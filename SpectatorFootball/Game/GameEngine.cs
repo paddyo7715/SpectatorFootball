@@ -205,6 +205,9 @@ namespace SpectatorFootball.GameNS
 
         public Play_Struct ExecutePlay()
         {
+            //bpo test
+            bKickoff = true;
+
             Play_Struct r = new Play_Struct();
 
             Play_Package Offensive_Package = null;
@@ -699,7 +702,7 @@ namespace SpectatorFootball.GameNS
             {
                 Game_Player_Stats ps = Game_Player_Stats.Where(x => x.Player_ID == s.Player_ID).FirstOrDefault();
                 if (ps == null)
-                    g.Game_Player_Stats.Add(s);
+                    Game_Player_Stats.Add(s);
                 else
                 {
                     //Passing

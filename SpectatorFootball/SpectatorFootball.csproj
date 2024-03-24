@@ -841,6 +841,17 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Sounds\Booing_Long.mp3" />
+    <Content Include="Sounds\Booing_Short.mp3" />
+    <Content Include="Sounds\Cheers_long.mp3" />
+    <Content Include="Sounds\Cheer_Short.mp3" />
+    <Content Include="Sounds\Doink.mp3" />
+    <Content Include="Sounds\huthut.mp3" />
+    <Content Include="Sounds\kickball.mp3" />
+    <Content Include="Sounds\Players_Colliding.mp3" />
+    <Content Include="Sounds\silence.mp3" />
+    <Content Include="Sounds\Tackle.mp3" />
+    <Content Include="Sounds\Whistle.mp3" />
     <Resource Include="Images\Goalposts.png" />
     <Content Include="Models\LeagueEDM.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -852,16 +863,6 @@
       <DependentUpon>LeagueEDM.edmx</DependentUpon>
       <LastGenOutput>LeagueEDM.cs</LastGenOutput>
     </Content>
-    <Content Include="Sounds\Booing_Long.mp3" />
-    <Content Include="Sounds\Booing_Short.mp3" />
-    <Content Include="Sounds\Cheers_long.mp3" />
-    <Content Include="Sounds\Cheer_Short.mp3" />
-    <Content Include="Sounds\Doink.mp3" />
-    <Content Include="Sounds\huthut.mp3" />
-    <Content Include="Sounds\kickball.mp3" />
-    <Content Include="Sounds\Players_Colliding.mp3" />
-    <Content Include="Sounds\Tackle.mp3" />
-    <Content Include="Sounds\Whistle.mp3" />
     <Resource Include="Images\fplayer.jpg" />
     <Resource Include="Images\Helmets\st_Turbos.png" />
     <Resource Include="Images\Stadiums\st_Detroit.jpg" />

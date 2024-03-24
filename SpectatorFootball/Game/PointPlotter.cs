@@ -11,9 +11,9 @@ namespace SpectatorFootball.GameNS
     public class PointPlotter
     {
         private static int BALL_NORMAL_SKIP = 12;
-        private static int BALL_SLOW_SKIP = 6;
+        private static int BALL_SLOW_SKIP = 4;
         private static int PLAYER_SKIP = 8;
-        private static int STARTING_KICK_SKIP = 24;
+        private static int STARTING_KICK_SKIP = 18;
         private static int ENDING_KICK_SKIP = 6;
 
         public static List<PointXY> PlotLine (bool bBall,double sx, double sy, double ex, double ey, bool addEndpoint, Ball_Speed? Ball_Speed, Ball_States? b_state, bool bnoSkip)

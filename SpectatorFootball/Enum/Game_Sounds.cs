@@ -8,6 +8,7 @@ namespace SpectatorFootball.Enum
 {
     public enum Game_Sounds
     {
+        SILENCE,
         HUT_HUT,
         WHISTLE,
         LOW_CHEER,
