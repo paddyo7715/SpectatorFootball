@@ -390,6 +390,8 @@ namespace SpectatorFootball.WindowsLeague
 
             for (int iii = 0; iii < 5; iii++)
             {
+                //Needed to prime the media player
+                Play_Sound(Game_Sounds.SILENCE);
 
                 bool bGameEneded = false;
                 Play = null;
@@ -458,7 +460,7 @@ namespace SpectatorFootball.WindowsLeague
                             if (gGame_Ball.bStageFinished)
                                 bStageFinished = true;
                         } while (!bStageFinished);
-
+/*
                         if (!gGame_Ball.arePointsDone())
                             logger.Debug("Points Not Done Ball");
 
@@ -469,6 +471,7 @@ namespace SpectatorFootball.WindowsLeague
                             if (!Defensive_Players[pSlot].arePointsDone())
                                 logger.Debug("Points Not Defensive Players");
                         }
+*/
 
 
                     }  // for loop stage

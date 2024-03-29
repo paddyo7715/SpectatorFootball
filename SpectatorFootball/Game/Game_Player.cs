@@ -70,8 +70,12 @@ namespace SpectatorFootball.GameNS
             Stages.Add(pStage);
         }
 
-        public void Block()
+        public void Block(bool bBlockSound)
         {
+            Game_Sounds? sound = null;
+            if (bBlockSound)
+                sound = Game_Sounds.PLAYERS_COLLIDING;
+
             Action pas = new Action(Game_Object_Types.P, Current_YardLine, Current_Vertical_Percent_Pos, Current_YardLine, Current_Vertical_Percent_Pos, false, Player_States.BLOCKING, null, null, Movement.NONE, null, false, 0);
             Play_Stage pStage = new Play_Stage();
             pStage.Main_Object = false;
@@ -171,7 +175,7 @@ namespace SpectatorFootball.GameNS
 
             bool r = false;
 
-            if (!bLast_Play && (Current_YardLine < 0.0 || Current_YardLine > 100.0))
+            if (!bLast_Play && (Current_YardLine < -1.0 || Current_YardLine > 101.0))
             {
                 double d = 0;
 

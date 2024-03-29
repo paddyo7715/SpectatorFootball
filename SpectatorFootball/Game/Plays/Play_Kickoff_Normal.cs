@@ -555,7 +555,7 @@ namespace SpectatorFootball.GameNS
                         {
                             //keep blocking till the returner runs up to you
                             if (!bSim)
-                                p.Block();
+                                p.Block(false);
 
                             double prev_yl = p.Current_YardLine;
                             double prev_v = p.Current_Vertical_Percent_Pos;
@@ -584,10 +584,10 @@ namespace SpectatorFootball.GameNS
                         {
                             if (!bSim)
                             {
-                                p.Block();
+                                p.Block(false);
                                 //If there is a tackler then  continue to block while he attempts the tackle
                                 if (TB_List.Count > 0 && !r.bRunOutofBounds)
-                                    p.Block();
+                                    p.Block(false);
                             }
                         }
                         id_Players++;
@@ -728,11 +728,11 @@ namespace SpectatorFootball.GameNS
                         }
                         else if (TB_List.Contains(id_Players))
                         {
-                            logger.Debug("Blocker");
+//                            logger.Debug("Blocker");
 
                             if (!bSim)
                             {
-                                p.Block();
+                                p.Block(true);
 
                                 if (!r.bRunOutofBounds)
                                 p.Stand();
@@ -742,10 +742,10 @@ namespace SpectatorFootball.GameNS
                         {
                             if (!bSim)
                             {
-                                p.Block();
+                                p.Block(true);
 
                                 if (TB_List.Count > 0 && !r.bRunOutofBounds)
-                                    p.Block();
+                                    p.Block(true);
                             }
                         }
                         id_Players++;
@@ -914,11 +914,11 @@ namespace SpectatorFootball.GameNS
                         {
                             if (!bSim)
                             {
-                                p.Block();
+                                p.Block(false);
 
                                 //If there is a tackler then  continue to block while he attempts the tackle
                                 if (bTackler)
-                                    p.Block();
+                                    p.Block(false);
                             }
                         }
                         id_Players++;
@@ -1027,10 +1027,10 @@ namespace SpectatorFootball.GameNS
                         {
                             if (!bSim)
                             {
-                                p.Block();
+                                p.Block(true);
 
                                 if (bTackler)
-                                    p.Block();
+                                    p.Block(true);
                             }
                         }
                         id_Players++;

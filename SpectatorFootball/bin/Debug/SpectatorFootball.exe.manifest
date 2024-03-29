@@ -102,14 +102,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SpectatorFootball.exe" size="17317888">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SpectatorFootball.exe" size="17317376">
       <assemblyIdentity name="SpectatorFootball" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>dkja+Nfca4lO3hDzRiiE1/WntqhEUF5eZbHLkkCzyrw=</dsig:DigestValue>
+        <dsig:DigestValue>hLoOFLS4dyRv3QKhNY0TdXX6CS4LNuR/9xNa9wDZpv4=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -437,13 +437,13 @@
       <dsig:DigestValue>s/MuLnHg8kEYTr9aeUuVRwEHVsceybNs/Ja1PybT7eg=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Sounds\Players_Colliding.mp3" size="82499">
+  <file name="Sounds\Players_Colliding.mp3" size="16762">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>z1gAwlvXIKUw31v4EaWlByy5feXiYF+FlkVCnmcdoBs=</dsig:DigestValue>
+      <dsig:DigestValue>PJfneNH0cvLSHeqs3rUWa/iqXcS6m5i71wItF1wg9uQ=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Sounds\silence.mp3" size="9868">
