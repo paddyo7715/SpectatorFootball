@@ -102,14 +102,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SpectatorFootball.exe" size="17317376">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SpectatorFootball.exe" size="17318400">
       <assemblyIdentity name="SpectatorFootball" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>hLoOFLS4dyRv3QKhNY0TdXX6CS4LNuR/9xNa9wDZpv4=</dsig:DigestValue>
+        <dsig:DigestValue>VDR9kxpN+TU3aZQXKnf/5vcKhxErFsxc/9qXOsDdRgo=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -437,13 +437,13 @@
       <dsig:DigestValue>s/MuLnHg8kEYTr9aeUuVRwEHVsceybNs/Ja1PybT7eg=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Sounds\Players_Colliding.mp3" size="16762">
+  <file name="Sounds\Players_Colliding.mp3" size="9128">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>PJfneNH0cvLSHeqs3rUWa/iqXcS6m5i71wItF1wg9uQ=</dsig:DigestValue>
+      <dsig:DigestValue>rIwebhpD9PMVipqVr/n7Zpncms9XS28H+VCnVC2+hQ4=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Sounds\silence.mp3" size="9868">
@@ -455,13 +455,13 @@
       <dsig:DigestValue>BAr7p4MH0YhJAop3qNFccbvZ1TvcFONV1+m0q36KDgc=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Sounds\Tackle.mp3" size="9128">
+  <file name="Sounds\Tackle.mp3" size="16762">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>rIwebhpD9PMVipqVr/n7Zpncms9XS28H+VCnVC2+hQ4=</dsig:DigestValue>
+      <dsig:DigestValue>PJfneNH0cvLSHeqs3rUWa/iqXcS6m5i71wItF1wg9uQ=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Sounds\Whistle.mp3" size="8868">

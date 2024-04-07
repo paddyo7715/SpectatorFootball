@@ -90,6 +90,7 @@ namespace SpectatorFootball.GameNS
                             r = Graphics_Player_States.RUNNING_1;
                     break;
                 case Player_States.FG_KICK:
+                    Sound = Game_Sounds.KICK;
                     r = Graphics_Player_States.FG_KICK;
                     break;
                 case Player_States.ABOUT_TO_CATCH_KICK:
@@ -98,6 +99,9 @@ namespace SpectatorFootball.GameNS
                 case Player_States.BLOCKING:
                     if (graph_pState == Graphics_Player_States.BLOCKING_1)
                     {
+                        int yyy = CommonUtils.getRandomNum(1, 100);
+                        if (yyy <= 4) Sound = Game_Sounds.PLAYERS_COLLIDING;
+
                         bool bYesNo = CommonUtils.getRandomTrueFalse();
                         if (bYesNo)
                             r = Graphics_Player_States.BLOCKING_3;
@@ -149,7 +153,10 @@ namespace SpectatorFootball.GameNS
                     break;
                 case Player_States.TACKLING:
                     if (!graph_pState.ToString().ToUpper().StartsWith("TACKLING_"))
+                    {
+                        Sound = Game_Sounds.PLAYER_TACKLED;
                         r = Graphics_Player_States.TACKLING_1;
+                    }
                     else if (graph_pState == Graphics_Player_States.TACKLING_1)
                         r = Graphics_Player_States.TACKLING_2;
                     else
@@ -216,14 +223,6 @@ namespace SpectatorFootball.GameNS
                     YardLine = act.PointXY[current_point].x;
                     Vertical_Percent_Pos = act.PointXY[current_point].y;
 
-                    if (act.PointXY != null && act.PointXY.Count() > 0)
-                    {
-                        if (current_point == 0)
-                            Sound = act.Sound;
-                        else
-                            Sound = null;
-                    }
-
                     current_point++;
                     if (current_point >= act.PointXY.Count())
                     {
@@ -231,7 +230,6 @@ namespace SpectatorFootball.GameNS
                         current_point = 0;
                     }
 
- //                   graph_pState = setGraphicsState(pState);
 
                 } //if pointxy left
                 else

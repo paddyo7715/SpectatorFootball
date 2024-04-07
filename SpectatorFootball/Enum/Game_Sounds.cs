@@ -18,7 +18,8 @@ namespace SpectatorFootball.Enum
         PLAYERS_COLLIDING,
         PLAYER_TACKLED,
         KICK,
-        BALL_HITS_GOALPOST
+        BALL_HITS_GOALPOST,
+        NONE
     }
 }
 

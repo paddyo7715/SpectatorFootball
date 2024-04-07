@@ -114,6 +114,9 @@ namespace SpectatorFootball.GameNS
             //Now determine how far and straight the kick is
             long leg_strength = r.Kicker.p_and_r.pr.First().Kicker_Leg_Power_Rating;
             KickOff_Length kick_length_enum = Kicking_Helper.getKickOff_Len_enum(leg_strength);
+
+            logger.Debug("kick_length_enum: " + kick_length_enum.ToString());
+
             double Kickoff_Len = Kicking_Helper.getKickoff_len(kick_length_enum);
 
             long leg_accuracy = r.Kicker.p_and_r.pr.First().Kicker_Leg_Accuracy_Rating;
@@ -138,7 +141,7 @@ namespace SpectatorFootball.GameNS
 
             gBall.Current_YardLine = Kicking_Helper.SetMaxKickoffYardline(gBall.Current_YardLine);
 
-//            retuner_catches_ball_yl = retuner_catches_ball_yl;
+            retuner_catches_ball_yl = gBall.Current_YardLine;
 
             r.bKick_Out_of_Endzone = r.Returner.isKickOutofEndzone(gBall.Current_YardLine);
             if (r.bKick_Out_of_Endzone)
@@ -1048,11 +1051,16 @@ namespace SpectatorFootball.GameNS
                 r.end_of_play_yardline = r.Returner.Current_YardLine;
 
             //Set the Play stats
-            double yards_gamed = Game_Engine_Helper.getYardsGained(bLefttoRight, retuner_catches_ball_yl, r.Returner.Current_YardLine);
+            double yards_returned = 0;
+            if (!r.bTouchback)
+                yards_returned = Game_Engine_Helper.getYardsGained(bLefttoRight, retuner_catches_ball_yl, r.Returner.Current_YardLine);
+            
+            r.Yards_Returned = yards_returned;
+
             //Create a play stats record for every player in this play and set the appropriate play count to 1
             r.Play_Player_Stats = CreateStatRecords(r.Kicker, r.Returner, Kickoff_Players, Return_Players);
             SetPlayerStats(r.bTouchback, r.bKick_Out_of_Endzone, r.bTouchDown,
-                r.bFumble, r.bFumble_Lost, yards_gamed, r.Kicker, r.Returner, r.Tackler, r.Fumble_Recoverer,
+                r.bFumble, r.bFumble_Lost, yards_returned, r.Kicker, r.Returner, r.Tackler, r.Fumble_Recoverer,
                 Missed_Tackles, r.Play_Player_Stats);
 
             return r;

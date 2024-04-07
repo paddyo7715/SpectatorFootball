@@ -27,7 +27,7 @@ namespace SpectatorFootball.GameNS
 
         public void Stand()
         {
-            Action pas = new Action(Game_Object_Types.P, Starting_YardLine, Starting_Vertical_Percent_Pos, 0.0, 0.0, false, Player_States.STANDING, null, null, Movement.NONE, null, false, 0);
+            Action pas = new Action(Game_Object_Types.P, Starting_YardLine, Starting_Vertical_Percent_Pos, 0.0, 0.0, false, Player_States.STANDING, null, Movement.NONE, null, false, 0);
             Play_Stage pStage = new Play_Stage();
             pStage.Main_Object = false;
             pStage.Actions.Add(pas);
@@ -53,7 +53,7 @@ namespace SpectatorFootball.GameNS
 
             Action new_action = new Action(a.type, a.start_yardline, a.start_vertical,
             a.end_yardline, a.end_vertical, a.bPossesses_Ball, 
-            a.p_state, a.b_state, a.Sound, a.MoveType, a.Ball_Speed, false, 0);
+            a.p_state, a.b_state, a.MoveType, a.Ball_Speed, false, 0);
             new_st.Actions.Add(new_action);
 
             Stages.Add(new_st);
@@ -61,8 +61,8 @@ namespace SpectatorFootball.GameNS
 
         public void KickBall(Player_States moving_ps, double prev_yl_1, double prev_v_1, double RunUp_YardLine_1, double RunUp_Vertical_Percent_Pos_1)
         {
-            Action pas1 = new Action(Game_Object_Types.P, prev_yl_1, prev_v_1, RunUp_YardLine_1, RunUp_Vertical_Percent_Pos_1, false, moving_ps, null, null, Movement.LINE, null, false, 0);
-            Action pas2 = new Action(Game_Object_Types.P, RunUp_YardLine_1, RunUp_Vertical_Percent_Pos_1, Current_YardLine, Current_Vertical_Percent_Pos, false, Player_States.FG_KICK, null, Game_Sounds.KICK, Movement.LINE, null, false, 0);
+            Action pas1 = new Action(Game_Object_Types.P, prev_yl_1, prev_v_1, RunUp_YardLine_1, RunUp_Vertical_Percent_Pos_1, false, moving_ps, null, Movement.LINE, null, false, 0);
+            Action pas2 = new Action(Game_Object_Types.P, RunUp_YardLine_1, RunUp_Vertical_Percent_Pos_1, Current_YardLine, Current_Vertical_Percent_Pos, false, Player_States.FG_KICK, null,Movement.LINE, null, false, 0);
             Play_Stage pStage = new Play_Stage();
             pStage.Main_Object = true;
             pStage.Actions.Add(pas1);
@@ -76,7 +76,7 @@ namespace SpectatorFootball.GameNS
             if (bBlockSound)
                 sound = Game_Sounds.PLAYERS_COLLIDING;
 
-            Action pas = new Action(Game_Object_Types.P, Current_YardLine, Current_Vertical_Percent_Pos, Current_YardLine, Current_Vertical_Percent_Pos, false, Player_States.BLOCKING, null, null, Movement.NONE, null, false, 0);
+            Action pas = new Action(Game_Object_Types.P, Current_YardLine, Current_Vertical_Percent_Pos, Current_YardLine, Current_Vertical_Percent_Pos, false, Player_States.BLOCKING, null, Movement.NONE, null, false, 0);
             Play_Stage pStage = new Play_Stage();
             pStage.Main_Object = false;
             pStage.Actions.Add(pas);
@@ -84,7 +84,7 @@ namespace SpectatorFootball.GameNS
         }
         public void OnBack()
         {
-            Action pas = new Action(Game_Object_Types.P, Current_YardLine, Current_Vertical_Percent_Pos, Current_YardLine, Current_Vertical_Percent_Pos, false, Player_States.ON_BACK, null, null, Movement.NONE, null, false, 0);
+            Action pas = new Action(Game_Object_Types.P, Current_YardLine, Current_Vertical_Percent_Pos, Current_YardLine, Current_Vertical_Percent_Pos, false, Player_States.ON_BACK, null, Movement.NONE, null, false, 0);
             Play_Stage pStage = new Play_Stage();
             pStage.Main_Object = false;
             pStage.Actions.Add(pas);
@@ -93,8 +93,8 @@ namespace SpectatorFootball.GameNS
         public void Run_Then_Stand(Player_States moving_ps, double prev_yl, double prev_v)
         {
             Action pas = null;
-            pas = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, false, moving_ps, null, null, Movement.LINE, null, false, 0);
-            Action pas2 = new Action(Game_Object_Types.P, Starting_YardLine, Starting_Vertical_Percent_Pos, 0.0, 0.0, false, Player_States.STANDING, null, null, Movement.NONE, null, false, 0);
+            pas = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, false, moving_ps, null, Movement.LINE, null, false, 0);
+            Action pas2 = new Action(Game_Object_Types.P, Starting_YardLine, Starting_Vertical_Percent_Pos, 0.0, 0.0, false, Player_States.STANDING, null, Movement.NONE, null, false, 0);
             Play_Stage pStage = new Play_Stage();
             pStage.Main_Object = false;
             pStage.Actions.Add(pas);
@@ -104,8 +104,8 @@ namespace SpectatorFootball.GameNS
 
         public void Run_Then_CatchKick(Player_States moving_ps, double prev_yl, double prev_v)
         {
-            Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, false, moving_ps, null, null, Movement.LINE, null, false, 0);
-            Action pas2 = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, false, Player_States.ABOUT_TO_CATCH_KICK, null, null, null, null, false, 0);
+            Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, false, moving_ps, null, Movement.LINE, null, false, 0);
+            Action pas2 = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, false, Player_States.ABOUT_TO_CATCH_KICK, null, null, null, false, 0);
 
             Play_Stage pStage = new Play_Stage();
             pStage.Main_Object = false;
@@ -117,8 +117,8 @@ namespace SpectatorFootball.GameNS
 
         public void Attempt_Tackle(Player_States moving_ps, double prev_yl, double prev_v)
         {
-            Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, false, moving_ps, null, null, Movement.LINE, null, false, 0);
-            Action pas2 = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, false, Player_States.TACKLING, null, null, Movement.FAKE_MOVEMENT, null, false, 3);
+            Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, false, moving_ps, null, Movement.LINE, null, false, 0);
+            Action pas2 = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, false, Player_States.TACKLING, null, Movement.FAKE_MOVEMENT, null, false, 3);
 
             Play_Stage pStage = new Play_Stage();
             pStage.Main_Object = false;
@@ -129,7 +129,7 @@ namespace SpectatorFootball.GameNS
 
         public void Run(Player_States moving_ps, double prev_yl, double prev_v)
         {
-            Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, true, moving_ps, null, null, Movement.LINE, null, false, 0); 
+            Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, true, moving_ps, null, Movement.LINE, null, false, 0); 
             Play_Stage pStage = new Play_Stage();
             pStage.Main_Object = false;
             pStage.Actions.Add(pas);
@@ -138,9 +138,9 @@ namespace SpectatorFootball.GameNS
 
         public void Run_and_Tackled(Player_States moving_ps, double prev_yl, double prev_v)
         {
-            Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, true, moving_ps, null, null, Movement.LINE, null, false, 0);
+            Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, true, moving_ps, null, Movement.LINE, null, false, 0);
             Action pas2 = null;
-            pas2 = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, true, Player_States.TACKLED, null, null, Movement.FAKE_MOVEMENT, null, false, 7);
+            pas2 = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, true, Player_States.TACKLED, null, Movement.FAKE_MOVEMENT, null, false, 7);
             Play_Stage pStage = new Play_Stage();
             pStage.Main_Object = true;
             pStage.Actions.Add(pas);
@@ -195,7 +195,7 @@ namespace SpectatorFootball.GameNS
 
         public void Kneel_With_Ball(double prev_yl, double prev_v)
         {
-            Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, true, Player_States.KNEELING, null, null, Movement.FAKE_MOVEMENT, null, true, 3);
+            Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, true, Player_States.KNEELING, null, Movement.FAKE_MOVEMENT, null, true, 3);
             Play_Stage pStage = new Play_Stage();
             pStage.Main_Object = true;
             pStage.Actions.Add(pas);
@@ -234,13 +234,13 @@ namespace SpectatorFootball.GameNS
 
             PointXY new_end_point = null;
 
-            Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, true, moving_ps, null, null, Movement.LINE, null, false, 0);
+            Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, true, moving_ps, null, Movement.LINE, null, false, 0);
 
             //Get the end point for the layer running out of bounds
             new_end_point = PointPlotter.getExtendedEndpoint(prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, (app_Constants.OUT_OF_BOUNDS_LEN + app_Constants.TOP_OUTOFBOUNDS_ADJUSTMENT) * dlefttoRight);
 
             Action pas2 = null;
-            pas2 = new Action(Game_Object_Types.P, Current_YardLine, Current_Vertical_Percent_Pos, new_end_point.x, new_end_point.y, true, moving_ps, null, null, Movement.LINE, null, false, 0);
+            pas2 = new Action(Game_Object_Types.P, Current_YardLine, Current_Vertical_Percent_Pos, new_end_point.x, new_end_point.y, true, moving_ps, null, Movement.LINE, null, false, 0);
 
             Play_Stage pStage = new Play_Stage();
             pStage.Main_Object = false;

@@ -8,6 +8,7 @@
          WindowStyle="None"  ResizeMode="NoResize"  ShowInTaskbar="False" Topmost="false">
         <Border Style="{StaticResource popupBD}" BorderThickness="5"> 
         <StackPanel Orientation="Vertical">
+            <Viewbox Stretch="Uniform">
         <StackPanel Name="Game_intro_pnl" Style="{StaticResource popupSP}" Height="770" Width="1210" Orientation="Vertical" >
                 <StackPanel.Background>
                     <ImageBrush ImageSource="..\Images\Game_Intro_Background.jpg" />
@@ -84,6 +85,7 @@
                 </Label.Effect>
             </Label>
             </StackPanel>
+            </Viewbox>
             <StackPanel Name="Gamepnl" Visibility="Collapsed" Orientation="Vertical" Height="770" Width="1210">
                 <Grid Height="60" Background="#424242" >
                     <Grid.ColumnDefinitions>

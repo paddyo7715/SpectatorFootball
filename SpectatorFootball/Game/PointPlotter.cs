@@ -10,7 +10,7 @@ namespace SpectatorFootball.GameNS
 {
     public class PointPlotter
     {
-        private static int BALL_NORMAL_SKIP = 12;
+        private static int BALL_NORMAL_SKIP = 10;
         private static int BALL_SLOW_SKIP = 4;
         private static int PLAYER_SKIP = 8;
         private static int STARTING_KICK_SKIP = 18;

@@ -64,6 +64,8 @@ namespace SpectatorFootball.GameNS
         private bool bAllowInjuries = false;
         private bool bAllowPenalties = false;
         private bool bSimGame = false;
+        private bool bPlayoffGame = false;
+        private bool bChampionshipGame = false;
         private List<Penalty> PenaltiesData = null;
 
         //other settings
@@ -132,8 +134,6 @@ namespace SpectatorFootball.GameNS
             g.Away_Score_OT = 0;
             g.Quarter = 1;
             g.Time = app_Constants.GAME_QUARTER_SECONDS;
-            g.Playoff_Game = 0;
-            g.Championship_Game = 0;
             g.Game_Done = 0;
             g.Home_Passing_Yards = 0;
             g.Away_Passing_Yards = 0;
@@ -144,6 +144,9 @@ namespace SpectatorFootball.GameNS
             g.Home_Sacks = 0;
             g.Away_Sacks = 0;
             g.Forfeited_Game = 0;
+
+            bPlayoffGame = g.Playoff_Game == 1 ? true : false;
+            bChampionshipGame = g.Championship_Game == 1 ? true : false;
 
             List<Game_Player_Penalty_Stats> Game_Player_Penalty_Stats = new List<Game_Player_Penalty_Stats>();
             List<Game_Scoring_Summary> Game_Scoring_Summary = new List<Game_Scoring_Summary>();
@@ -437,6 +440,9 @@ namespace SpectatorFootball.GameNS
 
                 if (p_result.bPlay_Stands)
                 {
+                    bool bHomeTeamPosses = Game_Engine_Helper.isHomeTeamPosessing(Offensive_Package.Play, ht.Franchise_ID,at.Franchise_ID, g_fid_posession);
+                    r.Cheer = getEndofPlaySound(bChampionshipGame, p_result, bHomeTeamPosses);
+
                     bKickoff = p_result.bFinal_NextPlayKickoff;
                     bFreeKick = p_result.bFinal_NextPlayFreeKick;
                     bExtraPoint = p_result.bFinal_NextPlayXP;
@@ -488,7 +494,7 @@ namespace SpectatorFootball.GameNS
 
             }
 
-            g_bGameOver = isGameEnd((long)g.Playoff_Game, (long)g.Quarter, (long)g.Time, (long)g.Away_Score, (long)g.Home_Score);
+            g_bGameOver = isGameEnd((long)g.Playoff_Game + (long) g.Championship_Game, (long)g.Quarter, (long)g.Time, (long)g.Away_Score, (long)g.Home_Score);
 
             r.Offensive_Players = Offensive_Players;
             r.Defensive_Players = Defensive_Players;
@@ -867,7 +873,6 @@ namespace SpectatorFootball.GameNS
 
             if (Play_Game_Summary != null)
                 Game_Scoring_Summary.Add(Play_Game_Summary);
-
 
         }
 
@@ -1898,6 +1903,74 @@ namespace SpectatorFootball.GameNS
 
             return r;
         }
+        private Game_Sounds getEndofPlaySound(bool bChampionship, Play_Result pr, bool bHomePossesion)
+        {
+            Game_Sounds r = Game_Sounds.NONE;
+            double long_return = 35.0;
+
+            logger.Debug("moe possesion: " + bHomePossesion.ToString() + " " +
+                 pr.Yards_Returned);
+
+            if (pr.AwayTurnoers > 0)
+            {
+                r = Game_Sounds.LOW_CHEER;
+            }
+            else if (pr.HomeTurnoers > 0)
+            {
+                r = Game_Sounds.LOW_BOO;
+            }
+            else if (pr.bAwayTD || pr.bAwayFG || pr.bAwayXP || pr.bAwaySafetyFor ||
+                pr.bAwayXP1 || pr.bAwayXP2 || pr.bAwayXP3)
+            {
+                r = Game_Sounds.LOUD_BOO;
+            }
+            else if (pr.bHomeTD || pr.bHomeFG || pr.bHomeXP || pr.bHomeSafetyFor ||
+                pr.bHomeXP1 || pr.bHomeXP2 || pr.bHomeXP3)
+            {
+                r = Game_Sounds.LOUD_CHEER;
+            }
+            else if (pr.HomeFirstDowns > 0)
+            {
+                r = Game_Sounds.LOW_CHEER;
+            }
+            else if (pr.AwayFirstDowns > 0)
+            {
+                r = Game_Sounds.LOW_BOO;
+            }
+            else if (pr.HomeSacks > 0)
+            {
+                r = Game_Sounds.LOW_CHEER;
+            }
+            else if (pr.AwaySacks > 0)
+            {
+                r = Game_Sounds.LOW_BOO;
+            }
+            else if (bHomePossesion && pr.Yards_Returned >= long_return)
+            {
+                r = Game_Sounds.LOW_CHEER;
+            }
+            else if (!bHomePossesion && pr.Yards_Returned >= long_return)
+            {
+                r = Game_Sounds.LOW_BOO;
+            }
+
+            //In the championship game everything good is cheered
+            if (bChampionship)
+            {
+                switch (r)
+                {
+                    case Game_Sounds.LOW_BOO:
+                        r = Game_Sounds.LOW_CHEER;
+                        break;
+                        case Game_Sounds.LOUD_BOO:
+                        r = Game_Sounds.LOUD_CHEER;
+                        break;
+                }
+            }
+
+            return r;
+        }
+
 
     }
 }

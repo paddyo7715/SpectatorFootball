@@ -95,13 +95,13 @@ namespace SpectatorFootball.unitTests.GameEngine_HelperTEST
         [TestMethod]
         public void isTouchdown_left_noTD()
         {
-            Assert.IsTrue(Game_Engine_Helper.isTouchdown(true, 98.0) == false);
+            Assert.IsTrue(Game_Engine_Helper.isTouchdown(true, 2.0) == false);
         }
         [TestCategory("Game_Engine_Helper")]
         [TestMethod]
         public void isTouchdown_left_TD()
         {
-            Assert.IsTrue(Game_Engine_Helper.isTouchdown(true, 102.0) == true);
+            Assert.IsTrue(Game_Engine_Helper.isTouchdown(true, -2.0) == true);
         }
 
 
@@ -109,13 +109,13 @@ namespace SpectatorFootball.unitTests.GameEngine_HelperTEST
         [TestMethod]
         public void isTouchdown_right_noTD()
         {
-            Assert.IsTrue(Game_Engine_Helper.isTouchdown(false, 2.0) == false);
+            Assert.IsTrue(Game_Engine_Helper.isTouchdown(false, 98.0) == false);
         }
         [TestCategory("Game_Engine_Helper")]
         [TestMethod]
         public void isTouchdown_right_TD()
         {
-            Assert.IsTrue(Game_Engine_Helper.isTouchdown(false, -2.0) == true);
+            Assert.IsTrue(Game_Engine_Helper.isTouchdown(false, 102.0) == true);
         }
 
         [TestCategory("Game_Engine_Helper")]

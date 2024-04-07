@@ -162,7 +162,9 @@ namespace SpectatorFootball
                         Season_ID = starting_season_id,
                         Week = long.Parse(sWeek),
                         Home_Team_Franchise_ID = nls.Season.Teams_by_Season.Where(x => x.Team_Slot == long.Parse(ht)).First().Franchise_ID,
-                        Away_Team_Franchise_ID = nls.Season.Teams_by_Season.Where(x => x.Team_Slot == long.Parse(at)).First().Franchise_ID
+                        Away_Team_Franchise_ID = nls.Season.Teams_by_Season.Where(x => x.Team_Slot == long.Parse(at)).First().Franchise_ID,
+                         Playoff_Game = 0,
+                         Championship_Game = 0
                     };
 
                     nls.Season.Games.Add(g);

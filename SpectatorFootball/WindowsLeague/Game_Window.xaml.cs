@@ -83,7 +83,7 @@ namespace SpectatorFootball.WindowsLeague
         private List<Graphics_Game_Player> Offensive_Players;
         private List<Graphics_Game_Player> Defensive_Players;
 
-        private MediaPlayer Sound_player = new MediaPlayer();
+//        private MediaPlayer Sound_player = new MediaPlayer();
 
         private const int PLAYER_SIZE = 50;
         private const int PLAYER_BALL_SIZE_DIFF = 30;
@@ -315,7 +315,7 @@ namespace SpectatorFootball.WindowsLeague
                     new GradientStop(CommonUtils.getColorfromHex(ball_Color), 0.1));
 
                 dispatcherTimer.Tick += CloseGameInfo;
-                dispatcherTimer.Interval = new TimeSpan(0, 0, 0);
+                dispatcherTimer.Interval = new TimeSpan(0, 0, 20);
                 dispatcherTimer.Start();
 
                 logger.Debug("Game Window Constructor ended");
@@ -388,8 +388,8 @@ namespace SpectatorFootball.WindowsLeague
 
             background.Fill = backgroundField;
 
-            for (int iii = 0; iii < 5; iii++)
-            {
+//            for (int iii = 0; iii < 5; iii++)
+//            {
                 //Needed to prime the media player
                 Play_Sound(Game_Sounds.SILENCE);
 
@@ -460,25 +460,31 @@ namespace SpectatorFootball.WindowsLeague
                             if (gGame_Ball.bStageFinished)
                                 bStageFinished = true;
                         } while (!bStageFinished);
-/*
-                        if (!gGame_Ball.arePointsDone())
-                            logger.Debug("Points Not Done Ball");
+                    /*
+                                            if (!gGame_Ball.arePointsDone())
+                                                logger.Debug("Points Not Done Ball");
 
-                        for (int pSlot = 0; pSlot < Offensive_Players.Count(); pSlot++)
-                        {
-                            if (!Offensive_Players[pSlot].arePointsDone())
-                                logger.Debug("Points Not Offensive Players");
-                            if (!Defensive_Players[pSlot].arePointsDone())
-                                logger.Debug("Points Not Defensive Players");
-                        }
-*/
+                                            for (int pSlot = 0; pSlot < Offensive_Players.Count(); pSlot++)
+                                            {
+                                                if (!Offensive_Players[pSlot].arePointsDone())
+                                                    logger.Debug("Points Not Offensive Players");
+                                                if (!Defensive_Players[pSlot].arePointsDone())
+                                                    logger.Debug("Points Not Defensive Players");
+                                            }
+                    */
+                }
+                Play_Sound(Game_Sounds.WHISTLE);
 
+                Thread.Sleep(500);
 
-                    }  // for loop stage
+                if (Play.Cheer != Game_Sounds.NONE)
+                    Play_Sound(Play.Cheer);
 
-                    //                bGameEneded = Play.bGameOver;
-                    //just to test one play take this out.
-                    bGameEneded = true;
+                //                    }  // for loop stage
+
+                //                bGameEneded = Play.bGameOver;
+                //just to test one play take this out.
+                bGameEneded = true;
 
                 }  //Game ended
 
@@ -491,7 +497,7 @@ namespace SpectatorFootball.WindowsLeague
                 //this.Close();
 
                 logger.Debug("Play_Game ended");
-            }
+
         }
 
         private double[] setViewEdge(double YardLIne, bool bLefttoRight, double vert_percent)
@@ -795,8 +801,8 @@ namespace SpectatorFootball.WindowsLeague
                     if (f.Sound != null)
                         Play_Sound((Game_Sounds)f.Sound);
 
-                    if (xxx == 5)
-                    logger.Debug("Returner x: " + f.YardLine + "y: " +f.Vertical_Percent_Pos);
+//                    if (xxx == 5)
+//                    logger.Debug("Returner x: " + f.YardLine + "y: " +f.Vertical_Percent_Pos);
 
 
                 setPlayer(Game_Ball, f, a_edge, def_Player_Sprites, bLefttoRight, false, xxx, def_Players_rect);
@@ -816,7 +822,10 @@ namespace SpectatorFootball.WindowsLeague
         }
         private void Play_Sound(Game_Sounds gs)
         {
+            MediaPlayer Sound_player = new MediaPlayer();
+
             string s = CommonUtils.getAppPath() + "\\Sounds\\";
+
             try
             {
 
@@ -858,6 +867,7 @@ namespace SpectatorFootball.WindowsLeague
                 }
 
                 var u = new Uri(s);
+
                 Sound_player.Open(u);
                 Sound_player.Play();
 

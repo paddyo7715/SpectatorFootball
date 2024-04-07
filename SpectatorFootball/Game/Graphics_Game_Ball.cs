@@ -151,14 +151,6 @@ namespace SpectatorFootball.GameNS
                     if (ThreeDee_ball)
                         setBallSize(current_point, act.PointXY.Count());
 
-                    if (act.PointXY != null && act.PointXY.Count() > 0)
-                    {
-                        if (current_point == 0)
-                            Sound = act.Sound;
-                        else
-                            Sound = null;
-                    }
-
                     current_point++;
                     if (current_point >= act.PointXY.Count())
                     {

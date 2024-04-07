@@ -1,14 +1,19 @@
-﻿using SpectatorFootball.Enum;
+﻿using log4net;
+using log4net.Core;
+using log4net.Repository.Hierarchy;
+using SpectatorFootball.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace SpectatorFootball.GameNS
 {
     public class Game_Engine_Helper
     {
+        private static ILog logger = LogManager.GetLogger("RollingFile");
         public static int HorizontalAdj(bool b)
         {
             int r = 1;
@@ -244,6 +249,9 @@ namespace SpectatorFootball.GameNS
         {
             double r = 0.0;
 
+            logger.Debug("blefttoright: " + bLefttoRight.ToString() + " " +
+     starting_yrdline + " " + end_yrdline);
+
             //Don't count the extra yards into the endzone as yards gained
             if (end_yrdline < 0)
                 end_yrdline = 0;
@@ -264,12 +272,12 @@ namespace SpectatorFootball.GameNS
 
             if (bLefttoRight)
             {
-                if (end_yrdline >= 100.0)
+                if (end_yrdline <= 0.0)
                     r = true;
             }
             else
             {
-                if (end_yrdline <= 0.0)
+                if (end_yrdline >= 100.0)
                     r = true;
             }
 
@@ -338,6 +346,22 @@ namespace SpectatorFootball.GameNS
                 r = Math.Abs(d - Yardline2);
 
             return r;
+        }
+        public static bool isHomeTeamPosessing(Play_Enum pe, long Homeid,long awayid, long PossessesID)
+        {
+            bool r = false;
+            long checkfid = Homeid;
+
+            if (pe == Play_Enum.KICKOFF_NORMAL || pe == Play_Enum.KICKOFF_ONSIDES ||
+                pe == Play_Enum.PUNT)
+                checkfid = awayid;
+
+            if (PossessesID == checkfid)
+                r = true;
+
+            logger.Debug("isHomeTeamPosessing " + pe.ToString() + " " + Homeid + " " + awayid + " " + PossessesID);
+
+             return r;
         }
 
     }

@@ -34,21 +34,30 @@ namespace SpectatorFootball.GameNS
         }
         public static KickOff_Length getKickOff_Len_enum(long leg_strength)
         {
-            int long_variable = (int) leg_strength - app_Constants.PRIMARY_ABILITY_LOW_RATING;
+            KickOff_Length r = KickOff_Length.SHORT;
 
-            //If this is not a kicker then the kickoff should be very short
-            if (long_variable <= 0)
-                return KickOff_Length.SUPER_SHORT;
+            int i = 0;
+            for (i = 1; i <= 3; i++)
+            {
+                int r_num = CommonUtils.getRandomNum(1, app_Constants.KICKOFF_LENGTH_CALC_VARIABLE);
+                if (r_num <= leg_strength)
+                    break;
+            }
 
-            int short_variable = app_Constants.PRIMARY_ABILITY_HIGH_RATING - (int)leg_strength + long_variable;
-            int r_num = CommonUtils.getRandomNum(1, app_Constants.KICKOFF_LENGTH_CALC_VARIABLE);
+            switch (i)
+            {
+                case 1:
+                    r = KickOff_Length.LONG;
+                    break;
+                case 2:
+                    r = KickOff_Length.AVERAGE;
+                    break;
+                case 3:
+                    r = KickOff_Length.SHORT;
+                    break;
+            }
 
-            if (r_num <= long_variable)
-                return KickOff_Length.LONG;
-            else if (r_num <= short_variable)
-                return KickOff_Length.SHORT;
-            else
-                return KickOff_Length.AVERAGE;
+            return r;
 
         }
         public static KickOff_Verticl getKickoff_Vert_enum(long leg_Accuracy)
