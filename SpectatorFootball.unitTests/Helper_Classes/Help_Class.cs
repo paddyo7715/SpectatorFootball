@@ -161,5 +161,37 @@ namespace SpectatorFootball.unitTests.Helper_ClassesNS
 
             return r;
         }
+
+        public static List<Game_Player> setGamePlayerLIsts(long f_id, double Line_of_Scrimmage, Formation f)
+        {
+            List<Game_Player> r = new List<Game_Player>();
+            foreach (Formation_Rec fr in f.Player_list)
+            {
+                Player_NamesDAOTEST pnDAO = new Player_NamesDAOTEST();
+                HomeTownsDAOTEST htDAO = new HomeTownsDAOTEST();
+                Player p = Player_Helper.CreatePlayer(fr.Pos, true, false, true, 1, pnDAO, htDAO);
+
+                Players_By_Team pbt = new Players_By_Team()
+                { Franchise_ID = f_id, Player_ID = p.ID, Season_ID = 1 };
+                Player_and_Ratings p_and_r = new Player_and_Ratings()
+                { p = p, pr = p.Player_Ratings.ToList(), pbt = pbt };
+
+                r.Add(new Game_Player()
+                {
+                    bCarryingBall = fr.bCarryingBall,
+                    Current_Vertical_Percent_Pos = fr.Vertical_Percent_Pos,
+                    Current_YardLine = Line_of_Scrimmage + fr.YardLine,
+                    Starting_Vertical_Percent_Pos = fr.Vertical_Percent_Pos,
+                    Starting_YardLine = Line_of_Scrimmage + fr.YardLine,
+                    Pos = fr.Pos,
+                    p_and_r =  p_and_r,
+                    State = fr.State,
+                    Initial_State = fr.State
+                });
+            }
+
+            return r;
+        }
+
     }
 }

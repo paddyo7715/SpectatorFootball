@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace SpectatorFootball.GameNS
 {
-    class Play_Kickoff_Normal
+    public class Play_Kickoff_Normal
     {
         private static ILog logger = LogManager.GetLogger("RollingFile");
 

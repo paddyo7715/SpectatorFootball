@@ -51,22 +51,23 @@
     <Reference Include="System.Data.DataSetExtensions" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Coach\CoachTEST.cs" />
+    <Compile Include="Integration_Tests\Kickoff_Normal\KickoffNormalTEST.cs" />
+    <Compile Include="Unit_Tests\Coach\CoachTEST.cs" />
     <Compile Include="DAOStubs\HomeTownsDAOTEST.cs" />
     <Compile Include="DAOStubs\Player_NamesDAOTEST.cs" />
-    <Compile Include="GameEngine\GameEngineTEST.cs" />
-    <Compile Include="GameEngine\setPlayOutCome_FG\setPlayOutCome_FG_TEST.cs" />
-    <Compile Include="GameEngine\setPlayOutCome_FreeKick\setPlayOutCome_FreeKick_TEST.cs" />
-    <Compile Include="GameEngine\setPlayOutCome_Kickoff\setPlayOutCome_Kickoff_TEST.cs" />
-    <Compile Include="GameEngine\setPlayOutCome_OnsideKick\setPlayOutCome_OnsideKick_TEST.cs" />
-    <Compile Include="GameEngine\setPlayOutCome_Punt\setPlayOutCome_Punt_TEST.cs" />
-    <Compile Include="GameEngine\setPlayOutCome_RunPass\setPlayOutCome_RunPass_TEST.cs" />
-    <Compile Include="GameEngine\setPlayOutCome_XPPlay123\setPlayOutCome_XPPlay123_TEST.cs" />
-    <Compile Include="GameEngine\setPlayOutCome_XP\setPlayOutCome_XP_TEST.cs" />
-    <Compile Include="Game_Engine_Helper\Game_Engine_HelperTEST.cs" />
+    <Compile Include="Unit_Tests\GameEngine\GameEngineTEST.cs" />
+    <Compile Include="Unit_Tests\GameEngine\setPlayOutCome_FG\setPlayOutCome_FG_TEST.cs" />
+    <Compile Include="Unit_Tests\GameEngine\setPlayOutCome_FreeKick\setPlayOutCome_FreeKick_TEST.cs" />
+    <Compile Include="Unit_Tests\GameEngine\setPlayOutCome_Kickoff\setPlayOutCome_Kickoff_TEST.cs" />
+    <Compile Include="Unit_Tests\GameEngine\setPlayOutCome_OnsideKick\setPlayOutCome_OnsideKick_TEST.cs" />
+    <Compile Include="Unit_Tests\GameEngine\setPlayOutCome_Punt\setPlayOutCome_Punt_TEST.cs" />
+    <Compile Include="Unit_Tests\GameEngine\setPlayOutCome_RunPass\setPlayOutCome_RunPass_TEST.cs" />
+    <Compile Include="Unit_Tests\GameEngine\setPlayOutCome_XPPlay123\setPlayOutCome_XPPlay123_TEST.cs" />
+    <Compile Include="Unit_Tests\GameEngine\setPlayOutCome_XP\setPlayOutCome_XP_TEST.cs" />
+    <Compile Include="Unit_Tests\Game_Engine_Helper\Game_Engine_HelperTEST.cs" />
     <Compile Include="Helper_Classes\Help_Class.cs" />
-    <Compile Include="NarrationAndText\ScoringSummaryTEST.cs" />
-    <Compile Include="Penalties\Penalty_HelperTEST.cs" />
+    <Compile Include="Unit_Tests\NarrationAndText\ScoringSummaryTEST.cs" />
+    <Compile Include="Unit_Tests\Penalties\Penalty_HelperTEST.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -675,13 +675,13 @@ namespace SpectatorFootball.GameNS
                 j.Num_of_Plays -= 1;
 
         }
-        private List<Game_Player> setGamePlayerLIsts(double Line_of_Scrimmage, Formation f)
+        public List<Game_Player> setGamePlayerLIsts(double Line_of_Scrimmage, Formation f)
         {
             List<Game_Player> r = new List<Game_Player>();
             foreach (Formation_Rec fr in f.Player_list)
             {
                 r.Add(new Game_Player()
-                {
+                { 
                     bCarryingBall = fr.bCarryingBall,
                     Current_Vertical_Percent_Pos = fr.Vertical_Percent_Pos,
                     Current_YardLine = Line_of_Scrimmage + fr.YardLine,
