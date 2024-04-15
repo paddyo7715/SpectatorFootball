@@ -83,36 +83,45 @@ namespace SpectatorFootball.IntegrationTests.Kickoff_Normal
                 };
 
                 Play_Kickoff_Normal kickoff = new Play_Kickoff_Normal(possess_team, at, ht, gb, Kickoff_Players, Receiving_Players, bLefttoRight, false, true, false);
+                kickoff.init();
                 Play_Result pResult = kickoff.Execute();
 
                 if (bLefttoRight)
                 {
                     if (pResult.bKick_Out_of_Endzone) L_num_out_of_EZ++;
                     if (pResult.bTouchback && !pResult.bKick_Out_of_Endzone) L_num_kneel_down++;
-                    if (!pResult.bKick_Out_of_Endzone && !pResult.bKick_Out_of_Endzone) L_num_returned++;
+                    if (!pResult.bTouchback) L_num_returned++;
                     if (pResult.bTouchDown) L_num_TDs++;
                     if (pResult.bFumble) L_num_fumble++;
                     if (pResult.bFumble_Lost) L_num_fumble_lost++;
                     if (pResult.bRunOutofBounds) L_num_run_out_of_bound++;
                     if (!pResult.bTouchDown && pResult.Yards_Returned >= 40) L_num_40plus_non_TD++;
-                    if (!pResult.bTouchback && !pResult.bTouchDown) L_total_starting_yardline += pResult.Returner.Current_YardLine;
+                    if (!pResult.bTouchback && !pResult.bTouchDown) L_total_starting_yardline += (100.0 - pResult.Returner.Current_YardLine);
                 }
                 else
                 {
                     if (pResult.bKick_Out_of_Endzone) R_num_out_of_EZ++;
                     if (pResult.bTouchback && !pResult.bKick_Out_of_Endzone) R_num_kneel_down++;
-                    if (!pResult.bKick_Out_of_Endzone && !pResult.bKick_Out_of_Endzone) R_num_returned++;
+                    if (!pResult.bTouchback) R_num_returned++;
                     if (pResult.bTouchDown) R_num_TDs++;
                     if (pResult.bFumble) R_num_fumble++;
                     if (pResult.bFumble_Lost) R_num_fumble_lost++;
                     if (pResult.bRunOutofBounds) R_num_run_out_of_bound++;
                     if (!pResult.bTouchDown && pResult.Yards_Returned >= 40) R_num_40plus_non_TD++;
-                    if (!pResult.bTouchback && !pResult.bTouchDown) R_total_starting_yardline +=(100.0 - pResult.Returner.Current_YardLine);
+                    if (!pResult.bTouchback && !pResult.bTouchDown) R_total_starting_yardline += pResult.Returner.Current_YardLine;
 
                 }
 
-                Assert.IsTrue(true);
             }
+
+string left_string = "Left Returns: " + L_num_returned + " kneel downs: " + L_num_kneel_down + " thru endzone: " + L_num_out_of_EZ +
+                " TDs: " + L_num_TDs + " Fumbles: " + L_num_fumble + " Fumbles Lost: " + L_num_fumble_lost + " Run out of Bounds: " + L_num_run_out_of_bound + 
+                " 40+ yards returns: " + L_num_40plus_non_TD + " AVG starting YL: " + L_total_starting_yardline / (L_num_returned- L_num_TDs) +
+                " Right Returns: " + R_num_returned + " kneel downs: " + R_num_kneel_down + " thru endzone: " + R_num_out_of_EZ +
+                " TDs: " + R_num_TDs + " Fumbles: " + R_num_fumble + " Fumbles Lost: " + R_num_fumble_lost + " Run out of Bounds: " + R_num_run_out_of_bound +
+                " 40+ yards returns: " + R_num_40plus_non_TD + " AVG starting YL: " + R_total_starting_yardline / (R_num_returned - R_num_TDs);
+
+            Assert.IsTrue(true);
 
         }
 
