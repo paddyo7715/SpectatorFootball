@@ -266,19 +266,22 @@ namespace SpectatorFootball.GameNS
             return r;
         }
 
-        public static bool isTouchdown(bool bLefttoRight, double end_yrdline)
+        public static bool isTouchdown(bool bLefttoRight, double end_yrdline, bool bTouchback)
         {
             bool r = false;
 
-            if (bLefttoRight)
+            if (!bTouchback)
             {
-                if (end_yrdline <= 0.0)
-                    r = true;
-            }
-            else
-            {
-                if (end_yrdline >= 100.0)
-                    r = true;
+                if (!bLefttoRight)
+                {
+                    if (end_yrdline <= 0.0)
+                        r = true;
+                }
+                else
+                {
+                    if (end_yrdline >= 100.0)
+                        r = true;
+                }
             }
 
             return r;

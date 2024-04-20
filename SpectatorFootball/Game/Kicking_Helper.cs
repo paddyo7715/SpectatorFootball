@@ -1,4 +1,6 @@
-﻿using SpectatorFootball.Enum;
+﻿using log4net;
+using log4net.Repository.Hierarchy;
+using SpectatorFootball.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +11,7 @@ namespace SpectatorFootball.GameNS
 {
     public class Kicking_Helper
     {
+        private static ILog logger = LogManager.GetLogger("RollingFile");
         public static double AdjustKickLength(double len, double vert)
         {
             double r;
@@ -34,26 +37,41 @@ namespace SpectatorFootball.GameNS
         }
         public static KickOff_Length getKickOff_Len_enum(long leg_strength)
         {
-            KickOff_Length r = KickOff_Length.SHORT;
+            KickOff_Length r = KickOff_Length.SUPER_LONG;
+            long ls_temp = app_Constants.KICKOFF_LENGTH_CALC_VARIABLE - leg_strength;
 
             int i = 0;
-            for (i = 1; i <= 3; i++)
+            for (i = 1; i <= 5; i++)
             {
+
+                long ls_var = ls_temp;
+                if (i == 1)
+                    ls_var /= 2;
+                else if (i == 4)
+                    ls_var = (long) (ls_var * 1.25);
+
                 int r_num = CommonUtils.getRandomNum(1, app_Constants.KICKOFF_LENGTH_CALC_VARIABLE);
-                if (r_num <= leg_strength)
+                logger.Debug("r_num " + r_num + " ls_var " + ls_var);
+                if (r_num <= ls_var)
                     break;
             }
 
             switch (i)
             {
                 case 1:
-                    r = KickOff_Length.LONG;
+                    r = KickOff_Length.SUPER_SHORT;
                     break;
                 case 2:
-                    r = KickOff_Length.AVERAGE;
+                    r = KickOff_Length.SHORT;
                     break;
                 case 3:
-                    r = KickOff_Length.SHORT;
+                    r = KickOff_Length.AVERAGE;
+                    break;
+                case 4:
+                    r = KickOff_Length.LONG;
+                    break;
+                case 5:
+                    r = KickOff_Length.SUPER_LONG;
                     break;
             }
 
@@ -105,6 +123,9 @@ namespace SpectatorFootball.GameNS
                     break;
                 case KickOff_Length.LONG:
                     r = CommonUtils.getRandomNum(app_Constants.KICKOFF_MIN_LONG_DISTANCE, app_Constants.KICKOFF_MAX_LONG_DISTANCE);
+                    break;
+                case KickOff_Length.SUPER_LONG:
+                    r = CommonUtils.getRandomNum(app_Constants.KICKOFF_MIN_SUPER_LONG_DISTANCE, app_Constants.KICKOFF_MAX_SUPER_LONG_DISTANCE);
                     break;
             }
 

@@ -503,14 +503,16 @@ namespace SpectatorFootball
 
         //Kickers
         public const double OFFCENTER_YARDS_LESS = 0.1;
-        public const int KICKOFF_MIN_SUPER_SHORT_DIST = 47;
-        public const int KICKOFF_MAX_SUPER_SHORT_DIST = 49;
-        public const int KICKOFF_MIN_SHORT_DISTANCE = 50;
+        public const int KICKOFF_MIN_SUPER_SHORT_DIST = 49;
+        public const int KICKOFF_MAX_SUPER_SHORT_DIST = 52;
+        public const int KICKOFF_MIN_SHORT_DISTANCE = 53;
         public const int KICKOFF_MAX_SHORT_DISTANCE = 59;
         public const int KICKOFF_MIN_AVG_DISTANCE = 60;
-        public const int KICKOFF_MAX_AVG_DISTANCE = 69;
-        public const int KICKOFF_MIN_LONG_DISTANCE = 70;
-        public const int KICKOFF_MAX_LONG_DISTANCE = 80;
+        public const int KICKOFF_MAX_AVG_DISTANCE = 66;
+        public const int KICKOFF_MIN_LONG_DISTANCE = 67;
+        public const int KICKOFF_MAX_LONG_DISTANCE = 73;
+        public const int KICKOFF_MIN_SUPER_LONG_DISTANCE = 74;
+        public const int KICKOFF_MAX_SUPER_LONG_DISTANCE = 80;
         public const double KICKOFF_MAX_YARDLINE_1  = 109;
         public const double KICKOFF_MAX_YARDLINE_2 = -9;
         public const double FG_LONGEST_FG_YARDLINE = 45;
@@ -520,7 +522,7 @@ namespace SpectatorFootball
         public const int KICKOFF_BOTTOM_MAX_VERTICAL = 79;
         public const int KICKOFF_TOP_AVG_VERTICAL = 35;
         public const int KICKOFF_BOTTOM_AVG_VERTICAL = 65;
-        public const int KICKOFF_LENGTH_CALC_VARIABLE = 150;
+        public const int KICKOFF_LENGTH_CALC_VARIABLE = 106;
         public const int KICKOFF_ACC_CALC_VARIABLE = 110;
 
         //Kickoff
@@ -550,7 +552,7 @@ namespace SpectatorFootball
         public const double KICKOFF_YARDS_BEFORE_TACKLER2 = 4.0;
         public const double KICKOFF_YARDS_BEFORE_TACKLER3 = 6.0;
         public const double KICKOFF_RUN_OUT_YARD_FACTOR = 0.5;
-        public const double KICK_OUT_OF_ENDZONE_YARD = 4.0;
+        public const double KICK_OUT_OF_ENDZONE_YARD = 9.0;
         public const double KICKOFF_RETURNER_VERT_STANDBY = 2.0;
         public const double KICKOFF_RETURNER_Y_STANDBY = 1.0;
         public const double KICKOFF_RUN_OOB_TOP_LIMIT = 15.0;

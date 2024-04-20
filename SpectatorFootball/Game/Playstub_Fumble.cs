@@ -9,7 +9,7 @@ namespace SpectatorFootball.GameNS
 {
     class Playstub_Fumble
     {
-        public static Game_Player Execute(bool bLefttoRight,
+        public static Tuple<Game_Player, bool> Execute(bool bLefttoRight,
             Game_Ball gBall, 
             List<Game_Player> Tackling_Players, 
             List<Game_Player> BallCarrying_Players,
@@ -20,6 +20,7 @@ namespace SpectatorFootball.GameNS
             bool bSim)
         {
             Game_Player r = null;
+            bool bLost = false;
             bool bRecover = false;
             int rnd = 0;
 
@@ -34,11 +35,13 @@ namespace SpectatorFootball.GameNS
                 {
                     rnd = CommonUtils.getRandomIndex(close_Tackling_Players.Count);
                     p = close_Tackling_Players[rnd];
+                    bLost = false;
                 }
                 else
                 {
                     rnd = CommonUtils.getRandomIndex(close_BallCarrying_Players.Count);
                     p = close_BallCarrying_Players[rnd];
+                    bLost = true;
                 }
 
                 bRecover = RecoverFumble(p.p_and_r.pr.First().Hands_Rating);
@@ -103,15 +106,17 @@ namespace SpectatorFootball.GameNS
                 ind++;
             }
 
-            return r;
+            return new Tuple<Game_Player, bool>(r, bLost);
         }
         public static bool RecoverFumble(long handsRating)
         {
+            long fudge = 40;
+
             bool r = false;
             const int UPPER_LIMIT = 200;
 
             int rnd = CommonUtils.getRandomNum(1, UPPER_LIMIT);
-            if (rnd <= handsRating)
+            if (rnd <= handsRating + fudge)
                 r = true;
 
             return r;

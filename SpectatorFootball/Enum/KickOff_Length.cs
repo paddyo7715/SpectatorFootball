@@ -11,6 +11,7 @@ namespace SpectatorFootball.Enum
         SUPER_SHORT, //Not a kicker 
         SHORT,
         AVERAGE,
-        LONG
+        LONG,
+        SUPER_LONG
     }
 }

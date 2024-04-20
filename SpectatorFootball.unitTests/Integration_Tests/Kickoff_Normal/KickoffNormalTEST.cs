@@ -44,6 +44,8 @@ namespace SpectatorFootball.IntegrationTests.Kickoff_Normal
             int R_num_run_out_of_bound = 0;
             double R_total_starting_yardline = 0.0;
 
+            double longest_return = 0;
+
             double g_yardline = 0.0;
             Play_Enum pe = Play_Enum.KICKOFF_NORMAL;
 
@@ -85,6 +87,9 @@ namespace SpectatorFootball.IntegrationTests.Kickoff_Normal
                 Play_Kickoff_Normal kickoff = new Play_Kickoff_Normal(possess_team, at, ht, gb, Kickoff_Players, Receiving_Players, bLefttoRight, false, true, false);
                 kickoff.init();
                 Play_Result pResult = kickoff.Execute();
+
+                if (pResult.Yards_Returned > 90.0)
+                    longest_return = pResult.Yards_Returned;
 
                 if (bLefttoRight)
                 {

@@ -760,7 +760,7 @@ namespace SpectatorFootball.GameNS
 
                     //if there is a tackle then check if the ball is fumbled.
                     if (r.Tackler != null)
-                    {
+                   {
                         long ball_safety_rating = r.Returner.p_and_r.pr.First().Ball_Safety_Rating;
                         long tackle_rating = r.Tackler.p_and_r.pr.First().Tackle_Rating;
                         long run_attack_rating = r.Tackler.p_and_r.pr.First().Run_Attack_Rating;
@@ -780,11 +780,14 @@ namespace SpectatorFootball.GameNS
                             getBothGroupSlotPlayers(Kickoff_Players, Return_Players,
                                 pFumble_Rec_Kickoff_Players, pFumble_Rec_Return_Players, closest_players);
                             pFumble_Rec_Return_Players.Add(r.Returner);
-                            r.Fumble_Recoverer = Playstub_Fumble.Execute(bLefttoRight, gBall,
+                            Tuple<Game_Player, bool> t = Playstub_Fumble.Execute(bLefttoRight, gBall,
                                 Kickoff_Players, Return_Players,
                                 pFumble_Rec_Kickoff_Players, pFumble_Rec_Return_Players,
                                 r.Returner, r.Tackler, bSim);
-                            
+
+                            r.Fumble_Recoverer = t.Item1;
+                            r.bFumble_Lost = t.Item2;
+
                             //If there is a fumble then no tackle is awarded
                             r.Tackler = null;
                         }
@@ -1045,7 +1048,7 @@ namespace SpectatorFootball.GameNS
                //===== end of stage six
 
             //Set if touchdown
-            r.bTouchDown = Game_Engine_Helper.isTouchdown(bLefttoRight, r.Returner.Current_YardLine);
+            r.bTouchDown = Game_Engine_Helper.isTouchdown(bLefttoRight, r.Returner.Current_YardLine, r.bTouchback);
 
             if (r.Returner != null)
                 r.end_of_play_yardline = r.Returner.Current_YardLine;

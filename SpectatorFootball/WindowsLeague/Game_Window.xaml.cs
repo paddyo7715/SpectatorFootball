@@ -315,7 +315,7 @@ namespace SpectatorFootball.WindowsLeague
                     new GradientStop(CommonUtils.getColorfromHex(ball_Color), 0.1));
 
                 dispatcherTimer.Tick += CloseGameInfo;
-                dispatcherTimer.Interval = new TimeSpan(0, 0, 20);
+                dispatcherTimer.Interval = new TimeSpan(0, 0, 2);
                 dispatcherTimer.Start();
 
                 logger.Debug("Game Window Constructor ended");
