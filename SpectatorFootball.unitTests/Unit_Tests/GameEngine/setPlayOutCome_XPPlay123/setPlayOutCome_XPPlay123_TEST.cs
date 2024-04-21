@@ -15,7 +15,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
     [TestClass]
     public class setPlayOutCome_XPPlay123_TEST
     {
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_xp1_from_97_and_half_made()
         {
@@ -115,7 +115,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_xp2_from_97_and_half_made()
         {
@@ -215,7 +215,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_xp3_from_97_and_half_made()
         {
@@ -315,7 +315,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_xp1_from_97_and_half_made()
         {
@@ -415,7 +415,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_xp2_from_97_and_half_made()
         {
@@ -515,7 +515,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_xp3_from_97_and_half_made()
         {
@@ -615,7 +615,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_xp1_from_97_and_half_made_penalty_on_Def_Declined()
         {
@@ -719,7 +719,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_xp2_from_97_and_half_made_FM_on_def_ignored()
         {
@@ -824,7 +824,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_xp2_from_97_and_half_made_FM_on_Off_ignored()
         {
@@ -929,7 +929,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_xp1_from_97_and_half_not_made()
         {
@@ -1029,7 +1029,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_xp2_from_97_and_half_not_made()
         {
@@ -1129,7 +1129,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_xp3_from_97_and_half_not_made()
         {
@@ -1229,7 +1229,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_xp1_from_97_and_half_not_made()
         {
@@ -1329,7 +1329,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_xp2_from_97_and_half_not_made()
         {
@@ -1429,7 +1429,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_xp3_from_97_and_half_not_made()
         {
@@ -1529,7 +1529,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_xp1_from_97_and_half_not_made_penalty_on_Def_Declined()
         {
@@ -1633,7 +1633,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_xp2_from_97_and_half_not_made_FM_on_def_ignored()
         {
@@ -1738,7 +1738,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_xp2_from_97_and_half_not_made_FM_on_Off_ignored()
         {
@@ -1843,7 +1843,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_xp2_from_97_and_half_Delay_of_Game_on_Off()
         {
@@ -1948,7 +1948,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_xp2_from_97_and_half_Defensive_Holding_Accepted()
         {
@@ -2053,7 +2053,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_xp2_from_97_and_half_Defensive_PI_Accepted()
         {
@@ -2158,7 +2158,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_xp2_from_97_and_half_Defensive_PI_in_End_Zone_Accepted()
         {
@@ -2263,7 +2263,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_xp2_from_97_and_half_Intercepted_in_Endzone()
         {
@@ -2366,7 +2366,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_xp2_from_97_and_half_Fumble_Lost()
         {
@@ -2467,7 +2467,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Right_Pass_xp1_from_2_and_half_made()
         {
@@ -2567,7 +2567,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Right_Pass_xp2_from_2_and_half_made()
         {
@@ -2667,7 +2667,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Right_Pass_xp3_from_2_and_half_made()
         {
@@ -2767,7 +2767,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Right_Run_xp1_from_2_and_half_made()
         {
@@ -2867,7 +2867,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Right_Run_xp2_from_2_and_half_made()
         {
@@ -2967,7 +2967,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Right_Run_xp3_from_97_and_half_made()
         {
@@ -3067,7 +3067,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Right_Pass_xp1_from_2_and_half_made_penalty_on_Def_Declined()
         {
@@ -3171,7 +3171,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Right_Run_xp2_from_2_and_half_made_FM_on_def_ignored()
         {
@@ -3276,7 +3276,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Right_Run_xp2_from_2_and_half_made_FM_on_Off_ignored()
         {
@@ -3381,7 +3381,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Right_Pass_xp1_from_2_and_half_not_made()
         {
@@ -3481,7 +3481,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Right_Pass_xp2_from_2_and_half_not_made()
         {
@@ -3581,7 +3581,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Right_Pass_xp3_from_2_and_half_not_made()
         {
@@ -3681,7 +3681,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Right_Run_xp1_from_2_and_half_not_made()
         {
@@ -3781,7 +3781,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Right_Run_xp2_from_2_and_half_not_made()
         {
@@ -3881,7 +3881,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Right_Run_xp3_from_2_and_half_not_made()
         {
@@ -3981,7 +3981,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Right_Pass_xp1_from_2_and_half_not_made_penalty_on_Def_Declined()
         {
@@ -4085,7 +4085,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Right_Run_xp2_from_2_and_half_not_made_FM_on_def_ignored()
         {
@@ -4190,7 +4190,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Right_Run_xp2_from_2_and_half_not_made_FM_on_Off_ignored()
         {
@@ -4295,7 +4295,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Right_Run_xp2_from_2_and_half_Delay_of_Game_on_Off()
         {
@@ -4400,7 +4400,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Right_Pass_xp2_from_2_and_half_Defensive_Holding_Accepted()
         {
@@ -4505,7 +4505,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Right_Pass_xp2_from_2_and_half_Defensive_PI_Accepted()
         {
@@ -4610,7 +4610,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Right_Pass_xp2_from_2_and_half_Defensive_PI_in_End_Zone_Accepted()
         {
@@ -4684,7 +4684,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must not stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 0 || r.Final_yard_to_go != 0 || r.Final_end_of_Play_Yardline !=1)
+            if (r.Final_Down != 0 || r.Final_yard_to_go != 0 || r.Final_end_of_Play_Yardline != 1)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -4715,7 +4715,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Right_Pass_xp2_from_2_and_half_Intercepted_in_Endzone()
         {
@@ -4818,7 +4818,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Right_Run_xp2_from_2_and_half_Fumble_Lost()
         {

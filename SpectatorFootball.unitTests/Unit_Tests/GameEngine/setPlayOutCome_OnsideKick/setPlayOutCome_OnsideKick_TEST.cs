@@ -15,7 +15,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
     [TestClass]
     public class setPlayOutCome_OnsideKick_TEST
     {
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_KICKOFF_ONSIDES_Left_returner_falls_on_ball_no_Penalty_to_50()
         {
@@ -96,7 +96,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_KICKOFF_ONSIDES_Left_Fumble_Recovered_no_Penalty_to_50()
         {
@@ -177,7 +177,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_KICKOFF_ONSIDES_Left_Fumble_Lost_no_Penalty_to_50()
         {
@@ -261,7 +261,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_KICKOFF_ONSIDES_Left_Returner_Falls_on_Ball50_Spot_Penalty_on_Defenders_at_55_to_70()
         {
@@ -346,7 +346,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_KICKOFF_ONSIDES_Left_Returner_Falls_on_Ball50_Spot_Penalty_on_Defenders_at_45_to_65()
         {
@@ -430,7 +430,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_KICKOFF_ONSIDES_Left_Returner_fumbles_and_recovers_on_Ball50_Spot_Penalty_on_Defenders_at_55_to_70()
         {
@@ -516,7 +516,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_KICKOFF_ONSIDES_Left_Returner_fumbles_and_recovers_on_Ball50_Spot_Penalty_on_Defenders_at_45_to_65()
         {
@@ -601,7 +601,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_KICKOFF_ONSIDES_Left_Returner_fumbles_and_loses_it_on_Ball50_Spot_Penalty_on_Defenders_at_55_to_70()
         {
@@ -688,7 +688,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_KICKOFF_ONSIDES_Left_Returner_fumbles_and_loses_it_recovers_on_Ball50_Spot_Penalty_on_Defenders_at_45_to_65()
         {
@@ -775,7 +775,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_KICKOFF_ONSIDES_Left_Returner_Falls_on_Ball50_Spot_Penalty_on_Returners_at_55_to_70()
         {
@@ -860,7 +860,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_KICKOFF_ONSIDES_Left_Returner_Falls_on_Ball50_Spot_Penalty_on_Returners_at_45_to_65()
         {
@@ -944,7 +944,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_KICKOFF_ONSIDES_Left_Returner_fumbles_and_recovers_on_Ball50_Spot_Penalty_on_Returners_at_55_to_70()
         {
@@ -1030,7 +1030,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_KICKOFF_ONSIDES_Left_Returner_fumbles_and_recovers_on_Ball50_Spot_Penalty_on_Returners_at_45_to_65()
         {
@@ -1115,7 +1115,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_KICKOFF_ONSIDES_Left_Returner_fumbles_and_loses_it_on_Ball50_Spot_Penalty_on_Returners_at_55_to_70()
         {
@@ -1202,7 +1202,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_KICKOFF_ONSIDES_Left_Returner_fumbles_and_loses_it_recovers_on_Ball50_Spot_Penalty_on_Returners_at_45_to_65()
         {
@@ -1289,7 +1289,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_KICKOFF_ONSIDES_Right_returner_falls_on_ball_no_Penalty_to_50()
         {
@@ -1370,7 +1370,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_KICKOFF_ONSIDES_Right_Fumble_Recovered_no_Penalty_to_50()
         {
@@ -1451,7 +1451,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_KICKOFF_ONSIDES_Right_Fumble_Lost_no_Penalty_to_50()
         {
@@ -1535,7 +1535,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_KICKOFF_ONSIDES_Right_Returner_Falls_on_Ball50_Spot_Penalty_on_Defenders_at_55_to_70()
         {
@@ -1620,7 +1620,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_KICKOFF_ONSIDES_Right_Returner_Falls_on_Ball50_Spot_Penalty_on_Defenders_at_45_to_65()
         {
@@ -1704,7 +1704,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_KICKOFF_ONSIDES_Right_Returner_fumbles_and_recovers_on_Ball50_Spot_Penalty_on_Defenders_at_55_to_70()
         {
@@ -1790,7 +1790,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_KICKOFF_ONSIDES_Right_Returner_fumbles_and_recovers_on_Ball50_Spot_Penalty_on_Defenders_at_45_to_65()
         {
@@ -1875,7 +1875,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_KICKOFF_ONSIDES_Right_Returner_fumbles_and_loses_it_on_Ball50_Spot_Penalty_on_Defenders_at_55_to_70()
         {
@@ -1962,7 +1962,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_KICKOFF_ONSIDES_Right_Returner_fumbles_and_loses_it_recovers_on_Ball50_Spot_Penalty_on_Defenders_at_45_to_65()
         {
@@ -2049,7 +2049,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_KICKOFF_ONSIDES_Right_Returner_Falls_on_Ball50_Spot_Penalty_on_Returners_at_55_to_70()
         {
@@ -2134,7 +2134,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_KICKOFF_ONSIDES_Right_Returner_Falls_on_Ball50_Spot_Penalty_on_Returners_at_45_to_65()
         {
@@ -2218,7 +2218,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_KICKOFF_ONSIDES_Right_Returner_fumbles_and_recovers_on_Ball50_Spot_Penalty_on_Returners_at_55_to_70()
         {
@@ -2304,7 +2304,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_KICKOFF_ONSIDES_Right_Returner_fumbles_and_recovers_on_Ball50_Spot_Penalty_on_Returners_at_45_to_65()
         {
@@ -2389,7 +2389,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_KICKOFF_ONSIDES_Right_Returner_fumbles_and_loses_it_on_Ball50_Spot_Penalty_on_Returners_at_55_to_70()
         {
@@ -2476,7 +2476,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_KICKOFF_ONSIDES_Right_Returner_fumbles_and_loses_it_recovers_on_Ball50_Spot_Penalty_on_Returners_at_45_to_65()
         {

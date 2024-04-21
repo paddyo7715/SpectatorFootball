@@ -15,7 +15,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
     [TestClass]
     public class setPlayOutCome_FG_TEST
     {
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_FG_Left_Good_No_Penalty()
         {
@@ -107,7 +107,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_FG_Left_Not_Good_No_Penalty()
         {
@@ -200,7 +200,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_FG_Left_Delay_of_Game_Penalty()
         {
@@ -296,7 +296,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_FG_Left_false_start_Penalty()
         {
@@ -393,7 +393,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_FG_Left_NZ_Penalty()
         {
@@ -490,7 +490,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_FG_Left_Missed_Def_Offsides_Accepted()
         {
@@ -589,7 +589,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_FG_Left_Missed_Def_Offsides_Accepted_First_down()
         {
@@ -688,7 +688,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_FG_Left_Missed_Def_Offsides_Accepted_at_5_to_2point5()
         {
@@ -786,7 +786,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_FG_Left_Good_Def_Offsides_Accepted_First_down()
         {
@@ -884,7 +884,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_FG_Left_Good_Def_Offsides_Declined()
         {
@@ -981,7 +981,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_FG_Rightt_Good_No_Penalty()
         {
@@ -1074,7 +1074,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_FG_Rightt_Not_Good_No_Penalty()
         {
@@ -1168,7 +1168,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_FG_Rightt_Delay_of_Game_Penalty()
         {
@@ -1264,7 +1264,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_FG_Rightt_false_start_Penalty()
         {
@@ -1361,7 +1361,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_FG_Rightt_NZ_Penalty()
         {
@@ -1458,7 +1458,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_FG_Rightt_Missed_Def_Offsides_Accepted()
         {
@@ -1557,7 +1557,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_FG_Rightt_Missed_Def_Offsides_Accepted_First_down()
         {
@@ -1656,7 +1656,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_FG_Rightt_Missed_Def_Offsides_Accepted_at_5_to_2point5()
         {
@@ -1754,7 +1754,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_FG_Rightt_Good_Def_Offsides_Accepted_First_down()
         {
@@ -1852,7 +1852,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_FG_Rightt_Good_Def_Offsides_Declined()
         {

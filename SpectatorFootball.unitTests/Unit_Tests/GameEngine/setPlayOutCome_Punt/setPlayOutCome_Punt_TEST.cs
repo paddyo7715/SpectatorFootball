@@ -15,7 +15,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
     [TestClass]
     public class setPlayOutCome_Punt_TEST
     {
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Punt_Left_No_Penalty_10_Yard_Return()
         {
@@ -114,7 +114,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Punt_Left_No_Penalty_10_Yard_Return_Fumble_Recovered()
         {
@@ -215,7 +215,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Punt_Left_No_Penalty_10_Yard_Return_Fumble_Lost()
         {
@@ -318,7 +318,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Punt_Left_No_Penalty_Returned_for_TD()
         {
@@ -418,7 +418,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Punt_Left_Sport_Penalty_Ignored_Returned_for_TD()
         {
@@ -522,7 +522,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Punt_Left_No_Penalty_Touchbck()
         {
@@ -622,7 +622,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Punt_Left_No_Penalty_Punt_Out_of_Bounds()
         {
@@ -723,7 +723,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Punt_Left_Delay_of_Game_From_6()
         {
@@ -828,7 +828,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Punt_Left_Delay_of_Game_From_20()
         {
@@ -933,7 +933,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Punt_Left_Defensive_Offsides_Decline_Returner_Fumble_Lost()
         {
@@ -1039,7 +1039,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Punt_Left_Defensive_Offsides_Accepted_Not_First_Down_but_Big_Return()
         {
@@ -1145,7 +1145,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Punt_Left_Defensive_Offsides_Accepted_First_Down_but_Big_Return()
         {
@@ -1251,7 +1251,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Punt_Left_Sport_Penalty_on_94_Returned_to_80()
         {
@@ -1355,7 +1355,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Punt_Left_Sport_Penalty_on_80_Returned_to_94()
         {
@@ -1458,7 +1458,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Punt_Left_Sport_Penalty_on_95_Returned_to_94_Fumble_Lost()
         {
@@ -1566,7 +1566,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Punt_Left_Sport_Penalty_on_10_Returned_to_8()
         {
@@ -1674,7 +1674,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Punt_Left_Sport_Penalty_on_45_Returned_to_50()
         {
@@ -1782,7 +1782,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Punt_Left_Sport_Penalty_on_95_Defensders_Returned_to_94_Fumble_Lost()
         {
@@ -1889,7 +1889,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Punt_Left_Sport_Penalty_on_15_Defensders_Returned_to_10_Fumble_Lost()
         {
@@ -1997,7 +1997,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Punt_Right_No_Penalty_10_Yard_Return()
         {
@@ -2095,7 +2095,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Punt_Right_No_Penalty_10_Yard_Return_Fumble_Recovered()
         {
@@ -2195,7 +2195,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Punt_Right_No_Penalty_10_Yard_Return_Fumble_Lost()
         {
@@ -2297,7 +2297,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Punt_Right_No_Penalty_Returned_for_TD()
         {
@@ -2396,7 +2396,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Punt_Right_Sport_Penalty_Ignored_Returned_for_TD()
         {
@@ -2499,7 +2499,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Punt_Right_No_Penalty_Touchbck()
         {
@@ -2598,7 +2598,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Punt_Right_No_Penalty_Punt_Out_of_Bounds()
         {
@@ -2698,7 +2698,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Punt_Right_Delay_of_Game_rom_94()
         {
@@ -2802,7 +2802,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Punt_Right_Delay_of_Game_From_80()
         {
@@ -2906,7 +2906,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Punt_Right_Defensive_Offsides_Decline_Returner_Fumble_Lost()
         {
@@ -3012,7 +3012,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Punt_Right_Defensive_Offsides_Accepted_Not_First_Down_but_Big_Return()
         {
@@ -3118,7 +3118,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Punt_Right_Defensive_Offsides_Accepted_First_Down_but_Big_Return()
         {
@@ -3224,7 +3224,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Punt_Right_Sport_Penalty_on_94_Returned_to_20()
         {
@@ -3327,7 +3327,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Punt_Right_Sport_Penalty_on_80_Returned_to_6()
         {
@@ -3429,7 +3429,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Punt_Right_Sport_Penalty_on_95_Returned_to_6_Fumble_Lost()
         {
@@ -3536,7 +3536,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Punt_Right_Sport_Penalty_on_10_Returned_to_92()
         {
@@ -3643,7 +3643,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Punt_Right_Sport_Penalty_on_45_Returned_to_92()
         {
@@ -3750,7 +3750,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Punt_Right_Sport_Penalty_on_95_Defensders_Returned_to_6_Fumble_Lost()
         {
@@ -3857,7 +3857,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Punt_Right_Sport_Penalty_on_15_Defensders_Returned_to_90_Fumble_Lost()
         {

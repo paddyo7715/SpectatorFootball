@@ -14,7 +14,7 @@ namespace SpectatorFootball.unitTests.CoachTest
     [TestClass]
     public class CoachTEST
     {
-        [TestCategory("Coach")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setOurThereScore_oursisAway()
         {
@@ -25,7 +25,7 @@ namespace SpectatorFootball.unitTests.CoachTest
 
             Assert.IsTrue(t.Item1 == 22 && t.Item2 == 11);
         }
-        [TestCategory("Coach")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setOurThereScore_oursisHome()
         {
@@ -37,13 +37,13 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(t.Item1 == 11 && t.Item2 == 22);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptDef_Penalty_Turnover()
         {
             int Yards_to_go = 5;
             Penalty p = new Penalty() { bDeclinable = true };
-            Play_Result pResult = new Play_Result() {end_of_play_yardline = 50, Yards_Gained = 0, bInterception = true, Penalty = p };
+            Play_Result pResult = new Play_Result() { end_of_play_yardline = 50, Yards_Gained = 0, bInterception = true, Penalty = p };
             Game g = new Game() { Home_Score = 0, Away_Score = 0 };
             Coach c = new Coach(11, g, 7, new List<Player_and_Ratings>(), new List<Player_and_Ratings>(), new List<Injury>());
             bool bAccept = c.AcceptDef_Penalty(Enum.Play_Enum.RUN, pResult, Yards_to_go, true, false, false, 25);
@@ -52,7 +52,7 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptDef_Penalty_TD()
         {
@@ -66,7 +66,7 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(!bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptDef_Penalty_Safety()
         {
@@ -80,7 +80,7 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptDef_Penalty_xpmissed()
         {
@@ -94,7 +94,7 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptDef_Penalty_xpmade()
         {
@@ -108,7 +108,7 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(!bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptDef_Penalty_FGMissed()
         {
@@ -122,7 +122,7 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptDef_Penalty_FGMade_no_FD()
         {
@@ -136,7 +136,7 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(!bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptDef_Penalty_FGMade_FD()
         {
@@ -150,7 +150,7 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptDef_Penalty_FGMade_FD_near_end_of_half_or_game_dont_take1()
         {
@@ -164,7 +164,7 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(!bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptDef_Penalty_FGMade_FD_near_end_of_half_or_game_dont_take2()
         {
@@ -178,7 +178,7 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(!bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptDef_Penalty_FGMade_FD_near_end_of_half_or_game_dont_take3()
         {
@@ -192,7 +192,7 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(!bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptDef_Penalty_FGMade_FD_near_end_of_half_or_game_dont_take4()
         {
@@ -206,7 +206,7 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(!bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptDef_Penalty_FGMade_FD_near_end_of_half_or_game_less_urgent_take_penalty()
         {
@@ -219,7 +219,7 @@ namespace SpectatorFootball.unitTests.CoachTest
 
             Assert.IsTrue(bAccept);
         }
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptDef_Penalty_FGMade_FD_near_end_of_OT_Decline()
         {
@@ -232,7 +232,7 @@ namespace SpectatorFootball.unitTests.CoachTest
 
             Assert.IsTrue(bAccept);
         }
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptDef_Penalty_bOnePntAfterTDMissed()
         {
@@ -245,7 +245,7 @@ namespace SpectatorFootball.unitTests.CoachTest
 
             Assert.IsTrue(bAccept);
         }
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptDef_Penalty_bOnePntAfterTDMade()
         {
@@ -259,7 +259,7 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(!bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptDef_Penalty_bTwoPntAfterTDMissed()
         {
@@ -272,7 +272,7 @@ namespace SpectatorFootball.unitTests.CoachTest
 
             Assert.IsTrue(bAccept);
         }
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptDef_Penalty_bTwoPntAfterTDMade()
         {
@@ -286,7 +286,7 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(!bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptDef_Penalty_bThreePntAfterTDMissed()
         {
@@ -299,7 +299,7 @@ namespace SpectatorFootball.unitTests.CoachTest
 
             Assert.IsTrue(bAccept);
         }
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptDef_Penalty_bThreePntAfterTDMade()
         {
@@ -312,7 +312,7 @@ namespace SpectatorFootball.unitTests.CoachTest
 
             Assert.IsTrue(!bAccept);
         }
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptDef_Penalty_LastPlay_not_winning_Accept()
         {
@@ -326,13 +326,13 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptDef_Def_Offices_Penalty_not_First_Down_Good_Return_Punt_accept()
         {
             int Yards_to_go = 10;
             Penalty p = new Penalty() { code = Penalty_Codes.DO, bDeclinable = true, Yards = 5 };
-            Play_Result pResult = new Play_Result() {Play_Start_Yardline = 20, end_of_play_yardline = 59, Penalty = p};
+            Play_Result pResult = new Play_Result() { Play_Start_Yardline = 20, end_of_play_yardline = 59, Penalty = p };
             Game g = new Game() { Home_Score = 0, Away_Score = 0, Quarter = 4, Time = 200 };
             Coach c = new Coach(11, g, 7, new List<Player_and_Ratings>(), new List<Player_and_Ratings>(), new List<Injury>());
             bool bAccept = c.AcceptDef_Penalty(Enum.Play_Enum.PUNT, pResult, Yards_to_go, true, false, false, 25);
@@ -340,7 +340,7 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptDef_Def_Offices_Penalty_not_First_Down_Not_Good_Return_Punt_dont_accept()
         {
@@ -354,7 +354,7 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(!bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptDef_Def_Offices_Penalty_not_First_Down_Not_Good_Return_Punt_touchback_accept()
         {
@@ -368,7 +368,7 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptDef_Def_Penalty_Auto_First_Down_Bad_Return_Punt_accept()
         {
@@ -381,7 +381,7 @@ namespace SpectatorFootball.unitTests.CoachTest
 
             Assert.IsTrue(bAccept);
         }
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptDef_Def_Penalty_not_First_Down_but_first_Down_Punt_accept()
         {
@@ -395,7 +395,7 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptDef_Def_Penalty_Big_Kick_Turnover_Decline_Penalty()
         {
@@ -409,7 +409,7 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(!bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptDef_Def_Penalty_Big_Kick_Coffin_Corner_not_FD_Decline_Penalty()
         {
@@ -423,7 +423,7 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(!bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptDef_Def_Punt_Penalty_Big_Kick_Returned_TD_not_FD_Accept_Penalty()
         {
@@ -437,7 +437,7 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptDef_Penalty_kickoff_accept()
         {
@@ -451,7 +451,7 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptDef_not_FD_Penalty_on_RunFD_Decline()
         {
@@ -465,7 +465,7 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(!bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptDef_not_FD_Penalty_on_RunFD_half_the_dist()
         {
@@ -478,7 +478,7 @@ namespace SpectatorFootball.unitTests.CoachTest
 
             Assert.IsTrue(!bAccept);
         }
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptDef_FD_Penalty_on_long_pass_complete_dont_accept()
         {
@@ -492,7 +492,7 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(!bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptDef_auto_FD_Penalty_on_short_run_accept()
         {
@@ -506,7 +506,7 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptDef_FD_Penalty_on_short_run_accept()
         {
@@ -520,7 +520,7 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptDef_FD_Penalty_on_FD_Pass_accept()
         {
@@ -534,7 +534,7 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(!bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptDef_FD_Penalty_on_FD_Pass_dont_accept()
         {
@@ -548,13 +548,13 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptDef_auto_FD_Penalty_on_FD_run_dont_accept()
         {
             int Yards_to_go = 6;
             Penalty p = new Penalty() { bDeclinable = true, Yards = 10 };
-            Play_Result pResult = new Play_Result() {Play_Start_Yardline = 90, end_of_play_yardline = 90, Penalty = p, Yards_Gained = 7 };
+            Play_Result pResult = new Play_Result() { Play_Start_Yardline = 90, end_of_play_yardline = 90, Penalty = p, Yards_Gained = 7 };
             Game g = new Game() { Home_Score = 0, Away_Score = 0, Quarter = 4, Time = 0 };
             Coach c = new Coach(11, g, 7, new List<Player_and_Ratings>(), new List<Player_and_Ratings>(), new List<Injury>());
             bool bAccept = c.AcceptDef_Penalty(Enum.Play_Enum.RUN, pResult, Yards_to_go, true, false, false, 25);
@@ -564,17 +564,17 @@ namespace SpectatorFootball.unitTests.CoachTest
 
 
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptDef_Right_PI_Beyond_Yards_Gained_Accept()
         {
             int Yards_to_go = 10;
-            Penalty p = new Penalty() {code = Penalty_Codes.PI, bDeclinable = true, Yards = 0 };
+            Penalty p = new Penalty() { code = Penalty_Codes.PI, bDeclinable = true, Yards = 0 };
             Game_Player Penalized_Player = new Game_Player()
             {
                 Current_YardLine = 10.0
             };
-            Play_Result pResult = new Play_Result() {Play_Start_Yardline = 60,  end_of_play_yardline = 50, Penalty = p,Penalized_Player = Penalized_Player, Yards_Gained = 10 };
+            Play_Result pResult = new Play_Result() { Play_Start_Yardline = 60, end_of_play_yardline = 50, Penalty = p, Penalized_Player = Penalized_Player, Yards_Gained = 10 };
             Game g = new Game() { Home_Score = 0, Away_Score = 0, Quarter = 4, Time = 0 };
             Coach c = new Coach(11, g, 7, new List<Player_and_Ratings>(), new List<Player_and_Ratings>(), new List<Injury>());
             bool bAccept = c.AcceptDef_Penalty(Enum.Play_Enum.RUN, pResult, Yards_to_go, false, false, false, 25);
@@ -582,7 +582,7 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptDef_Right_PI_Big_Gainer_Decline()
         {
@@ -600,7 +600,7 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(!bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptDef_Right_PI_Gain_Beyond_Penalty_But_not_FD_Accept()
         {
@@ -622,7 +622,7 @@ namespace SpectatorFootball.unitTests.CoachTest
 
 
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptOff_Penalty_Turnover()
         {
@@ -636,7 +636,7 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(!bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptOff_Penalty_TD()
         {
@@ -650,7 +650,7 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptOff_Penalty_Safety()
         {
@@ -664,7 +664,7 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(!bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptOff_Penalty_xpmissed()
         {
@@ -678,7 +678,7 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(!bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptOff_Penalty_xpmade()
         {
@@ -692,7 +692,7 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptOff_Penalty_FGMissed()
         {
@@ -706,7 +706,7 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(!bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptOff_Penalty_FGmADE()
         {
@@ -720,7 +720,7 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptoFF_Penalty_bOnePntAfterTDMissed()
         {
@@ -733,7 +733,7 @@ namespace SpectatorFootball.unitTests.CoachTest
 
             Assert.IsTrue(!bAccept);
         }
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptoFF_Penalty_bOnePntAfterTDMade()
         {
@@ -747,7 +747,7 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptoFF_Penalty_bTwoPntAfterTDMissed()
         {
@@ -760,7 +760,7 @@ namespace SpectatorFootball.unitTests.CoachTest
 
             Assert.IsTrue(!bAccept);
         }
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptoFF_Penalty_bTwoPntAfterTDMade()
         {
@@ -774,7 +774,7 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptoFF_Penalty_bThreePntAfterTDMissed()
         {
@@ -787,7 +787,7 @@ namespace SpectatorFootball.unitTests.CoachTest
 
             Assert.IsTrue(!bAccept);
         }
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptOff_FG_Penalty_bThreePntAfterTDMade()
         {
@@ -801,21 +801,21 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptOff_Penalty_LastPlay_not_winning_Accept()
         {
             int Yards_to_go = 2;
             Penalty p = new Penalty() { bDeclinable = true, Yards = 10 };
             Play_Result pResult = new Play_Result() { end_of_play_yardline = 88, bThreePntAfterTDMade = false, Penalty = p };
-            Game g = new Game() {Home_Team_Franchise_ID = 22, Away_Team_Franchise_ID = 11, Home_Score = 7, Away_Score = 0, Quarter = 4, Time = 0 };
+            Game g = new Game() { Home_Team_Franchise_ID = 22, Away_Team_Franchise_ID = 11, Home_Score = 7, Away_Score = 0, Quarter = 4, Time = 0 };
             Coach c = new Coach(11, g, 7, new List<Player_and_Ratings>(), new List<Player_and_Ratings>(), new List<Injury>());
             bool bAccept = c.AcceptOff_Penalty(Enum.Play_Enum.PASS, pResult, Yards_to_go, true, true, false, 25);
 
             Assert.IsTrue(bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptOff_Punt_Off_Penalty_Bad_Net_Yards_Decline()
         {
@@ -829,7 +829,7 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(!bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptOff_Right_Punt_Off_Penalty_Good_Net_Yards_Accept()
         {
@@ -843,13 +843,13 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptOff_Right_Punt_Off_Penalty_Bad_Net_Yards_Decline()
         {
             int Yards_to_go = 2;
             Penalty p = new Penalty() { bDeclinable = true, Yards = 10 };
-            Play_Result pResult = new Play_Result() {Play_Start_Yardline = 80, end_of_play_yardline = 50, bCoffinCornerMade = false, Penalty = p };
+            Play_Result pResult = new Play_Result() { Play_Start_Yardline = 80, end_of_play_yardline = 50, bCoffinCornerMade = false, Penalty = p };
             Game g = new Game() { Home_Score = 0, Away_Score = 0, Quarter = 4, Time = 0 };
             Coach c = new Coach(11, g, 7, new List<Player_and_Ratings>(), new List<Player_and_Ratings>(), new List<Injury>());
             bool bAccept = c.AcceptOff_Penalty(Enum.Play_Enum.PUNT, pResult, Yards_to_go, false, false, false, 25);
@@ -857,7 +857,7 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(!bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptOff_Punt_Off_Penalty_Good_Net_Yards_Accept()
         {
@@ -871,7 +871,7 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptOff_Punt_Bad_Net_Touchback_Decline()
         {
@@ -885,7 +885,7 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(!bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptOff_Punt_Good_Net_Turnover_Accept()
         {
@@ -899,7 +899,7 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptOff_Punt_Coffin_Corner_Decline()
         {
@@ -913,7 +913,7 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptOff_Punt_TD_Decline()
         {
@@ -927,7 +927,7 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(!bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptOff_Penalty_kickoff_accept()
         {
@@ -940,7 +940,7 @@ namespace SpectatorFootball.unitTests.CoachTest
 
             Assert.IsTrue(bAccept);
         }
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptOff_Penalty_kickoff_TD_accept()
         {
@@ -953,7 +953,7 @@ namespace SpectatorFootball.unitTests.CoachTest
 
             Assert.IsTrue(bAccept);
         }
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptOff_Penalty_kickoff_Turnover_Reject()
         {
@@ -967,7 +967,7 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(!bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptOff_Penalty_5yrd_Run_For_Loss_Dont_Accept()
         {
@@ -981,7 +981,7 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(!bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptOff_Penalty_5yrd_Run_For_Loss_Accept()
         {
@@ -995,7 +995,7 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(!bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptOff_Penalty_Run_For_Loss_Dont_Accept()
         {
@@ -1009,7 +1009,7 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(!bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptOff_Penalty_Run_For_Loss_Accept()
         {
@@ -1023,7 +1023,7 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(!bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptOff_Penalty_Pas_For_Good_Game_Accept()
         {
@@ -1036,7 +1036,7 @@ namespace SpectatorFootball.unitTests.CoachTest
 
             Assert.IsTrue(bAccept);
         }
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptOff_Penalty_Pas_For_Good_Game_Accept_End_of_Game()
         {
@@ -1050,7 +1050,7 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptOff_Penalty_bOnePntAfterTDMissed()
         {
@@ -1063,7 +1063,7 @@ namespace SpectatorFootball.unitTests.CoachTest
 
             Assert.IsTrue(!bAccept);
         }
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptOff_Penalty_bOnePntAfterTDMade()
         {
@@ -1077,7 +1077,7 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptOff_Penalty_bTwoPntAfterTDMissed()
         {
@@ -1090,7 +1090,7 @@ namespace SpectatorFootball.unitTests.CoachTest
 
             Assert.IsTrue(!bAccept);
         }
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptOff_Penalty_bTwoPntAfterTDMade()
         {
@@ -1104,7 +1104,7 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(bAccept);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptOff_Penalty_bThreePntAfterTDMissed()
         {
@@ -1117,7 +1117,7 @@ namespace SpectatorFootball.unitTests.CoachTest
 
             Assert.IsTrue(!bAccept);
         }
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void AcceptOff_Penalty_bThreePntAfterTDMade()
         {

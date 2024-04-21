@@ -13,7 +13,7 @@ namespace SpectatorFootball.IntegrationTests.Kickoff_Normal
     [TestClass]
     public class KickoffNormalTEST
     {
-        [TestCategory("Normal_Kickoff")]
+        [TestCategory("Integration")]
         [TestMethod]
         public void Normal_Kickoff_Avgs()
         {

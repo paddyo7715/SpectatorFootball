@@ -14,7 +14,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
     [TestClass]
     public class GameEngineTEST
     {
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void coinToss_HTWins()
         {
@@ -22,7 +22,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(r == 11);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void coinToss_ATWins()
         {
@@ -30,43 +30,43 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(r == 22);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void isPlayWithReturner_Kickoff_true()
         {
             Assert.IsTrue(GameEngine.isPlayWithReturner(Play_Enum.KICKOFF_NORMAL) == true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void isPlayWithReturner_FreeKick_true()
         {
             Assert.IsTrue(GameEngine.isPlayWithReturner(Play_Enum.FREE_KICK) == true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void isPlayWithReturner_Punt_true()
         {
             Assert.IsTrue(GameEngine.isPlayWithReturner(Play_Enum.PUNT) == true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void isPlayWithReturner_Pass_false()
         {
             Assert.IsTrue(GameEngine.isPlayWithReturner(Play_Enum.PASS) == false);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void Switch_Posession_at_possession()
         {
             Assert.IsTrue(GameEngine.Switch_Posession(11, 11, 22) == 22);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void Switch_Posession_ht_possession()
         {
             Assert.IsTrue(GameEngine.Switch_Posession(22, 11, 22) == 11);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void getPlayerAction_Passer()
         {
@@ -77,7 +77,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             bool b = GameEngine.isBallTeamPenalty(pResult);
             Assert.IsTrue(b);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void getPlayerAction_Kicker()
         {
@@ -88,7 +88,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             bool b = GameEngine.isBallTeamPenalty(pResult);
             Assert.IsTrue(!b);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void getPlayerAction_Punter()
         {
@@ -99,7 +99,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             bool b = GameEngine.isBallTeamPenalty(pResult);
             Assert.IsTrue(!b);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void getPlayerAction_Returner()
         {
@@ -110,7 +110,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             bool b = GameEngine.isBallTeamPenalty(pResult);
             Assert.IsTrue(b);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void getPlayerAction_PuntReturner()
         {
@@ -121,7 +121,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             bool b = GameEngine.isBallTeamPenalty(pResult);
             Assert.IsTrue(b);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void getPlayerAction_PassCatchers()
         {
@@ -132,7 +132,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             bool b = GameEngine.isBallTeamPenalty(pResult);
             Assert.IsTrue(b);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void getPlayerAction_BallRunners()
         {
@@ -143,7 +143,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             bool b = GameEngine.isBallTeamPenalty(pResult);
             Assert.IsTrue(b);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void getPlayerAction_PassBlockers()
         {
@@ -154,7 +154,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             bool b = GameEngine.isBallTeamPenalty(pResult);
             Assert.IsTrue(b);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void getPlayerAction_PassRushers()
         {
@@ -165,7 +165,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             bool b = GameEngine.isBallTeamPenalty(pResult);
             Assert.IsTrue(!b);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void getPlayerAction_PassDefenders()
         {
@@ -176,7 +176,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             bool b = GameEngine.isBallTeamPenalty(pResult);
             Assert.IsTrue(!b);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void getPlayerAction_RunDefenders()
         {
@@ -187,7 +187,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             bool b = GameEngine.isBallTeamPenalty(pResult);
             Assert.IsTrue(!b);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void getPlayerAction_KickReturners()
         {
@@ -198,7 +198,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             bool b = GameEngine.isBallTeamPenalty(pResult);
             Assert.IsTrue(b);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void getPlayerAction_KickDefenders()
         {
@@ -209,7 +209,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             bool b = GameEngine.isBallTeamPenalty(pResult);
             Assert.IsTrue(!b);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void getPlayerAction_PuntReturners()
         {
@@ -220,7 +220,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             bool b = GameEngine.isBallTeamPenalty(pResult);
             Assert.IsTrue(b);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void getPlayerAction_Field_Goal_Kicking_Team()
         {
@@ -231,7 +231,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             bool b = GameEngine.isBallTeamPenalty(pResult);
             Assert.IsTrue(b);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void getPlayerAction_Field_Goal_Defenders()
         {
@@ -242,43 +242,43 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             bool b = GameEngine.isBallTeamPenalty(pResult);
             Assert.IsTrue(!b);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void isGameEnd__Regualr_3rdQuarterTied_false()
         {
             Assert.IsTrue(GameEngine.isGameEnd(0, 3, 100, 10, 10) == false);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void isGameEnd_Regualr_EndofGameTied_False()
         {
             Assert.IsTrue(GameEngine.isGameEnd(0, 4, 0, 10, 10) == false);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void isGameEnd_Playeroffs_EndofGame_true()
         {
             Assert.IsTrue(GameEngine.isGameEnd(1, 4, 0, 10, 20) == true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void isGameEnd_playoffs_OertimeTied_true()
         {
             Assert.IsTrue(GameEngine.isGameEnd(1, 6, 100, 20, 20) == false);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void isGameEnd_playoffs_FirstOertimeTied_true()
         {
             Assert.IsTrue(GameEngine.isGameEnd(1, 5, 0, 20, 20) == false);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void isGameEnd_Regualr_FirstOertimeTied_true()
         {
             Assert.IsTrue(GameEngine.isGameEnd(0, 5, 0, 20, 20) == true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setScoringBool_home_team_TD()
         {
@@ -295,7 +295,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 pResult.bAwaySafetyFor == false);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setScoringBool_away_team_TD()
         {
@@ -313,7 +313,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
 
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setScoringBool_Home_team_FG()
         {
@@ -330,7 +330,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 pResult.bAwaySafetyFor == false);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setScoringBool_Away_team_FG()
         {
@@ -347,7 +347,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 pResult.bAwaySafetyFor == false);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setScoringBool_Home_team_XP()
         {
@@ -364,7 +364,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 pResult.bAwaySafetyFor == false);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setScoringBool_Away_team_XP()
         {
@@ -382,7 +382,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
 
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setScoringBool_Home_team_XP1()
         {
@@ -399,7 +399,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 pResult.bAwaySafetyFor == false);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setScoringBool_Away_team_XP1()
         {
@@ -416,7 +416,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 pResult.bAwaySafetyFor == false);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setScoringBool_Home_team_XP2()
         {
@@ -433,7 +433,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 pResult.bAwaySafetyFor == false);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setScoringBool_Away_team_XP2()
         {
@@ -450,7 +450,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 pResult.bAwaySafetyFor == false);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setScoringBool_Home_team_XP3()
         {
@@ -467,7 +467,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 pResult.bAwaySafetyFor == false);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setScoringBool_Away_team_XP3()
         {
@@ -484,7 +484,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 pResult.bAwaySafetyFor == false);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setScoringBool_Home_team_Safety()
         {
@@ -501,7 +501,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 pResult.bAwaySafetyFor == false);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setScoringBool_Away_team_Safety()
         {
@@ -517,15 +517,15 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 pResult.bAwayXP1 == false && pResult.bAwayXP2 == false && pResult.bAwayXP3 == false &&
                 pResult.bAwaySafetyFor == true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void getForfeit_Message_HomeTeamForfeits()
         {
-            string message = GameEngine.getForfeit_Message("Away_Team", "Home_Team_Name", 2,0);
+            string message = GameEngine.getForfeit_Message("Away_Team", "Home_Team_Name", 2, 0);
             Assert.IsTrue(message == "The " + "Away_Team" + " have won the game through forfeit, becuase the " + "Home_Team_Name" + " could not field enough players." + Environment.NewLine + Environment.NewLine +
             "The final score is " + "2" + " to " + "0");
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void getForfeit_Message_AwayTeamForfeits()
         {
@@ -533,7 +533,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(message == "The " + "Home_Team_Name" + " have won the game through forfeit, becuase the " + "Away_Team" + " could not field enough players." + Environment.NewLine + Environment.NewLine +
             "The final score is " + "2" + " to " + "0");
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void UpdateScore_Away_TD_Scores_Q1()
         {
@@ -562,7 +562,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 g.Home_Score_Q1 == 0);
 
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void UpdateScore_Away_FG_Scores_Q1()
         {
@@ -591,7 +591,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 g.Home_Score_Q1 == 0);
 
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void UpdateScore_Away_XP_Scores_Q1()
         {
@@ -620,7 +620,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 g.Home_Score_Q1 == 0);
 
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void UpdateScore_Away_Safety_Scores_Q1()
         {
@@ -649,7 +649,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 g.Home_Score_Q1 == 0);
 
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void UpdateScore_Away_XP1_Q1()
         {
@@ -678,7 +678,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 g.Home_Score_Q1 == 0);
 
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void UpdateScore_Away_XP2_Q1()
         {
@@ -707,7 +707,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 g.Home_Score_Q1 == 0);
 
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void UpdateScore_Away_XP3_Q1()
         {
@@ -737,7 +737,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void UpdateScore_Home_TD_Scores_Q1()
         {
@@ -766,7 +766,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 g.Home_Score_Q1 == 6);
 
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void UpdateScore_Home_FG_Scores_Q1()
         {
@@ -795,7 +795,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 g.Home_Score_Q1 == 3);
 
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void UpdateScore_Home_XP_Scores_Q1()
         {
@@ -824,7 +824,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 g.Home_Score_Q1 == 1);
 
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void UpdateScore_Home_Safety_Scores_Q1()
         {
@@ -853,7 +853,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 g.Home_Score_Q1 == 2);
 
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void UpdateScore_Home_XP1_Q1()
         {
@@ -882,7 +882,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 g.Home_Score_Q1 == 1);
 
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void UpdateScore_Home_XP2_Q1()
         {
@@ -911,7 +911,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 g.Home_Score_Q1 == 2);
 
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void UpdateScore_Home_XP3_Q1()
         {
@@ -940,7 +940,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 g.Home_Score_Q1 == 3);
 
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void UpdateScore_Away_TD_Scores_Q2()
         {
@@ -968,7 +968,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(g.Away_Score == 6 && g.Home_Score == 0 && g.Away_Score_Q2 == 6 &&
                 g.Home_Score_Q2 == 0);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void UpdateScore_Home_TD_Scores_Q2()
         {
@@ -996,7 +996,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(g.Away_Score == 0 && g.Home_Score == 6 && g.Away_Score_Q2 == 0 &&
                 g.Home_Score_Q2 == 6);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void UpdateScore_Away_TD_Scores_Q3()
         {
@@ -1024,7 +1024,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(g.Away_Score == 6 && g.Home_Score == 0 && g.Away_Score_Q3 == 6 &&
                 g.Home_Score_Q3 == 0);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void UpdateScore_Home_TD_Scores_Q3()
         {
@@ -1053,7 +1053,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 g.Home_Score_Q3 == 6);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void UpdateScore_Away_TD_Scores_Q4()
         {
@@ -1081,7 +1081,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(g.Away_Score == 6 && g.Home_Score == 0 && g.Away_Score_Q4 == 6 &&
                 g.Home_Score_Q4 == 0);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void UpdateScore_Home_TD_Scores_Q4()
         {
@@ -1109,7 +1109,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(g.Away_Score == 0 && g.Home_Score == 6 && g.Away_Score_Q4 == 0 &&
                 g.Home_Score_Q4 == 6);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void UpdateScore_Away_TD_Scores_OT()
         {
@@ -1137,7 +1137,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(g.Away_Score == 6 && g.Home_Score == 0 && g.Away_Score_OT == 6 &&
                 g.Home_Score_OT == 0);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void UpdateScore_Home_TD_Scores_OT()
         {

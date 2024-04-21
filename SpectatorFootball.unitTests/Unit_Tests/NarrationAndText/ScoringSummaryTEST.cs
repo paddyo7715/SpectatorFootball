@@ -10,7 +10,7 @@ namespace SpectatorFootball.unitTests.NarrationAndText
     [TestClass]
     public class ScoringSummaryTEST
     {
-        [TestCategory("NarrationAndText")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void CreateScoringSummaryEntry_KO_TD()
         {
@@ -25,11 +25,11 @@ namespace SpectatorFootball.unitTests.NarrationAndText
             pResult.Yards_Returned = 99.0;
 
             string s = ScoringSummary.CreateScoringSummaryEntry(Enum.Play_Enum.KICKOFF_NORMAL, pResult);
-            string expected_result = "J Miller kickoff return of 99 yards for a TD";                 
-        
-            Assert.IsTrue(s == expected_result);    
+            string expected_result = "J Miller kickoff return of 99 yards for a TD";
+
+            Assert.IsTrue(s == expected_result);
         }
-        [TestCategory("NarrationAndText")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void CreateScoringSummaryEntry_FK_TD()
         {
@@ -48,7 +48,7 @@ namespace SpectatorFootball.unitTests.NarrationAndText
 
             Assert.IsTrue(s == expected_result);
         }
-        [TestCategory("NarrationAndText")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void CreateScoringSummaryEntry_PR_TD()
         {
@@ -68,7 +68,7 @@ namespace SpectatorFootball.unitTests.NarrationAndText
             Assert.IsTrue(s == expected_result);
         }
 
-        [TestCategory("NarrationAndText")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void CreateScoringSummaryEntry_FG_Good()
         {
@@ -87,7 +87,7 @@ namespace SpectatorFootball.unitTests.NarrationAndText
 
             Assert.IsTrue(s == expected_result);
         }
-        [TestCategory("NarrationAndText")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void CreateScoringSummaryEntry_EP_Good()
         {
@@ -99,13 +99,13 @@ namespace SpectatorFootball.unitTests.NarrationAndText
             Play_Result pResult = new Play_Result();
             pResult.Kicker = gp;
             pResult.bAwayXP = true;
- 
+
             string s = ScoringSummary.CreateScoringSummaryEntry(Enum.Play_Enum.EXTRA_POINT, pResult);
             string expected_result = "J Miller makes the extra point";
 
             Assert.IsTrue(s == expected_result);
         }
-        [TestCategory("NarrationAndText")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void CreateScoringSummaryEntry_1XP_RUN()
         {
@@ -123,7 +123,7 @@ namespace SpectatorFootball.unitTests.NarrationAndText
 
             Assert.IsTrue(s == expected_result);
         }
-        [TestCategory("NarrationAndText")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void CreateScoringSummaryEntry_2XP_RUN()
         {
@@ -141,7 +141,7 @@ namespace SpectatorFootball.unitTests.NarrationAndText
 
             Assert.IsTrue(s == expected_result);
         }
-        [TestCategory("NarrationAndText")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void CreateScoringSummaryEntry_3XP_RUN()
         {
@@ -160,7 +160,7 @@ namespace SpectatorFootball.unitTests.NarrationAndText
             Assert.IsTrue(s == expected_result);
         }
 
-        [TestCategory("NarrationAndText")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void CreateScoringSummaryEntry_1XP_PASS_QBRun()
         {
@@ -184,7 +184,7 @@ namespace SpectatorFootball.unitTests.NarrationAndText
 
             Assert.IsTrue(s == expected_result);
         }
-        [TestCategory("NarrationAndText")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void CreateScoringSummaryEntry_1XP_PASS()
         {
@@ -205,7 +205,7 @@ namespace SpectatorFootball.unitTests.NarrationAndText
 
             Assert.IsTrue(s == expected_result);
         }
-        [TestCategory("NarrationAndText")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void CreateScoringSummaryEntry_2XP_PASS_QBRun()
         {
@@ -230,7 +230,7 @@ namespace SpectatorFootball.unitTests.NarrationAndText
 
             Assert.IsTrue(s == expected_result);
         }
-        [TestCategory("NarrationAndText")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void CreateScoringSummaryEntry_2XP_PASS()
         {
@@ -252,7 +252,7 @@ namespace SpectatorFootball.unitTests.NarrationAndText
             Assert.IsTrue(s == expected_result);
         }
 
-        [TestCategory("NarrationAndText")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void CreateScoringSummaryEntry_3XP_PASS_QBRun()
         {
@@ -279,7 +279,7 @@ namespace SpectatorFootball.unitTests.NarrationAndText
 
             Assert.IsTrue(s == expected_result);
         }
-        [TestCategory("NarrationAndText")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void CreateScoringSummaryEntry_3XP_PASS()
         {
@@ -300,7 +300,7 @@ namespace SpectatorFootball.unitTests.NarrationAndText
 
             Assert.IsTrue(s == expected_result);
         }
-        [TestCategory("NarrationAndText")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void CreateScoringSummaryEntry_Run_TD()
         {
@@ -319,7 +319,7 @@ namespace SpectatorFootball.unitTests.NarrationAndText
             Assert.IsTrue(s == expected_result);
         }
 
-        [TestCategory("NarrationAndText")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void CreateScoringSummaryEntry_Run_Fumble_Recovered_TD()
         {
@@ -343,7 +343,7 @@ namespace SpectatorFootball.unitTests.NarrationAndText
             Assert.IsTrue(s == expected_result);
         }
 
-        [TestCategory("NarrationAndText")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void CreateScoringSummaryEntry_Run_Safety()
         {
@@ -366,7 +366,7 @@ namespace SpectatorFootball.unitTests.NarrationAndText
             Assert.IsTrue(s == expected_result);
         }
 
-        [TestCategory("NarrationAndText")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void CreateScoringSummaryEntry_Pass_QB_Run_TD()
         {
@@ -391,7 +391,7 @@ namespace SpectatorFootball.unitTests.NarrationAndText
             Assert.IsTrue(s == expected_result);
         }
 
-        [TestCategory("NarrationAndText")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void CreateScoringSummaryEntry_PASS()
         {
@@ -414,7 +414,7 @@ namespace SpectatorFootball.unitTests.NarrationAndText
             Assert.IsTrue(s == expected_result);
         }
 
-        [TestCategory("NarrationAndText")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void CreateScoringSummaryEntry_Pass_Fumble_Recovered_TD()
         {
@@ -437,7 +437,7 @@ namespace SpectatorFootball.unitTests.NarrationAndText
             Assert.IsTrue(s == expected_result);
         }
 
-        [TestCategory("NarrationAndText")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void CreateScoringSummaryEntry_Pass_Safety()
         {

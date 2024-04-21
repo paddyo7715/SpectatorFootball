@@ -15,7 +15,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
     [TestClass]
     public class setPlayOutCome_RunPass_TEST
     {
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Left_1st_and_10_2yardloss()
         {
@@ -123,7 +123,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Left_1st_and_10_2yardloss()
         {
@@ -218,7 +218,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Left_1st_and_10_5Yard_Gain()
         {
@@ -326,7 +326,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Left_1st_and_10_5_Yard_Gain()
         {
@@ -421,7 +421,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Left_1st_and_10_10Yard_Gain_FirstDown()
         {
@@ -529,7 +529,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Left_1st_and_10_10_Yard_Gain_FirstDown()
         {
@@ -624,7 +624,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Left_3rd_and_2_2Yard_Gain_FirstDown_3rdDownConv()
         {
@@ -732,7 +732,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Left_3rd_and_2_2_Yard_Gain_FirstDown_3rddownConv()
         {
@@ -827,7 +827,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Left_4th_and_2_2Yard_Gain_FirstDown_4thDownConv()
         {
@@ -935,7 +935,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Left_4th_and_2_2_Yard_Gain_FirstDown_4thdownConv()
         {
@@ -1030,7 +1030,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Left_3rd_and_3_1Yard_Gain_no_3rdDownConv()
         {
@@ -1138,7 +1138,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Left_4th_and_3_1_Yard_Gain_No_4thdownConv()
         {
@@ -1232,7 +1232,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Left_4th_and_3_1Yard_Gain_no_4thDownConv()
         {
@@ -1340,7 +1340,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Left_3rd_and_3_1_Yard_Gain_No_3rddownConv()
         {
@@ -1435,7 +1435,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Left_2nd_and_3_from_95_TD_and_FirstDown()
         {
@@ -1543,7 +1543,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Left_2nd_and_3_from_95_TD_and_FirstDown()
         {
@@ -1638,7 +1638,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Left_3rd_and_8_from_95_TD_no_FirstDown_or_3rdDownConv()
         {
@@ -1746,7 +1746,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Left_3rd_and_8_from_95_TD_no_FirstDown_or_3rdDownConv()
         {
@@ -1841,7 +1841,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Left_4th_and_8_from_95_TD_no_FirstDown_or_4thDownConv()
         {
@@ -1949,7 +1949,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Left_4th_and_8_from_95_TD_no_FirstDown_or_4thDownConv()
         {
@@ -2044,7 +2044,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Left_3rd_and_8_from_92_TD_FirstDown_and_3rdDownConv()
         {
@@ -2152,7 +2152,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Left_3rd_and_8_from_92_TD_FirstDown_and_3rdDownConv()
         {
@@ -2247,7 +2247,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Left_4th_and_8_from_92_TD_FirstDown_and_4thDownConv()
         {
@@ -2355,7 +2355,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Left_4th_and_8_from_92_TD_FirstDown_and_4thDownConv()
         {
@@ -2450,7 +2450,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Left_3rd_and_10_from_30_2yardGane_Fumble_lost_no_3rdDownConv()
         {
@@ -2558,7 +2558,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Left_3rd_and_10_from_30_Interception_no_3rdDownConv()
         {
@@ -2654,7 +2654,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Left_3rd_and_10_from_30_2yardGame_Fubmle_no_3rdDownConv()
         {
@@ -2750,7 +2750,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Left_3rd_and_10_from_30_15yardGane_Fumble_lost_no_FirstDown_or_3rdDownConv()
         {
@@ -2858,7 +2858,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Left_3rd_and_10_from_30_15yardGame_Fumble_lost_no_FirstDown_or_3rdDownConv()
         {
@@ -2954,7 +2954,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Left_4th_and_10_from_30_15yardGane_Fumble_lost_no_FirstDown_or_4thDownConv()
         {
@@ -3062,7 +3062,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Left_4th_and_10_from_30_15yardGame_Fumble_lost_no_FirstDown_or_4thDownConv()
         {
@@ -3158,7 +3158,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Left_4th_and_10_from_2_3yardLoss_Fumble_lost_TD_no_FirstDown_or_4thDownConv()
         {
@@ -3266,7 +3266,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Left_4th_and_10_from_2_3yardLoss_Fumble_lost_TD_no_FirstDown_or_4thDownConv()
         {
@@ -3361,7 +3361,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Left_4th_and_10_from_2_3yardLoss_Safety_no_FirstDown_or_4thDownConv()
         {
@@ -3470,7 +3470,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Left_4th_and_10_from_2_3yardLoss_Safety_no_FirstDown_or_4thDownConv()
         {
@@ -3566,7 +3566,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Left_4th_and_10_from_2_Sack_Safety_no_FirstDown_or_4thDownConv()
         {
@@ -3664,7 +3664,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Left_3rd_and_10_from_2_QB_Fumdbles_TD_no_FirstDown_or_3rdDownConv()
         {
@@ -3758,7 +3758,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Left_1st_and_10_from_20_Sack_7_yard_loss()
         {
@@ -3852,7 +3852,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Left_1st_and_10_Pass_interference_Accepted()
         {
@@ -3956,7 +3956,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Left_1st_and_10_Pass_interference_Rejected()
         {
@@ -4058,7 +4058,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Left_3rd_and_10_from_88_Pass_interference_endzone_Accepted()
         {
@@ -4162,7 +4162,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Left_3rd_and_10_from_5_Offensive_Pass_interference_Accepted()
         {
@@ -4266,7 +4266,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Left_3rd_and_10_from_5_Offensive_Pass_interference_Rejected_Interception()
         {
@@ -4370,7 +4370,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Left_4th_and_10_from_80_Interception_in_Endzone()
         {
@@ -4469,7 +4469,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Left_3rd_and_5_from_80_Fubmle_Lost_10_yard_game()
         {
@@ -4570,7 +4570,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Left_3rd_and10_delay_of_Game_Penalty()
         {
@@ -4675,7 +4675,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Left_3rd_and10_delay_of_Game_Penalty()
         {
@@ -4780,7 +4780,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Left_3rd_and10_from_6_delay_of_Game_Penalty()
         {
@@ -4885,7 +4885,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Left_3rd_and10_from_6_delay_of_Game_Penalty()
         {
@@ -4990,7 +4990,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Left_2nd_and10_from_6_Illegal_Contact_Aut_First_Down_on_Def_Penalty()
         {
@@ -5095,7 +5095,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Left_2nd_and10_from_6_Illegal_Contact_Aut_First_Down_on_Def_Penalty()
         {
@@ -5200,7 +5200,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Left_3rd_and3_from_30_Illegal_Contact_Aut_First_Down_on_Def_Penalty()
         {
@@ -5305,7 +5305,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Left_3rd_and3_from_30_Illegal_Contact_Aut_First_Down_on_Def_Penalty()
         {
@@ -5410,7 +5410,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Left_3rd_and6_from_95_NZ_Penalty_on_Def_4th_and_3p5()
         {
@@ -5515,7 +5515,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Left_3rd_and6_from_95_NZ_Penalty_on_Def_4th_and_3p5()
         {
@@ -5620,7 +5620,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Left_3rd_and3_from_27_Def_Off_Penalty_on_Def_Declined()
         {
@@ -5726,7 +5726,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Left_3rd_and3_from_27_Def_Off_Penalty_on_Def_Declined()
         {
@@ -5831,7 +5831,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Left_1st_and_10_from_20_5_yard_game_UC_Penalty_on_Offense()
         {
@@ -5946,7 +5946,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Left_1st_and_10_from_20_5_yard_game_UC_Penalty_on_Offense()
         {
@@ -6077,7 +6077,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Left_1st_and_10_from_40_0_yard_game_FM_Penalty_on_Offense()
         {
@@ -6192,7 +6192,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Left_1st_and_10_from_40_0_yard_game_FM_Penalty_on_Offense()
         {
@@ -6323,7 +6323,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Left_1st_and_10_from_40_0_yard_game_FM_Penalty_on_Offense_at_39()
         {
@@ -6438,7 +6438,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Left_1st_and_10_from_40_0_yard_game_FM_Penalty_on_Offense_at_39()
         {
@@ -6569,7 +6569,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Left_1st_and_10_from_40_0_yard_game_FM_Penalty_on_Offense_at_5()
         {
@@ -6684,7 +6684,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Left_1st_and_10_from_40_0_yard_game_FM_Penalty_on_Offense_at_5()
         {
@@ -6815,7 +6815,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Left_1st_and_10_from_40_0_yard_game_FM_Penalty_on_Defense()
         {
@@ -6930,7 +6930,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Left_1st_and_10_from_40_0_yard_game_FM_Penalty_on_Defense()
         {
@@ -7061,7 +7061,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Left_4th_and_5_from_80_10_yard_game_Fumble_lost_FM_Penalty_on_Defense()
         {
@@ -7176,7 +7176,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Left_3rd_and_10_from_80_TD_FM_Penalty_on_Defense_Ignored()
         {
@@ -7308,7 +7308,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Left_3rd_and_10_from_80_TD_FM_Penalty_on_Offense()
         {
@@ -7439,7 +7439,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Left_4th_and_10_from_80_Interception_in_Endzone_FM_on_Offense()
         {
@@ -7542,7 +7542,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Left_4th_and_10_from_80_Interception_in_Endzone_FM_on_Defense()
         {
@@ -7646,7 +7646,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
 
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Right_1st_and_10_2yardloss()
         {
@@ -7754,7 +7754,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Right_1st_and_10_2yardloss()
         {
@@ -7849,7 +7849,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Right_1st_and_10_5Yard_Gain()
         {
@@ -7957,7 +7957,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Right_1st_and_10_5_Yard_Gain()
         {
@@ -8052,7 +8052,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Right_1st_and_10_10Yard_Gain_FirstDown()
         {
@@ -8160,7 +8160,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Right_1st_and_10_10_Yard_Gain_FirstDown()
         {
@@ -8255,7 +8255,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Right_3rd_and_2_2Yard_Gain_FirstDown_3rdDownConv()
         {
@@ -8363,7 +8363,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Right_3rd_and_2_2_Yard_Gain_FirstDown_3rddownConv()
         {
@@ -8458,7 +8458,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Right_4th_and_2_2Yard_Gain_FirstDown_4thDownConv()
         {
@@ -8566,7 +8566,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Right_4th_and_2_2_Yard_Gain_FirstDown_4thdownConv()
         {
@@ -8661,7 +8661,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Right_3rd_and_3_1Yard_Gain_no_3rdDownConv()
         {
@@ -8769,7 +8769,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Right_4th_and_3_1_Yard_Gain_No_4thdownConv()
         {
@@ -8864,7 +8864,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Right_4th_and_3_1Yard_Gain_no_4thDownConv()
         {
@@ -8972,7 +8972,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Right_3rd_and_3_1_Yard_Gain_No_3rddownConv()
         {
@@ -9067,7 +9067,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Right_2nd_and_3_from_95_TD_and_FirstDown()
         {
@@ -9175,7 +9175,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Right_2nd_and_3_from_95_TD_and_FirstDown()
         {
@@ -9270,7 +9270,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Right_3rd_and_8_from_95_TD_no_FirstDown_or_3rdDownConv()
         {
@@ -9378,7 +9378,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Right_3rd_and_8_from_95_TD_no_FirstDown_or_3rdDownConv()
         {
@@ -9473,7 +9473,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Right_4th_and_8_from_95_TD_no_FirstDown_or_4thDownConv()
         {
@@ -9581,7 +9581,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Right_4th_and_8_from_95_TD_no_FirstDown_or_4thDownConv()
         {
@@ -9676,7 +9676,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Right_3rd_and_8_from_92_TD_FirstDown_and_3rdDownConv()
         {
@@ -9784,7 +9784,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Right_3rd_and_8_from_92_TD_FirstDown_and_3rdDownConv()
         {
@@ -9880,7 +9880,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
 
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Right_4th_and_8_from_92_TD_FirstDown_and_4thDownConv()
         {
@@ -9988,7 +9988,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Right_4th_and_8_from_92_TD_FirstDown_and_4thDownConv()
         {
@@ -10083,7 +10083,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Right_3rd_and_10_from_30_2yardGane_Fumble_lost_no_3rdDownConv()
         {
@@ -10191,7 +10191,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Right_3rd_and_10_from_30_Interception_no_3rdDownConv()
         {
@@ -10287,7 +10287,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Right_3rd_and_10_from_70_2yardGame_Fubmle_no_3rdDownConv()
         {
@@ -10383,7 +10383,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Right_3rd_and_10_from_70_15yardGane_Fumble_lost_no_FirstDown_or_3rdDownConv()
         {
@@ -10491,7 +10491,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Right_3rd_and_10_from_70_15yardGame_Fumble_lost_no_FirstDown_or_3rdDownConv()
         {
@@ -10587,7 +10587,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Right_4th_and_10_from_70_15yardGane_Fumble_lost_no_FirstDown_or_4thDownConv()
         {
@@ -10695,7 +10695,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Right_4th_and_10_from_70_15yardGame_Fumble_lost_no_FirstDown_or_4thDownConv()
         {
@@ -10791,7 +10791,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Right_4th_and_10_from_98_3yardLoss_Fumble_lost_TD_no_FirstDown_or_4thDownConv()
         {
@@ -10899,7 +10899,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Right_4th_and_10_from_98_3yardLoss_Fumble_lost_TD_no_FirstDown_or_4thDownConv()
         {
@@ -10994,7 +10994,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Right_4th_and_10_from_98_3yardLoss_Safety_no_FirstDown_or_4thDownConv()
         {
@@ -11103,7 +11103,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Right_4th_and_10_from_98_3yardLoss_Safety_no_FirstDown_or_4thDownConv()
         {
@@ -11199,7 +11199,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Right_4th_and_10_from_98_Sack_Safety_no_FirstDown_or_4thDownConv()
         {
@@ -11297,7 +11297,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Right_3rd_and_10_from_98_QB_Fumdbles_TD_no_FirstDown_or_3rdDownConv()
         {
@@ -11391,7 +11391,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Right_1st_and_10_from_80_Sack_7_yard_loss()
         {
@@ -11485,7 +11485,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Right_1st_and_10_Pass_interference_Accepted()
         {
@@ -11589,7 +11589,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Right_1st_and_10_Pass_interference_Rejected()
         {
@@ -11691,7 +11691,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Right_3rd_and_10_from_12_Pass_interference_endzone_Accepted()
         {
@@ -11795,7 +11795,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Right_3rd_and_10_from_95_Offensive_Pass_interference_Accepted()
         {
@@ -11899,7 +11899,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Right_3rd_and_10_from_95_Offensive_Pass_interference_Rejected_Interception()
         {
@@ -12003,7 +12003,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Right_4th_and_10_from_20_Interception_in_Endzone()
         {
@@ -12102,7 +12102,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Right_3rd_and_95_from_20_Fubmle_Lost_10_yard_game()
         {
@@ -12203,7 +12203,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Right_3rd_and10_delay_of_Game_Penalty()
         {
@@ -12308,7 +12308,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Right_3rd_and10_delay_of_Game_Penalty()
         {
@@ -12413,7 +12413,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Right_3rd_and10_from_94_delay_of_Game_Penalty()
         {
@@ -12518,7 +12518,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Right_3rd_and10_from_94_delay_of_Game_Penalty()
         {
@@ -12623,7 +12623,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Right_2nd_and10_from_94_Illegal_Contact_Aut_First_Down_on_Def_Penalty()
         {
@@ -12728,7 +12728,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Right_2nd_and10_from_94_Illegal_Contact_Aut_First_Down_on_Def_Penalty()
         {
@@ -12833,7 +12833,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Right_3rd_and3_from_70_Illegal_Contact_Aut_First_Down_on_Def_Penalty()
         {
@@ -12938,7 +12938,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Right_3rd_and3_from_70_Illegal_Contact_Aut_First_Down_on_Def_Penalty()
         {
@@ -13043,7 +13043,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Right_3rd_and6_from_5_NZ_Penalty_on_Def_4th_and_3p5()
         {
@@ -13148,7 +13148,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Right_3rd_and6_from_5_NZ_Penalty_on_Def_4th_and_3p5()
         {
@@ -13253,7 +13253,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Right_3rd_and3_from_73_Def_Off_Penalty_on_Def_Declined()
         {
@@ -13359,7 +13359,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Right_3rd_and3_from_73_Def_Off_Penalty_on_Def_Declined()
         {
@@ -13464,7 +13464,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Right_1st_and_10_from_80_5_yard_game_UC_Penalty_on_Offense()
         {
@@ -13579,7 +13579,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Right_1st_and_10_from_80_5_yard_game_UC_Penalty_on_Offense()
         {
@@ -13710,7 +13710,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Right_1st_and_10_from_60_0_yard_game_FM_Penalty_on_Offense()
         {
@@ -13825,7 +13825,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Right_1st_and_10_from_60_0_yard_game_FM_Penalty_on_Offense()
         {
@@ -13956,7 +13956,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Right_1st_and_10_from_60_0_yard_game_FM_Penalty_on_Offense_at_61()
         {
@@ -14071,7 +14071,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Right_1st_and_10_from_60_0_yard_game_FM_Penalty_on_Offense_at_39()
         {
@@ -14202,7 +14202,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Right_1st_and_10_from_60_0_yard_game_FM_Penalty_on_Offense_at_5()
         {
@@ -14317,7 +14317,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Right_1st_and_10_from_60_0_yard_game_FM_Penalty_on_Offense_at_5()
         {
@@ -14448,7 +14448,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Right_1st_and_10_from_60_0_yard_game_FM_Penalty_on_Defense()
         {
@@ -14563,7 +14563,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Right_1st_and_10_from_60_0_yard_game_FM_Penalty_on_Defense()
         {
@@ -14694,7 +14694,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Run_Right_4th_and_5_from_20_10_yard_game_Fumble_lost_FM_Penalty_on_Defense()
         {
@@ -14809,7 +14809,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Right_3rd_and_10_from_20_TD_FM_Penalty_on_Defense_Ignored()
         {
@@ -14941,7 +14941,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Right_3rd_and_10_from_20_TD_FM_Penalty_on_Offense()
         {
@@ -15072,7 +15072,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Right_4th_and_10_from_20_Interception_in_Endzone_FM_on_Offense()
         {
@@ -15175,7 +15175,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
-        [TestCategory("GameEngine")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void setPlayOutCome_Pass_Right_4th_and_10_from_20_Interception_in_Endzone_FM_on_Defense()
         {

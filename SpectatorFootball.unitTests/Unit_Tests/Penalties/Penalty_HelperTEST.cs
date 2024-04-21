@@ -17,14 +17,14 @@ namespace SpectatorFootball.unitTests.Penalties
     {
         private List<Penalty> penaltyList = Penalty_Helper.ReturnAllPenalties();
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void All_Penalties_Returned_Count_Greater_Than_0()
         {
             List<Penalty> p = Penalty_Helper.ReturnAllPenalties();
             Assert.IsTrue(p.Count > 0);
         }
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void getPlayerAction_Passer()
         {
@@ -34,7 +34,7 @@ namespace SpectatorFootball.unitTests.Penalties
             Player_Action_State pa = Penalty_Helper.getPlayerAction(p, pResult);
             Assert.IsTrue(pa == Player_Action_State.PAS);
         }
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void getPlayerAction_Kicker()
         {
@@ -44,7 +44,7 @@ namespace SpectatorFootball.unitTests.Penalties
             Player_Action_State pa = Penalty_Helper.getPlayerAction(p, pResult);
             Assert.IsTrue(pa == Player_Action_State.K);
         }
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void getPlayerAction_Punter()
         {
@@ -54,7 +54,7 @@ namespace SpectatorFootball.unitTests.Penalties
             Player_Action_State pa = Penalty_Helper.getPlayerAction(p, pResult);
             Assert.IsTrue(pa == Player_Action_State.P);
         }
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void getPlayerAction_Returner()
         {
@@ -64,7 +64,7 @@ namespace SpectatorFootball.unitTests.Penalties
             Player_Action_State pa = Penalty_Helper.getPlayerAction(p, pResult);
             Assert.IsTrue(pa == Player_Action_State.KR);
         }
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void getPlayerAction_PuntReturner()
         {
@@ -74,7 +74,7 @@ namespace SpectatorFootball.unitTests.Penalties
             Player_Action_State pa = Penalty_Helper.getPlayerAction(p, pResult);
             Assert.IsTrue(pa == Player_Action_State.PR);
         }
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void getPlayerAction_PassCatchers()
         {
@@ -84,7 +84,7 @@ namespace SpectatorFootball.unitTests.Penalties
             Player_Action_State pa = Penalty_Helper.getPlayerAction(p, pResult);
             Assert.IsTrue(pa == Player_Action_State.PC);
         }
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void getPlayerAction_BallRunners()
         {
@@ -94,7 +94,7 @@ namespace SpectatorFootball.unitTests.Penalties
             Player_Action_State pa = Penalty_Helper.getPlayerAction(p, pResult);
             Assert.IsTrue(pa == Player_Action_State.BRN);
         }
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void getPlayerAction_PassBlockers()
         {
@@ -104,7 +104,7 @@ namespace SpectatorFootball.unitTests.Penalties
             Player_Action_State pa = Penalty_Helper.getPlayerAction(p, pResult);
             Assert.IsTrue(pa == Player_Action_State.PB);
         }
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void getPlayerAction_PassRushers()
         {
@@ -114,7 +114,7 @@ namespace SpectatorFootball.unitTests.Penalties
             Player_Action_State pa = Penalty_Helper.getPlayerAction(p, pResult);
             Assert.IsTrue(pa == Player_Action_State.PAR);
         }
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void getPlayerAction_PassDefenders()
         {
@@ -124,7 +124,7 @@ namespace SpectatorFootball.unitTests.Penalties
             Player_Action_State pa = Penalty_Helper.getPlayerAction(p, pResult);
             Assert.IsTrue(pa == Player_Action_State.PD);
         }
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void getPlayerAction_RunDefenders()
         {
@@ -134,7 +134,7 @@ namespace SpectatorFootball.unitTests.Penalties
             Player_Action_State pa = Penalty_Helper.getPlayerAction(p, pResult);
             Assert.IsTrue(pa == Player_Action_State.RD);
         }
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void getPlayerAction_KickReturners()
         {
@@ -144,7 +144,7 @@ namespace SpectatorFootball.unitTests.Penalties
             Player_Action_State pa = Penalty_Helper.getPlayerAction(p, pResult);
             Assert.IsTrue(pa == Player_Action_State.KRT);
         }
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void getPlayerAction_KickDefenders()
         {
@@ -154,7 +154,7 @@ namespace SpectatorFootball.unitTests.Penalties
             Player_Action_State pa = Penalty_Helper.getPlayerAction(p, pResult);
             Assert.IsTrue(pa == Player_Action_State.KDT);
         }
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void getPlayerAction_PuntReturners()
         {
@@ -164,7 +164,7 @@ namespace SpectatorFootball.unitTests.Penalties
             Player_Action_State pa = Penalty_Helper.getPlayerAction(p, pResult);
             Assert.IsTrue(pa == Player_Action_State.PRT);
         }
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void getPlayerAction_Field_Goal_Kicking_Team()
         {
@@ -174,7 +174,7 @@ namespace SpectatorFootball.unitTests.Penalties
             Player_Action_State pa = Penalty_Helper.getPlayerAction(p, pResult);
             Assert.IsTrue(pa == Player_Action_State.FGT);
         }
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void getPlayerAction_Field_Goal_Defenders()
         {
@@ -185,7 +185,7 @@ namespace SpectatorFootball.unitTests.Penalties
             Assert.IsTrue(pa == Player_Action_State.FGD);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void getPreSnapPenalty_Kickoff_Freekick()
         {
@@ -236,7 +236,7 @@ namespace SpectatorFootball.unitTests.Penalties
 
             Assert.IsTrue(true);
         }
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void getPreSnapPenalty_Onside_Kickoff()
         {
@@ -278,7 +278,7 @@ namespace SpectatorFootball.unitTests.Penalties
 
             Assert.IsTrue(true);
         }
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void getPreSnapPenalty_Punt()
         {
@@ -315,7 +315,7 @@ namespace SpectatorFootball.unitTests.Penalties
             for (int i = 0; i < Num_Tries; i++)
             {
                 Play_Enum pe = Play_Enum.PUNT;
-  
+
                 Tuple<Game_Player, Penalty> t = Penalty_Helper.Presnap_Penalty(pe, this.penaltyList,
                     Offensive_Players, Defensive_Players, pResult);
                 Penalty_Player = t.Item1;
@@ -352,7 +352,7 @@ namespace SpectatorFootball.unitTests.Penalties
 
             Assert.IsTrue(true);
         }
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void getPreSnapPenalty_FG_XP()
         {
@@ -380,7 +380,7 @@ namespace SpectatorFootball.unitTests.Penalties
 
             for (int i = 0; i < 11; i++)
             {
-                    pResult.Field_Goal_Defenders.Add(Defensive_Players[i]);
+                pResult.Field_Goal_Defenders.Add(Defensive_Players[i]);
             }
 
             for (int i = 0; i < Num_Tries; i++)
@@ -433,7 +433,7 @@ namespace SpectatorFootball.unitTests.Penalties
 
             Assert.IsTrue(true);
         }
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void getPreSnapPenalty_RUN()
         {
@@ -534,7 +534,7 @@ namespace SpectatorFootball.unitTests.Penalties
             Assert.IsTrue(true);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void getPreSnapPenalty_PASS()
         {
@@ -636,7 +636,7 @@ namespace SpectatorFootball.unitTests.Penalties
             Assert.IsTrue(true);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void getPostSnapPenalty_Kickoff_Freekick()
         {
@@ -645,7 +645,7 @@ namespace SpectatorFootball.unitTests.Penalties
             int UR = 0;
             int FM = 0;
 
-            Play_Result pResult = new Play_Result(){ at = 11, ht = 22 };
+            Play_Result pResult = new Play_Result() { at = 11, ht = 22 };
             int Num_Tries = 10000;
             Penalty penalty = null;
             Game_Player Penalty_Player = null;
@@ -716,7 +716,7 @@ namespace SpectatorFootball.unitTests.Penalties
             Assert.IsTrue(true);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void getPostSnapPenalty_OnsideKickoff()
         {
@@ -783,7 +783,7 @@ namespace SpectatorFootball.unitTests.Penalties
             Assert.IsTrue(true);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void getPostSnapPenalty_Punt()
         {
@@ -864,7 +864,7 @@ namespace SpectatorFootball.unitTests.Penalties
             Assert.IsTrue(true);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void getPostSnapPenalty_PASS()
         {
@@ -903,7 +903,7 @@ namespace SpectatorFootball.unitTests.Penalties
             for (int i = 0; i < 11; i++)
             {
                 if (i < 6)
-                    pResult.Pass_Rushers.Add(Defensive_Players[i]); 
+                    pResult.Pass_Rushers.Add(Defensive_Players[i]);
                 else
                     pResult.Pass_Defenders.Add(Defensive_Players[i]);
             }
@@ -987,7 +987,7 @@ namespace SpectatorFootball.unitTests.Penalties
             Assert.IsTrue(true);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void getPostSnapPenalty_RUN()
         {
@@ -1017,7 +1017,7 @@ namespace SpectatorFootball.unitTests.Penalties
 
             for (int i = 0; i < 11; i++)
             {
-                    pResult.Run_Defenders.Add(Defensive_Players[i]);
+                pResult.Run_Defenders.Add(Defensive_Players[i]);
             }
 
             for (int i = 0; i < Num_Tries; i++)
@@ -1077,7 +1077,7 @@ namespace SpectatorFootball.unitTests.Penalties
             Assert.IsTrue(true);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void isNoPenaltyPlay_True()
         {
@@ -1086,7 +1086,7 @@ namespace SpectatorFootball.unitTests.Penalties
             bool bWrong = false;
 
             int numtries = 100;
-            for (int i= 0; i < numtries; i++)
+            for (int i = 0; i < numtries; i++)
             {
                 int n = CommonUtils.getRandomNum(1, 3);
                 switch (n)
@@ -1112,7 +1112,7 @@ namespace SpectatorFootball.unitTests.Penalties
 
             Assert.IsTrue(!bWrong);
         }
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void isNoPenaltyPlay_False()
         {
@@ -1157,7 +1157,7 @@ namespace SpectatorFootball.unitTests.Penalties
 
             Assert.IsTrue(!bWrong);
         }
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void isHalfTheDistance_true()
         {
@@ -1167,7 +1167,7 @@ namespace SpectatorFootball.unitTests.Penalties
 
             Assert.IsTrue(bhalfDis && yl == 7.0);
         }
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void isHalfTheDistance_false()
         {
@@ -1177,7 +1177,7 @@ namespace SpectatorFootball.unitTests.Penalties
 
             Assert.IsTrue(!bhalfDis);
         }
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void isFirstDowwithPenalty_autoFirstDown()
         {
@@ -1188,7 +1188,7 @@ namespace SpectatorFootball.unitTests.Penalties
 
             Assert.IsTrue(bFD);
         }
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void isFirstDowwithPenalty_HalftheDist_NotFD()
         {
@@ -1200,11 +1200,11 @@ namespace SpectatorFootball.unitTests.Penalties
             Assert.IsTrue(!bFD);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void isFirstDowwithPenalty_HalftheDist_FD()
         {
-            Penalty p = new Penalty() { bAuto_FirstDown = false, Yards=10 };
+            Penalty p = new Penalty() { bAuto_FirstDown = false, Yards = 10 };
             double yards_to_go = 3.0;
             double dist_from_gl = 18;
 
@@ -1213,7 +1213,7 @@ namespace SpectatorFootball.unitTests.Penalties
             Assert.IsTrue(bFD);
         }
 
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void isFirstDowwithPenalty_NOTHalftheDist_FD()
         {
@@ -1225,7 +1225,7 @@ namespace SpectatorFootball.unitTests.Penalties
 
             Assert.IsTrue(bFD);
         }
-        [TestCategory("Penalties")]
+        [TestCategory("Unit")]
         [TestMethod]
         public void isFirstDowwithPenalty_NOTHalftheDist_NotFD()
         {
