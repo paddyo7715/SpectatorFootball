@@ -845,6 +845,7 @@ namespace SpectatorFootball.GameNS
                     logger.Debug("bTackler true - slot index:" + slot_index);
                     bTackler = true;
                     long tackler_tackle_rating = r.Kicker.p_and_r.pr.First().Tackle_Rating;
+                    tackler_tackle_rating /= 2;
                     bool bTackled = Game_Engine_Helper.Make_Tackle(
                             r.Returner.p_and_r.pr.First().Speed_Rating,
                             r.Returner.p_and_r.pr.First().Agilty_Rating,

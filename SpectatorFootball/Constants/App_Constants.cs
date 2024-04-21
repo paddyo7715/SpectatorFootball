@@ -302,6 +302,9 @@ namespace SpectatorFootball
         public const int NO_SKILL_ABILITY_LOW = 10;
         public const int NO_SKILL_ABILITY_HIGH = 20;
 
+        public const int REALLY_NO_SKILL_ABILITY_LOW = 1;
+        public const int REALLY_NO_SKILL_ABILITY_HIGH = 10;
+
         // Teams
         public const string EMPTY_TEAM_SLOT = "Empty Team Slot";
         public const int TRAINING_CAMP_TEAM_PLAYER_COUNT = 86;
@@ -503,15 +506,15 @@ namespace SpectatorFootball
 
         //Kickers
         public const double OFFCENTER_YARDS_LESS = 0.1;
-        public const int KICKOFF_MIN_SUPER_SHORT_DIST = 49;
-        public const int KICKOFF_MAX_SUPER_SHORT_DIST = 52;
-        public const int KICKOFF_MIN_SHORT_DISTANCE = 53;
-        public const int KICKOFF_MAX_SHORT_DISTANCE = 59;
-        public const int KICKOFF_MIN_AVG_DISTANCE = 60;
-        public const int KICKOFF_MAX_AVG_DISTANCE = 66;
-        public const int KICKOFF_MIN_LONG_DISTANCE = 67;
-        public const int KICKOFF_MAX_LONG_DISTANCE = 73;
-        public const int KICKOFF_MIN_SUPER_LONG_DISTANCE = 74;
+        public const int KICKOFF_MIN_SUPER_SHORT_DIST = 56;
+        public const int KICKOFF_MAX_SUPER_SHORT_DIST = 59;
+        public const int KICKOFF_MIN_SHORT_DISTANCE = 60;
+        public const int KICKOFF_MAX_SHORT_DISTANCE = 64;
+        public const int KICKOFF_MIN_AVG_DISTANCE = 65;
+        public const int KICKOFF_MAX_AVG_DISTANCE = 70;
+        public const int KICKOFF_MIN_LONG_DISTANCE = 71;
+        public const int KICKOFF_MAX_LONG_DISTANCE = 76;
+        public const int KICKOFF_MIN_SUPER_LONG_DISTANCE = 77;
         public const int KICKOFF_MAX_SUPER_LONG_DISTANCE = 80;
         public const double KICKOFF_MAX_YARDLINE_1  = 109;
         public const double KICKOFF_MAX_YARDLINE_2 = -9;

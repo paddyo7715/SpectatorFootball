@@ -560,8 +560,8 @@ namespace SpectatorFootball.PlayerNS
                         r.Pass_Attack_Rating = CommonUtils.getRandomNum(app_Constants.NO_SKILL_ABILITY_LOW, app_Constants.NO_SKILL_ABILITY_HIGH);
                         r.Running_Power_Rating = CommonUtils.getRandomNum(app_Constants.NO_SKILL_ABILITY_LOW, app_Constants.NO_SKILL_ABILITY_HIGH);
                         r.Speed_Rating = CommonUtils.getRandomNum(app_Constants.TERTIARY_ABILITY_LOW_RATING, app_Constants.TERTIARY_ABILITY_HIGH_RATING);
-                        r.Run_Attack_Rating = CommonUtils.getRandomNum(app_Constants.NO_SKILL_ABILITY_LOW, app_Constants.NO_SKILL_ABILITY_HIGH);
-                        r.Tackle_Rating = CommonUtils.getRandomNum(app_Constants.NO_SKILL_ABILITY_LOW, app_Constants.NO_SKILL_ABILITY_HIGH);
+                        r.Run_Attack_Rating = CommonUtils.getRandomNum(app_Constants.REALLY_NO_SKILL_ABILITY_LOW, app_Constants.NO_SKILL_ABILITY_HIGH);
+                        r.Tackle_Rating = CommonUtils.getRandomNum(app_Constants.REALLY_NO_SKILL_ABILITY_LOW, app_Constants.NO_SKILL_ABILITY_HIGH);
 
 //                        r.OverAll = Convert.ToSingle(r.Kicking_Accuracy * app_Constants.K_KICK_ACC + r.Leg_Strength * app_Constants.K_LEG_STRENGTH);
                         break;
