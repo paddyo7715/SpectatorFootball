@@ -1,6 +1,5 @@
 ﻿using log4net;
 using SpectatorFootball.Enum;
-using SpectatorFootball.GameNS;
 using SpectatorFootball.Models;
 using System;
 using System.Collections.Generic;
@@ -10,8 +9,10 @@ using System.Threading.Tasks;
 
 namespace SpectatorFootball.GameNS
 {
-    public class Play_Kickoff_Normal
+    public class Play_Kickoff_Normal : iPlay
     {
+        public Play_Enum Play { get; set; } = Play_Enum.KICKOFF_NORMAL;
+
         private static ILog logger = LogManager.GetLogger("RollingFile");
 
         private long Possessing_Team_Id;
@@ -49,9 +50,13 @@ namespace SpectatorFootball.GameNS
             r = setPlayerActions(Kickoff_Players, Return_Players,r);
         }
 
-        public Play_Result getPLayResult()
+        public bool isPreSnapPenalty_Eligible()
         {
-            return r;
+            return false; 
+        }
+        public bool isAccumeStats()
+        {
+            return true; 
         }
 
         public Play_Result Execute()

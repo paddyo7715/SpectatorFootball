@@ -47,7 +47,7 @@ namespace SpectatorFootball.GameNS
         //Manditory next plays
         private bool bKickoff;
         private bool bExtraPoint;
-        private bool bFreeKick;
+        private bool bKickoffAfterSafety;
 
         //Just for testing
         private int Execut_Play_Num = 0;
@@ -71,7 +71,7 @@ namespace SpectatorFootball.GameNS
         //other settings
         private double YardsInField = 100.0;
         private double KickoffYardline = 35.0;
-        private double FreeKickYardline = 20.0;
+        private double KickoffAfterSafetyYardline = 20.0;
 
         private double Kickoff_TouchbackYardline = 25;
         private double Other_TouchbackYardline = 20;
@@ -245,7 +245,7 @@ namespace SpectatorFootball.GameNS
 
             //if the play should be a kickoff but kickoffs not used in this league then set the team
             //on the 25 with a first and ten and switch possession
-            if (!bAllowKickoffs && (bKickoff || bFreeKick))
+            if (!bAllowKickoffs && (bKickoff || bKickoffAfterSafety))
             {
                 g_Down = 1;
                 g_Yards_to_go = 10;
@@ -258,7 +258,7 @@ namespace SpectatorFootball.GameNS
                 g_Line_of_Scrimmage = Game_Engine_Helper.getScrimmageLine(KickoffYardline, bLefttoRight);
                 g_Vertical_Ball_Placement = 50.0;
             }
-            else if (bFreeKick)
+            else if (bKickoffAfterSafety)
             {
                 g_Line_of_Scrimmage = Game_Engine_Helper.getScrimmageLine(KickoffYardline, bLefttoRight);
                 g_Vertical_Ball_Placement = 50.0;
@@ -268,7 +268,7 @@ namespace SpectatorFootball.GameNS
             double PossessionAdjuster = Game_Engine_Helper.HorizontalAdj(bLefttoRight);
 
             //Call the play
-            Offensive_Package = Offensive_Coach.Call_Off_PlayFormation(bKickoff, bExtraPoint, bFreeKick, PossessionAdjuster);
+            Offensive_Package = Offensive_Coach.Call_Off_PlayFormation(bKickoff, bExtraPoint, bKickoffAfterSafety, PossessionAdjuster);
             DEF_Formation = Defensive_Coach.Call_Def_Formation(Offensive_Package, PossessionAdjuster);
             logger.Debug("ExecutePlay Offensive and Defensive plays called.");
 
@@ -365,7 +365,7 @@ namespace SpectatorFootball.GameNS
                         Kickoff_k.init();
                         p_result = Kickoff_k.Execute();
                         break;
-                    case Play_Enum.FREE_KICK:
+                    case Play_Enum.KICKOFF_AFTER_SAFETY:
                         Play_Kickoff_Normal Kickoff_fk = new Play_Kickoff_Normal(g_fid_posession, at.Franchise_ID, ht.Franchise_ID, Game_Ball, Offensive_Players, Defensive_Players, bLefttoRight, true, bSimGame, false);
                         Kickoff_fk.init();
                         p_result = Kickoff_fk.Execute();
@@ -444,7 +444,7 @@ namespace SpectatorFootball.GameNS
                     r.Cheer = getEndofPlaySound(bChampionshipGame, p_result, bHomeTeamPosses);
 
                     bKickoff = p_result.bFinal_NextPlayKickoff;
-                    bFreeKick = p_result.bFinal_NextPlayFreeKick;
+                    bKickoffAfterSafety = p_result.bFinal_NextPlayKickoffAfterSafety;
                     bExtraPoint = p_result.bFinal_NextPlayXP;
 
                     if (p_result.bFinal_SwitchPossession)
@@ -467,7 +467,7 @@ namespace SpectatorFootball.GameNS
 
                 g_Down = p_result.Final_Down;
                 g_Yards_to_go = p_result.Final_yard_to_go;
-                //Final_end_of_play NA when next play is kickoff, freekick of XP.  This will be set 
+                //Final_end_of_play NA when next play is kickoff, KickoffAfterSafety of XP.  This will be set 
                 //on the next play
                 g_Line_of_Scrimmage = p_result.Final_end_of_Play_Yardline;
                 penalty_yards = p_result.Final_Added_Penalty_Yards;
@@ -878,7 +878,7 @@ namespace SpectatorFootball.GameNS
 
         //This method will update the play_result object and return other values to
         //indicate the final result of the play taking into account the penalty
-        //The next yardline will be set to 0 in the case the next play is a kickoff, freekick or extra point,
+        //The next yardline will be set to 0 in the case the next play is a kickoff, KickoffAfterSafety or extra point,
         //That is because the executeplay method sets the yardline for that.  
         //special note: final ending yardline is for this play and not always the starting yardline
         //of the next play
@@ -897,7 +897,7 @@ namespace SpectatorFootball.GameNS
             switch (PE)
             {
                 case Play_Enum.KICKOFF_NORMAL:
-                case Play_Enum.FREE_KICK:
+                case Play_Enum.KICKOFF_AFTER_SAFETY:
                 case Play_Enum.KICKOFF_ONSIDES:
 
                     //Switch the ball possessing team on certain plays and situations
@@ -1087,7 +1087,7 @@ namespace SpectatorFootball.GameNS
 
                     if (!r.bPlay_Stands)
                     {
-                        r.bFinal_NextPlayFreeKick = false;
+                        r.bFinal_NextPlayKickoffAfterSafety = false;
                         r.bFinal_NextPlayKickoff = false;
                         r.bFinal_NextPlayXP = true;
                     }
@@ -1140,13 +1140,13 @@ namespace SpectatorFootball.GameNS
 
                     if (!r.bPlay_Stands)
                     {
-                        r.bFinal_NextPlayFreeKick = false;
+                        r.bFinal_NextPlayKickoffAfterSafety = false;
                         r.bFinal_NextPlayKickoff = false;
                         r.bFinal_NextPlayXP = true;
                     }
                     else
                     {
-                        r.bFinal_NextPlayFreeKick = false;
+                        r.bFinal_NextPlayKickoffAfterSafety = false;
                         r.bFinal_NextPlayKickoff = true;
                         r.bFinal_NextPlayXP = false;
                     }
@@ -1602,7 +1602,7 @@ namespace SpectatorFootball.GameNS
             if (pResult.bTouchDown)
                 pResult.bFinal_NextPlayXP = true;
             else if (pResult.bSafety)
-                pResult.bFinal_NextPlayFreeKick = true;
+                pResult.bFinal_NextPlayKickoffAfterSafety = true;
             else if (pResult.bFGMade || pResult.bFGMissed || pResult.bXPMade || pResult.bXPMissed ||
                 pResult.bOnePntAfterTDMade || pResult.bOnePntAfterTDMissed || pResult.bTwoPntAfterTDMade ||
                 pResult.bTwoPntAfterTDMissed || pResult.bThreePntAfterTDMade || pResult.bThreePntAfterTDMissed)
@@ -1740,7 +1740,7 @@ namespace SpectatorFootball.GameNS
             bool r = false;
             if (p_enum == Play_Enum.KICKOFF_NORMAL ||
                 p_enum == Play_Enum.PUNT ||
-                p_enum == Play_Enum.FREE_KICK)
+                p_enum == Play_Enum.KICKOFF_AFTER_SAFETY)
                 r = true;
 
             return r;
@@ -1898,7 +1898,7 @@ namespace SpectatorFootball.GameNS
         private double getTouchBackYL(Play_Enum pe, double kickoff_TB, double Normal_TB)
         {
             double r = Normal_TB;
-            if (pe == Play_Enum.KICKOFF_NORMAL || pe == Play_Enum.FREE_KICK || pe == Play_Enum.KICKOFF_ONSIDES)
+            if (pe == Play_Enum.KICKOFF_NORMAL || pe == Play_Enum.KICKOFF_AFTER_SAFETY || pe == Play_Enum.KICKOFF_ONSIDES)
                 r = kickoff_TB;
 
             return r;

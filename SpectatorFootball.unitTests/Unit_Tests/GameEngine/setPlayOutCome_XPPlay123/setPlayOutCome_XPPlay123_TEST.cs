@@ -89,7 +89,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 0.0)
@@ -189,7 +189,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 0.0)
@@ -289,7 +289,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 0.0)
@@ -389,7 +389,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 0.0)
@@ -489,7 +489,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 0.0)
@@ -589,7 +589,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 0.0)
@@ -693,7 +693,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 0.0)
@@ -797,7 +797,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 0.0 || !r.bIgnorePenalty)
@@ -902,7 +902,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 0.0 || !r.bIgnorePenalty)
@@ -1003,7 +1003,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 0.0)
@@ -1103,7 +1103,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 0.0)
@@ -1203,7 +1203,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 0.0)
@@ -1303,7 +1303,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 0.0)
@@ -1403,7 +1403,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 0.0)
@@ -1503,7 +1503,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 0.0)
@@ -1607,7 +1607,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 0.0)
@@ -1711,7 +1711,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 0.0 || !r.bIgnorePenalty)
@@ -1816,7 +1816,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 0.0 || !r.bIgnorePenalty)
@@ -1921,7 +1921,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (!r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (!r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 5.0 || r.bIgnorePenalty)
@@ -2026,7 +2026,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (!r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (!r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 1.25 || r.bIgnorePenalty)
@@ -2131,7 +2131,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (!r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (!r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 1.5 || r.bIgnorePenalty)
@@ -2236,7 +2236,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (!r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (!r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 1.5 || r.bIgnorePenalty)
@@ -2339,7 +2339,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 0.0 || r.bIgnorePenalty)
@@ -2440,7 +2440,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 0.0 || r.bIgnorePenalty)
@@ -2541,7 +2541,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 0.0)
@@ -2641,7 +2641,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 0.0)
@@ -2741,7 +2741,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 0.0)
@@ -2841,7 +2841,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 0.0)
@@ -2941,7 +2941,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 0.0)
@@ -3041,7 +3041,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 0.0)
@@ -3145,7 +3145,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 0.0)
@@ -3249,7 +3249,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 0.0 || !r.bIgnorePenalty)
@@ -3354,7 +3354,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 0.0 || !r.bIgnorePenalty)
@@ -3455,7 +3455,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 0.0)
@@ -3555,7 +3555,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 0.0)
@@ -3655,7 +3655,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 0.0)
@@ -3755,7 +3755,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 0.0)
@@ -3855,7 +3855,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 0.0)
@@ -3955,7 +3955,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 0.0)
@@ -4059,7 +4059,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 0.0)
@@ -4163,7 +4163,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 0.0 || !r.bIgnorePenalty)
@@ -4268,7 +4268,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 0.0 || !r.bIgnorePenalty)
@@ -4373,7 +4373,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (!r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (!r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 5.0 || r.bIgnorePenalty)
@@ -4478,7 +4478,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (!r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (!r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 1.25 || r.bIgnorePenalty)
@@ -4583,7 +4583,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (!r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (!r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 1.5 || r.bIgnorePenalty)
@@ -4688,7 +4688,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (!r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (!r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 1.5 || r.bIgnorePenalty)
@@ -4791,7 +4791,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 0.0 || r.bIgnorePenalty)
@@ -4892,7 +4892,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || !r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 0.0 || r.bIgnorePenalty)

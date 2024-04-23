@@ -9,7 +9,7 @@ namespace SpectatorFootball.Enum
     public enum Play_Enum
     {
         KICKOFF_NORMAL,
-        FREE_KICK,
+        KICKOFF_AFTER_SAFETY,
         KICKOFF_ONSIDES,
         FIELD_GOAL,
         EXTRA_POINT,

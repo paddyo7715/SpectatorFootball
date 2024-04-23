@@ -38,7 +38,7 @@ namespace SpectatorFootball.GameNS
 
         }
  
-        public Play_Package Call_Off_PlayFormation(bool bKickoff, bool bExtraPoint, bool bFreeKick, double PossessionAdjuster)
+        public Play_Package Call_Off_PlayFormation(bool bKickoff, bool bExtraPoint, bool bKickoffAfterSafety, double PossessionAdjuster)
         {
             Formations_Enum f;
             Play_Enum p;
@@ -521,7 +521,7 @@ namespace SpectatorFootball.GameNS
                             r = false;
 
                         break;
-                    case Play_Enum.FREE_KICK:
+                    case Play_Enum.KICKOFF_AFTER_SAFETY:
                     case Play_Enum.KICKOFF_NORMAL:
                     case Play_Enum.KICKOFF_ONSIDES:
                         r = true;
@@ -640,7 +640,7 @@ namespace SpectatorFootball.GameNS
                                 r = true;
                         }
                         break;
-                    case Play_Enum.FREE_KICK:
+                    case Play_Enum.KICKOFF_AFTER_SAFETY:
                     case Play_Enum.KICKOFF_NORMAL:
                     case Play_Enum.KICKOFF_ONSIDES:
                         r = true;

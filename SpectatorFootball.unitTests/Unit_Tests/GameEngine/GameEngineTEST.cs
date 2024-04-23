@@ -38,9 +38,9 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
         [TestCategory("Unit")]
         [TestMethod]
-        public void isPlayWithReturner_FreeKick_true()
+        public void isPlayWithReturner_KickoffAfterSafety_true()
         {
-            Assert.IsTrue(GameEngine.isPlayWithReturner(Play_Enum.FREE_KICK) == true);
+            Assert.IsTrue(GameEngine.isPlayWithReturner(Play_Enum.KICKOFF_AFTER_SAFETY) == true);
         }
         [TestCategory("Unit")]
         [TestMethod]

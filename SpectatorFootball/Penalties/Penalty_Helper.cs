@@ -481,7 +481,7 @@ namespace SpectatorFootball.PenaltiesNS
             r.Last().Penalty_Play_Types = new List<Play_Enum>()
             {
                 Play_Enum.KICKOFF_NORMAL,
-                Play_Enum.FREE_KICK
+                Play_Enum.KICKOFF_AFTER_SAFETY
             };
             r.Last().Player_Action_States = new List<Player_Action_State>()
             {
@@ -566,7 +566,7 @@ namespace SpectatorFootball.PenaltiesNS
             r.Last().Penalty_Play_Types = new List<Play_Enum>()
             {
                 Play_Enum.KICKOFF_NORMAL,
-                Play_Enum.FREE_KICK,
+                Play_Enum.KICKOFF_AFTER_SAFETY,
                 Play_Enum.KICKOFF_ONSIDES,
                 Play_Enum.RUN,
                 Play_Enum.PASS,
@@ -616,7 +616,7 @@ namespace SpectatorFootball.PenaltiesNS
             r.Last().Penalty_Play_Types = new List<Play_Enum>()
             {
                 Play_Enum.KICKOFF_NORMAL,
-                Play_Enum.FREE_KICK,
+                Play_Enum.KICKOFF_AFTER_SAFETY,
                 Play_Enum.KICKOFF_ONSIDES,
                 Play_Enum.RUN,
                 Play_Enum.PASS,
@@ -666,7 +666,7 @@ namespace SpectatorFootball.PenaltiesNS
             r.Last().Penalty_Play_Types = new List<Play_Enum>()
             {
                 Play_Enum.KICKOFF_NORMAL,
-                Play_Enum.FREE_KICK,
+                Play_Enum.KICKOFF_AFTER_SAFETY,
                 Play_Enum.KICKOFF_ONSIDES,
                 Play_Enum.RUN,
                 Play_Enum.PASS,
@@ -879,7 +879,7 @@ namespace SpectatorFootball.PenaltiesNS
         {
             bool r = false;
 
-            if ((pe == Play_Enum.KICKOFF_NORMAL || pe == Play_Enum.FREE_KICK || pe == Play_Enum.PUNT) &&
+            if ((pe == Play_Enum.KICKOFF_NORMAL || pe == Play_Enum.KICKOFF_AFTER_SAFETY || pe == Play_Enum.PUNT) &&
                 pResult.bTouchback)
                 r = true;
             else if (pe == Play_Enum.PUNT && (pResult.bKick_Out_of_Bounds || pResult.bKick_Out_of_Endzone))

@@ -106,7 +106,7 @@ namespace SpectatorFootball.GameNS
         public double Final_end_of_Play_Yardline = 0;
         public bool bFinal_NextPlayXP = false;
         public bool bFinal_NextPlayKickoff = false;
-        public bool bFinal_NextPlayFreeKick = false;
+        public bool bFinal_NextPlayKickoffAfterSafety = false;
         public double Final_Added_Penalty_Yards = 0;
 
         public bool bAwayTD = false;

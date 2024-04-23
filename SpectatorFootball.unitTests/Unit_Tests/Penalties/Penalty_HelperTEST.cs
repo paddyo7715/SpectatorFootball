@@ -187,7 +187,7 @@ namespace SpectatorFootball.unitTests.Penalties
 
         [TestCategory("Unit")]
         [TestMethod]
-        public void getPreSnapPenalty_Kickoff_Freekick()
+        public void getPreSnapPenalty_Kickoff_After_Safety()
         {
             Play_Result pResult = new Play_Result() { at = 11, ht = 22 };
             int Num_Tries = 2000;
@@ -221,7 +221,7 @@ namespace SpectatorFootball.unitTests.Penalties
                         pe = Play_Enum.KICKOFF_NORMAL;
                         break;
                     case 2:
-                        pe = Play_Enum.FREE_KICK;
+                        pe = Play_Enum.KICKOFF_AFTER_SAFETY;
                         break;
                 }
 
@@ -638,7 +638,7 @@ namespace SpectatorFootball.unitTests.Penalties
 
         [TestCategory("Unit")]
         [TestMethod]
-        public void getPostSnapPenalty_Kickoff_Freekick()
+        public void getPostSnapPenalty_Kickoff_After_Safety()
         {
             int KIB = 0;
             int UC = 0;
@@ -677,7 +677,7 @@ namespace SpectatorFootball.unitTests.Penalties
                         pe = Play_Enum.KICKOFF_NORMAL;
                         break;
                     case 2:
-                        pe = Play_Enum.FREE_KICK;
+                        pe = Play_Enum.KICKOFF_AFTER_SAFETY;
                         break;
                 }
 
@@ -1095,7 +1095,7 @@ namespace SpectatorFootball.unitTests.Penalties
                         pe = Play_Enum.KICKOFF_NORMAL;
                         break;
                     case 2:
-                        pe = Play_Enum.FREE_KICK;
+                        pe = Play_Enum.KICKOFF_AFTER_SAFETY;
                         break;
                     case 3:
                         pe = Play_Enum.PUNT;
@@ -1130,7 +1130,7 @@ namespace SpectatorFootball.unitTests.Penalties
                         pe = Play_Enum.KICKOFF_NORMAL;
                         break;
                     case 2:
-                        pe = Play_Enum.FREE_KICK;
+                        pe = Play_Enum.KICKOFF_AFTER_SAFETY;
                         break;
                     case 3:
                         pe = Play_Enum.PUNT;

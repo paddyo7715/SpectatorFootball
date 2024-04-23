@@ -31,7 +31,7 @@ namespace SpectatorFootball.unitTests.NarrationAndText
         }
         [TestCategory("Unit")]
         [TestMethod]
-        public void CreateScoringSummaryEntry_FK_TD()
+        public void CreateScoringSummaryEntry_KAS_TD()
         {
             List<Game_Player> Kickoff_Players = Help_Class.getRandomPlayersforPlay(1);
 
@@ -43,7 +43,7 @@ namespace SpectatorFootball.unitTests.NarrationAndText
             pResult.bAwayTD = true;
             pResult.Yards_Returned = 99.0;
 
-            string s = ScoringSummary.CreateScoringSummaryEntry(Enum.Play_Enum.FREE_KICK, pResult);
+            string s = ScoringSummary.CreateScoringSummaryEntry(Enum.Play_Enum.KICKOFF_AFTER_SAFETY, pResult);
             string expected_result = "J Miller free kick return of 99 yards for a TD";
 
             Assert.IsTrue(s == expected_result);

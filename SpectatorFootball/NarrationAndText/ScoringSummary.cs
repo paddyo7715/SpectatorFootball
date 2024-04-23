@@ -23,7 +23,7 @@ namespace SpectatorFootball.NarrationAndText
                         r = name + " kickoff return of " + (int)pResult.Yards_Returned + " yards for a TD";
                     }
                     break;
-                case Play_Enum.FREE_KICK:
+                case Play_Enum.KICKOFF_AFTER_SAFETY:
                     if (pResult.bAwayTD || pResult.bHomeTD)
                     {
                         string name = NarratorandText_Helper.getShortPlayName_from_Game_Player(pResult.Returner);

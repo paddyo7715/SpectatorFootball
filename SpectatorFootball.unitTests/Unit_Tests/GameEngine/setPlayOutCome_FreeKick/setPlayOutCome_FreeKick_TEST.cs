@@ -13,14 +13,14 @@ using SpectatorFootball.PenaltiesNS;
 namespace SpectatorFootball.unitTests.GameEngineNS
 {
     [TestClass]
-    public class setPlayOutCome_FreeKick_TEST
+    public class setPlayOutCome_KickoffAfterSafety_TEST
     {
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_FREE_KICK_Left_ReturntoOwn20_no_Penalty_to_20()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Left_ReturntoOwn20_no_Penalty_to_20()
         {
             bool penOnBallCarryingTeam = false;
-            Play_Enum PE = Play_Enum.FREE_KICK;
+            Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
             int Down = 0;
             double Yards_to_Go = 0.0;
 
@@ -83,7 +83,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 0)
@@ -117,10 +117,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_FREE_KICK_Left_Touchback_to_25()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Left_Touchback_to_25()
         {
             bool penOnBallCarryingTeam = false;
-            Play_Enum PE = Play_Enum.FREE_KICK;
+            Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
             int Down = 0;
             double Yards_to_Go = 0.0;
 
@@ -183,7 +183,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 0)
@@ -217,10 +217,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_FREE_KICK_Left_Touchdown_NextPlay_XP()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Left_Touchdown_NextPlay_XP()
         {
             bool penOnBallCarryingTeam = false;
-            Play_Enum PE = Play_Enum.FREE_KICK;
+            Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
             int Down = 0;
             double Yards_to_Go = 0.0;
 
@@ -283,7 +283,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play will be an XP");
 
             //Check for next play
-            if (!r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (!r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("Next play must be an XP");
 
             if (r.Final_Added_Penalty_Yards != 0)
@@ -318,10 +318,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_FREE_KICK_Left_Touchdown_NextPlay_XP_Ignore_Penalty()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Left_Touchdown_NextPlay_XP_Ignore_Penalty()
         {
             bool penOnBallCarryingTeam = false;
-            Play_Enum PE = Play_Enum.FREE_KICK;
+            Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
             int Down = 0;
             double Yards_to_Go = 0.0;
 
@@ -387,7 +387,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play will be an XP");
 
             //Check for next play
-            if (!r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (!r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("Next play must be an XP");
 
             if (r.Final_Added_Penalty_Yards != 0 || !r.bIgnorePenalty)
@@ -422,10 +422,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_FREE_KICK_Left_ReturntoOwn20_Spot_Penalty_on_Defenders_at_25_to_40()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Left_ReturntoOwn20_Spot_Penalty_on_Defenders_at_25_to_40()
         {
             bool penOnBallCarryingTeam = false;
-            Play_Enum PE = Play_Enum.FREE_KICK;
+            Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
             int Down = 0;
             double Yards_to_Go = 0.0;
 
@@ -491,7 +491,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 15)
@@ -525,10 +525,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_FREE_KICK_Left_ReturntoOwn40_Spot_Penalty_on_Defenders_to_30()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Left_ReturntoOwn40_Spot_Penalty_on_Defenders_to_30()
         {
             bool penOnBallCarryingTeam = false;
-            Play_Enum PE = Play_Enum.FREE_KICK;
+            Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
             int Down = 0;
             double Yards_to_Go = 0.0;
 
@@ -594,7 +594,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 15)
@@ -629,10 +629,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_FREE_KICK_Left_ReturntoOwn07_Spot_Penalty_on_Defenders_to_08()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Left_ReturntoOwn07_Spot_Penalty_on_Defenders_to_08()
         {
             bool penOnBallCarryingTeam = false;
-            Play_Enum PE = Play_Enum.FREE_KICK;
+            Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
             int Down = 0;
             double Yards_to_Go = 0.0;
 
@@ -698,7 +698,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 15)
@@ -732,10 +732,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_FREE_KICK_Left_ReturntoOwn91_Spot_Penalty_on_Defenders_to_92()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Left_ReturntoOwn91_Spot_Penalty_on_Defenders_to_92()
         {
             bool penOnBallCarryingTeam = false;
-            Play_Enum PE = Play_Enum.FREE_KICK;
+            Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
             int Down = 0;
             double Yards_to_Go = 0.0;
 
@@ -801,7 +801,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 4)
@@ -835,10 +835,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_FREE_KICK_Left_ReturntoOwn92_Spot_Penalty_on_Defenders_to_91()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Left_ReturntoOwn92_Spot_Penalty_on_Defenders_to_91()
         {
             bool penOnBallCarryingTeam = false;
-            Play_Enum PE = Play_Enum.FREE_KICK;
+            Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
             int Down = 0;
             double Yards_to_Go = 0.0;
 
@@ -904,7 +904,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 4)
@@ -939,10 +939,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_FREE_KICK_Left_ReturntoOwn30_Spot_Penalty_on_Returners_at_25()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Left_ReturntoOwn30_Spot_Penalty_on_Returners_at_25()
         {
             bool penOnBallCarryingTeam = true;
-            Play_Enum PE = Play_Enum.FREE_KICK;
+            Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
             int Down = 0;
             double Yards_to_Go = 0.0;
 
@@ -1008,7 +1008,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 12.5)
@@ -1042,10 +1042,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_FREE_KICK_Left_ReturntoOwn30_Spot_Penalty_on_Returners_at_35()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Left_ReturntoOwn30_Spot_Penalty_on_Returners_at_35()
         {
             bool penOnBallCarryingTeam = true;
-            Play_Enum PE = Play_Enum.FREE_KICK;
+            Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
             int Down = 0;
             double Yards_to_Go = 0.0;
 
@@ -1111,7 +1111,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 15.0)
@@ -1145,10 +1145,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_FREE_KICK_Left_ReturntoOwn92_Spot_Penalty_on_Returners_at_92()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Left_ReturntoOwn92_Spot_Penalty_on_Returners_at_92()
         {
             bool penOnBallCarryingTeam = true;
-            Play_Enum PE = Play_Enum.FREE_KICK;
+            Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
             int Down = 0;
             double Yards_to_Go = 0.0;
 
@@ -1214,7 +1214,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 15.0)
@@ -1248,10 +1248,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_FREE_KICK_Left_ReturnTD_Spot_Penalty_on_Returners_at_50()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Left_ReturnTD_Spot_Penalty_on_Returners_at_50()
         {
             bool penOnBallCarryingTeam = true;
-            Play_Enum PE = Play_Enum.FREE_KICK;
+            Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
             int Down = 0;
             double Yards_to_Go = 0.0;
 
@@ -1317,7 +1317,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 15.0)
@@ -1351,10 +1351,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_FREE_KICK_Left_Return04_Spot_Penalty_on_Returners_at_5()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Left_Return04_Spot_Penalty_on_Returners_at_5()
         {
             bool penOnBallCarryingTeam = true;
-            Play_Enum PE = Play_Enum.FREE_KICK;
+            Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
             int Down = 0;
             double Yards_to_Go = 0.0;
 
@@ -1420,7 +1420,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 2.0)
@@ -1454,10 +1454,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_FREE_KICK_Left_Return05_Spot_Penalty_on_Returners_at_4()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Left_Return05_Spot_Penalty_on_Returners_at_4()
         {
             bool penOnBallCarryingTeam = true;
-            Play_Enum PE = Play_Enum.FREE_KICK;
+            Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
             int Down = 0;
             double Yards_to_Go = 0.0;
 
@@ -1523,7 +1523,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 2.0)
@@ -1557,10 +1557,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_FREE_KICK_Left_Return_Fumbles_on_20_and_Recovers()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Left_Return_Fumbles_on_20_and_Recovers()
         {
             bool penOnBallCarryingTeam = true;
-            Play_Enum PE = Play_Enum.FREE_KICK;
+            Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
             int Down = 0;
             double Yards_to_Go = 0.0;
 
@@ -1624,7 +1624,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 0.0)
@@ -1658,10 +1658,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_FREE_KICK_Left_Return_lost_Fumbles_on_20_penalty_on_retuners()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Left_Return_lost_Fumbles_on_20_penalty_on_retuners()
         {
             bool penOnBallCarryingTeam = true;
-            Play_Enum PE = Play_Enum.FREE_KICK;
+            Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
             int Down = 0;
             double Yards_to_Go = 0.0;
 
@@ -1729,7 +1729,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 7.5)
@@ -1763,10 +1763,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_FREE_KICK_Left_Return_lost_Fumbles_on_20_penalty_on_defenders()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Left_Return_lost_Fumbles_on_20_penalty_on_defenders()
         {
             bool penOnBallCarryingTeam = false;
-            Play_Enum PE = Play_Enum.FREE_KICK;
+            Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
             int Down = 0;
             double Yards_to_Go = 0.0;
 
@@ -1833,7 +1833,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 15)
@@ -1867,10 +1867,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_FREE_KICK_Right_ReturntoOwn20_no_Penalty_to_80()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Right_ReturntoOwn20_no_Penalty_to_80()
         {
             bool penOnBallCarryingTeam = false;
-            Play_Enum PE = Play_Enum.FREE_KICK;
+            Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
             int Down = 0;
             double Yards_to_Go = 0.0;
 
@@ -1933,7 +1933,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 0)
@@ -1967,10 +1967,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_FREE_KICK_Right_Touchback_to_75()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Right_Touchback_to_75()
         {
             bool penOnBallCarryingTeam = false;
-            Play_Enum PE = Play_Enum.FREE_KICK;
+            Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
             int Down = 0;
             double Yards_to_Go = 0.0;
 
@@ -2033,7 +2033,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 0)
@@ -2067,10 +2067,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_FREE_KICK_Right_Touchdown_NextPlay_XP()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Right_Touchdown_NextPlay_XP()
         {
             bool penOnBallCarryingTeam = false;
-            Play_Enum PE = Play_Enum.FREE_KICK;
+            Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
             int Down = 0;
             double Yards_to_Go = 0.0;
 
@@ -2133,7 +2133,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play will be an XP");
 
             //Check for next play
-            if (!r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (!r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("Next play must be an XP");
 
             if (r.Final_Added_Penalty_Yards != 0)
@@ -2168,10 +2168,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_FREE_KICK_Right_Touchdown_NextPlay_XP_Ignore_Penalty()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Right_Touchdown_NextPlay_XP_Ignore_Penalty()
         {
             bool penOnBallCarryingTeam = false;
-            Play_Enum PE = Play_Enum.FREE_KICK;
+            Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
             int Down = 0;
             double Yards_to_Go = 0.0;
 
@@ -2237,7 +2237,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play will be an XP");
 
             //Check for next play
-            if (!r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (!r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("Next play must be an XP");
 
             if (r.Final_Added_Penalty_Yards != 0 || !r.bIgnorePenalty)
@@ -2272,10 +2272,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_FREE_KICK_Right_ReturntoOwn20_Spot_Penalty_on_Defenders_at_75_to_60()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Right_ReturntoOwn20_Spot_Penalty_on_Defenders_at_75_to_60()
         {
             bool penOnBallCarryingTeam = false;
-            Play_Enum PE = Play_Enum.FREE_KICK;
+            Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
             int Down = 0;
             double Yards_to_Go = 0.0;
 
@@ -2341,7 +2341,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 15)
@@ -2375,10 +2375,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_FREE_KICK_Right_ReturntoOwn40_Spot_Penalty_on_Defenders_to_70()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Right_ReturntoOwn40_Spot_Penalty_on_Defenders_to_70()
         {
             bool penOnBallCarryingTeam = false;
-            Play_Enum PE = Play_Enum.FREE_KICK;
+            Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
             int Down = 0;
             double Yards_to_Go = 0.0;
 
@@ -2444,7 +2444,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 15)
@@ -2479,10 +2479,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_FREE_KICK_Right_ReturntoOwn07_Spot_Penalty_on_Defenders_to_92()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Right_ReturntoOwn07_Spot_Penalty_on_Defenders_to_92()
         {
             bool penOnBallCarryingTeam = false;
-            Play_Enum PE = Play_Enum.FREE_KICK;
+            Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
             int Down = 0;
             double Yards_to_Go = 0.0;
 
@@ -2548,7 +2548,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 15)
@@ -2582,10 +2582,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_FREE_KICK_Right_ReturntoOwn91_Spot_Penalty_on_Defenders_to_8()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Right_ReturntoOwn91_Spot_Penalty_on_Defenders_to_8()
         {
             bool penOnBallCarryingTeam = false;
-            Play_Enum PE = Play_Enum.FREE_KICK;
+            Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
             int Down = 0;
             double Yards_to_Go = 0.0;
 
@@ -2651,7 +2651,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 4)
@@ -2685,10 +2685,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_FREE_KICK_Right_ReturntoOwn92_Spot_Penalty_on_Defenders_to_9()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Right_ReturntoOwn92_Spot_Penalty_on_Defenders_to_9()
         {
             bool penOnBallCarryingTeam = false;
-            Play_Enum PE = Play_Enum.FREE_KICK;
+            Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
             int Down = 0;
             double Yards_to_Go = 0.0;
 
@@ -2754,7 +2754,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 4)
@@ -2789,10 +2789,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_FREE_KICK_Right_ReturntoOwn30_Spot_Penalty_on_Returners_at_75()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Right_ReturntoOwn30_Spot_Penalty_on_Returners_at_75()
         {
             bool penOnBallCarryingTeam = true;
-            Play_Enum PE = Play_Enum.FREE_KICK;
+            Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
             int Down = 0;
             double Yards_to_Go = 0.0;
 
@@ -2858,7 +2858,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 12.5)
@@ -2892,10 +2892,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_FREE_KICK_Right_ReturntoOwn30_Spot_Penalty_on_Returners_at_65()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Right_ReturntoOwn30_Spot_Penalty_on_Returners_at_65()
         {
             bool penOnBallCarryingTeam = true;
-            Play_Enum PE = Play_Enum.FREE_KICK;
+            Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
             int Down = 0;
             double Yards_to_Go = 0.0;
 
@@ -2961,7 +2961,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 15.0)
@@ -2995,10 +2995,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_FREE_KICK_Right_ReturntoOwn92_Spot_Penalty_on_Returners_at_8()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Right_ReturntoOwn92_Spot_Penalty_on_Returners_at_8()
         {
             bool penOnBallCarryingTeam = true;
-            Play_Enum PE = Play_Enum.FREE_KICK;
+            Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
             int Down = 0;
             double Yards_to_Go = 0.0;
 
@@ -3064,7 +3064,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 15.0)
@@ -3098,10 +3098,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_FREE_KICK_Right_ReturnTD_Spot_Penalty_on_Returners_at_50()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Right_ReturnTD_Spot_Penalty_on_Returners_at_50()
         {
             bool penOnBallCarryingTeam = true;
-            Play_Enum PE = Play_Enum.FREE_KICK;
+            Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
             int Down = 0;
             double Yards_to_Go = 0.0;
 
@@ -3167,7 +3167,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 15.0)
@@ -3201,10 +3201,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_FREE_KICK_Right_Return04_Spot_Penalty_on_Returners_at_95()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Right_Return04_Spot_Penalty_on_Returners_at_95()
         {
             bool penOnBallCarryingTeam = true;
-            Play_Enum PE = Play_Enum.FREE_KICK;
+            Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
             int Down = 0;
             double Yards_to_Go = 0.0;
 
@@ -3270,7 +3270,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 2.0)
@@ -3304,10 +3304,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_FREE_KICK_Right_Return05_Spot_Penalty_on_Returners_at_96()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Right_Return05_Spot_Penalty_on_Returners_at_96()
         {
             bool penOnBallCarryingTeam = true;
-            Play_Enum PE = Play_Enum.FREE_KICK;
+            Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
             int Down = 0;
             double Yards_to_Go = 0.0;
 
@@ -3373,7 +3373,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 2.0)
@@ -3407,10 +3407,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_FREE_KICK_Right_Return_Fumbles_on_80_and_Recovers()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Right_Return_Fumbles_on_80_and_Recovers()
         {
             bool penOnBallCarryingTeam = true;
-            Play_Enum PE = Play_Enum.FREE_KICK;
+            Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
             int Down = 0;
             double Yards_to_Go = 0.0;
 
@@ -3474,7 +3474,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 0.0)
@@ -3508,10 +3508,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_FREE_KICK_Right_Return_lost_Fumbles_on_80_penalty_on_retuners()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Right_Return_lost_Fumbles_on_80_penalty_on_retuners()
         {
             bool penOnBallCarryingTeam = true;
-            Play_Enum PE = Play_Enum.FREE_KICK;
+            Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
             int Down = 0;
             double Yards_to_Go = 0.0;
 
@@ -3579,7 +3579,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 7.5)
@@ -3613,10 +3613,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_FREE_KICK_Right_Return_lost_Fumbles_on_80_penalty_on_defenders()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Right_Return_lost_Fumbles_on_80_penalty_on_defenders()
         {
             bool penOnBallCarryingTeam = false;
-            Play_Enum PE = Play_Enum.FREE_KICK;
+            Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
             int Down = 0;
             double Yards_to_Go = 0.0;
 
@@ -3683,7 +3683,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
-            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayFreeKick)
+            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
                 throw new Exception("There should not be a special play on the next play");
 
             if (r.Final_Added_Penalty_Yards != 15)
