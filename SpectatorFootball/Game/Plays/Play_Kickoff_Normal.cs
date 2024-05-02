@@ -39,18 +39,15 @@ namespace SpectatorFootball.GameNS
             this.FreeKic = FreeKic;
             this.bSim = bSim;
             this.bLast_Play = bLast_Play;
-        }
 
-        public void init()
-        {
             r.BallPossessing_Team_Id = Possessing_Team_Id == at ? ht : at;
             r.NonbBallPossessing_Team_Id = Possessing_Team_Id == at ? at : ht;
             r.at = at;
             r.ht = ht;
-            r = setPlayerActions(Kickoff_Players, Return_Players,r);
+            r = setPlayerActions(Kickoff_Players, Return_Players, r);
         }
 
-        public bool isPreSnapPenalty_Eligible()
+         public bool isPreSnapPenalty_Eligible()
         {
             return false; 
         }
@@ -59,7 +56,7 @@ namespace SpectatorFootball.GameNS
             return true; 
         }
 
-        public Play_Result Execute()
+        public Play_Result Execute(bool bPreSnapPenalty)
         {
             List<string> Play_Stages = new List<string>();
             List<Game_Player> Missed_Tackles = new List<Game_Player>();

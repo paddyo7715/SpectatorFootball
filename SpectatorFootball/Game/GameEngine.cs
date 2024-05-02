@@ -1,13 +1,11 @@
-﻿using SpectatorFootball.Enum;
+﻿using log4net;
+using SpectatorFootball.Enum;
 using SpectatorFootball.Models;
+using SpectatorFootball.NarrationAndText;
+using SpectatorFootball.PenaltiesNS;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using log4net;
-using System.Text;
-using System.Threading.Tasks;
-using SpectatorFootball.PenaltiesNS;
-using SpectatorFootball.NarrationAndText;
 
 namespace SpectatorFootball.GameNS
 {
@@ -212,24 +210,20 @@ namespace SpectatorFootball.GameNS
             bKickoff = true;
 
             Play_Struct r = new Play_Struct();
-
-            Play_Package Offensive_Package = null;
-            Formation DEF_Formation = null;
-
             List<Game_Player> Offensive_Players = null;
             List<Game_Player> Defensive_Players = null;
             Game_Ball Game_Ball = null;
 
-            Coach Offensive_Coach = null;
-            Coach Defensive_Coach = null;
             int Delay_Seconds = 0;
             string Down_and_Yards = "";
 
-            //call the offensive and defensive plays
             bool bLefttoRight;
 
             bool isBallCarryingTeam = false;
 
+            //Set the coach
+            Coach Offensive_Coach = null;
+            Coach Defensive_Coach = null;
             if (g_fid_posession == at.Franchise_ID)
             {
                 Offensive_Coach = Away_Coach;
@@ -245,29 +239,22 @@ namespace SpectatorFootball.GameNS
 
             //if the play should be a kickoff but kickoffs not used in this league then set the team
             //on the 25 with a first and ten and switch possession
-            if (!bAllowKickoffs && (bKickoff || bKickoffAfterSafety))
+            Tuple<bool, int, double, double, double, bool> t = setSpecialPlayYardline(nonKickoff_StartingYardline, bLefttoRight,
+                bAllowKickoffs, bKickoff, bKickoffAfterSafety);
+            bool bsetFields = t.Item1;
+            if (bsetFields)
             {
-                g_Down = 1;
-                g_Yards_to_go = 10;
-                g_Line_of_Scrimmage = nonKickoff_StartingYardline;
-                g_Vertical_Ball_Placement = 50.0;
-                g_fid_posession = Switch_Posession(g_fid_posession, at.Franchise_ID, ht.Franchise_ID);
-            }
-            else if (bKickoff)             //if this play is a kickoff then set where to kickoff from
-            {
-                g_Line_of_Scrimmage = Game_Engine_Helper.getScrimmageLine(KickoffYardline, bLefttoRight);
-                g_Vertical_Ball_Placement = 50.0;
-            }
-            else if (bKickoffAfterSafety)
-            {
-                g_Line_of_Scrimmage = Game_Engine_Helper.getScrimmageLine(KickoffYardline, bLefttoRight);
-                g_Vertical_Ball_Placement = 50.0;
+                g_Down = t.Item2;
+                g_Yards_to_go = t.Item3;
+                g_Line_of_Scrimmage = t.Item4;
+                g_Vertical_Ball_Placement = t.Item5;
+                if (t.Item6) g_fid_posession = Switch_Posession(g_fid_posession, at.Franchise_ID, ht.Franchise_ID);
             }
 
-            //adjust the formation positions depending on which team has the ball
+            //Call the play, set the formations and populate the formations.
             double PossessionAdjuster = Game_Engine_Helper.HorizontalAdj(bLefttoRight);
-
-            //Call the play
+            Play_Package Offensive_Package = null;
+            Formation DEF_Formation = null;
             Offensive_Package = Offensive_Coach.Call_Off_PlayFormation(bKickoff, bExtraPoint, bKickoffAfterSafety, PossessionAdjuster);
             DEF_Formation = Defensive_Coach.Call_Def_Formation(Offensive_Package, PossessionAdjuster);
             logger.Debug("ExecutePlay Offensive and Defensive plays called.");
@@ -279,22 +266,6 @@ namespace SpectatorFootball.GameNS
                 bAllowSubs = true;
 
             logger.Debug("ExecutePlay Allowsubstituions finished.");
-
-            // Get the Game Values Before the Play is Executed
-            r.Line_of_Scimmage = g_Line_of_Scrimmage;
-            r.bLefttoRight = bLefttoRight;
-
-            r.Before_Away_Score = g.Away_Score.ToString();
-            r.Before_Home_Score = g.Home_Score.ToString();
-
-            Down_and_Yards = Game_Helper.getDownAndYardString(g_Down, g_Yards_to_go, g_Line_of_Scrimmage, bLefttoRight);
-            r.Before_Down_and_Yards = Down_and_Yards;
-            r.Before_Away_Timeouts = g_Away_timeouts.ToString();
-            r.Before_Home_Timeouts = g_Home_timeouts.ToString();
-
-            r.Before_Display_QTR = Game_Helper.getQTRString((long)g.Quarter) + " QTR";
-            r.Before_Display_Time = Game_Helper.getTimestringFromSeconds((long)g.Time);
-            //=================================================================
 
             bool bPlayWithReturner = isPlayWithReturner(Offensive_Package.Play);
 
@@ -350,6 +321,22 @@ namespace SpectatorFootball.GameNS
                 Starting_YardLine = g_Line_of_Scrimmage
             };
 
+            // Get the Game Values Before the Play is Executed
+            r.Line_of_Scimmage = g_Line_of_Scrimmage;
+            r.bLefttoRight = bLefttoRight;
+
+            r.Before_Away_Score = g.Away_Score.ToString();
+            r.Before_Home_Score = g.Home_Score.ToString();
+
+            Down_and_Yards = Game_Helper.getDownAndYardString(g_Down, g_Yards_to_go, g_Line_of_Scrimmage, bLefttoRight);
+            r.Before_Down_and_Yards = Down_and_Yards;
+            r.Before_Away_Timeouts = g_Away_timeouts.ToString();
+            r.Before_Home_Timeouts = g_Home_timeouts.ToString();
+
+            r.Before_Display_QTR = Game_Helper.getQTRString((long)g.Quarter) + " QTR";
+            r.Before_Display_Time = Game_Helper.getTimestringFromSeconds((long)g.Time);
+            //=================================================================
+
             //Only execute the play and accume the play stats if the game has not been forfeited
             if (!r.bForfeitedGame)
             {
@@ -358,19 +345,25 @@ namespace SpectatorFootball.GameNS
 
                 g_TouchbackYardline = getTouchBackYL(Offensive_Package.Play, Kickoff_TouchbackYardline, Other_TouchbackYardline);
 
-                switch (Offensive_Package.Play)
+                //Create the selected play object
+                iPlay Play = null;
+                if (Offensive_Package.Play == Play_Enum.KICKOFF_NORMAL)
+                    Play = new Play_Kickoff_Normal(g_fid_posession, at.Franchise_ID, ht.Franchise_ID, Game_Ball, Offensive_Players, Defensive_Players, bLefttoRight, false, bSimGame, false);
+                else if (Offensive_Package.Play == Play_Enum.KICKOFF_AFTER_SAFETY)
+                    Play = new Play_Kickoff_Normal(g_fid_posession, at.Franchise_ID, ht.Franchise_ID, Game_Ball, Offensive_Players, Defensive_Players, bLefttoRight, true, bSimGame, false);
+
+                //Is there a pre-snap penalty?
+                bool bpreSnapPenalty = false;
+                if (bAllowPenalties && Play.isPreSnapPenalty_Eligible())
                 {
-                    case Play_Enum.KICKOFF_NORMAL:
-                        Play_Kickoff_Normal Kickoff_k = new Play_Kickoff_Normal(g_fid_posession, at.Franchise_ID, ht.Franchise_ID, Game_Ball, Offensive_Players, Defensive_Players, bLefttoRight, false, bSimGame, false);
-                        Kickoff_k.init();
-                        p_result = Kickoff_k.Execute();
-                        break;
-                    case Play_Enum.KICKOFF_AFTER_SAFETY:
-                        Play_Kickoff_Normal Kickoff_fk = new Play_Kickoff_Normal(g_fid_posession, at.Franchise_ID, ht.Franchise_ID, Game_Ball, Offensive_Players, Defensive_Players, bLefttoRight, true, bSimGame, false);
-                        Kickoff_fk.init();
-                        p_result = Kickoff_fk.Execute();
-                        break;
+                    Tuple<Game_Player, Penalty> ttt = Penalty_Helper.Presnap_Penalty(Offensive_Package.Play, Penalty_List,
+                        Offensive_Players, Defensive_Players, p_result);
+                    p_result.Penalized_Player = ttt.Item1;
+                    p_result.Penalty = ttt.Item2;
                 }
+
+                //Execute the play
+                p_result = Play.Execute(bpreSnapPenalty);
 
                 int ball_stages = Game_Ball.Stages.Count();
                 for (int pind = 0; pind < Offensive_Players.Count(); pind++)
@@ -380,12 +373,13 @@ namespace SpectatorFootball.GameNS
                         throw new Exception("Number of stages do not match between ball, offensive and defensive players");
                 }
 
-                if (bAllowPenalties && Penalty_Helper.isNoPenaltyPlay(p_result, Offensive_Package.Play))
+                //Is there a penalty during the play?
+                if (bAllowPenalties && Penalty_Helper.isNoPenaltyPlay(p_result, Offensive_Package.Play) && p_result.Penalty == null)
                 {
-                    Tuple<Game_Player, Penalty> t = Penalty_Helper.PostSnap_Penalty(Offensive_Package.Play, Penalty_List,
+                    Tuple<Game_Player, Penalty> t4 = Penalty_Helper.PostSnap_Penalty(Offensive_Package.Play, Penalty_List,
                         Offensive_Players, Defensive_Players, p_result);
-                    p_result.Penalized_Player = t.Item1;
-                    p_result.Penalty = t.Item2;
+                    p_result.Penalized_Player = t4.Item1;
+                    p_result.Penalty = t4.Item2;
 
                     if (p_result.Penalized_Player != null)
                     {
@@ -421,7 +415,7 @@ namespace SpectatorFootball.GameNS
                     g_Yards_to_go, p_result, bLefttoRight, g_TouchbackYardline);
 
                 //Add penalty if applicable
-                if (p_result.Penalty != null && !p_result.bPenalty_Rejected)
+                if (Play.isAccumeStats() && p_result.Penalty != null && !p_result.bPenalty_Rejected)
                 {
                     Game_Player_Penalty_Stats pen_stat = new Game_Player_Penalty_Stats();
                     long f_id = Away_Players.Contains(p_result.Penalized_Player.p_and_r) ? at.Franchise_ID : ht.Franchise_ID;
@@ -440,7 +434,7 @@ namespace SpectatorFootball.GameNS
 
                 if (p_result.bPlay_Stands)
                 {
-                    bool bHomeTeamPosses = Game_Engine_Helper.isHomeTeamPosessing(Offensive_Package.Play, ht.Franchise_ID,at.Franchise_ID, g_fid_posession);
+                    bool bHomeTeamPosses = Game_Engine_Helper.isHomeTeamPosessing(Offensive_Package.Play, ht.Franchise_ID, at.Franchise_ID, g_fid_posession);
                     r.Cheer = getEndofPlaySound(bChampionshipGame, p_result, bHomeTeamPosses);
 
                     bKickoff = p_result.bFinal_NextPlayKickoff;
@@ -458,9 +452,12 @@ namespace SpectatorFootball.GameNS
                         p_result.play_scoring_summary.Scoring_Summary = ScoringSummary.CreateScoringSummaryEntry(Offensive_Package.Play, p_result);
                     }
                     //acume individual stats
-                    Accume_Play_Stats(Game_Player_Stats, Game_Penalty_Stats, Game_Scoring_Summary, p_result.Play_Player_Stats,
-                         p_result.Play_Player_Penalty_Stats, p_result.play_scoring_summary);
-                    logger.Debug("After accum stats");
+                    if (Play.isAccumeStats())
+                    {
+                        Accume_Play_Stats(Game_Player_Stats, Game_Penalty_Stats, Game_Scoring_Summary, p_result.Play_Player_Stats,
+                             p_result.Play_Player_Penalty_Stats, p_result.play_scoring_summary);
+                        logger.Debug("After accum stats");
+                    }
                 }
 
                 UpdateScore(p_result, g);
@@ -494,7 +491,7 @@ namespace SpectatorFootball.GameNS
 
             }
 
-            g_bGameOver = isGameEnd((long)g.Playoff_Game + (long) g.Championship_Game, (long)g.Quarter, (long)g.Time, (long)g.Away_Score, (long)g.Home_Score);
+            g_bGameOver = isGameEnd((long)g.Playoff_Game + (long)g.Championship_Game, (long)g.Quarter, (long)g.Time, (long)g.Away_Score, (long)g.Home_Score, r.bForfeitedGame);
 
             r.Offensive_Players = Offensive_Players;
             r.Defensive_Players = Defensive_Players;
@@ -681,7 +678,7 @@ namespace SpectatorFootball.GameNS
             foreach (Formation_Rec fr in f.Player_list)
             {
                 r.Add(new Game_Player()
-                { 
+                {
                     bCarryingBall = fr.bCarryingBall,
                     Current_Vertical_Percent_Pos = fr.Vertical_Percent_Pos,
                     Current_YardLine = Line_of_Scrimmage + fr.YardLine,
@@ -1778,11 +1775,13 @@ namespace SpectatorFootball.GameNS
                 throw new Exception("isBallTeamPenalty error can't determine penalty team!");
             return r;
         }
-        public static bool isGameEnd(long Playoffs, long Quarter, long Time, long Away_Score, long Home_Score)
+        public static bool isGameEnd(long Playoffs, long Quarter, long Time, long Away_Score, long Home_Score, bool bForfeitedGame)
         {
             bool r = false;
 
-            if (Quarter == 4 && Time == 0 && Away_Score != Home_Score)
+            if (bForfeitedGame)
+                r = true;
+            else if (Quarter == 4 && Time == 0 && Away_Score != Home_Score)
                 r = true;
             else if (Quarter > 4 && Away_Score != Home_Score)
                 r = true;
@@ -1857,7 +1856,7 @@ namespace SpectatorFootball.GameNS
 
             if (pResult.bTouchDown || pResult.bFGMade || pResult.bXPMade ||
                 pResult.bOnePntAfterTDMade || pResult.bTwoPntAfterTDMade || pResult.bThreePntAfterTDMade)
-                
+
                 r = true;
 
 
@@ -1962,7 +1961,7 @@ namespace SpectatorFootball.GameNS
                     case Game_Sounds.LOW_BOO:
                         r = Game_Sounds.LOW_CHEER;
                         break;
-                        case Game_Sounds.LOUD_BOO:
+                    case Game_Sounds.LOUD_BOO:
                         r = Game_Sounds.LOUD_CHEER;
                         break;
                 }
@@ -1971,6 +1970,45 @@ namespace SpectatorFootball.GameNS
             return r;
         }
 
+        public Tuple<bool, int, double, double, double, bool> setSpecialPlayYardline(double nonKickoff_StartingYardline, bool bLefttoRight,
+            bool bAllowKickoffs, bool bKickoff, bool bKickoffAfterSafety)
+        {
+            int down = 0;
+            double yard_to_go = 0;
+            double line_of_scrimmage = 0;
+            double Vertical_Ball_Placement = 0;
+            bool bSwitch_os = false;
+            bool bsetFields = false;
+
+            if (!bAllowKickoffs && (bKickoff || bKickoffAfterSafety))
+            {
+                bsetFields = true;
+                down = 1;
+                yard_to_go = 10;
+                line_of_scrimmage = nonKickoff_StartingYardline;
+                Vertical_Ball_Placement = 50.0;
+                bSwitch_os = true;
+            }
+            else if (bKickoff)             //if this play is a kickoff then set where to kickoff from
+            {
+                bsetFields = true;
+                down = 0;
+                yard_to_go = 0;
+                line_of_scrimmage = Game_Engine_Helper.getScrimmageLine(KickoffYardline, bLefttoRight);
+                Vertical_Ball_Placement = 50.0;
+            }
+            else if (bKickoffAfterSafety)
+            {
+                bsetFields = true;
+                down = 0;
+                yard_to_go = 0;
+                line_of_scrimmage = Game_Engine_Helper.getScrimmageLine(KickoffYardline, bLefttoRight);
+                Vertical_Ball_Placement = 50.0;
+            }
+
+            Tuple<bool, int, double, double, double, bool> r = new Tuple<bool, int, double, double, double, bool>(bsetFields, down, yard_to_go, line_of_scrimmage, Vertical_Ball_Placement, bSwitch_os);
+            return r;
+        }
 
     }
 }

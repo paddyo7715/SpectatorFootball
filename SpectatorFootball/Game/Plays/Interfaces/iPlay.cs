@@ -11,10 +11,7 @@ namespace SpectatorFootball.GameNS
     public interface iPlay
     {
         Play_Enum Play { get; set; }
-
-        void init();
-
-        Play_Result Execute();
+        Play_Result Execute(bool bPreSnapPenalty);
         bool isPreSnapPenalty_Eligible();
         bool isAccumeStats();
 

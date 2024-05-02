@@ -246,37 +246,43 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         [TestMethod]
         public void isGameEnd__Regualr_3rdQuarterTied_false()
         {
-            Assert.IsTrue(GameEngine.isGameEnd(0, 3, 100, 10, 10) == false);
+            Assert.IsTrue(GameEngine.isGameEnd(0, 3, 100, 10, 10,false) == false);
         }
         [TestCategory("Unit")]
         [TestMethod]
         public void isGameEnd_Regualr_EndofGameTied_False()
         {
-            Assert.IsTrue(GameEngine.isGameEnd(0, 4, 0, 10, 10) == false);
+            Assert.IsTrue(GameEngine.isGameEnd(0, 4, 0, 10, 10,false) == false);
         }
         [TestCategory("Unit")]
         [TestMethod]
         public void isGameEnd_Playeroffs_EndofGame_true()
         {
-            Assert.IsTrue(GameEngine.isGameEnd(1, 4, 0, 10, 20) == true);
+            Assert.IsTrue(GameEngine.isGameEnd(1, 4, 0, 10, 20,false) == true);
         }
         [TestCategory("Unit")]
         [TestMethod]
         public void isGameEnd_playoffs_OertimeTied_true()
         {
-            Assert.IsTrue(GameEngine.isGameEnd(1, 6, 100, 20, 20) == false);
+            Assert.IsTrue(GameEngine.isGameEnd(1, 6, 100, 20, 20,false) == false);
         }
         [TestCategory("Unit")]
         [TestMethod]
         public void isGameEnd_playoffs_FirstOertimeTied_true()
         {
-            Assert.IsTrue(GameEngine.isGameEnd(1, 5, 0, 20, 20) == false);
+            Assert.IsTrue(GameEngine.isGameEnd(1, 5, 0, 20, 20, false) == false);
         }
         [TestCategory("Unit")]
         [TestMethod]
         public void isGameEnd_Regualr_FirstOertimeTied_true()
         {
-            Assert.IsTrue(GameEngine.isGameEnd(0, 5, 0, 20, 20) == true);
+            Assert.IsTrue(GameEngine.isGameEnd(0, 5, 0, 20, 20, false) == true);
+        }
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void isGameEnd_Regualr_forfeit_true()
+        {
+            Assert.IsTrue(GameEngine.isGameEnd(0, 1, 200, 10, 20, true) == true);
         }
         [TestCategory("Unit")]
         [TestMethod]

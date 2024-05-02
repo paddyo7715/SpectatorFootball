@@ -87,8 +87,7 @@ namespace SpectatorFootball.IntegrationTests.Kickoff_Normal
                 };
 
                 Play_Kickoff_Normal kickoff = new Play_Kickoff_Normal(possess_team, at, ht, gb, Kickoff_Players, Receiving_Players, bLefttoRight, false, true, false);
-                kickoff.init();
-                Play_Result pResult = kickoff.Execute();
+                Play_Result pResult = kickoff.Execute(false);
 
                 if (pResult.Yards_Returned > 90.0)
                     longest_return = pResult.Yards_Returned;

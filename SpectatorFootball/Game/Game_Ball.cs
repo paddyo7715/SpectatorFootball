@@ -123,5 +123,11 @@ namespace SpectatorFootball.GameNS
             bStage.Actions.Add(bas2);
             Stages.Add(bStage);
         }
+        public void Bounce_Along_Ground()
+        {
+            State = Ball_States.BOUNCING;
+            Action bas2 = new Action(Game_Object_Types.B, Starting_YardLine, Starting_Vertical_Percent_Pos, Current_YardLine, Current_Vertical_Percent_Pos, false, null, Ball_States.BOUNCING, Movement.LINE, Ball_Speed.SLOW, false, 0);
+        }
+
     }
 }
