@@ -351,6 +351,9 @@ namespace SpectatorFootball.GameNS
                     Play = new Play_Kickoff_Normal(g_fid_posession, at.Franchise_ID, ht.Franchise_ID, Game_Ball, Offensive_Players, Defensive_Players, bLefttoRight, false, bSimGame, false);
                 else if (Offensive_Package.Play == Play_Enum.KICKOFF_AFTER_SAFETY)
                     Play = new Play_Kickoff_Normal(g_fid_posession, at.Franchise_ID, ht.Franchise_ID, Game_Ball, Offensive_Players, Defensive_Players, bLefttoRight, true, bSimGame, false);
+                else if (Offensive_Package.Play == Play_Enum.KICKOFF_ONSIDES)
+                    Play = new Play_Kickoff_Onsides(g_fid_posession, at.Franchise_ID, ht.Franchise_ID, Game_Ball, Offensive_Players, Defensive_Players, bLefttoRight, true, bSimGame, false);
+
 
                 //Is there a pre-snap penalty?
                 bool bpreSnapPenalty = false;

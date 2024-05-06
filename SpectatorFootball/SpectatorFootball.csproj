@@ -733,6 +733,9 @@
     <None Include="Images\Source\Field_Templates\Field_Template.xcf" />
     <None Include="Images\Source\Field_Templates\Template.xcf" />
     <None Include="Images\Source\misc\Goalposts.xcf" />
+    <None Include="Images\Source\Players\L_FallOnBall1.xcf" />
+    <None Include="Images\Source\Players\L_FallOnBall2.xcf" />
+    <None Include="Images\Source\Players\L_FallOnBall3.xcf" />
     <None Include="Images\Source\Players\L_FG_KICK.xcf" />
     <None Include="Images\Source\Players\L_Kick_About_to_Catch.xcf" />
     <None Include="Images\Source\Players\L_kneel1_With_Ball.xcf" />
@@ -776,8 +779,10 @@
     <None Include="Images\Source\Players\L_Upright_Block3.xcf" />
     <None Include="Images\Source\Players\new_L_Run2_No_Ball.xcf" />
     <None Include="Images\Source\Players\new_R_Run2_No_Ball.xcf" />
-    <None Include="Images\Source\Players\old_Player_Sprite_Sheet.xcf" />
     <None Include="Images\Source\Players\Player_Sprite_Sheet.xcf" />
+    <None Include="Images\Source\Players\R_FallOnBall1.xcf" />
+    <None Include="Images\Source\Players\R_FallOnBall2.xcf" />
+    <None Include="Images\Source\Players\R_FallOnBall3.xcf" />
     <None Include="Images\Source\Players\R_FG_KICK.xcf" />
     <None Include="Images\Source\Players\R_Kick_About_to_Catch.xcf" />
     <None Include="Images\Source\Players\R_kneel1_With_Ball.xcf" />

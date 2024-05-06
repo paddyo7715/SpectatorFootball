@@ -192,6 +192,17 @@ namespace SpectatorFootball.GameNS
                     else if (graph_pState == Graphics_Player_States.KNEELING_2)
                           r = Graphics_Player_States.KNEELING_3;
                     break;
+
+                case Player_States.FALL_ON_BALL:
+                    if (!graph_pState.ToString().ToUpper().StartsWith("FALL_ON_BALL_"))
+                    {
+                        r = Graphics_Player_States.FALL_ON_BALL_1;
+                    }
+                    else if (graph_pState == Graphics_Player_States.FALL_ON_BALL_1)
+                        r = Graphics_Player_States.FALL_ON_BALL_2;
+                    else
+                        r = Graphics_Player_States.FALL_ON_BALL_3;
+                    break;
             }
             return r;
         }

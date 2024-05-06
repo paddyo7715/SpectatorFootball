@@ -101,17 +101,15 @@ namespace SpectatorFootball.GameNS
             logger.Debug("");
  
             //================================  Stage Two =======================================
-            logger.Debug("Stage 1");
+            logger.Debug("Stage 2");
             logger.Debug("=====================================================");
             //================================================
 
             //Pick a random return player to kick the ball to
-            int rnd = CommonUtils.getRandomNum(1, 11);
-            //don't kick it to the returner
-            if (rnd <= 5) rnd--;
+            int rnd = CommonUtils.getRandomNum(4, 8) - 1;
 
             //possision where ball should be caught
-            gBall.Current_YardLine = Return_Players[rnd].Starting_YardLine;
+            gBall.Current_YardLine = Return_Players[rnd].Starting_YardLine - (0.75 *  Game_Engine_Helper.HorizontalAdj(bLefttoRight)); 
             gBall.Current_Vertical_Percent_Pos = Return_Players[rnd].Starting_Vertical_Percent_Pos;
 
             gBall.Bounce_Along_Ground();
@@ -122,7 +120,7 @@ namespace SpectatorFootball.GameNS
             {
                 if (p == r.Kicker)
                 {
-                    yardline_Offset = 14.0;
+                    yardline_Offset = 6.0;
                     vert = 50.0;
                 }
                 else
@@ -157,8 +155,8 @@ namespace SpectatorFootball.GameNS
             logger.Debug("=======================================================");
             logger.Debug("");
 
-            //================================  Stage Two =======================================
-            logger.Debug("Stage 1");
+            //================================  Stage Three =======================================
+            logger.Debug("Stage 3");
             logger.Debug("=====================================================");
             //================  ==========================
 

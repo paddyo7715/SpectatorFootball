@@ -179,7 +179,7 @@ namespace SpectatorFootball.GameNS
                     f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.LB, YardLine = (10.0 * PossessionAdjuster), Vertical_Percent_Pos = 32, State = Player_States.STANDING });
                     f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.DB, YardLine = (10.0 * PossessionAdjuster), Vertical_Percent_Pos = 35, State = Player_States.STANDING });
                     f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.RB, YardLine = (10.0 * PossessionAdjuster), Vertical_Percent_Pos = 44, State = Player_States.STANDING });
-                    f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.WR, YardLine = (15.0 * PossessionAdjuster), Vertical_Percent_Pos = 50, State = Player_States.STANDING });
+                    f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.WR, YardLine = (10.0 * PossessionAdjuster), Vertical_Percent_Pos = 50, State = Player_States.STANDING });
                     f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.LB, YardLine = (10.0 * PossessionAdjuster), Vertical_Percent_Pos = 55, State = Player_States.STANDING });
                     f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.DB, YardLine = (10.0 * PossessionAdjuster), Vertical_Percent_Pos = 65, State = Player_States.STANDING });
                     f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.LB, YardLine = (10.0 * PossessionAdjuster), Vertical_Percent_Pos = 68, State = Player_States.STANDING });

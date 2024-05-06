@@ -87,6 +87,10 @@ namespace SpectatorFootball.GameNS
 
             formation = Game_Helper.getFormation(f, PossessionAdjuster);
 
+            //bpo test code
+            f = Formations_Enum.KICKOFF_ONSIDE_KICK;
+            p = Play_Enum.KICKOFF_ONSIDES;
+
             return new Play_Package() { Formation = formation, Play = p } ;
         }
         public Tuple<long, long> setOurThereScore()
@@ -136,6 +140,9 @@ namespace SpectatorFootball.GameNS
                 //formation based on what the defense thinks the O will do.
                 r = Formations_Enum.KICKOFF_REGULAR_RECEIVE;
             }
+
+            //bpo test code
+            r = Formations_Enum.KICKOFF_ONSIDE_RECEIVE;
 
             fList = Game_Helper.getFormation(r, PossessionAdjuster);
 

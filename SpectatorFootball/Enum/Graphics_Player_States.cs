@@ -51,6 +51,9 @@ namespace SpectatorFootball.Enum
         RUNNING_BACKWORDS_4,
         KNEELING_1,
         KNEELING_2,
-        KNEELING_3
+        KNEELING_3,
+        FALL_ON_BALL_1,
+        FALL_ON_BALL_2,
+        FALL_ON_BALL_3
     }
 }
