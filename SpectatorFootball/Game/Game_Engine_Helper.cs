@@ -366,6 +366,18 @@ namespace SpectatorFootball.GameNS
 
              return r;
         }
+        public static bool DoesPlayerCoverOnsideKick(long Hands_rating)
+        {
+            bool r = false;
+            const int top = 117;
+
+            int rnd = CommonUtils.getRandomNum(1, top);
+
+            if (rnd > Hands_rating)
+                r = true;
+
+            return r;
+        }
 
     }
 }
