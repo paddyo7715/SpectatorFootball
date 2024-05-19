@@ -84,7 +84,7 @@ namespace SpectatorFootball.GameNS
 
             return r;
         }
-        public static block_result Attempt_Block(bool runBlock, int rndNum, 
+        public static block_result Attempt_Block(bool runBlock, int rndNum,
             long blkPass_Block_Rating, long blkRun_Block_Rating, long bklAgility,
             long atkPass_Attack, long atkRun_Attack, long atkAgility, long atkSpeed)
         {
@@ -113,7 +113,7 @@ namespace SpectatorFootball.GameNS
             //On a run block then the attacker speed is not considered
             if (!runBlock)
             {
-                Blocker_adv_val = (int) (Math.Round(blkPass_Block_Rating * PASS_BLK_MULT) + (bklAgility * PASS_BLK_AGIL_MULT));
+                Blocker_adv_val = (int)(Math.Round(blkPass_Block_Rating * PASS_BLK_MULT) + (bklAgility * PASS_BLK_AGIL_MULT));
                 Attacker_adv_val = (int)(Math.Round(atkPass_Attack * PASS_ATK_MULT) + (atkAgility * PASS_ATK_AGIL_MULT) + (atkSpeed * PASS_ATK_SPEED_MULT));
             }
             else
@@ -169,7 +169,7 @@ namespace SpectatorFootball.GameNS
                     break;
             }
 
-            r = (long) Math.Round(tackler_val);
+            r = (long)Math.Round(tackler_val);
             return r;
 
         }
@@ -189,7 +189,7 @@ namespace SpectatorFootball.GameNS
 
             return r;
         }
-         public static bool Switch_LefttoRight(bool bLefttoRight)
+        public static bool Switch_LefttoRight(bool bLefttoRight)
         {
             bool r;
 
@@ -344,13 +344,13 @@ namespace SpectatorFootball.GameNS
 
 
             if (blefttoright && d > Yardline2)
-                  r = d - Yardline2;
+                r = d - Yardline2;
             else if (!blefttoright && d < Yardline2)
                 r = Math.Abs(d - Yardline2);
 
             return r;
         }
-        public static bool isHomeTeamPosessing(Play_Enum pe, long Homeid,long awayid, long PossessesID)
+        public static bool isHomeTeamPosessing(Play_Enum pe, long Homeid, long awayid, long PossessesID)
         {
             bool r = false;
             long checkfid = Homeid;
@@ -364,7 +364,19 @@ namespace SpectatorFootball.GameNS
 
             logger.Debug("isHomeTeamPosessing " + pe.ToString() + " " + Homeid + " " + awayid + " " + PossessesID);
 
-             return r;
+            return r;
+        }
+        public static bool DoesPlayerCoverOnsideKick(long Hands_rating)
+        {
+            bool r = false;
+            const int top = 117;
+
+            int rnd = CommonUtils.getRandomNum(1, top);
+
+            if (rnd > Hands_rating)
+                r = true;
+
+            return r;
         }
 
     }

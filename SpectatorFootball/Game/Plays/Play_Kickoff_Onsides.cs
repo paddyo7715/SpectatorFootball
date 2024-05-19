@@ -22,10 +22,13 @@ namespace SpectatorFootball.GameNS
         private Game_Ball gBall;
         private List<Game_Player> Kickoff_Players;
         private List<Game_Player> Return_Players;
+        private Game_Player Ball_Target_Recover;
+        private Game_Player Onside_Recoverer;
         private bool bLefttoRight;
         private bool FreeKic;
         private bool bSim;
         private bool bLast_Play;
+
         private Play_Result r = new Play_Result();
 
         public Play_Kickoff_Onsides(long Possessing_Team_Id, long at, long ht, Game_Ball gBall, List<Game_Player> Kickoff_Players, List<Game_Player> Return_Players, bool bLefttoRight, bool FreeKic, bool bSim, bool bLast_Play)
@@ -51,6 +54,7 @@ namespace SpectatorFootball.GameNS
         public Play_Result Execute(bool bPreSnapPenalty)
         {
             List<string> Play_Stages = new List<string>();
+            int rnd = 0;
             List<Game_Player> Missed_Tackles = new List<Game_Player>();
             //================================  Stage One =======================================
             logger.Debug("Stage 1");
@@ -58,6 +62,8 @@ namespace SpectatorFootball.GameNS
             //================ Kicker Runs up to the ball and kicks it ==========================
             if (!bSim)
                 gBall.TeeUp();
+
+
 
             int io_Players = 0;
             //cycle thru the offensive/kickoff team then he defense
@@ -99,18 +105,20 @@ namespace SpectatorFootball.GameNS
             //===== End of Stage One - Kicker Runs up to the ball and kicks it ================
             logger.Debug("=======================================================");
             logger.Debug("");
- 
+
             //================================  Stage Two =======================================
             logger.Debug("Stage 2");
             logger.Debug("=====================================================");
             //================================================
 
             //Pick a random return player to kick the ball to
-            int rnd = CommonUtils.getRandomNum(4, 8) - 1;
+            rnd = CommonUtils.getRandomNum(4, 8) - 1;
 
             //possision where ball should be caught
-            gBall.Current_YardLine = Return_Players[rnd].Starting_YardLine - (0.75 *  Game_Engine_Helper.HorizontalAdj(bLefttoRight)); 
+            gBall.Current_YardLine = Return_Players[rnd].Starting_YardLine - (0.25 * Game_Engine_Helper.HorizontalAdj(bLefttoRight));
             gBall.Current_Vertical_Percent_Pos = Return_Players[rnd].Starting_Vertical_Percent_Pos;
+
+            Ball_Target_Recover = Return_Players[rnd];
 
             gBall.Bounce_Along_Ground();
             int id_Players = 0;
@@ -134,10 +142,10 @@ namespace SpectatorFootball.GameNS
                 p.Current_Vertical_Percent_Pos = vert;
 
                 if (!bSim)
-                    {
-                        Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos);
-                        p.Run_Then_Stand(moving_ps, prev_yl, prev_v);
-                    }
+                {
+                    Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos);
+                    p.Run_Then_Stand(moving_ps, prev_yl, prev_v);
+                }
 
                 id_Players++;
             }
@@ -157,6 +165,37 @@ namespace SpectatorFootball.GameNS
 
             //================================  Stage Three =======================================
             logger.Debug("Stage 3");
+
+            //Does the returner cover the ball or not.  If not treat it like a fumble
+            long hands_rating = Ball_Target_Recover.p_and_r.pr.First().Hands_Rating;
+            bool ballRecovered = Game_Engine_Helper.DoesPlayerCoverOnsideKick(hands_rating);
+
+            if (ballRecovered == false)
+            {
+                //Get all players adjacent to where the ball is
+                r.Forced_Fumble_Tackler = r.Tackler;
+                List<Game_Player> pFumble_Rec_Kickoff_Players = new List<Game_Player>();
+                List<Game_Player> pFumble_Rec_Return_Players = new List<Game_Player>();
+                List<int> closest_players = getkickoffGroupClosestPlayers(rnd);
+                getBothGroupSlotPlayers(Kickoff_Players, Return_Players,
+                    pFumble_Rec_Kickoff_Players, pFumble_Rec_Return_Players, closest_players);
+                pFumble_Rec_Return_Players.Add(r.Returner);
+                Tuple<Game_Player, bool> t = Playstub_Fumble.Execute(bLefttoRight, gBall,
+                    Kickoff_Players, Return_Players,
+                    pFumble_Rec_Kickoff_Players, pFumble_Rec_Return_Players,
+                    r.Returner, r.Tackler, bSim);
+
+                /*               if (t.Item2)
+                               {
+                                   r.on
+                               }
+                */
+
+                r.Fumble_Recoverer = t.Item1;
+                r.bFumble_Lost = t.Item2;
+
+            }
+
             logger.Debug("=====================================================");
             //================  ==========================
 
@@ -173,7 +212,7 @@ namespace SpectatorFootball.GameNS
         }
         public bool isAccumeStats()
         {
-            return true;
+            return false;
         }
         public static Play_Result setPlayerActions(List<Game_Player> Kickoff_Players, List<Game_Player> Return_Players, Play_Result pResult)
         {
@@ -230,6 +269,35 @@ namespace SpectatorFootball.GameNS
             return r;
         }
 
+        private static List<int> getkickoffGroupClosestPlayers(int slot_index)
+        {
+            List<int> r = new List<int>();
+            int highest_index = 10;
+
+            r.Add(slot_index);
+
+            if (slot_index > 0)
+                r.Add(slot_index - 1);
+
+            if (slot_index < highest_index)
+                r.Add(slot_index + 1);
+
+            return r;
+        }
+        public static void getBothGroupSlotPlayers(
+        List<Game_Player> Kickoff_Players,
+        List<Game_Player> Return_Players,
+        List<Game_Player> pFumble_Rec_Kickoff_Players,
+        List<Game_Player> pFumble_Rec_Return_Players,
+        List<int> grpIndexes)
+        {
+
+            foreach (int i in grpIndexes)
+            {
+                if (i != 5) pFumble_Rec_Kickoff_Players.Add(Kickoff_Players[i]);
+                pFumble_Rec_Return_Players.Add(Return_Players[i]);
+            }
+        }
 
     }
 }
