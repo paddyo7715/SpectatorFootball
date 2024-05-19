@@ -141,6 +141,10 @@ namespace SpectatorFootball.GameNS
             g.Away_Turnovers = 0;
             g.Home_Sacks = 0;
             g.Away_Sacks = 0;
+            g.Home_Onside_Att = 0;
+            g.Home_Onside_Made = 0;
+            g.Away_Onside_Att = 0;
+            g.Away_Onside_Made = 0;
             g.Forfeited_Game = 0;
 
             bPlayoffGame = g.Playoff_Game == 1 ? true : false;
@@ -793,8 +797,6 @@ namespace SpectatorFootball.GameNS
                     ps.Kickoffs_Out_of_Bounds += s.Kickoffs_Out_of_Bounds;
                     ps.Kickoff_Touchbacks += s.Kickoff_Touchbacks;
                     ps.Kickoff_Thru_Endzones += s.Kickoff_Thru_Endzones;
-                    ps.Kickoff_Onside_Att += s.Kickoff_Onside_Att;
-                    ps.Kickoff_Onside_Succ += s.Kickoff_Onside_Succ;
 
                     //Kickoff Returns
                     ps.ko_ret_plays += s.ko_ret_plays;
@@ -815,11 +817,9 @@ namespace SpectatorFootball.GameNS
                     ps.ko_def_fumbles_recovered_Yards += s.ko_def_fumbles_recovered_Yards;
                     ps.ko_def_tackles += s.ko_def_tackles;
                     ps.ko_def_tackles_missed += s.ko_def_tackles_missed;
-                    ps.ko_def_Onside_Kick_Recoveries += s.ko_def_Onside_Kick_Recoveries;
 
                     //Kickoff Receivers
                     ps.ko_rec_plays += s.ko_rec_plays;
-                    ps.ko_rec_Onside_Recovery += s.ko_rec_Onside_Recovery;
                     ps.ko_rec_fumbles_recovered += s.ko_rec_fumbles_recovered;
 
                     //FG Defense

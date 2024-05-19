@@ -160,10 +160,6 @@ namespace SpectatorFootball.Models
 
         public long Kickoff_Thru_Endzones { get; set; }
 
-        public long Kickoff_Onside_Att { get; set; }
-
-        public long Kickoff_Onside_Succ { get; set; }
-
         public long ko_ret_plays { get; set; }
 
         public long ko_ret { get; set; }
@@ -196,11 +192,7 @@ namespace SpectatorFootball.Models
 
         public long ko_def_tackles_missed { get; set; }
 
-        public long ko_def_Onside_Kick_Recoveries { get; set; }
-
         public long ko_rec_plays { get; set; }
-
-        public long ko_rec_Onside_Recovery { get; set; }
 
         public long ko_rec_fumbles_recovered { get; set; }
 

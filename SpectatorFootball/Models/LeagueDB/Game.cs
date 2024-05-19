@@ -55,6 +55,9 @@ namespace SpectatorFootball.Models
 
         public long? Home_TOP { get; set; }
 
+        public long? Home_Onside_Att { get; set; }
+        public long? Home_Onside_Made { get; set; }
+
         public long? Away_FirstDowns { get; set; }
 
         public long? Away_ThirdDown_Conversions { get; set; }
@@ -124,6 +127,9 @@ namespace SpectatorFootball.Models
         public long? Home_Sacks { get; set; }
 
         public long? Away_Sacks { get; set; }
+
+        public long? Away_Onside_Att { get; set; }
+        public long? Away_Onside_Made { get; set; }
 
         public long? Forfeited_Game { get; set; }
 
