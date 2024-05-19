@@ -1,0 +1,57 @@
+namespace SpectatorFootball.Models
+{
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
+    public partial class Player_Ratings
+    {
+        public long ID { get; set; }
+
+        public long Player_ID { get; set; }
+
+        public long Season_ID { get; set; }
+
+        public long Ball_Safety_Rating { get; set; }
+
+        public long Accuracy_Rating { get; set; }
+
+        public long Decision_Making_Rating { get; set; }
+
+        public long Arm_Strength_Rating { get; set; }
+
+        public long Pass_Block_Rating { get; set; }
+
+        public long Run_Block_Rating { get; set; }
+
+        public long Running_Power_Rating { get; set; }
+
+        public long Speed_Rating { get; set; }
+
+        public long Agilty_Rating { get; set; }
+
+        public long Hands_Rating { get; set; }
+
+        public long Pass_Attack_Rating { get; set; }
+
+        public long Run_Attack_Rating { get; set; }
+
+        public long Tackle_Rating { get; set; }
+
+        public long Kicker_Leg_Power_Rating { get; set; }
+
+        public long Kicker_Leg_Accuracy_Rating { get; set; }
+
+        public long Work_Ethic_Ratings { get; set; }
+
+        public long Toughness_Ratings { get; set; }
+
+        public long Sportsmanship_Ratings { get; set; }
+
+        public virtual Season Season { get; set; }
+
+        public virtual Player Player { get; set; }
+    }
+}

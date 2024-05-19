@@ -17,32 +17,34 @@ namespace SpectatorFootball.Common
 
             string r = "";
 
-            string Provider = null;
-            string metadata = null;
-            string connectionString = ConfigurationManager.ConnectionStrings["leagueContext"].ConnectionString;
+            /*            string Provider = null;
+                        string metadata = null;
+                        string connectionString = ConfigurationManager.ConnectionStrings["leagueContext"].ConnectionString;
 
-            string[] m = null;
-            m = connectionString.Split(';');
-            foreach (string x in m)
-            {
-                if (x.StartsWith("metadata="))
-                {
-                    metadata = x.Split('=')[1];
-                }
-                else if (x.StartsWith("provider="))
-                {
-                    Provider = x.Split('=')[1];
-                }
-            }
+                        string[] m = null;
+                        m = connectionString.Split(';');
+                        foreach (string x in m)
+                        {
+                            if (x.StartsWith("metadata="))
+                            {
+                                metadata = x.Split('=')[1];
+                            }
+                            else if (x.StartsWith("provider="))
+                            {
+                                Provider = x.Split('=')[1];
+                            }
+                        }
 
-            EntityConnectionStringBuilder entityString = new EntityConnectionStringBuilder()
-            {
-                Provider = Provider,
-                Metadata = metadata,
-                ProviderConnectionString = CommonUtils.getLeagueDBConnectionString(leaguepath),
-            };
+                        EntityConnectionStringBuilder entityString = new EntityConnectionStringBuilder()
+                        {
+                            Provider = Provider,
+                            Metadata = metadata,
+                            ProviderConnectionString = CommonUtils.getLeagueDBConnectionString(leaguepath),
+                        };
 
-            r = entityString.ToString();
+                        r = entityString.ToString();
+            */
+            r = CommonUtils.getLeagueDBConnectionString(leaguepath);
 
             return r;
 

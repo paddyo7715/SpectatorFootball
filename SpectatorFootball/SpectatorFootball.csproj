@@ -255,115 +255,58 @@
     </Compile>
     <Compile Include="League\League_Stats.cs" />
     <Compile Include="League\Team_Wins_Loses_rec.cs" />
-    <Compile Include="Models\Award.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Blocking_Accum_Stats_by_year.cs" />
     <Compile Include="Models\BoxScore.cs" />
-    <Compile Include="Models\Conference.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DBVersion.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Defense_Accum_Stats_by_year.cs" />
-    <Compile Include="Models\Division.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Draft.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Franchise.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\FreeAgencyTrans.cs" />
-    <Compile Include="Models\Free_Agency.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Game.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Game_Player_Penalty_Stats.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Game_Player_Stats.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Game_Scoring_Summary.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Hall_of_Fame.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Injury.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Injury_Log.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Kicking_Accum_Stats_by_year.cs" />
     <Compile Include="Models\KickReturn_Accum_Stats_by_year.cs" />
-    <Compile Include="Models\LeagueEDM.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>LeagueEDM.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\LeagueEDM.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\LeagueEDM.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>LeagueEDM.edmx</DependentUpon>
-    </Compile>
+    <Compile Include="Models\LeagueDB\Award.cs" />
+    <Compile Include="Models\LeagueDB\Conference.cs" />
+    <Compile Include="Models\LeagueDB\DBVersion.cs" />
+    <Compile Include="Models\LeagueDB\Division.cs" />
+    <Compile Include="Models\LeagueDB\Draft.cs" />
+    <Compile Include="Models\LeagueDB\Franchise.cs" />
+    <Compile Include="Models\LeagueDB\Free_Agency.cs" />
+    <Compile Include="Models\LeagueDB\Game.cs" />
+    <Compile Include="Models\LeagueDB\Game_Player_Penalty_Stats.cs" />
+    <Compile Include="Models\LeagueDB\Game_Player_Stats.cs" />
+    <Compile Include="Models\LeagueDB\Game_Scoring_Summary.cs" />
+    <Compile Include="Models\LeagueDB\Hall_of_Fame.cs" />
+    <Compile Include="Models\LeagueDB\Injury.cs" />
+    <Compile Include="Models\LeagueDB\Injury_Log.cs" />
+    <Compile Include="Models\LeagueDB\leagueContext.cs" />
+    <Compile Include="Models\LeagueDB\League_Structure_by_Season.cs" />
+    <Compile Include="Models\LeagueDB\Player.cs" />
+    <Compile Include="Models\LeagueDB\Players_By_Team.cs" />
+    <Compile Include="Models\LeagueDB\Player_Awards.cs" />
+    <Compile Include="Models\LeagueDB\Player_Ratings.cs" />
+    <Compile Include="Models\LeagueDB\Player_Retiring_Log.cs" />
+    <Compile Include="Models\LeagueDB\Playoff_Teams_by_Season.cs" />
+    <Compile Include="Models\LeagueDB\Season.cs" />
+    <Compile Include="Models\LeagueDB\Teams_by_Season.cs" />
+    <Compile Include="Models\LeagueDB\Training_Camp_by_Season.cs" />
     <Compile Include="Models\League_Injuries.cs" />
-    <Compile Include="Models\League_Structure_by_Season.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\OneInt2Strings.cs" />
     <Compile Include="Models\Passing_Accum_Stats_by_year.cs" />
     <Compile Include="Models\Pass_Defense_Accum_Stats_by_year.cs" />
-    <Compile Include="Models\Player.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Players_By_Team.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Player_and_Ratings.cs" />
     <Compile Include="Models\Player_and_Ratings_and_Draft.cs" />
-    <Compile Include="Models\Player_Awards.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Player_Ratings.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Player_Retiring_Log.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Playoff_Teams_by_Season.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Punting_Accum_Stats_by_year.cs" />
     <Compile Include="Models\PuntReturns_Accum_Stats_by_year.cs" />
     <Compile Include="Models\Receiving_Accum_Stats_by_year.cs" />
     <Compile Include="Models\Roster_rec.cs" />
     <Compile Include="Models\Rushing_Accum_Stats_by_year.cs" />
     <Compile Include="Models\Sched_Week_With_Name.cs" />
-    <Compile Include="Models\Season.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Models\SettingsDB\HomeTown.cs" />
+    <Compile Include="Models\SettingsDB\Potential_First_Names.cs" />
+    <Compile Include="Models\SettingsDB\Potential_Last_Names.cs" />
+    <Compile Include="Models\SettingsDB\settingsContext.cs" />
+    <Compile Include="Models\SettingsDB\Stock_Teams.cs" />
     <Compile Include="Models\TeamStatsRaw.cs" />
-    <Compile Include="Models\Teams_by_Season.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Team_Stat_Rec.cs" />
     <Compile Include="Models\TrainingCampResults.cs" />
     <Compile Include="Models\TrainingCampStatus.cs" />
-    <Compile Include="Models\Training_Camp_by_Season.cs">
-      <DependentUpon>LeagueEDM.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\WeeklyScheduleRec.cs" />
     <Compile Include="NarrationAndText\NarratorandText_Helper.cs" />
     <Compile Include="NarrationAndText\ScoringSummary.cs" />
@@ -418,33 +361,6 @@
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Models\HomeTown.cs">
-      <DependentUpon>SettingsEDM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Potential_First_Names.cs">
-      <DependentUpon>SettingsEDM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Potential_Last_Names.cs">
-      <DependentUpon>SettingsEDM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\SettingsEDM.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SettingsEDM.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\SettingsEDM.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SettingsEDM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\SettingsEDM.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SettingsEDM.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Stock_Teams.cs">
-      <DependentUpon>SettingsEDM.tt</DependentUpon>
     </Compile>
     <Compile Include="NarrationAndText\ScoutingReport.cs" />
     <Compile Include="NewLeagueUC.xaml.cs">
@@ -726,10 +642,6 @@
     <None Include="Database\BlankDB.db" />
     <None Include="Database\Settings.db" />
     <None Include="ImageSource\blankUniform.xcf" />
-    <EntityDeploy Include="Models\SettingsEDM.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>SettingsEDM.Designer.cs</LastGenOutput>
-    </EntityDeploy>
     <None Include="Images\Source\Field_Templates\Field_Template.xcf" />
     <None Include="Images\Source\Field_Templates\Template.xcf" />
     <None Include="Images\Source\misc\Goalposts.xcf" />
@@ -824,17 +736,7 @@
     <None Include="Images\Source\Players\R_Upright_Block.xcf" />
     <None Include="Images\Source\Players\R_Upright_Block1.xcf" />
     <None Include="Images\Source\Players\R_Upright_Block2.xcf" />
-    <EntityDeploy Include="Models\LeagueEDM.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>LeagueEDM.Designer.cs</LastGenOutput>
-    </EntityDeploy>
     <None Include="Images\Source\Players\R_Upright_Block3.xcf" />
-    <None Include="Models\LeagueEDM.edmx.diagram">
-      <DependentUpon>LeagueEDM.edmx</DependentUpon>
-    </None>
-    <None Include="Models\SettingsEDM.edmx.diagram">
-      <DependentUpon>SettingsEDM.edmx</DependentUpon>
-    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -860,16 +762,6 @@
     <Content Include="Sounds\Tackle.mp3" />
     <Content Include="Sounds\Whistle.mp3" />
     <Resource Include="Images\Goalposts.png" />
-    <Content Include="Models\LeagueEDM.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>LeagueEDM.edmx</DependentUpon>
-      <LastGenOutput>LeagueEDM.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\LeagueEDM.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>LeagueEDM.edmx</DependentUpon>
-      <LastGenOutput>LeagueEDM.cs</LastGenOutput>
-    </Content>
     <Resource Include="Images\fplayer.jpg" />
     <Resource Include="Images\Helmets\st_Turbos.png" />
     <Resource Include="Images\Stadiums\st_Detroit.jpg" />
@@ -877,16 +769,6 @@
     <Resource Include="Images\Stadiums\Field__Template.png" />
     <Resource Include="Images\Stadiums\Grass_BrightGreen.png" />
     <Resource Include="Images\Players\Player_Sprite_Sheet.png" />
-    <Content Include="Models\SettingsEDM.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>SettingsEDM.edmx</DependentUpon>
-      <LastGenOutput>SettingsEDM.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\SettingsEDM.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>SettingsEDM.edmx</DependentUpon>
-      <LastGenOutput>SettingsEDM.cs</LastGenOutput>
-    </Content>
     <Resource Include="Images\Logos\APFL.png" />
     <Resource Include="Images\Logos\blank_Horizontal.png" />
     <Resource Include="Images\Logos\Blank_Sheild.png" />

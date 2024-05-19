@@ -102,14 +102,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SpectatorFootball.exe" size="17325056">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SpectatorFootball.exe" size="17142784">
       <assemblyIdentity name="SpectatorFootball" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>3KVWONh4xi+MMD3byozMG8x94fS3qCvehH2WbnNFe6Y=</dsig:DigestValue>
+        <dsig:DigestValue>Kb5et8Zo2cQCzgUem7mXX7PZEeows7/F+P/0j5QKGo8=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -338,42 +338,6 @@
       <dsig:DigestValue>R5/VhkwmQ2dNGzxG+9Jq51JgqTZ1V9YZsgoXRAfu1Y4=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Models\LeagueEDM.Context.tt" size="22933">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>kDxsjg9iGKKL9HXbtMGRIz4EOdrYCccQuB23SkwOSP8=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="Models\LeagueEDM.tt" size="25278">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>MQrGnGTqH+K4gKAFX5nPMdYteoR1Z3aMio9LyBkIZ2Y=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="Models\SettingsEDM.Context.tt" size="22935">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>gq+dwHUylXeHY3ybkkhS+Boxu9eu4KTanvl/m6hx+0E=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="Models\SettingsEDM.tt" size="25280">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>HL9o7LlQkPLeqgeqM6/+zGZe6rRJGu5Qg78iH6j807U=</dsig:DigestValue>
-    </hash>
-  </file>
   <file name="Sounds\Booing_Long.mp3" size="53704">
     <hash>
       <dsig:Transforms>
@@ -473,13 +437,13 @@
       <dsig:DigestValue>ZGmNMRtn7/Yufl+GH+8biANiL0Xp93jpGQdCvyqb9RY=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="SpectatorFootball.exe.config" size="4845">
+  <file name="SpectatorFootball.exe.config" size="2270">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>yUVpumKCeWRRJqgx3hcAKnhBaAFMuKm+0g0UmKGNbu0=</dsig:DigestValue>
+      <dsig:DigestValue>r6yHnKC72A9XwC/fQUJc0VUiRQ/0sXzjFhdSoeGfN/U=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>

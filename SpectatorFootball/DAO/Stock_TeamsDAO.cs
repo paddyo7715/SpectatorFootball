@@ -15,10 +15,16 @@ namespace SpectatorFootball
         {
             List<Stock_Teams> r = null;
             string con = Common.SettingsConnection.Connect();
+
             using (var context = new settingsContext(con))
             {
-//                context.Database.Log = Console.Write;
-                r = context.Stock_Teams.Where(x => true).OrderBy( x => x.City).ThenBy(x => x.Nickname).ToList();
+                try
+                {
+                    //                context.Database.Log = Console.Write;
+                    r = context.Stock_Teams.Where(x => true).OrderBy(x => x.City).ThenBy(x => x.Nickname).ToList();
+                }
+                catch (Exception e ) {
+                    int i = 5; }
 
             }
 

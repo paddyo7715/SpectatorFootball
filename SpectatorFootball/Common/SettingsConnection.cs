@@ -34,32 +34,7 @@ namespace SpectatorFootball.Common
 
             string r = "";
 
-            string Provider = null;
-            string metadata = null;
-            string connectionString = ConfigurationManager.ConnectionStrings["settingsContext"].ConnectionString;
-
-            string[] m = null;
-            m = connectionString.Split(';');
-            foreach (string x in m)
-            {
-                if (x.StartsWith("metadata="))
-                {
-                    metadata = x.Split('=')[1];
-                }
-                else if (x.StartsWith("provider="))
-                {
-                    Provider = x.Split('=')[1];
-                }
-            }
-
-            EntityConnectionStringBuilder entityString = new EntityConnectionStringBuilder()
-            {
-                Provider = Provider,
-                Metadata = metadata,
-                ProviderConnectionString = CommonUtils.getSettingsDBConnectionString(),
-            };
-
-            r = entityString.ToString();
+            r = CommonUtils.getSettingsDBConnectionString();
 
             return r;
 
