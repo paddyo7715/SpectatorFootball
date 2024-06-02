@@ -84,6 +84,71 @@ namespace SpectatorFootball.GameNS
 
             return r;
         }
+
+        public static Player_States setRunningState2(bool bLefttoRight, bool bOffense, double x1, double y1, double x2, double y2)
+        {
+            Player_States r = Player_States.RUNNING_FORWARD;
+            double xdiff = x2 - x1;
+            double ydiff = (y2 - y1) / 2.5;
+
+            if (Math.Abs(xdiff) >= Math.Abs(ydiff))
+            {
+                if (bLefttoRight)
+                {
+                    if (bOffense)
+                    {
+                        if (xdiff < 0 && xdiff < -app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK)
+                            r = Player_States.RUNNING_BACKWORDS;
+                        else if (xdiff < 0)
+                            r = Player_States.RUNNING_FORWARD;
+                        else
+                            r = Player_States.RUNNING_FORWARD;
+                    }
+                    else
+                    {
+                        if (xdiff > 0 && xdiff > app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK)
+                            r = Player_States.RUNNING_BACKWORDS;
+                        else if (xdiff > 0)
+                            r = Player_States.RUNNING_FORWARD;
+                        else
+                            r = Player_States.RUNNING_FORWARD;
+                    }
+                }
+                else
+                {
+                    if (bOffense)
+                    {
+                        if (xdiff > 0 && xdiff > app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK)
+                            r = Player_States.RUNNING_BACKWORDS;
+                        else if (xdiff > 0)
+                            r = Player_States.RUNNING_FORWARD;
+                        else
+                            r = Player_States.RUNNING_FORWARD;
+                    }
+                    else
+                    {
+                        if (xdiff < 0 && xdiff < -app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK)
+                            r = Player_States.RUNNING_BACKWORDS;
+                        else if (xdiff < 0)
+                            r = Player_States.RUNNING_FORWARD;
+                        else
+                            r = Player_States.RUNNING_FORWARD;
+                    }
+                }
+            }
+            else
+            {
+                if (ydiff > 0)
+                    r = Player_States.RUNNING_DOWN;
+                else
+                    r = Player_States.RUNNING_UP;
+            }
+
+            return r;
+        }
+
+
+
         public static block_result Attempt_Block(bool runBlock, int rndNum,
             long blkPass_Block_Rating, long blkRun_Block_Rating, long bklAgility,
             long atkPass_Attack, long atkRun_Attack, long atkAgility, long atkSpeed)

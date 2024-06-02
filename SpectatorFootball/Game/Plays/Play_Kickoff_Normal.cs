@@ -64,6 +64,8 @@ namespace SpectatorFootball.GameNS
             //================================  Stage One =======================================
             logger.Debug("Stage 1");
             logger.Debug("=====================================================");
+            logger.Debug(this.bLefttoRight);
+
             //================ Kicker Runs up to the ball and kicks it ==========================
             if (!bSim)
                 gBall.TeeUp();
@@ -549,7 +551,7 @@ namespace SpectatorFootball.GameNS
                             if (!bSim)
                             {
                                 Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, false, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos);
-                                p.Run(moving_ps, prev_yl, prev_v);
+                                p.Run_With_Ball(moving_ps, prev_yl, prev_v);
 
                                 if (TB_List.Count > 0 && !r.bRunOutofBounds)
                                     p.Stand();
@@ -657,7 +659,7 @@ namespace SpectatorFootball.GameNS
                                 if (!bSim)
                                 {
                                     Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos);
-                                    p.Run(moving_ps, prev_yl, prev_v);
+                                    p.Run_With_Ball(moving_ps, prev_yl, prev_v);
 
                                     //for the ball
                                     gBall.Carried(prev_yl, prev_v);
@@ -689,7 +691,7 @@ namespace SpectatorFootball.GameNS
                                     }
                                     else
                                     {
-                                        p.Run(moving_ps, prev_yl, prev_v);
+                                        p.Run_With_Ball(moving_ps, prev_yl, prev_v);
                                         //for the ball
                                         gBall.Carried(prev_yl, prev_v);
                                     }
@@ -714,7 +716,7 @@ namespace SpectatorFootball.GameNS
                                 if (!bSim)
                                 {
                                     Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos);
-                                    p.Run(moving_ps, prev_yl, prev_v);
+                                    p.Run_With_Ball(moving_ps, prev_yl, prev_v);
 
                                     //for the ball
                                     gBall.Carried(prev_yl, prev_v);
@@ -770,6 +772,9 @@ namespace SpectatorFootball.GameNS
                         r.bFumble = Game_Engine_Helper.DoesBallCarrierFumble(
                                    Ball_Carry_Actions.KICK_RETURN,
                                    ball_safety_rating, tackle_rating, run_attack_rating);
+
+                        //bpo test
+                        r.bFumble = true;
 
                         //if there is a fumble then there can not be a tackle, but give the tackler
                         //creit for forcing the fumble
@@ -960,7 +965,7 @@ namespace SpectatorFootball.GameNS
                                 if (!bSim)
                                 {
                                     Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos);
-                                    p.Run(moving_ps, prev_yl, prev_v);
+                                    p.Run_With_Ball(moving_ps, prev_yl, prev_v);
 
                                     //for the ball
                                     gBall.Carried(prev_yl, prev_v);
@@ -991,7 +996,7 @@ namespace SpectatorFootball.GameNS
                                     }
                                     else
                                     {
-                                        p.Run(moving_ps, prev_yl, prev_v);
+                                        p.Run_With_Ball(moving_ps, prev_yl, prev_v);
                                         //for the ball
                                         gBall.Carried(prev_yl, prev_v);
                                     }
@@ -1015,7 +1020,7 @@ namespace SpectatorFootball.GameNS
                                 if (!bSim)
                                 {
                                     Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos);
-                                    p.Run(moving_ps, prev_yl, prev_v);
+                                    p.Run_With_Ball(moving_ps, prev_yl, prev_v);
 
                                     //for the ball
                                     gBall.Carried(prev_yl, prev_v);

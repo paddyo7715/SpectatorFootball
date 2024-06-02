@@ -63,8 +63,6 @@ namespace SpectatorFootball.GameNS
             if (!bSim)
                 gBall.TeeUp();
 
-
-
             int io_Players = 0;
             //cycle thru the offensive/kickoff team then he defense
             //if kicker then do their special thing; otherwise, the player just remains standing 
@@ -170,6 +168,9 @@ namespace SpectatorFootball.GameNS
             long hands_rating = Ball_Target_Recover.p_and_r.pr.First().Hands_Rating;
             bool ballRecovered = Game_Engine_Helper.DoesPlayerCoverOnsideKick(hands_rating);
 
+            //bpo test
+            ballRecovered = false;
+
             if (ballRecovered == false)
             {
                 //Get all players adjacent to where the ball is
@@ -179,11 +180,11 @@ namespace SpectatorFootball.GameNS
                 List<int> closest_players = getkickoffGroupClosestPlayers(rnd);
                 getBothGroupSlotPlayers(Kickoff_Players, Return_Players,
                     pFumble_Rec_Kickoff_Players, pFumble_Rec_Return_Players, closest_players);
-                pFumble_Rec_Return_Players.Add(r.Returner);
-                Tuple<Game_Player, bool> t = Playstub_Fumble.Execute(bLefttoRight, gBall,
+//                pFumble_Rec_Return_Players.Add(r.Returner);
+                Tuple<Game_Player, bool> t = Playstub_Fumble.Execute(!bLefttoRight, gBall,
                     Kickoff_Players, Return_Players,
                     pFumble_Rec_Kickoff_Players, pFumble_Rec_Return_Players,
-                    r.Returner, r.Tackler, bSim);
+                    Ball_Target_Recover, r.Tackler, bSim);
 
                 /*               if (t.Item2)
                                {
@@ -220,7 +221,7 @@ namespace SpectatorFootball.GameNS
 
             r.Kicker = Kickoff_Players[app_Constants.KICKER_INDEX];
             //Get the kicker - kicker and returner must be slot 5 in the formation
-            r.Returner = Return_Players[app_Constants.RETURNER_INDEX];
+//            r.Returner = Return_Players[app_Constants.RETURNER_INDEX];
 
             //for testing print out all the players and their relevant ratings
             logger.Debug("Kickoff Players");

@@ -11,6 +11,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Controls;
 using SpectatorFootball.Enum;
 using System.Windows.Media;
+using System.Security.Cryptography.X509Certificates;
 
 namespace SpectatorFootball
 {
@@ -411,6 +412,20 @@ namespace SpectatorFootball
                 return bitmapImage;
             }
 
+        }
+        public static double VaryDoulblernd(double p, int varience)
+        {
+            double r = 0.0;
+
+            varience *= 10;
+            int toprnd = varience * 2;
+
+            int rnd = CommonUtils.getRandomNum(1, toprnd);
+            int temp = rnd - varience;
+
+            r = temp / 10.0;
+
+            return r;
         }
     }
     
