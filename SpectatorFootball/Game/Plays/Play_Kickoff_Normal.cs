@@ -87,7 +87,7 @@ namespace SpectatorFootball.GameNS
 
                     if (!bSim)
                     {
-                        Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos);
+                        Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
                         p.KickBall(moving_ps, prev_yl, prev_v, Runup_end_yardline, Runup_end_vert_pos);
                     }
                 }
@@ -285,7 +285,7 @@ namespace SpectatorFootball.GameNS
 
                 if (!bSim)
                 {
-                    Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos);
+                    Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
                     p.Run_Then_Stand(moving_ps, prev_yl, prev_v);
                 }
                 id_Players++;
@@ -316,7 +316,7 @@ namespace SpectatorFootball.GameNS
 
                         if (!bSim)
                         {
-                            Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, false, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos);
+                            Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, false, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
                             p.Run_Then_Stand(moving_ps, prev_yl, prev_v);
                         }
                     }
@@ -327,7 +327,7 @@ namespace SpectatorFootball.GameNS
 
                         if (!bSim)
                         {
-                            Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, false, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos);
+                            Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, false, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
                             p.Run_Then_CatchKick(moving_ps, prev_yl, prev_v);
                         }
                     }
@@ -343,7 +343,7 @@ namespace SpectatorFootball.GameNS
                     p.Current_Vertical_Percent_Pos = Kickoff_Players[id_Players].Current_Vertical_Percent_Pos;
                     if (!bSim)
                     {
-                        Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, false, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos);
+                        Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, false, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
                         p.Run_Then_Stand(moving_ps, prev_yl, prev_v);
                     }
                 }
@@ -550,7 +550,7 @@ namespace SpectatorFootball.GameNS
 
                             if (!bSim)
                             {
-                                Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, false, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos);
+                                Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, false, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
                                 p.Run_With_Ball(moving_ps, prev_yl, prev_v);
 
                                 if (TB_List.Count > 0 && !r.bRunOutofBounds)
@@ -573,7 +573,7 @@ namespace SpectatorFootball.GameNS
                             //Move vertically to make the tackle
                             if (!bSim && !r.bRunOutofBounds)
                             {
-                                Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, false, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos);
+                                Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, false, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
                                 p.Attempt_Tackle(moving_ps, prev_yl, prev_v);
                             }
                         }
@@ -631,7 +631,7 @@ namespace SpectatorFootball.GameNS
 
                                 if (!bSim)
                                 {
-                                    Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos);
+                                    Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
                                     p.Run_and_GoOut_of_Bounds(moving_ps, prev_yl, prev_v, bLefttoRight);
 
                                     //for the ball
@@ -658,7 +658,7 @@ namespace SpectatorFootball.GameNS
 
                                 if (!bSim)
                                 {
-                                    Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos);
+                                    Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
                                     p.Run_With_Ball(moving_ps, prev_yl, prev_v);
 
                                     //for the ball
@@ -683,7 +683,7 @@ namespace SpectatorFootball.GameNS
 
                                 if (!bSim)
                                 {
-                                    Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos);
+                                    Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
                                     if (r.Tackler != null)
                                     {
                                         p.Run_and_Tackled(moving_ps, prev_yl, prev_v);
@@ -715,7 +715,7 @@ namespace SpectatorFootball.GameNS
 
                                 if (!bSim)
                                 {
-                                    Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos);
+                                    Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
                                     p.Run_With_Ball(moving_ps, prev_yl, prev_v);
 
                                     //for the ball
@@ -910,7 +910,7 @@ namespace SpectatorFootball.GameNS
                                 //Move vertically to make the tackle
                                 if (!bSim)
                                 {
-                                    Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, false, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos);
+                                    Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, false, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
                                     p.Attempt_Tackle(moving_ps, prev_yl, prev_v);
                                 }
                             }
@@ -964,7 +964,7 @@ namespace SpectatorFootball.GameNS
 
                                 if (!bSim)
                                 {
-                                    Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos);
+                                    Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
                                     p.Run_With_Ball(moving_ps, prev_yl, prev_v);
 
                                     //for the ball
@@ -988,7 +988,7 @@ namespace SpectatorFootball.GameNS
 
                                 if (!bSim)
                                 {
-                                    Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos);
+                                    Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
                                     if (r.Tackler != null)
                                     {
                                         p.Run_and_Tackled(moving_ps, prev_yl, prev_v);
@@ -1019,7 +1019,7 @@ namespace SpectatorFootball.GameNS
 
                                 if (!bSim)
                                 {
-                                    Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos);
+                                    Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
                                     p.Run_With_Ball(moving_ps, prev_yl, prev_v);
 
                                     //for the ball

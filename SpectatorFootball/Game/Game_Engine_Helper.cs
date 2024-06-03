@@ -23,7 +23,7 @@ namespace SpectatorFootball.GameNS
 
             return r;
         }
-        public static Player_States setRunningState(bool bLefttoRight, bool bOffense, double x1, double y1, double x2, double y2)
+        public static Player_States setRunningState_backup(bool bLefttoRight, bool bOffense, double x1, double y1, double x2, double y2)
         {
             Player_States r = Player_States.RUNNING_FORWARD;
             double xdiff = x2 - x1;
@@ -85,7 +85,7 @@ namespace SpectatorFootball.GameNS
             return r;
         }
 
-        public static Player_States setRunningState2(bool bLefttoRight, bool bOffense, double x1, double y1, double x2, double y2)
+        public static Player_States setRunningState(bool bLefttoRight, bool bOffense, double x1, double y1, double x2, double y2, double yard_backbettle)
         {
             Player_States r = Player_States.RUNNING_FORWARD;
             double xdiff = x2 - x1;
@@ -97,7 +97,7 @@ namespace SpectatorFootball.GameNS
                 {
                     if (bOffense)
                     {
-                        if (xdiff < 0 && xdiff < -app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK)
+                        if (xdiff < 0 && xdiff < -yard_backbettle)
                             r = Player_States.RUNNING_BACKWORDS;
                         else if (xdiff < 0)
                             r = Player_States.RUNNING_FORWARD;
@@ -106,7 +106,7 @@ namespace SpectatorFootball.GameNS
                     }
                     else
                     {
-                        if (xdiff > 0 && xdiff > app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK)
+                        if (xdiff > 0 && xdiff > yard_backbettle)
                             r = Player_States.RUNNING_BACKWORDS;
                         else if (xdiff > 0)
                             r = Player_States.RUNNING_FORWARD;
@@ -118,7 +118,7 @@ namespace SpectatorFootball.GameNS
                 {
                     if (bOffense)
                     {
-                        if (xdiff > 0 && xdiff > app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK)
+                        if (xdiff > 0 && xdiff > yard_backbettle)
                             r = Player_States.RUNNING_BACKWORDS;
                         else if (xdiff > 0)
                             r = Player_States.RUNNING_FORWARD;
@@ -127,7 +127,7 @@ namespace SpectatorFootball.GameNS
                     }
                     else
                     {
-                        if (xdiff < 0 && xdiff < -app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK)
+                        if (xdiff < 0 && xdiff < -yard_backbettle)
                             r = Player_States.RUNNING_BACKWORDS;
                         else if (xdiff < 0)
                             r = Player_States.RUNNING_FORWARD;
