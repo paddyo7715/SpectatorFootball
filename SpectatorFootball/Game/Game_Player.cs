@@ -219,6 +219,15 @@ namespace SpectatorFootball.GameNS
             Stages.Add(pStage);
         }
 
+        public void Fall_On_Ball(double prev_yl, double prev_v)
+        {
+            Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, true, Player_States.FALL_ON_BALL, null, Movement.FAKE_MOVEMENT, null, true, 3);
+            Play_Stage pStage = new Play_Stage();
+            pStage.Main_Object = true;
+            pStage.Actions.Add(pas);
+            Stages.Add(pStage);
+        }
+
         public bool Kickoff_GoOutofBounds(bool bLast_Play, bool bGoOut, int slot, double ret_vert)
         {
             bool r = false;

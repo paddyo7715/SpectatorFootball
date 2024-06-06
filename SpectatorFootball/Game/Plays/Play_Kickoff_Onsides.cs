@@ -168,13 +168,9 @@ namespace SpectatorFootball.GameNS
             long hands_rating = Ball_Target_Recover.p_and_r.pr.First().Hands_Rating;
             bool ballRecovered = Game_Engine_Helper.DoesPlayerCoverOnsideKick(hands_rating);
 
-            //bpo test
-            ballRecovered = false;
-
             if (ballRecovered == false)
             {
                 //Get all players adjacent to where the ball is
-                r.Forced_Fumble_Tackler = r.Tackler;
                 List<Game_Player> pFumble_Rec_Kickoff_Players = new List<Game_Player>();
                 List<Game_Player> pFumble_Rec_Return_Players = new List<Game_Player>();
                 List<int> closest_players = getkickoffGroupClosestPlayers(rnd);
@@ -185,16 +181,42 @@ namespace SpectatorFootball.GameNS
                     Kickoff_Players, Return_Players,
                     pFumble_Rec_Kickoff_Players, pFumble_Rec_Return_Players,
                     Ball_Target_Recover, r.Tackler, bSim);
+            }
+            else
+            {
+                io_Players = 0;
+                //cycle thru the offensive/kickoff team then he defense
+                //if kicker then do their special thing; otherwise, the player just remains standing 
+                foreach (Game_Player p in Kickoff_Players)
+                {
+                    {
+                        if (!bSim)
+                            p.Stand();
+                    }
+                    io_Players++;
+                }
 
-                /*               if (t.Item2)
-                               {
-                                   r.on
-                               }
-                */
+                if (!bSim)
+                {
+                    //for the ball
+                    gBall.Carried_Fake_Movement(5);
+                }
 
-                r.Fumble_Recoverer = t.Item1;
-                r.bFumble_Lost = t.Item2;
-
+                //The team receiving the kick will just stand there before the kick
+                foreach (Game_Player p in Return_Players)
+                {
+                    if (!bSim)
+                    {
+                        if (p == Ball_Target_Recover)
+                        {
+                            double prev_yl = p.Current_YardLine;
+                            double prev_v = p.Current_Vertical_Percent_Pos;
+                            p.Fall_On_Ball(prev_yl, prev_v);
+                        }
+                        else
+                            p.Stand();
+                    }
+                }
             }
 
             logger.Debug("=====================================================");
