@@ -10,7 +10,7 @@ using static System.Windows.Forms.AxHost;
 
 namespace SpectatorFootball.GameNS
 {
-    internal class Play_Kickoff_Onsides : iPlay
+    public class Play_Kickoff_Onsides : iPlay
     {
         public Play_Enum Play { get; set; } = Play_Enum.KICKOFF_ONSIDES;
 
@@ -55,6 +55,7 @@ namespace SpectatorFootball.GameNS
         {
             List<string> Play_Stages = new List<string>();
             int rnd = 0;
+            bool bLost = false;
             List<Game_Player> Missed_Tackles = new List<Game_Player>();
             //================================  Stage One =======================================
             logger.Debug("Stage 1");
@@ -170,6 +171,7 @@ namespace SpectatorFootball.GameNS
 
             if (ballRecovered == false)
             {
+                r.bOnside_Muffed = true;
                 //Get all players adjacent to where the ball is
                 List<Game_Player> pFumble_Rec_Kickoff_Players = new List<Game_Player>();
                 List<Game_Player> pFumble_Rec_Return_Players = new List<Game_Player>();
@@ -181,6 +183,8 @@ namespace SpectatorFootball.GameNS
                     Kickoff_Players, Return_Players,
                     pFumble_Rec_Kickoff_Players, pFumble_Rec_Return_Players,
                     Ball_Target_Recover, r.Tackler, bSim);
+                bLost = t.Item2;
+
             }
             else
             {
@@ -226,6 +230,12 @@ namespace SpectatorFootball.GameNS
             //===== the ball goes to a random member of the return team ================
             logger.Debug("=======================================================");
             logger.Debug("");
+
+            r.bOnsideAtt = true;
+            if (bLost == true)
+                r.bOnsideMade = true;
+            else
+                r.bFinal_SwitchPossession = true;
 
             return r;
         }

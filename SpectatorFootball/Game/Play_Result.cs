@@ -26,6 +26,7 @@ namespace SpectatorFootball.GameNS
         public bool bTouchback = false;
         public bool bFumble = false;
         public bool bFumble_Lost = false;
+        public bool bOnside_Muffed = false;
         public bool bRunOutofBounds = false;
         public bool bSafety = false;
         public bool bSack = false;
@@ -44,6 +45,8 @@ namespace SpectatorFootball.GameNS
         public bool bThreePntAfterTDMissed = false;
         public bool bCoffinCornerAttemt = false;
         public bool bCoffinCornerMade = false;
+        public bool bOnsideAtt = false;
+        public bool bOnsideMade = false;
 
         //Penalties
         public Game_Player Penalized_Player = null;
@@ -116,6 +119,8 @@ namespace SpectatorFootball.GameNS
         public bool bAwayXP1 = false;
         public bool bAwayXP2 = false;
         public bool bAwayXP3 = false;
+        public bool bAway_OnsideAtt = false;
+        public bool bAway_OnsideMade = false;
 
         public bool bHomeTD = false;
         public bool bHomeFG = false;
@@ -124,6 +129,8 @@ namespace SpectatorFootball.GameNS
         public bool bHomeXP1 = false;
         public bool bHomeXP2 = false;
         public bool bHomeXP3 = false;
+        public bool bHome_OnsideAtt = false;
+        public bool bHome_OnsideMade = false;
 
         public long AwayFirstDowns = 0;
         public long Away3rdDownAtt = 0;

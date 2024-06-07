@@ -1815,7 +1815,9 @@ namespace SpectatorFootball.GameNS
                 pResult.bAwayXP2 = pResult.bTwoPntAfterTDMade;
                 pResult.bAwayXP3 = pResult.bThreePntAfterTDMade;
                 pResult.bHomeSafetyFor = pResult.bSafety;
-            }
+                pResult.bAway_OnsideAtt = pResult.bOnsideAtt;
+                pResult.bAway_OnsideMade = pResult.bOnsideMade;
+    }
             else
             {
                 pResult.bHomeTD = pResult.bTouchDown;
@@ -1824,8 +1826,9 @@ namespace SpectatorFootball.GameNS
                 pResult.bHomeXP1 = pResult.bOnePntAfterTDMade;
                 pResult.bHomeXP2 = pResult.bTwoPntAfterTDMade;
                 pResult.bHomeXP3 = pResult.bThreePntAfterTDMade;
-
                 pResult.bAwaySafetyFor = pResult.bSafety;
+                pResult.bHome_OnsideAtt = pResult.bOnsideAtt;
+                pResult.bHome_OnsideMade = pResult.bOnsideMade;
             }
 
             return r;
