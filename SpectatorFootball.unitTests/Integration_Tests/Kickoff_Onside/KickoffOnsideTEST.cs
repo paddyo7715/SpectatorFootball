@@ -8,10 +8,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpectatorFootball.unitTests.Integration_Tests.Kickoff_Normal
+namespace SpectatorFootball.Integration_Tests.Kickoff_Onside
 {
     [TestClass]
-    internal class KickoffOnsideTEST
+    public class KickoffOnsideTEST
     {
         [TestCategory("Integration")]
         [TestMethod]

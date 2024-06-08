@@ -434,11 +434,11 @@ namespace SpectatorFootball.GameNS
         public static bool DoesPlayerCoverOnsideKick(long Hands_rating)
         {
             bool r = false;
-            const int top = 200;
+            const int top = 222;
 
             int rnd = CommonUtils.getRandomNum(1, top);
 
-            if (rnd > (Hands_rating * 2))
+            if (rnd < (Hands_rating * 2))
                 r = true;
 
             return r;
