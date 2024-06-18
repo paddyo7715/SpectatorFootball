@@ -1065,11 +1065,10 @@ namespace SpectatorFootball.GameNS
             
             r.Yards_Returned = yards_returned;
 
-            //Create a play stats record for every player in this play and set the appropriate play count to 1
-            r.Play_Player_Stats = CreateStatRecords(r.Kicker, r.Returner, Kickoff_Players, Return_Players);
-            SetPlayerStats(r.bTouchback, r.bKick_Out_of_Endzone, r.bTouchDown,
+            //Create Player Stats Records for the play
+            r.Play_Player_Stats = SetPlayerStats(Kickoff_Players, Return_Players, r.bTouchback, r.bKick_Out_of_Endzone, r.bTouchDown,
                 r.bFumble, r.bFumble_Lost, yards_returned, r.Kicker, r.Returner, r.Tackler, r.Fumble_Recoverer,
-                Missed_Tackles, r.Play_Player_Stats);
+                Missed_Tackles);
 
             return r;
         }
@@ -1285,84 +1284,87 @@ namespace SpectatorFootball.GameNS
                 pFumble_Rec_Return_Players.Add(Return_Players[i]);
             }
         }
-        public static List<Game_Player_Stats> CreateStatRecords(Game_Player Kicker, Game_Player Returner, List<Game_Player> Kickoff_Players, List<Game_Player> Return_Players)
-        {
-            List<Game_Player_Stats> r = new List<Game_Player_Stats>();
 
-            foreach (Game_Player p in Kickoff_Players)
-                if (p == Kicker)
-                    r.Add(new Game_Player_Stats() {Player_ID = Kicker.p_and_r.pr.First().Player_ID,  Kickoffs = 1 });
-                else
-                    r.Add(new Game_Player_Stats() {Player_ID = p.p_and_r.pr.First().Player_ID, ko_def_plays = 1 });
-
-            foreach (Game_Player p in Return_Players)
-                if (p == Returner)
-                    r.Add(new Game_Player_Stats() {Player_ID = Returner.p_and_r.pr.First().Player_ID, ko_ret_plays = 1 });
-                else
-                    r.Add(new Game_Player_Stats() { Player_ID = p.p_and_r.pr.First().Player_ID, ko_rec_plays = 1 });
-
-            return r;
-        }
-        public static void SetPlayerStats(bool bTouchback, bool bKicked_Out_of_Endzone, bool bTouchdown, 
+        public static List<Game_Player_Stats> SetPlayerStats(List<Game_Player> Kickoff_Players, List<Game_Player> Return_Players, bool bTouchback, bool bKicked_Out_of_Endzone, bool bTouchdown,
             bool bFumble, bool bFumble_Lost, double Yards,
-            Game_Player Kicker, Game_Player Returner, Game_Player Tackler, 
-            Game_Player Forced_Fumble_Recoverer, List<Game_Player> Missed_Tackle, List<Game_Player_Stats> Game_Player_Stats)
+            Game_Player Kicker, Game_Player Returner, Game_Player Tackler,
+            Game_Player Forced_Fumble_Recoverer, List<Game_Player> Missed_Tackle)
         {
-            long lTDs = bTouchdown ? 1 : 0;
-            long lFubmle = bFumble ? 1 : 0;
-            long lFubmle_Lost = bFumble_Lost ? 1 : 0;
-            long lKickoff_out_of_Endzone = bKicked_Out_of_Endzone ? 1 : 0;
+                long lTDs = bTouchdown ? 1 : 0;
+                long lFubmle = bFumble ? 1 : 0;
+                long lFubmle_Lost = bFumble_Lost ? 1 : 0;
+                long lKickoff_out_of_Endzone = bKicked_Out_of_Endzone ? 1 : 0;
 
-            //if touchback then set those stats
-            if (bTouchback)
-            {
-                Game_Player_Stats ks = Game_Player_Stats.Where(x => x.Player_ID == Kicker.p_and_r.pr.First().Player_ID).First();
-                ks.Kickoff_Touchbacks = 1;
-                ks.Kickoff_Thru_Endzones = lKickoff_out_of_Endzone;
+                List<Game_Player_Stats> r = new List<Game_Player_Stats>();
+
+                //Set a play record for each player in the play
+                foreach (Game_Player p in Kickoff_Players)
+                {
+                    if (p == Kicker)
+                        r.Add(new Game_Player_Stats() { Player_ID = Kicker.p_and_r.pr.First().Player_ID, Kickoffs = 1 });
+                    else
+                        r.Add(new Game_Player_Stats() { Player_ID = p.p_and_r.pr.First().Player_ID, ko_def_plays = 1 });
+                }
+
+                foreach (Game_Player p in Return_Players)
+                {
+                    if (p == Returner)
+                        r.Add(new Game_Player_Stats() { Player_ID = Returner.p_and_r.pr.First().Player_ID, ko_ret_plays = 1 });
+                    else
+                        r.Add(new Game_Player_Stats() { Player_ID = p.p_and_r.pr.First().Player_ID, ko_rec_plays = 1 });
+                }
+
+                //if touchback then set those stats
+                if (bTouchback)
+                {
+                    Game_Player_Stats ks = r.Where(x => x.Player_ID == Kicker.p_and_r.pr.First().Player_ID).First();
+                    ks.Kickoff_Touchbacks = 1;
+                }
+
+                if (bKicked_Out_of_Endzone)
+                {
+                    Game_Player_Stats ks = r.Where(x => x.Player_ID == Kicker.p_and_r.pr.First().Player_ID).First();
+                    ks.Kickoff_Thru_Endzones = 1;
+                }
+
+                //set the returner stats
+                Game_Player_Stats kr = r.Where(x => x.Player_ID == Returner.p_and_r.pr.First().Player_ID).First();
+                kr.ko_ret = bTouchback ? 0 : 1;
+                kr.ko_ret_TDs = lTDs;
+                kr.ko_ret_fumbles = lFubmle;
+                kr.ko_ret_fumbles_lost = lFubmle_Lost;
+                kr.ko_ret_yards = (long) Math.Round(Yards);
+                kr.ko_ret_yards_long = kr.ko_ret_yards;
+
+                //Set Tackler stats
+                if (Tackler != null)
+                {
+                    Game_Player_Stats kt = r.Where(x => x.Player_ID == Tackler.p_and_r.pr.First().Player_ID).First();
+                    kt.ko_def_tackles = 1;
+
+                    if (lFubmle > 0)
+                        kt.ko_def_Forced_Fumbles = 1;
+                }
+
+                //set missed tackles
+                foreach(Game_Player m in Missed_Tackle)
+                {
+                    Game_Player_Stats mt = r.Where(x => x.Player_ID == m.p_and_r.pr.First().Player_ID).First();
+                    mt.ko_def_tackles_missed = 1;
+                }
+
+                //if there is a fumble and it is recovered give credit to the player that recovered it
+                if (Forced_Fumble_Recoverer != null)
+                {
+                    Game_Player_Stats fr = r.Where(x => x.Player_ID == Forced_Fumble_Recoverer.p_and_r.pr.First().Player_ID).First();
+                    fr.ko_fumbles_recovered = 1;
+                }
+
+                return r;
             }
 
-            if (bKicked_Out_of_Endzone)
+            public static Play_Result setPlayerActions(List<Game_Player> Kickoff_Players, List<Game_Player> Return_Players, Play_Result pResult)
             {
-                Game_Player_Stats koe = Game_Player_Stats.Where(x => x.Player_ID == Returner.p_and_r.pr.First().Player_ID).First();
-                koe.ko_ret_touchbacks = 1;
-                koe.ko_ret_Thru_Endzones = lKickoff_out_of_Endzone;
-            }
-
-            //set the returner stats
-            Game_Player_Stats kr = Game_Player_Stats.Where(x => x.Player_ID == Returner.p_and_r.pr.First().Player_ID).First();
-            kr.ko_ret_TDs = lTDs;
-            kr.ko_ret_fumbles = lFubmle;
-            kr.ko_ret_fumbles_lost = lFubmle_Lost;
-            kr.ko_ret_yards = (long) Math.Round(Yards);
-            kr.ko_ret_yards_long = kr.ko_ret_yards;
-
-            //Set Tackler stats
-            if (Tackler != null)
-            {
-                Game_Player_Stats kt = Game_Player_Stats.Where(x => x.Player_ID == Tackler.p_and_r.pr.First().Player_ID).First();
-                kt.ko_def_tackles = 1;
-
-                if (lFubmle > 0)
-                    kt.ko_def_Forced_Fumbles = 1;
-            }
-
-            //set missed tackles
-            foreach(Game_Player m in Missed_Tackle)
-            {
-                Game_Player_Stats mt = Game_Player_Stats.Where(x => x.Player_ID == m.p_and_r.pr.First().Player_ID).First();
-                mt.ko_def_tackles_missed = 1;
-            }
-
-            //if there is a fumble and it is recovered give credit to the player that recovered it
-            if (Forced_Fumble_Recoverer != null)
-            {
-                Game_Player_Stats fr = Game_Player_Stats.Where(x => x.Player_ID == Forced_Fumble_Recoverer.p_and_r.pr.First().Player_ID).First();
-                fr.ko_def_Forced_Fumbles = 1;
-            }
-
-        }
-        public static Play_Result setPlayerActions(List<Game_Player> Kickoff_Players, List<Game_Player> Return_Players, Play_Result pResult)
-        {
             Play_Result r = pResult;
 
             r.Kicker = Kickoff_Players[app_Constants.KICKER_INDEX];

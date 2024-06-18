@@ -170,10 +170,6 @@ namespace SpectatorFootball.Models
 
         public long ko_ret_yards_long { get; set; }
 
-        public long ko_ret_touchbacks { get; set; }
-
-        public long ko_ret_Thru_Endzones { get; set; }
-
         public long ko_ret_fumbles { get; set; }
 
         public long ko_ret_fumbles_lost { get; set; }
@@ -182,7 +178,7 @@ namespace SpectatorFootball.Models
 
         public long ko_def_Forced_Fumbles { get; set; }
 
-        public long ko_def_fumbles_recovered { get; set; }
+        public long ko_fumbles_recovered { get; set; }
 
         public long ko_def_fumbles_recovered_TDs { get; set; }
 
@@ -193,8 +189,6 @@ namespace SpectatorFootball.Models
         public long ko_def_tackles_missed { get; set; }
 
         public long ko_rec_plays { get; set; }
-
-        public long ko_rec_fumbles_recovered { get; set; }
 
         public long fg_def_plays { get; set; }
 
@@ -254,7 +248,7 @@ namespace SpectatorFootball.Models
 
         public long punt_def_forced_fumbles { get; set; }
 
-        public long punt_def_forced_fumbles_recovered { get; set; }
+        public long punt_forced_fumbles_recovered { get; set; }
 
         public long punt_def_forced_fumbles_recovered_TDs { get; set; }
 
@@ -265,6 +259,24 @@ namespace SpectatorFootball.Models
         public long punt_def_tackles_missed { get; set; }
 
         public long def_pass_TDs_Surrendered { get; set; }
+
+        public long punt_rec_block_safety { get; set; }
+ 
+        public long punt_rec_muffed { get; set; }
+ 
+        public long punt_rec_muffed_lost { get; set; }
+ 
+        public long punt_muffed_recovered { get; set; }
+        public long ko_onside_play { get; set; }
+        public long scimmage_onside_play { get; set; }
+        public long ko_onside_kick_att { get; set; }
+        public long ko_onside_kick_made { get; set; }
+
+        public long ko_onside_recovered { get; set; }
+
+        
+
+
 
         public virtual Franchise Franchise { get; set; }
 

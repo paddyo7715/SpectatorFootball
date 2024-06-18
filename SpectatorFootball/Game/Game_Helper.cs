@@ -186,6 +186,38 @@ namespace SpectatorFootball.GameNS
                     f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.TE, YardLine = (10.0 * PossessionAdjuster), Vertical_Percent_Pos = 73, State = Player_States.STANDING });
                     f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.RB, YardLine = (10.0 * PossessionAdjuster), Vertical_Percent_Pos = 80, State = Player_States.STANDING });
                     break;
+                case Formations_Enum.PUNT:
+                    f.Name = "Punt";
+                    f.f_enum = fe;
+                    f.bSpecialTeams = true;
+                    f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.WR, YardLine = (-1.0 * PossessionAdjuster), Vertical_Percent_Pos = 23, State = Player_States.STANDING });
+                    f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.OL, YardLine = (-1.0 * PossessionAdjuster), Vertical_Percent_Pos = 39, State = Player_States.STANDING });
+                    f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.OL, YardLine = (-1.0 * PossessionAdjuster), Vertical_Percent_Pos = 44, State = Player_States.STANDING });
+                    f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.OL, YardLine = (-1.0 * PossessionAdjuster), Vertical_Percent_Pos = 49, State = Player_States.STANDING });
+                    f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.DB, YardLine = (-2.5 * PossessionAdjuster), Vertical_Percent_Pos = 42, State = Player_States.STANDING });
+                    f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.K, YardLine = (-13.0 * PossessionAdjuster), Vertical_Percent_Pos = 49, State = Player_States.STANDING });
+                    f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.TE, YardLine = (-4.0 * PossessionAdjuster), Vertical_Percent_Pos = 54, State = Player_States.STANDING });
+                    f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.RB, YardLine = (-2.0 * PossessionAdjuster), Vertical_Percent_Pos = 59, State = Player_States.STANDING });
+                    f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.OL, YardLine = (-1.0 * PossessionAdjuster), Vertical_Percent_Pos = 54, State = Player_States.STANDING });
+                    f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.OL, YardLine = (-1.0 * PossessionAdjuster), Vertical_Percent_Pos = 59, State = Player_States.STANDING });
+                    f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.WR, YardLine = (-1.0 * PossessionAdjuster), Vertical_Percent_Pos = 77, State = Player_States.STANDING });
+                    break;
+                case Formations_Enum.PUNT_RETURN:
+                    f.Name = "Punt Return";
+                    f.f_enum = fe;
+                    f.bSpecialTeams = true;
+                    f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.DB, YardLine = (1.0 * PossessionAdjuster), Vertical_Percent_Pos = 23, State = Player_States.STANDING });
+                    f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.LB, YardLine = (1.0 * PossessionAdjuster), Vertical_Percent_Pos = 33, State = Player_States.STANDING });
+                    f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.LB, YardLine = (1.0 * PossessionAdjuster), Vertical_Percent_Pos = 38, State = Player_States.STANDING });
+                    f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.DL, YardLine = (1.0 * PossessionAdjuster), Vertical_Percent_Pos = 43, State = Player_States.STANDING });
+                    f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.DL, YardLine = (1.0 * PossessionAdjuster), Vertical_Percent_Pos = 48, State = Player_States.STANDING });
+                    f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.DB, YardLine = (40.0 * PossessionAdjuster), Vertical_Percent_Pos = 50, State = Player_States.STANDING });
+                    f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.DL, YardLine = (1.0 * PossessionAdjuster), Vertical_Percent_Pos = 52, State = Player_States.STANDING });
+                    f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.DL, YardLine = (1.0 * PossessionAdjuster), Vertical_Percent_Pos = 57, State = Player_States.STANDING });
+                    f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.LB, YardLine = (1.0 * PossessionAdjuster), Vertical_Percent_Pos = 62, State = Player_States.STANDING });
+                    f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.LB, YardLine = (1.0 * PossessionAdjuster), Vertical_Percent_Pos = 67, State = Player_States.STANDING });
+                    f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.DB, YardLine = (1.0 * PossessionAdjuster), Vertical_Percent_Pos = 77, State = Player_States.STANDING });
+                    break;
             }
             return f;
         }

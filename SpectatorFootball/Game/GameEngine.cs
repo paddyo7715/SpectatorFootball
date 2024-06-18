@@ -804,15 +804,14 @@ namespace SpectatorFootball.GameNS
                     ps.ko_ret_yards += s.ko_ret_yards;
                     ps.ko_ret_TDs += s.ko_ret_TDs;
                     if (ps.ko_ret_yards_long < s.ko_ret_yards_long) ps.ko_ret_yards_long = s.ko_ret_yards_long;
-                    ps.ko_ret_touchbacks += s.ko_ret_touchbacks;
-                    ps.ko_ret_Thru_Endzones += s.ko_ret_Thru_Endzones;
                     ps.ko_ret_fumbles += s.ko_ret_fumbles;
                     ps.ko_ret_fumbles_lost += s.ko_ret_fumbles_lost;
+
+                    ps.ko_fumbles_recovered += s.ko_fumbles_recovered;
 
                     //Kickoff Defense
                     ps.ko_def_plays += s.ko_def_plays;
                     ps.ko_def_Forced_Fumbles += s.ko_def_Forced_Fumbles;
-                    ps.ko_def_fumbles_recovered += s.ko_def_fumbles_recovered;
                     ps.ko_def_fumbles_recovered_TDs += s.ko_def_fumbles_recovered_TDs;
                     ps.ko_def_fumbles_recovered_Yards += s.ko_def_fumbles_recovered_Yards;
                     ps.ko_def_tackles += s.ko_def_tackles;
@@ -820,7 +819,11 @@ namespace SpectatorFootball.GameNS
 
                     //Kickoff Receivers
                     ps.ko_rec_plays += s.ko_rec_plays;
-                    ps.ko_rec_fumbles_recovered += s.ko_rec_fumbles_recovered;
+
+                    //Onside Kickoff/Play
+                    ps.ko_onside_play += s.ko_onside_play;
+                    ps.scimmage_onside_play += s.scimmage_onside_play;
+
 
                     //FG Defense
                     ps.fg_def_plays += s.fg_def_plays;
@@ -849,6 +852,10 @@ namespace SpectatorFootball.GameNS
                     if (ps.punt_ret_yards_long < s.punt_ret_yards_long) ps.punt_ret_yards_long = s.punt_ret_yards_long;
                     ps.punt_ret_fumbles += s.punt_ret_fumbles;
                     ps.punt_ret_fumbles_lost += s.punt_ret_fumbles_lost;
+                    ps.punt_forced_fumbles_recovered += s.punt_forced_fumbles_recovered;
+                    ps.punt_rec_muffed += s.punt_rec_muffed;
+                    ps.punt_rec_muffed_lost += s.punt_rec_muffed_lost;
+                    ps.punt_muffed_recovered += s.punt_muffed_recovered;
 
                     //Punt Reveivers
                     ps.punt_rec_plays += s.punt_rec_plays;
@@ -856,11 +863,12 @@ namespace SpectatorFootball.GameNS
                     ps.punt_rec_block_recovery += s.punt_rec_block_recovery;
                     ps.punt_rec_block_recovery_yards += s.punt_rec_block_recovery_yards;
                     ps.punt_rec_block_recovery_TDs += s.punt_rec_block_recovery_TDs;
+                    ps.punt_rec_block_recovery_TDs += s.punt_rec_block_recovery_TDs;
 
                     //Punt Defense
                     ps.punt_def_plays += s.punt_def_plays;
                     ps.punt_def_forced_fumbles += s.punt_def_forced_fumbles;
-                    ps.punt_def_forced_fumbles_recovered += s.punt_def_forced_fumbles_recovered;
+                    ps.punt_forced_fumbles_recovered += s.punt_forced_fumbles_recovered;
                     ps.punt_def_forced_fumbles_recovered_TDs += s.punt_def_forced_fumbles_recovered_TDs;
                     ps.punt_def_forced_fumbles_recovered_Yards += s.punt_def_forced_fumbles_recovered_Yards;
                     ps.punt_def_tackles += s.punt_def_tackles;

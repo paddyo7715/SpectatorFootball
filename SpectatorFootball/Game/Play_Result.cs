@@ -91,6 +91,7 @@ namespace SpectatorFootball.GameNS
         public Game_Player Tackler = null;
         public Game_Player Fumble_Recoverer = null;
         public Game_Player Forced_Fumble_Tackler = null;
+        public Game_Player Onside_Kick_Recoverer = null;
 
         public double Yards_Gained = 0;
         public double Yards_Returned = 0;

@@ -1,6 +1,7 @@
 ﻿using log4net;
 using SpectatorFootball.Enum;
 using SpectatorFootball.GameNS;
+using SpectatorFootball.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -183,6 +184,7 @@ namespace SpectatorFootball.GameNS
                     Kickoff_Players, Return_Players,
                     pFumble_Rec_Kickoff_Players, pFumble_Rec_Return_Players,
                     Ball_Target_Recover, r.Tackler, bSim);
+                r.Onside_Kick_Recoverer = t.Item1;
                 bLost = t.Item2;
 
             }
@@ -237,6 +239,9 @@ namespace SpectatorFootball.GameNS
             else
                 r.bFinal_SwitchPossession = true;
 
+            //Create Player Stats Records for the play
+            r.Play_Player_Stats = SetPlayerStats(Kickoff_Players, Return_Players, r.bOnsideMade, r.Kicker, r.Onside_Kick_Recoverer);
+
             return r;
         }
         public bool isPreSnapPenalty_Eligible()
@@ -245,7 +250,7 @@ namespace SpectatorFootball.GameNS
         }
         public bool isAccumeStats()
         {
-            return false;
+            return true;
         }
         public static Play_Result setPlayerActions(List<Game_Player> Kickoff_Players, List<Game_Player> Return_Players, Play_Result pResult)
         {
@@ -330,6 +335,34 @@ namespace SpectatorFootball.GameNS
                 if (i != 5) pFumble_Rec_Kickoff_Players.Add(Kickoff_Players[i]);
                 pFumble_Rec_Return_Players.Add(Return_Players[i]);
             }
+        }
+
+        public static List<Game_Player_Stats> SetPlayerStats(List<Game_Player> Kickoff_Players, List<Game_Player> Return_Players, 
+            bool onside_successful, Game_Player Kicker, Game_Player Onside_Recoverer)
+        {
+            List<Game_Player_Stats> r = new List<Game_Player_Stats>();
+
+            //Set a play record for each player in the play
+            foreach (Game_Player p in Kickoff_Players)
+            {
+                if (p == Kicker)
+                    r.Add(new Game_Player_Stats() { Player_ID = Kicker.p_and_r.pr.First().Player_ID, ko_onside_kick_att = 1 });
+                else
+                    r.Add(new Game_Player_Stats() { Player_ID = p.p_and_r.pr.First().Player_ID, ko_onside_play = 1 });
+            }
+
+            if (Onside_Recoverer != null)
+            {
+                Game_Player_Stats ks = r.Where(x => x.Player_ID == Onside_Recoverer.p_and_r.pr.First().Player_ID).First();
+                if (ks != null) ks.ko_onside_recovered = 1;
+            }
+
+            //set the returner stats
+            Game_Player_Stats kr = r.Where(x => x.Player_ID == Kicker.p_and_r.pr.First().Player_ID).First();
+            kr.ko_onside_kick_att = 1;
+            kr.ko_onside_kick_made = onside_successful ? 1 : 0;
+
+             return r;
         }
 
     }
