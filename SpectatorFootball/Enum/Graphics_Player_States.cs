@@ -54,6 +54,18 @@ namespace SpectatorFootball.Enum
         KNEELING_3,
         FALL_ON_BALL_1,
         FALL_ON_BALL_2,
-        FALL_ON_BALL_3
+        FALL_ON_BALL_3,
+            //new 
+        PUNTER_READY,
+        PUNTER_RUN_1,
+        PUNTER_RUN_2,
+        PUNTER_RUN_3,
+        PUNTER_RUN_4,
+        PUNTER_KICK_1,
+        PUNTER_KICK_2,
+        PUNTER_KICK_3,
+        PUNTER_AFTER_KICK_1,
+        PUNTER_AFTER_KICK_2,
+        BLOCK_KICK,
     }
 }
