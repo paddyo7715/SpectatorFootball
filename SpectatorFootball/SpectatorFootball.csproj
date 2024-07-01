@@ -221,6 +221,7 @@
     <Compile Include="Game\Plays\Interfaces\iPlay.cs" />
     <Compile Include="Game\Plays\Play_Kickoff_Normal.cs" />
     <Compile Include="Game\Plays\Play_Kickoff_Onsides.cs" />
+    <Compile Include="Game\Plays\Play_Punt.cs" />
     <Compile Include="Game\Play_Result.cs" />
     <Compile Include="Game\Play_Stage.cs" />
     <Compile Include="Game\Play_Struct.cs" />

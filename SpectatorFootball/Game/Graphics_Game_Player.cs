@@ -192,7 +192,6 @@ namespace SpectatorFootball.GameNS
                     else if (graph_pState == Graphics_Player_States.KNEELING_2)
                           r = Graphics_Player_States.KNEELING_3;
                     break;
-
                 case Player_States.FALL_ON_BALL:
                     if (!graph_pState.ToString().ToUpper().StartsWith("FALL_ON_BALL_"))
                     {
@@ -202,6 +201,36 @@ namespace SpectatorFootball.GameNS
                         r = Graphics_Player_States.FALL_ON_BALL_2;
                     else
                         r = Graphics_Player_States.FALL_ON_BALL_3;
+                    break;
+                case Player_States.PUNTER_READY:
+                    r = Graphics_Player_States.PUNTER_READY;
+                    break;
+                case Player_States.PUNTER_RUN:
+                    if (graph_pState == Graphics_Player_States.PUNTER_RUN_1)
+                        r = Graphics_Player_States.PUNTER_RUN_2;
+                    else if (graph_pState == Graphics_Player_States.PUNTER_RUN_2)
+                        r = Graphics_Player_States.PUNTER_RUN_3;
+                    else if (graph_pState == Graphics_Player_States.PUNTER_RUN_3)
+                        r = Graphics_Player_States.PUNTER_RUN_4;
+                    else
+                        r = Graphics_Player_States.PUNTER_RUN_1;
+                    break;
+                case Player_States.PUNTER_KICK:
+                    if (!graph_pState.ToString().ToUpper().StartsWith("PUNTER_KICK_"))
+                        r = Graphics_Player_States.PUNTER_KICK_1;
+                    else if (graph_pState == Graphics_Player_States.PUNTER_KICK_1)
+                        r = Graphics_Player_States.PUNTER_KICK_2;
+                    else if (graph_pState == Graphics_Player_States.PUNTER_KICK_2)
+                        r = Graphics_Player_States.PUNTER_KICK_3;
+                    break;
+                case Player_States.PUNTER_AFTER_KICK:
+                    if (!graph_pState.ToString().ToUpper().StartsWith("PUNTER_AFTER_KICK_"))
+                        r = Graphics_Player_States.PUNTER_AFTER_KICK_1;
+                    else if (graph_pState == Graphics_Player_States.PUNTER_AFTER_KICK_1)
+                        r = Graphics_Player_States.PUNTER_AFTER_KICK_2;
+                    break;
+                case Player_States.BLOCK_KICK:
+                    r = Graphics_Player_States.BLOCK_KICK;
                     break;
             }
             return r;

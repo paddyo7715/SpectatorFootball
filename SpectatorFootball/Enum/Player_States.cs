@@ -23,6 +23,11 @@ namespace SpectatorFootball.Enum
         ON_BACK,  
         RUNNING_BACKWORDS,
         KNEELING,
-        FALL_ON_BALL
+        FALL_ON_BALL,
+        PUNTER_READY,
+        PUNTER_RUN,
+        PUNTER_KICK,
+        PUNTER_AFTER_KICK,
+        BLOCK_KICK
     }
 }
