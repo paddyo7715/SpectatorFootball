@@ -18,32 +18,108 @@ namespace SpectatorFootball.GameNS
         private long at;
         private long ht;
         private Game_Ball gBall;
-        private List<Game_Player> Kickoff_Players;
+        private List<Game_Player> Punt_Players;
         private List<Game_Player> Return_Players;
         private bool bLefttoRight;
         private bool FreeKic;
         private bool bSim;
         private bool bLast_Play;
+        private Formation Punt_Formation = null;
+        private Formation Return_Formation = null;
+
         private Play_Result r = new Play_Result();
 
         Play_Enum Play { get; set; } = Play_Enum.PUNT;
 
-        Play_Enum iPlay.Play { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-        public Play_Result Execute(bool bPreSnapPenalty)
+        Play_Enum iPlay.Play { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }        private Formation Kickoff_Formation = null;
+        public Play_Punt(Formation Punt_Formation, Formation Return_Formation, long Possessing_Team_Id, long at, long ht, Game_Ball gBall, List<Game_Player> Punt_Players, List<Game_Player> Return_Players, bool bLefttoRight, bool bSim, bool bLast_Play)
         {
-            throw new NotImplementedException();
-        }
+            this.Possessing_Team_Id = Possessing_Team_Id;
+            this.at = at;
+            this.ht = ht;
+            this.gBall = gBall;
+            this.Punt_Players = Punt_Players;
+            this.Return_Players = Return_Players;
+            this.bLefttoRight = bLefttoRight;
+            this.bSim = bSim;
+            this.bLast_Play = bLast_Play;
+            this.Punt_Formation = Punt_Formation;
+            this.Return_Formation = Return_Formation;
 
-        public bool isAccumeStats()
-        {
-            throw new NotImplementedException();
+            r.BallPossessing_Team_Id = Possessing_Team_Id == at ? ht : at;
+            r.NonbBallPossessing_Team_Id = Possessing_Team_Id == at ? at : ht;
+            r.at = at;
+            r.ht = ht;
+            r = setPlayerActions(Punt_Players, Return_Players, r);
         }
 
         public bool isPreSnapPenalty_Eligible()
         {
-            throw new NotImplementedException();
+            return true;
         }
+
+        public bool isAccumeStats()
+        {
+            return true;
+        }
+
+        public Play_Result Execute(bool bPreSnapPenalty)
+        {
+            List<string> Play_Stages = new List<string>();
+            List<Game_Player> Missed_Tackles = new List<Game_Player>();
+            double retuner_catches_ball_yl = 0.0;
+            //================================  Stage One =======================================
+            logger.Debug("Stage 1");
+            logger.Debug("=====================================================");
+            logger.Debug(this.bLefttoRight);
+
+            //================ Players get ready for play ==========================
+            if (!bSim)
+                gBall.TeeUp();
+
+            int io_Players = 0;
+            //cycle thru the offensive/kickoff team then he defense
+            //if kicker then do their special thing; otherwise, the player just remains standing 
+            foreach (Game_Player p in Punt_Players)
+            {
+                if (p == r.Kicker)
+                {
+                    double prev_yl = p.Current_YardLine;
+                    double prev_v = p.Current_Vertical_Percent_Pos;
+
+                    if (!bSim)
+                    {
+                        p.Punter_Ready_for_Ball(prev_yl, prev_v);
+                    }
+                }
+                else
+                {
+
+
+                    //Other players just stand there waiting for the kick
+                    if (!bSim)
+                        p.Stand();
+                }
+                io_Players++;
+            }
+
+            //The team receiving the kick will just stand there before the kick
+            foreach (Game_Player p in Return_Players)
+            {
+                //Receiving players just stand there waiting for the kick
+                if (!bSim)
+                    p.Stand();
+            }
+            //===== End of Stage One - Kicker Runs up to the ball and kicks it ================
+            logger.Debug("=======================================================");
+            logger.Debug("");
+
+            return r;
+        }
+
+
+
+
 
         public static List<Game_Player_Stats> SetPlayerStats(List<Game_Player> Punt_Players, List<Game_Player> Return_Players, bool bTouchback, bool coffin_corner_att, bool coffin_corner_made, bool bTouchdown,
     bool bFumble, bool bFumble_Lost, double Yards,

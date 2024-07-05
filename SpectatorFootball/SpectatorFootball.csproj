@@ -646,6 +646,8 @@
     <None Include="Images\Source\Field_Templates\Field_Template.xcf" />
     <None Include="Images\Source\Field_Templates\Template.xcf" />
     <None Include="Images\Source\misc\Goalposts.xcf" />
+    <None Include="Images\Source\Players\L_Crouch_Block1.xcf" />
+    <None Include="Images\Source\Players\L_Crouch_Block2.xcf" />
     <None Include="Images\Source\Players\L_FallOnBall1.xcf" />
     <None Include="Images\Source\Players\L_FallOnBall2.xcf" />
     <None Include="Images\Source\Players\L_FallOnBall3.xcf" />

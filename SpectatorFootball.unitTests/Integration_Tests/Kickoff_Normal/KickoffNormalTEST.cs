@@ -86,7 +86,7 @@ namespace SpectatorFootball.IntegrationTests.Kickoff_Normal
                     Starting_YardLine = g_yardline
                 };
 
-                Play_Kickoff_Normal kickoff = new Play_Kickoff_Normal(possess_team, at, ht, gb, Kickoff_Players, Receiving_Players, bLefttoRight, false, true, false);
+                Play_Kickoff_Normal kickoff = new Play_Kickoff_Normal(KickForm, RecForm,possess_team, at, ht, gb, Kickoff_Players, Receiving_Players, bLefttoRight, false, true, false);
                 Play_Result pResult = kickoff.Execute(false);
 
                 if (pResult.Yards_Returned > 90.0)

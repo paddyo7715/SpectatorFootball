@@ -28,6 +28,9 @@ namespace SpectatorFootball.Enum
         PUNTER_RUN,
         PUNTER_KICK,
         PUNTER_AFTER_KICK,
-        BLOCK_KICK
+        BLOCK_KICK,
+        CROUCH_BLOCK_DOWN,
+        CROUCH_BLOCK_UP,
+
     }
 }

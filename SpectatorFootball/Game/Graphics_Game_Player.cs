@@ -232,6 +232,18 @@ namespace SpectatorFootball.GameNS
                 case Player_States.BLOCK_KICK:
                     r = Graphics_Player_States.BLOCK_KICK;
                     break;
+                case Player_States.CROUCH_BLOCK_DOWN:
+                    if (!graph_pState.ToString().ToUpper().StartsWith("CROUCH_BLOCK_"))
+                        r = Graphics_Player_States.CROUCH_BLOCK_1;
+                    else if (graph_pState.ToString().ToUpper().StartsWith("CROUCH_BLOCK_"))
+                        r = Graphics_Player_States.CROUCH_BLOCK_2;
+                    break;
+                case Player_States.CROUCH_BLOCK_UP:
+                    if (graph_pState.ToString().ToUpper().StartsWith("CROUCH_BLOCK_2"))
+                        r = Graphics_Player_States.CROUCH_BLOCK_1;
+                    else 
+                        r = Graphics_Player_States.STANDING;
+                    break;
             }
             return r;
         }

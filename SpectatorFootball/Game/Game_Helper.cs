@@ -126,6 +126,7 @@ namespace SpectatorFootball.GameNS
                     f.Name = "Kickoff";
                     f.f_enum = fe;
                     f.bSpecialTeams = true;
+                    f.KickerIndex = 5;
                     f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.DB, YardLine = (-1.0 * PossessionAdjuster), Vertical_Percent_Pos = 20, State = Player_States.STANDING });
                     f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.LB, YardLine = (-1.0 * PossessionAdjuster), Vertical_Percent_Pos = 26, State = Player_States.STANDING });
                     f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.TE, YardLine = (-1.0 * PossessionAdjuster), Vertical_Percent_Pos = 32, State = Player_States.STANDING });
@@ -142,6 +143,7 @@ namespace SpectatorFootball.GameNS
                     f.Name = "Kickoff Receive";
                     f.f_enum = fe;
                     f.bSpecialTeams = true;
+                    f.ReturnerIndex = 5;
                     f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.RB, YardLine = (15.0 * PossessionAdjuster), Vertical_Percent_Pos = 20, State = Player_States.STANDING });
                     f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.TE, YardLine = (25.0 * PossessionAdjuster), Vertical_Percent_Pos = 27, State = Player_States.STANDING });
                     f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.LB, YardLine = (15.0 * PossessionAdjuster), Vertical_Percent_Pos = 32, State = Player_States.STANDING });
@@ -158,6 +160,7 @@ namespace SpectatorFootball.GameNS
                     f.Name = "Onside Kickoff";
                     f.f_enum = fe;
                     f.bSpecialTeams = true;
+                    f.KickerIndex = 5;
                     f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.DB, YardLine = (-1.0 * PossessionAdjuster), Vertical_Percent_Pos = 20, State = Player_States.STANDING });
                     f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.RB, YardLine = (-1.0 * PossessionAdjuster), Vertical_Percent_Pos = 26, State = Player_States.STANDING });
                     f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.TE, YardLine = (-1.0 * PossessionAdjuster), Vertical_Percent_Pos = 32, State = Player_States.STANDING });
@@ -190,6 +193,7 @@ namespace SpectatorFootball.GameNS
                     f.Name = "Punt";
                     f.f_enum = fe;
                     f.bSpecialTeams = true;
+                    f.KickerIndex = 5;
                     f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.WR, YardLine = (-1.0 * PossessionAdjuster), Vertical_Percent_Pos = 23, State = Player_States.STANDING });
                     f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.OL, YardLine = (-1.0 * PossessionAdjuster), Vertical_Percent_Pos = 39, State = Player_States.STANDING });
                     f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.OL, YardLine = (-1.0 * PossessionAdjuster), Vertical_Percent_Pos = 44, State = Player_States.STANDING });
@@ -206,6 +210,7 @@ namespace SpectatorFootball.GameNS
                     f.Name = "Punt Return";
                     f.f_enum = fe;
                     f.bSpecialTeams = true;
+                    f.ReturnerIndex = 5;
                     f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.DB, YardLine = (1.0 * PossessionAdjuster), Vertical_Percent_Pos = 23, State = Player_States.STANDING });
                     f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.LB, YardLine = (1.0 * PossessionAdjuster), Vertical_Percent_Pos = 33, State = Player_States.STANDING });
                     f.Player_list.Add(new Formation_Rec() { Pos = Enum.Player_Pos.LB, YardLine = (1.0 * PossessionAdjuster), Vertical_Percent_Pos = 38, State = Player_States.STANDING });

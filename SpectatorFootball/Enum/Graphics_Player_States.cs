@@ -55,7 +55,6 @@ namespace SpectatorFootball.Enum
         FALL_ON_BALL_1,
         FALL_ON_BALL_2,
         FALL_ON_BALL_3,
-            //new 
         PUNTER_READY,
         PUNTER_RUN_1,
         PUNTER_RUN_2,
@@ -67,5 +66,7 @@ namespace SpectatorFootball.Enum
         PUNTER_AFTER_KICK_1,
         PUNTER_AFTER_KICK_2,
         BLOCK_KICK,
+        CROUCH_BLOCK_1,
+        CROUCH_BLOCK_2,
     }
 }

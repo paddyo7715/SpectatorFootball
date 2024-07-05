@@ -275,6 +275,15 @@ namespace SpectatorFootball.GameNS
             Stages.Add(pStage);
         }
 
+        public void Punter_Ready_for_Ball(double prev_yl, double prev_v)
+        {
+            Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, false, Player_States.PUNTER_READY, null, Movement.FAKE_MOVEMENT, null, true, 5);
+            Play_Stage pStage = new Play_Stage();
+            pStage.Main_Object = true;
+            pStage.Actions.Add(pas);
+            Stages.Add(pStage);
+        }
+
 
 
     }

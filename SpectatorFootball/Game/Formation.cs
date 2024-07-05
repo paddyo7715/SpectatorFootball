@@ -15,6 +15,8 @@ namespace SpectatorFootball.GameNS
 
         public Ball_States bState;
         public bool bSpecialTeams { get; set; }
+        public int? KickerIndex { get; set; }
+        public int? ReturnerIndex { get; set; }
         public List<Formation_Rec> Player_list { get; set; }
     }
 }

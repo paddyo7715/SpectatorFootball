@@ -25,9 +25,11 @@ namespace SpectatorFootball.GameNS
         private bool FreeKic;
         private bool bSim;
         private bool bLast_Play;
+        private Formation Kickoff_Formation = null;
+        private Formation Return_Formation = null;
         private Play_Result r = new Play_Result();
 
-        public Play_Kickoff_Normal(long Possessing_Team_Id, long at, long ht, Game_Ball gBall, List<Game_Player> Kickoff_Players, List<Game_Player> Return_Players, bool bLefttoRight, bool FreeKic, bool bSim, bool bLast_Play)
+        public Play_Kickoff_Normal(Formation Kickoff_Formation, Formation Return_Formation, long Possessing_Team_Id, long at, long ht, Game_Ball gBall, List<Game_Player> Kickoff_Players, List<Game_Player> Return_Players, bool bLefttoRight, bool FreeKic, bool bSim, bool bLast_Play)
         {
             this.Possessing_Team_Id = Possessing_Team_Id;
             this.at = at;
@@ -39,6 +41,8 @@ namespace SpectatorFootball.GameNS
             this.FreeKic = FreeKic;
             this.bSim = bSim;
             this.bLast_Play = bLast_Play;
+            this.Kickoff_Formation = Kickoff_Formation;
+            this.Return_Formation = Return_Formation;
 
             r.BallPossessing_Team_Id = Possessing_Team_Id == at ? ht : at;
             r.NonbBallPossessing_Team_Id = Possessing_Team_Id == at ? at : ht;

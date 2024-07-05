@@ -69,7 +69,7 @@ namespace SpectatorFootball.Integration_Tests.Kickoff_Onside
                     Starting_YardLine = g_yardline
                 };
 
-                Play_Kickoff_Onsides kickoff = new Play_Kickoff_Onsides(possess_team, at, ht, gb, Kickoff_Players, Receiving_Players, bLefttoRight, false, true, false);
+                Play_Kickoff_Onsides kickoff = new Play_Kickoff_Onsides(KickForm, RecForm, possess_team, at, ht, gb, Kickoff_Players, Receiving_Players, bLefttoRight, false, true, false);
                 Play_Result pResult = kickoff.Execute(false);
 
                 if (bLefttoRight)
