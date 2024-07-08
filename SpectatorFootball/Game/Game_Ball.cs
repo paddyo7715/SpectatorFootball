@@ -27,7 +27,14 @@ namespace SpectatorFootball.GameNS
             bStage.Main_Object = false;
             bStage.Actions.Add(bas);
             Stages.Add(bStage);
-
+        }
+        public void Fake_Movement(int n)
+        {
+            Play_Stage bStage = new Play_Stage();
+            bStage.Main_Object = true;
+            Action bas = new Action(Game_Object_Types.B, Current_YardLine, Current_Vertical_Percent_Pos, Current_YardLine, Current_Vertical_Percent_Pos, true, null, State, Movement.FAKE_MOVEMENT, Ball_Speed.CARRIED, false, n);
+            bStage.Actions.Add(bas);
+            Stages.Add(bStage);
         }
         public void End_Over_End_Thru_Air()
         {
@@ -80,6 +87,7 @@ namespace SpectatorFootball.GameNS
             bStage.Main_Object = true;
             bStage.Actions.Add(bas);
             Stages.Add(bStage);
+            State = Ball_States.CARRIED;
         }
 
         public void Carried_Tackled(double prev_yl, double prev_v)
@@ -89,6 +97,7 @@ namespace SpectatorFootball.GameNS
             bStage.Main_Object = false;
             bStage.Actions.Add(bas);
             Stages.Add(bStage);
+            State = Ball_States.CARRIED;
         }
 
         public void Carried_Fake_Movement(int n)
@@ -98,6 +107,7 @@ namespace SpectatorFootball.GameNS
             Action bas = new Action(Game_Object_Types.B, Current_YardLine, Current_Vertical_Percent_Pos, Current_YardLine, Current_Vertical_Percent_Pos, true, null, Ball_States.CARRIED, Movement.FAKE_MOVEMENT, Ball_Speed.CARRIED, false, n);
             bStage.Actions.Add(bas);
             Stages.Add(bStage);
+            State = Ball_States.CARRIED;
         }
 
         public void Carried_Out_of_Bounds(double prev_yl, double prev_v, bool blefttoRight)
@@ -122,6 +132,7 @@ namespace SpectatorFootball.GameNS
             bStage.Actions.Add(bas);
             bStage.Actions.Add(bas2);
             Stages.Add(bStage);
+            State = Ball_States.CARRIED;
         }
         public void Bounce_Along_Ground()
         {
@@ -130,6 +141,7 @@ namespace SpectatorFootball.GameNS
             Action bas2 = new Action(Game_Object_Types.B, Starting_YardLine, Starting_Vertical_Percent_Pos, Current_YardLine, Current_Vertical_Percent_Pos, false, null, Ball_States.BOUNCING, Movement.LINE, Ball_Speed.NORMAL, false, 0);
             bStage.Actions.Add(bas2);
             Stages.Add(bStage);
+            State = Ball_States.BOUNCING;
         }
 
     }

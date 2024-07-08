@@ -32,6 +32,7 @@ namespace SpectatorFootball.GameNS
             pStage.Main_Object = false;
             pStage.Actions.Add(pas);
             Stages.Add(pStage);
+            State = Player_States.STANDING;
         }
 
         public void Same_As_Last_Action()
@@ -68,6 +69,7 @@ namespace SpectatorFootball.GameNS
             pStage.Actions.Add(pas1);
             pStage.Actions.Add(pas2);
             Stages.Add(pStage);
+            State = Player_States.FG_KICK;
         }
 
         public void Block(bool bBlockSound)
@@ -81,6 +83,7 @@ namespace SpectatorFootball.GameNS
             pStage.Main_Object = false;
             pStage.Actions.Add(pas);
             Stages.Add(pStage);
+            State = Player_States.BLOCKING;
         }
         public void OnBack()
         {
@@ -89,6 +92,7 @@ namespace SpectatorFootball.GameNS
             pStage.Main_Object = false;
             pStage.Actions.Add(pas);
             Stages.Add(pStage);
+            State = Player_States.ON_BACK;
         }
         public void Run_Then_Stand(Player_States moving_ps, double prev_yl, double prev_v)
         {
@@ -100,6 +104,7 @@ namespace SpectatorFootball.GameNS
             pStage.Actions.Add(pas);
             pStage.Actions.Add(pas2);
             Stages.Add(pStage);
+            State = Player_States.STANDING;
         }
 
         public void Run_Then_CatchKick(Player_States moving_ps, double prev_yl, double prev_v)
@@ -113,6 +118,7 @@ namespace SpectatorFootball.GameNS
             pStage.Actions.Add(pas);
             pStage.Actions.Add(pas2);
             Stages.Add(pStage);
+            State = Player_States.ABOUT_TO_CATCH_KICK;
         }
 
         public void Attempt_Tackle(Player_States moving_ps, double prev_yl, double prev_v)
@@ -125,6 +131,7 @@ namespace SpectatorFootball.GameNS
             pStage.Actions.Add(pas);
             pStage.Actions.Add(pas2);
             Stages.Add(pStage);
+            State = Player_States.TACKLING;
         }
 
         public void Run_With_Ball(Player_States moving_ps, double prev_yl, double prev_v)
@@ -134,6 +141,7 @@ namespace SpectatorFootball.GameNS
             pStage.Main_Object = false;
             pStage.Actions.Add(pas);
             Stages.Add(pStage);
+            State = moving_ps;
         }
         public void Run(Player_States moving_ps, double prev_yl, double prev_v)
         {
@@ -141,7 +149,8 @@ namespace SpectatorFootball.GameNS
             Play_Stage pStage = new Play_Stage();
             pStage.Main_Object = false;
             pStage.Actions.Add(pas);
-            Stages.Add(pStage);
+            Stages.Add(pStage);     
+            State = moving_ps; 
         }
 
         public void Run_and_Tackled(Player_States moving_ps, double prev_yl, double prev_v)
@@ -154,6 +163,7 @@ namespace SpectatorFootball.GameNS
             pStage.Actions.Add(pas);
             pStage.Actions.Add(pas2);
             Stages.Add(pStage);
+            State = Player_States.TACKLED;
         }
         public void Cover_Ball(Player_States moving_ps, double prev_yl, double prev_v)
         {
@@ -163,6 +173,7 @@ namespace SpectatorFootball.GameNS
             pStage.Main_Object = true;
             pStage.Actions.Add(pas2);
             Stages.Add(pStage);
+            State = Player_States.TACKLED;
         }
 
         public bool isKickOutofEndzone(double yardline)
@@ -217,6 +228,7 @@ namespace SpectatorFootball.GameNS
             pStage.Main_Object = true;
             pStage.Actions.Add(pas);
             Stages.Add(pStage);
+            State = Player_States.KNEELING;
         }
 
         public void Fall_On_Ball(double prev_yl, double prev_v)
@@ -226,6 +238,7 @@ namespace SpectatorFootball.GameNS
             pStage.Main_Object = true;
             pStage.Actions.Add(pas);
             Stages.Add(pStage);
+            State = Player_States.FALL_ON_BALL;
         }
 
         public bool Kickoff_GoOutofBounds(bool bLast_Play, bool bGoOut, int slot, double ret_vert)
@@ -273,6 +286,7 @@ namespace SpectatorFootball.GameNS
             pStage.Actions.Add(pas);
             pStage.Actions.Add(pas2);
             Stages.Add(pStage);
+            State = moving_ps;
         }
 
         public void Punter_Ready_for_Ball(double prev_yl, double prev_v)
@@ -282,6 +296,27 @@ namespace SpectatorFootball.GameNS
             pStage.Main_Object = true;
             pStage.Actions.Add(pas);
             Stages.Add(pStage);
+            State = Player_States.PUNTER_READY;
+        }
+
+        public void Crouch(double prev_yl, double prev_v)
+        {
+            Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, false, Player_States.CROUCH_BLOCK_DOWN, null, Movement.FAKE_MOVEMENT, null, true, 2);
+            Play_Stage pStage = new Play_Stage();
+            pStage.Main_Object = false;
+            pStage.Actions.Add(pas);
+            Stages.Add(pStage);
+            State = Player_States.CROUCH_BLOCK_DOWN;
+        }
+
+        public void Crouch_Stand_Up(double prev_yl, double prev_v)
+        {
+            Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, false, Player_States.CROUCH_BLOCK_DOWN, null, Movement.FAKE_MOVEMENT, null, true, 2);
+            Play_Stage pStage = new Play_Stage();
+            pStage.Main_Object = false;
+            pStage.Actions.Add(pas);
+            Stages.Add(pStage);
+            State = Player_States.CROUCH_BLOCK_UP;
         }
 
 

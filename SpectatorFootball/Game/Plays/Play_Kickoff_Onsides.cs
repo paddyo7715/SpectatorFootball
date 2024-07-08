@@ -52,7 +52,7 @@ namespace SpectatorFootball.GameNS
             r.NonbBallPossessing_Team_Id = Possessing_Team_Id == at ? at : ht;
             r.at = at;
             r.ht = ht;
-            r = setPlayerActions(Kickoff_Players, Return_Players, r);
+            r = setPlayerActions(Kickoff_Formation, Return_Formation,Kickoff_Players, Return_Players, r);
         }
 
         public Play_Result Execute(bool bPreSnapPenalty)
@@ -255,13 +255,16 @@ namespace SpectatorFootball.GameNS
         {
             return true;
         }
-        public static Play_Result setPlayerActions(List<Game_Player> Kickoff_Players, List<Game_Player> Return_Players, Play_Result pResult)
+        public Play_Result getPlayResult()
+        {
+            return r;
+        }
+        public static Play_Result setPlayerActions(Formation Kickoff_Formation, Formation Return_Formation, List<Game_Player> Kickoff_Players, List<Game_Player> Return_Players, Play_Result pResult)
         {
             Play_Result r = pResult;
 
-            r.Kicker = Kickoff_Players[app_Constants.KICKER_INDEX];
+            r.Kicker = Kickoff_Players[(int)Kickoff_Formation.KickerIndex];
             //Get the kicker - kicker and returner must be slot 5 in the formation
-//            r.Returner = Return_Players[app_Constants.RETURNER_INDEX];
 
             //for testing print out all the players and their relevant ratings
             logger.Debug("Kickoff Players");

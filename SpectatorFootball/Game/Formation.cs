@@ -15,8 +15,12 @@ namespace SpectatorFootball.GameNS
 
         public Ball_States bState;
         public bool bSpecialTeams { get; set; }
+        public List<Formation_Rec> Player_list { get; set; }
+
+        //Special player slot variables
         public int? KickerIndex { get; set; }
         public int? ReturnerIndex { get; set; }
-        public List<Formation_Rec> Player_list { get; set; }
+        public List<int> Line_Players { get; set; }
+        public int? Punter_Behind_Line_ayrds { get; set; }
     }
 }

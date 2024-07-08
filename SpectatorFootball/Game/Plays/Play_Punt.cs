@@ -4,6 +4,7 @@ using SpectatorFootball.GameNS;
 using SpectatorFootball.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,7 +28,7 @@ namespace SpectatorFootball.GameNS
         private Formation Punt_Formation = null;
         private Formation Return_Formation = null;
 
-        private Play_Result r = new Play_Result();
+        public Play_Result r = new Play_Result();
 
         Play_Enum Play { get; set; } = Play_Enum.PUNT;
 
@@ -50,7 +51,7 @@ namespace SpectatorFootball.GameNS
             r.NonbBallPossessing_Team_Id = Possessing_Team_Id == at ? at : ht;
             r.at = at;
             r.ht = ht;
-            r = setPlayerActions(Punt_Players, Return_Players, r);
+            r = setPlayerActions(Punt_Formation, Return_Formation, Punt_Players, Return_Players, r);
         }
 
         public bool isPreSnapPenalty_Eligible()
@@ -62,6 +63,10 @@ namespace SpectatorFootball.GameNS
         {
             return true;
         }
+        public Play_Result getPlayResult()
+        {
+            return r;
+        }
 
         public Play_Result Execute(bool bPreSnapPenalty)
         {
@@ -69,11 +74,11 @@ namespace SpectatorFootball.GameNS
             List<Game_Player> Missed_Tackles = new List<Game_Player>();
             double retuner_catches_ball_yl = 0.0;
             //================================  Stage One =======================================
+            //Players get ready for play 
             logger.Debug("Stage 1");
             logger.Debug("=====================================================");
             logger.Debug(this.bLefttoRight);
 
-            //================ Players get ready for play ==========================
             if (!bSim)
                 gBall.TeeUp();
 
@@ -82,37 +87,57 @@ namespace SpectatorFootball.GameNS
             //if kicker then do their special thing; otherwise, the player just remains standing 
             foreach (Game_Player p in Punt_Players)
             {
-                if (p == r.Kicker)
-                {
-                    double prev_yl = p.Current_YardLine;
-                    double prev_v = p.Current_Vertical_Percent_Pos;
+                double prev_yl = p.Current_YardLine;
+                double prev_v = p.Current_Vertical_Percent_Pos;
 
-                    if (!bSim)
-                    {
+                if (!bSim)
+                {
+                    if (p == r.Punter)
                         p.Punter_Ready_for_Ball(prev_yl, prev_v);
-                    }
-                }
-                else
-                {
-
-
-                    //Other players just stand there waiting for the kick
-                    if (!bSim)
+                    else if (Punt_Formation.Line_Players.Contains(io_Players))
+                        p.Crouch(prev_yl, prev_v);
+                    else
                         p.Stand();
                 }
+
+
                 io_Players++;
             }
 
+            io_Players = 0;
             //The team receiving the kick will just stand there before the kick
             foreach (Game_Player p in Return_Players)
             {
-                //Receiving players just stand there waiting for the kick
+                double prev_yl = p.Current_YardLine;
+                double prev_v = p.Current_Vertical_Percent_Pos;
+
                 if (!bSim)
-                    p.Stand();
+                {
+                    if (Return_Formation.Line_Players.Contains(io_Players))
+                        p.Crouch(prev_yl, prev_v);
+                    else
+                        p.Stand();
+                }
+
+                io_Players++;
             }
             //===== End of Stage One - Kicker Runs up to the ball and kicks it ================
             logger.Debug("=======================================================");
             logger.Debug("");
+
+            //================================  Stage Two =======================================
+            //if presnap penatly then plaers stand up; otherwise snap ball back to punter
+            logger.Debug("Stage 2");
+            logger.Debug("=====================================================");
+            if (bPreSnapPenalty)
+            {
+                Playstub_Uncrouch.Execute(bLefttoRight, gBall, Punt_Players, Return_Players, bSim);
+            }
+            else
+            {
+
+
+            }
 
             return r;
         }
@@ -131,13 +156,14 @@ namespace SpectatorFootball.GameNS
             return r;
         }
 
-        public static Play_Result setPlayerActions(List<Game_Player> Kickoff_Players, List<Game_Player> Return_Players, Play_Result pResult)
+        public static Play_Result setPlayerActions(Formation Kickoff_Formation, Formation Return_Formation, 
+            List<Game_Player> Kickoff_Players, List<Game_Player> Return_Players, Play_Result pResult)
         {
             Play_Result r = pResult;
 
-            r.Punter = Kickoff_Players[app_Constants.KICKER_INDEX];
+            r.Punter = Kickoff_Players[(int)Kickoff_Formation.KickerIndex];
             //Get the kicker - kicker and returner must be slot 5 in the formation
-            r.Punt_Returner = Return_Players[app_Constants.RETURNER_INDEX];
+            r.Punt_Returner = Return_Players[(int)Return_Formation.ReturnerIndex];
 
             //for testing print out all the players and their relevant ratings
             logger.Debug("Kickoff Players");

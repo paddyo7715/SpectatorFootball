@@ -86,10 +86,8 @@ namespace SpectatorFootball.GameNS
             }
 
             //bpo test code
-//            f = Formations_Enum.KICKOFF_ONSIDE_KICK;
-//            p = Play_Enum.KICKOFF_ONSIDES;
-            f = Formations_Enum.KICKOFF_REGULAR_KICK;
-            p = Play_Enum.KICKOFF_NORMAL;
+            f = Formations_Enum.PUNT;
+            p = Play_Enum.PUNT;
             //==========================================
 
             formation = Game_Helper.getFormation(f, PossessionAdjuster);
@@ -134,7 +132,7 @@ namespace SpectatorFootball.GameNS
             else if (pp.Formation.f_enum == Formations_Enum.FIELD_GOAL)
                 r = Formations_Enum.KICKOFF_REGULAR_RECEIVE;
             else if (pp.Formation.f_enum == Formations_Enum.PUNT)
-                r = Formations_Enum.KICKOFF_REGULAR_RECEIVE;
+                r = Formations_Enum.PUNT_RETURN;
             else if (pp.Formation.f_enum == Formations_Enum.EXTRA_POINT)
                 r = Formations_Enum.KICKOFF_REGULAR_RECEIVE;
             else
@@ -170,29 +168,31 @@ namespace SpectatorFootball.GameNS
 
             return false;
         }
-        public List<Formation_Rec> Populate_Formation(List<Formation_Rec> fList, 
-            bool bAllowSubstitutions,
-            bool bSpecialTeams, bool bPlayWithReturner)
+        public List<Formation_Rec> Populate_Formation(Formation Formation, 
+            bool bAllowSubstitutions, bool bPlayWithReturner)
         {
             //if a player spot can not be filled (and this should almost never happen) then
             //the team will return null for the return code and they must forfeit the game.
             List<Formation_Rec> r = new List<Formation_Rec>();
             bool bCouldFine_Player = false;
+            List<Formation_Rec> fList = Formation.Player_list;
+            bool bSpecialTeams = Formation.bSpecialTeams;
 
             int p_id = 0;
             foreach (Formation_Rec f in fList)
             {
+
                 bool bSlotSubstitution = false;
                 Player_and_Ratings Player_rating = null;
 
                 if (bAllowSubstitutions)
                     bSlotSubstitution = SlotSubstitute(f.Pos);
 
-                if (bSpecialTeams)
+                if (Formation.bSpecialTeams)
                     bSlotSubstitution = true;
 
                 bool bReturner = false;
-                if (bPlayWithReturner && p_id == app_Constants.RETURNER_INDEX)
+                if (bPlayWithReturner && p_id == Formation.ReturnerIndex)
                     bReturner = true;
                 //try to get a player at the need position either a starter or sub
                 Player_rating = PlayerSamePOS(f.Pos, fList, bSlotSubstitution, bReturner, bSpecialTeams  );

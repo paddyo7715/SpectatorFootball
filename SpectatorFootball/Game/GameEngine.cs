@@ -228,6 +228,12 @@ namespace SpectatorFootball.GameNS
             //Set the coach
             Coach Offensive_Coach = null;
             Coach Defensive_Coach = null;
+
+            //bpo test
+            g_fid_posession = at.Franchise_ID;
+            g_Line_of_Scrimmage = 35.0;
+            //********************
+
             if (g_fid_posession == at.Franchise_ID)
             {
                 Offensive_Coach = Away_Coach;
@@ -275,8 +281,8 @@ namespace SpectatorFootball.GameNS
 
             logger.Debug("Before  Offensive_Coach.Populate_Formation");
             Offensive_Package.Formation.Player_list = Offensive_Coach.Populate_Formation(
-                Offensive_Package.Formation.Player_list,
-                bAllowSubs, Offensive_Package.Formation.bSpecialTeams, false);
+                Offensive_Package.Formation,
+                bAllowSubs, false);
             logger.Debug("After  Offensive_Coach.Populate_Formation");
             if (Offensive_Package.Formation.Player_list == null)
             {
@@ -293,8 +299,8 @@ namespace SpectatorFootball.GameNS
             }
             logger.Debug("Before  Defensive_Coach.Populate_Formation");
             DEF_Formation.Player_list = Defensive_Coach.Populate_Formation(
-                DEF_Formation.Player_list,
-                 bAllowSubs, DEF_Formation.bSpecialTeams, bPlayWithReturner);
+                DEF_Formation,
+                 bAllowSubs, bPlayWithReturner);
             logger.Debug("After  Defensive_Coach.Populate_Formation");
             if (DEF_Formation.Player_list == null)
             {
@@ -357,19 +363,24 @@ namespace SpectatorFootball.GameNS
                     Play = new Play_Kickoff_Normal(Offensive_Package.Formation, DEF_Formation, g_fid_posession, at.Franchise_ID, ht.Franchise_ID, Game_Ball, Offensive_Players, Defensive_Players, bLefttoRight, true, bSimGame, false);
                 else if (Offensive_Package.Play == Play_Enum.KICKOFF_ONSIDES)
                     Play = new Play_Kickoff_Onsides(Offensive_Package.Formation, DEF_Formation, g_fid_posession, at.Franchise_ID, ht.Franchise_ID, Game_Ball, Offensive_Players, Defensive_Players, bLefttoRight, true, bSimGame, false);
-
+                else if (Offensive_Package.Play == Play_Enum.PUNT)
+                    Play = new Play_Punt(Offensive_Package.Formation, DEF_Formation, g_fid_posession, at.Franchise_ID, ht.Franchise_ID, Game_Ball, Offensive_Players, Defensive_Players, bLefttoRight, bSimGame, false);
 
                 //Is there a pre-snap penalty?
                 bool bpreSnapPenalty = false;
                 if (bAllowPenalties && Play.isPreSnapPenalty_Eligible())
                 {
                     Tuple<Game_Player, Penalty> ttt = Penalty_Helper.Presnap_Penalty(Offensive_Package.Play, Penalty_List,
-                        Offensive_Players, Defensive_Players, p_result);
+                        Offensive_Players, Defensive_Players, Play.getPlayResult()
+                        );
+                    p_result = Play.getPlayResult();
                     p_result.Penalized_Player = ttt.Item1;
                     p_result.Penalty = ttt.Item2;
                 }
 
                 //Execute the play
+                p_result = Play.Execute(bpreSnapPenalty);
+                bpreSnapPenalty = true;
                 p_result = Play.Execute(bpreSnapPenalty);
 
                 int ball_stages = Game_Ball.Stages.Count();

@@ -48,7 +48,7 @@ namespace SpectatorFootball.GameNS
             r.NonbBallPossessing_Team_Id = Possessing_Team_Id == at ? at : ht;
             r.at = at;
             r.ht = ht;
-            r = setPlayerActions(Kickoff_Players, Return_Players, r);
+            r = setPlayerActions(Kickoff_Formation, Return_Formation, Kickoff_Players, Return_Players, r);
         }
 
          public bool isPreSnapPenalty_Eligible()
@@ -58,6 +58,11 @@ namespace SpectatorFootball.GameNS
         public bool isAccumeStats()
         {
             return true; 
+        }
+
+        public Play_Result getPlayResult()
+        {
+            return r;
         }
 
         public Play_Result Execute(bool bPreSnapPenalty)
@@ -832,7 +837,7 @@ namespace SpectatorFootball.GameNS
 
                     //The index of the kicker doesn't matter
                     List<int?> g_list = new List<int?>() { null, null, null, null, null };
-                    g_list[slot_index] = app_Constants.KICKER_INDEX;
+                    g_list[slot_index] = Kickoff_Formation.KickerIndex;
                     logger.Debug("slot_index:" + slot_index);
 
                     //bpo test
@@ -1367,13 +1372,14 @@ namespace SpectatorFootball.GameNS
                 return r;
             }
 
-            public static Play_Result setPlayerActions(List<Game_Player> Kickoff_Players, List<Game_Player> Return_Players, Play_Result pResult)
+            public static Play_Result setPlayerActions(Formation Kickoff_Formation, Formation Return_Formation,
+                List<Game_Player> Kickoff_Players, List<Game_Player> Return_Players, Play_Result pResult)
             {
             Play_Result r = pResult;
 
-            r.Kicker = Kickoff_Players[app_Constants.KICKER_INDEX];
+            r.Kicker = Kickoff_Players[(int)Kickoff_Formation.KickerIndex];
             //Get the kicker - kicker and returner must be slot 5 in the formation
-            r.Returner = Return_Players[app_Constants.RETURNER_INDEX];
+            r.Returner = Return_Players[(int)Return_Formation.ReturnerIndex];
 
                 //for testing print out all the players and their relevant ratings
                 logger.Debug("Kickoff Players");
