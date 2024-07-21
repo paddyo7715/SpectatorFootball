@@ -379,8 +379,7 @@ namespace SpectatorFootball.GameNS
                 }
 
                 //Execute the play
-                p_result = Play.Execute(bpreSnapPenalty);
-                bpreSnapPenalty = true;
+//                bpreSnapPenalty = true;
                 p_result = Play.Execute(bpreSnapPenalty);
 
                 int ball_stages = Game_Ball.Stages.Count();

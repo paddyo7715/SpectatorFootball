@@ -36,7 +36,7 @@ namespace SpectatorFootball.GameNS
                 if (!bSim)
                 {
                     Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, 0.0);
-                    if (p.State == Player_States.CROUCH_BLOCK_DOWN)
+                    if (p.State == Player_States.CROUCH_BLOCK_UP)
                         p.Crouch_Stand_Up(prev_yl, prev_v);
                     else 
                         p.Stand();
@@ -56,7 +56,7 @@ namespace SpectatorFootball.GameNS
                 if (!bSim)
                 {
                     Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, 0.0);
-                    if (p.State == Player_States.CROUCH_BLOCK_DOWN)
+                    if (p.State == Player_States.CROUCH_BLOCK_UP)
                         p.Crouch_Stand_Up(prev_yl, prev_v);
                     else
                         p.Stand();

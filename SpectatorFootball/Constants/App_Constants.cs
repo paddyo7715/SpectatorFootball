@@ -583,5 +583,7 @@ namespace SpectatorFootball
         public const double PENALTY_UPPER_LIMIT_ADJ_K = 2.0;  //For QBs or kickers
         public const double NET_YARDS_TO_DECLINE_PENALTY = 40.0;
 
+ 
+
     }
 }

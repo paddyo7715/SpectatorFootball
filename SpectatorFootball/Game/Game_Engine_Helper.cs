@@ -443,6 +443,20 @@ namespace SpectatorFootball.GameNS
 
             return r;
         }
+        public static List<Game_Player> getPlayerSublist(List<Game_Player> pList, List<int> Index_list)
+        {
+            List<Game_Player> r = new List<Game_Player> ();
+
+            int ind = 0;
+            foreach (Game_Player p in pList)
+            {
+                if (Index_list.Contains(ind))
+                    r.Add(p);
+                    ind++;
+            }
+
+            return r;
+        }
 
     }
 }

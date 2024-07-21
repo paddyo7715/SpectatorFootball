@@ -53,8 +53,8 @@ namespace SpectatorFootball.Integration_Tests.Kickoff_Onside
                 }
 
                 double PossessionAdjuster = Game_Engine_Helper.HorizontalAdj(bLefttoRight);
-                Formation KickForm = Game_Helper.getFormation(Formations_Enum.KICKOFF_ONSIDE_KICK, PossessionAdjuster);
-                Formation RecForm = Game_Helper.getFormation(Formations_Enum.KICKOFF_ONSIDE_RECEIVE, PossessionAdjuster);
+                Formation KickForm = formation_helper.getFormation(Formations_Enum.KICKOFF_ONSIDE_KICK, PossessionAdjuster);
+                Formation RecForm = formation_helper.getFormation(Formations_Enum.KICKOFF_ONSIDE_RECEIVE, PossessionAdjuster);
 
                 Kickoff_Players = Help_Class.setGamePlayerLIsts(11, g_yardline, KickForm);
                 Receiving_Players = Help_Class.setGamePlayerLIsts(22, g_yardline, RecForm);

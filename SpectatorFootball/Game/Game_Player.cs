@@ -60,6 +60,31 @@ namespace SpectatorFootball.GameNS
             Stages.Add(new_st);
         }
 
+        public void Same_As_Last_Action_not_main()
+        {
+            //This method will take the last stage and create a new stage with the
+            //each same actions.
+            if (Stages.Count() == 0)
+                throw new Exception("Same_As_Last_Action called on a player with 0 stages!");
+
+            Play_Stage ps = Stages.Last();
+
+            Play_Stage new_st = new Play_Stage()
+            {
+                Main_Object = false,
+                Player_Catches_Ball = ps.Player_Catches_Ball
+            };
+
+            Action a = ps.Actions.Last();
+
+            Action new_action = new Action(a.type, a.start_yardline, a.start_vertical,
+            a.end_yardline, a.end_vertical, a.bPossesses_Ball,
+            a.p_state, a.b_state, a.MoveType, a.Ball_Speed, false, 0);
+            new_st.Actions.Add(new_action);
+
+            Stages.Add(new_st);
+        }
+
         public void KickBall(Player_States moving_ps, double prev_yl_1, double prev_v_1, double RunUp_YardLine_1, double RunUp_Vertical_Percent_Pos_1)
         {
             Action pas1 = new Action(Game_Object_Types.P, prev_yl_1, prev_v_1, RunUp_YardLine_1, RunUp_Vertical_Percent_Pos_1, false, moving_ps, null, Movement.LINE, null, false, 0);
@@ -82,6 +107,18 @@ namespace SpectatorFootball.GameNS
             Play_Stage pStage = new Play_Stage();
             pStage.Main_Object = false;
             pStage.Actions.Add(pas);
+            Stages.Add(pStage);
+            State = Player_States.BLOCKING;
+        }
+        public void Run_Then_Block(Player_States moving_ps, double prev_yl, double prev_v)
+        {
+            Action pas = null;
+            pas = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, false, moving_ps, null, Movement.LINE, null, false, 0);
+            Action pas2 = new Action(Game_Object_Types.P, Starting_YardLine, Starting_Vertical_Percent_Pos, 0.0, 0.0, false, Player_States.BLOCKING, null, Movement.NONE, null, false, 0);
+            Play_Stage pStage = new Play_Stage();
+            pStage.Main_Object = false;
+            pStage.Actions.Add(pas);
+            pStage.Actions.Add(pas2);
             Stages.Add(pStage);
             State = Player_States.BLOCKING;
         }
@@ -291,19 +328,19 @@ namespace SpectatorFootball.GameNS
 
         public void Punter_Ready_for_Ball(double prev_yl, double prev_v)
         {
-            Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, false, Player_States.PUNTER_READY, null, Movement.FAKE_MOVEMENT, null, true, 5);
+            Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, false, Player_States.PUNTER_READY, null, Movement.FAKE_MOVEMENT, null, true, 2);
             Play_Stage pStage = new Play_Stage();
-            pStage.Main_Object = true;
+            pStage.Main_Object = false;
             pStage.Actions.Add(pas);
             Stages.Add(pStage);
             State = Player_States.PUNTER_READY;
         }
 
-        public void Crouch(double prev_yl, double prev_v)
+        public void Crouch(double prev_yl, double prev_v, bool bmain)
         {
             Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, false, Player_States.CROUCH_BLOCK_DOWN, null, Movement.FAKE_MOVEMENT, null, true, 2);
             Play_Stage pStage = new Play_Stage();
-            pStage.Main_Object = false;
+            pStage.Main_Object = bmain;
             pStage.Actions.Add(pas);
             Stages.Add(pStage);
             State = Player_States.CROUCH_BLOCK_DOWN;
@@ -319,7 +356,29 @@ namespace SpectatorFootball.GameNS
             State = Player_States.CROUCH_BLOCK_UP;
         }
 
-
+        public void Run_and_Punt(double prev_yl_1, double prev_v_1)
+        {
+            Action pas1 = new Action(Game_Object_Types.P, prev_yl_1, prev_v_1, Current_YardLine, Current_Vertical_Percent_Pos, true, Player_States.PUNTER_RUN, null, Movement.LINE, null, false, 0);
+            Action pas = new Action(Game_Object_Types.P, Current_YardLine, Current_Vertical_Percent_Pos, Current_YardLine, Current_Vertical_Percent_Pos, true, Player_States.PUNTER_KICK, null, Movement.FAKE_MOVEMENT, null, true, 3); 
+            Play_Stage pStage = new Play_Stage();
+            pStage.Main_Object = true;
+            pStage.Actions.Add(pas1);
+            pStage.Actions.Add(pas);
+            Stages.Add(pStage);
+            State = Player_States.FG_KICK;
+        }
+        public void Run_and_TrytoBlockKick(Player_States moving_ps, double prev_yl_1, double prev_v_1)
+        {
+            Action pas = null;
+            pas = new Action(Game_Object_Types.P, prev_yl_1, prev_v_1, Current_YardLine, Current_Vertical_Percent_Pos, false, moving_ps, null, Movement.LINE, null, false, 0);
+            Action pas2 = new Action(Game_Object_Types.P, Starting_YardLine, Starting_Vertical_Percent_Pos, 0.0, 0.0, false, Player_States.STANDING, null, Movement.NONE, null, false, 0);
+            Play_Stage pStage = new Play_Stage();
+            pStage.Main_Object = false;
+            pStage.Actions.Add(pas);
+            pStage.Actions.Add(pas2);
+            Stages.Add(pStage);
+            State = Player_States.BLOCK_KICK;
+        }
 
     }
 

@@ -88,9 +88,13 @@ namespace SpectatorFootball.GameNS
             //bpo test code
             f = Formations_Enum.PUNT;
             p = Play_Enum.PUNT;
+//            f = Formations_Enum.KICKOFF_ONSIDE_KICK;
+//            p = Play_Enum.KICKOFF_ONSIDES;
+
             //==========================================
 
-            formation = Game_Helper.getFormation(f, PossessionAdjuster);
+            //            formation = Game_Helper.getFormation(f, PossessionAdjuster);
+            formation = formation_helper.getFormation(f, PossessionAdjuster);
 
 
             return new Play_Package() { Formation = formation, Play = p } ;
@@ -143,7 +147,8 @@ namespace SpectatorFootball.GameNS
                 r = Formations_Enum.KICKOFF_REGULAR_RECEIVE;
             }
 
-            fList = Game_Helper.getFormation(r, PossessionAdjuster);
+//            fList = Game_Helper.getFormation(r, PossessionAdjuster);
+            fList = formation_helper.getFormation(r, PossessionAdjuster);
 
             return fList;
         }
