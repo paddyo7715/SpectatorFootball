@@ -28,6 +28,9 @@ namespace SpectatorFootball.GameNS
         private bool bLast_Play;
         private Formation Punt_Formation = null;
         private Formation Return_Formation = null;
+        List<Game_Player> Blockers = null;
+        List<Game_Player> Attackers = null;
+
 
 
         public Play_Result r = new Play_Result();
@@ -76,6 +79,7 @@ namespace SpectatorFootball.GameNS
             List<Game_Player> Missed_Tackles = new List<Game_Player>();
             double retuner_catches_ball_yl = 0.0;
             double first_block_dropback_yards = 3.0;
+            double starting_yl = gBall.Current_YardLine;
             //================================  Stage One =======================================
             //Players get ready for play 
             logger.Debug("Stage 1");
@@ -142,7 +146,7 @@ namespace SpectatorFootball.GameNS
                 //possision where ball should be caught
                 double prev_yl = gBall.Current_YardLine;
                 double prev_v = gBall.Current_Vertical_Percent_Pos;
-                gBall.Current_YardLine = gBall.Starting_YardLine + ((double )(Punt_Formation.Punter_Behind_Line_ayrds -1.0) * Game_Engine_Helper.HorizontalAdj(!bLefttoRight));
+                gBall.Current_YardLine = gBall.Starting_YardLine + ((double )(Punt_Formation.Punter_Behind_Line_ayrds -1.75) * Game_Engine_Helper.HorizontalAdj(!bLefttoRight));
                 gBall.Current_Vertical_Percent_Pos = gBall.Starting_Vertical_Percent_Pos;
 
                 if (!bSim)
@@ -228,7 +232,7 @@ namespace SpectatorFootball.GameNS
 
             //================================  Stage Three =======================================
             //Punter walks forward and attempt to kick the ball, while possibly a rusher tries to block the kick
-            logger.Debug("Stage 2");
+            logger.Debug("Stage 3");
             logger.Debug("=====================================================");
 
             //Punter attempts to kick, attacker possibly attempts block
@@ -241,8 +245,8 @@ namespace SpectatorFootball.GameNS
                 blocker_index_list.AddRange(Punt_Formation.Line_Players);
                 blocker_index_list.AddRange(Punt_Formation.Backfield_Players);
 
-                List<Game_Player> Blockers = Game_Engine_Helper.getPlayerSublist(Punt_Players, blocker_index_list);
-                List<Game_Player> Attackers = Game_Engine_Helper.getPlayerSublist(Return_Players, Return_Formation.Line_Players);
+                Blockers = Game_Engine_Helper.getPlayerSublist(Punt_Players, blocker_index_list);
+                Attackers = Game_Engine_Helper.getPlayerSublist(Return_Players, Return_Formation.Line_Players);
 
                 r.Defender_Close_to_Kicker = getAttacker_BreakThru(Blockers, Attackers);
 
@@ -250,7 +254,7 @@ namespace SpectatorFootball.GameNS
                 {
                     double prev_yl = gBall.Current_YardLine;
                     double prev_v = gBall.Current_Vertical_Percent_Pos;
-                    gBall.Current_YardLine += half_yards  * Game_Engine_Helper.HorizontalAdj(bLefttoRight);
+                    gBall.Current_YardLine += half_yards * Game_Engine_Helper.HorizontalAdj(bLefttoRight);
                     gBall.Carried_notMain(prev_yl, prev_v);
                 }
 
@@ -298,6 +302,7 @@ namespace SpectatorFootball.GameNS
                     if (p == r.Defender_Close_to_Kicker)
                     {
                         p.Current_YardLine -= half_yards * Game_Engine_Helper.HorizontalAdj(bLefttoRight);
+                        p.Current_Vertical_Percent_Pos = gBall.Current_Vertical_Percent_Pos;
                         Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
                         if (!bSim)
                         {
@@ -325,8 +330,32 @@ namespace SpectatorFootball.GameNS
                     io_Players++;
                 }
             }
+            //===== End of Stage Three - ============================================
+            logger.Debug("=======================================================");
+            logger.Debug("");
 
-                return r;
+
+            //================================  Stage Four =======================================
+            //Only execute if an attacker is close to kicker and can make the block
+            logger.Debug("Stage 4");
+            logger.Debug("=====================================================");
+
+            //Punter attempts to kick, attacker possibly attempts block
+            if (!bPreSnapPenalty && r.Defender_Close_to_Kicker != null)
+            {
+                //First determine if the punt is blocked
+                r.bPunt_blocked = puntBlocked((double) Punt_Formation.Punter_Behind_Line_ayrds);
+                //bpo test
+                r.bPunt_blocked = true;
+
+                Tuple<Game_Player, bool> t = Playstub_Punt_Block.Execute(bLefttoRight, gBall,
+                                Punt_Players, Return_Players, Blockers, Attackers, r.Punter, bSim);
+            }
+            //===== End of Stage Four - ============================================
+            logger.Debug("=======================================================");
+            logger.Debug("");
+
+            return r;
         }
 
 
@@ -431,14 +460,17 @@ namespace SpectatorFootball.GameNS
             if (attacker_wins >= 6)
                 r = Best_Attacker;
 
-            return null;
+            //bpo test
+            r = Attackers[Attackers.Count -3];
+
+            return r;
         }
-        private bool puntBlocked(int punter_yards_behind)
+        private bool puntBlocked(double punter_yards_behind)
         {
             bool r = false;
             int upper_limit = 10;
 
-            if (punter_yards_behind < 10)
+            if (punter_yards_behind < 10.0)
                 upper_limit = 9;
 
             int i = CommonUtils.getRandomNum(1, upper_limit);

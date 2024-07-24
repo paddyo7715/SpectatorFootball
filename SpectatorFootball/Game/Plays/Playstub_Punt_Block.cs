@@ -1,32 +1,48 @@
-﻿using SpectatorFootball.Enum;
+﻿using log4net;
+using SpectatorFootball.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using log4net;
 
- namespace SpectatorFootball.GameNS
+namespace SpectatorFootball.GameNS
 {
-    class Playstub_Fumble
+    public class Playstub_Punt_Block
     {
         private static ILog logger = LogManager.GetLogger("RollingFile");
         public static Tuple<Game_Player, bool> Execute(bool bLefttoRight,
-            Game_Ball gBall, 
-            List<Game_Player> Tackling_Players, 
-            List<Game_Player> BallCarrying_Players,
-            List<Game_Player> close_Tackling_Players,
-            List<Game_Player> close_BallCarrying_Players,
-            Game_Player Returner,
-            Game_Player Tackler,
+            Game_Ball gBall,
+            List<Game_Player> Punt_Players,
+            List<Game_Player> Return_Players,
+            List<Game_Player> close_Punt_Players,
+            List<Game_Player> close_Return_Players,
+            Game_Player Punter,
             bool bSim)
         {
             Game_Player r = null;
             bool bLost = false;
-            bool bRecover = false;
-            int rnd = 0;
+            int rnd;
+            bool bRecover;
 
-            if (close_Tackling_Players.Count() == 0 && close_BallCarrying_Players.Count() == 0)
+            gBall.Popup(50,3);
+
+            int io_Players = 0;
+            foreach (Game_Player p in Punt_Players)
+            {
+                if (!bSim) p.Stand();
+                io_Players++;
+            }
+
+            io_Players = 0;
+
+            foreach (Game_Player p in Return_Players)
+            {
+                if (!bSim) p.Stand();
+                io_Players++;
+            }
+
+            if (close_Punt_Players.Count() == 0 && close_Return_Players.Count() == 0)
                 throw new Exception("No close players on either team for fumble.  Should never happen");
 
             while (r == null)
@@ -35,18 +51,18 @@ using log4net;
                 bool bCheckTacklers = CommonUtils.getRandomTrueFalse();
                 if (bCheckTacklers)
                 {
-                    rnd = CommonUtils.getRandomIndex(close_Tackling_Players.Count);
-                    p = close_Tackling_Players[rnd];
+                    rnd = CommonUtils.getRandomIndex(close_Return_Players.Count);
+                    p = close_Return_Players[rnd];
                     bLost = false;
                 }
                 else
                 {
-                    rnd = CommonUtils.getRandomIndex(close_BallCarrying_Players.Count);
-                    p = close_BallCarrying_Players[rnd];
+                    rnd = CommonUtils.getRandomIndex(close_Punt_Players.Count);
+                    p = close_Punt_Players[rnd];
                     bLost = true;
                 }
 
-                bRecover = RecoverFumble(p.p_and_r.pr.First().Hands_Rating);
+                bRecover = RecoverBall(p.p_and_r.pr.First().Hands_Rating);
                 if (bRecover)
                     r = p;
             }
@@ -58,7 +74,7 @@ using log4net;
 
             }
             int ind = 0;
-            foreach (Game_Player p in BallCarrying_Players)
+            foreach (Game_Player p in Punt_Players)
             {
                 double prev_yl = p.Current_YardLine;
                 double prev_v = p.Current_Vertical_Percent_Pos;
@@ -69,9 +85,9 @@ using log4net;
                 if (!bSim)
                 {
                     Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, 0.0);
-                    if (p == Returner)
+                    if (p == r)
                         p.Cover_Ball(moving_ps, prev_yl, prev_v);
-                    else if (close_BallCarrying_Players.Contains(p))
+                    else if (close_Punt_Players.Contains(p))
                         p.Attempt_Tackle(moving_ps, prev_yl, prev_v);
                     else
                     {
@@ -86,7 +102,7 @@ using log4net;
             }
 
             ind = 0;
-            foreach (Game_Player p in Tackling_Players)
+            foreach (Game_Player p in Return_Players)
             {
                 double prev_yl = p.Current_YardLine;
                 double prev_v = p.Current_Vertical_Percent_Pos;
@@ -97,9 +113,8 @@ using log4net;
                 if (!bSim)
                 {
                     Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, false, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, 0.0);
-                    if (p == Tackler)
-                        p.Same_As_Last_Action();
-                    else if (close_Tackling_Players.Contains(p))
+
+                    if (close_Return_Players.Contains(p))
                         p.Attempt_Tackle(moving_ps, prev_yl, prev_v);
                     else
                     {
@@ -116,8 +131,10 @@ using log4net;
             }
 
             return new Tuple<Game_Player, bool>(r, bLost);
+
         }
-        public static bool RecoverFumble(long handsRating)
+
+        public static bool RecoverBall(long handsRating)
         {
             long fudge = 40;
 
@@ -130,5 +147,5 @@ using log4net;
 
             return r;
         }
-     }
+    }
 }

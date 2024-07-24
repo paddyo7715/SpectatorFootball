@@ -16,6 +16,7 @@ namespace SpectatorFootball.Enum
         ON_THE_GROUND, 
         CARRIED,
         BOUNCING,
-        ROLLING
+        ROLLING,
+        POPUP
     }
 }

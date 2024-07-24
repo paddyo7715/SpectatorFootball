@@ -228,6 +228,7 @@
     <Compile Include="Game\Kicking_Helper.cs" />
     <Compile Include="Game\Plays\Playstub_Fumble.cs" />
     <Compile Include="Game\Plays\Interfaces\iPlay.cs" />
+    <Compile Include="Game\Plays\Playstub_Punt_Block.cs" />
     <Compile Include="Game\Plays\Playstub_Uncrouch.cs" />
     <Compile Include="Game\Plays\Play_Kickoff_Normal.cs" />
     <Compile Include="Game\Plays\Play_Kickoff_Onsides.cs" />

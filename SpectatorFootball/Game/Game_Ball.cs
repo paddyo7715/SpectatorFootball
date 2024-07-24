@@ -130,6 +130,16 @@ namespace SpectatorFootball.GameNS
             State = Ball_States.CARRIED;
         }
 
+        public void Popup(int n, double vertMinus)
+        {
+            Play_Stage bStage = new Play_Stage();
+            bStage.Main_Object = true;
+            Action bas = new Action(Game_Object_Types.B, Current_YardLine, Current_Vertical_Percent_Pos - vertMinus, Current_YardLine, Current_Vertical_Percent_Pos - vertMinus, false, null, Ball_States.POPUP, Movement.FAKE_MOVEMENT, Ball_Speed.NORMAL, false, n);
+            bStage.Actions.Add(bas);
+            Stages.Add(bStage);
+            State = Ball_States.CARRIED;
+        }
+
         public void Carried_Out_of_Bounds(double prev_yl, double prev_v, bool blefttoRight)
         {
             double top_adjustment = 0.0;

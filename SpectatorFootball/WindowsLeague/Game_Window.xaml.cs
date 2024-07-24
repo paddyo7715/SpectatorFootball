@@ -580,6 +580,13 @@ namespace SpectatorFootball.WindowsLeague
                     else
                         Ball.Fill = myLinearGradientBrush2;
                     break;
+                case Ball_States.POPUP:
+                    int rnum2 = CommonUtils.getRandomNum(1, 2);
+                    if (rnum2 == 1)
+                        Ball.Fill = myLinearGradientBrush1;
+                    else
+                        Ball.Fill = myLinearGradientBrush2;
+                    break;
                 case Ball_States.ON_THE_GROUND:
                     Ball.Fill = (Brush)CommonUtils.getBrushfromHex(ball_Color);
                     break;

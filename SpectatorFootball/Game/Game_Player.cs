@@ -358,10 +358,12 @@ namespace SpectatorFootball.GameNS
 
         public void Run_and_Punt(double prev_yl_1, double prev_v_1)
         {
+            Action pasOne = new Action(Game_Object_Types.P, prev_yl_1, prev_v_1, prev_yl_1, prev_v_1, true, Player_States.PUNTER_READY, null, Movement.FAKE_MOVEMENT, null, true, 5);
             Action pas1 = new Action(Game_Object_Types.P, prev_yl_1, prev_v_1, Current_YardLine, Current_Vertical_Percent_Pos, true, Player_States.PUNTER_RUN, null, Movement.LINE, null, false, 0);
             Action pas = new Action(Game_Object_Types.P, Current_YardLine, Current_Vertical_Percent_Pos, Current_YardLine, Current_Vertical_Percent_Pos, true, Player_States.PUNTER_KICK, null, Movement.FAKE_MOVEMENT, null, true, 3); 
             Play_Stage pStage = new Play_Stage();
             pStage.Main_Object = true;
+            pStage.Actions.Add(pasOne);
             pStage.Actions.Add(pas1);
             pStage.Actions.Add(pas);
             Stages.Add(pStage);
@@ -371,7 +373,7 @@ namespace SpectatorFootball.GameNS
         {
             Action pas = null;
             pas = new Action(Game_Object_Types.P, prev_yl_1, prev_v_1, Current_YardLine, Current_Vertical_Percent_Pos, false, moving_ps, null, Movement.LINE, null, false, 0);
-            Action pas2 = new Action(Game_Object_Types.P, Starting_YardLine, Starting_Vertical_Percent_Pos, 0.0, 0.0, false, Player_States.STANDING, null, Movement.NONE, null, false, 0);
+            Action pas2 = new Action(Game_Object_Types.P, Starting_YardLine, Starting_Vertical_Percent_Pos, 0.0, 0.0, false, Player_States.BLOCK_KICK, null, Movement.NONE, null, false, 0);
             Play_Stage pStage = new Play_Stage();
             pStage.Main_Object = false;
             pStage.Actions.Add(pas);

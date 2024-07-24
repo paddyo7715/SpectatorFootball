@@ -47,6 +47,7 @@ namespace SpectatorFootball.GameNS
         public bool bCoffinCornerMade = false;
         public bool bOnsideAtt = false;
         public bool bOnsideMade = false;
+        public bool bPunt_blocked = false;
 
         //Penalties
         public Game_Player Penalized_Player = null;
@@ -90,6 +91,7 @@ namespace SpectatorFootball.GameNS
 //Used for Initial stats and players before penalty
         public Game_Player Tackler = null;
         public Game_Player Fumble_Recoverer = null;
+        public Game_Player Blocked_Punt_Recoverer = null;
         public Game_Player Forced_Fumble_Tackler = null;
         public Game_Player Onside_Kick_Recoverer = null;
 

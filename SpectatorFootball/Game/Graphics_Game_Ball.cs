@@ -60,6 +60,7 @@ namespace SpectatorFootball.GameNS
                     r = Graphics_Ball_Stats.CARRIED;
                     break;
                 case Ball_States.END_OVER_END:
+                case Ball_States.POPUP:
                     if (graph_bState != Graphics_Ball_Stats.END_OVER_END_1)
                     {
                         Height = ball_size;

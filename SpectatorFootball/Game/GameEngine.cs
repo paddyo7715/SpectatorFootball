@@ -383,7 +383,7 @@ namespace SpectatorFootball.GameNS
                 p_result = Play.Execute(bpreSnapPenalty);
 
                 int ball_stages = Game_Ball.Stages.Count();
-                for (int pind = 0; pind < Offensive_Players.Count(); pind++)
+                for ( int pind = 0; pind < Offensive_Players.Count(); pind++)
                 {
                     if (Offensive_Players[pind].Stages.Count() != ball_stages ||
                         Defensive_Players[pind].Stages.Count() != ball_stages)

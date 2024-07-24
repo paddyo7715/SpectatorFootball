@@ -10,6 +10,7 @@ namespace SpectatorFootball.GameNS
 {
     public class PointPlotter
     {
+        private static int BALL_SUPER_SLOW = 1;
         private static int BALL_FAST_SKIP = 20;
         private static int BALL_NORMAL_SKIP = 10;
         private static int BALL_SLOW_SKIP = 4;
@@ -41,6 +42,8 @@ namespace SpectatorFootball.GameNS
                     skip_count = BALL_NORMAL_SKIP;
                 else if (Ball_Speed == Enum.Ball_Speed.FAST)
                     skip_count = BALL_FAST_SKIP;
+                else if (Ball_Speed == Enum.Ball_Speed.SUPER_SLOW)
+                    skip_count = BALL_SUPER_SLOW;
                 else
                     skip_count = BALL_NORMAL_SKIP;
             }
@@ -123,7 +126,6 @@ namespace SpectatorFootball.GameNS
 
             return r;
         }
-
         public double GetSlopofLIne(double x1, double y1, double x2, double y2)
         {
             double r = 0.0;
