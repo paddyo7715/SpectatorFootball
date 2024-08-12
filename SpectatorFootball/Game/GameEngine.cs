@@ -832,7 +832,7 @@ namespace SpectatorFootball.GameNS
 
                     //Onside Kickoff/Play
                     ps.ko_onside_play += s.ko_onside_play;
-                    ps.scimmage_onside_play += s.scimmage_onside_play;
+                    ps.scrimmage_onside_play += s.scrimmage_onside_play;
 
 
                     //FG Defense
@@ -1289,12 +1289,14 @@ namespace SpectatorFootball.GameNS
                         r.Final_Added_Penalty_Yards = Penalty_Yards;
                         r.Final_end_of_Play_Yardline = lesser_yl - (Penalty_Yards * Game_Engine_Helper.HorizontalAdj(!bLefttoRgiht));
 
-                        double reduce_yards = Game_Engine_Helper.Yards_to_Reduce(r.end_of_play_yardline, r.Penalized_Player.Current_YardLine, !bLefttoRgiht);
-                        Game_Player_Stats a_stat = pResult.Play_Player_Stats.Where(x => x.Player_ID == r.Punt_Returner.p_and_r.p.ID).First();
-                        a_stat.punt_ret_TDs = 0;
-                        a_stat.punt_ret_yards -= (long)(reduce_yards + 0.5);
-                        a_stat.punt_ret_yards_long = a_stat.punt_ret_yards;
-
+                        if (!r.bPunt_blocked)
+                        {
+                            double reduce_yards = Game_Engine_Helper.Yards_to_Reduce(r.end_of_play_yardline, r.Penalized_Player.Current_YardLine, !bLefttoRgiht);
+                            Game_Player_Stats a_stat = pResult.Play_Player_Stats.Where(x => x.Player_ID == r.Punt_Returner.p_and_r.p.ID).First();
+                            a_stat.punt_ret_TDs = 0;
+                            a_stat.punt_ret_yards -= (long)(reduce_yards + 0.5);
+                            a_stat.punt_ret_yards_long = a_stat.punt_ret_yards;
+                        }
                     }
                     else if (penOnBallCarryingTeam)
                     {
@@ -1832,7 +1834,10 @@ namespace SpectatorFootball.GameNS
                 pResult.bAwayXP1 = pResult.bOnePntAfterTDMade;
                 pResult.bAwayXP2 = pResult.bTwoPntAfterTDMade;
                 pResult.bAwayXP3 = pResult.bThreePntAfterTDMade;
-                pResult.bHomeSafetyFor = pResult.bSafety;
+                if (r.Punter == null)
+                    pResult.bHomeSafetyFor = pResult.bSafety;
+                else
+                    pResult.bAwaySafetyFor = pResult.bSafety;
                 pResult.bAway_OnsideAtt = pResult.bOnsideAtt;
                 pResult.bAway_OnsideMade = pResult.bOnsideMade;
     }
@@ -1844,7 +1849,10 @@ namespace SpectatorFootball.GameNS
                 pResult.bHomeXP1 = pResult.bOnePntAfterTDMade;
                 pResult.bHomeXP2 = pResult.bTwoPntAfterTDMade;
                 pResult.bHomeXP3 = pResult.bThreePntAfterTDMade;
-                pResult.bAwaySafetyFor = pResult.bSafety;
+                if (r.Punter == null)
+                    pResult.bAwaySafetyFor = pResult.bSafety;
+                else
+                    pResult.bHomeSafetyFor = pResult.bSafety;
                 pResult.bHome_OnsideAtt = pResult.bOnsideAtt;
                 pResult.bHome_OnsideMade = pResult.bOnsideMade;
             }
@@ -1879,7 +1887,8 @@ namespace SpectatorFootball.GameNS
             bool r = false;
 
             if (pResult.bTouchDown || pResult.bFGMade || pResult.bXPMade ||
-                pResult.bOnePntAfterTDMade || pResult.bTwoPntAfterTDMade || pResult.bThreePntAfterTDMade)
+                pResult.bOnePntAfterTDMade || pResult.bTwoPntAfterTDMade || pResult.bThreePntAfterTDMade  ||
+                pResult.bSafety)
 
                 r = true;
 

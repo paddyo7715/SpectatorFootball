@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace SpectatorFootball.Enum
 {
-    public enum Kickoff_Verticl
+    public enum Punt_Len
     {
-        TOP,
-        MIDDLE,
-        BOTTOM
+        SHORT,
+        AVG,
+        LONG
     }
 }

@@ -78,7 +78,7 @@ namespace SpectatorFootball.GameNS
             return r;
 
         }
-        public static KickOff_Verticl getKickoff_Vert_enum(long leg_Accuracy)
+        public static Kickoff_Verticl getKickoff_Vert_enum(long leg_Accuracy)
         {
             bool bNot_Straight;
 
@@ -98,12 +98,12 @@ namespace SpectatorFootball.GameNS
             {
                 int r_num = CommonUtils.getRandomNum(1, 2);
                 if (r_num == 1)
-                    return KickOff_Verticl.TOP;
+                    return Kickoff_Verticl.TOP;
                 else
-                    return KickOff_Verticl.BOTTOM;
+                    return Kickoff_Verticl.BOTTOM;
             }
             else
-                return KickOff_Verticl.MIDDLE;
+                return Kickoff_Verticl.MIDDLE;
 
         }
         public static double getKickoff_len(KickOff_Length kickoff_len_enum)
@@ -131,24 +131,126 @@ namespace SpectatorFootball.GameNS
 
             return r;
         }
-        public static double getKickoff_Vert(KickOff_Verticl vert_enum)
+        public static double getKickoff_Vert(Kickoff_Verticl vert_enum)
         {
             double r = 0.0;
 
             switch (vert_enum)
             {
-                case KickOff_Verticl.TOP:
+                case Kickoff_Verticl.TOP:
                     r = CommonUtils.getRandomNum(app_Constants.KICKOFF_TOP_MIN_VERTICAL, app_Constants.KICKOFF_TOP_AVG_VERTICAL);
                     break;
-                case KickOff_Verticl.MIDDLE:
+                case Kickoff_Verticl.MIDDLE:
                     r = CommonUtils.getRandomNum(app_Constants.KICKOFF_TOP_AVG_VERTICAL, app_Constants.KICKOFF_BOTTOM_AVG_VERTICAL);
                     break;
-                case KickOff_Verticl.BOTTOM:
+                case Kickoff_Verticl.BOTTOM:
                     r = CommonUtils.getRandomNum(app_Constants.KICKOFF_BOTTOM_AVG_VERTICAL, app_Constants.KICKOFF_BOTTOM_MAX_VERTICAL);
                     break;
             }
 
             return r;
         }
+
+        public static Punt_Len getPunt_Len_enum(long leg_strength)
+        {
+            Punt_Len r = Punt_Len.LONG;
+            long ls_temp = app_Constants.PUNT_LENGTH_CALC_VARIABLE - leg_strength;
+
+            int i = 0;
+            for (i = 1; i <= 3; i++)
+            {
+
+                long ls_var = ls_temp;
+                int r_num = CommonUtils.getRandomNum(1, app_Constants.PUNT_LENGTH_CALC_VARIABLE);
+                if (r_num <= ls_var)
+                    break;
+            }
+
+            switch (i)
+            {
+                case 1:
+                    r = Punt_Len.SHORT;
+                    break;
+                case 2:
+                    r = Punt_Len.AVG;
+                    break;
+                case 3:
+                    r = Punt_Len.LONG;
+                    break;
+            }
+
+            return r;
+
+        }
+
+        public static double getPunt_len(Punt_Len Punt_len_enum)
+        {
+            double r = 0.0;
+
+            switch (Punt_len_enum)
+            {
+                case Punt_Len.SHORT:
+                    r = CommonUtils.getRandomNum(app_Constants.PUNT_MIN_SHORT_DISTANCE, app_Constants.PUNT_MAX_SHORT_DISTANCE);
+                    break;
+                case Punt_Len.AVG:
+                    r = CommonUtils.getRandomNum(app_Constants.PUNT_MIN_AVG_DISTANCE, app_Constants.PUNT_MAX_AVG_DISTANCE);
+                    break;
+                case Punt_Len.LONG:
+                    r = CommonUtils.getRandomNum(app_Constants.PUNT_MIN_LONG_DISTANCE, app_Constants.PUNT_MAX_LONG_DISTANCE);
+                    break;
+            }
+
+            return r;
+        }
+
+        public static double getPunt_Vert(Punt_Vertical vert_enum)
+        {
+            double r = 0.0;
+
+            switch (vert_enum)
+            {
+                case Punt_Vertical.TOP:
+                    r = CommonUtils.getRandomNum(app_Constants.PUNT_TOP_MIN_VERTICAL, app_Constants.PUNT_TOP_AVG_VERTICAL);
+                    break;
+                case Punt_Vertical.MIDDLE:
+                    r = CommonUtils.getRandomNum(app_Constants.PUNT_TOP_AVG_VERTICAL, app_Constants.PUNT_BOTTOM_AVG_VERTICAL);
+                    break;
+                case Punt_Vertical.BOTTOM:
+                    r = CommonUtils.getRandomNum(app_Constants.PUNT_BOTTOM_AVG_VERTICAL, app_Constants.PUNT_BOTTOM_MAX_VERTICAL);
+                    break;
+            }
+
+            return r;
+        }
+
+        public static Punt_Vertical getPunt_Vert_enum(long leg_Accuracy)
+        {
+            bool bNot_Straight;
+
+            int not_straight = (int)leg_Accuracy - app_Constants.PRIMARY_ABILITY_LOW_RATING;
+            if (not_straight <= 0)
+                bNot_Straight = true;
+            else
+            {
+                int acc_variable = CommonUtils.getRandomNum(1, app_Constants.PUNT_ACC_CALC_VARIABLE);
+                if (acc_variable <= not_straight)
+                    bNot_Straight = true;
+                else
+                    bNot_Straight = false;
+            }
+
+            if (bNot_Straight)
+            {
+                int r_num = CommonUtils.getRandomNum(1, 2);
+                if (r_num == 1)
+                    return Punt_Vertical.TOP;
+                else
+                    return Punt_Vertical.BOTTOM;
+            }
+            else
+                return Punt_Vertical.MIDDLE;
+
+        }
     }
 }
+

@@ -524,7 +524,6 @@ namespace SpectatorFootball
         public const int KICKOFF_LENGTH_CALC_VARIABLE = 106;
         public const int KICKOFF_ACC_CALC_VARIABLE = 110;
 
-        //Kickoff
         public const int KICKOFF_GROUP_CALC_VARIABLE = 54;
         public const int KICKOFF_AVOID_TRACKER_CALC_VARIABLE = 102;
         public const int KICKOFF_KICKER_MAKE_TACKLE_CALC_VARIABLE = 70;
@@ -575,6 +574,22 @@ namespace SpectatorFootball
 
         //Tackling
         public const long TACKLER_ADVANTAGE_MULTIPLIER = 3;
+
+        //Punts
+        public const int PUNT_MIN_SHORT_DISTANCE = 26;
+        public const int PUNT_MAX_SHORT_DISTANCE = 35;
+        public const int PUNT_MIN_AVG_DISTANCE = 36;
+        public const int PUNT_MAX_AVG_DISTANCE = 45;
+        public const int PUNT_MIN_LONG_DISTANCE = 46;
+        public const int PUNT_MAX_LONG_DISTANCE = 55;
+
+        public const int PUNT_LENGTH_CALC_VARIABLE = 106;
+
+        public const int PUNT_TOP_MIN_VERTICAL = 21;
+        public const int PUNT_BOTTOM_MAX_VERTICAL = 79;
+        public const int PUNT_TOP_AVG_VERTICAL = 35;
+        public const int PUNT_BOTTOM_AVG_VERTICAL = 65;
+        public const int PUNT_ACC_CALC_VARIABLE = 110;
 
         //Penalties
         public const long SPORTSMANSHIP_ADJUSTER = 130;

@@ -80,280 +80,37 @@ namespace SpectatorFootball.GameNS
             double retuner_catches_ball_yl = 0.0;
             double first_block_dropback_yards = 3.0;
             double starting_yl = gBall.Current_YardLine;
-            //================================  Stage One =======================================
-            //Players get ready for play 
-            logger.Debug("Stage 1");
-            logger.Debug("=====================================================");
-            logger.Debug(this.bLefttoRight);
+            bool bCoffinCornerEligible = false;
+            List<int?> group_1 = new List<int?>();
+            List<int?> group_2 = new List<int?>();
+            List<int?> group_3 = new List<int?>();
 
-            if (!bSim)
-                gBall.TeeUp();
+            Set_Ball_and_Players_Before_Snap(gBall, Punt_Players, Return_Players, Punt_Formation, Return_Formation, bSim);
 
-            int io_Players = 0;
-            foreach (Game_Player p in Punt_Players)
-            {
-                bool bMain = true;
-                double prev_yl = p.Current_YardLine;
-                double prev_v = p.Current_Vertical_Percent_Pos;
-
-                if (!bSim)
-                {
-                    if (Punt_Formation.Line_Players.Contains(io_Players))
-                    {
-                        p.Crouch(prev_yl, prev_v, bMain);
-                        bMain = false;
-                    }
-                    else
-                        p.Stand();
-                }
-                io_Players++;
-            }
-
-            io_Players = 0;
-            //The team receiving the kick will just stand there before the kick
-            foreach (Game_Player p in Return_Players)
-            {
-                if (!bSim)
-                {
-                    double prev_yl = p.Current_YardLine;
-                    double prev_v = p.Current_Vertical_Percent_Pos;
-                    if (Return_Formation.Line_Players.Contains(io_Players))
-                        p.Crouch(prev_yl, prev_v, false);
-                    else
-                        p.Stand();
-                }
-
-                io_Players++;
-            }
-            //===== End of Stage One - Players get ready for play ================
-            logger.Debug("=======================================================");
-            logger.Debug("");
-
-            //================================  Stage Two =======================================
-            //if presnap penatly then players stand up; otherwise snap ball back to punter
-            logger.Debug("Stage 2");
-            logger.Debug("=====================================================");
             if (bPreSnapPenalty)
             {
                 Playstub_Uncrouch.Execute(bLefttoRight, gBall, Punt_Players, Return_Players, bSim);
             }
-
-            //Snap ball back to punter, lines clash
-            if (!bPreSnapPenalty)
+            else
             {
-                double ball_yl = gBall.Current_YardLine;
-                double line_yl = 0.0;
-                //possision where ball should be caught
-                double prev_yl = gBall.Current_YardLine;
-                double prev_v = gBall.Current_Vertical_Percent_Pos;
-                gBall.Current_YardLine = gBall.Starting_YardLine + ((double )(Punt_Formation.Punter_Behind_Line_ayrds -1.75) * Game_Engine_Helper.HorizontalAdj(!bLefttoRight));
-                gBall.Current_Vertical_Percent_Pos = gBall.Starting_Vertical_Percent_Pos;
-
-                if (!bSim)
-                    gBall.Spiral(prev_yl, prev_v);
-
-                io_Players = 0;
-                foreach (Game_Player p in Punt_Players)
+                Snap_Ball_Lines_Clash(gBall, Punt_Players, Return_Players, Punt_Formation, Return_Formation, bSim, bLefttoRight, first_block_dropback_yards);
+                Punter_Prepares_to_Kick(gBall, Punt_Players, Return_Players, Punt_Formation, Return_Formation, bSim, bLefttoRight, first_block_dropback_yards);
+                if (r.Defender_Close_to_Kicker != null && puntBlocked((double)Punt_Formation.Punter_Behind_Line_ayrds))
                 {
+                    r.bPunt_blocked = true;
+                    Tuple<Game_Player, bool> t = Playstub_Punt_Block.Execute(bLefttoRight, gBall,Punt_Players, Return_Players, Blockers, Attackers, r.Punter, bSim);
+//bpo stopped here
+//need to check if the attacking team recovers the ball in the endzone or if the punt team recovers in the endzone for safety.
+//if not then the team will switch possession.  Need to set switch possession setting if ball is recovered in endzone by other team.
 
-                    prev_yl = p.Current_YardLine;
-                    prev_v = p.Current_Vertical_Percent_Pos;
-                    if (p == r.Punter)
-                    {
-                        if (!bSim) p.Punter_Ready_for_Ball(prev_yl, prev_v);
-                    }
-                    else if (Punt_Formation.Line_Players.Contains(io_Players))
-                    {
-                        p.Current_YardLine -= first_block_dropback_yards * Game_Engine_Helper.HorizontalAdj(bLefttoRight);
-                        line_yl = p.Current_YardLine;
-                        if (!bSim)
-                        {
-                            Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
-                            p.Run_Then_Block(moving_ps, prev_yl, prev_v);
-                        }
-                    }
-                    else if (Punt_Formation.Backfield_Players.Contains(io_Players))
-                    {
-                        p.Current_YardLine = line_yl;
-                        if (!bSim)
-                        {
-                            Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
-                            p.Run_Then_Block(moving_ps, prev_yl, prev_v);
-                        }
-                    }
-                    else if (Punt_Formation.Gunners.Contains(io_Players))
-                    {
-                        if (!bSim)
-                        {
-                            p.Block(false);
-                        }
-                    }
-                    else
-                        p.Same_As_Last_Action_not_main();
-
-                    io_Players++;
                 }
-
-                io_Players = 0;
-                foreach (Game_Player p in Return_Players)
+                else
                 {
-                    prev_yl = p.Current_YardLine;
-                    prev_v = p.Current_Vertical_Percent_Pos;
 
-                    if (Return_Formation.Line_Players.Contains(io_Players))
-                    {
-                        p.Current_YardLine -= (first_block_dropback_yards+.75) * Game_Engine_Helper.HorizontalAdj(bLefttoRight);
-                        line_yl = p.Current_YardLine;
-                        if (!bSim)
-                        {
-                            Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
-                            p.Run_Then_Block(moving_ps, prev_yl, prev_v);
-                        }
-                    }
-                    else if (Return_Formation.Gunners.Contains(io_Players))
-                    {
-                        p.Current_YardLine -= .75 * Game_Engine_Helper.HorizontalAdj(bLefttoRight);
-                        line_yl = p.Current_YardLine;
-                        if (!bSim)
-                        {
-                            Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, line_yl, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
-                            p.Run_Then_Block(moving_ps, prev_yl, prev_v);
-                        }
-                    }
-                    else
-                        p.Same_As_Last_Action_not_main();
-                    io_Players++;
                 }
             }
-            //===== End of Stage Two - ============================================
-            logger.Debug("=======================================================");
-            logger.Debug("");
 
 
-            //================================  Stage Three =======================================
-            //Punter walks forward and attempt to kick the ball, while possibly a rusher tries to block the kick
-            logger.Debug("Stage 3");
-            logger.Debug("=====================================================");
-
-            //Punter attempts to kick, attacker possibly attempts block
-            if (!bPreSnapPenalty)
-            {
-                double half_yards = (double) (Punt_Formation.Punter_Behind_Line_ayrds - first_block_dropback_yards)  / 2.0;
-
-                //First decide if an attacker breaks thru the line to attempt a block
-                List<int> blocker_index_list = new List<int>();
-                blocker_index_list.AddRange(Punt_Formation.Line_Players);
-                blocker_index_list.AddRange(Punt_Formation.Backfield_Players);
-
-                Blockers = Game_Engine_Helper.getPlayerSublist(Punt_Players, blocker_index_list);
-                Attackers = Game_Engine_Helper.getPlayerSublist(Return_Players, Return_Formation.Line_Players);
-
-                r.Defender_Close_to_Kicker = getAttacker_BreakThru(Blockers, Attackers);
-
-                if (!bSim)
-                {
-                    double prev_yl = gBall.Current_YardLine;
-                    double prev_v = gBall.Current_Vertical_Percent_Pos;
-                    gBall.Current_YardLine += half_yards * Game_Engine_Helper.HorizontalAdj(bLefttoRight);
-                    gBall.Carried_notMain(prev_yl, prev_v);
-                }
-
-                //bpo stopped here 
-                //foreach in the steop I need to work on the foreaches.
-
-                io_Players = 0;
-                foreach (Game_Player p in Punt_Players)
-                {
-
-                    double prev_yl = p.Current_YardLine;
-                    double prev_v = p.Current_Vertical_Percent_Pos;
-                    if (p == r.Punter)
-                    {
-                        p.Current_YardLine += half_yards * Game_Engine_Helper.HorizontalAdj(bLefttoRight);
-                        if (!bSim) p.Run_and_Punt(prev_yl, prev_v);
-                    }
-                    else if (Punt_Formation.Line_Players.Contains(io_Players) || Punt_Formation.Backfield_Players.Contains(io_Players))
-                    {
-                        if (!bSim)
-                        {
-                            p.Same_As_Last_Action();
-                        }
-                    }
-                    else if (Punt_Formation.Gunners.Contains(io_Players))
-                    {
-                        p.Current_YardLine += half_yards * Game_Engine_Helper.HorizontalAdj(bLefttoRight);
-                        if (!bSim)
-                        {
-                            Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
-                            p.Run(moving_ps, prev_yl, prev_v);
-                        }
-                    }
-
-
-                    io_Players++;
-                }
-
-                io_Players = 0;
-                foreach (Game_Player p in Return_Players)
-                {
-                    double prev_yl = p.Current_YardLine;
-                    double prev_v = p.Current_Vertical_Percent_Pos;
-
-                    if (p == r.Defender_Close_to_Kicker)
-                    {
-                        p.Current_YardLine -= half_yards * Game_Engine_Helper.HorizontalAdj(bLefttoRight);
-                        p.Current_Vertical_Percent_Pos = gBall.Current_Vertical_Percent_Pos;
-                        Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
-                        if (!bSim)
-                        {
-                            p.Run_and_TrytoBlockKick(moving_ps, prev_yl, prev_v);
-                        }
-                    }
-                    else if (Return_Formation.Line_Players.Contains(io_Players))
-                    {
-                        if (!bSim)
-                        {
-                            p.Same_As_Last_Action();
-                        }
-                    }
-                    else if (Return_Formation.Gunners.Contains(io_Players))
-                    {
-                        p.Current_YardLine += half_yards * Game_Engine_Helper.HorizontalAdj(bLefttoRight);
-                        if (!bSim)
-                        {
-                            Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
-                            p.Run(moving_ps, prev_yl, prev_v);
-                        }
-                    }
-                    else
-                        p.Same_As_Last_Action_not_main();
-                    io_Players++;
-                }
-            }
-            //===== End of Stage Three - ============================================
-            logger.Debug("=======================================================");
-            logger.Debug("");
-
-
-            //================================  Stage Four =======================================
-            //Only execute if an attacker is close to kicker and can make the block
-            logger.Debug("Stage 4");
-            logger.Debug("=====================================================");
-
-            //Punter attempts to kick, attacker possibly attempts block
-            if (!bPreSnapPenalty && r.Defender_Close_to_Kicker != null)
-            {
-                //First determine if the punt is blocked
-                r.bPunt_blocked = puntBlocked((double) Punt_Formation.Punter_Behind_Line_ayrds);
-                //bpo test
-                r.bPunt_blocked = true;
-
-                Tuple<Game_Player, bool> t = Playstub_Punt_Block.Execute(bLefttoRight, gBall,
-                                Punt_Players, Return_Players, Blockers, Attackers, r.Punter, bSim);
-            }
-            //===== End of Stage Four - ============================================
-            logger.Debug("=======================================================");
-            logger.Debug("");
 
             return r;
         }
@@ -480,5 +237,230 @@ namespace SpectatorFootball.GameNS
 
             return r;
         }
+
+        private void Set_Ball_and_Players_Before_Snap(Game_Ball gBall, List<Game_Player> Punt_Players, List<Game_Player> Return_Players,
+           Formation Punt_Formation, Formation Return_Formation, bool bSim)
+        {
+
+            if (!bSim)
+                gBall.TeeUp();
+
+            int io_Players = 0;
+            foreach (Game_Player p in Punt_Players)
+            {
+                bool bMain = true;
+                double prev_yl = p.Current_YardLine;
+                double prev_v = p.Current_Vertical_Percent_Pos;
+
+                if (!bSim)
+                {
+                    if (Punt_Formation.Line_Players.Contains(io_Players))
+                    {
+                        p.Crouch(prev_yl, prev_v, bMain);
+                        bMain = false;
+                    }
+                    else
+                        p.Stand();
+                }
+                io_Players++;
+            }
+
+            io_Players = 0;
+            //The team receiving the kick will just stand there before the kick
+            foreach (Game_Player p in Return_Players)
+            {
+                if (!bSim)
+                {
+                    double prev_yl = p.Current_YardLine;
+                    double prev_v = p.Current_Vertical_Percent_Pos;
+                    if (Return_Formation.Line_Players.Contains(io_Players))
+                        p.Crouch(prev_yl, prev_v, false);
+                    else
+                        p.Stand();
+                }
+
+                io_Players++;
+            }
+        }
+
+        private void Snap_Ball_Lines_Clash(Game_Ball gBall, List<Game_Player> Punt_Players, List<Game_Player> Return_Players,
+             Formation Punt_Formation, Formation Return_Formation, bool bSim, bool bLefttoRight, double first_block_dropback_yards)
+        {
+            double ball_yl = gBall.Current_YardLine;
+            double line_yl = 0.0;
+            //possision where ball should be caught
+            double prev_yl = gBall.Current_YardLine;
+            double prev_v = gBall.Current_Vertical_Percent_Pos;
+            gBall.Current_YardLine = gBall.Starting_YardLine + ((double)(Punt_Formation.Punter_Behind_Line_ayrds - 1.75) * Game_Engine_Helper.HorizontalAdj(!bLefttoRight));
+            gBall.Current_Vertical_Percent_Pos = gBall.Starting_Vertical_Percent_Pos;
+
+            if (!bSim)
+                gBall.Spiral(prev_yl, prev_v);
+
+            int io_Players = 0;
+            foreach (Game_Player p in Punt_Players)
+            {
+
+                prev_yl = p.Current_YardLine;
+                prev_v = p.Current_Vertical_Percent_Pos;
+                if (p == r.Punter)
+                {
+                    if (!bSim) p.Punter_Ready_for_Ball(prev_yl, prev_v);
+                }
+                else if (Punt_Formation.Line_Players.Contains(io_Players))
+                {
+                    p.Current_YardLine -= first_block_dropback_yards * Game_Engine_Helper.HorizontalAdj(bLefttoRight);
+                    line_yl = p.Current_YardLine;
+                    if (!bSim)
+                    {
+                        Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
+                        p.Run_Then_Block(moving_ps, prev_yl, prev_v);
+                    }
+                }
+                else if (Punt_Formation.Backfield_Players.Contains(io_Players))
+                {
+                    p.Current_YardLine = line_yl;
+                    if (!bSim)
+                    {
+                        Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
+                        p.Run_Then_Block(moving_ps, prev_yl, prev_v);
+                    }
+                }
+                else if (Punt_Formation.Gunners.Contains(io_Players))
+                {
+                    if (!bSim)
+                    {
+                        p.Block(false);
+                    }
+                }
+                else
+                    p.Same_As_Last_Action_not_main();
+
+                io_Players++;
+            }
+
+            io_Players = 0;
+            foreach (Game_Player p in Return_Players)
+            {
+                prev_yl = p.Current_YardLine;
+                prev_v = p.Current_Vertical_Percent_Pos;
+
+                if (Return_Formation.Line_Players.Contains(io_Players))
+                {
+                    p.Current_YardLine -= (first_block_dropback_yards + .75) * Game_Engine_Helper.HorizontalAdj(bLefttoRight);
+                    line_yl = p.Current_YardLine;
+                    if (!bSim)
+                    {
+                        Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
+                        p.Run_Then_Block(moving_ps, prev_yl, prev_v);
+                    }
+                }
+                else if (Return_Formation.Gunners.Contains(io_Players))
+                {
+                    p.Current_YardLine -= .75 * Game_Engine_Helper.HorizontalAdj(bLefttoRight);
+                    line_yl = p.Current_YardLine;
+                    if (!bSim)
+                    {
+                        Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, line_yl, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
+                        p.Run_Then_Block(moving_ps, prev_yl, prev_v);
+                    }
+                }
+                else
+                    p.Same_As_Last_Action_not_main();
+                io_Players++;
+            }
+        }
+ 
+        private void Punter_Prepares_to_Kick(Game_Ball gBall, List<Game_Player> Punt_Players, List<Game_Player> Return_Players,
+             Formation Punt_Formation, Formation Return_Formation, bool bSim, bool bLefttoRight, double first_block_dropback_yards)
+        {
+            double half_yards = (double)(Punt_Formation.Punter_Behind_Line_ayrds - first_block_dropback_yards) / 2.0;
+
+            //First decide if an attacker breaks thru the line to attempt a block
+            List<int> blocker_index_list = new List<int>();
+            blocker_index_list.AddRange(Punt_Formation.Line_Players);
+            blocker_index_list.AddRange(Punt_Formation.Backfield_Players);
+
+            Blockers = Game_Engine_Helper.getPlayerSublist(Punt_Players, blocker_index_list);
+            Attackers = Game_Engine_Helper.getPlayerSublist(Return_Players, Return_Formation.Line_Players);
+
+            r.Defender_Close_to_Kicker = getAttacker_BreakThru(Blockers, Attackers);
+
+            if (!bSim)
+            {
+                double prev_yl = gBall.Current_YardLine;
+                double prev_v = gBall.Current_Vertical_Percent_Pos;
+                gBall.Current_YardLine += half_yards * Game_Engine_Helper.HorizontalAdj(bLefttoRight);
+                gBall.Carried_notMain(prev_yl, prev_v);
+            }
+
+            int io_Players = 0;
+            foreach (Game_Player p in Punt_Players)
+            {
+
+                double prev_yl = p.Current_YardLine;
+                double prev_v = p.Current_Vertical_Percent_Pos;
+                if (p == r.Punter)
+                {
+                    p.Current_YardLine += half_yards * Game_Engine_Helper.HorizontalAdj(bLefttoRight);
+                    if (!bSim) p.Run_and_Punt(prev_yl, prev_v);
+                }
+                else if (Punt_Formation.Line_Players.Contains(io_Players) || Punt_Formation.Backfield_Players.Contains(io_Players))
+                {
+                    if (!bSim)
+                    {
+                        p.Same_As_Last_Action();
+                    }
+                }
+                else if (Punt_Formation.Gunners.Contains(io_Players))
+                {
+                    p.Current_YardLine += half_yards * Game_Engine_Helper.HorizontalAdj(bLefttoRight);
+                    if (!bSim)
+                    {
+                        Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
+                        p.Run(moving_ps, prev_yl, prev_v);
+                    }
+                }
+                io_Players++;
+            }
+
+            io_Players = 0;
+            foreach (Game_Player p in Return_Players)
+            {
+                double prev_yl = p.Current_YardLine;
+                double prev_v = p.Current_Vertical_Percent_Pos;
+
+                if (p == r.Defender_Close_to_Kicker)
+                {
+                    p.Current_YardLine -= half_yards * Game_Engine_Helper.HorizontalAdj(bLefttoRight);
+                    p.Current_Vertical_Percent_Pos = gBall.Current_Vertical_Percent_Pos;
+                    Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
+                    if (!bSim)
+                    {
+                        p.Run_and_TrytoBlockKick(moving_ps, prev_yl, prev_v);
+                    }
+                }
+                else if (Return_Formation.Line_Players.Contains(io_Players))
+                {
+                    if (!bSim)
+                    {
+                        p.Same_As_Last_Action();
+                    }
+                }
+                else if (Return_Formation.Gunners.Contains(io_Players))
+                {
+                    p.Current_YardLine += half_yards * Game_Engine_Helper.HorizontalAdj(bLefttoRight);
+                    if (!bSim)
+                    {
+                        Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
+                        p.Run(moving_ps, prev_yl, prev_v);
+                    }
+                }
+                else
+                    p.Same_As_Last_Action_not_main();
+                io_Players++;
+            }
+        }
+
     }
 }

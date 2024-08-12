@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SpectatorFootball.Enum
 {
-    public enum Kickoff_Verticl
+    public enum Punt_Vertical
     {
         TOP,
         MIDDLE,

@@ -114,8 +114,8 @@ namespace SpectatorFootball.GameNS
                 {
                     Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, false, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, 0.0);
 
-                    if (close_Return_Players.Contains(p))
-                        p.Attempt_Tackle(moving_ps, prev_yl, prev_v);
+                    if (p == r)
+                        p.Cover_Ball(moving_ps, prev_yl, prev_v);
                     else
                     {
                         //                        p.Same_As_Last_Action();

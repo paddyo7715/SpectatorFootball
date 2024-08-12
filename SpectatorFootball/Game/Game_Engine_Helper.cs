@@ -146,9 +146,6 @@ namespace SpectatorFootball.GameNS
 
             return r;
         }
-
-
-
         public static block_result Attempt_Block(bool runBlock, int rndNum,
             long blkPass_Block_Rating, long blkRun_Block_Rating, long bklAgility,
             long atkPass_Attack, long atkRun_Attack, long atkAgility, long atkSpeed)
@@ -454,6 +451,43 @@ namespace SpectatorFootball.GameNS
                     r.Add(p);
                     ind++;
             }
+
+            return r;
+        }
+        public static bool isC0ffinCornerEligible(double y, bool bLefttoRight)
+        {
+            bool r = false;
+            double cc_yardline = 45.0;
+            double yardLine = y;
+
+            if (!bLefttoRight)
+                cc_yardline = 100.0 - cc_yardline;
+
+            if (bLefttoRight && yardLine >= cc_yardline)
+                r = true;
+            else if (!bLefttoRight && yardLine <= cc_yardline)
+                r = true;
+
+                return r;
+        }
+        public static bool ShouldAttemptCoffinCorner(double ccPuntLen, double dist_from_endzone)
+        {
+            bool r = true;
+
+            if (ccPuntLen < dist_from_endzone - 10)
+                r = false;
+
+            return r;
+        }
+        public static bool CoffinCornerMade(long punt_accuracy)
+        {
+            bool r = false;
+            int upper_limit = 300;
+
+            int rnd = CommonUtils.getRandomNum(1, upper_limit);
+
+            if (rnd <= punt_accuracy)
+                r = true;
 
             return r;
         }

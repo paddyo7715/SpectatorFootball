@@ -133,7 +133,7 @@ namespace SpectatorFootball.GameNS
             double Kickoff_Len = Kicking_Helper.getKickoff_len(kick_length_enum);
 
             long leg_accuracy = r.Kicker.p_and_r.pr.First().Kicker_Leg_Accuracy_Rating;
-            KickOff_Verticl Kick_Vert_enum = Kicking_Helper.getKickoff_Vert_enum(leg_accuracy);
+            Kickoff_Verticl Kick_Vert_enum = Kicking_Helper.getKickoff_Vert_enum(leg_accuracy);
 
             double Kickoff_Vert = Kicking_Helper.getKickoff_Vert(Kick_Vert_enum);
 

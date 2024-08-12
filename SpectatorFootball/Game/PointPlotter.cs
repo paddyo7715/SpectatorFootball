@@ -36,6 +36,8 @@ namespace SpectatorFootball.GameNS
                     skip_count = PLAYER_SKIP;
                 else if ((b_state == Ball_States.END_OVER_END || b_state == Ball_States.SPIRAL))
                     skip_count = STARTING_KICK_SKIP;
+//                if (b_state == Ball_States.PUNT_THRU_THE_AIR)
+//                    skip_count = BALL_NORMAL_SKIP;
                 else if (Ball_Speed == Enum.Ball_Speed.SLOW)
                     skip_count = BALL_SLOW_SKIP;
                 else if (Ball_Speed == Enum.Ball_Speed.NORMAL)

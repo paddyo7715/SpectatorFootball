@@ -56,6 +56,7 @@ namespace SpectatorFootball.WindowsLeague
         {
             InitializeComponent();
 
+
             binding_team = Team_Helper.Clone_Team(this_team);
             this.DataContext = binding_team;
             binding_team.Season = null;
@@ -254,6 +255,7 @@ namespace SpectatorFootball.WindowsLeague
             lstGames.ItemsSource = Team_Sched_List;
 
             Team_Services ts = new Team_Services();
+
             Team_Stats = ts.getTeamSeasonStats(pw.Loaded_League.season.League_Structure_by_Season[0].Short_Name,
                 pw.Loaded_League.season.ID, this_team.Franchise_ID);
 
@@ -354,7 +356,7 @@ namespace SpectatorFootball.WindowsLeague
             else
                 tbInjuries.Visibility = Visibility.Collapsed;
 
-            List<OneInt2Strings> lTrans = ts.getTeamTransactions(pw.Loaded_League.season.ID,this_team.Franchise_ID, pw.Loaded_League.season.League_Structure_by_Season[0].Short_Name);
+            List<OneInt2Strings> lTrans = ts.getTeamTransactions(pw.Loaded_League.season.ID, this_team.Franchise_ID, pw.Loaded_League.season.League_Structure_by_Season[0].Short_Name);
             if (lTrans != null || lTrans.Count() == 0)
                 lblNoTransactions.Visibility = Visibility.Collapsed;
             else
@@ -366,6 +368,7 @@ namespace SpectatorFootball.WindowsLeague
 
             this.orig_this_team = this_team;
             this.pw = pw;
+
         }
 
 
