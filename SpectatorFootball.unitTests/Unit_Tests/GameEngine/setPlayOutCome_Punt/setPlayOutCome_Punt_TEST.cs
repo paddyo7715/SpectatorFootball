@@ -2743,6 +2743,429 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Assert.IsTrue(true);
         }
 
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void setPlayOutCome_Punt_Left_Block_Spot_Penalty_on_Returners_in_Endzone_TD()
+        {
+            bool penOnBallCarryingTeam = true;
+            Play_Enum PE = Play_Enum.PUNT;
+            int Down = 4;
+            double Yards_to_Go = 7.0;
+
+            Game_Player Punter = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
+                Current_YardLine = -5
+            };
+            Game_Player Retuner = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 2 } },
+                Current_YardLine = 35
+            };
+
+            Game_Player Punt_Blocker = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 3 } },
+                Current_YardLine = -4
+            };
+
+            Game_Player Block_Recover = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 4 } },
+                Current_YardLine = -4
+            };
+
+            //get penalty settings
+            List<Penalty> p = Penalty_Helper.ReturnAllPenalties();
+            Penalty Penalty = p.Where(x => x.code == Penalty_Codes.UC).First();
+            Game_Player Penalized_Player = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 4 } },
+                Current_YardLine = -4
+            };
+
+            Play_Result pResult = new Play_Result()
+            {
+                at = 11,
+                ht = 22,
+                BallPossessing_Team_Id = 11,
+                NonbBallPossessing_Team_Id = 22,
+                end_of_play_yardline = -4.0,
+                Penalty = Penalty,
+                Penalized_Player = Penalized_Player,
+                Punter = Punter,
+                Punt_Returner = Retuner,
+                bPenalty_Rejected = false,
+                bPunt_blocked = true,
+                Blocked_Punt_Recoverer = Block_Recover,
+                bTouchDown = true,
+                bSafety = false,
+                bTouchback = false
+            };
+
+            double original_Yardline = 4.0;
+            bool bLefttoRgiht = true;
+            double TouchBack_Yardline = 25.0;
+
+            Play_Result r = GameEngine.setPlayOutCome(penOnBallCarryingTeam, PE, Down, Yards_to_Go,
+                pResult, bLefttoRgiht, TouchBack_Yardline);
+
+            //There should be a change in possession
+            if (!r.bFinal_SwitchPossession)
+                throw new Exception("Possession should have been swtiched");
+
+            if (!r.bPlay_Stands)
+                throw new Exception("This Play must not stand");
+
+            //Check dow, yardage and yardline
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 11)
+                throw new Exception("The next Play must be first and ten on specified yard line");
+
+            //Check for next play
+            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
+                throw new Exception("Next play not special");
+
+            if (r.Final_Added_Penalty_Yards != 15)
+                throw new Exception("There was no penalty on this play");
+
+            if (r.bAwayTD || r.bAwayFG || r.bAwayXP || r.bAwaySafetyFor || r.bAwayXP1 || r.bAwayXP2 || r.bAwayXP3 ||
+                r.bHomeTD || r.bHomeFG || r.bHomeXP || r.bHomeSafetyFor || r.bHomeXP1 || r.bHomeXP2 || r.bHomeXP3)
+                throw new Exception("There should have been no scoring on this play");
+
+            if (r.AwayFirstDowns != 0 || r.Away3rdDownAtt != 0 || r.Away3rdDownMade != 0 ||
+                    r.Away4thDownAtt != 0 || r.Away4thDownMade != 0 || r.AwayXP1Attempt != 0 ||
+                    r.AwayXP1Made != 0 || r.AwayXP2Attempt != 0 || r.AwayXP2Made != 0 ||
+                    r.AwayXP3Attempt != 0 || r.AwayXP3Made != 0 || r.AwayPassingYards != 0 ||
+                    r.AwayRushingYards != 0 || r.AwayTurnoers != 0 || r.AwaySacks != 0 ||
+                    r.AwayTOP != 0 ||
+                    r.HomeFirstDowns != 0 || r.Home3rdDownAtt != 0 || r.Home3rdDownMade != 0 ||
+                    r.Home4thDownAtt != 0 || r.Home4thDownMade != 0 || r.HomeXP1Attempt != 0 ||
+                    r.HomeXP1Made != 0 || r.HomeXP2Attempt != 0 || r.HomeXP2Made != 0 ||
+                    r.HomeXP3Attempt != 0 || r.HomeXP3Made != 0 || r.HomePassingYards != 0 ||
+                    r.HomeRushingYards != 0 || r.HomeTurnoers != 0 || r.HomeSacks != 0 ||
+                    r.HomeTOP != 0)
+                throw new Exception("None of these should be greater than 0");
+
+            Assert.IsTrue(true);
+        }
+
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void setPlayOutCome_Punt_Left_Block_Spot_Penalty_on_Returners_in_Endzone_Safety()
+        {
+            bool penOnBallCarryingTeam = true;
+            Play_Enum PE = Play_Enum.PUNT;
+            int Down = 4;
+            double Yards_to_Go = 7.0;
+
+            Game_Player Punter = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
+                Current_YardLine = -5
+            };
+            Game_Player Retuner = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 2 } },
+                Current_YardLine = 35
+            };
+
+            Game_Player Punt_Blocker = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 3 } },
+                Current_YardLine = -4
+            };
+
+            Game_Player Block_Recover = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 4 } },
+                Current_YardLine = -4
+            };
+
+            //get penalty settings
+            List<Penalty> p = Penalty_Helper.ReturnAllPenalties();
+            Penalty Penalty = p.Where(x => x.code == Penalty_Codes.UC).First();
+            Game_Player Penalized_Player = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 4 } },
+                Current_YardLine = -3
+            };
+
+            Play_Result pResult = new Play_Result()
+            {
+                at = 11,
+                ht = 22,
+                BallPossessing_Team_Id = 11,
+                NonbBallPossessing_Team_Id = 22,
+                end_of_play_yardline = -4.0,
+                Penalty = Penalty,
+                Penalized_Player = Penalized_Player,
+                Punter = Punter,
+                Punt_Returner = Retuner,
+                bPenalty_Rejected = false,
+                bPunt_blocked = true,
+                Blocked_Punt_Recoverer = Block_Recover,
+                bTouchDown = false,
+                bSafety = true,
+                bTouchback = false
+            };
+
+            double original_Yardline = 27.0;
+            bool bLefttoRgiht = true;
+            double TouchBack_Yardline = 25.0;
+
+            Play_Result r = GameEngine.setPlayOutCome(penOnBallCarryingTeam, PE, Down, Yards_to_Go,
+                pResult, bLefttoRgiht, TouchBack_Yardline);
+
+            //There should be a change in possession
+            if (!r.bFinal_SwitchPossession)
+                throw new Exception("Possession should have been swtiched");
+
+            if (!r.bPlay_Stands)
+                throw new Exception("This Play must not stand");
+
+            //Check dow, yardage and yardline
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 12)
+                throw new Exception("The next Play must be first and ten on specified yard line");
+
+            //Check for next play
+            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
+                throw new Exception("Next play need to be extra point");
+
+            if (r.Final_Added_Penalty_Yards != 15)
+                throw new Exception("There was no penalty on this play");
+
+            if (r.bAwayTD || r.bAwayFG || r.bAwayXP || r.bAwaySafetyFor || r.bAwayXP1 || r.bAwayXP2 || r.bAwayXP3 ||
+                r.bHomeTD || r.bHomeFG || r.bHomeXP || r.bHomeSafetyFor || r.bHomeXP1 || r.bHomeXP2 || r.bHomeXP3)
+                throw new Exception("There should have been no scoring on this play");
+
+            if (r.AwayFirstDowns != 0 || r.Away3rdDownAtt != 0 || r.Away3rdDownMade != 0 ||
+                    r.Away4thDownAtt != 0 || r.Away4thDownMade != 0 || r.AwayXP1Attempt != 0 ||
+                    r.AwayXP1Made != 0 || r.AwayXP2Attempt != 0 || r.AwayXP2Made != 0 ||
+                    r.AwayXP3Attempt != 0 || r.AwayXP3Made != 0 || r.AwayPassingYards != 0 ||
+                    r.AwayRushingYards != 0 || r.AwayTurnoers != 0 || r.AwaySacks != 0 ||
+                    r.AwayTOP != 0 ||
+                    r.HomeFirstDowns != 0 || r.Home3rdDownAtt != 0 || r.Home3rdDownMade != 0 ||
+                    r.Home4thDownAtt != 0 || r.Home4thDownMade != 0 || r.HomeXP1Attempt != 0 ||
+                    r.HomeXP1Made != 0 || r.HomeXP2Attempt != 0 || r.HomeXP2Made != 0 ||
+                    r.HomeXP3Attempt != 0 || r.HomeXP3Made != 0 || r.HomePassingYards != 0 ||
+                    r.HomeRushingYards != 0 || r.HomeTurnoers != 0 || r.HomeSacks != 0 ||
+                    r.HomeTOP != 0)
+                throw new Exception("None of these should be greater than 0");
+
+            Assert.IsTrue(true);
+        }
+
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void setPlayOutCome_Punt_Left_Block_Spot_Penalty_on_Returners_not_in_EZ()
+        {
+            bool penOnBallCarryingTeam = true;
+            Play_Enum PE = Play_Enum.PUNT;
+            int Down = 4;
+            double Yards_to_Go = 7.0;
+
+            Game_Player Punter = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
+                Current_YardLine = 10
+            };
+            Game_Player Retuner = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 2 } },
+                Current_YardLine = 50
+            };
+
+            Game_Player Punt_Blocker = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 3 } },
+                Current_YardLine = 10
+            };
+
+            Game_Player Block_Recover = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 4 } },
+                Current_YardLine = 11
+            };
+
+            //get penalty settings
+            List<Penalty> p = Penalty_Helper.ReturnAllPenalties();
+            Penalty Penalty = p.Where(x => x.code == Penalty_Codes.UC).First();
+            Game_Player Penalized_Player = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 4 } },
+                Current_YardLine = 13
+            };
+
+            Play_Result pResult = new Play_Result()
+            {
+                at = 11,
+                ht = 22,
+                BallPossessing_Team_Id = 11,
+                NonbBallPossessing_Team_Id = 22,
+                end_of_play_yardline = 10.0,
+                Penalty = Penalty,
+                Penalized_Player = Penalized_Player,
+                Punter = Punter,
+                Punt_Returner = Retuner,
+                bPenalty_Rejected = false,
+                bPunt_blocked = true,
+                Blocked_Punt_Recoverer = Block_Recover,
+                bTouchDown = false,
+                bSafety = false,
+                bTouchback = false
+            };
+
+            double original_Yardline = 27.0;
+            bool bLefttoRgiht = true;
+            double TouchBack_Yardline = 25.0;
+
+            Play_Result r = GameEngine.setPlayOutCome(penOnBallCarryingTeam, PE, Down, Yards_to_Go,
+                pResult, bLefttoRgiht, TouchBack_Yardline);
+
+            //There should be a change in possession
+            if (!r.bFinal_SwitchPossession)
+                throw new Exception("Possession should have been swtiched");
+
+            if (!r.bPlay_Stands)
+                throw new Exception("This Play must not stand");
+
+            //Check dow, yardage and yardline
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 28)
+                throw new Exception("The next Play must be first and ten on specified yard line");
+
+            //Check for next play
+            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
+                throw new Exception("Next play need to be extra point");
+
+            if (r.Final_Added_Penalty_Yards != 15)
+                throw new Exception("There was no penalty on this play");
+
+            if (r.bAwayTD || r.bAwayFG || r.bAwayXP || r.bAwaySafetyFor || r.bAwayXP1 || r.bAwayXP2 || r.bAwayXP3 ||
+                r.bHomeTD || r.bHomeFG || r.bHomeXP || r.bHomeSafetyFor || r.bHomeXP1 || r.bHomeXP2 || r.bHomeXP3)
+                throw new Exception("There should have been no scoring on this play");
+
+            if (r.AwayFirstDowns != 0 || r.Away3rdDownAtt != 0 || r.Away3rdDownMade != 0 ||
+                    r.Away4thDownAtt != 0 || r.Away4thDownMade != 0 || r.AwayXP1Attempt != 0 ||
+                    r.AwayXP1Made != 0 || r.AwayXP2Attempt != 0 || r.AwayXP2Made != 0 ||
+                    r.AwayXP3Attempt != 0 || r.AwayXP3Made != 0 || r.AwayPassingYards != 0 ||
+                    r.AwayRushingYards != 0 || r.AwayTurnoers != 0 || r.AwaySacks != 0 ||
+                    r.AwayTOP != 0 ||
+                    r.HomeFirstDowns != 0 || r.Home3rdDownAtt != 0 || r.Home3rdDownMade != 0 ||
+                    r.Home4thDownAtt != 0 || r.Home4thDownMade != 0 || r.HomeXP1Attempt != 0 ||
+                    r.HomeXP1Made != 0 || r.HomeXP2Attempt != 0 || r.HomeXP2Made != 0 ||
+                    r.HomeXP3Attempt != 0 || r.HomeXP3Made != 0 || r.HomePassingYards != 0 ||
+                    r.HomeRushingYards != 0 || r.HomeTurnoers != 0 || r.HomeSacks != 0 ||
+                    r.HomeTOP != 0)
+                throw new Exception("None of these should be greater than 0");
+
+            Assert.IsTrue(true);
+        }
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void setPlayOutCome_Punt_Left_Block_Recovered_in_EZ_TD_Defensive_Holding()
+        {
+            bool penOnBallCarryingTeam = true;
+            Play_Enum PE = Play_Enum.PUNT;
+            int Down = 4;
+            double Yards_to_Go = 7.0;
+
+            Game_Player Punter = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
+                Current_YardLine = -4
+            };
+            Game_Player Retuner = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 2 } },
+                Current_YardLine = 40
+            };
+
+            Game_Player Punt_Blocker = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 3 } },
+                Current_YardLine = -4
+            };
+
+            Game_Player Block_Recover = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 4 } },
+                Current_YardLine = -3
+            };
+
+            //get penalty settings
+            List<Penalty> p = Penalty_Helper.ReturnAllPenalties();
+            Penalty Penalty = p.Where(x => x.code == Penalty_Codes.DO).First();
+            Game_Player Penalized_Player = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 4 } },
+                Current_YardLine = 7
+            };
+
+            Play_Result pResult = new Play_Result()
+            {
+                at = 11,
+                ht = 22,
+                BallPossessing_Team_Id = 11,
+                NonbBallPossessing_Team_Id = 22,
+                end_of_play_yardline = -3.0,
+                Play_Start_Yardline = 5.0,
+                Penalty = Penalty,
+                Penalized_Player = Penalized_Player,
+                Punter = Punter,
+                Punt_Returner = Retuner,
+                bPenalty_Rejected = false,
+                bPunt_blocked = true,
+                Blocked_Punt_Recoverer = Block_Recover,
+                bTouchDown = true,
+                bSafety = false,
+                bTouchback = false
+            };
+
+            double original_Yardline = 27.0;
+            bool bLefttoRgiht = true;
+            double TouchBack_Yardline = 25.0;
+
+            Play_Result r = GameEngine.setPlayOutCome(penOnBallCarryingTeam, PE, Down, Yards_to_Go,
+                pResult, bLefttoRgiht, TouchBack_Yardline);
+
+            //There should be a change in possession
+            if (r.bFinal_SwitchPossession)
+                throw new Exception("Possession should have been swtiched");
+
+            if (r.bPlay_Stands)
+                throw new Exception("This Play must not stand");
+
+            //Check dow, yardage and yardline
+            if (r.Final_Down != 4 || r.Final_yard_to_go != 2 || r.Final_end_of_Play_Yardline != 10)
+                throw new Exception("The next Play must be first and ten on specified yard line");
+
+            //Check for next play
+            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
+                throw new Exception("Next play need to be extra point");
+
+            if (r.Final_Added_Penalty_Yards != 5)
+                throw new Exception("There was no penalty on this play");
+
+            if (r.bAwayTD || r.bAwayFG || r.bAwayXP || r.bAwaySafetyFor || r.bAwayXP1 || r.bAwayXP2 || r.bAwayXP3 ||
+                r.bHomeTD || r.bHomeFG || r.bHomeXP || r.bHomeSafetyFor || r.bHomeXP1 || r.bHomeXP2 || r.bHomeXP3)
+                throw new Exception("There should have been no scoring on this play");
+
+            if (r.AwayFirstDowns != 0 || r.Away3rdDownAtt != 0 || r.Away3rdDownMade != 0 ||
+                    r.Away4thDownAtt != 0 || r.Away4thDownMade != 0 || r.AwayXP1Attempt != 0 ||
+                    r.AwayXP1Made != 0 || r.AwayXP2Attempt != 0 || r.AwayXP2Made != 0 ||
+                    r.AwayXP3Attempt != 0 || r.AwayXP3Made != 0 || r.AwayPassingYards != 0 ||
+                    r.AwayRushingYards != 0 || r.AwayTurnoers != 0 || r.AwaySacks != 0 ||
+                    r.AwayTOP != 0 ||
+                    r.HomeFirstDowns != 0 || r.Home3rdDownAtt != 0 || r.Home3rdDownMade != 0 ||
+                    r.Home4thDownAtt != 0 || r.Home4thDownMade != 0 || r.HomeXP1Attempt != 0 ||
+                    r.HomeXP1Made != 0 || r.HomeXP2Attempt != 0 || r.HomeXP2Made != 0 ||
+                    r.HomeXP3Attempt != 0 || r.HomeXP3Made != 0 || r.HomePassingYards != 0 ||
+                    r.HomeRushingYards != 0 || r.HomeTurnoers != 0 || r.HomeSacks != 0 ||
+                    r.HomeTOP != 0)
+                throw new Exception("None of these should be greater than 0");
+
+            Assert.IsTrue(true);
+        }
         //************************************
 
         [TestCategory("Unit")]
@@ -4712,6 +5135,1165 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
+        //*************************************
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void setPlayOutCome_Punt_Right_Block_No_Penalty_not_in_Endzone()
+        {
+            bool penOnBallCarryingTeam = false;
+            Play_Enum PE = Play_Enum.PUNT;
+            int Down = 4;
+            double Yards_to_Go = 7.0;
+
+            Game_Player Punter = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
+                Current_YardLine = 73
+            };
+            Game_Player Retuner = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 2 } },
+                Current_YardLine = 30
+            };
+
+            Game_Player Punt_Blocker = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 3 } },
+                Current_YardLine = 30
+            };
+
+            Game_Player Block_Recover = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 4 } },
+                Current_YardLine = 30
+            };
+
+            //get penalty settings
+            List<Penalty> p = Penalty_Helper.ReturnAllPenalties();
+            Penalty Penalty = null;
+            Game_Player Penalized_Player = null;
+
+            Play_Result pResult = new Play_Result()
+            {
+                at = 11,
+                ht = 22,
+                BallPossessing_Team_Id = 11,
+                NonbBallPossessing_Team_Id = 22,
+                end_of_play_yardline = 80.0,
+                Penalty = Penalty,
+                Penalized_Player = Penalized_Player,
+                Punter = Punter,
+                Punt_Returner = Retuner,
+                bPenalty_Rejected = false,
+                bPunt_blocked = true,
+                Blocked_Punt_Recoverer = Block_Recover
+            };
+
+            //set player stats
+            pResult.Play_Player_Stats.Add(new Game_Player_Stats()
+            {
+                Player_ID = Punt_Blocker.p_and_r.p.ID,
+                punter_plays = 1,
+                Punts_Blocked = 1
+            });
+
+            bool bLefttoRgiht = false;
+            double TouchBack_Yardline = 75.0;
+
+            Play_Result r = GameEngine.setPlayOutCome(penOnBallCarryingTeam, PE, Down, Yards_to_Go,
+                pResult, bLefttoRgiht, TouchBack_Yardline);
+
+            //There should be a change in possession
+            if (!r.bFinal_SwitchPossession)
+                throw new Exception("Possession should have been swtiched");
+
+            if (!r.bPlay_Stands)
+                throw new Exception("This Play must not stand");
+
+            //Check dow, yardage and yardline
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 80)
+                throw new Exception("The next Play must be first and ten on specified yard line");
+
+            //Check for next play
+            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
+                throw new Exception("There should not be a special play on the next play");
+
+            if (r.Final_Added_Penalty_Yards != 0)
+                throw new Exception("There was no penalty on this play");
+
+            if (r.bAwayTD || r.bAwayFG || r.bAwayXP || r.bAwaySafetyFor || r.bAwayXP1 || r.bAwayXP2 || r.bAwayXP3 ||
+                r.bHomeTD || r.bHomeFG || r.bHomeXP || r.bHomeSafetyFor || r.bHomeXP1 || r.bHomeXP2 || r.bHomeXP3)
+                throw new Exception("There should have been no scoring on this play");
+
+            if (r.AwayFirstDowns != 0 || r.Away3rdDownAtt != 0 || r.Away3rdDownMade != 0 ||
+                    r.Away4thDownAtt != 0 || r.Away4thDownMade != 0 || r.AwayXP1Attempt != 0 ||
+                    r.AwayXP1Made != 0 || r.AwayXP2Attempt != 0 || r.AwayXP2Made != 0 ||
+                    r.AwayXP3Attempt != 0 || r.AwayXP3Made != 0 || r.AwayPassingYards != 0 ||
+                    r.AwayRushingYards != 0 || r.AwayTurnoers != 0 || r.AwaySacks != 0 ||
+                    r.AwayTOP != 0 ||
+                    r.HomeFirstDowns != 0 || r.Home3rdDownAtt != 0 || r.Home3rdDownMade != 0 ||
+                    r.Home4thDownAtt != 0 || r.Home4thDownMade != 0 || r.HomeXP1Attempt != 0 ||
+                    r.HomeXP1Made != 0 || r.HomeXP2Attempt != 0 || r.HomeXP2Made != 0 ||
+                    r.HomeXP3Attempt != 0 || r.HomeXP3Made != 0 || r.HomePassingYards != 0 ||
+                    r.HomeRushingYards != 0 || r.HomeTurnoers != 0 || r.HomeSacks != 0 ||
+                    r.HomeTOP != 0)
+                throw new Exception("None of these should be greater than 0");
+
+            Assert.IsTrue(true);
+        }
+
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void setPlayOutCome_Punt_Right_Block_Spot_Penalty_on_Punt_team_not_in_Endzone()
+        {
+            bool penOnBallCarryingTeam = false;
+            Play_Enum PE = Play_Enum.PUNT;
+            int Down = 4;
+            double Yards_to_Go = 7.0;
+
+            Game_Player Punter = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
+                Current_YardLine = 73
+            };
+            Game_Player Retuner = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 2 } },
+                Current_YardLine = 30
+            };
+
+            Game_Player Punt_Blocker = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 3 } },
+                Current_YardLine = 30
+            };
+
+            Game_Player Block_Recover = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 4 } },
+                Current_YardLine = 80
+            };
+
+            //get penalty settings
+            List<Penalty> p = Penalty_Helper.ReturnAllPenalties();
+            Penalty Penalty = p.Where(x => x.code == Penalty_Codes.UC).First();
+            Game_Player Penalized_Player = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 4 } },
+                Current_YardLine = 82
+            };
+
+            Play_Result pResult = new Play_Result()
+            {
+                at = 11,
+                ht = 22,
+                BallPossessing_Team_Id = 11,
+                NonbBallPossessing_Team_Id = 22,
+                end_of_play_yardline = 80.0,
+                Penalty = Penalty,
+                Penalized_Player = Penalized_Player,
+                Punter = Punter,
+                Punt_Returner = Retuner,
+                bPenalty_Rejected = false,
+                bPunt_blocked = true,
+                Blocked_Punt_Recoverer = Block_Recover
+            };
+
+            //set player stats
+            pResult.Play_Player_Stats.Add(new Game_Player_Stats()
+            {
+                Player_ID = Punt_Blocker.p_and_r.p.ID,
+                punter_plays = 1,
+                Punts_Blocked = 1
+            });
+
+            bool bLefttoRgiht = false;
+            double TouchBack_Yardline = 75.0;
+
+            Play_Result r = GameEngine.setPlayOutCome(penOnBallCarryingTeam, PE, Down, Yards_to_Go,
+                pResult, bLefttoRgiht, TouchBack_Yardline);
+
+            //There should be a change in possession
+            if (!r.bFinal_SwitchPossession)
+                throw new Exception("Possession should have been swtiched");
+
+            if (!r.bPlay_Stands)
+                throw new Exception("This Play must not stand");
+
+            //Check dow, yardage and yardline
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 91)
+                throw new Exception("The next Play must be first and ten on specified yard line");
+
+            //Check for next play
+            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
+                throw new Exception("There should not be a special play on the next play");
+
+            if (r.Final_Added_Penalty_Yards != 9)
+                throw new Exception("Wrong Number of Penalty Yards");
+
+            if (r.bAwayTD || r.bAwayFG || r.bAwayXP || r.bAwaySafetyFor || r.bAwayXP1 || r.bAwayXP2 || r.bAwayXP3 ||
+                r.bHomeTD || r.bHomeFG || r.bHomeXP || r.bHomeSafetyFor || r.bHomeXP1 || r.bHomeXP2 || r.bHomeXP3)
+                throw new Exception("There should have been no scoring on this play");
+
+            if (r.AwayFirstDowns != 0 || r.Away3rdDownAtt != 0 || r.Away3rdDownMade != 0 ||
+                    r.Away4thDownAtt != 0 || r.Away4thDownMade != 0 || r.AwayXP1Attempt != 0 ||
+                    r.AwayXP1Made != 0 || r.AwayXP2Attempt != 0 || r.AwayXP2Made != 0 ||
+                    r.AwayXP3Attempt != 0 || r.AwayXP3Made != 0 || r.AwayPassingYards != 0 ||
+                    r.AwayRushingYards != 0 || r.AwayTurnoers != 0 || r.AwaySacks != 0 ||
+                    r.AwayTOP != 0 ||
+                    r.HomeFirstDowns != 0 || r.Home3rdDownAtt != 0 || r.Home3rdDownMade != 0 ||
+                    r.Home4thDownAtt != 0 || r.Home4thDownMade != 0 || r.HomeXP1Attempt != 0 ||
+                    r.HomeXP1Made != 0 || r.HomeXP2Attempt != 0 || r.HomeXP2Made != 0 ||
+                    r.HomeXP3Attempt != 0 || r.HomeXP3Made != 0 || r.HomePassingYards != 0 ||
+                    r.HomeRushingYards != 0 || r.HomeTurnoers != 0 || r.HomeSacks != 0 ||
+                    r.HomeTOP != 0)
+                throw new Exception("None of these should be greater than 0");
+
+            Assert.IsTrue(true);
+        }
+
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void setPlayOutCome_Punt_Right_Block_Spot_on_Return_Team_Penalty_not_in_Endzone()
+        {
+            bool penOnBallCarryingTeam = true;
+            Play_Enum PE = Play_Enum.PUNT;
+            int Down = 4;
+            double Yards_to_Go = 7.0;
+
+            Game_Player Punter = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
+                Current_YardLine = 73
+            };
+            Game_Player Retuner = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 2 } },
+                Current_YardLine = 30
+            };
+
+            Game_Player Punt_Blocker = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 3 } },
+                Current_YardLine = 80
+            };
+
+            Game_Player Block_Recover = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 4 } },
+                Current_YardLine = 80
+            };
+
+            //get penalty settings
+            List<Penalty> p = Penalty_Helper.ReturnAllPenalties();
+            Penalty Penalty = p.Where(x => x.code == Penalty_Codes.UC).First();
+            Game_Player Penalized_Player = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 4 } },
+                Current_YardLine = 72
+            };
+
+            Play_Result pResult = new Play_Result()
+            {
+                at = 11,
+                ht = 22,
+                BallPossessing_Team_Id = 11,
+                NonbBallPossessing_Team_Id = 22,
+                end_of_play_yardline = 80.0,
+                Penalty = Penalty,
+                Penalized_Player = Penalized_Player,
+                Punter = Punter,
+                Punt_Returner = Retuner,
+                bPenalty_Rejected = false,
+                bPunt_blocked = true,
+                Blocked_Punt_Recoverer = Block_Recover
+            };
+
+            //set player stats
+            pResult.Play_Player_Stats.Add(new Game_Player_Stats()
+            {
+                Player_ID = Punt_Blocker.p_and_r.p.ID,
+                punter_plays = 1,
+                Punts_Blocked = 1
+            });
+
+            bool bLefttoRgiht = false;
+            double TouchBack_Yardline = 75.0;
+
+            Play_Result r = GameEngine.setPlayOutCome(penOnBallCarryingTeam, PE, Down, Yards_to_Go,
+                pResult, bLefttoRgiht, TouchBack_Yardline);
+
+            //There should be a change in possession
+            if (!r.bFinal_SwitchPossession)
+                throw new Exception("Possession should have been swtiched");
+
+            if (!r.bPlay_Stands)
+                throw new Exception("This Play must not stand");
+
+            //Check dow, yardage and yardline
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 57)
+                throw new Exception("The next Play must be first and ten on specified yard line");
+
+            //Check for next play
+            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
+                throw new Exception("There should not be a special play on the next play");
+
+            if (r.Final_Added_Penalty_Yards != 15)
+                throw new Exception("Wrong Number of Penalty Yards");
+
+            if (r.bAwayTD || r.bAwayFG || r.bAwayXP || r.bAwaySafetyFor || r.bAwayXP1 || r.bAwayXP2 || r.bAwayXP3 ||
+                r.bHomeTD || r.bHomeFG || r.bHomeXP || r.bHomeSafetyFor || r.bHomeXP1 || r.bHomeXP2 || r.bHomeXP3)
+                throw new Exception("There should have been no scoring on this play");
+
+            if (r.AwayFirstDowns != 0 || r.Away3rdDownAtt != 0 || r.Away3rdDownMade != 0 ||
+                    r.Away4thDownAtt != 0 || r.Away4thDownMade != 0 || r.AwayXP1Attempt != 0 ||
+                    r.AwayXP1Made != 0 || r.AwayXP2Attempt != 0 || r.AwayXP2Made != 0 ||
+                    r.AwayXP3Attempt != 0 || r.AwayXP3Made != 0 || r.AwayPassingYards != 0 ||
+                    r.AwayRushingYards != 0 || r.AwayTurnoers != 0 || r.AwaySacks != 0 ||
+                    r.AwayTOP != 0 ||
+                    r.HomeFirstDowns != 0 || r.Home3rdDownAtt != 0 || r.Home3rdDownMade != 0 ||
+                    r.Home4thDownAtt != 0 || r.Home4thDownMade != 0 || r.HomeXP1Attempt != 0 ||
+                    r.HomeXP1Made != 0 || r.HomeXP2Attempt != 0 || r.HomeXP2Made != 0 ||
+                    r.HomeXP3Attempt != 0 || r.HomeXP3Made != 0 || r.HomePassingYards != 0 ||
+                    r.HomeRushingYards != 0 || r.HomeTurnoers != 0 || r.HomeSacks != 0 ||
+                    r.HomeTOP != 0)
+                throw new Exception("None of these should be greater than 0");
+
+            Assert.IsTrue(true);
+        }
+
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void setPlayOutCome_Punt_Right_Block_No_Penalty_in_Endzone_TD()
+        {
+            bool penOnBallCarryingTeam = false;
+            Play_Enum PE = Play_Enum.PUNT;
+            int Down = 4;
+            double Yards_to_Go = 7.0;
+
+            Game_Player Punter = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
+                Current_YardLine = 105
+            };
+            Game_Player Retuner = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 2 } },
+                Current_YardLine = 65
+            };
+
+            Game_Player Punt_Blocker = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 3 } },
+                Current_YardLine = 104
+            };
+
+            Game_Player Block_Recover = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 4 } },
+                Current_YardLine = 104
+            };
+
+            //get penalty settings
+            List<Penalty> p = Penalty_Helper.ReturnAllPenalties();
+            Penalty Penalty = null;
+            Game_Player Penalized_Player = null;
+
+            Play_Result pResult = new Play_Result()
+            {
+                at = 11,
+                ht = 22,
+                BallPossessing_Team_Id = 11,
+                NonbBallPossessing_Team_Id = 22,
+                end_of_play_yardline = 104.0,
+                Penalty = Penalty,
+                Penalized_Player = Penalized_Player,
+                Punter = Punter,
+                Punt_Returner = Retuner,
+                bPenalty_Rejected = false,
+                bPunt_blocked = true,
+                Blocked_Punt_Recoverer = Block_Recover,
+                bTouchDown = true,
+                bSafety = false,
+                bTouchback = false
+            };
+
+            bool bLefttoRgiht = false;
+            double TouchBack_Yardline = 75.0;
+
+            Play_Result r = GameEngine.setPlayOutCome(penOnBallCarryingTeam, PE, Down, Yards_to_Go,
+                pResult, bLefttoRgiht, TouchBack_Yardline);
+
+            //There should be a change in possession
+            if (!r.bFinal_SwitchPossession)
+                throw new Exception("Possession should have been swtiched");
+
+            if (!r.bPlay_Stands)
+                throw new Exception("This Play must not stand");
+
+            //Check dow, yardage and yardline
+            if (r.Final_Down != 0 || r.Final_yard_to_go != 0 || r.Final_end_of_Play_Yardline != 0)
+                throw new Exception("The next Play must be first and ten on specified yard line");
+
+            //Check for next play
+            if (!r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
+                throw new Exception("Next play need to be extra point");
+
+            if (r.Final_Added_Penalty_Yards != 0)
+                throw new Exception("There was no penalty on this play");
+
+            if (r.bAwayTD || r.bAwayFG || r.bAwayXP || r.bAwaySafetyFor || r.bAwayXP1 || r.bAwayXP2 || r.bAwayXP3 ||
+                !r.bHomeTD || r.bHomeFG || r.bHomeXP || r.bHomeSafetyFor || r.bHomeXP1 || r.bHomeXP2 || r.bHomeXP3)
+                throw new Exception("There should have been no scoring on this play");
+
+            if (r.AwayFirstDowns != 0 || r.Away3rdDownAtt != 0 || r.Away3rdDownMade != 0 ||
+                    r.Away4thDownAtt != 0 || r.Away4thDownMade != 0 || r.AwayXP1Attempt != 0 ||
+                    r.AwayXP1Made != 0 || r.AwayXP2Attempt != 0 || r.AwayXP2Made != 0 ||
+                    r.AwayXP3Attempt != 0 || r.AwayXP3Made != 0 || r.AwayPassingYards != 0 ||
+                    r.AwayRushingYards != 0 || r.AwayTurnoers != 0 || r.AwaySacks != 0 ||
+                    r.AwayTOP != 0 ||
+                    r.HomeFirstDowns != 0 || r.Home3rdDownAtt != 0 || r.Home3rdDownMade != 0 ||
+                    r.Home4thDownAtt != 0 || r.Home4thDownMade != 0 || r.HomeXP1Attempt != 0 ||
+                    r.HomeXP1Made != 0 || r.HomeXP2Attempt != 0 || r.HomeXP2Made != 0 ||
+                    r.HomeXP3Attempt != 0 || r.HomeXP3Made != 0 || r.HomePassingYards != 0 ||
+                    r.HomeRushingYards != 0 || r.HomeTurnoers != 0 || r.HomeSacks != 0 ||
+                    r.HomeTOP != 0)
+                throw new Exception("None of these should be greater than 0");
+
+            Assert.IsTrue(true);
+        }
+
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void setPlayOutCome_Punt_Right_Block_No_Penalty_in_Endzone_Safety()
+        {
+            bool penOnBallCarryingTeam = false;
+            Play_Enum PE = Play_Enum.PUNT;
+            int Down = 4;
+            double Yards_to_Go = 7.0;
+
+            Game_Player Punter = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
+                Current_YardLine = 105
+            };
+            Game_Player Retuner = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 2 } },
+                Current_YardLine = 65
+            };
+
+            Game_Player Punt_Blocker = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 3 } },
+                Current_YardLine = 104
+            };
+
+            Game_Player Block_Recover = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 4 } },
+                Current_YardLine = 104
+            };
+
+            //get penalty settings
+            List<Penalty> p = Penalty_Helper.ReturnAllPenalties();
+            Penalty Penalty = null;
+            Game_Player Penalized_Player = null;
+
+            Play_Result pResult = new Play_Result()
+            {
+                at = 11,
+                ht = 22,
+                BallPossessing_Team_Id = 11,
+                NonbBallPossessing_Team_Id = 22,
+                end_of_play_yardline = 104.0,
+                Penalty = Penalty,
+                Penalized_Player = Penalized_Player,
+                Punter = Punter,
+                Punt_Returner = Retuner,
+                bPenalty_Rejected = false,
+                bPunt_blocked = true,
+                Blocked_Punt_Recoverer = Block_Recover,
+                bTouchDown = false,
+                bSafety = true,
+                bTouchback = false
+            };
+
+            bool bLefttoRgiht = false;
+            double TouchBack_Yardline = 75.0;
+
+            Play_Result r = GameEngine.setPlayOutCome(penOnBallCarryingTeam, PE, Down, Yards_to_Go,
+                pResult, bLefttoRgiht, TouchBack_Yardline);
+
+            //There should be a change in possession
+            if (!r.bFinal_SwitchPossession)
+                throw new Exception("Possession should have been swtiched");
+
+            if (!r.bPlay_Stands)
+                throw new Exception("This Play must not stand");
+
+            //Check dow, yardage and yardline
+            if (r.Final_Down != 0 || r.Final_yard_to_go != 0 || r.Final_end_of_Play_Yardline != 0)
+                throw new Exception("The next Play must be first and ten on specified yard line");
+
+            //Check for next play
+            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || !r.bFinal_NextPlayKickoffAfterSafety)
+                throw new Exception("Next play need to be extra point");
+
+            if (r.Final_Added_Penalty_Yards != 0)
+                throw new Exception("There was no penalty on this play");
+
+            if (r.bAwayTD || r.bAwayFG || r.bAwayXP || r.bAwaySafetyFor || r.bAwayXP1 || r.bAwayXP2 || r.bAwayXP3 ||
+                r.bHomeTD || r.bHomeFG || r.bHomeXP || !r.bHomeSafetyFor || r.bHomeXP1 || r.bHomeXP2 || r.bHomeXP3)
+                throw new Exception("There should have been no scoring on this play");
+
+            if (r.AwayFirstDowns != 0 || r.Away3rdDownAtt != 0 || r.Away3rdDownMade != 0 ||
+                    r.Away4thDownAtt != 0 || r.Away4thDownMade != 0 || r.AwayXP1Attempt != 0 ||
+                    r.AwayXP1Made != 0 || r.AwayXP2Attempt != 0 || r.AwayXP2Made != 0 ||
+                    r.AwayXP3Attempt != 0 || r.AwayXP3Made != 0 || r.AwayPassingYards != 0 ||
+                    r.AwayRushingYards != 0 || r.AwayTurnoers != 0 || r.AwaySacks != 0 ||
+                    r.AwayTOP != 0 ||
+                    r.HomeFirstDowns != 0 || r.Home3rdDownAtt != 0 || r.Home3rdDownMade != 0 ||
+                    r.Home4thDownAtt != 0 || r.Home4thDownMade != 0 || r.HomeXP1Attempt != 0 ||
+                    r.HomeXP1Made != 0 || r.HomeXP2Attempt != 0 || r.HomeXP2Made != 0 ||
+                    r.HomeXP3Attempt != 0 || r.HomeXP3Made != 0 || r.HomePassingYards != 0 ||
+                    r.HomeRushingYards != 0 || r.HomeTurnoers != 0 || r.HomeSacks != 0 ||
+                    r.HomeTOP != 0)
+                throw new Exception("None of these should be greater than 0");
+
+            Assert.IsTrue(true);
+        }
+
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void setPlayOutCome_Punt_Right_Block_Spot_Penalty_Ignored_in_Endzone_TD()
+        {
+            bool penOnBallCarryingTeam = false;
+            Play_Enum PE = Play_Enum.PUNT;
+            int Down = 4;
+            double Yards_to_Go = 7.0;
+
+            Game_Player Punter = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
+                Current_YardLine = 105
+            };
+            Game_Player Retuner = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 2 } },
+                Current_YardLine = 65
+            };
+
+            Game_Player Punt_Blocker = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 3 } },
+                Current_YardLine = 104
+            };
+
+            Game_Player Block_Recover = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 4 } },
+                Current_YardLine = 104
+            };
+
+            //get penalty settings
+            List<Penalty> p = Penalty_Helper.ReturnAllPenalties();
+            Penalty Penalty = p.Where(x => x.code == Penalty_Codes.UC).First();
+            Game_Player Penalized_Player = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 4 } },
+                Current_YardLine = 82
+            };
+
+            Play_Result pResult = new Play_Result()
+            {
+                at = 11,
+                ht = 22,
+                BallPossessing_Team_Id = 11,
+                NonbBallPossessing_Team_Id = 22,
+                end_of_play_yardline = 104.0,
+                Penalty = Penalty,
+                Penalized_Player = Penalized_Player,
+                Punter = Punter,
+                Punt_Returner = Retuner,
+                bPenalty_Rejected = false,
+                bPunt_blocked = true,
+                Blocked_Punt_Recoverer = Block_Recover,
+                bTouchDown = true,
+                bSafety = false,
+                bTouchback = false
+            };
+
+            bool bLefttoRgiht = false;
+            double TouchBack_Yardline = 75.0;
+
+            Play_Result r = GameEngine.setPlayOutCome(penOnBallCarryingTeam, PE, Down, Yards_to_Go,
+                pResult, bLefttoRgiht, TouchBack_Yardline);
+
+            //There should be a change in possession
+            if (!r.bFinal_SwitchPossession)
+                throw new Exception("Possession should have been swtiched");
+
+            if (!r.bPlay_Stands)
+                throw new Exception("This Play must not stand");
+
+            //Check dow, yardage and yardline
+            if (r.Final_Down != 0 || r.Final_yard_to_go != 0 || r.Final_end_of_Play_Yardline != 0)
+                throw new Exception("The next Play must be first and ten on specified yard line");
+
+            //Check for next play
+            if (!r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
+                throw new Exception("Next play need to be extra point");
+
+            if (r.Final_Added_Penalty_Yards != 0)
+                throw new Exception("There was no penalty on this play");
+
+            if (r.bAwayTD || r.bAwayFG || r.bAwayXP || r.bAwaySafetyFor || r.bAwayXP1 || r.bAwayXP2 || r.bAwayXP3 ||
+                !r.bHomeTD || r.bHomeFG || r.bHomeXP || r.bHomeSafetyFor || r.bHomeXP1 || r.bHomeXP2 || r.bHomeXP3)
+                throw new Exception("There should have been no scoring on this play");
+
+            if (r.AwayFirstDowns != 0 || r.Away3rdDownAtt != 0 || r.Away3rdDownMade != 0 ||
+                    r.Away4thDownAtt != 0 || r.Away4thDownMade != 0 || r.AwayXP1Attempt != 0 ||
+                    r.AwayXP1Made != 0 || r.AwayXP2Attempt != 0 || r.AwayXP2Made != 0 ||
+                    r.AwayXP3Attempt != 0 || r.AwayXP3Made != 0 || r.AwayPassingYards != 0 ||
+                    r.AwayRushingYards != 0 || r.AwayTurnoers != 0 || r.AwaySacks != 0 ||
+                    r.AwayTOP != 0 ||
+                    r.HomeFirstDowns != 0 || r.Home3rdDownAtt != 0 || r.Home3rdDownMade != 0 ||
+                    r.Home4thDownAtt != 0 || r.Home4thDownMade != 0 || r.HomeXP1Attempt != 0 ||
+                    r.HomeXP1Made != 0 || r.HomeXP2Attempt != 0 || r.HomeXP2Made != 0 ||
+                    r.HomeXP3Attempt != 0 || r.HomeXP3Made != 0 || r.HomePassingYards != 0 ||
+                    r.HomeRushingYards != 0 || r.HomeTurnoers != 0 || r.HomeSacks != 0 ||
+                    r.HomeTOP != 0)
+                throw new Exception("None of these should be greater than 0");
+
+            Assert.IsTrue(true);
+        }
+
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void setPlayOutCome_Punt_Right_Block_Spot_Penalty_ignored_in_Endzone_Safety()
+        {
+            bool penOnBallCarryingTeam = false;
+            Play_Enum PE = Play_Enum.PUNT;
+            int Down = 4;
+            double Yards_to_Go = 7.0;
+
+            Game_Player Punter = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
+                Current_YardLine = 105
+            };
+            Game_Player Retuner = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 2 } },
+                Current_YardLine = 65
+            };
+
+            Game_Player Punt_Blocker = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 3 } },
+                Current_YardLine = 104
+            };
+
+            Game_Player Block_Recover = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 4 } },
+                Current_YardLine = 104
+            };
+
+            //get penalty settings
+            List<Penalty> p = Penalty_Helper.ReturnAllPenalties();
+            Penalty Penalty = p.Where(x => x.code == Penalty_Codes.UC).First();
+            Game_Player Penalized_Player = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 4 } },
+                Current_YardLine = 72
+            };
+
+            Play_Result pResult = new Play_Result()
+            {
+                at = 11,
+                ht = 22,
+                BallPossessing_Team_Id = 11,
+                NonbBallPossessing_Team_Id = 22,
+                end_of_play_yardline = 104.0,
+                Penalty = Penalty,
+                Penalized_Player = Penalized_Player,
+                Punter = Punter,
+                Punt_Returner = Retuner,
+                bPenalty_Rejected = false,
+                bPunt_blocked = true,
+                Blocked_Punt_Recoverer = Block_Recover,
+                bTouchDown = false,
+                bSafety = true,
+                bTouchback = false
+            };
+
+            bool bLefttoRgiht = false;
+            double TouchBack_Yardline = 75.0;
+
+            Play_Result r = GameEngine.setPlayOutCome(penOnBallCarryingTeam, PE, Down, Yards_to_Go,
+                pResult, bLefttoRgiht, TouchBack_Yardline);
+
+            //There should be a change in possession
+            if (!r.bFinal_SwitchPossession)
+                throw new Exception("Possession should have been swtiched");
+
+            if (!r.bPlay_Stands)
+                throw new Exception("This Play must not stand");
+
+            //Check dow, yardage and yardline
+            if (r.Final_Down != 0 || r.Final_yard_to_go != 0 || r.Final_end_of_Play_Yardline != 0)
+                throw new Exception("The next Play must be first and ten on specified yard line");
+
+            //Check for next play
+            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || !r.bFinal_NextPlayKickoffAfterSafety)
+                throw new Exception("Next play need to be extra point");
+
+            if (r.Final_Added_Penalty_Yards != 0)
+                throw new Exception("There was no penalty on this play");
+
+            if (r.bAwayTD || r.bAwayFG || r.bAwayXP || r.bAwaySafetyFor || r.bAwayXP1 || r.bAwayXP2 || r.bAwayXP3 ||
+                r.bHomeTD || r.bHomeFG || r.bHomeXP || !r.bHomeSafetyFor || r.bHomeXP1 || r.bHomeXP2 || r.bHomeXP3)
+                throw new Exception("There should have been no scoring on this play");
+
+            if (r.AwayFirstDowns != 0 || r.Away3rdDownAtt != 0 || r.Away3rdDownMade != 0 ||
+                    r.Away4thDownAtt != 0 || r.Away4thDownMade != 0 || r.AwayXP1Attempt != 0 ||
+                    r.AwayXP1Made != 0 || r.AwayXP2Attempt != 0 || r.AwayXP2Made != 0 ||
+                    r.AwayXP3Attempt != 0 || r.AwayXP3Made != 0 || r.AwayPassingYards != 0 ||
+                    r.AwayRushingYards != 0 || r.AwayTurnoers != 0 || r.AwaySacks != 0 ||
+                    r.AwayTOP != 0 ||
+                    r.HomeFirstDowns != 0 || r.Home3rdDownAtt != 0 || r.Home3rdDownMade != 0 ||
+                    r.Home4thDownAtt != 0 || r.Home4thDownMade != 0 || r.HomeXP1Attempt != 0 ||
+                    r.HomeXP1Made != 0 || r.HomeXP2Attempt != 0 || r.HomeXP2Made != 0 ||
+                    r.HomeXP3Attempt != 0 || r.HomeXP3Made != 0 || r.HomePassingYards != 0 ||
+                    r.HomeRushingYards != 0 || r.HomeTurnoers != 0 || r.HomeSacks != 0 ||
+                    r.HomeTOP != 0)
+                throw new Exception("None of these should be greater than 0");
+
+            Assert.IsTrue(true);
+        }
+
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void setPlayOutCome_Punt_Right_Block_Spot_Penalty_on_Returners_in_Endzone_TD()
+        {
+            bool penOnBallCarryingTeam = true;
+            Play_Enum PE = Play_Enum.PUNT;
+            int Down = 4;
+            double Yards_to_Go = 7.0;
+
+            Game_Player Punter = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
+                Current_YardLine = 105
+            };
+            Game_Player Retuner = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 2 } },
+                Current_YardLine = 65
+            };
+
+            Game_Player Punt_Blocker = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 3 } },
+                Current_YardLine = 104
+            };
+
+            Game_Player Block_Recover = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 4 } },
+                Current_YardLine = 104
+            };
+
+            //get penalty settings
+            List<Penalty> p = Penalty_Helper.ReturnAllPenalties();
+            Penalty Penalty = p.Where(x => x.code == Penalty_Codes.UC).First();
+            Game_Player Penalized_Player = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 4 } },
+                Current_YardLine = 104
+            };
+
+            Play_Result pResult = new Play_Result()
+            {
+                at = 11,
+                ht = 22,
+                BallPossessing_Team_Id = 11,
+                NonbBallPossessing_Team_Id = 22,
+                end_of_play_yardline = 104.0,
+                Penalty = Penalty,
+                Penalized_Player = Penalized_Player,
+                Punter = Punter,
+                Punt_Returner = Retuner,
+                bPenalty_Rejected = false,
+                bPunt_blocked = true,
+                Blocked_Punt_Recoverer = Block_Recover,
+                bTouchDown = true,
+                bSafety = false,
+                bTouchback = false
+            };
+
+            bool bLefttoRgiht = false;
+            double TouchBack_Yardline = 75.0;
+
+            Play_Result r = GameEngine.setPlayOutCome(penOnBallCarryingTeam, PE, Down, Yards_to_Go,
+                pResult, bLefttoRgiht, TouchBack_Yardline);
+
+            //There should be a change in possession
+            if (!r.bFinal_SwitchPossession)
+                throw new Exception("Possession should have been swtiched");
+
+            if (!r.bPlay_Stands)
+                throw new Exception("This Play must not stand");
+
+            //Check dow, yardage and yardline
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 89)
+                throw new Exception("The next Play must be first and ten on specified yard line");
+
+            //Check for next play
+            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
+                throw new Exception("Next play not special");
+
+            if (r.Final_Added_Penalty_Yards != 15)
+                throw new Exception("There was no penalty on this play");
+
+            if (r.bAwayTD || r.bAwayFG || r.bAwayXP || r.bAwaySafetyFor || r.bAwayXP1 || r.bAwayXP2 || r.bAwayXP3 ||
+                r.bHomeTD || r.bHomeFG || r.bHomeXP || r.bHomeSafetyFor || r.bHomeXP1 || r.bHomeXP2 || r.bHomeXP3)
+                throw new Exception("There should have been no scoring on this play");
+
+            if (r.AwayFirstDowns != 0 || r.Away3rdDownAtt != 0 || r.Away3rdDownMade != 0 ||
+                    r.Away4thDownAtt != 0 || r.Away4thDownMade != 0 || r.AwayXP1Attempt != 0 ||
+                    r.AwayXP1Made != 0 || r.AwayXP2Attempt != 0 || r.AwayXP2Made != 0 ||
+                    r.AwayXP3Attempt != 0 || r.AwayXP3Made != 0 || r.AwayPassingYards != 0 ||
+                    r.AwayRushingYards != 0 || r.AwayTurnoers != 0 || r.AwaySacks != 0 ||
+                    r.AwayTOP != 0 ||
+                    r.HomeFirstDowns != 0 || r.Home3rdDownAtt != 0 || r.Home3rdDownMade != 0 ||
+                    r.Home4thDownAtt != 0 || r.Home4thDownMade != 0 || r.HomeXP1Attempt != 0 ||
+                    r.HomeXP1Made != 0 || r.HomeXP2Attempt != 0 || r.HomeXP2Made != 0 ||
+                    r.HomeXP3Attempt != 0 || r.HomeXP3Made != 0 || r.HomePassingYards != 0 ||
+                    r.HomeRushingYards != 0 || r.HomeTurnoers != 0 || r.HomeSacks != 0 ||
+                    r.HomeTOP != 0)
+                throw new Exception("None of these should be greater than 0");
+
+            Assert.IsTrue(true);
+        }
+
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void setPlayOutCome_Punt_Right_Block_Spot_Penalty_on_Returners_in_Endzone_Safety()
+        {
+            bool penOnBallCarryingTeam = true;
+            Play_Enum PE = Play_Enum.PUNT;
+            int Down = 4;
+            double Yards_to_Go = 7.0;
+
+            Game_Player Punter = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
+                Current_YardLine = 105
+            };
+            Game_Player Retuner = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 2 } },
+                Current_YardLine = 65
+            };
+
+            Game_Player Punt_Blocker = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 3 } },
+                Current_YardLine = 104
+            };
+
+            Game_Player Block_Recover = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 4 } },
+                Current_YardLine = 104
+            };
+
+            //get penalty settings
+            List<Penalty> p = Penalty_Helper.ReturnAllPenalties();
+            Penalty Penalty = p.Where(x => x.code == Penalty_Codes.UC).First();
+            Game_Player Penalized_Player = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 4 } },
+                Current_YardLine = 103
+            };
+
+            Play_Result pResult = new Play_Result()
+            {
+                at = 11,
+                ht = 22,
+                BallPossessing_Team_Id = 11,
+                NonbBallPossessing_Team_Id = 22,
+                end_of_play_yardline = 104.0,
+                Penalty = Penalty,
+                Penalized_Player = Penalized_Player,
+                Punter = Punter,
+                Punt_Returner = Retuner,
+                bPenalty_Rejected = false,
+                bPunt_blocked = true,
+                Blocked_Punt_Recoverer = Block_Recover,
+                bTouchDown = false,
+                bSafety = true,
+                bTouchback = false
+            };
+
+            bool bLefttoRgiht = false;
+            double TouchBack_Yardline = 75.0;
+
+            Play_Result r = GameEngine.setPlayOutCome(penOnBallCarryingTeam, PE, Down, Yards_to_Go,
+                pResult, bLefttoRgiht, TouchBack_Yardline);
+
+            //There should be a change in possession
+            if (!r.bFinal_SwitchPossession)
+                throw new Exception("Possession should have been swtiched");
+
+            if (!r.bPlay_Stands)
+                throw new Exception("This Play must not stand");
+
+            //Check dow, yardage and yardline
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 88)
+                throw new Exception("The next Play must be first and ten on specified yard line");
+
+            //Check for next play
+            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
+                throw new Exception("Next play need to be extra point");
+
+            if (r.Final_Added_Penalty_Yards != 15)
+                throw new Exception("There was no penalty on this play");
+
+            if (r.bAwayTD || r.bAwayFG || r.bAwayXP || r.bAwaySafetyFor || r.bAwayXP1 || r.bAwayXP2 || r.bAwayXP3 ||
+                r.bHomeTD || r.bHomeFG || r.bHomeXP || r.bHomeSafetyFor || r.bHomeXP1 || r.bHomeXP2 || r.bHomeXP3)
+                throw new Exception("There should have been no scoring on this play");
+
+            if (r.AwayFirstDowns != 0 || r.Away3rdDownAtt != 0 || r.Away3rdDownMade != 0 ||
+                    r.Away4thDownAtt != 0 || r.Away4thDownMade != 0 || r.AwayXP1Attempt != 0 ||
+                    r.AwayXP1Made != 0 || r.AwayXP2Attempt != 0 || r.AwayXP2Made != 0 ||
+                    r.AwayXP3Attempt != 0 || r.AwayXP3Made != 0 || r.AwayPassingYards != 0 ||
+                    r.AwayRushingYards != 0 || r.AwayTurnoers != 0 || r.AwaySacks != 0 ||
+                    r.AwayTOP != 0 ||
+                    r.HomeFirstDowns != 0 || r.Home3rdDownAtt != 0 || r.Home3rdDownMade != 0 ||
+                    r.Home4thDownAtt != 0 || r.Home4thDownMade != 0 || r.HomeXP1Attempt != 0 ||
+                    r.HomeXP1Made != 0 || r.HomeXP2Attempt != 0 || r.HomeXP2Made != 0 ||
+                    r.HomeXP3Attempt != 0 || r.HomeXP3Made != 0 || r.HomePassingYards != 0 ||
+                    r.HomeRushingYards != 0 || r.HomeTurnoers != 0 || r.HomeSacks != 0 ||
+                    r.HomeTOP != 0)
+                throw new Exception("None of these should be greater than 0");
+
+            Assert.IsTrue(true);
+        }
+
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void setPlayOutCome_Punt_Right_Block_Spot_Penalty_on_Returners_not_in_EZ()
+        {
+            bool penOnBallCarryingTeam = true;
+            Play_Enum PE = Play_Enum.PUNT;
+            int Down = 4;
+            double Yards_to_Go = 7.0;
+
+            Game_Player Punter = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
+                Current_YardLine = 90
+            };
+            Game_Player Retuner = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 2 } },
+                Current_YardLine = 50
+            };
+
+            Game_Player Punt_Blocker = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 3 } },
+                Current_YardLine = 90
+            };
+
+            Game_Player Block_Recover = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 4 } },
+                Current_YardLine = 89
+            };
+
+            //get penalty settings
+            List<Penalty> p = Penalty_Helper.ReturnAllPenalties();
+            Penalty Penalty = p.Where(x => x.code == Penalty_Codes.UC).First();
+            Game_Player Penalized_Player = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 4 } },
+                Current_YardLine = 87
+            };
+
+            Play_Result pResult = new Play_Result()
+            {
+                at = 11,
+                ht = 22,
+                BallPossessing_Team_Id = 11,
+                NonbBallPossessing_Team_Id = 22,
+                end_of_play_yardline = 90.0,
+                Penalty = Penalty,
+                Penalized_Player = Penalized_Player,
+                Punter = Punter,
+                Punt_Returner = Retuner,
+                bPenalty_Rejected = false,
+                bPunt_blocked = true,
+                Blocked_Punt_Recoverer = Block_Recover,
+                bTouchDown = false,
+                bSafety = false,
+                bTouchback = false
+            };
+
+            bool bLefttoRgiht = false;
+            double TouchBack_Yardline = 75.0;
+
+            Play_Result r = GameEngine.setPlayOutCome(penOnBallCarryingTeam, PE, Down, Yards_to_Go,
+                pResult, bLefttoRgiht, TouchBack_Yardline);
+
+            //There should be a change in possession
+            if (!r.bFinal_SwitchPossession)
+                throw new Exception("Possession should have been swtiched");
+
+            if (!r.bPlay_Stands)
+                throw new Exception("This Play must not stand");
+
+            //Check dow, yardage and yardline
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 72)
+                throw new Exception("The next Play must be first and ten on specified yard line");
+
+            //Check for next play
+            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
+                throw new Exception("Next play need to be extra point");
+
+            if (r.Final_Added_Penalty_Yards != 15)
+                throw new Exception("There was no penalty on this play");
+
+            if (r.bAwayTD || r.bAwayFG || r.bAwayXP || r.bAwaySafetyFor || r.bAwayXP1 || r.bAwayXP2 || r.bAwayXP3 ||
+                r.bHomeTD || r.bHomeFG || r.bHomeXP || r.bHomeSafetyFor || r.bHomeXP1 || r.bHomeXP2 || r.bHomeXP3)
+                throw new Exception("There should have been no scoring on this play");
+
+            if (r.AwayFirstDowns != 0 || r.Away3rdDownAtt != 0 || r.Away3rdDownMade != 0 ||
+                    r.Away4thDownAtt != 0 || r.Away4thDownMade != 0 || r.AwayXP1Attempt != 0 ||
+                    r.AwayXP1Made != 0 || r.AwayXP2Attempt != 0 || r.AwayXP2Made != 0 ||
+                    r.AwayXP3Attempt != 0 || r.AwayXP3Made != 0 || r.AwayPassingYards != 0 ||
+                    r.AwayRushingYards != 0 || r.AwayTurnoers != 0 || r.AwaySacks != 0 ||
+                    r.AwayTOP != 0 ||
+                    r.HomeFirstDowns != 0 || r.Home3rdDownAtt != 0 || r.Home3rdDownMade != 0 ||
+                    r.Home4thDownAtt != 0 || r.Home4thDownMade != 0 || r.HomeXP1Attempt != 0 ||
+                    r.HomeXP1Made != 0 || r.HomeXP2Attempt != 0 || r.HomeXP2Made != 0 ||
+                    r.HomeXP3Attempt != 0 || r.HomeXP3Made != 0 || r.HomePassingYards != 0 ||
+                    r.HomeRushingYards != 0 || r.HomeTurnoers != 0 || r.HomeSacks != 0 ||
+                    r.HomeTOP != 0)
+                throw new Exception("None of these should be greater than 0");
+
+            Assert.IsTrue(true);
+        }
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void setPlayOutCome_Punt_Right_Block_Recovered_in_EZ_TD_Defensive_Holding()
+        {
+            bool penOnBallCarryingTeam = true;
+            Play_Enum PE = Play_Enum.PUNT;
+            int Down = 4;
+            double Yards_to_Go = 7.0;
+
+            Game_Player Punter = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
+                Current_YardLine = 104
+            };
+            Game_Player Retuner = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 2 } },
+                Current_YardLine = 60
+            };
+
+            Game_Player Punt_Blocker = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 3 } },
+                Current_YardLine = 104
+            };
+
+            Game_Player Block_Recover = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 4 } },
+                Current_YardLine = 103
+            };
+
+            //get penalty settings
+            List<Penalty> p = Penalty_Helper.ReturnAllPenalties();
+            Penalty Penalty = p.Where(x => x.code == Penalty_Codes.DO).First();
+            Game_Player Penalized_Player = new Game_Player()
+            {
+                p_and_r = new Player_and_Ratings() { p = new Player() { ID = 4 } },
+                Current_YardLine = 93
+            };
+
+            Play_Result pResult = new Play_Result()
+            {
+                at = 11,
+                ht = 22,
+                BallPossessing_Team_Id = 11,
+                NonbBallPossessing_Team_Id = 22,
+                end_of_play_yardline = 90.0,
+                Play_Start_Yardline = 95.0,
+                Penalty = Penalty,
+                Penalized_Player = Penalized_Player,
+                Punter = Punter,
+                Punt_Returner = Retuner,
+                bPenalty_Rejected = false,
+                bPunt_blocked = true,
+                Blocked_Punt_Recoverer = Block_Recover,
+                bTouchDown = true,
+                bSafety = false,
+                bTouchback = false
+            };
+
+            bool bLefttoRgiht = false;
+            double TouchBack_Yardline = 75.0;
+
+            Play_Result r = GameEngine.setPlayOutCome(penOnBallCarryingTeam, PE, Down, Yards_to_Go,
+                pResult, bLefttoRgiht, TouchBack_Yardline);
+
+            //There should be a change in possession
+            if (r.bFinal_SwitchPossession)
+                throw new Exception("Possession should have been swtiched");
+
+            if (r.bPlay_Stands)
+                throw new Exception("This Play must not stand");
+
+            //Check dow, yardage and yardline
+            if (r.Final_Down != 4 || r.Final_yard_to_go != 2 || r.Final_end_of_Play_Yardline != 90)
+                throw new Exception("The next Play must be first and ten on specified yard line");
+
+            //Check for next play
+            if (r.bFinal_NextPlayXP || r.bFinal_NextPlayKickoff || r.bFinal_NextPlayKickoffAfterSafety)
+                throw new Exception("Next play need to be extra point");
+
+            if (r.Final_Added_Penalty_Yards != 5)
+                throw new Exception("There was no penalty on this play");
+
+            if (r.bAwayTD || r.bAwayFG || r.bAwayXP || r.bAwaySafetyFor || r.bAwayXP1 || r.bAwayXP2 || r.bAwayXP3 ||
+                r.bHomeTD || r.bHomeFG || r.bHomeXP || r.bHomeSafetyFor || r.bHomeXP1 || r.bHomeXP2 || r.bHomeXP3)
+                throw new Exception("There should have been no scoring on this play");
+
+            if (r.AwayFirstDowns != 0 || r.Away3rdDownAtt != 0 || r.Away3rdDownMade != 0 ||
+                    r.Away4thDownAtt != 0 || r.Away4thDownMade != 0 || r.AwayXP1Attempt != 0 ||
+                    r.AwayXP1Made != 0 || r.AwayXP2Attempt != 0 || r.AwayXP2Made != 0 ||
+                    r.AwayXP3Attempt != 0 || r.AwayXP3Made != 0 || r.AwayPassingYards != 0 ||
+                    r.AwayRushingYards != 0 || r.AwayTurnoers != 0 || r.AwaySacks != 0 ||
+                    r.AwayTOP != 0 ||
+                    r.HomeFirstDowns != 0 || r.Home3rdDownAtt != 0 || r.Home3rdDownMade != 0 ||
+                    r.Home4thDownAtt != 0 || r.Home4thDownMade != 0 || r.HomeXP1Attempt != 0 ||
+                    r.HomeXP1Made != 0 || r.HomeXP2Attempt != 0 || r.HomeXP2Made != 0 ||
+                    r.HomeXP3Attempt != 0 || r.HomeXP3Made != 0 || r.HomePassingYards != 0 ||
+                    r.HomeRushingYards != 0 || r.HomeTurnoers != 0 || r.HomeSacks != 0 ||
+                    r.HomeTOP != 0)
+                throw new Exception("None of these should be greater than 0");
+
+            Assert.IsTrue(true);
+        }
+        //************************************
 
 
     }

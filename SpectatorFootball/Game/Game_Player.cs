@@ -367,7 +367,7 @@ namespace SpectatorFootball.GameNS
             pStage.Actions.Add(pas1);
             pStage.Actions.Add(pas);
             Stages.Add(pStage);
-            State = Player_States.FG_KICK;
+            State = Player_States.PUNTER_RUN;
         }
         public void Run_and_TrytoBlockKick(Player_States moving_ps, double prev_yl_1, double prev_v_1)
         {
@@ -380,6 +380,15 @@ namespace SpectatorFootball.GameNS
             pStage.Actions.Add(pas2);
             Stages.Add(pStage);
             State = Player_States.BLOCK_KICK;
+        }
+        public void Punter_Put_Leg_Down()
+        {
+            Action pas = new Action(Game_Object_Types.P, Current_YardLine, Current_Vertical_Percent_Pos, Current_YardLine, Current_Vertical_Percent_Pos, true, Player_States.PUNTER_AFTER_KICK, null, Movement.FAKE_MOVEMENT, null, true, 3);
+            Play_Stage pStage = new Play_Stage();
+            pStage.Main_Object = true;
+            pStage.Actions.Add(pas);
+            Stages.Add(pStage);
+            State = Player_States.PUNTER_AFTER_KICK;
         }
 
     }

@@ -461,6 +461,8 @@ namespace SpectatorFootball.GameNS
                 else
                     r = false;
             }
+            else if (pResult.bPunt_blocked)
+                r = true;
             else if (pResult.bSafety)
                 r = true;
             else if (pResult.bXPMissed)
@@ -614,6 +616,8 @@ namespace SpectatorFootball.GameNS
                 else
                     r = true;
             }
+            else if (pResult.bPunt_blocked)
+                r = false;
             else if (pResult.bSafety)
                 r = false;
             else if (pResult.bXPMissed)
@@ -632,7 +636,7 @@ namespace SpectatorFootball.GameNS
                 r = true;
             else  //all other play situations
             {
-   //             int Horizonal_Adj = Game_Engine_Helper.HorizontalAdj(bLefttoRight);
+                //             int Horizonal_Adj = Game_Engine_Helper.HorizontalAdj(bLefttoRight);
 
                 switch (pe)
                 {
@@ -640,14 +644,14 @@ namespace SpectatorFootball.GameNS
                         double end_yardLine = pResult.end_of_play_yardline;
                         if (pResult.bTouchback)
                             end_yardLine = Game_Engine_Helper.getScrimmageLine(touchback_yl, bLefttoRight);
-         
+
                         double net_Punt_Yards = Game_Engine_Helper.getYardsGained(bLefttoRight, pResult.Play_Start_Yardline, end_yardLine);
 
                         if (pResult.bCoffinCornerMade || pResult.Penalty.bSpot_Foul)
                             r = true;
                         else
                         {
-                            if (net_Punt_Yards <= app_Constants.NET_YARDS_TO_DECLINE_PENALTY)  
+                            if (net_Punt_Yards <= app_Constants.NET_YARDS_TO_DECLINE_PENALTY)
                                 r = false;
                             else
                                 r = true;

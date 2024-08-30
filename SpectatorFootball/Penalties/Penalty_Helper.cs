@@ -535,7 +535,7 @@ namespace SpectatorFootball.PenaltiesNS
                 Yards = 5,
                 bDeclinable = false,
                 bAuto_FirstDown = false,
-                bSpot_Foul = true,
+                bSpot_Foul = false,
                 Play_Timing = Play_Snap_Timing.DURING_PLAY,
                 Frequency_Rating = 50,
                 Description = "Running into the Kicker"

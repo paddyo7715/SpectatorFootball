@@ -342,6 +342,20 @@ namespace SpectatorFootball.unitTests.CoachTest
 
         [TestCategory("Unit")]
         [TestMethod]
+        public void AcceptDef_Def_Offices_Penalty_not_First_Down_Block_Punt_accept()
+        {
+            int Yards_to_go = 10;
+            Penalty p = new Penalty() { code = Penalty_Codes.DO, bDeclinable = true, Yards = 5 };
+            Play_Result pResult = new Play_Result() { Play_Start_Yardline = 20, end_of_play_yardline = 15, Penalty = p, bPunt_blocked = true };
+            Game g = new Game() { Home_Score = 0, Away_Score = 0, Quarter = 4, Time = 200 };
+            Coach c = new Coach(11, g, 7, new List<Player_and_Ratings>(), new List<Player_and_Ratings>(), new List<Injury>());
+            bool bAccept = c.AcceptDef_Penalty(Enum.Play_Enum.PUNT, pResult, Yards_to_go, true, false, false, 25);
+
+            Assert.IsTrue(bAccept);
+        }
+
+        [TestCategory("Unit")]
+        [TestMethod]
         public void AcceptDef_Def_Offices_Penalty_not_First_Down_Not_Good_Return_Punt_dont_accept()
         {
             int Yards_to_go = 10;
@@ -618,10 +632,6 @@ namespace SpectatorFootball.unitTests.CoachTest
             Assert.IsTrue(bAccept);
         }
 
-
-
-
-
         [TestCategory("Unit")]
         [TestMethod]
         public void AcceptOff_Penalty_Turnover()
@@ -878,6 +888,20 @@ namespace SpectatorFootball.unitTests.CoachTest
             int Yards_to_go = 2;
             Penalty p = new Penalty() { bDeclinable = true, Yards = 10 };
             Play_Result pResult = new Play_Result() { Play_Start_Yardline = 50, end_of_play_yardline = 105, bTouchback = true, Penalty = p };
+            Game g = new Game() { Home_Score = 0, Away_Score = 0, Quarter = 4, Time = 0 };
+            Coach c = new Coach(11, g, 7, new List<Player_and_Ratings>(), new List<Player_and_Ratings>(), new List<Injury>());
+            bool bAccept = c.AcceptOff_Penalty(Enum.Play_Enum.PUNT, pResult, Yards_to_go, true, false, false, 25);
+
+            Assert.IsTrue(!bAccept);
+        }
+
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void AcceptOff_Punt_Blocked_Decline()
+        {
+            int Yards_to_go = 2;
+            Penalty p = new Penalty() { bDeclinable = true, Yards = 10 };
+            Play_Result pResult = new Play_Result() { Play_Start_Yardline = 50, end_of_play_yardline = 40, Penalty = p, bPunt_blocked = true };
             Game g = new Game() { Home_Score = 0, Away_Score = 0, Quarter = 4, Time = 0 };
             Coach c = new Coach(11, g, 7, new List<Player_and_Ratings>(), new List<Player_and_Ratings>(), new List<Injury>());
             bool bAccept = c.AcceptOff_Penalty(Enum.Play_Enum.PUNT, pResult, Yards_to_go, true, false, false, 25);

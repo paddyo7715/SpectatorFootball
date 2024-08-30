@@ -13,8 +13,8 @@ namespace SpectatorFootball.GameNS
         private static ILog logger = LogManager.GetLogger("RollingFile");
         public static void Execute(bool bLefttoRight,
             Game_Ball gBall,
-            List<Game_Player> Team1,
-            List<Game_Player> Team2,
+            List<Game_Player> Punt_Team,
+            List<Game_Player> Return_Team,
             bool bSim)
         {
 
@@ -25,7 +25,7 @@ namespace SpectatorFootball.GameNS
 
             }
             int ind = 0;
-            foreach (Game_Player p in Team1)
+            foreach (Game_Player p in Punt_Team)
             {
                 double prev_yl = p.Current_YardLine;
                 double prev_v = p.Current_Vertical_Percent_Pos;
@@ -38,14 +38,15 @@ namespace SpectatorFootball.GameNS
                     Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, 0.0);
                     if (p.State == Player_States.CROUCH_BLOCK_UP)
                         p.Crouch_Stand_Up(prev_yl, prev_v);
-                    else 
+                    else
                         p.Stand();
-                 }
+                }
+
                 ind++;
             }
 
             ind = 0;
-            foreach (Game_Player p in Team2)
+            foreach (Game_Player p in Return_Team)
             {
                 double prev_yl = p.Current_YardLine;
                 double prev_v = p.Current_Vertical_Percent_Pos;

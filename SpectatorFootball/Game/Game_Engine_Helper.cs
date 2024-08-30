@@ -1,10 +1,12 @@
 ﻿using log4net;
 using log4net.Core;
 using log4net.Repository.Hierarchy;
+using SpectatorFootball.Common;
 using SpectatorFootball.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -454,9 +456,11 @@ namespace SpectatorFootball.GameNS
 
             return r;
         }
-        public static bool isC0ffinCornerEligible(double y, bool bLefttoRight)
+        public static Tuple<bool,bool> isCCEligible_and_Punt_long_Enough(double PuntLen, double y, bool bLefttoRight)
         {
-            bool r = false;
+            bool bEligible = false;
+            bool bLongEnough = false;
+
             double cc_yardline = 45.0;
             double yardLine = y;
 
@@ -464,21 +468,21 @@ namespace SpectatorFootball.GameNS
                 cc_yardline = 100.0 - cc_yardline;
 
             if (bLefttoRight && yardLine >= cc_yardline)
-                r = true;
+                bEligible = true;
             else if (!bLefttoRight && yardLine <= cc_yardline)
-                r = true;
+                bEligible = true;
 
-                return r;
+            if (bEligible)
+            {
+                double dist_from_gl = calcDistanceFromOpponentGL(y, bLefttoRight);
+
+                if (PuntLen >= dist_from_gl - 10)
+                    bLongEnough = true; ;
+            }
+
+            return Tuple.Create(bEligible, bLongEnough);
         }
-        public static bool ShouldAttemptCoffinCorner(double ccPuntLen, double dist_from_endzone)
-        {
-            bool r = true;
 
-            if (ccPuntLen < dist_from_endzone - 10)
-                r = false;
-
-            return r;
-        }
         public static bool CoffinCornerMade(long punt_accuracy)
         {
             bool r = false;
@@ -490,6 +494,80 @@ namespace SpectatorFootball.GameNS
                 r = true;
 
             return r;
+        }
+        public static double getAVGSpeedScore(long SpeedRating)
+        {
+            double r = 0.0;
+            int iterations = 10;
+
+            int tot = 0;
+            for (int i = 0; i < iterations; i++)
+            {
+                int rnd = CommonUtils.getRandomNum(1, 100);
+                if (rnd <= SpeedRating)
+                    tot++;
+            }
+
+            r = ((double) tot) / ((double) iterations);
+
+            return r;
+        }
+        public static List<List<int>> setTackleGroups(List<Game_Player> Punt_Players, Game_Player Punter)
+        {
+            List<Int_and_Double> Slot_List_sorted = setReturnSppedRanks(Punt_Players, Punter);
+            return setReturnTackleGroups(Slot_List_sorted);
+        }
+
+        public static List<Int_and_Double> setReturnSppedRanks(List<Game_Player> Punt_Players, Game_Player Punter)
+        {
+            List<Int_and_Double> Slot_List_unsorted = new List<Int_and_Double>();
+
+            int ind = 0;
+            foreach (Game_Player p in Punt_Players)
+            {
+                if (p == Punter) continue;
+
+                long speed_Rating = Punter.p_and_r.pr.First().Speed_Rating;
+                double speed_score = Game_Engine_Helper.getAVGSpeedScore(speed_Rating);
+                Slot_List_unsorted.Add(new Int_and_Double() { i1 = ind, d2 = speed_score });
+                ind++;
+            }
+
+            List<Int_and_Double> Slot_List_sorted = Slot_List_unsorted.OrderBy(x => x.d2).ToList();
+
+            return Slot_List_unsorted;
+        }
+
+        public static List<List<int>> setReturnTackleGroups(List<Int_and_Double> Slot_List_sorted)
+        {
+            List<int> group_1 = new List<int>();
+            List<int> group_2 = new List<int>();
+            List<int> group_3 = new List<int>();
+
+            //first add any gruop 1 players
+            foreach (Int_and_Double d in Slot_List_sorted)
+            {
+                if (d.d2 >= 8 && group_1.Count() < 5)
+                    group_1.Add(d.i1);
+                else
+                    break;
+            }
+
+            int g2_count = (10 - group_1.Count()) / 2;
+            foreach (Int_and_Double d in Slot_List_sorted)
+            {
+                if (group_1.Contains(d.i1))
+                    continue;
+                else
+                {
+                    if (group_2.Count() < g2_count)
+                        group_2.Add(d.i1);
+                    else
+                        group_3.Add(d.i1);
+                }
+            }
+
+            return new List<List<int>> { group_1, group_2, group_3 };
         }
 
     }

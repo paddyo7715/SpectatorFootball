@@ -1,4 +1,5 @@
 ﻿using log4net;
+using SpectatorFootball.Common;
 using SpectatorFootball.Enum;
 using SpectatorFootball.GameNS;
 using SpectatorFootball.Models;
@@ -6,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Eventing.Reader;
 using System.Linq;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -37,7 +39,7 @@ namespace SpectatorFootball.GameNS
 
         Play_Enum Play { get; set; } = Play_Enum.PUNT;
 
-        Play_Enum iPlay.Play { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }        private Formation Kickoff_Formation = null;
+        Play_Enum iPlay.Play { get => throw new NotImplementedException(); set => throw new NotImplementedException(); } private Formation Kickoff_Formation = null;
         public Play_Punt(Formation Punt_Formation, Formation Return_Formation, long Possessing_Team_Id, long at, long ht, Game_Ball gBall, List<Game_Player> Punt_Players, List<Game_Player> Return_Players, bool bLefttoRight, bool bSim, bool bLast_Play)
         {
             this.Possessing_Team_Id = Possessing_Team_Id;
@@ -80,10 +82,11 @@ namespace SpectatorFootball.GameNS
             double retuner_catches_ball_yl = 0.0;
             double first_block_dropback_yards = 3.0;
             double starting_yl = gBall.Current_YardLine;
-            bool bCoffinCornerEligible = false;
+            bool bPuntLogEnoughfor_CC = false;
             List<int?> group_1 = new List<int?>();
             List<int?> group_2 = new List<int?>();
             List<int?> group_3 = new List<int?>();
+
 
             Set_Ball_and_Players_Before_Snap(gBall, Punt_Players, Return_Players, Punt_Formation, Return_Formation, bSim);
 
@@ -98,19 +101,33 @@ namespace SpectatorFootball.GameNS
                 if (r.Defender_Close_to_Kicker != null && puntBlocked((double)Punt_Formation.Punter_Behind_Line_ayrds))
                 {
                     r.bPunt_blocked = true;
-                    Tuple<Game_Player, bool> t = Playstub_Punt_Block.Execute(bLefttoRight, gBall,Punt_Players, Return_Players, Blockers, Attackers, r.Punter, bSim);
-//bpo stopped here
-//need to check if the attacking team recovers the ball in the endzone or if the punt team recovers in the endzone for safety.
-//if not then the team will switch possession.  Need to set switch possession setting if ball is recovered in endzone by other team.
-
+                    Tuple<Game_Player, bool> t = Playstub_Punt_Block.Execute(bLefttoRight, gBall, Punt_Players, Return_Players, Blockers, Attackers, r.Punter, bSim);
+                    r.Blocked_Punt_Recoverer = t.Item1;
                 }
                 else
                 {
+                    var t = getMaxPuntLengthandVert(r.Punter);
+                    double MaxPuntLen = t.Item1;
+                    double MaxPuntVert = t.Item2;
 
+                    var t2 = Game_Engine_Helper.isCCEligible_and_Punt_long_Enough(MaxPuntLen, gBall.Current_YardLine, bLefttoRight);
+
+                    r.bCoffinCornerAttemt = t2.Item1;
+                    bPuntLogEnoughfor_CC = t2.Item2;
+
+                    var tackle_groups =  Game_Engine_Helper.setTackleGroups(Punt_Players, r.Punter);
+
+                    //ball goes in the air, kicker returns to standing possision then runs, the players
+                    //in the 3 groups run.
+                    //the ball can go out of bound.
+
+                    //ball is either normal kick, coffine corner attempt or made or in endzone.
                 }
             }
 
-
+            //bpo be sure to do the following
+            //need to check if the attacking team recovers the ball in the endzone or if the punt team recovers in the endzone for safety.
+            //if not then the team will switch possession.  Need to set switch possession setting if ball is recovered in endzone by other team.
 
             return r;
         }
@@ -129,7 +146,7 @@ namespace SpectatorFootball.GameNS
             return r;
         }
 
-        public static Play_Result setPlayerActions(Formation Kickoff_Formation, Formation Return_Formation, 
+        public static Play_Result setPlayerActions(Formation Kickoff_Formation, Formation Return_Formation,
             List<Game_Player> Kickoff_Players, List<Game_Player> Return_Players, Play_Result pResult)
         {
             Play_Result r = pResult;
@@ -192,12 +209,12 @@ namespace SpectatorFootball.GameNS
             int attacker_wins = 0;
             Game_Player Best_Attacker = null;
 
-            for (int i=0; i<Blockers.Count; i++)
+            for (int i = 0; i < Blockers.Count; i++)
             {
                 int attacker_score = 0;
                 int blocker_score = 0;
-                int attacker_ability = (int) Attackers[i].p_and_r.pr.First().Pass_Attack_Rating * 10;
-                int blocker_ability = (int) Blockers[i].p_and_r.pr.First().Pass_Block_Rating * 10;
+                int attacker_ability = (int)Attackers[i].p_and_r.pr.First().Pass_Attack_Rating * 10;
+                int blocker_ability = (int)Blockers[i].p_and_r.pr.First().Pass_Block_Rating * 10;
 
                 attacker_score = CommonUtils.getRandomNum(1, attacker_ability);
                 blocker_score = CommonUtils.getRandomNum(1, blocker_ability);
@@ -218,7 +235,7 @@ namespace SpectatorFootball.GameNS
                 r = Best_Attacker;
 
             //bpo test
-            r = Attackers[Attackers.Count -3];
+            r = Attackers[Attackers.Count - 3];
 
             return r;
         }
@@ -235,8 +252,12 @@ namespace SpectatorFootball.GameNS
             if (i == 1)
                 r = true;
 
+            //bpo test
+            r = true;
+
             return r;
         }
+
 
         private void Set_Ball_and_Players_Before_Snap(Game_Ball gBall, List<Game_Player> Punt_Players, List<Game_Player> Return_Players,
            Formation Punt_Formation, Formation Return_Formation, bool bSim)
@@ -370,7 +391,7 @@ namespace SpectatorFootball.GameNS
                 io_Players++;
             }
         }
- 
+
         private void Punter_Prepares_to_Kick(Game_Ball gBall, List<Game_Player> Punt_Players, List<Game_Player> Return_Players,
              Formation Punt_Formation, Formation Return_Formation, bool bSim, bool bLefttoRight, double first_block_dropback_yards)
         {
@@ -462,5 +483,22 @@ namespace SpectatorFootball.GameNS
             }
         }
 
+        public Tuple<double,double> getMaxPuntLengthandVert(Game_Player Punter)
+        { 
+            long leg_strength = Punter.p_and_r.pr.First().Kicker_Leg_Power_Rating;
+            Punt_Len Punt_length_enum = Kicking_Helper.getPunt_Len_enum(leg_strength);
+            double Punt_Len = Kicking_Helper.getPunt_len(Punt_length_enum);
+            Punt_Len += (double)Punt_Formation.Punter_Behind_Line_ayrds;
+
+            long leg_accuracy = r.Kicker.p_and_r.pr.First().Kicker_Leg_Accuracy_Rating;
+            Punt_Vertical Punt_Vert_enum = Kicking_Helper.getPunt_Vert_enum(leg_accuracy);
+            double Punt_Vert = Kicking_Helper.getPunt_Vert(Punt_Vert_enum);
+
+            double realPuntLen = Kicking_Helper.AdjustKickLength(Punt_Len, Punt_Vert);
+
+            return Tuple.Create(realPuntLen, Punt_Vert);
+        }
+ 
     }
 }
+

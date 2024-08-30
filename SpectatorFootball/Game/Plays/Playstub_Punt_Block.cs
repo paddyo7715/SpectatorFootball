@@ -30,7 +30,14 @@ namespace SpectatorFootball.GameNS
             int io_Players = 0;
             foreach (Game_Player p in Punt_Players)
             {
-                if (!bSim) p.Stand();
+                if (p == Punter)
+                {
+                    if (!bSim) p.Punter_Put_Leg_Down();
+                }
+                else
+                {
+                    if (!bSim) p.Stand();
+                }
                 io_Players++;
             }
 

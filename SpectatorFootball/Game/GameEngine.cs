@@ -1886,11 +1886,11 @@ namespace SpectatorFootball.GameNS
         {
             bool r = false;
 
-            if (pResult.bTouchDown || pResult.bFGMade || pResult.bXPMade ||
+            if (!pResult.Penalty.bDeclinable && 
+                (pResult.bTouchDown || pResult.bFGMade || pResult.bXPMade ||
                 pResult.bOnePntAfterTDMade || pResult.bTwoPntAfterTDMade || pResult.bThreePntAfterTDMade  ||
-                pResult.bSafety)
-
-                r = true;
+                pResult.bSafety))
+                    r = true;
 
 
             return r;
