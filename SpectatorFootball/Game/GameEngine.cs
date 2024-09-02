@@ -221,31 +221,9 @@ namespace SpectatorFootball.GameNS
             int Delay_Seconds = 0;
             string Down_and_Yards = "";
 
-            bool bLefttoRight;
+            bool bLefttoRight = true;
 
             bool isBallCarryingTeam = false;
-
-            //Set the coach
-            Coach Offensive_Coach = null;
-            Coach Defensive_Coach = null;
-
-            //bpo test
-            g_fid_posession = at.Franchise_ID;
-            g_Line_of_Scrimmage = 35.0;
-            //********************
-
-            if (g_fid_posession == at.Franchise_ID)
-            {
-                Offensive_Coach = Away_Coach;
-                Defensive_Coach = Home_Coach;
-                bLefttoRight = true;
-            }
-            else
-            {
-                Offensive_Coach = Home_Coach;
-                Defensive_Coach = Away_Coach;
-                bLefttoRight = false;
-            }
 
             //if the play should be a kickoff but kickoffs not used in this league then set the team
             //on the 25 with a first and ten and switch possession
@@ -259,6 +237,30 @@ namespace SpectatorFootball.GameNS
                 g_Line_of_Scrimmage = t.Item4;
                 g_Vertical_Ball_Placement = t.Item5;
                 if (t.Item6) g_fid_posession = Switch_Posession(g_fid_posession, at.Franchise_ID, ht.Franchise_ID);
+            }
+
+            //bpo test
+            g_fid_posession = at.Franchise_ID;
+            g_Line_of_Scrimmage = 45.0;
+            bKickoff = false;
+            bKickoffAfterSafety = false;
+            //********************
+
+            //Set the coach
+            Coach Offensive_Coach = null;
+            Coach Defensive_Coach = null;
+
+            if (g_fid_posession == at.Franchise_ID)
+            {
+                Offensive_Coach = Away_Coach;
+                Defensive_Coach = Home_Coach;
+                bLefttoRight = true;
+            }
+            else
+            {
+                Offensive_Coach = Home_Coach;
+                Defensive_Coach = Away_Coach;
+                bLefttoRight = false;
             }
 
             //Call the play, set the formations and populate the formations.

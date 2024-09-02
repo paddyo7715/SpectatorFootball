@@ -86,6 +86,7 @@ namespace SpectatorFootball.GameNS
             List<int?> group_1 = new List<int?>();
             List<int?> group_2 = new List<int?>();
             List<int?> group_3 = new List<int?>();
+            double starting_yardline = gBall.Current_YardLine;
 
 
             Set_Ball_and_Players_Before_Snap(gBall, Punt_Players, Return_Players, Punt_Formation, Return_Formation, bSim);
@@ -110,7 +111,7 @@ namespace SpectatorFootball.GameNS
                     double MaxPuntLen = t.Item1;
                     double MaxPuntVert = t.Item2;
 
-                    var t2 = Game_Engine_Helper.isCCEligible_and_Punt_long_Enough(MaxPuntLen, gBall.Current_YardLine, bLefttoRight);
+                    var t2 = Game_Engine_Helper.isCCEligible_and_Punt_long_Enough(MaxPuntLen, starting_yardline, bLefttoRight);
 
                     r.bCoffinCornerAttemt = t2.Item1;
                     bPuntLogEnoughfor_CC = t2.Item2;
@@ -235,7 +236,7 @@ namespace SpectatorFootball.GameNS
                 r = Best_Attacker;
 
             //bpo test
-            r = Attackers[Attackers.Count - 3];
+//            r = Attackers[Attackers.Count - 3];
 
             return r;
         }
@@ -253,7 +254,7 @@ namespace SpectatorFootball.GameNS
                 r = true;
 
             //bpo test
-            r = true;
+//            r = true;
 
             return r;
         }
@@ -488,9 +489,9 @@ namespace SpectatorFootball.GameNS
             long leg_strength = Punter.p_and_r.pr.First().Kicker_Leg_Power_Rating;
             Punt_Len Punt_length_enum = Kicking_Helper.getPunt_Len_enum(leg_strength);
             double Punt_Len = Kicking_Helper.getPunt_len(Punt_length_enum);
-            Punt_Len += (double)Punt_Formation.Punter_Behind_Line_ayrds;
+//            Punt_Len += (double)Punt_Formation.Punter_Behind_Line_ayrds;
 
-            long leg_accuracy = r.Kicker.p_and_r.pr.First().Kicker_Leg_Accuracy_Rating;
+            long leg_accuracy = r.Punter.p_and_r.pr.First().Kicker_Leg_Accuracy_Rating;
             Punt_Vertical Punt_Vert_enum = Kicking_Helper.getPunt_Vert_enum(leg_accuracy);
             double Punt_Vert = Kicking_Helper.getPunt_Vert(Punt_Vert_enum);
 

@@ -477,7 +477,7 @@ namespace SpectatorFootball.GameNS
                 double dist_from_gl = calcDistanceFromOpponentGL(y, bLefttoRight);
 
                 if (PuntLen >= dist_from_gl - 10)
-                    bLongEnough = true; ;
+                    bLongEnough = true; 
             }
 
             return Tuple.Create(bEligible, bLongEnough);
@@ -495,9 +495,8 @@ namespace SpectatorFootball.GameNS
 
             return r;
         }
-        public static double getAVGSpeedScore(long SpeedRating)
+        public static int getAVGSpeedScore(long SpeedRating)
         {
-            double r = 0.0;
             int iterations = 10;
 
             int tot = 0;
@@ -508,11 +507,10 @@ namespace SpectatorFootball.GameNS
                     tot++;
             }
 
-            r = ((double) tot) / ((double) iterations);
+            return tot;
 
-            return r;
         }
-        public static List<List<int>> setTackleGroups(List<Game_Player> Punt_Players, Game_Player Punter)
+        public static List<List<int?>> setTackleGroups(List<Game_Player> Punt_Players, Game_Player Punter)
         {
             List<Int_and_Double> Slot_List_sorted = setReturnSppedRanks(Punt_Players, Punter);
             return setReturnTackleGroups(Slot_List_sorted);
@@ -527,22 +525,24 @@ namespace SpectatorFootball.GameNS
             {
                 if (p == Punter) continue;
 
-                long speed_Rating = Punter.p_and_r.pr.First().Speed_Rating;
+                long speed_Rating = p.p_and_r.pr.First().Speed_Rating;
                 double speed_score = Game_Engine_Helper.getAVGSpeedScore(speed_Rating);
                 Slot_List_unsorted.Add(new Int_and_Double() { i1 = ind, d2 = speed_score });
                 ind++;
             }
 
-            List<Int_and_Double> Slot_List_sorted = Slot_List_unsorted.OrderBy(x => x.d2).ToList();
+            List<Int_and_Double> Slot_List_sorted = Slot_List_unsorted.OrderByDescending(x => x.d2).ToList();
 
-            return Slot_List_unsorted;
+
+
+            return Slot_List_sorted;
         }
 
-        public static List<List<int>> setReturnTackleGroups(List<Int_and_Double> Slot_List_sorted)
+        public static List<List<int?>> setReturnTackleGroups(List<Int_and_Double> Slot_List_sorted)
         {
-            List<int> group_1 = new List<int>();
-            List<int> group_2 = new List<int>();
-            List<int> group_3 = new List<int>();
+            List<int?> group_1 = new List<int?>();
+            List<int?> group_2 = new List<int?>();
+            List<int?> group_3 = new List<int?>();
 
             //first add any gruop 1 players
             foreach (Int_and_Double d in Slot_List_sorted)
@@ -567,8 +567,44 @@ namespace SpectatorFootball.GameNS
                 }
             }
 
-            return new List<List<int>> { group_1, group_2, group_3 };
+            group_1 = group_1.OrderBy(x => x).ToList();
+            group_2 = group_2.OrderBy(x => x).ToList();
+            group_3 = group_3.OrderBy(x => x).ToList();
+
+            group_1 = Game_Engine_Helper.ExpandGroup(group_1);
+            group_2 = Game_Engine_Helper.ExpandGroup(group_2);
+            group_3 = Game_Engine_Helper.ExpandGroup(group_3);
+
+            return new List<List<int?>> { group_1, group_2, group_3 };
         }
 
+        public static List<int?> ExpandGroup(List<int?> Group)
+        {
+            List<int?> r = new List<int?>();
+            int empty_spots = app_Constants.KICKOFF_PLAYERS_IN_GROUP - Group.Count();
+
+            foreach (int? s in Group)
+            {
+                bool bStopEmpties = false;
+                while (!bStopEmpties && empty_spots > 0)
+                {
+                    int rnd = CommonUtils.getRandomNum(1, 10);
+                    if (rnd <= 6)
+                    {
+                        r.Add(null);
+                        empty_spots--;
+                    }
+                    else
+                        bStopEmpties = true;
+                }
+
+                r.Add(s);
+            }
+
+            for (int i = 0; i < empty_spots; i++)
+                r.Add(null);
+
+            return r;
+        }
     }
 }

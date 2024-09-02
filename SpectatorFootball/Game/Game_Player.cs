@@ -385,7 +385,7 @@ namespace SpectatorFootball.GameNS
         {
             Action pas = new Action(Game_Object_Types.P, Current_YardLine, Current_Vertical_Percent_Pos, Current_YardLine, Current_Vertical_Percent_Pos, true, Player_States.PUNTER_AFTER_KICK, null, Movement.FAKE_MOVEMENT, null, true, 3);
             Play_Stage pStage = new Play_Stage();
-            pStage.Main_Object = true;
+            pStage.Main_Object = false;
             pStage.Actions.Add(pas);
             Stages.Add(pStage);
             State = Player_States.PUNTER_AFTER_KICK;

@@ -232,9 +232,9 @@ namespace SpectatorFootball.GameNS
             logger.Debug("Group 3:" + string.Join(",", group_3.ToArray()));
 
             //Expand out the group lists
-            group_1 = ExpandGroup(group_1);
-            group_2 = ExpandGroup(group_2);
-            group_3 = ExpandGroup(group_3);
+            group_1 = Game_Engine_Helper.ExpandGroup(group_1);
+            group_2 = Game_Engine_Helper.ExpandGroup(group_2);
+            group_3 = Game_Engine_Helper.ExpandGroup(group_3);
 
             if (group_1.Count() > app_Constants.KICKOFF_PLAYERS_IN_GROUP ||
                 group_2.Count() > app_Constants.KICKOFF_PLAYERS_IN_GROUP ||
@@ -840,8 +840,6 @@ namespace SpectatorFootball.GameNS
                     g_list[slot_index] = Kickoff_Formation.KickerIndex;
                     logger.Debug("slot_index:" + slot_index);
 
-                    //bpo test
-                    //slot_index = 2;
                     double BreakAwayYardline = 0.0;
                     double Breakthrough_vert = 0.0;
                     double returner_before_tackler_yardline = 0.0;
@@ -1213,34 +1211,7 @@ namespace SpectatorFootball.GameNS
 
             return r;
         }
-        public static List<int?> ExpandGroup(List<int?> Group)
-        {
-            List<int?> r = new List<int?>();
-            int empty_spots = app_Constants.KICKOFF_PLAYERS_IN_GROUP - Group.Count();
 
-            foreach (int? s in Group)
-            {
-                bool bStopEmpties = false;
-                while (!bStopEmpties && empty_spots > 0)
-                {
-                    int rnd = CommonUtils.getRandomNum(1, 10);
-                    if (rnd <= 6)
-                    {
-                        r.Add(null);
-                        empty_spots--;
-                    }
-                    else
-                        bStopEmpties = true;
-                }
-
-                r.Add(s);
-            }
-
-            for (int i = 0; i < empty_spots; i++)
-                r.Add(null);
-
-            return r;
-        }
         public static List<int?> removeRandomIndexes(List<int?> lst)
         {
             List<int?> r = new List<int?>();

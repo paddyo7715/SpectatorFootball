@@ -103,8 +103,6 @@ namespace SpectatorFootball.unitTests.GameEngine_HelperTEST
         {
             Assert.IsTrue(Game_Engine_Helper.isTouchdown(false, -2.0, false) == true);
         }
-
-
         [TestCategory("Unit")]
         [TestMethod]
         public void isTouchdown_right_noTD()
@@ -154,6 +152,49 @@ namespace SpectatorFootball.unitTests.GameEngine_HelperTEST
         {
             Assert.IsTrue(Game_Engine_Helper.getScrimmageLine(20.0, false) == 80.0);
         }
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void isCCEligible_and_Punt_long_Enough_not_eligible_left()
+        {
+            Tuple<bool, bool> t = Game_Engine_Helper.isCCEligible_and_Punt_long_Enough(50.0, 10.0, true);
+            Assert.IsTrue(!t.Item1 && !t.Item2);
+        }
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void isCCEligible_and_Punt_long_Enough_not_eligible_right()
+        {
+            Tuple<bool, bool> t = Game_Engine_Helper.isCCEligible_and_Punt_long_Enough(50.0, 90.0, false);
+            Assert.IsTrue(!t.Item1 && !t.Item2);
+        }
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void isCCEligible_and_Punt_long_Enough_eligible_long_enough_left()
+        {
+            Tuple<bool, bool> t = Game_Engine_Helper.isCCEligible_and_Punt_long_Enough(43.0, 50.0, true);
+            Assert.IsTrue(t.Item1 && t.Item2);
+        }
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void isCCEligible_and_Punt_long_Enough_eligible_long_enough_right()
+        {
+            Tuple<bool, bool> t = Game_Engine_Helper.isCCEligible_and_Punt_long_Enough(43.0, 50.0, false);
+            Assert.IsTrue(t.Item1 && t.Item2);
+        }
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void isCCEligible_and_Punt_long_Enough_eligible_long_not_enough_left()
+        {
+            Tuple<bool, bool> t = Game_Engine_Helper.isCCEligible_and_Punt_long_Enough(42.0, 45.0, true);
+            Assert.IsTrue(t.Item1 && !t.Item2);
+        }
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void isCCEligible_and_Punt_long_Enough_eligible_long_not_enough_right()
+        {
+            Tuple<bool, bool> t = Game_Engine_Helper.isCCEligible_and_Punt_long_Enough(42.0, 55.0, false);
+            Assert.IsTrue(t.Item1 && !t.Item2);
+        }
+
 
     }
 }
