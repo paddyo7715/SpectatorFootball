@@ -476,7 +476,7 @@ namespace SpectatorFootball.GameNS
             {
                 double dist_from_gl = calcDistanceFromOpponentGL(y, bLefttoRight);
 
-                if (PuntLen >= dist_from_gl - 10)
+                if (PuntLen >= dist_from_gl - app_Constants.DIST_FROM_GL_FOR_CC)
                     bLongEnough = true; 
             }
 
@@ -605,6 +605,66 @@ namespace SpectatorFootball.GameNS
                 r.Add(null);
 
             return r;
+        }
+
+        //This method determines the yardline and vertical that the punt will land an if it is catchable.
+        //Note that the returner may still opt of not catch and return the ball.
+        public static Tuple<double, double, bool>  getPuntLandingSpot_and_isCatchable(bool isCCeligble, bool isCCLongEnough, bool isCCmade,
+            double MaxLen, double MaxVert, double current_yardline, bool bLefttoRight)
+        {
+            bool bTop = CommonUtils.getRandomTrueFalse();
+            int rtemp = CommonUtils.getRandomNum(1, app_Constants.DIST_FROM_GL_FOR_CC);
+
+            var t = getPuntLandingSpot(isCCeligble, isCCLongEnough, isCCmade, MaxLen, MaxVert, current_yardline, bTop, rtemp, bLefttoRight);
+            bool isCatchable = isPuntCatchable(t.Item1, t.Item2);
+
+            return Tuple.Create(t.Item1, t.Item2, isCatchable);
+        }
+
+        public static Tuple<double, double> getPuntLandingSpot(bool isCCeligble, bool isCCLongEnough, bool isCCmade,
+            double MaxLen, double MaxVert, double current_yardline, bool bTop, int rtemp, bool bLefttoRight)
+        {
+            double FURTHEST_LEFT = -21.0;
+            double FURTHEST_RIGHT = 121.0;
+            double TOP_MADE = -1.0;
+            double TOP_NOT_MADE = 1.0;
+            double BOTTOM_MADE = 101.0;
+            double BOTTOM_NOT_MADE = 99.0;
+
+            double yardline = 0.0;
+            double vertline = 0.0;
+            bool bCatchable = false;
+
+            if (!isCCeligble || !isCCLongEnough)
+            {
+                yardline = current_yardline += MaxLen * Game_Engine_Helper.HorizontalAdj(bLefttoRight);
+                vertline = MaxVert;
+            }
+            else
+            {
+                double rnd = Convert.ToDouble(rtemp);
+                if (bLefttoRight)
+                    yardline = 100 - rnd;
+                else
+                    yardline = rnd;
+
+                if (isCCmade)
+                    vertline = bTop ? TOP_MADE : BOTTOM_MADE;
+                else
+                    vertline = bTop ? TOP_NOT_MADE : BOTTOM_NOT_MADE;
+            }
+
+            //Make sure punt is not too far left or right out of the endzone
+            if (yardline < FURTHEST_LEFT)
+                yardline = FURTHEST_LEFT;
+            else if (yardline > FURTHEST_RIGHT)
+                yardline = FURTHEST_RIGHT;
+
+            return Tuple.Create(yardline, vertline);
+        }
+        public static bool isPuntCatchable(double end_yardline, double end_vert)
+        {
+            return end_yardline >= 1.0 && end_yardline <= 99.0 && end_vert > 0 && end_vert < 100;
         }
     }
 }

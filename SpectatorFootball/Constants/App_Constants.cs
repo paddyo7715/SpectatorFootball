@@ -591,6 +591,8 @@ namespace SpectatorFootball
         public const int PUNT_BOTTOM_AVG_VERTICAL = 65;
         public const int PUNT_ACC_CALC_VARIABLE = 110;
 
+        public const int DIST_FROM_GL_FOR_CC = 10;
+
         //Penalties
         public const long SPORTSMANSHIP_ADJUSTER = 130;
         public const long PENALTY_UPPER_LIMIT = 14000;

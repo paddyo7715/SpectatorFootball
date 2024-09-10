@@ -88,7 +88,6 @@ namespace SpectatorFootball.GameNS
             List<int?> group_3 = new List<int?>();
             double starting_yardline = gBall.Current_YardLine;
 
-
             Set_Ball_and_Players_Before_Snap(gBall, Punt_Players, Return_Players, Punt_Formation, Return_Formation, bSim);
 
             if (bPreSnapPenalty)
@@ -116,7 +115,12 @@ namespace SpectatorFootball.GameNS
                     r.bCoffinCornerAttemt = t2.Item1;
                     bPuntLogEnoughfor_CC = t2.Item2;
 
+                    if (r.bCoffinCornerAttemt && bPuntLogEnoughfor_CC)
+                        r.bCoffinCornerMade = Game_Engine_Helper.CoffinCornerMade(r.Punter.p_and_r.pr.First().Kicker_Leg_Power_Rating);
+
                     var tackle_groups =  Game_Engine_Helper.setTackleGroups(Punt_Players, r.Punter);
+
+                    var t3 = Game_Engine_Helper.getPuntLandingSpot_and_isCatchable(r.bCoffinCornerAttemt, bPuntLogEnoughfor_CC, r.bCoffinCornerMade, MaxPuntLen, MaxPuntVert, starting_yl, bLefttoRight);
 
                     //ball goes in the air, kicker returns to standing possision then runs, the players
                     //in the 3 groups run.

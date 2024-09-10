@@ -195,6 +195,76 @@ namespace SpectatorFootball.unitTests.GameEngine_HelperTEST
             Assert.IsTrue(t.Item1 && !t.Item2);
         }
 
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void getPuntLandingSpot_normal_punt_left()
+        {
+            bool bTop = false;
+            int rtemp = 10;
+            Tuple<double, double> t = Game_Engine_Helper.getPuntLandingSpot(false, false, false, 40.0, 35.0, 20.0, bTop, rtemp, true);
+            Assert.IsTrue(t.Item1 == 60.0  && t.Item2 == 35.0);
+        }
+
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void getPuntLandingSpot_normal_punt_out_endzone_left()
+        {
+            bool bTop = false;
+            int rtemp = 10;
+            Tuple<double, double> t = Game_Engine_Helper.getPuntLandingSpot(false, false, false, 90.0, 49.0, 40.0, bTop, rtemp, true);
+            Assert.IsTrue(t.Item1 == 121.0 && t.Item2 == 49.0);
+        }
+
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void getPuntLandingSpot_CCEligible_not_long_enough()
+        {
+            bool bTop = false;
+            int rtemp = 10;
+            Tuple<double, double> t = Game_Engine_Helper.getPuntLandingSpot(true, false, false, 35.0, 40.0, 50.0, bTop, rtemp, true);
+            Assert.IsTrue(t.Item1 == 85.0 && t.Item2 == 40.0);
+        }
+
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void getPuntLandingSpot_CCEligible_Missed_botton_left()
+        {
+            bool bTop = false;
+            int rtemp = 10;
+            Tuple<double, double> t = Game_Engine_Helper.getPuntLandingSpot(true, true, false, 55.0, 40.0, 50.0, bTop, rtemp, true);
+            Assert.IsTrue(t.Item1 >= 90.0 && t.Item1 <= 99.0 && t.Item2 == 99.0 );
+        }
+
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void getPuntLandingSpot_CCEligible_Missed_top_left()
+        {
+            bool bTop = true;
+            int rtemp = 10;
+            Tuple<double, double> t = Game_Engine_Helper.getPuntLandingSpot(true, true, false, 55.0, 40.0, 50.0, bTop, rtemp, true);
+            Assert.IsTrue(t.Item1 >= 90.0 && t.Item1 <= 99.0 && t.Item2 == 1.0);
+        }
+
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void getPuntLandingSpot_CCEligible_Made_botton_left()
+        {
+            bool bTop = false;
+            int rtemp = 10;
+            Tuple<double, double> t = Game_Engine_Helper.getPuntLandingSpot(true, true, true, 55.0, 40.0, 50.0, bTop, rtemp, true);
+            Assert.IsTrue(t.Item1 >= 90.0 && t.Item1 <= 99.0 && t.Item2 == 101.0);
+        }
+
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void getPuntLandingSpot_CCEligible_Made_top_left()
+        {
+            bool bTop = true;
+            int rtemp = 10;
+            Tuple<double, double> t = Game_Engine_Helper.getPuntLandingSpot(true, true, true, 55.0, 40.0, 50.0, bTop, rtemp, true);
+            Assert.IsTrue(t.Item1 >= 90.0 && t.Item1 <= 99.0 && t.Item2 == -1.0);
+        }
+
 
     }
 }
