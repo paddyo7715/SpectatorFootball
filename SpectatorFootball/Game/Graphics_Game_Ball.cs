@@ -61,7 +61,7 @@ namespace SpectatorFootball.GameNS
                     break;
                 case Ball_States.END_OVER_END:
                 case Ball_States.POPUP:
- //               case Ball_States.PUNT_THRU_THE_AIR:
+                case Ball_States.PUNT_THRU_THE_AIR:
                     if (graph_bState != Graphics_Ball_Stats.END_OVER_END_1)
                     {
                         Height = ball_size;

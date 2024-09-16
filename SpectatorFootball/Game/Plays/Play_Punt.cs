@@ -33,8 +33,6 @@ namespace SpectatorFootball.GameNS
         List<Game_Player> Blockers = null;
         List<Game_Player> Attackers = null;
 
-
-
         public Play_Result r = new Play_Result();
 
         Play_Enum Play { get; set; } = Play_Enum.PUNT;
@@ -119,8 +117,8 @@ namespace SpectatorFootball.GameNS
                         r.bCoffinCornerMade = Game_Engine_Helper.CoffinCornerMade(r.Punter.p_and_r.pr.First().Kicker_Leg_Power_Rating);
 
                     var tackle_groups =  Game_Engine_Helper.setTackleGroups(Punt_Players, r.Punter);
+                    var tBallAct = Game_Engine_Helper.getPuntLandingSpot_and_isCatchable(r.bCoffinCornerAttemt, bPuntLogEnoughfor_CC, r.bCoffinCornerMade, MaxPuntLen, MaxPuntVert, starting_yl, bLefttoRight);
 
-                    var t3 = Game_Engine_Helper.getPuntLandingSpot_and_isCatchable(r.bCoffinCornerAttemt, bPuntLogEnoughfor_CC, r.bCoffinCornerMade, MaxPuntLen, MaxPuntVert, starting_yl, bLefttoRight);
 
                     //ball goes in the air, kicker returns to standing possision then runs, the players
                     //in the 3 groups run.
@@ -137,7 +135,41 @@ namespace SpectatorFootball.GameNS
             return r;
         }
 
+        private void BallPuntedPlayersRun(Game_Ball gBall, List<Game_Player> Punt_Players, List<Game_Player> Return_Players, Tuple<double,double, bool> tballAct,
+            Game_Player Punter, Game_Player Returner, List<List<int?>> tGroups, Play_Result pr, bool bLast_Play, bool bLefttoRight, bool bSim)
+        {
+            double newBallX = tballAct.Item1;
+            double newBallY = tballAct.Item2;
+            bool bCatchable = tballAct.Item3;
 
+            long dec_making_rating = Punter.p_and_r.pr.First().Decision_Making_Rating;
+            var tRetAct = Returner.PuntReturnerActions(newBallX, newBallY, bLast_Play, dec_making_rating, bLefttoRight);
+
+            pr.bPunt_Out_of_Bounds = tRetAct.Item1;
+            pr.bPunt_Out_of_Endzone = tRetAct.Item2;
+            pr.bPunt_KneelDown = tRetAct.Item3;
+            pr.bPunt_Returned = tRetAct.Item4;
+
+            double prevBallX = gBall.Current_YardLine;
+            double prevBallY = gBall.Current_Vertical_Percent_Pos;
+
+            gBall.Current_YardLine = newBallX;
+            gBall.Current_Vertical_Percent_Pos = newBallY;
+
+            if (bSim)
+            {
+                if (pr.bPunt_Out_of_Bounds)
+                    gBall.Punt_Out_of_Bounds(bLefttoRight);
+                else if (pr.bPunt_Out_of_Endzone)
+                    gBall.Punt_Out_of_Endzone(bLefttoRight);
+                else
+                    gBall.Punt_End_Over_End_Thru_Air();
+            }
+
+
+
+
+        }
 
 
 

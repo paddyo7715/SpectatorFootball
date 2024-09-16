@@ -227,6 +227,16 @@ namespace SpectatorFootball.unitTests.GameEngine_HelperTEST
 
         [TestCategory("Unit")]
         [TestMethod]
+        public void getPuntLandingSpot_Normal_Punt_left()
+        {
+            bool bTop = false;
+            int rtemp = 10;
+            Tuple<double, double> t = Game_Engine_Helper.getPuntLandingSpot(false, false, false, 55.0, 40.0, 20.0, bTop, rtemp, true);
+            Assert.IsTrue(t.Item1 == 75.0 && t.Item2 == 40.0);
+        }
+
+        [TestCategory("Unit")]
+        [TestMethod]
         public void getPuntLandingSpot_CCEligible_Missed_botton_left()
         {
             bool bTop = false;
@@ -265,6 +275,103 @@ namespace SpectatorFootball.unitTests.GameEngine_HelperTEST
             Assert.IsTrue(t.Item1 >= 90.0 && t.Item1 <= 99.0 && t.Item2 == -1.0);
         }
 
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void getPuntLandingSpot_Normal_Punt_right()
+        {
+            bool bTop = false;
+            int rtemp = 10;
+            Tuple<double, double> t = Game_Engine_Helper.getPuntLandingSpot(false, false, false, 55.0, 40.0, 80.0, bTop, rtemp, false);
+            Assert.IsTrue(t.Item1 == 25.0 && t.Item2 == 40.0);
+        }
 
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void getPuntLandingSpot_CCEligible_Missed_botton_right()
+        {
+            bool bTop = false;
+            int rtemp = 10;
+            Tuple<double, double> t = Game_Engine_Helper.getPuntLandingSpot(true, true, false, 55.0, 40.0, 50.0, bTop, rtemp, false);
+            Assert.IsTrue(t.Item1 >= 1.0 && t.Item1 <= 10.0 && t.Item2 == 99.0);
+        }
+
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void getPuntLandingSpot_CCEligible_Missed_top_right()
+        {
+            bool bTop = true;
+            int rtemp = 10;
+            Tuple<double, double> t = Game_Engine_Helper.getPuntLandingSpot(true, true, false, 55.0, 40.0, 50.0, bTop, rtemp, false);
+            Assert.IsTrue(t.Item1 >= 1.0 && t.Item1 <= 10.0 && t.Item2 == 1.0);
+        }
+
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void getPuntLandingSpot_CCEligible_Made_botton_right()
+        {
+            bool bTop = false;
+            int rtemp = 10;
+            Tuple<double, double> t = Game_Engine_Helper.getPuntLandingSpot(true, true, true, 55.0, 40.0, 50.0, bTop, rtemp, false);
+            Assert.IsTrue(t.Item1 >= 1.0 && t.Item1 <= 10.0 && t.Item2 == 101.0);
+        }
+
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void getPuntLandingSpot_CCEligible_Made_top_right()
+        {
+            bool bTop = true;
+            int rtemp = 10;
+            Tuple<double, double> t = Game_Engine_Helper.getPuntLandingSpot(true, true, true, 55.0, 40.0, 50.0, bTop, rtemp, false);
+            Assert.IsTrue(t.Item1 >= 1.0 && t.Item1 <= 10.0 && t.Item2 == -1.0);
+        }
+
+        /*
+
+
+
+x 0 y 0 false        
+        */
+
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void isPuntCatchable_10_13()
+        {
+            Assert.IsTrue(Game_Engine_Helper.isPuntCatchable(10,13));
+        }
+
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void isPuntCatchable_m1_44()
+        {
+            Assert.IsTrue(!Game_Engine_Helper.isPuntCatchable(-1, 44));
+        }
+
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void isPuntCatchable_50_m10()
+        {
+            Assert.IsTrue(!Game_Engine_Helper.isPuntCatchable(50, -10));
+        }
+
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void isPuntCatchable_101_13()
+        {
+            Assert.IsTrue(!Game_Engine_Helper.isPuntCatchable(101, 13));
+        }
+
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void isPuntCatchable_100_10()
+        {
+            Assert.IsTrue(!Game_Engine_Helper.isPuntCatchable(100, 10));
+        }
+
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void isPuntCatchable_0_0()
+        {
+            Assert.IsTrue(!Game_Engine_Helper.isPuntCatchable(0, 0));
+        }
     }
 }

@@ -7,6 +7,10 @@ namespace SpectatorFootball
 {
     public class app_Constants
     {
+        //Field
+        public const double ENDZONE_YARDS = 20.0;
+        public const double FIELD_YARDS = 100.0;
+
         // Max Settings
         public const int MAX_DIVISIONS = 20;
         public const int MAX_TEAMS = 200;
@@ -590,6 +594,8 @@ namespace SpectatorFootball
         public const int PUNT_TOP_AVG_VERTICAL = 35;
         public const int PUNT_BOTTOM_AVG_VERTICAL = 65;
         public const int PUNT_ACC_CALC_VARIABLE = 110;
+
+        public const double YARDS_FROM_GL_DECIDE_TO_RETURN = 5;
 
         public const int DIST_FROM_GL_FOR_CC = 10;
 

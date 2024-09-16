@@ -309,12 +309,20 @@ namespace SpectatorFootball.GameNS
 
             return yardLine;
         }
+        public static double yards_from_end_of_endzone(double x, bool bLefttoRight)
+        {
+            double yards;
+
+            if (bLefttoRight)
+                yards = x - app_Constants.ENDZONE_YARDS;
+            else
+                yards = app_Constants.FIELD_YARDS + app_Constants.ENDZONE_YARDS - x;
+
+            return yards;
+        }
         public static double getYardsGained(bool bLefttoRight, double starting_yrdline, double end_yrdline)
         {
             double r = 0.0;
-
-            logger.Debug("blefttoright: " + bLefttoRight.ToString() + " " +
-     starting_yrdline + " " + end_yrdline);
 
             //Don't count the extra yards into the endzone as yards gained
             if (end_yrdline < 0)
@@ -665,6 +673,18 @@ namespace SpectatorFootball.GameNS
         public static bool isPuntCatchable(double end_yardline, double end_vert)
         {
             return end_yardline >= 1.0 && end_yardline <= 99.0 && end_vert > 0 && end_vert < 100;
+        }
+        public static bool isBallvertTop(double y)
+        {
+            if (y > 50.0)
+                return true;
+            else
+                return false;
+        }
+
+        public static bool isBounceBall(double ball_end_yl)
+        {
+            return ball_end_yl >= -37.0 && ball_end_yl <= 137;
         }
     }
 }

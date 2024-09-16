@@ -22,6 +22,13 @@ namespace SpectatorFootball.GameNS
         //Result
         public bool bKick_Out_of_Endzone = false;
         public bool bKick_Out_of_Bounds = false;
+        public bool bKick_KneelDown = false;
+        public bool bKick_Returned = false;
+        public bool bPunt_blocked = false;
+        public bool bPunt_Out_of_Endzone = false;
+        public bool bPunt_Out_of_Bounds = false;
+        public bool bPunt_KneelDown = false;
+        public bool bPunt_Returned = false;
         public bool bTouchDown = false;
         public bool bTouchback = false;
         public bool bFumble = false;
@@ -47,7 +54,7 @@ namespace SpectatorFootball.GameNS
         public bool bCoffinCornerMade = false;
         public bool bOnsideAtt = false;
         public bool bOnsideMade = false;
-        public bool bPunt_blocked = false;
+
 
         //Penalties
         public Game_Player Penalized_Player = null;

@@ -12,7 +12,7 @@ namespace SpectatorFootball.Enum
     {
         TEED_UP, 
         END_OVER_END, 
-//        PUNT_THRU_THE_AIR,
+        PUNT_THRU_THE_AIR,
         SPIRAL, 
         ON_THE_GROUND, 
         CARRIED,

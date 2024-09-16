@@ -574,6 +574,7 @@ namespace SpectatorFootball.WindowsLeague
                     Ball.Fill = (Brush)CommonUtils.getBrushfromHex(ball_Color);
                     break;
                  case Ball_States.END_OVER_END:
+                 case Ball_States.PUNT_THRU_THE_AIR:
                     int rnum = CommonUtils.getRandomNum(1, 2);
                     if (rnum == 1)
                         Ball.Fill = myLinearGradientBrush1;
