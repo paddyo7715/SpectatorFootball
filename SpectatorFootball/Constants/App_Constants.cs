@@ -8,7 +8,7 @@ namespace SpectatorFootball
     public class app_Constants
     {
         //Field
-        public const double ENDZONE_YARDS = 20.0;
+        public const double ENDZONE_YARDS = 10.0;
         public const double FIELD_YARDS = 100.0;
 
         // Max Settings
@@ -586,6 +586,16 @@ namespace SpectatorFootball
         public const int PUNT_MAX_AVG_DISTANCE = 45;
         public const int PUNT_MIN_LONG_DISTANCE = 46;
         public const int PUNT_MAX_LONG_DISTANCE = 55;
+
+        public const int PUNT_GROUP_1_MIN = 8;
+        public const int PUNT_GROUP_1_MAX = 11;
+        public const int PUNT_GROUP_2_MIN = 20;
+        public const int PUNT_GROUP_2_MAX = 21;
+        public const int PUNT_GROUP_3_MIN = 32;
+        public const int PUNT_GROUP_3_MAX = 35;
+        public const int PUNT_KICKER_FROM_RETURNER = 45;
+        public const double PUNT_GROUP_VERT_DIST = 7.0;
+        public const double PUNT_DIST_BETWEEN_BLOCK_ATTACHERS = 1.00;
 
         public const int PUNT_LENGTH_CALC_VARIABLE = 106;
 

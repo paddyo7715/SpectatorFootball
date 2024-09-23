@@ -123,6 +123,19 @@ namespace SpectatorFootball.GameNS
             Stages.Add(pStage);
             State = Player_States.BLOCKING;
         }
+        public void Delay_Then_Run_and_Stand(Player_States moving_ps, double prev_yl, double prev_v, int delay)
+        {
+             Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, true, Player_States.TACKLED, null, Movement.FAKE_MOVEMENT, null, false, delay);
+            Action pas2 = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, false, moving_ps, null, Movement.LINE, null, false, 0);
+            Action pas3 = new Action(Game_Object_Types.P, Starting_YardLine, Starting_Vertical_Percent_Pos, 0.0, 0.0, false, Player_States.STANDING, null, Movement.NONE, null, false, 0);
+            Play_Stage pStage = new Play_Stage();
+            pStage.Main_Object = false;
+            pStage.Actions.Add(pas);
+            pStage.Actions.Add(pas2);
+            pStage.Actions.Add(pas3);
+            Stages.Add(pStage);
+            State = moving_ps;
+        }
         public void OnBack()
         {
             Action pas = new Action(Game_Object_Types.P, Current_YardLine, Current_Vertical_Percent_Pos, Current_YardLine, Current_Vertical_Percent_Pos, false, Player_States.ON_BACK, null, Movement.NONE, null, false, 0);
@@ -392,52 +405,72 @@ namespace SpectatorFootball.GameNS
             State = Player_States.PUNTER_AFTER_KICK;
         }
 
-        public Tuple<bool, bool, bool, bool> PuntReturnerActions(double ballx, double bally, bool bLast_Play,
-            long dec_making_rating, bool bLefttoRight)
+        public void Punter_Put_Leg_Down_and_Run(Player_States moving_ps, double prev_yl, double prev_v)
         {
-            int rnd = CommonUtils.getRandomNum(1, 100);
-            var t = getReturnerAction(ballx, bally, bLast_Play, dec_making_rating, rnd, bLefttoRight);
-            returnerWaitLocation(ballx, bally, t.Item1, t.Item2, t.Item3, t.Item4, bLefttoRight);
 
-            return Tuple.Create(t.Item1, t.Item2, t.Item3, t.Item4 );
+            Action pas1 = new Action(Game_Object_Types.P, prev_yl, prev_v, prev_yl, prev_v, true, Player_States.PUNTER_AFTER_KICK, null, Movement.FAKE_MOVEMENT, null, true, 3);
+            Action pas2 = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, false, moving_ps, null, Movement.LINE, null, false, 0);
+
+            Play_Stage pStage = new Play_Stage();
+            pStage.Main_Object = false;
+            pStage.Actions.Add(pas1);
+            pStage.Actions.Add(pas2);
+            Stages.Add(pStage);
+            State = Player_States.PUNTER_AFTER_KICK;
         }
 
-        public Tuple<bool, bool, bool, bool> getReturnerAction(double ballx, double bally, bool bLast_Play, 
-            long dec_making_rating, int rnd, bool bLefttoRight)
+        public Tuple<bool, bool, bool, bool, bool> PuntReturnerActions(double ballx, double bally, bool bLast_Play,bool bLefttoRight)
+        {
+            int rnd = CommonUtils.getRandomNum(1, 100);
+            var t = getReturnerAction(ballx, bally, bLast_Play, rnd, bLefttoRight);
+            returnerWaitLocation(ballx, bally, t.Item1, t.Item2, t.Item3, t.Item4, t.Item4, bLefttoRight);
+
+            return Tuple.Create(t.Item1, t.Item2, t.Item3, t.Item4, t.Item5 );
+        }
+
+        public Tuple<bool, bool, bool, bool, bool> getReturnerAction(double ballx, double bally, bool bLast_Play, 
+            int rnd, bool bLefttoRight)
         {
             bool bOut_of_Bounds = false;
             bool bOut_of_Endzone = false;
             bool bKnell_with_Ball = false;
             bool bReturn = false;
+            bool bDontField = false;
 
-            double yardline = Game_Engine_Helper.getScrimmageLine(ballx, bLefttoRight);
+            double yardline = ballx;
 
-            if (bLefttoRight && ballx >= 100.0)
+            if (bLefttoRight && ballx >= app_Constants.FIELD_YARDS + app_Constants.ENDZONE_YARDS)
                 bOut_of_Endzone = true;
-            else if (!bLefttoRight && ballx <= 0.0)
+            else if (!bLefttoRight && ballx <= -app_Constants.ENDZONE_YARDS)
                 bOut_of_Endzone = true;
             else if (bally <= 0.0 || bally >= 100.0)
                 bOut_of_Bounds = true;
             else if (bLast_Play)
                 bReturn = true;
-            else if (yardline > app_Constants.YARDS_FROM_GL_DECIDE_TO_RETURN && bLefttoRight)
+            else if (yardline > app_Constants.YARDS_FROM_GL_DECIDE_TO_RETURN && !bLefttoRight)
                 bReturn = true;
-            else if (yardline < (100 - app_Constants.YARDS_FROM_GL_DECIDE_TO_RETURN) && !bLefttoRight)
+            else if (yardline < (100 - app_Constants.YARDS_FROM_GL_DECIDE_TO_RETURN) && bLefttoRight)
                 bReturn = true;
             else
             {
+                long dec_making_rating = p_and_r.pr.First().Decision_Making_Rating;
                 double yards_from_back_of_endzone = Game_Engine_Helper.yards_from_end_of_endzone(ballx, bLefttoRight);
                 dec_making_rating += (long)yards_from_back_of_endzone;
-                if (dec_making_rating <= rnd)
-                    bKnell_with_Ball = true;
+                if (rnd <= dec_making_rating)
+                {
+                    if ((ballx >= 100 && bLefttoRight) || ballx <= 0 && !bLefttoRight)
+                        bKnell_with_Ball = true;
+                    else
+                        bDontField = true;
+                }
                 else
                     bReturn = true;
             }
 
-            return Tuple.Create(bOut_of_Bounds, bOut_of_Endzone, bKnell_with_Ball, bReturn);
+            return Tuple.Create(bOut_of_Bounds, bOut_of_Endzone, bKnell_with_Ball, bReturn, bDontField);
         }
 
-        public void returnerWaitLocation(double ballx, double bally, bool bOut_of_Bounds, bool bOut_of_Endzone, bool bKnell_with_Ball, bool bReturn, bool bLefttoRight)
+        public void returnerWaitLocation(double ballx, double bally, bool bOut_of_Bounds, bool bOut_of_Endzone, bool bKnell_with_Ball, bool bReturn, bool bDontField, bool bLefttoRight)
         {
             if (bKnell_with_Ball || bReturn)
             {
@@ -454,6 +487,15 @@ namespace SpectatorFootball.GameNS
             {
                 Current_YardLine = bLefttoRight ? 105.0 : -5.0;
                 Current_Vertical_Percent_Pos = bally;
+            }
+            else if (bDontField)
+            {
+                double yoffset = 5.0;
+                Current_YardLine = ballx;
+                bool bTop = Game_Engine_Helper.isBallvertTop(Current_Vertical_Percent_Pos);
+                if (bTop)
+                    yoffset = -yoffset;
+                Current_Vertical_Percent_Pos += yoffset;
             }
             else
             {

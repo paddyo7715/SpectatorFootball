@@ -29,6 +29,7 @@ namespace SpectatorFootball.GameNS
         public bool bPunt_Out_of_Bounds = false;
         public bool bPunt_KneelDown = false;
         public bool bPunt_Returned = false;
+        public bool bPunt_Not_Fielded = false;
         public bool bTouchDown = false;
         public bool bTouchback = false;
         public bool bFumble = false;

@@ -192,6 +192,19 @@ namespace SpectatorFootball.unitTests.Helper_ClassesNS
 
             return r;
         }
+        public static Game_Player getPunter(int f_id)
+        {
+            Game_Player r = new Game_Player();
+            Player_NamesDAOTEST pnDAO = new Player_NamesDAOTEST();
+            HomeTownsDAOTEST htDAO = new HomeTownsDAOTEST();
+            Player p = Player_Helper.CreatePlayer(Player_Pos.P, true, false, true, 1, pnDAO, htDAO);
+            Players_By_Team pbt = new Players_By_Team()
+            { Franchise_ID = f_id, Player_ID = p.ID, Season_ID = 1 };
+            Player_and_Ratings p_and_r = new Player_and_Ratings()
+            { p = p, pr = p.Player_Ratings.ToList(), pbt = pbt };
+            r.p_and_r = p_and_r;
+            return r;
+        }
 
     }
 }

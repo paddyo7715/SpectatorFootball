@@ -314,9 +314,9 @@ namespace SpectatorFootball.GameNS
             double yards;
 
             if (bLefttoRight)
-                yards = x - app_Constants.ENDZONE_YARDS;
-            else
                 yards = app_Constants.FIELD_YARDS + app_Constants.ENDZONE_YARDS - x;
+            else
+                yards = app_Constants.ENDZONE_YARDS + x;
 
             return yards;
         }
@@ -617,16 +617,15 @@ namespace SpectatorFootball.GameNS
 
         //This method determines the yardline and vertical that the punt will land an if it is catchable.
         //Note that the returner may still opt of not catch and return the ball.
-        public static Tuple<double, double, bool>  getPuntLandingSpot_and_isCatchable(bool isCCeligble, bool isCCLongEnough, bool isCCmade,
+        public static Tuple<double, double>  getPuntLandingSpot_and_isCatchable(bool isCCeligble, bool isCCLongEnough, bool isCCmade,
             double MaxLen, double MaxVert, double current_yardline, bool bLefttoRight)
         {
             bool bTop = CommonUtils.getRandomTrueFalse();
             int rtemp = CommonUtils.getRandomNum(1, app_Constants.DIST_FROM_GL_FOR_CC);
 
             var t = getPuntLandingSpot(isCCeligble, isCCLongEnough, isCCmade, MaxLen, MaxVert, current_yardline, bTop, rtemp, bLefttoRight);
-            bool isCatchable = isPuntCatchable(t.Item1, t.Item2);
 
-            return Tuple.Create(t.Item1, t.Item2, isCatchable);
+            return Tuple.Create(t.Item1, t.Item2);
         }
 
         public static Tuple<double, double> getPuntLandingSpot(bool isCCeligble, bool isCCLongEnough, bool isCCmade,
@@ -685,6 +684,26 @@ namespace SpectatorFootball.GameNS
         public static bool isBounceBall(double ball_end_yl)
         {
             return ball_end_yl >= -37.0 && ball_end_yl <= 137;
+        }
+        public static int getTackleGroup(int slot_id, List<List<int?>> tGroups)
+        {
+            bool bFound = false;
+
+            int i = 0;
+            foreach (var tgroup in tGroups)
+            {
+                if (tgroup.Contains(i))
+                {
+                    bFound = true;
+                    break;
+                }    
+                i++;
+            }
+
+            if (!bFound)
+                throw new Exception("Error in getTackleGroup: index not found in tackle groups!");
+
+            return i;
         }
     }
 }
