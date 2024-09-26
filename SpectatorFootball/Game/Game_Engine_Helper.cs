@@ -531,17 +531,19 @@ namespace SpectatorFootball.GameNS
             int ind = 0;
             foreach (Game_Player p in Punt_Players)
             {
-                if (p == Punter) continue;
-
-                long speed_Rating = p.p_and_r.pr.First().Speed_Rating;
-                double speed_score = Game_Engine_Helper.getAVGSpeedScore(speed_Rating);
-                Slot_List_unsorted.Add(new Int_and_Double() { i1 = ind, d2 = speed_score });
+                if (p != Punter)
+                {
+                    long speed_Rating = p.p_and_r.pr.First().Speed_Rating;
+                    double speed_score = Game_Engine_Helper.getAVGSpeedScore(speed_Rating);
+                    Slot_List_unsorted.Add(new Int_and_Double() { i1 = ind, d2 = speed_score });
+                }
                 ind++;
             }
 
             List<Int_and_Double> Slot_List_sorted = Slot_List_unsorted.OrderByDescending(x => x.d2).ToList();
 
-
+            if (Slot_List_sorted.Count != 10)
+                throw new Exception("setReturnSppedRanks error Slot_list_sorted has " + Slot_List_sorted.Count + " records!");
 
             return Slot_List_sorted;
         }
@@ -557,8 +559,6 @@ namespace SpectatorFootball.GameNS
             {
                 if (d.d2 >= 8 && group_1.Count() < 5)
                     group_1.Add(d.i1);
-                else
-                    break;
             }
 
             int g2_count = (10 - group_1.Count()) / 2;
@@ -575,6 +575,9 @@ namespace SpectatorFootball.GameNS
                 }
             }
 
+            if (group_1.Count + group_2.Count + group_3.Count != 10)
+                throw new Exception("setReturnTackleGroups error before sort 3 groups do not have 10 players.");
+
             group_1 = group_1.OrderBy(x => x).ToList();
             group_2 = group_2.OrderBy(x => x).ToList();
             group_3 = group_3.OrderBy(x => x).ToList();
@@ -582,6 +585,15 @@ namespace SpectatorFootball.GameNS
             group_1 = Game_Engine_Helper.ExpandGroup(group_1);
             group_2 = Game_Engine_Helper.ExpandGroup(group_2);
             group_3 = Game_Engine_Helper.ExpandGroup(group_3);
+
+            int player_count = 0;
+            for(int yyy=0; yyy<=10;yyy++)
+            {
+                if (yyy == 5) continue;
+                if (!group_1.Contains(yyy) && !group_2.Contains(yyy) && !group_3.Contains(yyy))
+                    throw new Exception("player not found in any of the 3 final groups");
+            }
+
 
             return new List<List<int?>> { group_1, group_2, group_3 };
         }
@@ -692,7 +704,7 @@ namespace SpectatorFootball.GameNS
             int i = 0;
             foreach (var tgroup in tGroups)
             {
-                if (tgroup.Contains(i))
+                if (tgroup.Contains(slot_id))
                 {
                     bFound = true;
                     break;

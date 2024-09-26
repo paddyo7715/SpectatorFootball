@@ -119,7 +119,7 @@ namespace SpectatorFootball.GameNS
                     var tackle_groups =  Game_Engine_Helper.setTackleGroups(Punt_Players, r.Punter);
                     var tBallAct = Game_Engine_Helper.getPuntLandingSpot_and_isCatchable(r.bCoffinCornerAttemt, bPuntLogEnoughfor_CC, r.bCoffinCornerMade, MaxPuntLen, MaxPuntVert, starting_yl, bLefttoRight);
 
-
+                    BallPuntedPlayersRun(gBall, Punt_Players, Return_Players, tBallAct, r.Punter, r.Punt_Returner, tackle_groups, r, bLast_Play, bLefttoRight, bSim);
                     //ball goes in the air, kicker returns to standing possision then runs, the players
                     //in the 3 groups run.
                     //the ball can go out of bound.
@@ -135,8 +135,8 @@ namespace SpectatorFootball.GameNS
             return r;
         }
 
-        private void BallPuntedPlayersRun(Game_Ball gBall, List<Game_Player> Punt_Players, List<Game_Player> Return_Players, Tuple<double,double, bool> tballAct,
-            Game_Player Punter, Game_Player Returner, List<List<int?>> tGroups, Play_Result pr, bool bLast_Play, bool bLefttoRight, bool bSim)
+        private void BallPuntedPlayersRun(Game_Ball gBall, List<Game_Player> Punt_Players, List<Game_Player> Return_Players, Tuple<double,double> tballAct,
+            Game_Player Punter, Game_Player Punt_Returner, List<List<int?>> tGroups, Play_Result pr, bool bLast_Play, bool bLefttoRight, bool bSim)
         {
             double newBallX = tballAct.Item1;
             double newBallY = tballAct.Item2;
@@ -196,9 +196,9 @@ namespace SpectatorFootball.GameNS
                 double prev_yl = p.Current_YardLine;
                 double prev_v = p.Current_Vertical_Percent_Pos;
 
-                if (p == r.Returner)
+                if (p == r.Punt_Returner)
                 {
-                    var tRetAct = Returner.PuntReturnerActions(newBallX, newBallY, bLast_Play, bLefttoRight);
+                    var tRetAct = r.Punt_Returner.PuntReturnerActions(newBallX, newBallY, bLast_Play, bLefttoRight);
 
                     pr.bPunt_Out_of_Bounds = tRetAct.Item1;
                     pr.bPunt_Out_of_Endzone = tRetAct.Item2;
@@ -236,7 +236,7 @@ namespace SpectatorFootball.GameNS
                     double prev_yl = p.Current_YardLine;
                     double prev_v = p.Current_Vertical_Percent_Pos;
 
-                    if (p == r.Returner)
+                    if (p == r.Punt_Returner)
                     {
                         if (!bSim)
                         {
@@ -349,7 +349,7 @@ namespace SpectatorFootball.GameNS
             }
 
             //if the attackers win 6 of 8 battles the attacker with the highest score breaks thru
-            if (attacker_wins >= 6)
+            if (attacker_wins >= Attackers.Count - 1)
                 r = Best_Attacker;
 
             //bpo test
