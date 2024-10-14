@@ -240,8 +240,8 @@ namespace SpectatorFootball.GameNS
             }
 
             //bpo test
-            g_fid_posession = at.Franchise_ID;
-            g_Line_of_Scrimmage = 45.0;
+            g_fid_posession = ht.Franchise_ID;
+            g_Line_of_Scrimmage = 70.0;
             bKickoff = false;
             bKickoffAfterSafety = false;
             //********************
@@ -381,7 +381,6 @@ namespace SpectatorFootball.GameNS
                 }
 
                 //Execute the play
-//                bpreSnapPenalty = true;
                 p_result = Play.Execute(bpreSnapPenalty);
 
                 int ball_stages = Game_Ball.Stages.Count();

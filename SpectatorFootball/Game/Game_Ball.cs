@@ -45,10 +45,17 @@ namespace SpectatorFootball.GameNS
             bStage.Actions.Add(bas);
             Stages.Add(bStage);
         }
-        public void Punt_End_Over_End_Thru_Air()
+        public void Punt_End_Over_End_Thru_Air(double prev_yl, double prev_v, bool bLefttoRight)
         {
+            double vert_adjust_off_Foot = -1.5;
+            double yl_adjust_off_foot = 0.0;
+            if (bLefttoRight)
+                yl_adjust_off_foot = -1.0;
+            else
+                yl_adjust_off_foot = 1.5;
+
             State = Ball_States.PUNT_THRU_THE_AIR;
-            Action bas = new Action(Game_Object_Types.B, Starting_YardLine, Starting_Vertical_Percent_Pos, Current_YardLine, Current_Vertical_Percent_Pos, false, null, State, Movement.LINE, Ball_Speed.SLOW, false, 0);
+            Action bas = new Action(Game_Object_Types.B, prev_yl + yl_adjust_off_foot, prev_v + vert_adjust_off_Foot, Current_YardLine, Current_Vertical_Percent_Pos, false, null, State, Movement.LINE, Ball_Speed.SLOW, false, 0);
             Play_Stage bStage = new Play_Stage();
             bStage.Main_Object = true;
             bStage.Actions.Add(bas);
@@ -69,7 +76,7 @@ namespace SpectatorFootball.GameNS
         {
             bool bDontBounce = false;
             const double BOUNCE_LENGTH = 4.7;
-            const double ROLL_LENGTH = 1.3;
+            const double ROLL_LENGTH = 4.0;
 
             double prev_yardline = Starting_YardLine;
             double prev_vert = Starting_Vertical_Percent_Pos;
@@ -85,7 +92,7 @@ namespace SpectatorFootball.GameNS
             Action bas3 = null;
 
             bool bTop = Game_Engine_Helper.isBallvertTop(Current_Vertical_Percent_Pos);
-            double bounce_roll_vert = bTop ? 4.0 : -4.0;
+            double bounce_roll_vert = bTop ? 0.5 : -0.5;
 
             //Get the end point for bouncing ball
             new_end_point = PointPlotter.getExtendedEndpoint(prev_yardline, prev_vert, Current_YardLine, Current_Vertical_Percent_Pos, BOUNCE_LENGTH * dlefttoRight);
@@ -163,6 +170,39 @@ namespace SpectatorFootball.GameNS
 
             State = Ball_States.END_OVER_END;
             Action bas = new Action(Game_Object_Types.B, prev_yardline, prev_vert, Current_YardLine, Current_Vertical_Percent_Pos, false, null, Ball_States.END_OVER_END, Movement.LINE, Ball_Speed.SLOW, false, 0);
+
+            //Get the end point for bouncing ball
+            new_end_point = PointPlotter.getExtendedEndpoint(prev_yardline, prev_vert, Current_YardLine, Current_Vertical_Percent_Pos, BOUNCE_LENGTH * dlefttoRight);
+
+            State = Ball_States.BOUNCING;
+            Action bas2 = new Action(Game_Object_Types.B, Current_YardLine, Current_Vertical_Percent_Pos, new_end_point.x, new_end_point.y, false, null, Ball_States.BOUNCING, Movement.LINE, Ball_Speed.SLOW, false, 0);
+
+            //Get the end point for rolling ball
+            PointXY rolling_end_point = PointPlotter.getExtendedEndpoint(prev_yardline, prev_vert, new_end_point.x, new_end_point.y, ROLL_LENGTH * dlefttoRight);
+
+            State = Ball_States.ROLLING;
+            Action bas3 = new Action(Game_Object_Types.B, new_end_point.x, new_end_point.y, rolling_end_point.x, rolling_end_point.y, false, null, Ball_States.ROLLING, Movement.LINE, Ball_Speed.SLOW, false, 0);
+
+            Play_Stage bStage = new Play_Stage();
+            bStage.Main_Object = true;
+            bStage.Actions.Add(bas);
+            bStage.Actions.Add(bas2);
+            bStage.Actions.Add(bas3);
+            Stages.Add(bStage);
+        }
+        public void Punt_End_Over_End_Thru_Air_Not_Caught(bool blefttoRight)
+        {
+            const double BOUNCE_LENGTH = 4.0;
+            const double ROLL_LENGTH = 1.3;
+
+            double prev_yardline = Starting_YardLine;
+            double prev_vert = Starting_Vertical_Percent_Pos;
+
+            double dlefttoRight = blefttoRight ? 1 : -1;
+
+            PointXY new_end_point = null;
+
+            Action bas = new Action(Game_Object_Types.B, prev_yardline, prev_vert, Current_YardLine, Current_Vertical_Percent_Pos, false, null, Ball_States.PUNT_THRU_THE_AIR, Movement.LINE, Ball_Speed.SLOW, false, 0);
 
             //Get the end point for bouncing ball
             new_end_point = PointPlotter.getExtendedEndpoint(prev_yardline, prev_vert, Current_YardLine, Current_Vertical_Percent_Pos, BOUNCE_LENGTH * dlefttoRight);

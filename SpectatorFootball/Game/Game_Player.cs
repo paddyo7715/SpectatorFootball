@@ -125,7 +125,7 @@ namespace SpectatorFootball.GameNS
         }
         public void Delay_Then_Run_and_Stand(Player_States moving_ps, double prev_yl, double prev_v, int delay)
         {
-             Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, true, Player_States.TACKLED, null, Movement.FAKE_MOVEMENT, null, false, delay);
+             Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, prev_yl, prev_v, false, Player_States.STANDING, null, Movement.FAKE_MOVEMENT, null, false, delay);
             Action pas2 = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, false, moving_ps, null, Movement.LINE, null, false, 0);
             Action pas3 = new Action(Game_Object_Types.P, Starting_YardLine, Starting_Vertical_Percent_Pos, 0.0, 0.0, false, Player_States.STANDING, null, Movement.NONE, null, false, 0);
             Play_Stage pStage = new Play_Stage();
@@ -136,6 +136,7 @@ namespace SpectatorFootball.GameNS
             Stages.Add(pStage);
             State = moving_ps;
         }
+
         public void OnBack()
         {
             Action pas = new Action(Game_Object_Types.P, Current_YardLine, Current_Vertical_Percent_Pos, Current_YardLine, Current_Vertical_Percent_Pos, false, Player_States.ON_BACK, null, Movement.NONE, null, false, 0);
@@ -423,7 +424,7 @@ namespace SpectatorFootball.GameNS
         {
             int rnd = CommonUtils.getRandomNum(1, 100);
             var t = getReturnerAction(ballx, bally, bLast_Play, rnd, bLefttoRight);
-            returnerWaitLocation(ballx, bally, t.Item1, t.Item2, t.Item3, t.Item4, t.Item4, bLefttoRight);
+            returnerWaitLocation(ballx, bally, t.Item1, t.Item2, t.Item3, t.Item4, t.Item5, bLefttoRight);
 
             return Tuple.Create(t.Item1, t.Item2, t.Item3, t.Item4, t.Item5 );
         }
@@ -453,10 +454,10 @@ namespace SpectatorFootball.GameNS
                 bReturn = true;
             else
             {
-                long dec_making_rating = p_and_r.pr.First().Decision_Making_Rating;
+                double avg_dont_run_out = 78.0;
                 double yards_from_back_of_endzone = Game_Engine_Helper.yards_from_end_of_endzone(ballx, bLefttoRight);
-                dec_making_rating += (long)yards_from_back_of_endzone;
-                if (rnd <= dec_making_rating)
+                avg_dont_run_out += (long)yards_from_back_of_endzone;
+                if (rnd <= avg_dont_run_out)
                 {
                     if ((ballx >= 100 && bLefttoRight) || ballx <= 0 && !bLefttoRight)
                         bKnell_with_Ball = true;
@@ -477,25 +478,16 @@ namespace SpectatorFootball.GameNS
                 Current_YardLine = ballx;
                 Current_Vertical_Percent_Pos = bally;
             }
-            else if (bOut_of_Bounds)
+            else if (bOut_of_Bounds || bDontField)
             {
                 Current_YardLine = ballx;
-                double offsetY = Game_Engine_Helper.isBallvertTop(bally) ? 1.0 : -1.0;
-                Current_Vertical_Percent_Pos = offsetY;
+                double offsetY = Game_Engine_Helper.isBallvertTop(bally) ? 5.0 : -5.0;
+                Current_Vertical_Percent_Pos = bally + offsetY;
             }
             else if (bOut_of_Endzone)
             {
                 Current_YardLine = bLefttoRight ? 105.0 : -5.0;
                 Current_Vertical_Percent_Pos = bally;
-            }
-            else if (bDontField)
-            {
-                double yoffset = 5.0;
-                Current_YardLine = ballx;
-                bool bTop = Game_Engine_Helper.isBallvertTop(Current_Vertical_Percent_Pos);
-                if (bTop)
-                    yoffset = -yoffset;
-                Current_Vertical_Percent_Pos += yoffset;
             }
             else
             {
@@ -503,9 +495,6 @@ namespace SpectatorFootball.GameNS
                 double offsetY = Game_Engine_Helper.isBallvertTop(bally) ? 20.0 : -20.0;
                 Current_Vertical_Percent_Pos = bally + offsetY;
             }
-
-
-
 
         }
 

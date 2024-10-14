@@ -242,7 +242,7 @@ namespace SpectatorFootball.unitTests.GameEngine_HelperTEST
             bool bTop = false;
             int rtemp = 10;
             Tuple<double, double> t = Game_Engine_Helper.getPuntLandingSpot(true, true, false, 55.0, 40.0, 50.0, bTop, rtemp, true);
-            Assert.IsTrue(t.Item1 >= 90.0 && t.Item1 <= 99.0 && t.Item2 == 99.0 );
+            Assert.IsTrue(t.Item2 <= 99.0 && t.Item2 >= 1.0);
         }
 
         [TestCategory("Unit")]
@@ -252,7 +252,7 @@ namespace SpectatorFootball.unitTests.GameEngine_HelperTEST
             bool bTop = true;
             int rtemp = 10;
             Tuple<double, double> t = Game_Engine_Helper.getPuntLandingSpot(true, true, false, 55.0, 40.0, 50.0, bTop, rtemp, true);
-            Assert.IsTrue(t.Item1 >= 90.0 && t.Item1 <= 99.0 && t.Item2 == 1.0);
+            Assert.IsTrue(t.Item2 <= 99.0 && t.Item2 >= 1.0);
         }
 
         [TestCategory("Unit")]
@@ -292,7 +292,7 @@ namespace SpectatorFootball.unitTests.GameEngine_HelperTEST
             bool bTop = false;
             int rtemp = 10;
             Tuple<double, double> t = Game_Engine_Helper.getPuntLandingSpot(true, true, false, 55.0, 40.0, 50.0, bTop, rtemp, false);
-            Assert.IsTrue(t.Item1 >= 1.0 && t.Item1 <= 10.0 && t.Item2 == 99.0);
+            Assert.IsTrue(t.Item2 <= 99.0 && t.Item2 >= 1.0);
         }
 
         [TestCategory("Unit")]
@@ -302,7 +302,7 @@ namespace SpectatorFootball.unitTests.GameEngine_HelperTEST
             bool bTop = true;
             int rtemp = 10;
             Tuple<double, double> t = Game_Engine_Helper.getPuntLandingSpot(true, true, false, 55.0, 40.0, 50.0, bTop, rtemp, false);
-            Assert.IsTrue(t.Item1 >= 1.0 && t.Item1 <= 10.0 && t.Item2 == 1.0);
+            Assert.IsTrue(t.Item2 <= 99.0 && t.Item2 >= 1.0);
         }
 
         [TestCategory("Unit")]
@@ -324,13 +324,6 @@ namespace SpectatorFootball.unitTests.GameEngine_HelperTEST
             Tuple<double, double> t = Game_Engine_Helper.getPuntLandingSpot(true, true, true, 55.0, 40.0, 50.0, bTop, rtemp, false);
             Assert.IsTrue(t.Item1 >= 1.0 && t.Item1 <= 10.0 && t.Item2 == -1.0);
         }
-
-        /*
-
-
-
-x 0 y 0 false        
-        */
 
         [TestCategory("Unit")]
         [TestMethod]

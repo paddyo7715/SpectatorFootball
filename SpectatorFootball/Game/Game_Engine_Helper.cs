@@ -654,6 +654,7 @@ namespace SpectatorFootball.GameNS
             double vertline = 0.0;
             bool bCatchable = false;
 
+
             if (!isCCeligble || !isCCLongEnough)
             {
                 yardline = current_yardline += MaxLen * Game_Engine_Helper.HorizontalAdj(bLefttoRight);
@@ -670,7 +671,15 @@ namespace SpectatorFootball.GameNS
                 if (isCCmade)
                     vertline = bTop ? TOP_MADE : BOTTOM_MADE;
                 else
-                    vertline = bTop ? TOP_NOT_MADE : BOTTOM_NOT_MADE;
+                {
+                    if (CommonUtils.getRandomTrueFalse())
+                    {
+                        yardline = current_yardline += MaxLen * Game_Engine_Helper.HorizontalAdj(bLefttoRight);
+                        vertline = MaxVert;
+                    }
+                    else
+                        vertline = bTop ? TOP_NOT_MADE : BOTTOM_NOT_MADE;
+                }
             }
 
             //Make sure punt is not too far left or right out of the endzone
@@ -687,7 +696,7 @@ namespace SpectatorFootball.GameNS
         }
         public static bool isBallvertTop(double y)
         {
-            if (y > 50.0)
+            if (y <= 50.0)
                 return true;
             else
                 return false;

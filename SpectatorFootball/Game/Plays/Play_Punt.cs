@@ -1,10 +1,12 @@
 ﻿using log4net;
+using OxyPlot.Wpf;
 using SpectatorFootball.Common;
 using SpectatorFootball.Enum;
 using SpectatorFootball.GameNS;
 using SpectatorFootball.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Reflection;
@@ -120,17 +122,16 @@ namespace SpectatorFootball.GameNS
                     var tBallAct = Game_Engine_Helper.getPuntLandingSpot_and_isCatchable(r.bCoffinCornerAttemt, bPuntLogEnoughfor_CC, r.bCoffinCornerMade, MaxPuntLen, MaxPuntVert, starting_yl, bLefttoRight);
 
                     BallPuntedPlayersRun(gBall, Punt_Players, Return_Players, tBallAct, r.Punter, r.Punt_Returner, tackle_groups, r, bLast_Play, bLefttoRight, bSim);
-                    //ball goes in the air, kicker returns to standing possision then runs, the players
-                    //in the 3 groups run.
-                    //the ball can go out of bound.
+                    if (r.bPunt_Returned)
+                    {
+                        //punter returns ball
+                        //have him run thru the 3 groups and punter in this one method.
+                    }    
 
-                    //ball is either normal kick, coffine corner attempt or made or in endzone.
                 }
             }
 
-            //bpo be sure to do the following
-            //need to check if the attacking team recovers the ball in the endzone or if the punt team recovers in the endzone for safety.
-            //if not then the team will switch possession.  Need to set switch possession setting if ball is recovered in endzone by other team.
+
 
             return r;
         }
@@ -144,18 +145,9 @@ namespace SpectatorFootball.GameNS
             double prevBallX = gBall.Current_YardLine;
             double prevBallY = gBall.Current_Vertical_Percent_Pos;
 
-            gBall.Current_YardLine = newBallX;
-            gBall.Current_Vertical_Percent_Pos = newBallY;
+            int delay_factor = 3;
 
-            if (bSim)
-            {
-                if (pr.bPunt_Out_of_Bounds)
-                    gBall.Punt_Out_of_Bounds(bLefttoRight);
-                else if (pr.bPunt_Out_of_Endzone)
-                    gBall.Punt_Out_of_Endzone(bLefttoRight);
-                else
-                    gBall.Punt_End_Over_End_Thru_Air();
-            }
+            int tgroup_ind = 0;
 
             int id_Players = 0;
             foreach (Game_Player p in Punt_Players)
@@ -174,7 +166,7 @@ namespace SpectatorFootball.GameNS
                     p.Current_YardLine += yardline_Offset * Game_Engine_Helper.HorizontalAdj(bLefttoRight);
                     p.Current_Vertical_Percent_Pos = vert_offset;
 
-                    if (bSim)
+                    if (!bSim)
                     {
                         Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
                         p.Punter_Put_Leg_Down_and_Run(moving_ps, prev_yl, prev_v);
@@ -182,8 +174,12 @@ namespace SpectatorFootball.GameNS
                 }
                 else
                 {
-                    int tgroup_ind = Game_Engine_Helper.getTackleGroup(id_Players, tGroups);
-                    int delay = tgroup_ind * 2;
+                    tgroup_ind = Game_Engine_Helper.getTackleGroup(id_Players, tGroups);
+                    int slot = tGroups[tgroup_ind].IndexOf(id_Players);
+
+                    p.Current_YardLine += getAttBlkyl(newBallX, p.Current_YardLine, tgroup_ind) * Game_Engine_Helper.HorizontalAdj(bLefttoRight);
+                    p.Current_Vertical_Percent_Pos = getAttBlkVert(newBallY, slot);
+                    int delay = tgroup_ind * delay_factor + 1;
                     Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
                     p.Delay_Then_Run_and_Stand(moving_ps, prev_yl, prev_v, delay);
                 }
@@ -200,36 +196,61 @@ namespace SpectatorFootball.GameNS
                 {
                     var tRetAct = r.Punt_Returner.PuntReturnerActions(newBallX, newBallY, bLast_Play, bLefttoRight);
 
+                    gBall.Current_YardLine = newBallX;
+                    gBall.Current_Vertical_Percent_Pos = newBallY;
+
                     pr.bPunt_Out_of_Bounds = tRetAct.Item1;
                     pr.bPunt_Out_of_Endzone = tRetAct.Item2;
                     pr.bPunt_KneelDown = tRetAct.Item3;
                     pr.bPunt_Returned = tRetAct.Item4;
                     pr.bPunt_Not_Fielded = tRetAct.Item5;
 
-                    if (bSim)
+                    if (pr.bPunt_Out_of_Bounds)
+                        gBall.Punt_Out_of_Bounds(bLefttoRight);
+                    else if (pr.bPunt_Out_of_Endzone)
+                        gBall.Punt_End_Over_End_Thru_Air_Not_Caught(bLefttoRight);
+                    else if (pr.bPunt_Not_Fielded)
+                        gBall.Punt_End_Over_End_Thru_Air_Not_Caught(bLefttoRight);
+                    else
+                        gBall.Punt_End_Over_End_Thru_Air(prevBallX, prevBallY, bLefttoRight);
+
+                    logger.Debug("Punt Result: " + pr.bPunt_blocked + " " + pr.bPunt_Out_of_Bounds + " " + pr.bPunt_Out_of_Endzone + " " + pr.bKick_KneelDown + " " + pr.bPunt_Not_Fielded + " " + pr.bPunt_Returned + " " + newBallX + " " + newBallY + " " + p.Current_YardLine + " " + p.Current_Vertical_Percent_Pos);
+
+                    if (!bSim)
                     {
                         Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, false, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
-                        if (pr.bPunt_Out_of_Endzone || pr.bPunt_Out_of_Bounds || pr.bPunt_Out_of_Bounds)
+                        if (pr.bPunt_Out_of_Endzone || pr.bPunt_Out_of_Bounds)
                             p.Run_Then_Stand(moving_ps, prev_yl, prev_v);
-                        else if (pr.bPunt_KneelDown || pr.bPunt_Returned)
+                        else if (pr.bPunt_KneelDown)
                             p.Run_Then_CatchKick(moving_ps, prev_yl, prev_v);
+                        else if (pr.bPunt_Returned)
+                            p.Run_Then_CatchKick(moving_ps, prev_yl, prev_v);
+                        else if (pr.bPunt_Not_Fielded)
+                            p.Run_Then_Stand(moving_ps, prev_yl, prev_v);
                     }
                 }
                 else
                 {
-                    int tgroup_ind = Game_Engine_Helper.getTackleGroup(id_Players, tGroups);
-                    int delay = tgroup_ind * 2;
+                    p.Current_YardLine = Punt_Players[id_Players].Current_YardLine + (app_Constants.PUNT_DIST_BETWEEN_BLOCK_ATTACHERS * Game_Engine_Helper.HorizontalAdj(bLefttoRight));
+                    p.Current_Vertical_Percent_Pos = Punt_Players[id_Players].Current_Vertical_Percent_Pos;
+                    tgroup_ind = Game_Engine_Helper.getTackleGroup(id_Players, tGroups);
+                    int delay = tgroup_ind * delay_factor + 1;
                     Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, false, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
                     p.Delay_Then_Run_and_Stand(moving_ps, prev_yl, prev_v, delay);
                 }
                 id_Players++;
             }
 
+
+
+
+
+
             //If the returner kneels then we need to do antoher stage
             if (pr.bPunt_KneelDown)
             {
                 foreach (Game_Player p in Punt_Players)
-                    if (bSim) p.Same_As_Last_Action();
+                    if (!bSim) p.Same_As_Last_Action();
 
                 foreach (Game_Player p in Return_Players)
                 {
@@ -247,7 +268,7 @@ namespace SpectatorFootball.GameNS
                         }
                     }
                     else
-                       if (bSim) p.Same_As_Last_Action();
+                       if (!bSim) p.Same_As_Last_Action();
                 }
             }
         }
@@ -375,7 +396,6 @@ namespace SpectatorFootball.GameNS
 
             return r;
         }
-
 
         private void Set_Ball_and_Players_Before_Snap(Game_Ball gBall, List<Game_Player> Punt_Players, List<Game_Player> Return_Players,
            Formation Punt_Formation, Formation Return_Formation, bool bSim)
@@ -616,7 +636,54 @@ namespace SpectatorFootball.GameNS
 
             return Tuple.Create(realPuntLen, Punt_Vert);
         }
- 
+
+        public double getAttBlkVert(double bally, int slot)
+        {
+            double r = 0;
+            double too_low = 90.0;
+            double too_high = 10.0;
+
+            slot -= 2;
+
+            if (bally < too_high)
+                bally = 20.0;
+            else if (bally > too_low)
+                bally = 80.0;
+
+            r = bally + app_Constants.PUNT_GROUP_VERT_DIST * slot;
+
+            return r;
+        }
+
+        public double getAttBlkyl(double ballx, double playerx, int group)
+        {
+            double r = 0;
+            int min_yl, max_yl = 0;
+
+            switch (group)
+            {
+                case 0:
+                    min_yl = app_Constants.PUNT_GROUP_1_MIN;
+                    max_yl = app_Constants.PUNT_GROUP_1_MAX;
+                    break;
+                case 1:
+                    min_yl = app_Constants.PUNT_GROUP_2_MIN;
+                    max_yl = app_Constants.PUNT_GROUP_2_MAX;
+                    break;
+                case 2:
+                    min_yl = app_Constants.PUNT_GROUP_3_MIN;
+                    max_yl = app_Constants.PUNT_GROUP_3_MAX;
+                    break;
+                default:
+                    throw new Exception("Error in method getAttBlkyl, unknow group index " + group );
+            }
+
+            int yard_off_returner = CommonUtils.getRandomNum(min_yl, max_yl) + app_Constants.PUNT_GROUP_1_MIN;
+            r = Math.Abs(ballx - playerx) - yard_off_returner;
+
+            return r;
+        }
+
     }
 }
 

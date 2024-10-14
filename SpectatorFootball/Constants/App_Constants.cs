@@ -587,13 +587,13 @@ namespace SpectatorFootball
         public const int PUNT_MIN_LONG_DISTANCE = 46;
         public const int PUNT_MAX_LONG_DISTANCE = 55;
 
-        public const int PUNT_GROUP_1_MIN = 8;
-        public const int PUNT_GROUP_1_MAX = 11;
-        public const int PUNT_GROUP_2_MIN = 20;
-        public const int PUNT_GROUP_2_MAX = 21;
-        public const int PUNT_GROUP_3_MIN = 32;
-        public const int PUNT_GROUP_3_MAX = 35;
-        public const int PUNT_KICKER_FROM_RETURNER = 45;
+        public const int PUNT_GROUP_1_MIN = 4;
+        public const int PUNT_GROUP_1_MAX = 7;
+        public const int PUNT_GROUP_2_MIN = 14;
+        public const int PUNT_GROUP_2_MAX = 17;
+        public const int PUNT_GROUP_3_MIN = 24;
+        public const int PUNT_GROUP_3_MAX = 27;
+        public const int PUNT_KICKER_FROM_RETURNER = 34;
         public const double PUNT_GROUP_VERT_DIST = 7.0;
         public const double PUNT_DIST_BETWEEN_BLOCK_ATTACHERS = 1.00;
 
