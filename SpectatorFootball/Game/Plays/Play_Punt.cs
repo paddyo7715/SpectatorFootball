@@ -34,12 +34,12 @@ namespace SpectatorFootball.GameNS
         private Formation Return_Formation = null;
         List<Game_Player> Blockers = null;
         List<Game_Player> Attackers = null;
+        private List<Game_Player> Missed_Tackles = new List<Game_Player>();
 
         public Play_Result r = new Play_Result();
 
-        Play_Enum Play { get; set; } = Play_Enum.PUNT;
+        public Play_Enum Play { get; set; } = Play_Enum.PUNT;
 
-        Play_Enum iPlay.Play { get => throw new NotImplementedException(); set => throw new NotImplementedException(); } private Formation Kickoff_Formation = null;
         public Play_Punt(Formation Punt_Formation, Formation Return_Formation, long Possessing_Team_Id, long at, long ht, Game_Ball gBall, List<Game_Player> Punt_Players, List<Game_Player> Return_Players, bool bLefttoRight, bool bSim, bool bLast_Play)
         {
             this.Possessing_Team_Id = Possessing_Team_Id;
@@ -78,7 +78,6 @@ namespace SpectatorFootball.GameNS
         public Play_Result Execute(bool bPreSnapPenalty)
         {
             List<string> Play_Stages = new List<string>();
-            List<Game_Player> Missed_Tackles = new List<Game_Player>();
             double retuner_catches_ball_yl = 0.0;
             double first_block_dropback_yards = 3.0;
             double starting_yl = gBall.Current_YardLine;
@@ -123,10 +122,7 @@ namespace SpectatorFootball.GameNS
 
                     BallPuntedPlayersRun(gBall, Punt_Players, Return_Players, tBallAct, r.Punter, r.Punt_Returner, tackle_groups, r, bLast_Play, bLefttoRight, bSim);
                     if (r.bPunt_Returned)
-                    {
-                        //punter returns ball
-                        //have him run thru the 3 groups and punter in this one method.
-                    }    
+                        r = return_punt(Punt_Players, Return_Players, gBall, tackle_groups, r);
 
                 }
             }
@@ -241,11 +237,6 @@ namespace SpectatorFootball.GameNS
                 id_Players++;
             }
 
-
-
-
-
-
             //If the returner kneels then we need to do antoher stage
             if (pr.bPunt_KneelDown)
             {
@@ -285,19 +276,19 @@ namespace SpectatorFootball.GameNS
             return r;
         }
 
-        public static Play_Result setPlayerActions(Formation Kickoff_Formation, Formation Return_Formation,
-            List<Game_Player> Kickoff_Players, List<Game_Player> Return_Players, Play_Result pResult)
+        public static Play_Result setPlayerActions(Formation Punt_Formation, Formation Punt_Return_Formation,
+            List<Game_Player> Punt_Players, List<Game_Player> Return_Players, Play_Result pResult)
         {
             Play_Result r = pResult;
 
-            r.Punter = Kickoff_Players[(int)Kickoff_Formation.KickerIndex];
+            r.Punter = Punt_Players[(int)Punt_Formation.KickerIndex];
             //Get the kicker - kicker and returner must be slot 5 in the formation
-            r.Punt_Returner = Return_Players[(int)Return_Formation.ReturnerIndex];
+            r.Punt_Returner = Return_Players[(int)Punt_Return_Formation.ReturnerIndex];
 
             //for testing print out all the players and their relevant ratings
-            logger.Debug("Kickoff Players");
+            logger.Debug("Punt Players");
             int d_index = 0;
-            foreach (Game_Player p in Kickoff_Players)
+            foreach (Game_Player p in Punt_Players)
             {
                 if (p != r.Punter)
                     r.Punt_Defenders.Add(p);
@@ -684,6 +675,586 @@ namespace SpectatorFootball.GameNS
             return r;
         }
 
+        private Play_Result return_punt(List<Game_Player> Punt_Players, List<Game_Player> Return_Players,
+            Game_Ball gBall, List<List<int?>> tGroups, Play_Result r)
+        {
+            int slot_index, prev_slot_index = 0;
+            List<int> Past_Blocker_Tackler_List = new List<int>();
+            int id_Players = 0;
+
+            slot_index = getInitialSlot(gBall.Current_Vertical_Percent_Pos);
+
+            List<int?> group = new List<int?>();
+            for (int i = 1; i <= app_Constants.PUNT_TACKLING_GROUPS; i++)
+            {
+                group = tGroups[i-1];
+
+                bool bFindOpenSlot = false;
+                double agility = r.Returner.p_and_r.pr.First().Agilty_Rating;
+                bFindOpenSlot = ReturnerLookforHole(agility);
+
+                int Tackler_Index = 0;
+                double dbetweenVert = 0.0;
+
+                bool bAnySlot = i == 1 ? true : false;
+                prev_slot_index = slot_index;
+                slot_index = getPuntReturnRunSlot(slot_index, bFindOpenSlot, group, bAnySlot);
+
+                List<int> TB_List = new List<int>();  //tacklers/blocker around the returner
+
+                double returner_swerve_vert = 0.0;
+                double Breakthrough_len = 0.0;
+                double Breakthrough_vert = 0.0;
+
+                double returner_before_tackler_yardline = 0.0;
+                double returner_before_tackler_vert = 0.0;
+                double returner_hole_yl = 0.0;
+                double outofBound_yl = 0.0;
+                double outofBound_vert = 0.0;
+
+                bool bSwereUp;
+
+                if (group[slot_index] != null)
+                {
+                    Tackler_Index = (int)group[slot_index];
+                    TB_List.Add(Tackler_Index);
+
+                    dbetweenVert = app_Constants.PUNT_GROUP_VERT_DIST / 2.0;
+
+                    bSwereUp = CommonUtils.getRandomTrueFalse();
+                    if (bSwereUp)
+                        dbetweenVert *= -1;
+                    int? adjacent_tackler = getPossibleUporDownTackler(bSwereUp, slot_index, group);
+                    if (adjacent_tackler != null)
+                        TB_List.Add((int)adjacent_tackler);
+                }
+                else
+                {
+                    //Since the returner is running to an open slot, let's see if the slot just above and below has potential tacklers
+                    TB_List.AddRange(getPossibleAdjacentTacklers(slot_index, group));
+                }
+
+                if (TB_List.Count > 0)
+                {
+                    int ind_close_Tklr = getClosestKickGroupPlayerInd(slot_index, group);
+
+                    //Will the returner run out of bounds
+/*                    r.bRunOutofBounds = r.Returner.Kickoff_GoOutofBounds(bLast_Play, CommonUtils.getRandomTrueFalse(), slot_index, r.Returner.Current_Vertical_Percent_Pos);
+                    if (r.bRunOutofBounds)
+                    {
+                        r.bRunOutofBounds = true;
+                        outofBound_yl = Kickoff_Players[ind_close_Tklr].Current_YardLine;
+                        outofBound_vert = r.Returner.VertForNearestSideline(r.Returner.Current_Vertical_Percent_Pos);
+                    }
+*/
+                }
+
+//                if (!r.bRunOutofBounds)
+//                {
+                    //go thru the tacler/blocker list to determine if a tackle is made
+                    int b_list_ind = CommonUtils.getRandomIndex(TB_List.Count);
+                    for (int tb_xx = 0; tb_xx < TB_List.Count; tb_xx++)
+                    {
+                        int tackler_ind = TB_List[b_list_ind];
+                        block_result br = Game_Engine_Helper.Attempt_Block(true,
+                            CommonUtils.getRandomNum(1, app_Constants.BLOCKING_MAX_RAND),
+                            Return_Players[tackler_ind].p_and_r.pr.First().Pass_Block_Rating,
+                            Return_Players[tackler_ind].p_and_r.pr.First().Run_Block_Rating,
+                            Return_Players[tackler_ind].p_and_r.pr.First().Agilty_Rating,
+                            Punt_Players[tackler_ind].p_and_r.pr.First().Pass_Attack_Rating,
+                            Punt_Players[tackler_ind].p_and_r.pr.First().Run_Attack_Rating,
+                            Punt_Players[tackler_ind].p_and_r.pr.First().Agilty_Rating,
+                            Punt_Players[tackler_ind].p_and_r.pr.First().Speed_Rating);
+
+                        long tackler_tackle_rating = Punt_Players[tackler_ind].p_and_r.pr.First().Tackle_Rating;
+                        //adjust potential tackler's tackle rating based on the block
+                        tackler_tackle_rating = Game_Engine_Helper.AdjustTackleRating_forBlock(br, tackler_tackle_rating);
+
+                        bool bTack = Game_Engine_Helper.Make_Tackle(
+                            r.Punt_Returner.p_and_r.pr.First().Speed_Rating,
+                            r.Punt_Returner.p_and_r.pr.First().Agilty_Rating,
+                            r.Punt_Returner.p_and_r.pr.First().Running_Power_Rating,
+                            tackler_tackle_rating);
+
+                        if (bTack)
+                            r.Tackler = Punt_Players[tackler_ind];
+                        else
+                            Missed_Tackles.Add(Punt_Players[tackler_ind]);
+
+                        if (r.Tackler != null)
+                            break;
+
+                        if (b_list_ind == TB_List.Count - 1)
+                            b_list_ind = 0;
+                        else
+                            b_list_ind++;
+//                    }
+
+                    if (TB_List.Count > 0)
+                    {
+                        int ind_close_Tklr = getClosestKickGroupPlayerInd(slot_index, group);
+
+                        //the runner will run one yard before the tackler and then swerve up or down
+
+                        returner_hole_yl = Punt_Players[ind_close_Tklr].Current_YardLine;
+//bpo stopped her
+                        if (group[slot_index] != null)
+                            returner_before_tackler_yardline = returner_hole_yl - (app_Constants.PUNT_YARDS_BEFORE_TACKLER * Game_Engine_Helper.HorizontalAdj(bLefttoRight));
+                        else
+                            returner_before_tackler_yardline = returner_hole_yl - (app_Constants.PUNT_YARDS_BEFORE_TACKLER2 * Game_Engine_Helper.HorizontalAdj(bLefttoRight));
+
+                        returner_before_tackler_vert = r.Punt_Returner.Current_Vertical_Percent_Pos + getPuntGroupOffset(slot_index);
+                        returner_swerve_vert = returner_before_tackler_vert + dbetweenVert;
+                    }
+                    else
+                    {
+                        Breakthrough_vert = r.Punt_Returner.Current_Vertical_Percent_Pos + getPuntGroupOffset(slot_index);
+                        Breakthrough_len = (app_Constants.PUNT_GROUP_1_MAX - app_Constants.PUNT_GROUP_1_MIN) + (app_Constants.PUNT_GROUP_2_MIN - app_Constants.PUNT_GROUP_1_MAX) * Game_Engine_Helper.HorizontalAdj(bLefttoRight);
+
+                    }
+                }
+
+                id_Players = 0;
+                foreach (Game_Player p in Punt_Players)
+                {
+                    if (p == r.Punter)  
+                    {
+                        double prev_yl = p.Current_YardLine;
+                        double prev_v = p.Current_Vertical_Percent_Pos;
+
+                        if (TB_List.Count > 0)
+                            p.Current_Vertical_Percent_Pos = returner_before_tackler_vert;
+                        else
+                            p.Current_Vertical_Percent_Pos = Breakthrough_vert;
+
+                        if (!bSim)
+                        {
+                            Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, false, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
+                            p.Run_With_Ball(moving_ps, prev_yl, prev_v);
+
+                            if (TB_List.Count > 0 && !r.bRunOutofBounds)
+                                p.Stand();
+                        }
+
+                    }
+                    else if (TB_List.Contains(id_Players))
+                    {
+                        //keep blocking till the returner runs up to you
+                        if (!bSim)
+                            p.Block(false);
+
+                        double prev_yl = p.Current_YardLine;
+                        double prev_v = p.Current_Vertical_Percent_Pos;
+
+                        p.Current_YardLine = returner_hole_yl;
+                        p.Current_Vertical_Percent_Pos = returner_swerve_vert;
+
+                        //Move vertically to make the tackle
+                        if (!bSim && !r.bRunOutofBounds)
+                        {
+                            Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, false, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
+                            p.Attempt_Tackle(moving_ps, prev_yl, prev_v);
+                        }
+                    }
+                    // Players from previous groups should still do what they last did not go back to blocking
+                    else if (Past_Blocker_Tackler_List.Contains(id_Players))
+                    {
+                        if (!bSim)
+                        {
+                            p.Same_As_Last_Action();
+                            if (TB_List.Count > 0 && !r.bRunOutofBounds)
+                                p.Same_As_Last_Action();
+                        }
+                    }
+                    else
+                    {
+                        if (!bSim)
+                        {
+                            p.Block(false);
+                            //If there is a tackler then  continue to block while he attempts the tackle
+                            if (TB_List.Count > 0 && !r.bRunOutofBounds)
+                                p.Block(false);
+                        }
+                    }
+                    id_Players++;
+                }
+
+                id_Players = 0;
+                foreach (Game_Player p in Return_Players)
+                {
+                    if (p == r.Punt_Returner)  //Kick Returner
+                    {
+ //                       if (r.bTouchback)
+ //                       {
+                            if (!bSim)
+                            {
+                                p.Kneel_With_Ball(p.Current_YardLine, p.Current_Vertical_Percent_Pos);
+
+                                //for the ball
+                                gBall.Carried_Fake_Movement(1);
+                            }
+//                        }
+/*                        else if (r.bRunOutofBounds)
+                        {
+                            logger.Debug("Returner Runs out of Bounds:");
+
+                            double prev_yl = p.Current_YardLine;
+                            double prev_v = p.Current_Vertical_Percent_Pos;
+
+                            p.Current_YardLine = outofBound_yl;
+                            p.Current_Vertical_Percent_Pos = outofBound_vert;
+
+                            gBall.Current_YardLine = p.Current_YardLine;
+                            gBall.Current_Vertical_Percent_Pos = p.Current_Vertical_Percent_Pos;
+
+                            if (!bSim)
+                            {
+                                Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
+                                p.Run_and_GoOut_of_Bounds(moving_ps, prev_yl, prev_v, bLefttoRight);
+
+                                //for the ball
+                                gBall.Carried_Out_of_Bounds(prev_yl, prev_v, bLefttoRight);
+                            }
+                        } */
+                        else if (TB_List.Count > 0)
+                        {
+                            logger.Debug("Returner runs up to tackler:");
+
+                            double prev_yl = p.Current_YardLine;
+                            double prev_v = p.Current_Vertical_Percent_Pos;
+
+                            p.Current_YardLine = returner_before_tackler_yardline;
+                            p.Current_Vertical_Percent_Pos = returner_before_tackler_vert;
+
+                            //must move the ball too, even thogh it will not be visible.
+                            gBall.Current_YardLine = p.Current_YardLine;
+                            gBall.Current_Vertical_Percent_Pos = p.Current_Vertical_Percent_Pos;
+
+                            if (!bSim)
+                            {
+                                Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
+                                p.Run_With_Ball(moving_ps, prev_yl, prev_v);
+
+                                //for the ball
+                                gBall.Carried(prev_yl, prev_v);
+                            }
+
+                            //he either gets tackled or not
+                            prev_yl = p.Current_YardLine;
+                            prev_v = p.Current_Vertical_Percent_Pos;
+
+                            p.Current_YardLine = returner_hole_yl;
+                            p.Current_Vertical_Percent_Pos = returner_swerve_vert;
+
+                            //must move the ball too, even thogh it will not be visible.
+                            gBall.Current_YardLine = p.Current_YardLine;
+                            gBall.Current_Vertical_Percent_Pos = p.Current_Vertical_Percent_Pos;
+
+                            if (!bSim)
+                            {
+                                Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
+                                if (r.Tackler != null)
+                                {
+                                    p.Run_and_Tackled(moving_ps, prev_yl, prev_v);
+                                    gBall.Carried_Tackled(prev_yl, prev_v);
+                                }
+                                else
+                                {
+                                    p.Run_With_Ball(moving_ps, prev_yl, prev_v);
+                                    //for the ball
+                                    gBall.Carried(prev_yl, prev_v);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            double prev_yl = p.Current_YardLine;
+                            double prev_v = p.Current_Vertical_Percent_Pos;
+
+                            p.Current_YardLine += Breakthrough_len;
+                            p.Current_Vertical_Percent_Pos = Breakthrough_vert;
+
+                            gBall.Current_YardLine = p.Current_YardLine;
+                            gBall.Current_Vertical_Percent_Pos = p.Current_Vertical_Percent_Pos;
+
+                            if (!bSim)
+                            {
+                                Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
+                                p.Run_With_Ball(moving_ps, prev_yl, prev_v);
+
+                                //for the ball
+                                gBall.Carried(prev_yl, prev_v);
+                            }
+                        }
+                    }
+                    // Players from previous groups should still do what they last did not go back to blocking
+                    else if (Past_Blocker_Tackler_List.Contains(id_Players))
+                    {
+                        if (!bSim)
+                        {
+                            p.Same_As_Last_Action();
+                            if (TB_List.Count > 0 && !r.bRunOutofBounds)
+                                p.Same_As_Last_Action();
+                        }
+                    }
+                    else if (TB_List.Contains(id_Players))
+                    {
+                        if (!bSim)
+                        {
+                            p.Block(true);
+
+                            if (!r.bRunOutofBounds)
+                                p.Stand();
+                        }
+                    }
+                    else
+                    {
+                        if (!bSim)
+                        {
+                            p.Block(true);
+
+                            if (TB_List.Count > 0 && !r.bRunOutofBounds)
+                                p.Block(true);
+                        }
+                    }
+                    id_Players++;
+                }
+
+                //bpo test code take it out
+                //bTackled = true;
+                //=========================
+
+                //if there is a tackle then check if the ball is fumbled.
+                if (r.Tackler != null)
+                {
+                    long ball_safety_rating = r.Returner.p_and_r.pr.First().Ball_Safety_Rating;
+                    long tackle_rating = r.Tackler.p_and_r.pr.First().Tackle_Rating;
+                    long run_attack_rating = r.Tackler.p_and_r.pr.First().Run_Attack_Rating;
+
+                    r.bFumble = Game_Engine_Helper.DoesBallCarrierFumble(
+                               Ball_Carry_Actions.KICK_RETURN,
+                               ball_safety_rating, tackle_rating, run_attack_rating);
+
+                    //if there is a fumble then there can not be a tackle, but give the tackler
+                    //creit for forcing the fumble
+                    if (r.bFumble)
+                    {
+                        r.Forced_Fumble_Tackler = r.Tackler;
+                        List<Game_Player> pFumble_Rec_Punt_Players = new List<Game_Player>();
+                        List<Game_Player> pFumble_Rec_Return_Players = new List<Game_Player>();
+                        List<int> closest_players = getPuntGroupClosestPlayers(slot_index, group);
+                        getBothGroupSlotPlayers(Punt_Players, Return_Players,
+                            pFumble_Rec_Punt_Players, pFumble_Rec_Return_Players, closest_players);
+                        pFumble_Rec_Return_Players.Add(r.Returner);
+                        Tuple<Game_Player, bool> t = Playstub_Fumble.Execute(bLefttoRight, gBall,
+                            Punt_Players, Return_Players,
+                            pFumble_Rec_Punt_Players, pFumble_Rec_Return_Players,
+                            r.Returner, r.Tackler, bSim);
+
+                        r.Fumble_Recoverer = t.Item1;
+                        r.bFumble_Lost = t.Item2;
+
+                        //If there is a fumble then no tackle is awarded
+                        r.Tackler = null;
+                    }
+
+                    //Next pass in the players how could recover the fumble and get back
+                    //the player that recovers the ball.  I can then determine if the fumble
+                    //was lost and assign credit to the players
+                }
+
+                if (r.Tackler != null || r.bTouchback || r.bRunOutofBounds || r.bFumble)
+                    break;
+
+
+                Past_Blocker_Tackler_List.AddRange(group.Where(x => x != null).Select(x => (int)x).ToList());
+            }  //on group 1,2 or 3
+
+            return r;
+        }
+
+        public static bool ReturnerLookforHole(double agility)
+        {
+            bool r = false;
+
+            int agility_var = (int)agility - app_Constants.PUNT_AGILITY_CUTOFF;
+            int r_agile = CommonUtils.getRandomNum(1, app_Constants.PUNT_AVOID_TRACKER_CALC_VARIABLE);
+            if (r_agile <= agility_var)
+                r = true;
+
+            return r;
+        }
+
+        public static int getInitialSlot(double bally)
+        {
+            if (bally <= app_Constants.PUNT_TOP_VERT_CUTOFF)
+                return 0;
+            else if (bally >= app_Constants.PUNT_BOTTOM_VERT_CUTOFF)
+                return 4;
+            else
+                return 2;
+
+        }
+
+        public static int getPuntReturnRunSlot(int slot_index, bool bLookforhole, List<int?> group, bool bAnyFive)
+        {
+            int r;
+            List<int> empty_indexes = CommonUtils.GetIndexes(group, true);
+            List<int> possible_indexes = new List<int>();
+            if (bAnyFive)
+            {
+                if (bLookforhole && empty_indexes.Count() > 0)
+                    possible_indexes = empty_indexes;
+                else
+                    possible_indexes = CommonUtils.GetIndexes(group, false);
+            }
+            else
+            {
+                if (bLookforhole) //you can go a max of 2 up or down
+                {
+                    foreach (int i in empty_indexes)
+                    {
+                        if (i >= slot_index - app_Constants.PUNT_AFTER_FIRST_GROUP_SLOT_VARIANCE && i <= slot_index + app_Constants.PUNT_AFTER_FIRST_GROUP_SLOT_VARIANCE)
+                            possible_indexes.Add(i);
+                    }
+                    if (possible_indexes.Count() == 0)
+                    {
+                        for (int i = slot_index - app_Constants.PUNT_AFTER_FIRST_GROUP_SLOT_VARIANCE; i <= slot_index + app_Constants.PUNT_AFTER_FIRST_GROUP_SLOT_VARIANCE; i++)
+                        {
+                            if (i >= 0 && i < group.Count())
+                                possible_indexes.Add(i);
+                        }
+                    }
+                }
+                else
+                {
+                    for (int i = slot_index - app_Constants.PUNT_AFTER_FIRST_GROUP_SLOT_VARIANCE; i <= slot_index + app_Constants.PUNT_AFTER_FIRST_GROUP_SLOT_VARIANCE; i++)
+                    {
+                        if (i >= 0 && i < group.Count())
+                            possible_indexes.Add(i);
+                    }
+                }
+
+            }
+
+            int r_ind = CommonUtils.getRandomIndex(possible_indexes.Count());
+            r = possible_indexes[r_ind];
+
+            return r;
+        }
+        public static int? getPossibleUporDownTackler(bool bSwerveUp, int slot_index, List<int?> group)
+        {
+            int? r = null;
+
+            if (bSwerveUp)
+            {
+                if (slot_index > 0) r = group[slot_index - 1];
+            }
+            else
+            {
+                if (slot_index < app_Constants.PUNT_PLAYERS_IN_GROUP - 1) r = group[slot_index + 1];
+            }
+
+            return r;
+        }
+        public static List<int> getPossibleAdjacentTacklers(int slot_index, List<int?> group)
+        {
+            List<int> r = new List<int>();
+
+            //Check one spot above
+            if (slot_index > 0)
+            {
+                int above_slot = slot_index - 1;
+                if (group[above_slot] != null)
+                    r.Add((int)group[above_slot]);
+            }
+
+            //Check one apot below
+            if (slot_index < app_Constants.PUNT_PLAYERS_IN_GROUP - 1)
+            {
+                int below_slot = slot_index + 1;
+                if (group[below_slot] != null)
+                    r.Add((int)group[below_slot]);
+            }
+
+            return r;
+        }
+        public static int getClosestKickGroupPlayerInd(int slot_index, List<int?> Group)
+        {
+            int r, g;
+            List<int> Possible_Indexes = new List<int>();
+
+            if (Group[slot_index] != null)
+                Possible_Indexes.Add(slot_index);
+
+            if (slot_index > 0 && Group[slot_index - 1] != null)
+                Possible_Indexes.Add(slot_index - 1);
+
+            if (slot_index < app_Constants.PUNT_PLAYERS_IN_GROUP - 1 && Group[slot_index + 1] != null)
+                Possible_Indexes.Add(slot_index + 1);
+
+            if (Possible_Indexes.Count == 0)
+                throw new Exception("Could not find closest tacker in method getClosestKickGroupPlayerInd");
+
+            int r_ind = CommonUtils.getRandomIndex(Possible_Indexes.Count());
+            g = Possible_Indexes[r_ind];
+
+            r = (int)Group[g];
+
+            return r;
+        }
+
+        public static double getPuntGroupOffset(int ind)
+        {
+            double r = 0;
+
+            ind -= 2;
+
+            r = app_Constants.PUNT_GROUP_VERT_DIST * ind;
+
+            return r;
+        }
+
+        public static List<int> getPuntGroupClosestPlayers(int slot_index, List<int?> group)
+        {
+            List<int> r = new List<int>();
+
+            //Check one spot above
+            if (slot_index > 0)
+            {
+                int above_slot = slot_index - 1;
+                if (group[above_slot] != null)
+                    r.Add((int)group[above_slot]);
+            }
+
+            //Check one apot below
+            if (slot_index < app_Constants.PUNT_PLAYERS_IN_GROUP - 1)
+            {
+                int below_slot = slot_index + 1;
+                if (group[below_slot] != null)
+                    r.Add((int)group[below_slot]);
+            }
+
+            if (group[slot_index] != null)
+                r.Add((int)group[slot_index]);
+
+            return r;
+        }
+
+        public static void getBothGroupSlotPlayers(
+            List<Game_Player> Punt_Players,
+            List<Game_Player> Return_Players,
+            List<Game_Player> pFumble_Rec_Punt_Players,
+            List<Game_Player> pFumble_Rec_Return_Players,
+            List<int> grpIndexes)
+        {
+
+            foreach (int i in grpIndexes)
+            {
+                pFumble_Rec_Punt_Players.Add(Punt_Players[i]);
+                pFumble_Rec_Return_Players.Add(Return_Players[i]);
+            }
+        }
     }
 }
 
