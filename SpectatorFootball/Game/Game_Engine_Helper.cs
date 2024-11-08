@@ -646,9 +646,9 @@ namespace SpectatorFootball.GameNS
             double FURTHEST_LEFT = -21.0;
             double FURTHEST_RIGHT = 121.0;
             double TOP_MADE = -1.0;
-            double TOP_NOT_MADE = 1.0;
+            double TOP_NOT_MADE = app_Constants.PUNT_GROUP_VERT_DIST;
             double BOTTOM_MADE = 101.0;
-            double BOTTOM_NOT_MADE = 99.0;
+            double BOTTOM_NOT_MADE = 100 - app_Constants.PUNT_GROUP_VERT_DIST;
 
             double yardline = 0.0;
             double vertline = 0.0;
@@ -701,7 +701,6 @@ namespace SpectatorFootball.GameNS
             else
                 return false;
         }
-
         public static bool isBounceBall(double ball_end_yl)
         {
             return ball_end_yl >= -37.0 && ball_end_yl <= 137;
@@ -725,6 +724,23 @@ namespace SpectatorFootball.GameNS
                 throw new Exception("Error in getTackleGroup: index not found in tackle groups!");
 
             return i;
+        }
+        public static Tuple<bool, bool> BlockedPuntTD_or_Safety(bool bPuntTeamRecovers, double yl, bool bLefttoRight)
+        {
+            bool bTD = false;
+            bool bSafety = false;
+
+            if ((bLefttoRight && yl <= 0.0) || !bLefttoRight && yl >= 100.0)
+            {
+                if (bPuntTeamRecovers)
+                    bSafety = true;
+                else
+                    bTD = true;
+            }
+            else if ((bLefttoRight && yl >= 100.0) || !bLefttoRight && yl <= 0.0)
+                bTD = true;
+
+            return Tuple.Create(bTD, bSafety);
         }
     }
 }

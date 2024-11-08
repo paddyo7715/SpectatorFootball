@@ -86,10 +86,12 @@ namespace SpectatorFootball.GameNS
             }
 
             //bpo test code
-            f = Formations_Enum.PUNT;
-            p = Play_Enum.PUNT;
-//            f = Formations_Enum.KICKOFF_ONSIDE_KICK;
-//            p = Play_Enum.KICKOFF_ONSIDES;
+                        f = Formations_Enum.PUNT;
+                        p = Play_Enum.PUNT;
+            //            f = Formations_Enum.KICKOFF_ONSIDE_KICK;
+            //            p = Play_Enum.KICKOFF_ONSIDES;
+//            f = Formations_Enum.KICKOFF_REGULAR_KICK;
+ //           p = Play_Enum.KICKOFF_NORMAL;
 
             //==========================================
 

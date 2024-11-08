@@ -190,10 +190,43 @@ namespace SpectatorFootball.GameNS
             bStage.Actions.Add(bas3);
             Stages.Add(bStage);
         }
+        public void Punt_End_Over_End_Thru_Air_Out_of_Endzone(bool blefttoRight)
+        {
+            const double BOUNCE_LENGTH = 2.0;
+            const double ROLL_LENGTH = 1.0;
+
+            double prev_yardline = Starting_YardLine;
+            double prev_vert = Starting_Vertical_Percent_Pos;
+
+            double dlefttoRight = blefttoRight ? 1 : -1;
+
+            PointXY new_end_point = null;
+
+            Action bas = new Action(Game_Object_Types.B, prev_yardline, prev_vert, Current_YardLine, Current_Vertical_Percent_Pos, false, null, Ball_States.PUNT_THRU_THE_AIR, Movement.LINE, Ball_Speed.SLOW, false, 0);
+
+            //Get the end point for bouncing ball
+            new_end_point = PointPlotter.getExtendedEndpoint(prev_yardline, prev_vert, Current_YardLine, Current_Vertical_Percent_Pos, BOUNCE_LENGTH * dlefttoRight);
+
+            State = Ball_States.BOUNCING;
+            Action bas2 = new Action(Game_Object_Types.B, Current_YardLine, Current_Vertical_Percent_Pos, new_end_point.x, new_end_point.y, false, null, Ball_States.BOUNCING, Movement.LINE, Ball_Speed.SLOW, false, 0);
+
+            //Get the end point for rolling ball
+            PointXY rolling_end_point = PointPlotter.getExtendedEndpoint(prev_yardline, prev_vert, new_end_point.x, new_end_point.y, ROLL_LENGTH * dlefttoRight);
+
+            State = Ball_States.ROLLING;
+            Action bas3 = new Action(Game_Object_Types.B, new_end_point.x, new_end_point.y, rolling_end_point.x, rolling_end_point.y, false, null, Ball_States.ROLLING, Movement.LINE, Ball_Speed.SLOW, false, 0);
+
+            Play_Stage bStage = new Play_Stage();
+            bStage.Main_Object = true;
+            bStage.Actions.Add(bas);
+            bStage.Actions.Add(bas2);
+            bStage.Actions.Add(bas3);
+            Stages.Add(bStage);
+        }
         public void Punt_End_Over_End_Thru_Air_Not_Caught(bool blefttoRight)
         {
-            const double BOUNCE_LENGTH = 4.0;
-            const double ROLL_LENGTH = 1.3;
+            const double BOUNCE_LENGTH = 6.0;
+            const double ROLL_LENGTH = 3.3;
 
             double prev_yardline = Starting_YardLine;
             double prev_vert = Starting_Vertical_Percent_Pos;
