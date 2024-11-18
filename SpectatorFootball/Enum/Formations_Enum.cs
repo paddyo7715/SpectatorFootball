@@ -19,6 +19,7 @@ namespace SpectatorFootball.Enum
             EXTRA_POINT_GOAL_LINE,
             EXTRA_POINT_DEFENSE,
             PUNT,
+            PUNT_GL,
             PUNT_RETURN
 
         }

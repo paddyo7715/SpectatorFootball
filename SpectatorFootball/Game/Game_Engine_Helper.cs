@@ -737,10 +737,34 @@ namespace SpectatorFootball.GameNS
                 else
                     bTD = true;
             }
-            else if ((bLefttoRight && yl >= 100.0) || !bLefttoRight && yl <= 0.0)
-                bTD = true;
 
             return Tuple.Create(bTD, bSafety);
+        }
+
+        public static double getPuntYards(double LOS, double ball_yl, bool bLefttoRight)
+        {
+            double r = 0.0;
+
+            if (bLefttoRight && ball_yl > 100.0)
+                ball_yl = 100.0;
+            else if (!bLefttoRight && ball_yl < 0.0)
+                ball_yl = 0.0;
+
+            if (bLefttoRight)
+                r = ball_yl - LOS;
+            else
+                r = LOS - ball_yl;
+
+            return r;
+        }
+
+        public static bool isBallOutofBounds(double y)
+        {
+            bool r = false;
+
+            if (y > 100.0 || y < 0.0) r = true;
+
+            return r;
         }
     }
 }

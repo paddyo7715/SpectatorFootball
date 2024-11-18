@@ -478,11 +478,17 @@ namespace SpectatorFootball.GameNS
                 Current_YardLine = ballx;
                 Current_Vertical_Percent_Pos = bally;
             }
-            else if (bOut_of_Bounds || bDontField)
+            else if (bOut_of_Bounds)
             {
                 Current_YardLine = ballx;
                 double offsetY = Game_Engine_Helper.isBallvertTop(bally) ? app_Constants.PUNT_GROUP_VERT_DIST : 100 - app_Constants.PUNT_GROUP_VERT_DIST;
                 Current_Vertical_Percent_Pos = offsetY;
+            }
+            else if (bDontField)
+            {
+                Current_YardLine = ballx;
+                double offsetY = Game_Engine_Helper.isBallvertTop(bally) ? app_Constants.PUNT_GROUP_VERT_DIST : -app_Constants.PUNT_GROUP_VERT_DIST;
+                Current_Vertical_Percent_Pos = bally + offsetY;
             }
             else if (bOut_of_Endzone)
             {

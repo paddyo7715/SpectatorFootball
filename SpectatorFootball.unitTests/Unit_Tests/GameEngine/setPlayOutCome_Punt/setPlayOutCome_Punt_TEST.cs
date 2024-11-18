@@ -2056,7 +2056,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             {
                 Player_ID = Punt_Blocker.p_and_r.p.ID,
                 punter_plays = 1,
-                Punts_Blocked = 1
+                punter_blocks = 1
             });
 
             double original_Yardline = 27.0;
@@ -2167,7 +2167,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             {
                 Player_ID = Punt_Blocker.p_and_r.p.ID,
                 punter_plays = 1,
-                Punts_Blocked = 1
+                punter_blocks = 1
             });
 
             double original_Yardline = 27.0;
@@ -2278,7 +2278,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             {
                 Player_ID = Punt_Blocker.p_and_r.p.ID,
                 punter_plays = 1,
-                Punts_Blocked = 1
+                punter_blocks = 1
             });
 
             double original_Yardline = 27.0;
@@ -5194,7 +5194,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             {
                 Player_ID = Punt_Blocker.p_and_r.p.ID,
                 punter_plays = 1,
-                Punts_Blocked = 1
+                punter_blocks = 1
             });
 
             bool bLefttoRgiht = false;
@@ -5304,7 +5304,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             {
                 Player_ID = Punt_Blocker.p_and_r.p.ID,
                 punter_plays = 1,
-                Punts_Blocked = 1
+                punter_blocks = 1
             });
 
             bool bLefttoRgiht = false;
@@ -5414,7 +5414,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             {
                 Player_ID = Punt_Blocker.p_and_r.p.ID,
                 punter_plays = 1,
-                Punts_Blocked = 1
+                punter_blocks = 1
             });
 
             bool bLefttoRgiht = false;

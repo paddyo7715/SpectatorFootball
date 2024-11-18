@@ -267,7 +267,6 @@ namespace SpectatorFootball.Models
         public long punt_rec_muffed_lost { get; set; }
  
         public long punt_muffed_recovered { get; set; }
-        public long Punts_Blocked { get; set; }
         public long ko_onside_play { get; set; }
         public long scrimmage_onside_play { get; set; }
         public long ko_onside_kick_att { get; set; }

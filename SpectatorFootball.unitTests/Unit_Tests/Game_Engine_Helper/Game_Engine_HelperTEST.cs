@@ -366,5 +366,170 @@ namespace SpectatorFootball.unitTests.GameEngine_HelperTEST
         {
             Assert.IsTrue(!Game_Engine_Helper.isPuntCatchable(0, 0));
         }
+
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void BlockedPuntTD_or_Safety_p_recovers_no_safety_or_TD_Left()
+        {
+            Tuple<bool, bool> t = Game_Engine_Helper.BlockedPuntTD_or_Safety(true, 0.1, true);
+
+            Assert.IsTrue(!t.Item1 && !t.Item2);
+        }
+
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void BlockedPuntTD_or_Safety_r_recovers_no_safety_or_TD_Left()
+        {
+            Tuple<bool, bool> t = Game_Engine_Helper.BlockedPuntTD_or_Safety(false, 0.1, true);
+
+            Assert.IsTrue(!t.Item1 && !t.Item2);
+        }
+
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void BlockedPuntTD_or_Safety_p_recovers_safety_Left()
+        {
+            Tuple<bool, bool> t = Game_Engine_Helper.BlockedPuntTD_or_Safety(true, -0.1, true);
+
+            Assert.IsTrue(!t.Item1 && t.Item2);
+        }
+
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void BlockedPuntTD_or_Safety_p_recovers_TD_Left()
+        {
+            Tuple<bool, bool> t = Game_Engine_Helper.BlockedPuntTD_or_Safety(false, 0.0, true);
+
+            Assert.IsTrue(t.Item1 && !t.Item2);
+        }
+
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void BlockedPuntTD_or_Safety_p_recovers_no_safety_or_TD_Right()
+        {
+            Tuple<bool, bool> t = Game_Engine_Helper.BlockedPuntTD_or_Safety(true, 99.9, false);
+
+            Assert.IsTrue(!t.Item1 && !t.Item2);
+        }
+
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void BlockedPuntTD_or_Safety_r_recovers_no_safety_or_TD_Right()
+        {
+            Tuple<bool, bool> t = Game_Engine_Helper.BlockedPuntTD_or_Safety(false, 99.9, false);
+
+            Assert.IsTrue(!t.Item1 && !t.Item2);
+        }
+
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void BlockedPuntTD_or_Safety_p_recovers_safety_Right()
+        {
+            Tuple<bool, bool> t = Game_Engine_Helper.BlockedPuntTD_or_Safety(true, 100.1, false);
+
+            Assert.IsTrue(!t.Item1 && t.Item2);
+        }
+
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void BlockedPuntTD_or_Safety_p_recovers_TD_Right()
+        {
+            Tuple<bool, bool> t = Game_Engine_Helper.BlockedPuntTD_or_Safety(false, 100.1, false);
+
+            Assert.IsTrue(t.Item1 && !t.Item2);
+        }
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void getPuntYards_Normal_Punt_Left()
+        {
+            double len = Game_Engine_Helper.getPuntYards(20.0, 59.9, true);
+
+            Assert.IsTrue(len == 39.9);
+        }
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void getPuntYards_Out_of_bounds_Left()
+        {
+            double len = Game_Engine_Helper.getPuntYards(20.0, 60.0, true);
+
+            Assert.IsTrue(len == 40.0);
+        }
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void getPuntYards_Downed_in_EZ_Left()
+        {
+            double len = Game_Engine_Helper.getPuntYards(60.0, 105.0, true);
+
+            Assert.IsTrue(len == 40.0);
+        }
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void getPuntYards_Out_of_EZ_Left()
+        {
+            double len = Game_Engine_Helper.getPuntYards(60.0, 115.0, true);
+
+            Assert.IsTrue(len == 40.0);
+        }
+
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void getPuntYards_Normal_Punt_Right()
+        {
+            double len = Game_Engine_Helper.getPuntYards(80.0, 40.1, false);
+
+            Assert.IsTrue(len == 39.9);
+        }
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void getPuntYards_Out_of_bounds_Right()
+        {
+            double len = Game_Engine_Helper.getPuntYards(80.0, 40.0, false);
+
+            Assert.IsTrue(len == 40.0);
+        }
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void getPuntYards_Downed_in_EZ_Right()
+        {
+            double len = Game_Engine_Helper.getPuntYards(40.0, -5.0, false);
+
+            Assert.IsTrue(len == 40.0);
+        }
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void getPuntYards_Out_of_EZ_Right()
+        {
+            double len = Game_Engine_Helper.getPuntYards(40.0, -15.0, false);
+
+            Assert.IsTrue(len == 40.0);
+        }
+
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void isBallOutofBounds_not_out_top()
+        { 
+            Assert.IsTrue(!Game_Engine_Helper.isBallOutofBounds(1.0));
+        }
+
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void isBallOutofBounds_not_out_bottom()
+        {
+            Assert.IsTrue(!Game_Engine_Helper.isBallOutofBounds(99.0));
+        }
+
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void isBallOutofBounds_out_top()
+        {
+            Assert.IsTrue(Game_Engine_Helper.isBallOutofBounds(-1.0));
+        }
+
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void isBallOutofBounds_out_bottom()
+        {
+            Assert.IsTrue(Game_Engine_Helper.isBallOutofBounds(100.1));
+        }
     }
 }

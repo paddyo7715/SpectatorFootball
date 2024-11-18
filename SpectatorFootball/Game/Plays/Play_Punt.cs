@@ -83,6 +83,8 @@ namespace SpectatorFootball.GameNS
             double starting_yl = gBall.Current_YardLine;
             bool bPuntLogEnoughfor_CC = false;
             double starting_yardline = gBall.Current_YardLine;
+            r.Play_Start_Yardline = starting_yardline;
+            double Punt_caught_yl = 0.0;
 
             Set_Ball_and_Players_Before_Snap(gBall, Punt_Players, Return_Players, Punt_Formation, Return_Formation, bSim);
 
@@ -120,17 +122,24 @@ namespace SpectatorFootball.GameNS
                     if (r.bCoffinCornerAttemt && bPuntLogEnoughfor_CC)
                         r.bCoffinCornerMade = Game_Engine_Helper.CoffinCornerMade(r.Punter.p_and_r.pr.First().Kicker_Leg_Power_Rating);
 
-                    var tackle_groups =  Game_Engine_Helper.setTackleGroups(Punt_Players, r.Punter);
+                    var tackle_groups = Game_Engine_Helper.setTackleGroups(Punt_Players, r.Punter);
                     var tBallAct = Game_Engine_Helper.getPuntLandingSpot_and_isCatchable(r.bCoffinCornerAttemt, bPuntLogEnoughfor_CC, r.bCoffinCornerMade, MaxPuntLen, MaxPuntVert, starting_yl, bLefttoRight);
+
+                    Punt_caught_yl = tBallAct.Item1;
 
                     BallPuntedPlayersRun(gBall, Punt_Players, Return_Players, tBallAct, r.Punter, r.Punt_Returner, tackle_groups, r, bLast_Play, bLefttoRight, bSim);
                     if (r.bPunt_Returned)
+                    {
                         r = return_punt(Punt_Players, Return_Players, gBall, tackle_groups, r, bLefttoRight);
+                        r.Yards_Returned = Game_Engine_Helper.getYardsGained(bLefttoRight, Punt_caught_yl, r.Punt_Returner.Current_YardLine);
+                    }
                 }
+
+                r.Punt_Yards = Game_Engine_Helper.getPuntYards(starting_yl, gBall.Current_YardLine, bLefttoRight);
+                r.end_of_play_yardline = gBall.Current_YardLine;
+
+                r.Play_Player_Stats = SetPlayerStats(r, Punt_Players, Return_Players, Missed_Tackles);
             }
-
-
-
             return r;
         }
 
@@ -1012,9 +1021,20 @@ namespace SpectatorFootball.GameNS
                     }
                 }
 
+                //set td or not
+                if (Game_Engine_Helper.isTouchdown(bLefttoRight, r.Punt_Returner.Current_YardLine, r.bTouchback))
+                {
+                    //handle case where the returner is tacked in the EZ
+                    r.Tackler = null;
+                    r.bFumble = false;
+                    r.bFumble_Lost = false;
+                    r.Fumble_Recoverer = null;
+                    r.Forced_Fumble_Tackler = null;
+                    break;
+                }
+
                 if (r.Tackler != null || r.bTouchback || r.bRunOutofBounds || r.bFumble)
                     break;
-
 
                 Past_Blocker_Tackler_List.AddRange(group.Where(x => x != null).Select(x => (int)x).ToList());
             }  //on group 1,2 or 3
@@ -1222,6 +1242,94 @@ namespace SpectatorFootball.GameNS
             }
         }
 
+        public static List<Game_Player_Stats> SetPlayerStats(Play_Result pr, List<Game_Player> Punt_Players, List<Game_Player> Return_Players,
+            List<Game_Player> Missed_Tackles)
+        {
+            long lTDs = pr.bTouchDown ? 1 : 0;
+            long lFubmle = pr.bFumble ? 1 : 0;
+            long lFubmle_Lost = pr.bFumble_Lost ? 1 : 0;
+            long lPunt_out_of_Endzone = pr.bPunt_Out_of_Endzone ? 1 : 0;           
+            long cc_attempts = pr.bCoffinCornerAttemt ? 1 : 0;
+            long cc_made = pr.bCoffinCornerMade ? 1 : 0;
+            long punter_blocks = pr.bPunt_blocked ? 1 : 0;
+
+            List<Game_Player_Stats> r = new List<Game_Player_Stats>();
+
+            //Set a play record for each player in the play
+            foreach (Game_Player p in Punt_Players)
+            {
+                if (p == pr.Punter)
+                    r.Add(new Game_Player_Stats()
+                    {
+                        Player_ID = pr.Punter.p_and_r.pr.First().Player_ID,
+                        punter_plays = 1,
+                        punter_punts = 1,
+                        punter_punt_yards = (int)(pr.Punt_Yards + 0.5),
+                        punter_kill_att = cc_attempts,
+                        punter_kill_Succ = cc_made,
+                        punter_blocks = punter_blocks
+                    });
+                else
+                {
+                    int ind = 0;
+                    long punt_def_forced_fumbles = pr.Forced_Fumble_Tackler == p ? 1 : 0;
+                    long punt_forced_fumbles_recovered = pr.Fumble_Recoverer == p ? 1 : 0;
+                    long punt_def_tackles = pr.Tackler == p ? 1 : 0;
+                    long punt_def_tackles_missed = Missed_Tackles.Contains(p) ? 1 : 0;
+
+                    r.Add(new Game_Player_Stats()
+                    {
+                        Player_ID = p.p_and_r.pr.First().Player_ID,
+                        punt_def_plays = 1,
+                        punt_def_forced_fumbles = punt_def_forced_fumbles,
+                        punt_forced_fumbles_recovered = punt_forced_fumbles_recovered,
+                        punt_def_tackles = punt_def_tackles,
+                        punt_def_tackles_missed = punt_def_tackles_missed
+                    });
+                    ind++;
+                }
+            }
+
+            foreach (Game_Player p in Return_Players)
+            {
+                if (p == pr.Returner)
+                {
+                    long punt_returns = pr.bPunt_Returned ? 1 : 0;
+                    long punt_ret_TDs = pr.bTouchDown && !pr.bPunt_blocked && !pr.bFumble_Lost ? 1 : 0;
+                    long punt_ret_fumbles = pr.bFumble ? 1 : 0;
+                    long punt_ret_fumbles_Lost = pr.bFumble_Lost ? 1 : 0;
+
+                    r.Add(new Game_Player_Stats()
+                    {
+                        Player_ID = pr.Punt_Returner.p_and_r.pr.First().Player_ID,
+                        punt_ret_plays = 1,
+                        punt_ret = punt_returns,
+                        punt_ret_yards = (int)(pr.Yards_Returned + 0.5),
+                        punt_ret_TDs = punt_ret_TDs,
+                        punt_ret_yards_long = (int)(pr.Yards_Returned + 0.5),
+                        punt_ret_fumbles = punt_ret_fumbles,
+                        punt_ret_fumbles_lost = punt_ret_fumbles_Lost,
+                    });
+                }
+                else
+                {
+                    long punt_rec_blocks = pr.bPunt_blocked && pr.Defender_Close_to_Kicker == p ? 1 : 0;
+                    long punt_rec_block_recovery = pr.Blocked_Punt_Recoverer == p ? 1 : 0;
+                    long punt_rec_block_recovery_TDs = pr.Blocked_Punt_Recoverer == p && pr.bTouchDown ? 1 : 0;
+
+                    r.Add(new Game_Player_Stats() { 
+                        Player_ID = p.p_and_r.pr.First().Player_ID,
+                        punt_rec_plays = 1,
+                        punt_rec_blocks = punt_rec_blocks,
+                        punt_rec_block_recovery = punt_rec_block_recovery,
+                        punt_rec_block_recovery_TDs = punt_rec_block_recovery_TDs
+
+                    });
+                }
+            }
+
+             return r;
+        }
     }
 }
 

@@ -617,6 +617,8 @@ namespace SpectatorFootball
         public const int PUNT_AGILITY_CUTOFF = 40;
         public const int PUNT_AVOID_TRACKER_CALC_VARIABLE = 102;
 
+        public const double YARDS_FROM_GL_FOR_GL_PUNT = 2.0;
+
         public const double YARDS_FROM_GL_DECIDE_TO_RETURN = 5;
 
         public const int DIST_FROM_GL_FOR_CC = 10;

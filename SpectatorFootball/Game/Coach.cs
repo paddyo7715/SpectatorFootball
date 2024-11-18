@@ -38,7 +38,7 @@ namespace SpectatorFootball.GameNS
 
         }
  
-        public Play_Package Call_Off_PlayFormation(bool bKickoff, bool bExtraPoint, bool bKickoffAfterSafety, double PossessionAdjuster)
+        public Play_Package Call_Off_PlayFormation(double los, bool bKickoff, bool bExtraPoint, bool bKickoffAfterSafety, double PossessionAdjuster, bool bLefttoRight)
         {
             Formations_Enum f;
             Play_Enum p;
@@ -81,17 +81,20 @@ namespace SpectatorFootball.GameNS
             }
             else
             {
-                f = Formations_Enum.KICKOFF_REGULAR_KICK;
-                p = Play_Enum.KICKOFF_NORMAL;
+                double y = Game_Engine_Helper.calcDistanceFromMyGL(los, bLefttoRight);
+                if (y <= app_Constants.YARDS_FROM_GL_FOR_GL_PUNT)
+                {
+                    f = Formations_Enum.PUNT_GL;
+                    p = Play_Enum.PUNT;
+                }
+                else
+                {
+                    f = Formations_Enum.PUNT;
+                    p = Play_Enum.PUNT;
+                }
             }
 
-            //bpo test code
-                        f = Formations_Enum.PUNT;
-                        p = Play_Enum.PUNT;
-            //            f = Formations_Enum.KICKOFF_ONSIDE_KICK;
-            //            p = Play_Enum.KICKOFF_ONSIDES;
-//            f = Formations_Enum.KICKOFF_REGULAR_KICK;
- //           p = Play_Enum.KICKOFF_NORMAL;
+
 
             //==========================================
 
@@ -137,7 +140,7 @@ namespace SpectatorFootball.GameNS
                 r = Formations_Enum.KICKOFF_REGULAR_RECEIVE;
             else if (pp.Formation.f_enum == Formations_Enum.FIELD_GOAL)
                 r = Formations_Enum.KICKOFF_REGULAR_RECEIVE;
-            else if (pp.Formation.f_enum == Formations_Enum.PUNT)
+            else if (pp.Formation.f_enum == Formations_Enum.PUNT || pp.Formation.f_enum == Formations_Enum.PUNT_GL)
                 r = Formations_Enum.PUNT_RETURN;
             else if (pp.Formation.f_enum == Formations_Enum.EXTRA_POINT)
                 r = Formations_Enum.KICKOFF_REGULAR_RECEIVE;
@@ -146,7 +149,7 @@ namespace SpectatorFootball.GameNS
                 //Just to get this to compile put this formation.
                 //howver when I get to it, this will be a defensive
                 //formation based on what the defense thinks the O will do.
-                r = Formations_Enum.KICKOFF_REGULAR_RECEIVE;
+                r = Formations_Enum.PUNT_RETURN;
             }
 
 //            fList = Game_Helper.getFormation(r, PossessionAdjuster);

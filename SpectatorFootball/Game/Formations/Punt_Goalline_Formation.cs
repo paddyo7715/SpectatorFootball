@@ -16,7 +16,7 @@ namespace SpectatorFootball.GameNS
             Formation f = new Formation();
             f.Player_list = new List<Formation_Rec>();
 
-            f.Name = "Punt";
+            f.Name = "Boaline Punt";
             f.f_enum = fe;
             f.bSpecialTeams = true;
             f.KickerIndex = 5;

@@ -32,6 +32,9 @@ namespace SpectatorFootball.GameNS
                 case Formations_Enum.PUNT:
                     formplay = new Punt_Formation();
                     break;
+                case Formations_Enum.PUNT_GL:
+                    formplay = new Punt_Goalline_Formation();
+                    break;
                 case Formations_Enum.PUNT_RETURN:
                     formplay = new Punt_Return_Formation();
                     break;

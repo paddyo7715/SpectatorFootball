@@ -210,9 +210,6 @@ namespace SpectatorFootball.GameNS
 
         public Play_Struct ExecutePlay()
         {
-            //bpo test
-            bKickoff = true;
-
             Play_Struct r = new Play_Struct();
             List<Game_Player> Offensive_Players = null;
             List<Game_Player> Defensive_Players = null;
@@ -240,9 +237,9 @@ namespace SpectatorFootball.GameNS
             }
 
             //bpo test
-            g_fid_posession = ht.Franchise_ID;
-            g_Line_of_Scrimmage = 70.0;
-            bKickoff = true;
+            g_fid_posession = at.Franchise_ID;
+            g_Line_of_Scrimmage = 1.0;
+            bKickoff = false;
             bKickoffAfterSafety = false;
             //********************
 
@@ -267,7 +264,8 @@ namespace SpectatorFootball.GameNS
             double PossessionAdjuster = Game_Engine_Helper.HorizontalAdj(bLefttoRight);
             Play_Package Offensive_Package = null;
             Formation DEF_Formation = null;
-            Offensive_Package = Offensive_Coach.Call_Off_PlayFormation(bKickoff, bExtraPoint, bKickoffAfterSafety, PossessionAdjuster);
+
+            Offensive_Package = Offensive_Coach.Call_Off_PlayFormation(g_Line_of_Scrimmage, bKickoff, bExtraPoint, bKickoffAfterSafety, PossessionAdjuster, bLefttoRight);
             DEF_Formation = Defensive_Coach.Call_Def_Formation(Offensive_Package, PossessionAdjuster);
             logger.Debug("ExecutePlay Offensive and Defensive plays called.");
 
