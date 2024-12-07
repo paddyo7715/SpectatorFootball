@@ -244,7 +244,7 @@ namespace SpectatorFootball.GameNS
             bool r = false;
 
             double crrier_val = (carrier_speed + carrier_agility + carrier_power_running) / 3;
-            double tackler_val = tackler_tackle_rating * app_Constants.TACKLER_ADVANTAGE_MULTIPLIER;
+            double tackler_val = (int)(tackler_tackle_rating * app_Constants.TACKLER_ADVANTAGE_MULTIPLIER + 0.5);
 
             int max_rnd_num = (int)(tackler_val + crrier_val);
             int rnd_value = CommonUtils.getRandomNum(1, max_rnd_num + app_Constants.KICKOFF_TACKLE_TEST_ADJUSTER);
@@ -279,6 +279,9 @@ namespace SpectatorFootball.GameNS
                     rating_multiplyer = 15;
                     break;
                 case Ball_Carry_Actions.KICK_RETURN:
+                    rating_multiplyer = 3.1;
+                    break;
+                case Ball_Carry_Actions.PUNT_RETURN:
                     rating_multiplyer = 3.1;
                     break;
                 case Ball_Carry_Actions.RUNNING_THE_BALL:
@@ -329,6 +332,29 @@ namespace SpectatorFootball.GameNS
                 end_yrdline = 0;
             else if (end_yrdline > 100)
                 end_yrdline = 100;
+
+            if (bLefttoRight)
+                r = end_yrdline - starting_yrdline;
+            else
+                r = starting_yrdline - end_yrdline;
+
+            return r;
+        }
+
+        public static double getPuntReturnYards(bool bLefttoRight, double starting_yrdline, double end_yrdline)
+        {
+            double r = 0.0;
+
+            //Don't count the extra yards into the endzone as yards gained
+            if (end_yrdline < 0)
+                end_yrdline = 0;
+            else if (end_yrdline > 100)
+                end_yrdline = 100;
+
+            if (starting_yrdline < 0)
+                starting_yrdline = 0;
+            else if (starting_yrdline > 100)
+                starting_yrdline = 100;
 
             if (bLefttoRight)
                 r = end_yrdline - starting_yrdline;
@@ -557,7 +583,7 @@ namespace SpectatorFootball.GameNS
             //first add any gruop 1 players
             foreach (Int_and_Double d in Slot_List_sorted)
             {
-                if (d.d2 >= 8 && group_1.Count() < 5)
+                if (d.d2 >= 8 && group_1.Count() < 5)  
                     group_1.Add(d.i1);
             }
 
@@ -730,7 +756,7 @@ namespace SpectatorFootball.GameNS
             bool bTD = false;
             bool bSafety = false;
 
-            if ((bLefttoRight && yl <= 0.0) || !bLefttoRight && yl >= 100.0)
+            if ((!bLefttoRight && yl <= 0.0) || (bLefttoRight && yl >= 100.0))
             {
                 if (bPuntTeamRecovers)
                     bSafety = true;
@@ -763,6 +789,27 @@ namespace SpectatorFootball.GameNS
             bool r = false;
 
             if (y > 100.0 || y < 0.0) r = true;
+
+            return r;
+        }
+
+        public static bool isTouchBack(bool bLefttoRight, double end_yrdline)
+        {            
+            bool r = false;
+
+
+            if (bLefttoRight)
+            {
+                if (end_yrdline >= 100.0)
+                    r = true;
+            }
+            else
+            {
+                if (end_yrdline <= 0.0)
+                    r = true;
+            }
+
+
 
             return r;
         }

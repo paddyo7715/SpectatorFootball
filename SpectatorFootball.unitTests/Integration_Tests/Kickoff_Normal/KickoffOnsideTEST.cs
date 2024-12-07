@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpectatorFootball.Integration_Tests.Kickoff_Onside
+namespace SpectatorFootball.Integration_Tests.Kickoff
 {
     [TestClass]
     public class KickoffOnsideTEST

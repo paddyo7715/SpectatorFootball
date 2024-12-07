@@ -577,7 +577,7 @@ namespace SpectatorFootball
         public const int RETURNER_PERCENT_LIST_SELECTION = 80;
 
         //Tackling
-        public const long TACKLER_ADVANTAGE_MULTIPLIER = 3;
+        public const double TACKLER_ADVANTAGE_MULTIPLIER = 3.5;
 
         //Punts
         public const int PUNT_TACKLING_GROUPS = 3;
@@ -588,13 +588,13 @@ namespace SpectatorFootball
         public const int PUNT_MIN_LONG_DISTANCE = 46;
         public const int PUNT_MAX_LONG_DISTANCE = 55;
 
-        public const int PUNT_GROUP_1_MIN = 4;
-        public const int PUNT_GROUP_1_MAX = 7;
-        public const int PUNT_GROUP_2_MIN = 14;
-        public const int PUNT_GROUP_2_MAX = 17;
-        public const int PUNT_GROUP_3_MIN = 24;
-        public const int PUNT_GROUP_3_MAX = 27;
-        public const int PUNT_KICKER_FROM_RETURNER = 40;
+        public const int PUNT_GROUP_1_MIN = 3;
+        public const int PUNT_GROUP_1_MAX = 6;
+        public const int PUNT_GROUP_2_MIN = 13;
+        public const int PUNT_GROUP_2_MAX = 16;
+        public const int PUNT_GROUP_3_MIN = 23;
+        public const int PUNT_GROUP_3_MAX = 26;
+        public const int PUNT_KICKER_FROM_RETURNER = 37;
         public const double PUNT_GROUP_VERT_DIST = 7.0;
         public const double PUNT_DIST_BETWEEN_BLOCK_ATTACHERS = 1.00;
         public const double PUNT_TOP_VERT_CUTOFF = 10.0;
@@ -615,7 +615,7 @@ namespace SpectatorFootball
         public const int PUNT_ACC_CALC_VARIABLE = 110;
 
         public const int PUNT_AGILITY_CUTOFF = 40;
-        public const int PUNT_AVOID_TRACKER_CALC_VARIABLE = 102;
+        public const int PUNT_AVOID_TRACKER_CALC_VARIABLE = 102;  
 
         public const double YARDS_FROM_GL_FOR_GL_PUNT = 2.0;
 

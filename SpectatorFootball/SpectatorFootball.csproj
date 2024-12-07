@@ -331,6 +331,7 @@
     <Compile Include="Player\Team_Player_Accum_Stats_by_year.cs" />
     <Compile Include="Playoffs\Playoff_Bracket_rec.cs" />
     <Compile Include="Playoffs\Playoff_Helper.cs" />
+    <Compile Include="Play\Play_Validator.cs" />
     <Compile Include="Services\FreeAgency_Services.cs" />
     <Compile Include="Draft\Draft_Need.cs" />
     <Compile Include="Services\Game_Services.cs" />

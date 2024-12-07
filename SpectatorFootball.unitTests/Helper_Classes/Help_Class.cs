@@ -164,6 +164,7 @@ namespace SpectatorFootball.unitTests.Helper_ClassesNS
 
         public static List<Game_Player> setGamePlayerLIsts(long f_id, double Line_of_Scrimmage, Formation f)
         {
+            long player_id = f_id;
             List<Game_Player> r = new List<Game_Player>();
             foreach (Formation_Rec fr in f.Player_list)
             {
@@ -171,8 +172,13 @@ namespace SpectatorFootball.unitTests.Helper_ClassesNS
                 HomeTownsDAOTEST htDAO = new HomeTownsDAOTEST();
                 Player p = Player_Helper.CreatePlayer(fr.Pos, true, false, true, 1, pnDAO, htDAO);
 
+                p.ID = player_id;
+                Player_Ratings pl_ratings = p.Player_Ratings.First();
+                pl_ratings.ID = player_id;
+                pl_ratings.Player_ID = player_id;
+
                 Players_By_Team pbt = new Players_By_Team()
-                { Franchise_ID = f_id, Player_ID = p.ID, Season_ID = 1 };
+                { Franchise_ID = f_id, Player_ID = player_id, Season_ID = 1 };
                 Player_and_Ratings p_and_r = new Player_and_Ratings()
                 { p = p, pr = p.Player_Ratings.ToList(), pbt = pbt };
 
@@ -188,6 +194,7 @@ namespace SpectatorFootball.unitTests.Helper_ClassesNS
                     State = fr.State,
                     Initial_State = fr.State
                 });
+                player_id++;
             }
 
             return r;

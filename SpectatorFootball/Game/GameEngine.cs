@@ -3,6 +3,7 @@ using SpectatorFootball.Enum;
 using SpectatorFootball.Models;
 using SpectatorFootball.NarrationAndText;
 using SpectatorFootball.PenaltiesNS;
+using SpectatorFootball.PlayNS;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -380,6 +381,21 @@ namespace SpectatorFootball.GameNS
 
                 //Execute the play
                 p_result = Play.Execute(bpreSnapPenalty);
+
+                //Validate play result if not presnap penalty
+                string Play_Result_Validation = null;
+                string Play_Stats_Validation = null;
+                if (!bpreSnapPenalty)
+                {
+                    Play_Result_Validation = Play_Validator.Validate_Play_Result(Play_Enum.PUNT, Offensive_Players, Defensive_Players, p_result, Game_Ball, bLefttoRight);
+                    if (Play_Result_Validation != null)
+                        throw new Exception(Play_Result_Validation);
+
+                    Play_Stats_Validation = Play_Validator.Validate_Punt_play_stats(Play_Enum.PUNT, Offensive_Players, Defensive_Players, p_result);
+                    if (Play_Stats_Validation != null)
+                        throw new Exception(Play_Stats_Validation);
+                }
+
 
                 int ball_stages = Game_Ball.Stages.Count();
                 for ( int pind = 0; pind < Offensive_Players.Count(); pind++)

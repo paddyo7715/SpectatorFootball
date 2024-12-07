@@ -94,9 +94,10 @@ namespace SpectatorFootball.GameNS
         public List<Game_Player> Punt_Defenders = new List<Game_Player>();
         public List<Game_Player> FieldGaol_Kicking_Team = new List<Game_Player>();
         public List<Game_Player> Field_Goal_Defenders = new List<Game_Player>();
+        public List<Game_Player> Missed_Tackles = new List<Game_Player>();
 //===================================================
 
-//Used for Initial stats and players before penalty
+        //Used for Initial stats and players before penalty
         public Game_Player Tackler = null;
         public Game_Player Fumble_Recoverer = null;
         public Game_Player Blocked_Punt_Recoverer = null;
@@ -110,9 +111,11 @@ namespace SpectatorFootball.GameNS
         public double end_of_play_yardline = 0;
         public double Punt_Yards = 0;
         public double Field_Goal_Attempt_Length;
-//=============================================
+        public double Kick_landing_YL;
+        public double Kick_caught_yl;
+        //=============================================
 
-//Final play results after accounting for possible penalties
+        //Final play results after accounting for possible penalties
         public bool bFinal_SwitchPossession = false;
         public bool bPlay_Stands = false;
         public int Final_Down = 0;
@@ -183,6 +186,8 @@ namespace SpectatorFootball.GameNS
         public Game_Scoring_Summary play_scoring_summary = new Game_Scoring_Summary();
         public List<Game_Player_Stats> Play_Player_Stats = new List<Game_Player_Stats>();
         public List<Game_Player_Penalty_Stats> Play_Player_Penalty_Stats = new List<Game_Player_Penalty_Stats>();
+
+        public int test_counter = 0;
 
         public bool isScore()
         {

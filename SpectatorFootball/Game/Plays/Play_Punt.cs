@@ -35,8 +35,6 @@ namespace SpectatorFootball.GameNS
         private Formation Return_Formation = null;
         List<Game_Player> Blockers = null;
         List<Game_Player> Attackers = null;
-        private List<Game_Player> Missed_Tackles = new List<Game_Player>();
-
         public Play_Result r = new Play_Result();
 
         public Play_Enum Play { get; set; } = Play_Enum.PUNT;
@@ -84,7 +82,6 @@ namespace SpectatorFootball.GameNS
             bool bPuntLogEnoughfor_CC = false;
             double starting_yardline = gBall.Current_YardLine;
             r.Play_Start_Yardline = starting_yardline;
-            double Punt_caught_yl = 0.0;
 
             Set_Ball_and_Players_Before_Snap(gBall, Punt_Players, Return_Players, Punt_Formation, Return_Formation, bSim);
 
@@ -105,8 +102,7 @@ namespace SpectatorFootball.GameNS
                     bool bPunt_Team_Recovers = Punt_Players.Any(x => x == r.Blocked_Punt_Recoverer);
                     Tuple<bool, bool> t2 = Game_Engine_Helper.BlockedPuntTD_or_Safety(bPunt_Team_Recovers, gBall.Current_YardLine, bLefttoRight);
                     r.bTouchDown = t2.Item1;
-                    r.bSack = t2.Item2;
-
+                    r.bTouchback = t2.Item2;
                 }
                 else
                 {
@@ -125,20 +121,37 @@ namespace SpectatorFootball.GameNS
                     var tackle_groups = Game_Engine_Helper.setTackleGroups(Punt_Players, r.Punter);
                     var tBallAct = Game_Engine_Helper.getPuntLandingSpot_and_isCatchable(r.bCoffinCornerAttemt, bPuntLogEnoughfor_CC, r.bCoffinCornerMade, MaxPuntLen, MaxPuntVert, starting_yl, bLefttoRight);
 
-                    Punt_caught_yl = tBallAct.Item1;
+                    r.Kick_caught_yl = tBallAct.Item1;
 
                     BallPuntedPlayersRun(gBall, Punt_Players, Return_Players, tBallAct, r.Punter, r.Punt_Returner, tackle_groups, r, bLast_Play, bLefttoRight, bSim);
                     if (r.bPunt_Returned)
                     {
                         r = return_punt(Punt_Players, Return_Players, gBall, tackle_groups, r, bLefttoRight);
-                        r.Yards_Returned = Game_Engine_Helper.getYardsGained(bLefttoRight, Punt_caught_yl, r.Punt_Returner.Current_YardLine);
+                        r.Yards_Returned = Game_Engine_Helper.getPuntReturnYards(!bLefttoRight, r.Kick_caught_yl, r.Punt_Returner.Current_YardLine);
+
+                        //bpo test//
+//                        string stest = null;
+ //                       if (r.bFumble_Lost && r.bPunt_Returned && !r.bPunt_Out_of_Bounds && Game_Engine_Helper.isTouchBack(bLefttoRight, gBall.Current_YardLine))
+//                            stest += " Punt result should be touchdown set but doesnt";
+
+                        //if there is a returned punt that was fumbled, did the fumble take place in
+                        //the returnerns endzone.  If so the play must result in a TD or safety.
+                        if (r.bFumble)
+                        {
+                            //The logic is the same as a blocked punt, so I just reused that method.
+                            Tuple<bool, bool> t3 = Game_Engine_Helper.BlockedPuntTD_or_Safety(!r.bFumble_Lost, gBall.Current_YardLine, bLefttoRight);
+                            r.bTouchDown = t3.Item1;
+                            r.bTouchback = t3.Item2;
+                        }
+                        else if (r.bPunt_Returned && Game_Engine_Helper.isTouchBack(bLefttoRight, gBall.Current_YardLine))
+                            r.bTouchback = true;
                     }
                 }
 
-                r.Punt_Yards = Game_Engine_Helper.getPuntYards(starting_yl, gBall.Current_YardLine, bLefttoRight);
+                r.Punt_Yards = Game_Engine_Helper.getPuntYards(starting_yl, r.Kick_landing_YL, bLefttoRight);
                 r.end_of_play_yardline = gBall.Current_YardLine;
 
-                r.Play_Player_Stats = SetPlayerStats(r, Punt_Players, Return_Players, Missed_Tackles);
+                r.Play_Player_Stats = SetPlayerStats(r, Punt_Players, Return_Players, r.Missed_Tackles);
             }
             return r;
         }
@@ -151,6 +164,7 @@ namespace SpectatorFootball.GameNS
 
             double prevBallX = gBall.Current_YardLine;
             double prevBallY = gBall.Current_Vertical_Percent_Pos;
+            pr.Kick_landing_YL = newBallX;
 
             int delay_factor = 3;
 
@@ -212,7 +226,7 @@ namespace SpectatorFootball.GameNS
                     pr.bPunt_Returned = tRetAct.Item4;
                     pr.bPunt_Not_Fielded = tRetAct.Item5;
 
-                    if (pr.bPunt_Out_of_Endzone || pr.bKick_KneelDown || pr.bPunt_Not_Fielded)
+                    if (pr.bPunt_Out_of_Endzone || pr.bPunt_KneelDown || pr.bPunt_Not_Fielded)
                         pr.bTouchback = true;
 
                     if (pr.bPunt_Out_of_Bounds)
@@ -343,7 +357,7 @@ namespace SpectatorFootball.GameNS
                 int attacker_score = 0;
                 int blocker_score = 0;
                 int attacker_ability = (int)Attackers[i].p_and_r.pr.First().Pass_Attack_Rating * 10;
-                int blocker_ability = (int)Blockers[i].p_and_r.pr.First().Pass_Block_Rating * 10;
+                int blocker_ability = (int)Blockers[i].p_and_r.pr.First().Pass_Block_Rating * 11;
 
                 attacker_score = CommonUtils.getRandomNum(1, attacker_ability);
                 blocker_score = CommonUtils.getRandomNum(1, blocker_ability);
@@ -675,6 +689,7 @@ namespace SpectatorFootball.GameNS
             int id_Players = 0;
             int ind_close_Tklr = 0;
 
+
             var ts = GetInitialSlot(gBall.Current_Vertical_Percent_Pos);
             slot_index = ts.Item1;
             double slot2_vert = ts.Item2;
@@ -683,6 +698,7 @@ namespace SpectatorFootball.GameNS
             List<int?> group = new List<int?>();
             for (int i = 1; i <= app_Constants.PUNT_TACKLING_GROUPS + 1; i++)
             {
+
                 bool bFindOpenSlot = false;
                 double agility = r.Punt_Returner.p_and_r.pr.First().Agilty_Rating;
                 bFindOpenSlot = ReturnerLookforHole(agility);
@@ -775,7 +791,7 @@ namespace SpectatorFootball.GameNS
                     if (bTack)
                         r.Tackler = Punt_Players[tackler_ind];
                     else
-                        Missed_Tackles.Add(Punt_Players[tackler_ind]);
+                        r.Missed_Tackles.Add(Punt_Players[tackler_ind]);
 
                     if (r.Tackler != null)
                         break;
@@ -802,7 +818,7 @@ namespace SpectatorFootball.GameNS
                 }
 
                 if (i == 4)
-                    Breakthrough_len = Game_Engine_Helper.calcDistanceFromOpponentGL(returner_hole_yl, bLefttoRight) + 5.0;
+                    Breakthrough_len = (Game_Engine_Helper.calcDistanceFromOpponentGL(returner_hole_yl, bLefttoRight) + 5.0) * Game_Engine_Helper.HorizontalAdj(bLefttoRight);
                 else
                     Breakthrough_len = (app_Constants.PUNT_GROUP_1_MAX - app_Constants.PUNT_GROUP_1_MIN) + (app_Constants.PUNT_GROUP_2_MIN - app_Constants.PUNT_GROUP_1_MAX) * Game_Engine_Helper.HorizontalAdj(bLefttoRight);
 
@@ -987,15 +1003,17 @@ namespace SpectatorFootball.GameNS
                 }
 
                 //if there is a tackle (not the punter) then check if the ball is fumbled.
-                if (r.Tackler != null && i == 4) 
+                if (r.Tackler != null && i != 4) 
                 {
                     long ball_safety_rating = r.Punt_Returner.p_and_r.pr.First().Ball_Safety_Rating;
                     long tackle_rating = r.Tackler.p_and_r.pr.First().Tackle_Rating;
                     long run_attack_rating = r.Tackler.p_and_r.pr.First().Run_Attack_Rating;
 
                     r.bFumble = Game_Engine_Helper.DoesBallCarrierFumble(
-                               Ball_Carry_Actions.KICK_RETURN,
+                               Ball_Carry_Actions.PUNT_RETURN,
                                ball_safety_rating, tackle_rating, run_attack_rating);
+
+                    r.test_counter++;
 
                     //if there is a fumble then there can not be a tackle, but give the tackler
                     //creit for forcing the fumble
@@ -1024,6 +1042,7 @@ namespace SpectatorFootball.GameNS
                 //set td or not
                 if (Game_Engine_Helper.isTouchdown(bLefttoRight, r.Punt_Returner.Current_YardLine, r.bTouchback))
                 {
+                    r.bTouchDown = true;
                     //handle case where the returner is tacked in the EZ
                     r.Tackler = null;
                     r.bFumble = false;
@@ -1037,11 +1056,13 @@ namespace SpectatorFootball.GameNS
                     break;
 
                 Past_Blocker_Tackler_List.AddRange(group.Where(x => x != null).Select(x => (int)x).ToList());
-            }  //on group 1,2 or 3
+            }  //on group 1,2,3 and 4
 
-            //set td or not
-            if (r.Tackler == null)
-                r.bTouchDown = true;
+            int hhh = 0;
+            if (r.Tackler == null && !r.bPunt_blocked && !r.bFumble)
+            {
+                hhh = 10;
+            }
 
             return r;
         }
@@ -1258,25 +1279,26 @@ namespace SpectatorFootball.GameNS
             //Set a play record for each player in the play
             foreach (Game_Player p in Punt_Players)
             {
+                long punt_def_tackles = pr.Tackler == p ? 1 : 0;
+                long punt_def_tackles_missed = Missed_Tackles.Contains(p) ? 1 : 0;
                 if (p == pr.Punter)
                     r.Add(new Game_Player_Stats()
                     {
                         Player_ID = pr.Punter.p_and_r.pr.First().Player_ID,
                         punter_plays = 1,
-                        punter_punts = 1,
-                        punter_punt_yards = (int)(pr.Punt_Yards + 0.5),
+                        punter_punts = !pr.bPunt_blocked ?  1 : 0,
+                        punter_punt_yards = !pr.bPunt_blocked ? (int)(pr.Punt_Yards + 0.5) : 0,
                         punter_kill_att = cc_attempts,
                         punter_kill_Succ = cc_made,
-                        punter_blocks = punter_blocks
+                        punter_blocks = punter_blocks,
+                        punt_def_tackles = punt_def_tackles,
+                        punt_def_tackles_missed = punt_def_tackles_missed
                     });
                 else
                 {
                     int ind = 0;
                     long punt_def_forced_fumbles = pr.Forced_Fumble_Tackler == p ? 1 : 0;
                     long punt_forced_fumbles_recovered = pr.Fumble_Recoverer == p ? 1 : 0;
-                    long punt_def_tackles = pr.Tackler == p ? 1 : 0;
-                    long punt_def_tackles_missed = Missed_Tackles.Contains(p) ? 1 : 0;
-
                     r.Add(new Game_Player_Stats()
                     {
                         Player_ID = p.p_and_r.pr.First().Player_ID,

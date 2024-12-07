@@ -9,6 +9,7 @@ namespace SpectatorFootball.Enum
     public enum Ball_Carry_Actions
     {
         KICK_RETURN,
+        PUNT_RETURN,
         RUNNING_THE_BALL,
         RUNNING_AFTER_CATCH,
         PASSER_SACKED

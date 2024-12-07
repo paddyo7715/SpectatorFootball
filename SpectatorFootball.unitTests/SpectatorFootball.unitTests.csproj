@@ -52,7 +52,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Integration_Tests\Kickoff_Normal\KickoffNormalTEST.cs" />
-    <Compile Include="Integration_Tests\Kickoff_Onside\KickoffOnsideTEST.cs" />
+    <Compile Include="Integration_Tests\Kickoff_Normal\KickoffOnsideTEST.cs" />
+    <Compile Include="Integration_Tests\Punts\PuntGoalLineTEST.cs" />
+    <Compile Include="Integration_Tests\Punts\PuntNormalTEST.cs" />
+    <Compile Include="Integration_Tests\Punts\PuntOpp40TEST.cs" />
     <Compile Include="Unit_Tests\Coach\CoachTEST.cs" />
     <Compile Include="DAOStubs\HomeTownsDAOTEST.cs" />
     <Compile Include="DAOStubs\Player_NamesDAOTEST.cs" />

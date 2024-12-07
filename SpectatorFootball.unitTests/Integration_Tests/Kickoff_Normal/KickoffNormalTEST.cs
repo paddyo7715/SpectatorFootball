@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpectatorFootball.IntegrationTests.Kickoff_Normal
+namespace SpectatorFootball.IntegrationTests.Kickoff
 {
     [TestClass]
     public class KickoffNormalTEST
@@ -23,6 +23,8 @@ namespace SpectatorFootball.IntegrationTests.Kickoff_Normal
             int at = 11;
             int ht = 22;
             int possess_team = 0;
+
+            int L_test_counter = 0;
 
             int L_num_returned = 0;
             int L_num_TDs = 0;
@@ -94,6 +96,8 @@ namespace SpectatorFootball.IntegrationTests.Kickoff_Normal
 
                 if (bLefttoRight)
                 {
+                    L_test_counter += pResult.test_counter;
+
                     if (pResult.bKick_Out_of_Endzone) L_num_out_of_EZ++;
                     if (pResult.bTouchback && !pResult.bKick_Out_of_Endzone) L_num_kneel_down++;
                     if (!pResult.bTouchback) L_num_returned++;

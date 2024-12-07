@@ -189,7 +189,6 @@ namespace SpectatorFootball.GameNS
                     Ball_Target_Recover, r.Tackler, bSim);
                 r.Onside_Kick_Recoverer = t.Item1;
                 bLost = t.Item2;
-
             }
             else
             {
@@ -243,7 +242,7 @@ namespace SpectatorFootball.GameNS
                 r.bFinal_SwitchPossession = true;
 
             //Create Player Stats Records for the play
-            r.Play_Player_Stats = SetPlayerStats(Kickoff_Players, Return_Players, r.bOnsideMade, r.Kicker, r.Onside_Kick_Recoverer);
+//            r.Play_Player_Stats = SetPlayerStats(Kickoff_Players, Return_Players, r.bOnsideMade, r.Kicker, r.Onside_Kick_Recoverer);
 
             return r;
         }

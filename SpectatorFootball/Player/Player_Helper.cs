@@ -5,6 +5,7 @@ using SpectatorFootball.Enum;
 using log4net;
 using SpectatorFootball.Common;
 using SpectatorFootball.DAO.Interfaces;
+using SpectatorFootball.GameNS;
 
 namespace SpectatorFootball.PlayerNS
 {

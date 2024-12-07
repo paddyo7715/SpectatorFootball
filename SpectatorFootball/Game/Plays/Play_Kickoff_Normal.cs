@@ -782,6 +782,8 @@ namespace SpectatorFootball.GameNS
                                    Ball_Carry_Actions.KICK_RETURN,
                                    ball_safety_rating, tackle_rating, run_attack_rating);
 
+                        r.test_counter++;
+
                         //if there is a fumble then there can not be a tackle, but give the tackler
                         //creit for forcing the fumble
                         if (r.bFumble)
