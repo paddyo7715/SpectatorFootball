@@ -454,9 +454,9 @@ namespace SpectatorFootball.GameNS
                 bReturn = true;
             else
             {
-                double avg_dont_run_out = 78.0;
+                double avg_dont_run_out = 82.0;
                 double yards_from_back_of_endzone = Game_Engine_Helper.yards_from_end_of_endzone(ballx, bLefttoRight);
-                avg_dont_run_out += (long)yards_from_back_of_endzone;
+                avg_dont_run_out += (long)(yards_from_back_of_endzone);
                 if (rnd <= avg_dont_run_out)
                 {
                     if ((ballx >= 100 && bLefttoRight) || ballx <= 0 && !bLefttoRight)

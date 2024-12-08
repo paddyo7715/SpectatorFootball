@@ -66,7 +66,7 @@ namespace SpectatorFootball.unitTests.Unit_Tests.Game_PlayerTest
             Game_Player gp = Help_Class.getPunter(11);
             Player_Ratings pr = gp.p_and_r.pr.First();
             pr.Decision_Making_Rating = 40;
-            var t = gp.getReturnerAction(96.0, 51.0, false, 93, true);
+            var t = gp.getReturnerAction(96.0, 51.0, false, 99, true);
 
             Assert.IsTrue(!t.Item1 && !t.Item2 && !t.Item3 && t.Item4 && !t.Item5);
         }
@@ -78,7 +78,7 @@ namespace SpectatorFootball.unitTests.Unit_Tests.Game_PlayerTest
             Game_Player gp = Help_Class.getPunter(11);
             Player_Ratings pr = gp.p_and_r.pr.First();
             pr.Decision_Making_Rating = 40;
-            var t = gp.getReturnerAction(105.0, 51.0, false, 93, true);
+            var t = gp.getReturnerAction(105.0, 51.0, false, 100, true);
 
             Assert.IsTrue(!t.Item1 && !t.Item2 && !t.Item3 && t.Item4 && !t.Item5);
         }
@@ -171,7 +171,7 @@ namespace SpectatorFootball.unitTests.Unit_Tests.Game_PlayerTest
             Game_Player gp = Help_Class.getPunter(11);
             Player_Ratings pr = gp.p_and_r.pr.First();
             pr.Decision_Making_Rating = 40;
-            var t = gp.getReturnerAction(4.0, 51.0, false, 93, false);
+            var t = gp.getReturnerAction(4.0, 51.0, false, 99, false);
 
             Assert.IsTrue(!t.Item1 && !t.Item2 && !t.Item3 && t.Item4 && !t.Item5);
         }
@@ -183,7 +183,7 @@ namespace SpectatorFootball.unitTests.Unit_Tests.Game_PlayerTest
             Game_Player gp = Help_Class.getPunter(11);
             Player_Ratings pr = gp.p_and_r.pr.First();
             pr.Decision_Making_Rating = 40;
-            var t = gp.getReturnerAction(-5.0, 51.0, false, 93, false);
+            var t = gp.getReturnerAction(-5.0, 51.0, false, 99, false);
 
             Assert.IsTrue(!t.Item1 && !t.Item2 && !t.Item3 && t.Item4 && !t.Item5);
         }

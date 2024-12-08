@@ -61,7 +61,7 @@ namespace SpectatorFootball.PlayNS
                     }
                     break;
                  default:
-                    r += " Play_Result_Validator unknown play";
+//                    r += " Play_Result_Validator unknown play";
                     break;
                 }
 
@@ -149,7 +149,7 @@ namespace SpectatorFootball.PlayNS
                 }
                 break;
                 default:
-                    r += " Play_Result_Validator unknown play";
+//                    r += " Play_Result_Validator unknown play";
                     break;
             }
 

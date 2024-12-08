@@ -41,6 +41,8 @@ namespace SpectatorFootball.unitTests.Integration_Tests.Punts
             int L_TD_Fumble = 0;
             int L_TD_Block = 0;
             int L_Safety_Block = 0;
+            int L_Punts = 0;
+            double L_Punt_Yards = 0.0;
 
             int R_num_returned = 0;
             int R_num_TDs = 0;
@@ -56,6 +58,8 @@ namespace SpectatorFootball.unitTests.Integration_Tests.Punts
             int R_TD_Fumble = 0;
             int R_TD_Block = 0;
             int R_Safety_Block = 0;
+            int R_Punts = 0;
+            double R_Punt_Yards = 0.0;
 
             double g_yardline = 0.0;
 
@@ -123,6 +127,8 @@ namespace SpectatorFootball.unitTests.Integration_Tests.Punts
                     if (pResult.bTouchDown && pResult.bFumble_Lost) L_TD_Fumble++;
                     if (pResult.bTouchDown && pResult.bPunt_blocked) L_TD_Block++;
                     if (pResult.bSafety && pResult.bPunt_blocked) L_Safety_Block++;
+                    if (!pResult.bPunt_blocked) L_Punts++;
+                    if (!pResult.bPunt_blocked) L_Punt_Yards += pResult.Punt_Yards;
                 }
                 else
                 {
@@ -140,6 +146,8 @@ namespace SpectatorFootball.unitTests.Integration_Tests.Punts
                     if (pResult.bFumble_Lost && pResult.bTouchDown) R_TD_Fumble++;
                     if (pResult.bTouchDown && pResult.bPunt_blocked) R_TD_Block++;
                     if (pResult.bSafety && pResult.bPunt_blocked) R_Safety_Block++;
+                    if (!pResult.bPunt_blocked) R_Punts++;
+                    if (!pResult.bPunt_blocked) R_Punt_Yards += pResult.Punt_Yards;
                 }
 
             }
@@ -147,6 +155,7 @@ namespace SpectatorFootball.unitTests.Integration_Tests.Punts
 
 
             double L_avg = (double)L_avg_return / (double)L_num_returned;
+            double L_Punt_Avg = L_Punt_Yards / L_Punts;
 
             if (L_num_returned < icount*.4 || L_num_returned > icount*.6)
                 throw new Exception("L_num_returns out of range " + L_num_returned);
@@ -176,9 +185,11 @@ namespace SpectatorFootball.unitTests.Integration_Tests.Punts
                 throw new Exception("L_TD_Block:: out of range " + L_TD_Block);
             if (L_Safety_Block > 0)
                 throw new Exception("L_Safety_Block:: out of range " + L_Safety_Block);
-
+            if (L_Punt_Avg < 30.0 || L_Punt_Avg > 39.0)
+                throw new Exception("L_Punt_Avg:: out of range " + L_Punt_Avg);
 
             double R_avg = (double)R_avg_return / (double)R_num_returned;
+            double R_Punt_Avg = R_Punt_Yards / R_Punts;
 
             if (R_num_returned < icount * .4 || R_num_returned > icount * .6)
                 throw new Exception("R_num_returns out of range " + R_num_returned);
@@ -208,6 +219,8 @@ namespace SpectatorFootball.unitTests.Integration_Tests.Punts
                 throw new Exception("R_TD_Block:: out of range " + R_TD_Block);
             if (R_Safety_Block > 0)
                 throw new Exception("R_Safety_Block:: out of range " + R_Safety_Block);
+            if (R_Punt_Avg < 30.0 || R_Punt_Avg > 39.0)
+                throw new Exception("R_Punt_Avg:: out of range " + R_Punt_Avg);
 
             Assert.IsTrue(true);
 
