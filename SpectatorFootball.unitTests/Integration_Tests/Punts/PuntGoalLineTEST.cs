@@ -38,6 +38,9 @@ namespace SpectatorFootball.unitTests.Integration_Tests.Punts
             double L_avg_return = 0.0;
             int L_cc_attempt = 0;
             int L_cc_made = 0;
+            int L_TD_Fumble = 0;
+            int L_TD_Block = 0;
+            int L_Safety_Block = 0;
 
             int R_num_returned = 0;
             int R_num_TDs = 0;
@@ -50,6 +53,10 @@ namespace SpectatorFootball.unitTests.Integration_Tests.Punts
             double R_avg_return = 0.0;
             int R_cc_attempt = 0;
             int R_cc_made = 0;
+            int R_TD_Fumble = 0;
+            int R_TD_Block = 0;
+            int R_Safety_Block = 0;
+
 
             double g_yardline = 0.0;
 
@@ -114,6 +121,9 @@ namespace SpectatorFootball.unitTests.Integration_Tests.Punts
                     if (pResult.bPunt_blocked) L_Blocked_Punts++;
                     if (pResult.bCoffinCornerAttemt) L_cc_attempt++;
                     if (pResult.bCoffinCornerMade) L_cc_made++;
+                    if (pResult.bTouchDown && pResult.bFumble_Lost) L_TD_Fumble++;
+                    if (pResult.bTouchDown && pResult.bPunt_blocked) L_TD_Block++;
+                    if (pResult.bSafety && pResult.bPunt_blocked) L_Safety_Block++;
                 }
                 else
                 {
@@ -128,6 +138,9 @@ namespace SpectatorFootball.unitTests.Integration_Tests.Punts
                     if (pResult.bPunt_blocked) R_Blocked_Punts++;
                     if (pResult.bCoffinCornerAttemt) R_cc_attempt++;
                     if (pResult.bCoffinCornerMade) R_cc_made++;
+                    if (pResult.bTouchDown && pResult.bFumble_Lost) R_TD_Fumble++;
+                    if (pResult.bTouchDown && pResult.bPunt_blocked) R_TD_Block++;
+                    if (pResult.bSafety && pResult.bPunt_blocked) R_Safety_Block++;
                 }
 
             }
@@ -142,7 +155,7 @@ namespace SpectatorFootball.unitTests.Integration_Tests.Punts
                 throw new Exception("L_num_kneel_down out of range " + L_num_kneel_down);
             if (L_num_out_of_EZ != 0)
                 throw new Exception("L_num_out_of_EZ out of range " + L_num_out_of_EZ);
-            if (L_num_TDs < L_num_returned * .0015 || L_num_TDs > L_num_returned * .01)
+            if (L_num_TDs < L_num_returned * .0015 || L_num_TDs > L_num_returned * .015)
                 throw new Exception("L_num_TDs out of range " + L_num_TDs);
             if (L_num_fumble < L_num_returned * .006 || L_num_fumble > L_num_returned * .05)
                 throw new Exception("L_num_fumble out of range " + L_num_fumble); if (L_num_fumble_lost > L_num_fumble)
@@ -156,6 +169,12 @@ namespace SpectatorFootball.unitTests.Integration_Tests.Punts
                 throw new Exception("L_cc_attempt:: out of range " + L_cc_attempt);
             if (L_cc_made != 0)
                 throw new Exception("L_cc_made:: out of range " + L_cc_made);
+            if (L_TD_Fumble != 0)
+                throw new Exception("L_TD_Fumble:: out of range " + L_TD_Fumble);
+            if (L_TD_Block > L_Blocked_Punts)
+                throw new Exception("L_TD_Block:: out of range " + L_TD_Block);
+            if (L_Safety_Block > L_Blocked_Punts)
+                throw new Exception("L_Safety_Block:: out of range " + L_Safety_Block);
 
             double R_avg = (double)R_avg_return / (double)R_num_returned;
 
@@ -165,7 +184,7 @@ namespace SpectatorFootball.unitTests.Integration_Tests.Punts
                 throw new Exception("R_num_kneel_down out of range " + R_num_kneel_down);
             if (R_num_out_of_EZ != 0)
                 throw new Exception("R_num_out_of_EZ out of range " + R_num_out_of_EZ);
-            if (R_num_TDs < R_num_returned * .0015 || R_num_TDs > R_num_returned * .01)
+            if (R_num_TDs < R_num_returned * .0015 || R_num_TDs > R_num_returned * .015)
                 throw new Exception("R_num_TDs out of range " + R_num_TDs);
             if (R_num_fumble < R_num_returned * .006 || R_num_fumble > R_num_returned * .05)
                 throw new Exception("R_num_fumble out of range " + R_num_fumble);
@@ -181,6 +200,12 @@ namespace SpectatorFootball.unitTests.Integration_Tests.Punts
                 throw new Exception("R_cc_attempt:: out of range " + R_cc_attempt);
             if (R_cc_made != 0)
                 throw new Exception("R_cc_made:: out of range " + R_cc_made);
+            if (R_TD_Fumble != 0)
+                throw new Exception("R_TD_Fumble:: out of range " + R_TD_Fumble);
+            if (R_TD_Block > R_Blocked_Punts)
+                throw new Exception("R_TD_Block:: out of range " + R_TD_Block);
+            if (R_Safety_Block > R_Blocked_Punts)
+                throw new Exception("R_Safety_Block:: out of range " + R_Safety_Block);
 
             Assert.IsTrue(true);
 

@@ -389,7 +389,7 @@ namespace SpectatorFootball.unitTests.GameEngine_HelperTEST
         [TestMethod]
         public void BlockedPuntTD_or_Safety_p_recovers_safety_Left()
         {
-            Tuple<bool, bool> t = Game_Engine_Helper.BlockedPuntTD_or_Safety(true, 101.1, true);
+            Tuple<bool, bool> t = Game_Engine_Helper.BlockedPuntTD_or_Safety(true, -0.1, true);
 
             Assert.IsTrue(!t.Item1 && t.Item2);
         }
@@ -398,7 +398,7 @@ namespace SpectatorFootball.unitTests.GameEngine_HelperTEST
         [TestMethod]
         public void BlockedPuntTD_or_Safety_p_recovers_TD_Left()
         {
-            Tuple<bool, bool> t = Game_Engine_Helper.BlockedPuntTD_or_Safety(false, 100.0, true);
+            Tuple<bool, bool> t = Game_Engine_Helper.BlockedPuntTD_or_Safety(false, 0.0, true);
 
             Assert.IsTrue(t.Item1 && !t.Item2);
         }
@@ -425,7 +425,7 @@ namespace SpectatorFootball.unitTests.GameEngine_HelperTEST
         [TestMethod]
         public void BlockedPuntTD_or_Safety_p_recovers_safety_Right()
         {
-            Tuple<bool, bool> t = Game_Engine_Helper.BlockedPuntTD_or_Safety(true, -1.1, false);
+            Tuple<bool, bool> t = Game_Engine_Helper.BlockedPuntTD_or_Safety(true, 101.1, false);
 
             Assert.IsTrue(!t.Item1 && t.Item2);
         }
@@ -434,7 +434,7 @@ namespace SpectatorFootball.unitTests.GameEngine_HelperTEST
         [TestMethod]
         public void BlockedPuntTD_or_Safety_p_recovers_TD_Right()
         {
-            Tuple<bool, bool> t = Game_Engine_Helper.BlockedPuntTD_or_Safety(false, -1.1, false);
+            Tuple<bool, bool> t = Game_Engine_Helper.BlockedPuntTD_or_Safety(false, 101.1, false);
 
             Assert.IsTrue(t.Item1 && !t.Item2);
         }

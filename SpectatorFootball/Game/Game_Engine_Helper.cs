@@ -756,6 +756,22 @@ namespace SpectatorFootball.GameNS
             bool bTD = false;
             bool bSafety = false;
 
+            if ((bLefttoRight && yl <= 0.0) || (!bLefttoRight && yl >= 100.0))
+            {
+                if (bPuntTeamRecovers)
+                    bSafety = true;
+                else
+                    bTD = true;
+            }
+
+            return Tuple.Create(bTD, bSafety);
+        }
+
+        public static Tuple<bool, bool> ReturnTD_or_Safety(bool bPuntTeamRecovers, double yl, bool bLefttoRight)
+        {
+            bool bTD = false;
+            bool bSafety = false;
+
             if ((!bLefttoRight && yl <= 0.0) || (bLefttoRight && yl >= 100.0))
             {
                 if (bPuntTeamRecovers)

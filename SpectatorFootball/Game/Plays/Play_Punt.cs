@@ -102,7 +102,7 @@ namespace SpectatorFootball.GameNS
                     bool bPunt_Team_Recovers = Punt_Players.Any(x => x == r.Blocked_Punt_Recoverer);
                     Tuple<bool, bool> t2 = Game_Engine_Helper.BlockedPuntTD_or_Safety(bPunt_Team_Recovers, gBall.Current_YardLine, bLefttoRight);
                     r.bTouchDown = t2.Item1;
-                    r.bTouchback = t2.Item2;
+                    r.bSafety = t2.Item2;
                 }
                 else
                 {
@@ -139,7 +139,7 @@ namespace SpectatorFootball.GameNS
                         if (r.bFumble)
                         {
                             //The logic is the same as a blocked punt, so I just reused that method.
-                            Tuple<bool, bool> t3 = Game_Engine_Helper.BlockedPuntTD_or_Safety(!r.bFumble_Lost, gBall.Current_YardLine, bLefttoRight);
+                            Tuple<bool, bool> t3 = Game_Engine_Helper.ReturnTD_or_Safety(!r.bFumble_Lost, gBall.Current_YardLine, bLefttoRight);
                             r.bTouchDown = t3.Item1;
                             r.bTouchback = t3.Item2;
                         }
