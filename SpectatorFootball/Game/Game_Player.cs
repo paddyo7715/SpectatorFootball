@@ -471,6 +471,40 @@ namespace SpectatorFootball.GameNS
             return Tuple.Create(bOut_of_Bounds, bOut_of_Endzone, bKnell_with_Ball, bReturn, bDontField);
         }
 
+        public Tuple<bool, bool, bool> getClassicKickoff_ReturnerAction(double ballx, bool bLast_Play,
+    int rnd, bool bLefttoRight)
+        {
+            bool bOut_of_Endzone = false;
+            bool bKnell_with_Ball = false;
+            bool bReturn = false;
+
+            double yardline = ballx;
+
+            if (bLefttoRight && ballx >= app_Constants.FIELD_YARDS + app_Constants.ENDZONE_YARDS)
+                bOut_of_Endzone = true;
+            else if (!bLefttoRight && ballx <= -app_Constants.ENDZONE_YARDS)
+                bOut_of_Endzone = true;
+            else if (bLast_Play)
+                bReturn = true;
+            else
+            {
+                double avg_dont_run_out = 82.0;
+                double yards_from_back_of_endzone = Game_Engine_Helper.yards_from_end_of_endzone(ballx, bLefttoRight);
+                avg_dont_run_out += (long)(yards_from_back_of_endzone);
+                if (rnd <= avg_dont_run_out)
+                {
+                    if ((ballx >= 100 && bLefttoRight) || ballx <= 0 && !bLefttoRight)
+                        bKnell_with_Ball = true;
+                    else
+                        bReturn = true;
+                }
+                else
+                    bReturn = true;
+            }
+
+            return Tuple.Create(bOut_of_Endzone, bKnell_with_Ball, bReturn);
+        }
+
         public void returnerWaitLocation(double ballx, double bally, bool bOut_of_Bounds, bool bOut_of_Endzone, bool bKnell_with_Ball, bool bReturn, bool bDontField, bool bLefttoRight)
         {
             if (bKnell_with_Ball || bReturn)

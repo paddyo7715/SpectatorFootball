@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SpectatorFootball.GameNS
 {
-    public class Kickoff_Formation : iFormation_Play
+    public class Kickoff_Classic_Formation : iFormation_Play
     {
         public Formation getFormation(Formations_Enum fe, double PossessionAdjuster)
         {

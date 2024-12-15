@@ -18,10 +18,10 @@ namespace SpectatorFootball.GameNS
             switch (fe)
             {
                 case Formations_Enum.KICKOFF_REGULAR_KICK:
-                    formplay = new Kickoff_Formation();
+                    formplay = new Kickoff_Classic_Formation();
                     break;
                 case Formations_Enum.KICKOFF_REGULAR_RECEIVE:
-                    formplay = new Kickoff_Return_Formation();
+                    formplay = new Kickoff_Classic_Return_Formation();
                     break;
                 case Formations_Enum.KICKOFF_ONSIDE_KICK:
                     formplay = new Onside_Kickoff();

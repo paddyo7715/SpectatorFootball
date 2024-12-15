@@ -210,8 +210,8 @@
     <Compile Include="Game\Coach.cs" />
     <Compile Include="Game\Formations\formation_helper.cs" />
     <Compile Include="Game\Formations\Interfaces\iFormation_Play.cs" />
-    <Compile Include="Game\Formations\Kickoff_Formation.cs" />
-    <Compile Include="Game\Formations\Kickoff_Return_Formation.cs" />
+    <Compile Include="Game\Formations\Kickoff_Classic_Formation.cs" />
+    <Compile Include="Game\Formations\Kickoff_Classic_Return_Formation.cs" />
     <Compile Include="Game\Formations\Onside_Kickoff.cs" />
     <Compile Include="Game\Formations\Onside_Kickoff_Receive.cs" />
     <Compile Include="Game\Formations\Punt_Formation.cs" />
@@ -233,7 +233,7 @@
     <Compile Include="Game\Plays\Interfaces\iPlay.cs" />
     <Compile Include="Game\Plays\Playstub_Punt_Block.cs" />
     <Compile Include="Game\Plays\Playstub_Uncrouch.cs" />
-    <Compile Include="Game\Plays\Play_Kickoff_Normal.cs" />
+    <Compile Include="Game\Plays\Play_Kickoff_Classic.cs" />
     <Compile Include="Game\Plays\Play_Kickoff_Onsides.cs" />
     <Compile Include="Game\Plays\Play_Punt.cs" />
     <Compile Include="Game\Play_Result.cs" />

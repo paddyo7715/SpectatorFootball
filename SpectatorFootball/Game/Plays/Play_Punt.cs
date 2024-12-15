@@ -1058,12 +1058,6 @@ namespace SpectatorFootball.GameNS
                 Past_Blocker_Tackler_List.AddRange(group.Where(x => x != null).Select(x => (int)x).ToList());
             }  //on group 1,2,3 and 4
 
-            int hhh = 0;
-            if (r.Tackler == null && !r.bPunt_blocked && !r.bFumble)
-            {
-                hhh = 10;
-            }
-
             return r;
         }
 
