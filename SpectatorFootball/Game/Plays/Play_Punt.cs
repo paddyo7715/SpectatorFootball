@@ -1097,6 +1097,7 @@ namespace SpectatorFootball.GameNS
             return Tuple.Create(slot, vert);
         }
 
+
         public static int getPuntReturnRunSlot(int slot_index, bool bLookforhole, List<int?> group, bool bAnyFive)
         {
             int r;

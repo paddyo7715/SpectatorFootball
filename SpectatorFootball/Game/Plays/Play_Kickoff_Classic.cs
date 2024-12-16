@@ -73,7 +73,6 @@ namespace SpectatorFootball.GameNS
             r.Play_Start_Yardline = starting_yardline;
             double retuner_catches_ball_yl = 0.0;
 
-            Set_Ball_and_Players_Before_Kickoff(gBall, Kickoff_Players, Return_Players, Kickoff_Formation, Return_Formation, bSim);
             Kicker_Runs_Up_And_Kicks_Ball(gBall, Kickoff_Players, Return_Players, bSim);
 
             gBall = getKickoff_Len_and_Vert(r.Kicker.p_and_r.pr.First().Kicker_Leg_Power_Rating, 
@@ -340,52 +339,6 @@ namespace SpectatorFootball.GameNS
             return r;
         }
 
-        private void Set_Ball_and_Players_Before_Kickoff(Game_Ball gBall, List<Game_Player> Kickoff_Players, List<Game_Player> Return_Players,
-            Formation Kickoff_Formation, Formation Return_Formation, bool bSim)
-        {
-            if (!bSim)
-                gBall.TeeUp();
-
-            int io_Players = 0;
-            //cycle thru the offensive/kickoff team then he defense
-            //if kicker then do their special thing; otherwise, the player just remains standing 
-            foreach (Game_Player p in Kickoff_Players)
-            {
-                if (p == r.Kicker)
-                {
-                    double prev_yl = p.Current_YardLine;
-                    double prev_v = p.Current_Vertical_Percent_Pos;
-                    double Runup_end_yardline = p.Current_YardLine += 5.4 * Game_Engine_Helper.HorizontalAdj(bLefttoRight);
-                    double Runup_end_vert_pos = p.Current_Vertical_Percent_Pos += 0.0;
-
-                    p.Current_YardLine = Runup_end_yardline + (0.4 * Game_Engine_Helper.HorizontalAdj(bLefttoRight));
-                    p.Current_Vertical_Percent_Pos += 0.0;
-
-                    if (!bSim)
-                    {
-                        Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
-                        p.KickBall(moving_ps, prev_yl, prev_v, Runup_end_yardline, Runup_end_vert_pos);
-                    }
-                }
-                else
-                {
-                    //Other players just stand there waiting for the kick
-                    if (!bSim)
-                        p.Stand();
-                }
-                io_Players++;
-            }
-
-            //The team receiving the kick will just stand there before the kick
-            foreach (Game_Player p in Return_Players)
-            {
-                //Receiving players just stand there waiting for the kick
-                if (!bSim)
-                    p.Stand();
-            }
-
-        }
-
         private void Kicker_Runs_Up_And_Kicks_Ball(Game_Ball gBall, List<Game_Player> Kickoff_Players, List<Game_Player> Return_Players, bool bSim)
         {
             if (!bSim)
@@ -516,12 +469,15 @@ namespace SpectatorFootball.GameNS
                     pr.bKick_KneelDown = tRetAct.Item2;
                     pr.bKick_Returned = tRetAct.Item3;
 
+                    r.Returner.returnerWaitLocation(gBall.Current_YardLine, gBall.Current_Vertical_Percent_Pos,
+                        false, pr.bKick_Out_of_Endzone, pr.bKick_KneelDown, pr.bKick_Returned, false, bLefttoRight);
+
                     if (pr.bKick_Out_of_Endzone || pr.bKick_KneelDown)
                         pr.bTouchback = true;
 
                     if (!bSim)
                     {
-                        if (r.bTouchback)
+                        if (r.bKick_Out_of_Endzone)
                             gBall.End_Over_End_Thru_Air_Not_Caught(bLefttoRight);
                         else
                             gBall.End_Over_End_Thru_Air();
@@ -628,7 +584,7 @@ namespace SpectatorFootball.GameNS
             int ind_close_Tklr = 0;
 
             slot_index = 2;
-            double slot2_vert = gBall.Current_YardLine;
+            double slot2_vert = gBall.Current_Vertical_Percent_Pos;
             bLefttoRight = Game_Engine_Helper.Switch_LefttoRight(bLefttoRight);
 
             List<int?> group = new List<int?>();

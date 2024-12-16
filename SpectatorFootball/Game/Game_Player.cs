@@ -472,7 +472,7 @@ namespace SpectatorFootball.GameNS
         }
 
         public Tuple<bool, bool, bool> getClassicKickoff_ReturnerAction(double ballx, bool bLast_Play,
-    int rnd, bool bLefttoRight)
+            int rnd, bool bLefttoRight)
         {
             bool bOut_of_Endzone = false;
             bool bKnell_with_Ball = false;

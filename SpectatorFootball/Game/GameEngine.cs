@@ -239,8 +239,8 @@ namespace SpectatorFootball.GameNS
 
             //bpo test
             g_fid_posession = at.Franchise_ID;
-            g_Line_of_Scrimmage = 60.0;
-            bKickoff = false;
+            g_Line_of_Scrimmage = 35.0;
+            bKickoff = true;
             bKickoffAfterSafety = false;
             //********************
 
@@ -387,11 +387,11 @@ namespace SpectatorFootball.GameNS
                 string Play_Stats_Validation = null;
                 if (!bpreSnapPenalty)
                 {
-                    Play_Result_Validation = Play_Validator.Validate_Play_Result(Play_Enum.PUNT, Offensive_Players, Defensive_Players, p_result, Game_Ball, bLefttoRight);
+                    Play_Result_Validation = Play_Validator.Validate_Play_Result(Offensive_Package.Play, Offensive_Players, Defensive_Players, p_result, Game_Ball, bLefttoRight);
                     if (Play_Result_Validation != null)
                         throw new Exception(Play_Result_Validation);
 
-                    Play_Stats_Validation = Play_Validator.Validate_Punt_play_stats(Play_Enum.PUNT, Offensive_Players, Defensive_Players, p_result);
+                    Play_Stats_Validation = Play_Validator.Validate_Punt_play_stats(Offensive_Package.Play, Offensive_Players, Defensive_Players, p_result);
                     if (Play_Stats_Validation != null)
                         throw new Exception(Play_Stats_Validation);
                 }
