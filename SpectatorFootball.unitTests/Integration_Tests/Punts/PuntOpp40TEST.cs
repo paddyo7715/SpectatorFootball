@@ -157,27 +157,27 @@ namespace SpectatorFootball.unitTests.Integration_Tests.Punts
             double L_avg = (double)L_avg_return / (double)L_num_returned;
             double L_Punt_Avg = L_Punt_Yards / L_Punts;
 
-            if (L_num_returned < icount*.4 || L_num_returned > icount*.6)
+            if (L_num_returned < 4000 || L_num_returned > 6000)
                 throw new Exception("L_num_returns out of range " + L_num_returned);
-            if (L_num_kneel_down < icount*.07 || L_num_kneel_down > icount*.2)
+            if (L_num_kneel_down < 700 || L_num_kneel_down > 2000)
                 throw new Exception("L_num_kneel_down out of range " + L_num_kneel_down);
-            if (L_num_out_of_EZ < icount*.04 || L_num_out_of_EZ > icount*.11)
+            if (L_num_out_of_EZ < 400 || L_num_out_of_EZ > 1100)
                 throw new Exception("L_num_out_of_EZ out of range " + L_num_out_of_EZ);
-            if (L_num_TDs < L_num_returned * .0015 || L_num_TDs > L_num_returned * .015)
+            if (L_num_TDs < 5 || L_num_TDs > 100)
                 throw new Exception("L_num_TDs out of range " + L_num_TDs);
-            if (L_num_fumble < L_num_returned * .006 || L_num_fumble > L_num_returned * .05)
+            if (L_num_fumble < 60 || L_num_fumble > 300)
                 throw new Exception("L_num_fumble out of range " + L_num_fumble);
             if (L_num_fumble_lost > L_num_fumble)
                 throw new Exception("L_num_fumble_lost out of range " + L_num_fumble_lost);
             if (L_avg <= 7.0 || L_avg > 15.0)
                 throw new Exception("L_AVG Return:: out of range " + (L_avg_return / L_num_returned));
-            if (L_Defender_close_toKicker < icount * .03 || L_Defender_close_toKicker > icount * .08)
+            if (L_Defender_close_toKicker < 300 || L_Defender_close_toKicker > 800)
                 throw new Exception("L_Defender_close_toKicker:: out of range " + L_Defender_close_toKicker);
-            if (L_Blocked_Punts < icount * .003 || L_Blocked_Punts > icount * .015)
+            if (L_Blocked_Punts < 30 || L_Blocked_Punts > 150)
                 throw new Exception("L_Blocked_Punts:: out of range " + L_Blocked_Punts);
-            if (L_cc_attempt < icount * .94)
+            if (L_cc_attempt < 940)
                 throw new Exception("L_cc_attempt:: out of range " + L_cc_attempt);
-            if (L_cc_made < icount * .1 || L_cc_made > icount * .4)
+            if (L_cc_made < 1000 || L_cc_made > 4000)
                 throw new Exception("L_cc_made:: out of range " + L_cc_made);
             if (L_TD_Fumble > 10)
                 throw new Exception("L_TD_Fumble:: out of range " + L_TD_Fumble);
@@ -191,27 +191,27 @@ namespace SpectatorFootball.unitTests.Integration_Tests.Punts
             double R_avg = (double)R_avg_return / (double)R_num_returned;
             double R_Punt_Avg = R_Punt_Yards / R_Punts;
 
-            if (R_num_returned < icount * .4 || R_num_returned > icount * .6)
+            if (R_num_returned < 4000 || R_num_returned > 6000)
                 throw new Exception("R_num_returns out of range " + R_num_returned);
-            if (R_num_kneel_down < icount * .07 || R_num_kneel_down > icount * .2)
+            if (R_num_kneel_down < 700 || R_num_kneel_down > 2000)
                 throw new Exception("R_num_kneeR_down out of range " + R_num_kneel_down);
-            if (R_num_out_of_EZ < icount * .04 || R_num_out_of_EZ > icount * .11)
+            if (R_num_out_of_EZ < 400 || R_num_out_of_EZ > 1100)
                 throw new Exception("R_num_out_of_EZ out of range " + R_num_out_of_EZ);
-            if (R_num_TDs < R_num_returned * .0015 || R_num_TDs > R_num_returned * .015)
+            if (R_num_TDs < 5 || R_num_TDs > 100)
                 throw new Exception("R_num_TDs out of range " + R_num_TDs);
-            if (R_num_fumble < R_num_returned * .006 || R_num_fumble > R_num_returned * .05)
+            if (R_num_fumble < 60 || R_num_fumble > 300)
                 throw new Exception("R_num_fumble out of range " + R_num_fumble);
             if (R_num_fumble_lost > R_num_fumble)
                 throw new Exception("R_num_fumble_lost out of range " + R_num_fumble_lost);
             if (R_avg <= 7.0 || R_avg > 15.0)
                 throw new Exception("R_AVG Return:: out of range " + (R_avg_return / R_num_returned));
-            if (R_Defender_close_toKicker < icount * .03 || R_Defender_close_toKicker > icount * .08)
+            if (R_Defender_close_toKicker < 300 || R_Defender_close_toKicker > 800)
                 throw new Exception("R_Defender_close_toKicker:: out of range " + R_Defender_close_toKicker);
-            if (R_Blocked_Punts < icount * .003 || R_Blocked_Punts > icount * .015)
+            if (R_Blocked_Punts < 30 || R_Blocked_Punts > 150)
                 throw new Exception("R_Blocked_Punts:: out of range " + R_Blocked_Punts);
-            if (R_cc_attempt < icount * .94)
+            if (R_cc_attempt < 9400)
                 throw new Exception("R_cc_attempt:: out of range " + R_cc_attempt);
-            if (R_cc_made < icount * .1 || R_cc_made > icount * .4)
+            if (R_cc_made < 1000 || R_cc_made > 4000)
                 throw new Exception("R_cc_made:: out of range " + R_cc_made);
             if (R_TD_Fumble > 10)
                 throw new Exception("R_TD_Fumble:: out of range " + R_TD_Fumble);

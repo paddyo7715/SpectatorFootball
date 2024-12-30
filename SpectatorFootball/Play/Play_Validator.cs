@@ -60,24 +60,51 @@ namespace SpectatorFootball.PlayNS
                             r += " Blocked punt should have resulted in TD";
                     }
                     break;
-                 default:
+                case Play_Enum.KICKOFF_NORMAL:
+                    //no apparent result
+                    if (!pr.bKick_Returned && !pr.bKick_Out_of_Endzone && !pr.bKick_KneelDown)
+                        r += " No play result for kickoff";
+
+                    //is it a touchback
+                    if (!pr.bFumble_Lost && !pr.bKick_Out_of_Bounds && Game_Engine_Helper.isTouchBack(bLefttoRight, gb.Current_YardLine) && !pr.bTouchback)
+                        r += " Kickoff result should be btouchback set but doesnt";
+
+                    if (pr.bFumble_Lost && !pr.bKick_Out_of_Bounds && Game_Engine_Helper.isTouchBack(bLefttoRight, gb.Current_YardLine) && !pr.bTouchDown)
+                        r += " Punt result should be touchdown on fumble in EZ but isn't";
+
+                    if (pr.bKick_Returned)
+                    {
+                        if (Game_Engine_Helper.isTouchdown(!bLefttoRight, gb.Current_YardLine, false) && !pr.bTouchDown)
+                            r += " kickoff result should be returned TD set but doesnt";
+
+                        if (pr.bTouchDown && !pr.bFumble_Lost && !Game_Engine_Helper.isTouchdown(!bLefttoRight, gb.Current_YardLine, false)) r += " kickoff marked TD but ball is not in endzone";
+                        if (pr.bTouchDown && pr.bFumble_Lost && !Game_Engine_Helper.isTouchBack(bLefttoRight, gb.Current_YardLine)) r += " kickoff should be a TD for the punt team on afumble in the ez";
+                        if (!pr.bFumble && pr.bFumble_Lost) r += " kickoff marked not fumbled but fubmle lost";
+
+                        if (pr.bKick_KneelDown || pr.bKick_Out_of_Endzone)
+                            r += " kickoff returned but market as something else, such as blocked";
+
+                        double ret_yards = Game_Engine_Helper.getKickoffReturnYards(!bLefttoRight, pr.Kick_caught_yl, pr.Returner.Current_YardLine);
+                        if (ret_yards != pr.Yards_Returned)
+                            r += " kickoff return yards not set correctly";
+                    }
+
+                    break;
+                default:
 //                    r += " Play_Result_Validator unknown play";
                     break;
                 }
 
-            if (r != null)
-                r += "Punt: ";
-
             return r;
         }
-        public static string Validate_Punt_play_stats(Play_Enum pe, List<Game_Player> Punters, List<Game_Player> Returners, Play_Result pr)
+        public static string Validate_Punt_play_stats(Play_Enum pe, List<Game_Player> team1, List<Game_Player> team2, Play_Result pr)
         {
             string r = null;
 
             switch (pe)
             {
                 case Play_Enum.PUNT:
-                        foreach (Game_Player p in Punters)
+                        foreach (Game_Player p in team1)
                 {
                     long pPlayer_id = p.p_and_r.pr.First().Player_ID;
                     Game_Player_Stats pStat = pr.Play_Player_Stats.Where(x => x.Player_ID == pPlayer_id).FirstOrDefault();
@@ -114,7 +141,7 @@ namespace SpectatorFootball.PlayNS
                     }
                 }
 
-                foreach (Game_Player p in Returners)
+                foreach (Game_Player p in team2)
                 {
                     long pPlayer_id = p.p_and_r.pr.First().Player_ID;
                     Game_Player_Stats pStat = pr.Play_Player_Stats.Where(x => x.Player_ID == pPlayer_id).FirstOrDefault();
@@ -129,13 +156,13 @@ namespace SpectatorFootball.PlayNS
                     if (p == pr.Returner)
                     {
                         long ret = pr.bPunt_Returned ? 1 : 0;
-                        double yards_ret = pr.bPunt_Returned ? pr.Yards_Gained : 0;
+                        double yards_ret = pr.bPunt_Returned ? pr.Yards_Returned : 0;
                         long fumbles = pr.bFumble ? 1 : 0;
                         long fumbles_Lost = pr.bFumble_Lost ? 1 : 0;
                         long TDs = pr.bPunt_Returned && pr.bTouchDown ? 1 : 0;
 
                         if (pStat.punt_ret_plays != 1) r += " Returner plays not set correctly";
-                        if (ret != 1) r += " Punt returned but punt_ret not 1";
+                        if (ret != pStat.punt_ret) r += " Punt returned but punt_ret not 1";
                         if (yards_ret != pStat.punt_ret_yards) r = " Returner Yards incorrect";
                         if (yards_ret != pStat.punt_ret_yards_long) r = " Returner long Yards incorrect";
                         if (fumbles != pStat.punt_ret_fumbles) r = " Punt fubmles incorrect";
@@ -148,13 +175,65 @@ namespace SpectatorFootball.PlayNS
                     }
                 }
                 break;
+                case Play_Enum.KICKOFF_NORMAL:
+                    foreach (Game_Player p in team1)
+                    {
+                        long pPlayer_id = p.p_and_r.pr.First().Player_ID;
+                        Game_Player_Stats pStat = pr.Play_Player_Stats.Where(x => x.Player_ID == pPlayer_id).FirstOrDefault();
+
+                        long kickoff_def_forced_fumbles = pr.Forced_Fumble_Tackler == p ? 1 : 0;
+                        long kickoff_forced_fumbles_recovered = pr.Fumble_Recoverer == p ? 1 : 0;
+                        long kickoff_def_tackles = pr.Tackler == p ? 1 : 0;
+                        long kickoff_def_tackles_missed = pr.Missed_Tackles.Contains(p) ? 1 : 0;
+                        if (pStat.ko_def_Forced_Fumbles != kickoff_def_forced_fumbles) r += " kickoff defender forced fumbles not set correctly";
+                        if (pStat.ko_fumbles_recovered != kickoff_forced_fumbles_recovered) r += " kickoff def fumble recoveries not set correctly";
+                        if (pStat.ko_def_tackles != kickoff_def_tackles) r += " kickoff def tackles not set correctly";
+                        if (pStat.ko_def_tackles_missed != kickoff_def_tackles_missed) r += " kickoff def tackles missing not set correctly";
+
+                        if (p == pr.Kicker)
+                        {
+                            long kickoffs = 1;
+                            if (pStat.Kickoffs != kickoffs) r += " kicker kickoffs not set correctly";
+                            if (pStat.kicker_plays != 1) r += " kicker plays not set correctly";
+                        }
+                        else
+                        {
+                            if (pStat.ko_def_plays != 1) r += " punt team def plays not set correctly";
+
+                        }
+                    }
+
+                    foreach (Game_Player p in team2)
+                    {
+                        long pPlayer_id = p.p_and_r.pr.First().Player_ID;
+                        Game_Player_Stats pStat = pr.Play_Player_Stats.Where(x => x.Player_ID == pPlayer_id).FirstOrDefault();
+
+                        if (p == pr.Returner)
+                        {
+                            long ko_ret = pr.bKick_Returned ? 1 : 0;
+                            long yards_ret = pr.bKick_Returned ? (int)(pr.Yards_Returned +.5) : 0;
+                            long fumbles = pr.bFumble ? 1 : 0;
+                            long fumbles_Lost = pr.bFumble_Lost ? 1 : 0;
+                            long TDs = pr.bKick_Returned && pr.bTouchDown ? 1 : 0;
+
+                            if (pStat.ko_ret_plays != 1) r += " kickoff Returner plays not set correctly";
+                            if (ko_ret != pStat.ko_ret) r += " kickoff returned but punt_ret not 1";
+                            if (yards_ret != pStat.ko_ret_yards) r = " kickoff Returner Yards incorrect";
+                            if (yards_ret != pStat.ko_ret_yards_long) r = " kickoff Returner long Yards incorrect";
+                            if (fumbles != pStat.ko_ret_fumbles) r = " kickoff fubmles incorrect";
+                            if (fumbles_Lost != pStat.ko_ret_fumbles_lost) r = " kickoff fumbles lost incorrect";
+                            if (TDs != pStat.ko_ret_TDs) r = " kickoff return TDs incorrect";
+                        }
+                        else
+                        {
+                            if (pStat.ko_rec_plays != 1) r += " kickoff rec plays not set correctly";
+                        }
+                    }
+                    break;
                 default:
 //                    r += " Play_Result_Validator unknown play";
                     break;
             }
-
-            if (r != null)
-                r += "Punt: ";
 
             return r;
         }

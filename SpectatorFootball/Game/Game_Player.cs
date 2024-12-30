@@ -422,15 +422,13 @@ namespace SpectatorFootball.GameNS
 
         public Tuple<bool, bool, bool, bool, bool> PuntReturnerActions(double ballx, double bally, bool bLast_Play,bool bLefttoRight)
         {
-            int rnd = CommonUtils.getRandomNum(1, 100);
-            var t = getReturnerAction(ballx, bally, bLast_Play, rnd, bLefttoRight);
+            var t = getReturnerAction(ballx, bally, bLast_Play, bLefttoRight);
             returnerWaitLocation(ballx, bally, t.Item1, t.Item2, t.Item3, t.Item4, t.Item5, bLefttoRight);
 
             return Tuple.Create(t.Item1, t.Item2, t.Item3, t.Item4, t.Item5 );
         }
 
-        public Tuple<bool, bool, bool, bool, bool> getReturnerAction(double ballx, double bally, bool bLast_Play, 
-            int rnd, bool bLefttoRight)
+        public Tuple<bool, bool, bool, bool, bool> getReturnerAction(double ballx, double bally, bool bLast_Play, bool bLefttoRight)
         {
             bool bOut_of_Bounds = false;
             bool bOut_of_Endzone = false;
@@ -454,18 +452,10 @@ namespace SpectatorFootball.GameNS
                 bReturn = true;
             else
             {
-                double avg_dont_run_out = 82.0;
-                double yards_from_back_of_endzone = Game_Engine_Helper.yards_from_end_of_endzone(ballx, bLefttoRight);
-                avg_dont_run_out += (long)(yards_from_back_of_endzone);
-                if (rnd <= avg_dont_run_out)
-                {
-                    if ((ballx >= 100 && bLefttoRight) || ballx <= 0 && !bLefttoRight)
-                        bKnell_with_Ball = true;
-                    else
-                        bDontField = true;
-                }
+                if ((ballx >= 100 && bLefttoRight) || ballx <= 0 && !bLefttoRight)
+                    bKnell_with_Ball = true;
                 else
-                    bReturn = true;
+                    bDontField = true;
             }
 
             return Tuple.Create(bOut_of_Bounds, bOut_of_Endzone, bKnell_with_Ball, bReturn, bDontField);
@@ -488,7 +478,7 @@ namespace SpectatorFootball.GameNS
                 bReturn = true;
             else
             {
-                double avg_dont_run_out = 82.0;
+                double avg_dont_run_out = 60.0;
                 double yards_from_back_of_endzone = Game_Engine_Helper.yards_from_end_of_endzone(ballx, bLefttoRight);
                 avg_dont_run_out += (long)(yards_from_back_of_endzone);
                 if (rnd <= avg_dont_run_out)

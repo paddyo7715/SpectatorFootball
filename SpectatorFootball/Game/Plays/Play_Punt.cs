@@ -294,16 +294,6 @@ namespace SpectatorFootball.GameNS
 
 
 
-        public static List<Game_Player_Stats> SetPlayerStats(List<Game_Player> Punt_Players, List<Game_Player> Return_Players, bool bTouchback, bool coffin_corner_att, bool coffin_corner_made, bool bTouchdown,
-    bool bFumble, bool bFumble_Lost, double Yards,
-    Game_Player Punter, Game_Player Punt_Returner, Game_Player Tackler,
-    Game_Player Forced_Fumble_Recoverer, List<Game_Player> Missed_Tackle)
-        {
-            List<Game_Player_Stats> r = new List<Game_Player_Stats>();
-
-            return r;
-        }
-
         public static Play_Result setPlayerActions(Formation Punt_Formation, Formation Punt_Return_Formation,
             List<Game_Player> Punt_Players, List<Game_Player> Return_Players, Play_Result pResult)
         {

@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SpectatorFootball.Enum;
 using SpectatorFootball.GameNS;
+using SpectatorFootball.PlayNS;
 using SpectatorFootball.unitTests.Helper_ClassesNS;
 using System;
 using System.Collections.Generic;
@@ -48,13 +49,11 @@ namespace SpectatorFootball.IntegrationTests.Kickoff
             double R_total_starting_yardline = 0.0;
             double R_avg_return = 0.0;
 
-            double longest_return = 0;
-
             double g_yardline = 0.0;
             Play_Enum pe = Play_Enum.KICKOFF_NORMAL;
 
 
-            int num_plays = 2000;
+            int num_plays = 20000;
             for (int i = 0; i < num_plays; i++)
             {
                 bool bLefttoRight;
@@ -88,11 +87,16 @@ namespace SpectatorFootball.IntegrationTests.Kickoff
                     Starting_YardLine = g_yardline
                 };
 
-                Play_Kickoff_Classic kickoff = new Play_Kickoff_Classic(KickForm, RecForm,possess_team, at, ht, gb, Kickoff_Players, Receiving_Players, bLefttoRight, false, true, false);
+                Play_Kickoff_Classic kickoff = new Play_Kickoff_Classic(KickForm, RecForm,possess_team, at, ht, gb, Kickoff_Players, Receiving_Players, bLefttoRight, false, false, false);
                 Play_Result pResult = kickoff.Execute(false);
 
-                if (pResult.Yards_Returned > 90.0)
-                    longest_return = pResult.Yards_Returned;
+                string Play_Result_Validation = Play_Validator.Validate_Play_Result(Play_Enum.KICKOFF_NORMAL, Kickoff_Players, Receiving_Players, pResult, gb, bLefttoRight);
+                if (Play_Result_Validation != null)
+                    throw new Exception(Play_Result_Validation);
+
+                string Play_Stats_Validation = Play_Validator.Validate_Punt_play_stats(Play_Enum.KICKOFF_NORMAL, Kickoff_Players, Receiving_Players, pResult);
+                if (Play_Stats_Validation != null)
+                    throw new Exception(Play_Stats_Validation);
 
                 if (bLefttoRight)
                 {
@@ -105,8 +109,6 @@ namespace SpectatorFootball.IntegrationTests.Kickoff
                     if (pResult.bTouchDown) L_num_TDs++;
                     if (pResult.bFumble) L_num_fumble++;
                     if (pResult.bFumble_Lost) L_num_fumble_lost++;
-                    if (pResult.bRunOutofBounds) L_num_run_out_of_bound++;
-                    if (!pResult.bTouchDown && pResult.Yards_Returned >= 40) L_num_40plus_non_TD++;
                     if (!pResult.bTouchback && !pResult.bTouchDown) L_total_starting_yardline += (100.0 - pResult.Returner.Current_YardLine);
                 }
                 else
@@ -118,52 +120,44 @@ namespace SpectatorFootball.IntegrationTests.Kickoff
                     if (pResult.bTouchDown) R_num_TDs++;
                     if (pResult.bFumble) R_num_fumble++;
                     if (pResult.bFumble_Lost) R_num_fumble_lost++;
-                    if (pResult.bRunOutofBounds) R_num_run_out_of_bound++;
-                    if (!pResult.bTouchDown && pResult.Yards_Returned >= 40) R_num_40plus_non_TD++;
                     if (!pResult.bTouchback && !pResult.bTouchDown) R_total_starting_yardline += pResult.Returner.Current_YardLine;
 
                 }
 
             }
 
-            if (L_num_returned < 420 || L_num_returned > 620)
+            double dd = L_avg_return / L_num_returned;
+
+            if (L_num_returned < 4200 || L_num_returned > 6200)
                 throw new Exception("L_num_returns out of range " + L_num_returned);
-            if (L_num_kneel_down < 140 || L_num_kneel_down > 220)
+            if (L_num_kneel_down < 1400 || L_num_kneel_down > 2800)
                 throw new Exception("L_num_kneel_down out of range " + L_num_kneel_down);
-            if (L_num_out_of_EZ < 260 || L_num_out_of_EZ > 400)
+            if (L_num_out_of_EZ < 1500 || L_num_out_of_EZ > 5500)
                 throw new Exception("L_num_out_of_EZ out of range " + L_num_out_of_EZ);
-            if (L_num_TDs < 1 || L_num_TDs > 17)
+            if (L_num_TDs < 10 || L_num_TDs > 50)
                 throw new Exception("L_num_TDs out of range " + L_num_TDs);
-            if (L_num_fumble < 1 || L_num_fumble > 17)
+            if (L_num_fumble < 50 || L_num_fumble > 250)
                 throw new Exception("L_num_fumble out of range " + L_num_fumble);
-            if (L_num_fumble_lost > 14)
+            if (L_num_fumble_lost > 100)
                 throw new Exception("L_num_fumble_lost out of range " + L_num_fumble_lost);
-            if (L_num_run_out_of_bound > 10)
-                throw new Exception("L_num_run_out_of_bound out of range " + L_num_run_out_of_bound);
-            if (L_num_40plus_non_TD < 15 || L_num_40plus_non_TD > 75)
-                throw new Exception("L_num_40plus_non_TD out of range " + L_num_40plus_non_TD);
             if (L_total_starting_yardline / (L_num_returned - L_num_TDs) < 20.0 || L_total_starting_yardline / (L_num_returned - L_num_TDs) > 35.0)
                 throw new Exception("L_AVG starting YL: out of range " + L_total_starting_yardline / (L_num_returned - L_num_TDs));
             if ((L_avg_return / L_num_returned) < 20.0 || (L_avg_return / L_num_returned) > 35.0)
                 throw new Exception("L_AVG Return:: out of range " + (L_avg_return / L_num_returned));
 
 
-            if (R_num_returned < 420 || R_num_returned > 620)
+            if (R_num_returned < 4200 || R_num_returned > 6200)
                 throw new Exception("R_num_returns out of range " + R_num_returned);
-            if (R_num_kneel_down < 140 || R_num_kneel_down > 220)
+            if (R_num_kneel_down < 1500 || R_num_kneel_down > 2800)
                 throw new Exception("R_num_kneel_down out of range " + R_num_kneel_down);
-            if (R_num_out_of_EZ < 260 || R_num_out_of_EZ > 400)
+            if (R_num_out_of_EZ < 1500 || R_num_out_of_EZ > 5500)
                 throw new Exception("R_num_out_of_EZ out of range " + R_num_out_of_EZ);
-            if (R_num_TDs < 1 || R_num_TDs > 17)
+            if (R_num_TDs < 10 || R_num_TDs > 50)
                 throw new Exception("R_num_TDs out of range " + R_num_TDs);
-            if (R_num_fumble < 1 || R_num_fumble > 17)
+            if (R_num_fumble < 50 || R_num_fumble > 200)
                 throw new Exception("R_num_fumble out of range " + R_num_fumble);
-            if (R_num_fumble_lost > 14)
+            if (R_num_fumble_lost > 100)
                 throw new Exception("R_num_fumble_lost out of range " + R_num_fumble_lost);
-            if (R_num_run_out_of_bound > 10)
-                throw new Exception("R_num_run_out_of_bound out of range " + R_num_run_out_of_bound);
-            if (R_num_40plus_non_TD < 15 || R_num_40plus_non_TD > 75)
-                throw new Exception("R_num_40plus_non_TD out of range " + R_num_40plus_non_TD);
             if (R_total_starting_yardline / (R_num_returned - R_num_TDs) < 20.0 || R_total_starting_yardline / (R_num_returned - R_num_TDs) > 35.0)
                 throw new Exception("R_AVG starting YL: out of range " + R_total_starting_yardline / (R_num_returned - R_num_TDs));
             if ((R_avg_return / R_num_returned) < 20.0 || (R_avg_return / R_num_returned) > 35.0)

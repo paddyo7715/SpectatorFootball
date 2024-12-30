@@ -30,8 +30,12 @@ namespace SpectatorFootball.GameNS
 
             if (yt > app_Constants.KICKOFF_MAX_YARDLINE_1)
                 r = app_Constants.KICKOFF_MAX_YARDLINE_1;
+            else if (yt > 108.0)
+                r = 108.0;
             else if (yt < app_Constants.KICKOFF_MAX_YARDLINE_2)
                 r = app_Constants.KICKOFF_MAX_YARDLINE_2;
+            else if (yt < -8.0)
+                r = -8.9;
 
             return r;
         }
@@ -51,7 +55,6 @@ namespace SpectatorFootball.GameNS
                     ls_var = (long) (ls_var * 1.25);
 
                 int r_num = CommonUtils.getRandomNum(1, app_Constants.KICKOFF_LENGTH_CALC_VARIABLE);
-                logger.Debug("r_num " + r_num + " ls_var " + ls_var);
                 if (r_num <= ls_var)
                     break;
             }

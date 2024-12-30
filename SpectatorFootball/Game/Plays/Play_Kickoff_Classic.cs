@@ -82,28 +82,27 @@ namespace SpectatorFootball.GameNS
             BallKickedPlayersRun(gBall, Kickoff_Players, Return_Players, r.Kicker, r.Returner, tackle_groups, r, bLast_Play, bLefttoRight, bSim);
             if (r.bKick_Returned)
             {
+                r.Kick_caught_yl = gBall.Current_YardLine;
                 r = return_kickoff(Kickoff_Players, Return_Players, gBall, tackle_groups, r, bLefttoRight);
                 r.Yards_Returned = Game_Engine_Helper.getKickoffReturnYards(!bLefttoRight, r.Kick_caught_yl, r.Returner.Current_YardLine);
                 //bpo stopped here
             }
 
             //Set if touchdown
-            r.bTouchDown = Game_Engine_Helper.isTouchdown(bLefttoRight, r.Returner.Current_YardLine, r.bTouchback);
+            r.bTouchDown = Game_Engine_Helper.isTouchdown(!bLefttoRight, r.Returner.Current_YardLine, r.bTouchback);
 
             if (r.Returner != null)
                 r.end_of_play_yardline = r.Returner.Current_YardLine;
 
             //Set the Play stats
-            double yards_returned = 0;
-            if (!r.bTouchback)
-                yards_returned = Game_Engine_Helper.getYardsGained(bLefttoRight, retuner_catches_ball_yl, r.Returner.Current_YardLine);
+//            double yards_returned = 0;
+//            if (!r.bTouchback)
+//                yards_returned = Game_Engine_Helper.getYardsGained(bLefttoRight, retuner_catches_ball_yl, r.Returner.Current_YardLine);
             
-            r.Yards_Returned = yards_returned;
-
             //Create Player Stats Records for the play
             r.Play_Player_Stats = SetPlayerStats(Kickoff_Players, Return_Players, r.bTouchback, r.bKick_Out_of_Endzone, r.bTouchDown,
-                r.bFumble, r.bFumble_Lost, yards_returned, r.Kicker, r.Returner, r.Tackler, r.Fumble_Recoverer,
-                r.Missed_Tackles);
+                r.bFumble, r.bFumble_Lost, r.Yards_Returned, r.Kicker, r.Returner, r.Tackler, r.Fumble_Recoverer,
+                r.Missed_Tackles, r.Forced_Fumble_Tackler);
 
             return r;
         }
@@ -208,7 +207,8 @@ namespace SpectatorFootball.GameNS
         public static List<Game_Player_Stats> SetPlayerStats(List<Game_Player> Kickoff_Players, List<Game_Player> Return_Players, bool bTouchback, bool bKicked_Out_of_Endzone, bool bTouchdown,
             bool bFumble, bool bFumble_Lost, double Yards,
             Game_Player Kicker, Game_Player Returner, Game_Player Tackler,
-            Game_Player Forced_Fumble_Recoverer, List<Game_Player> Missed_Tackle)
+            Game_Player Forced_Fumble_Recoverer, List<Game_Player> Missed_Tackle,
+            Game_Player Force_Fubmle)
         {
             long lTDs = bTouchdown ? 1 : 0;
             long lFubmle = bFumble ? 1 : 0;
@@ -221,7 +221,7 @@ namespace SpectatorFootball.GameNS
             foreach (Game_Player p in Kickoff_Players)
             {
                 if (p == Kicker)
-                    r.Add(new Game_Player_Stats() { Player_ID = Kicker.p_and_r.pr.First().Player_ID, Kickoffs = 1 });
+                    r.Add(new Game_Player_Stats() { Player_ID = Kicker.p_and_r.pr.First().Player_ID, Kickoffs = 1, kicker_plays = 1 });
                 else
                     r.Add(new Game_Player_Stats() { Player_ID = p.p_and_r.pr.First().Player_ID, ko_def_plays = 1 });
             }
@@ -253,7 +253,7 @@ namespace SpectatorFootball.GameNS
             kr.ko_ret_TDs = lTDs;
             kr.ko_ret_fumbles = lFubmle;
             kr.ko_ret_fumbles_lost = lFubmle_Lost;
-            kr.ko_ret_yards = (long) Math.Round(Yards);
+            kr.ko_ret_yards = (long)(Yards + .5);
             kr.ko_ret_yards_long = kr.ko_ret_yards;
 
             //Set Tackler stats
@@ -262,8 +262,8 @@ namespace SpectatorFootball.GameNS
                 Game_Player_Stats kt = r.Where(x => x.Player_ID == Tackler.p_and_r.pr.First().Player_ID).First();
                 kt.ko_def_tackles = 1;
 
-                if (lFubmle > 0)
-                    kt.ko_def_Forced_Fumbles = 1;
+//                if (lFubmle > 0)
+//                    kt.ko_def_Forced_Fumbles = 1;
             }
 
             //set missed tackles
@@ -271,6 +271,12 @@ namespace SpectatorFootball.GameNS
             {
                 Game_Player_Stats mt = r.Where(x => x.Player_ID == m.p_and_r.pr.First().Player_ID).First();
                 mt.ko_def_tackles_missed = 1;
+            }
+
+            if (Force_Fubmle != null)
+            {
+                Game_Player_Stats fr = r.Where(x => x.Player_ID == Force_Fubmle.p_and_r.pr.First().Player_ID).First();
+                fr.ko_def_Forced_Fumbles = 1;
             }
 
             //if there is a fumble and it is recovered give credit to the player that recovered it
@@ -388,6 +394,12 @@ namespace SpectatorFootball.GameNS
         {
 
             KickOff_Length kick_length_enum = Kicking_Helper.getKickOff_Len_enum(leg_strength);
+
+            //bpo test
+            int qqqq = 0;
+            if (kick_length_enum == KickOff_Length.SUPER_LONG)
+                qqqq = 0;
+
             double Kickoff_Len = Kicking_Helper.getKickoff_len(kick_length_enum);
 
             Kickoff_Verticl Kick_Vert_enum = Kicking_Helper.getKickoff_Vert_enum(Leg_Accuracy);
@@ -666,6 +678,13 @@ namespace SpectatorFootball.GameNS
                     //adjust potential tackler's tackle rating based on the block
                     tackler_tackle_rating = Game_Engine_Helper.AdjustTackleRating_forBlock(br, tackler_tackle_rating);
 
+                    //bpo test
+                    //                    tackler_tackle_rating = 1;
+
+                    int hhh = 0;
+                    if (i == 4)
+                        hhh = 1;
+
                     bool bTack = Game_Engine_Helper.Make_Tackle(
                         r.Returner.p_and_r.pr.First().Speed_Rating,
                         r.Returner.p_and_r.pr.First().Agilty_Rating,
@@ -923,6 +942,11 @@ namespace SpectatorFootball.GameNS
                         r.Tackler = null;
                     }
                 }
+
+                //bpo test
+                int ppp = 0;
+                if ((r.Returner.Current_YardLine > 100.0 || r.Returner.Current_YardLine < 0) && r.bKick_Returned)
+                    ppp = 1;
 
                 //set td or not
                 if (Game_Engine_Helper.isTouchdown(bLefttoRight, r.Returner.Current_YardLine, r.bTouchback))

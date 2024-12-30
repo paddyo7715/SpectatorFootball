@@ -516,8 +516,8 @@ namespace SpectatorFootball
         public const int KICKOFF_MAX_LONG_DISTANCE = 76;
         public const int KICKOFF_MIN_SUPER_LONG_DISTANCE = 77;
         public const int KICKOFF_MAX_SUPER_LONG_DISTANCE = 80;
-        public const double KICKOFF_MAX_YARDLINE_1  = 109;
-        public const double KICKOFF_MAX_YARDLINE_2 = -9;
+        public const double KICKOFF_MAX_YARDLINE_1  = 111;
+        public const double KICKOFF_MAX_YARDLINE_2 = -11;
         public const double FG_LONGEST_FG_YARDLINE = 45;
 
 
@@ -536,12 +536,12 @@ namespace SpectatorFootball
         public const int KICKOFF_PLAYERS_IN_GROUP = 5;
         public const int KICKOFF_PLAYERS_GROUP_MIDPOINT = 2;
         public const int KICKOFF_TACKLING_GROUPS = 3;
-        public const int KICKOFF_GROUP_1_MIN = 8;
-        public const int KICKOFF_GROUP_1_MAX = 11;
+        public const int KICKOFF_GROUP_1_MIN = 9;
+        public const int KICKOFF_GROUP_1_MAX = 12;
         public const int KICKOFF_GROUP_2_MIN = 20;
-        public const int KICKOFF_GROUP_2_MAX = 21;
-        public const int KICKOFF_GROUP_3_MIN = 32;
-        public const int KICKOFF_GROUP_3_MAX = 35;
+        public const int KICKOFF_GROUP_2_MAX = 23;
+        public const int KICKOFF_GROUP_3_MIN = 31;
+        public const int KICKOFF_GROUP_3_MAX = 33;
         public const int KICKOFF_KICKER_FROM_RETURNER = 57;
         public const double KICKOFF_GROUP_VERT_DIST = 7.0;
         public const double KICKOFF_DIST_BETWEEN_BLOCK_ATTACHERS = 1.00;  
