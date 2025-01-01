@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpectatorFootball.IntegrationTests.Kickoff
+namespace SpectatorFootball.Integration_Tests.Kickoff
 {
     [TestClass]
     public class KickoffNormalTEST

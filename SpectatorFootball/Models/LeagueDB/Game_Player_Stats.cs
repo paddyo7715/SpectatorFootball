@@ -271,8 +271,8 @@ namespace SpectatorFootball.Models
         public long scrimmage_onside_play { get; set; }
         public long ko_onside_kick_att { get; set; }
         public long ko_onside_kick_made { get; set; }
-
         public long ko_onside_recovered { get; set; }
+        public long ko_onside_def_plays { get; set; }
 
         
 

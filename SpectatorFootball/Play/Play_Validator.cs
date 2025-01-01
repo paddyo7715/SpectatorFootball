@@ -90,6 +90,16 @@ namespace SpectatorFootball.PlayNS
                     }
 
                     break;
+                case Play_Enum.KICKOFF_ONSIDES:
+                    //no apparent result
+                    if (!pr.bOnsideAtt)
+                        r += " Onside Kick without an onside attempt";
+
+                    //is it a touchback
+                    if (pr.bOnsideMade && pr.Onside_Kick_Recoverer == null)
+                        r += " Onside kick made but no one recovered it";
+
+                    break;
                 default:
 //                    r += " Play_Result_Validator unknown play";
                     break;
@@ -228,6 +238,33 @@ namespace SpectatorFootball.PlayNS
                         {
                             if (pStat.ko_rec_plays != 1) r += " kickoff rec plays not set correctly";
                         }
+                    }
+                    break;
+                case Play_Enum.KICKOFF_ONSIDES:
+                    foreach (Game_Player p in team1)
+                    {
+                        long pPlayer_id = p.p_and_r.pr.First().Player_ID;
+                        Game_Player_Stats pStat = pr.Play_Player_Stats.Where(x => x.Player_ID == pPlayer_id).FirstOrDefault();
+
+                        if (p == pr.Onside_Kick_Recoverer && pStat.ko_onside_recovered != 1) r += " player recovered onside kick but onside kicks recovered not set correctly";
+                        if (pStat.ko_onside_play != 1) r += " player onside kickoff plays not correct";
+
+                        if (p == pr.Kicker)
+                        {
+                            long onside_kicks_made = pr.bAway_OnsideMade ? 1 : 0;
+                            if (pStat.ko_onside_kick_att != 1) r += " kicker onside kickoff attempts not set correctly";
+                            if (pStat.ko_onside_kick_made != onside_kicks_made) r += " kicker onside kicks made not set correctly";
+                        }
+
+                    }
+
+                    foreach (Game_Player p in team2)
+                    {
+                        long pPlayer_id = p.p_and_r.pr.First().Player_ID;
+                        Game_Player_Stats pStat = pr.Play_Player_Stats.Where(x => x.Player_ID == pPlayer_id).FirstOrDefault();
+
+                        if (p == pr.Onside_Kick_Recoverer && pStat.ko_onside_recovered != 1) r += " player recovered onside kick but onside kicks recovered not set correctly";
+                        if (pStat.ko_onside_play != 1) r += " player onside kickoff plays not correct";
                     }
                     break;
                 default:
