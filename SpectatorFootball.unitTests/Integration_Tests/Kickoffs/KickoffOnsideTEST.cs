@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SpectatorFootball.Enum;
 using SpectatorFootball.GameNS;
+using SpectatorFootball.PlayNS;
 using SpectatorFootball.unitTests.Helper_ClassesNS;
 using System;
 using System.Collections.Generic;
@@ -35,7 +36,7 @@ namespace SpectatorFootball.Integration_Tests.Kickoff
             double g_yardline = 0.0;
             Play_Enum pe = Play_Enum.KICKOFF_ONSIDES;
 
-            int num_plays = 2000;
+            int num_plays = 20000;
             for (int i = 0; i < num_plays; i++)
             {
                 bool bLefttoRight;
@@ -72,6 +73,14 @@ namespace SpectatorFootball.Integration_Tests.Kickoff
                 Play_Kickoff_Onsides kickoff = new Play_Kickoff_Onsides(KickForm, RecForm, possess_team, at, ht, gb, Kickoff_Players, Receiving_Players, bLefttoRight, false, true, false);
                 Play_Result pResult = kickoff.Execute(false);
 
+                string Play_Result_Validation = Play_Validator.Validate_Play_Result(Play_Enum.KICKOFF_ONSIDES, Kickoff_Players, Receiving_Players, pResult, gb, bLefttoRight);
+                if (Play_Result_Validation != null)
+                    throw new Exception(Play_Result_Validation);
+
+                string Play_Stats_Validation = Play_Validator.Validate_Punt_play_stats(Play_Enum.KICKOFF_ONSIDES, Kickoff_Players, Receiving_Players, pResult);
+                if (Play_Stats_Validation != null)
+                    throw new Exception(Play_Stats_Validation);
+
                 if (bLefttoRight)
                 {
                     L_num_att++;
@@ -87,18 +96,15 @@ namespace SpectatorFootball.Integration_Tests.Kickoff
 
             }
 
-            if (L_bOnside_Muffed < 300 || L_bOnside_Muffed > 500)
+            if (L_bOnside_Muffed < 3000 || L_bOnside_Muffed > 5000)
                 throw new Exception("L_bOnside_Muffed out of range " + L_bOnside_Muffed);
-            if (L_num_made < 150 || L_num_made > 250)
+            if (L_num_made < 1500 || L_num_made > 2500)
                 throw new Exception("L_num_made out of range " + L_num_made);
 
-            if (R_bOnside_Muffed < 300 || R_bOnside_Muffed > 500)
+            if (R_bOnside_Muffed < 3000 || R_bOnside_Muffed > 5000)
                 throw new Exception("R_bOnside_Muffed out of range " + R_bOnside_Muffed);
-            if (R_num_made < 150 || R_num_made > 250)
+            if (R_num_made < 1500 || R_num_made > 2500)
                 throw new Exception("R_num_made out of range " + R_num_made);
-
-            string left_string = "Left Returns: " + L_num_att + " Muffs: " + L_bOnside_Muffed + " Made : " + L_num_made + " " +
-                "Right Returns: " + R_num_att + " Muffs: " + R_bOnside_Muffed + " Made : " + R_num_made;
 
             Assert.IsTrue(true);
 

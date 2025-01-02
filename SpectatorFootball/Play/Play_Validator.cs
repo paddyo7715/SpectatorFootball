@@ -264,7 +264,7 @@ namespace SpectatorFootball.PlayNS
                         Game_Player_Stats pStat = pr.Play_Player_Stats.Where(x => x.Player_ID == pPlayer_id).FirstOrDefault();
 
                         if (p == pr.Onside_Kick_Recoverer && pStat.ko_onside_recovered != 1) r += " player recovered onside kick but onside kicks recovered not set correctly";
-                        if (pStat.ko_onside_play != 1) r += " player onside kickoff plays not correct";
+                        if (pStat.ko_onside_def_plays != 1) r += " player onside kickoff plays not correct";
                     }
                     break;
                 default:

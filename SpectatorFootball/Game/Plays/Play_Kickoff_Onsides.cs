@@ -196,7 +196,7 @@ namespace SpectatorFootball.GameNS
 
             foreach (Game_Player p in Return_Players)
             {
-                r.Add(new Game_Player_Stats() { Player_ID = Kicker.p_and_r.pr.First().Player_ID, ko_onside_def_plays = 1});
+                r.Add(new Game_Player_Stats() { Player_ID = p.p_and_r.pr.First().Player_ID, ko_onside_def_plays = 1});
             }
 
             if (Onside_Recoverer != null)
