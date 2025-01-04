@@ -205,7 +205,7 @@ namespace SpectatorFootball.WindowsLeague
                 Home_Players = gs.GetTeamPlayersForGame(ht.Franchise_ID, g.Week, pw.Loaded_League);
 
                 ge = new GameEngine(g, (Teams_by_Season)at, (List<Player_and_Ratings>)Away_Players,
-                    (Teams_by_Season)ht, (List<Player_and_Ratings>)Home_Players, false,
+                    (Teams_by_Season)ht, (List<Player_and_Ratings>)Home_Players, 
                     pw.Loaded_League.PenaltiesData, pw.Loaded_League.season.League_Structure_by_Season[0].Two_Point_Conversion,
                     pw.Loaded_League.season.League_Structure_by_Season[0].Three_Point_Conversion,
                     pw.Loaded_League.season.League_Structure_by_Season[0].Kickoff_Type,

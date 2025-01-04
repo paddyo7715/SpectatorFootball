@@ -26,13 +26,12 @@ namespace SpectatorFootball.GameNS
         private Game_Player Onside_Recoverer;
         private bool bLefttoRight;
         private bool FreeKic;
-        private bool bSim;
         private bool bLast_Play;
         private Formation Kickoff_Formation = null;
         private Formation Return_Formation = null;
         private Play_Result r = new Play_Result();
 
-        public Play_Kickoff_Onsides(Formation Kickoff_Formation, Formation Return_Formation, long Possessing_Team_Id, long at, long ht, Game_Ball gBall, List<Game_Player> Kickoff_Players, List<Game_Player> Return_Players, bool bLefttoRight, bool FreeKic, bool bSim, bool bLast_Play)
+        public Play_Kickoff_Onsides(Formation Kickoff_Formation, Formation Return_Formation, long Possessing_Team_Id, long at, long ht, Game_Ball gBall, List<Game_Player> Kickoff_Players, List<Game_Player> Return_Players, bool bLefttoRight, bool FreeKic, bool bLast_Play)
         {
             this.Possessing_Team_Id = Possessing_Team_Id;
             this.at = at;
@@ -42,7 +41,6 @@ namespace SpectatorFootball.GameNS
             this.Return_Players = Return_Players;
             this.bLefttoRight = bLefttoRight;
             this.FreeKic = FreeKic;
-            this.bSim = bSim;
             this.bLast_Play = bLast_Play;
             this.Kickoff_Formation = Kickoff_Formation;
             this.Return_Formation = Return_Formation;
@@ -61,17 +59,17 @@ namespace SpectatorFootball.GameNS
             List<Game_Player> Missed_Tackles = new List<Game_Player>();
             int rnd = CommonUtils.getRandomNum(4, 8) - 1;
 
-            Kicker_Runs_Up_And_Kicks_Ball(gBall, Kickoff_Players, Return_Players, bSim);
-            Game_Player Ball_Target_Recover = KickBall(gBall, Kickoff_Players, Return_Players, rnd, bSim);
+            Kicker_Runs_Up_And_Kicks_Ball(gBall, Kickoff_Players, Return_Players);
+            Game_Player Ball_Target_Recover = KickBall(gBall, Kickoff_Players, Return_Players, rnd);
 
             //Does the returner cover the ball or not.  If not treat it like a fumble
             long hands_rating = Ball_Target_Recover.p_and_r.pr.First().Hands_Rating;
             bool ballRecovered = Game_Engine_Helper.DoesPlayerCoverOnsideKick(hands_rating);
 
             if (ballRecovered == false)
-                bLost = kickMuffed(r, gBall, Kickoff_Players, Return_Players, Ball_Target_Recover, rnd, bSim); 
+                bLost = kickMuffed(r, gBall, Kickoff_Players, Return_Players, Ball_Target_Recover, rnd); 
             else
-                FallOnBall(gBall, Kickoff_Players, Return_Players, Ball_Target_Recover, rnd, bSim);
+                FallOnBall(gBall, Kickoff_Players, Return_Players, Ball_Target_Recover, rnd);
 
             r.bOnsideAtt = true;
             if (bLost == true)
@@ -210,10 +208,9 @@ namespace SpectatorFootball.GameNS
              return r;
         }
 
-        private void Kicker_Runs_Up_And_Kicks_Ball(Game_Ball gBall, List<Game_Player> Kickoff_Players, List<Game_Player> Return_Players, bool bSim)
+        private void Kicker_Runs_Up_And_Kicks_Ball(Game_Ball gBall, List<Game_Player> Kickoff_Players, List<Game_Player> Return_Players)
         {
-            if (!bSim)
-                gBall.TeeUp();
+             gBall.TeeUp();
 
             int io_Players = 0;
             //cycle thru the offensive/kickoff team then he defense
@@ -230,17 +227,14 @@ namespace SpectatorFootball.GameNS
                     p.Current_YardLine = Runup_end_yardline + (0.4 * Game_Engine_Helper.HorizontalAdj(bLefttoRight));
                     p.Current_Vertical_Percent_Pos += 0.0;
 
-                    if (!bSim)
-                    {
-                        Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
-                        p.KickBall(moving_ps, prev_yl, prev_v, Runup_end_yardline, Runup_end_vert_pos);
-                    }
+
+                    Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
+                    p.KickBall(moving_ps, prev_yl, prev_v, Runup_end_yardline, Runup_end_vert_pos);
                 }
                 else
                 {
                     //Other players just stand there waiting for the kick
-                    if (!bSim)
-                        p.Stand();
+                    p.Stand();
                 }
                 io_Players++;
             }
@@ -249,13 +243,12 @@ namespace SpectatorFootball.GameNS
             foreach (Game_Player p in Return_Players)
             {
                 //Receiving players just stand there waiting for the kick
-                if (!bSim)
-                    p.Stand();
+                p.Stand();
             }
 
         }
 
-        private Game_Player KickBall(Game_Ball gBall, List<Game_Player> Kickoff_Players, List<Game_Player> Return_Players, int rnd, bool bSim)
+        private Game_Player KickBall(Game_Ball gBall, List<Game_Player> Kickoff_Players, List<Game_Player> Return_Players, int rnd)
         {
             //possision where ball should be caught
             gBall.Current_YardLine = Return_Players[rnd].Starting_YardLine - (0.25 * Game_Engine_Helper.HorizontalAdj(bLefttoRight));
@@ -284,11 +277,8 @@ namespace SpectatorFootball.GameNS
                 p.Current_YardLine += yardline_Offset * Game_Engine_Helper.HorizontalAdj(bLefttoRight);
                 p.Current_Vertical_Percent_Pos = vert;
 
-                if (!bSim)
-                {
-                    Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
-                    p.Run_Then_Stand(moving_ps, prev_yl, prev_v);
-                }
+                Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
+                p.Run_Then_Stand(moving_ps, prev_yl, prev_v);
 
                 id_Players++;
             }
@@ -297,14 +287,13 @@ namespace SpectatorFootball.GameNS
             foreach (Game_Player p in Return_Players)
             {
                 //Receiving players just stand there waiting for the kick
-                if (!bSim)
-                    p.Stand();
+                p.Stand();
             }
 
             return Ball_Target_Recover;
         }
 
-        private bool kickMuffed(Play_Result r, Game_Ball gBall, List<Game_Player> Kickoff_Players, List<Game_Player> Return_Players, Game_Player Ball_Target_Recover, int rnd, bool bSim)
+        private bool kickMuffed(Play_Result r, Game_Ball gBall, List<Game_Player> Kickoff_Players, List<Game_Player> Return_Players, Game_Player Ball_Target_Recover, int rnd)
         {
             bool bLost = false;
             r.bOnside_Muffed = true;
@@ -317,38 +306,31 @@ namespace SpectatorFootball.GameNS
             Tuple<Game_Player, bool> t = Playstub_Fumble.Execute(!bLefttoRight, gBall,
                 Kickoff_Players, Return_Players,
                 pFumble_Rec_Kickoff_Players, pFumble_Rec_Return_Players,
-                Ball_Target_Recover, r.Tackler, bSim);
+                Ball_Target_Recover, r.Tackler);
             r.Onside_Kick_Recoverer = t.Item1;
             bLost = t.Item2;
 
             return bLost;
         }
 
-        private void FallOnBall(Game_Ball gBall, List<Game_Player> Kickoff_Players, List<Game_Player> Return_Players, Game_Player Ball_Target_Recover, int rnd, bool bSim)
+        private void FallOnBall(Game_Ball gBall, List<Game_Player> Kickoff_Players, List<Game_Player> Return_Players, Game_Player Ball_Target_Recover, int rnd)
         {
             int io_Players = 0;
             //cycle thru the offensive/kickoff team then he defense
             //if kicker then do their special thing; otherwise, the player just remains standing 
             foreach (Game_Player p in Kickoff_Players)
             {
-                {
-                    if (!bSim)
-                        p.Stand();
-                }
+                 p.Stand();
                 io_Players++;
             }
 
-            if (!bSim)
-            {
-                //for the ball
-                gBall.Carried_Fake_Movement(5);
-            }
+            //for the ball
+            gBall.Carried_Fake_Movement(5);
+
 
             //The team receiving the kick will just stand there before the kick
             foreach (Game_Player p in Return_Players)
             {
-                if (!bSim)
-                {
                     if (p == Ball_Target_Recover)
                     {
                         double prev_yl = p.Current_YardLine;
@@ -357,7 +339,6 @@ namespace SpectatorFootball.GameNS
                     }
                     else
                         p.Stand();
-                }
             }
         }
 

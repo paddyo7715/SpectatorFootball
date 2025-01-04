@@ -98,7 +98,7 @@ namespace SpectatorFootball.unitTests.Integration_Tests.Punts
                     Starting_YardLine = g_yardline
                 };
 
-                Play_Punt Punt = new Play_Punt(Punt_Forn, Punt_Ret_Form, possess_team, at, ht, gb, Punt_Players, Receiving_Players, bLefttoRight, false, false);
+                Play_Punt Punt = new Play_Punt(Punt_Forn, Punt_Ret_Form, possess_team, at, ht, gb, Punt_Players, Receiving_Players, bLefttoRight, false);
                 Play_Result pResult = Punt.Execute(false);
 
                 string Play_Result_Validation = Play_Validator.Validate_Play_Result(Play_Enum.PUNT, Punt_Players, Receiving_Players, pResult, gb, bLefttoRight);

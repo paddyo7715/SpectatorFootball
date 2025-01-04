@@ -62,7 +62,6 @@ namespace SpectatorFootball.GameNS
         private bool bThreePointConv = false;
         private bool bAllowInjuries = false;
         private bool bAllowPenalties = false;
-        private bool bSimGame = false;
         private bool bPlayoffGame = false;
         private bool bChampionshipGame = false;
         private List<Penalty> PenaltiesData = null;
@@ -82,7 +81,7 @@ namespace SpectatorFootball.GameNS
 
 
         public GameEngine(Game g, Teams_by_Season at, List<Player_and_Ratings> Away_Players,
-            Teams_by_Season ht, List<Player_and_Ratings> Home_Players, bool bSimGame,
+            Teams_by_Season ht, List<Player_and_Ratings> Home_Players, 
             List<Penalty> PenaltiesData, long two_point_con, long three_point_conv,
             long Kickoff_Type, long Injuries, long Penalties)
         {
@@ -91,7 +90,6 @@ namespace SpectatorFootball.GameNS
             this.ht = ht;
             this.Home_Players = Home_Players;
             this.g = g;
-            this.bSimGame = bSimGame;
             this.Penalty_List = PenaltiesData;
 
             //Initialize the game object
@@ -239,8 +237,8 @@ namespace SpectatorFootball.GameNS
 
             //bpo test
             g_fid_posession = at.Franchise_ID;
-            g_Line_of_Scrimmage = 35.0;
-            bKickoff = true;
+            g_Line_of_Scrimmage = 60.0;
+            bKickoff = false;
             bKickoffAfterSafety = false;
             //********************
 
@@ -359,13 +357,13 @@ namespace SpectatorFootball.GameNS
                 //Create the selected play object
                 iPlay Play = null;
                 if (Offensive_Package.Play == Play_Enum.KICKOFF_NORMAL)
-                    Play = new Play_Kickoff_Classic(Offensive_Package.Formation, DEF_Formation, g_fid_posession, at.Franchise_ID, ht.Franchise_ID, Game_Ball, Offensive_Players, Defensive_Players, bLefttoRight, false, bSimGame, false);
+                    Play = new Play_Kickoff_Classic(Offensive_Package.Formation, DEF_Formation, g_fid_posession, at.Franchise_ID, ht.Franchise_ID, Game_Ball, Offensive_Players, Defensive_Players, bLefttoRight, false, false);
                 else if (Offensive_Package.Play == Play_Enum.KICKOFF_AFTER_SAFETY)
-                    Play = new Play_Kickoff_Classic(Offensive_Package.Formation, DEF_Formation, g_fid_posession, at.Franchise_ID, ht.Franchise_ID, Game_Ball, Offensive_Players, Defensive_Players, bLefttoRight, true, bSimGame, false);
+                    Play = new Play_Kickoff_Classic(Offensive_Package.Formation, DEF_Formation, g_fid_posession, at.Franchise_ID, ht.Franchise_ID, Game_Ball, Offensive_Players, Defensive_Players, bLefttoRight, true, false);
                 else if (Offensive_Package.Play == Play_Enum.KICKOFF_ONSIDES)
-                    Play = new Play_Kickoff_Onsides(Offensive_Package.Formation, DEF_Formation, g_fid_posession, at.Franchise_ID, ht.Franchise_ID, Game_Ball, Offensive_Players, Defensive_Players, bLefttoRight, true, bSimGame, false);
+                    Play = new Play_Kickoff_Onsides(Offensive_Package.Formation, DEF_Formation, g_fid_posession, at.Franchise_ID, ht.Franchise_ID, Game_Ball, Offensive_Players, Defensive_Players, bLefttoRight, true, false);
                 else if (Offensive_Package.Play == Play_Enum.PUNT)
-                    Play = new Play_Punt(Offensive_Package.Formation, DEF_Formation, g_fid_posession, at.Franchise_ID, ht.Franchise_ID, Game_Ball, Offensive_Players, Defensive_Players, bLefttoRight, bSimGame, false);
+                    Play = new Play_Punt(Offensive_Package.Formation, DEF_Formation, g_fid_posession, at.Franchise_ID, ht.Franchise_ID, Game_Ball, Offensive_Players, Defensive_Players, bLefttoRight, false);
 
                 //Is there a pre-snap penalty?
                 bool bpreSnapPenalty = false;

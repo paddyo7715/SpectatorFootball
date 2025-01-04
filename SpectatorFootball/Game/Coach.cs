@@ -95,8 +95,8 @@ namespace SpectatorFootball.GameNS
             }
 
             //bpo test
-            f = Formations_Enum.KICKOFF_ONSIDE_KICK;
-            p = Play_Enum.KICKOFF_ONSIDES;
+//            f = Formations_Enum.KICKOFF_REGULAR_KICK;
+//            p = Play_Enum.KICKOFF_NORMAL;
 
             formation = formation_helper.getFormation(f, PossessionAdjuster);
 

@@ -87,7 +87,7 @@ namespace SpectatorFootball.Integration_Tests.Kickoff
                     Starting_YardLine = g_yardline
                 };
 
-                Play_Kickoff_Classic kickoff = new Play_Kickoff_Classic(KickForm, RecForm,possess_team, at, ht, gb, Kickoff_Players, Receiving_Players, bLefttoRight, false, false, false);
+                Play_Kickoff_Classic kickoff = new Play_Kickoff_Classic(KickForm, RecForm,possess_team, at, ht, gb, Kickoff_Players, Receiving_Players, bLefttoRight, false, false);
                 Play_Result pResult = kickoff.Execute(false);
 
                 string Play_Result_Validation = Play_Validator.Validate_Play_Result(Play_Enum.KICKOFF_NORMAL, Kickoff_Players, Receiving_Players, pResult, gb, bLefttoRight);
