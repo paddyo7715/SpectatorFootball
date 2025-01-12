@@ -158,7 +158,7 @@ namespace SpectatorFootball.GameNS
 
         public void End_Over_End_Thru_Air_Not_Caught(bool blefttoRight)
         {
-            const double BOUNCE_LENGTH = 4.7;
+            const double BOUNCE_LENGTH = 4.5;
             const double ROLL_LENGTH = 1.3;
 
             double prev_yardline = Starting_YardLine;
@@ -265,6 +265,18 @@ namespace SpectatorFootball.GameNS
             Play_Stage bStage = new Play_Stage();
             bStage.Main_Object = true;
             bStage.Actions.Add(bas);
+            Stages.Add(bStage);
+            State = Ball_States.CARRIED;
+        }
+
+        public void Delay_Carried(double prev_yl, double prev_v, int delay)
+        {
+            Action bas = new  Action(Game_Object_Types.B, prev_yl, prev_v, prev_yl, prev_v, true, null, Ball_States.CARRIED, Movement.FAKE_MOVEMENT, null, false, delay);
+            Action bas2 = new Action(Game_Object_Types.B, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, true, null, Ball_States.CARRIED, Movement.LINE, Ball_Speed.CARRIED, false, 0);
+            Play_Stage bStage = new Play_Stage();
+            bStage.Main_Object = true;
+            bStage.Actions.Add(bas);
+            bStage.Actions.Add(bas2);
             Stages.Add(bStage);
             State = Ball_States.CARRIED;
         }

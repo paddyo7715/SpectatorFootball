@@ -152,7 +152,10 @@ namespace SpectatorFootball.unitTests.Integration_Tests.Punts
 
             }
 
-
+            //Regualr punt stats to test when a few season are completed with the actual players
+            //avg return 9.5 yards
+            //TDs 8 per 1000 returns
+            //14 fumbles per 1000 returns
 
             double L_avg = (double)L_avg_return / (double) L_num_returned;
             double L_Punt_Avg = L_Punt_Yards / L_Punts;

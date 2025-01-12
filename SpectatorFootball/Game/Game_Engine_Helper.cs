@@ -561,20 +561,20 @@ namespace SpectatorFootball.GameNS
             return tot;
 
         }
-        public static List<List<int?>> setTackleGroups(List<Game_Player> Punt_Players, Game_Player Punter)
+        public static List<List<int?>> setTackleGroups(List<Game_Player> Punt__Kick_Players, Game_Player Kicker)
         {
-            List<Int_and_Double> Slot_List_sorted = setReturnSppedRanks(Punt_Players, Punter);
+            List<Int_and_Double> Slot_List_sorted = setReturnSppedRanks(Punt__Kick_Players, Kicker);
             return setReturnTackleGroups(Slot_List_sorted);
         }
 
-        public static List<Int_and_Double> setReturnSppedRanks(List<Game_Player> Punt_Players, Game_Player Punter)
+        public static List<Int_and_Double> setReturnSppedRanks(List<Game_Player> Punt_Kick_Players, Game_Player Kicker)
         {
             List<Int_and_Double> Slot_List_unsorted = new List<Int_and_Double>();
 
             int ind = 0;
-            foreach (Game_Player p in Punt_Players)
+            foreach (Game_Player p in Punt_Kick_Players)
             {
-                if (p != Punter)
+                if (p != Kicker)
                 {
                     long speed_Rating = p.p_and_r.pr.First().Speed_Rating;
                     double speed_score = Game_Engine_Helper.getAVGSpeedScore(speed_Rating);

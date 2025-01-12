@@ -95,8 +95,8 @@ namespace SpectatorFootball.GameNS
             }
 
             //bpo test
-//            f = Formations_Enum.KICKOFF_REGULAR_KICK;
-//            p = Play_Enum.KICKOFF_NORMAL;
+            f = Formations_Enum.KICKOFF_DYNAMIC_KICK;
+            p = Play_Enum.KICKOFF_DYNAMIC;
 
             formation = formation_helper.getFormation(f, PossessionAdjuster);
 
@@ -137,6 +137,8 @@ namespace SpectatorFootball.GameNS
                 r = Formations_Enum.KICKOFF_ONSIDE_RECEIVE;
             else if (pp.Formation.f_enum == Formations_Enum.KICKOFF_REGULAR_KICK)
                 r = Formations_Enum.KICKOFF_REGULAR_RECEIVE;
+            else if (pp.Formation.f_enum == Formations_Enum.KICKOFF_DYNAMIC_KICK)
+                r = Formations_Enum.KICKOFF_DYNAMIC_RECEIVE;
             else if (pp.Formation.f_enum == Formations_Enum.FIELD_GOAL)
                 r = Formations_Enum.KICKOFF_REGULAR_RECEIVE;
             else if (pp.Formation.f_enum == Formations_Enum.PUNT || pp.Formation.f_enum == Formations_Enum.PUNT_GL)

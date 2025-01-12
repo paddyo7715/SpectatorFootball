@@ -9,9 +9,11 @@ using System.Threading.Tasks;
 
 namespace SpectatorFootball.GameNS
 {
-    public class Play_Kickoff_Classic : iPlay
+    public class Play_Kickoff_Classic : iPlay, IKickoff
     {
         public Play_Enum Play { get; set; } = Play_Enum.KICKOFF_NORMAL;
+        public double kickoff_yl { get; set; } = 35;
+        public double touchback_yl { get; set; } = 25;
 
         private static ILog logger = LogManager.GetLogger("RollingFile");
 
@@ -28,7 +30,7 @@ namespace SpectatorFootball.GameNS
         private Formation Return_Formation = null;
         private Play_Result r = new Play_Result();
 
-        public Play_Kickoff_Classic(Formation Kickoff_Formation, Formation Return_Formation, long Possessing_Team_Id, long at, long ht, Game_Ball gBall, List<Game_Player> Kickoff_Players, List<Game_Player> Return_Players, bool bLefttoRight, bool FreeKic, bool bLast_Play)
+        public Play_Kickoff_Classic(Formation Kickoff_Formation, Formation Return_Formation, long Possessing_Team_Id, long at, long ht, Game_Ball gBall, List<Game_Player> Kickoff_Players, List<Game_Player> Return_Players, bool bLefttoRight, bool bLast_Play)
         {
             this.Possessing_Team_Id = Possessing_Team_Id;
             this.at = at;
@@ -37,7 +39,6 @@ namespace SpectatorFootball.GameNS
             this.Kickoff_Players = Kickoff_Players;
             this.Return_Players = Return_Players;
             this.bLefttoRight = bLefttoRight;
-            this.FreeKic = FreeKic;
             this.bLast_Play = bLast_Play;
             this.Kickoff_Formation = Kickoff_Formation;
             this.Return_Formation = Return_Formation;
@@ -83,7 +84,6 @@ namespace SpectatorFootball.GameNS
                 r.Kick_caught_yl = gBall.Current_YardLine;
                 r = return_kickoff(Kickoff_Players, Return_Players, gBall, tackle_groups, r, bLefttoRight);
                 r.Yards_Returned = Game_Engine_Helper.getKickoffReturnYards(!bLefttoRight, r.Kick_caught_yl, r.Returner.Current_YardLine);
-                //bpo stopped here
             }
 
             //Set if touchdown
@@ -384,11 +384,6 @@ namespace SpectatorFootball.GameNS
 
             KickOff_Length kick_length_enum = Kicking_Helper.getKickOff_Len_enum(leg_strength);
 
-            //bpo test
-            int qqqq = 0;
-            if (kick_length_enum == KickOff_Length.SUPER_LONG)
-                qqqq = 0;
-
             double Kickoff_Len = Kicking_Helper.getKickoff_len(kick_length_enum);
 
             Kickoff_Verticl Kick_Vert_enum = Kicking_Helper.getKickoff_Vert_enum(Leg_Accuracy);
@@ -405,7 +400,7 @@ namespace SpectatorFootball.GameNS
 
             return gBall;
         }
-
+        
         private void BallKickedPlayersRun(Game_Ball gBall, List<Game_Player> Kickoff_Players, List<Game_Player> Return_Players, 
             Game_Player Kicker, Game_Player Returner, List<List<int?>> tGroups, Play_Result pr, bool bLast_Play, bool bLefttoRight)
         {
@@ -461,7 +456,7 @@ namespace SpectatorFootball.GameNS
                 if (p == r.Returner)
                 {
                     int rnd = CommonUtils.getRandomNum(1, 100);
-                    var tRetAct = r.Returner.getClassicKickoff_ReturnerAction(gBall.Current_YardLine, bLast_Play, rnd, bLefttoRight);
+                    var tRetAct = r.Returner.getKickoff_ReturnerAction(gBall.Current_YardLine, bLast_Play, rnd, bLefttoRight);
 
                     pr.bKick_Out_of_Endzone = tRetAct.Item1;
                     pr.bKick_KneelDown = tRetAct.Item2;

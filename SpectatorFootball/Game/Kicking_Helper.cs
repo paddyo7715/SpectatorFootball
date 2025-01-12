@@ -39,6 +39,51 @@ namespace SpectatorFootball.GameNS
 
             return r;
         }
+
+        public static KickOff_Length getKickOff_Dynamic_Len_enum(long leg_strength, long leg_acc)
+        {
+            KickOff_Length r = KickOff_Length.SUPER_LONG;
+            long ls_temp = app_Constants.KICKOFF_LENGTH_CALC_VARIABLE - leg_strength;
+
+            int i = 0;
+            for (i = 1; i <= 5; i++)
+            {
+
+                long ls_var = ls_temp;
+                if (i == 1 || i == 2)
+                    ls_var = (long)(ls_var / 2.5);
+                else if (i == 3)
+                    ls_var = (long)(ls_var * 3);
+                else if (i == 4)
+                    ls_var = (long)(ls_var * 3);
+
+                int r_num = CommonUtils.getRandomNum(1, app_Constants.KICKOFF_LENGTH_CALC_VARIABLE);
+                if (r_num <= ls_var)
+                    break;
+            }
+
+            switch (i)
+            {
+                case 1:
+                    r = KickOff_Length.SUPER_SHORT;
+                    break;
+                case 2:
+                    r = KickOff_Length.SHORT;
+                    break;
+                case 3:
+                    r = KickOff_Length.AVERAGE;
+                    break;
+                case 4:
+                    r = KickOff_Length.LONG;
+                    break;
+                case 5:
+                    r = KickOff_Length.SUPER_LONG;
+                    break;
+            }
+
+            return r;
+
+        }
         public static KickOff_Length getKickOff_Len_enum(long leg_strength)
         {
             KickOff_Length r = KickOff_Length.SUPER_LONG;
@@ -49,10 +94,10 @@ namespace SpectatorFootball.GameNS
             {
 
                 long ls_var = ls_temp;
-                if (i == 1)
+                if (i == 1 || i == 2)
                     ls_var = (long) (ls_var / 2.5);
                 else if (i == 4)
-                    ls_var = (long) (ls_var * 1.25);
+                    ls_var = (long) (ls_var * 3);
 
                 int r_num = CommonUtils.getRandomNum(1, app_Constants.KICKOFF_LENGTH_CALC_VARIABLE);
                 if (r_num <= ls_var)
@@ -129,6 +174,32 @@ namespace SpectatorFootball.GameNS
                     break;
                 case KickOff_Length.SUPER_LONG:
                     r = CommonUtils.getRandomNum(app_Constants.KICKOFF_MIN_SUPER_LONG_DISTANCE, app_Constants.KICKOFF_MAX_SUPER_LONG_DISTANCE);
+                    break;
+            }
+
+            return r;
+        }
+
+        public static double getKICKOFF_DYNAMIC_len(KickOff_Length KICKOFF_DYNAMIC_len_enum)
+        {
+            double r = 0.0;
+
+            switch (KICKOFF_DYNAMIC_len_enum)
+            {
+                case KickOff_Length.SUPER_SHORT:
+                    r = CommonUtils.getRandomNum(app_Constants.KICKOFF_DYNAMIC_MIN_SUPER_SHORT_DIST, app_Constants.KICKOFF_DYNAMIC_MAX_SUPER_SHORT_DIST);
+                    break;
+                case KickOff_Length.SHORT:
+                    r = CommonUtils.getRandomNum(app_Constants.KICKOFF_DYNAMIC_MIN_SHORT_DISTANCE, app_Constants.KICKOFF_DYNAMIC_MAX_SHORT_DISTANCE);
+                    break;
+                case KickOff_Length.AVERAGE:
+                    r = CommonUtils.getRandomNum(app_Constants.KICKOFF_DYNAMIC_MIN_AVG_DISTANCE, app_Constants.KICKOFF_DYNAMIC_MAX_AVG_DISTANCE);
+                    break;
+                case KickOff_Length.LONG:
+                    r = CommonUtils.getRandomNum(app_Constants.KICKOFF_DYNAMIC_MIN_LONG_DISTANCE, app_Constants.KICKOFF_DYNAMIC_MAX_LONG_DISTANCE);
+                    break;
+                case KickOff_Length.SUPER_LONG:
+                    r = CommonUtils.getRandomNum(app_Constants.KICKOFF_DYNAMIC_MIN_SUPER_LONG_DISTANCE, app_Constants.KICKOFF_DYNAMIC_MAX_SUPER_LONG_DISTANCE);
                     break;
             }
 

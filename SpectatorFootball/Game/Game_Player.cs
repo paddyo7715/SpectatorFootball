@@ -137,6 +137,16 @@ namespace SpectatorFootball.GameNS
             State = moving_ps;
         }
 
+        public void Delay(int delay)
+        {
+            Action pas = new Action(Game_Object_Types.P, Current_YardLine, Current_Vertical_Percent_Pos, Current_YardLine, Current_YardLine, false, Player_States.STANDING, null, Movement.FAKE_MOVEMENT, null, false, delay);
+            Play_Stage pStage = new Play_Stage();
+            pStage.Main_Object = true;
+            pStage.Actions.Add(pas);
+            Stages.Add(pStage);
+            State = Player_States.STANDING;
+        }
+
         public void OnBack()
         {
             Action pas = new Action(Game_Object_Types.P, Current_YardLine, Current_Vertical_Percent_Pos, Current_YardLine, Current_Vertical_Percent_Pos, false, Player_States.ON_BACK, null, Movement.NONE, null, false, 0);
@@ -192,6 +202,17 @@ namespace SpectatorFootball.GameNS
             Play_Stage pStage = new Play_Stage();
             pStage.Main_Object = false;
             pStage.Actions.Add(pas);
+            Stages.Add(pStage);
+            State = moving_ps;
+        }
+        public void Delay_Run_With_Ball(Player_States moving_ps, double prev_yl, double prev_v, int delay)
+        {
+            Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, prev_yl, prev_v, false, Player_States.STANDING, null, Movement.FAKE_MOVEMENT, null, false, delay);
+            Action pas2 = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, true, moving_ps, null, Movement.LINE, null, false, 0);
+            Play_Stage pStage = new Play_Stage();
+            pStage.Main_Object = false;
+            pStage.Actions.Add(pas);
+            pStage.Actions.Add(pas2);
             Stages.Add(pStage);
             State = moving_ps;
         }
@@ -461,7 +482,7 @@ namespace SpectatorFootball.GameNS
             return Tuple.Create(bOut_of_Bounds, bOut_of_Endzone, bKnell_with_Ball, bReturn, bDontField);
         }
 
-        public Tuple<bool, bool, bool> getClassicKickoff_ReturnerAction(double ballx, bool bLast_Play,
+        public Tuple<bool, bool, bool> getKickoff_ReturnerAction(double ballx, bool bLast_Play,
             int rnd, bool bLefttoRight)
         {
             bool bOut_of_Endzone = false;
@@ -478,16 +499,8 @@ namespace SpectatorFootball.GameNS
                 bReturn = true;
             else
             {
-                double avg_dont_run_out = 60.0;
-                double yards_from_back_of_endzone = Game_Engine_Helper.yards_from_end_of_endzone(ballx, bLefttoRight);
-                avg_dont_run_out += (long)(yards_from_back_of_endzone);
-                if (rnd <= avg_dont_run_out)
-                {
-                    if ((ballx >= 100 && bLefttoRight) || ballx <= 0 && !bLefttoRight)
-                        bKnell_with_Ball = true;
-                    else
-                        bReturn = true;
-                }
+                if ((ballx >= 101 && bLefttoRight) || ballx <= -1 && !bLefttoRight)
+                    bKnell_with_Ball = true;
                 else
                     bReturn = true;
             }

@@ -96,6 +96,8 @@ namespace SpectatorFootball.Integration_Tests.Kickoff
 
             }
 
+            //Actual onside stats should be 4 out of 10 muffed and 2 out of 10 sucessful.
+
             if (L_bOnside_Muffed < 3000 || L_bOnside_Muffed > 5000)
                 throw new Exception("L_bOnside_Muffed out of range " + L_bOnside_Muffed);
             if (L_num_made < 1500 || L_num_made > 2500)

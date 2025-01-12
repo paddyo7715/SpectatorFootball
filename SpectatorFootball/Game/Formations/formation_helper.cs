@@ -23,6 +23,12 @@ namespace SpectatorFootball.GameNS
                 case Formations_Enum.KICKOFF_REGULAR_RECEIVE:
                     formplay = new Kickoff_Classic_Return_Formation();
                     break;
+                case Formations_Enum.KICKOFF_DYNAMIC_KICK:
+                    formplay = new Kickoff_Dynamic_Formation();
+                    break;
+                case Formations_Enum.KICKOFF_DYNAMIC_RECEIVE:
+                    formplay = new Kickoff_Dynamic_Return_Formation();
+                    break;
                 case Formations_Enum.KICKOFF_ONSIDE_KICK:
                     formplay = new Onside_Kickoff();
                     break;

@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System;
 using System.Drawing;
+using System.Security.Cryptography.X509Certificates;
 
 
 namespace SpectatorFootball
@@ -510,15 +511,26 @@ namespace SpectatorFootball
         public const int KICKOFF_MAX_SUPER_SHORT_DIST = 59;
         public const int KICKOFF_MIN_SHORT_DISTANCE = 60;
         public const int KICKOFF_MAX_SHORT_DISTANCE = 64;
-        public const int KICKOFF_MIN_AVG_DISTANCE = 65;
+        public const int KICKOFF_MIN_AVG_DISTANCE = 66;
         public const int KICKOFF_MAX_AVG_DISTANCE = 70;
         public const int KICKOFF_MIN_LONG_DISTANCE = 71;
         public const int KICKOFF_MAX_LONG_DISTANCE = 76;
         public const int KICKOFF_MIN_SUPER_LONG_DISTANCE = 77;
         public const int KICKOFF_MAX_SUPER_LONG_DISTANCE = 80;
-        public const double KICKOFF_MAX_YARDLINE_1  = 111;
+        public const double KICKOFF_MAX_YARDLINE_1 = 111;
         public const double KICKOFF_MAX_YARDLINE_2 = -11;
         public const double FG_LONGEST_FG_YARDLINE = 45;
+
+        public const int KICKOFF_DYNAMIC_MIN_SUPER_SHORT_DIST = 56;
+        public const int KICKOFF_DYNAMIC_MAX_SUPER_SHORT_DIST = 58;
+        public const int KICKOFF_DYNAMIC_MIN_SHORT_DISTANCE = 59;
+        public const int KICKOFF_DYNAMIC_MAX_SHORT_DISTANCE = 61;
+        public const int KICKOFF_DYNAMIC_MIN_AVG_DISTANCE = 62;
+        public const int KICKOFF_DYNAMIC_MAX_AVG_DISTANCE = 64;
+        public const int KICKOFF_DYNAMIC_MIN_LONG_DISTANCE = 65;
+        public const int KICKOFF_DYNAMIC_MAX_LONG_DISTANCE = 67;
+        public const int KICKOFF_DYNAMIC_MIN_SUPER_LONG_DISTANCE = 68;
+        public const int KICKOFF_DYNAMIC_MAX_SUPER_LONG_DISTANCE = 80;
 
 
         public const int KICKOFF_TOP_MIN_VERTICAL = 21;
@@ -537,7 +549,7 @@ namespace SpectatorFootball
         public const int KICKOFF_PLAYERS_GROUP_MIDPOINT = 2;
         public const int KICKOFF_TACKLING_GROUPS = 3;
         public const int KICKOFF_GROUP_1_MIN = 9;
-        public const int KICKOFF_GROUP_1_MAX = 12;
+        public const int KICKOFF_GROUP_1_MAX = 13;
         public const int KICKOFF_GROUP_2_MIN = 20;
         public const int KICKOFF_GROUP_2_MAX = 23;
         public const int KICKOFF_GROUP_3_MIN = 31;
@@ -561,7 +573,17 @@ namespace SpectatorFootball
         public const double KICKOFF_RUN_OOB_BOTTOM_LIMIT = 85.0;
         public const double TOP_OUTOFBOUNDS_ADJUSTMENT = 3.0;
         public const int KICKOFF_TACKLE_TEST_ADJUSTER = 0;  //Set 0 normally or high to test
-        
+
+        public const double KICKOFF_DYNAMIC_GROUP_VERT_DIST = 7.0;
+        public const int KICKOFF_DYNAMIC_TACKLING_GROUPS = 3;
+        public const int KICKOFF_DYNAMIC_GROUP_1_MIN = 9;
+        public const int KICKOFF_DYNAMIC_GROUP_1_MAX = 13;
+        public const int KICKOFF_DYNAMIC_GROUP_2_MIN = 18;
+        public const int KICKOFF_DYNAMIC_GROUP_2_MAX = 22;
+        public const int KICKOFF_DYNAMIC_GROUP_3_MIN = 27;
+        public const int KICKOFF_DYNAMIC_GROUP_3_MAX = 31;
+        public const int KICKOFF_DYNAMIC_KICKER_FROM_RETURNER = 57;
+        public const double KICKOFF_DYNAMIC_DIST_BETWEEN_BLOCK_ATTACHERS = 1.00;
 
         public const double TACKLER_FOO_MOVE = 0.3;
 

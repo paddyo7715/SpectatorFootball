@@ -237,8 +237,8 @@ namespace SpectatorFootball.GameNS
 
             //bpo test
             g_fid_posession = at.Franchise_ID;
-            g_Line_of_Scrimmage = 60.0;
-            bKickoff = false;
+            g_Line_of_Scrimmage = 35.0;
+            bKickoff = true;
             bKickoffAfterSafety = false;
             //********************
 
@@ -357,9 +357,11 @@ namespace SpectatorFootball.GameNS
                 //Create the selected play object
                 iPlay Play = null;
                 if (Offensive_Package.Play == Play_Enum.KICKOFF_NORMAL)
-                    Play = new Play_Kickoff_Classic(Offensive_Package.Formation, DEF_Formation, g_fid_posession, at.Franchise_ID, ht.Franchise_ID, Game_Ball, Offensive_Players, Defensive_Players, bLefttoRight, false, false);
-                else if (Offensive_Package.Play == Play_Enum.KICKOFF_AFTER_SAFETY)
-                    Play = new Play_Kickoff_Classic(Offensive_Package.Formation, DEF_Formation, g_fid_posession, at.Franchise_ID, ht.Franchise_ID, Game_Ball, Offensive_Players, Defensive_Players, bLefttoRight, true, false);
+                    Play = new Play_Kickoff_Classic(Offensive_Package.Formation, DEF_Formation, g_fid_posession, at.Franchise_ID, ht.Franchise_ID, Game_Ball, Offensive_Players, Defensive_Players, bLefttoRight, false);
+                if (Offensive_Package.Play == Play_Enum.KICKOFF_DYNAMIC)
+                    Play = new Play_Kickoff_Dynamic(Offensive_Package.Formation, DEF_Formation, g_fid_posession, at.Franchise_ID, ht.Franchise_ID, Game_Ball, Offensive_Players, Defensive_Players, bLefttoRight, false);
+                //                else if (Offensive_Package.Play == Play_Enum.KICKOFF_AFTER_SAFETY)
+                //                    Play = new Play_Kickoff_Classic(Offensive_Package.Formation, DEF_Formation, g_fid_posession, at.Franchise_ID, ht.Franchise_ID, Game_Ball, Offensive_Players, Defensive_Players, bLefttoRight, true, false);
                 else if (Offensive_Package.Play == Play_Enum.KICKOFF_ONSIDES)
                     Play = new Play_Kickoff_Onsides(Offensive_Package.Formation, DEF_Formation, g_fid_posession, at.Franchise_ID, ht.Franchise_ID, Game_Ball, Offensive_Players, Defensive_Players, bLefttoRight, true, false);
                 else if (Offensive_Package.Play == Play_Enum.PUNT)

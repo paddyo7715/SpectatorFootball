@@ -195,6 +195,7 @@
     <Compile Include="Enum\Graphics_Ball_Stats.cs" />
     <Compile Include="Enum\Graphics_Player_States.cs" />
     <Compile Include="Enum\KickOff_Length.cs" />
+    <Compile Include="Enum\Kickoff_Type.cs" />
     <Compile Include="Enum\KickOff_Verticl.cs" />
     <Compile Include="Enum\Movement.cs" />
     <Compile Include="Enum\Penalty_Codes.cs" />
@@ -212,6 +213,8 @@
     <Compile Include="Game\Formations\Interfaces\iFormation_Play.cs" />
     <Compile Include="Game\Formations\Kickoff_Classic_Formation.cs" />
     <Compile Include="Game\Formations\Kickoff_Classic_Return_Formation.cs" />
+    <Compile Include="Game\Formations\Kickoff_Dynamic_Formation.cs" />
+    <Compile Include="Game\Formations\Kickoff_Dynamic_Return_Formation.cs" />
     <Compile Include="Game\Formations\Onside_Kickoff.cs" />
     <Compile Include="Game\Formations\Onside_Kickoff_Receive.cs" />
     <Compile Include="Game\Formations\Punt_Formation.cs" />
@@ -229,11 +232,13 @@
     <Compile Include="Game\Game_Helper.cs" />
     <Compile Include="Game\Graphics_Game_Player.cs" />
     <Compile Include="Game\Kicking_Helper.cs" />
+    <Compile Include="Game\Plays\Interfaces\IKickoff.cs" />
     <Compile Include="Game\Plays\Playstub_Fumble.cs" />
     <Compile Include="Game\Plays\Interfaces\iPlay.cs" />
     <Compile Include="Game\Plays\Playstub_Punt_Block.cs" />
     <Compile Include="Game\Plays\Playstub_Uncrouch.cs" />
     <Compile Include="Game\Plays\Play_Kickoff_Classic.cs" />
+    <Compile Include="Game\Plays\Play_Kickoff_Dynamic.cs" />
     <Compile Include="Game\Plays\Play_Kickoff_Onsides.cs" />
     <Compile Include="Game\Plays\Play_Punt.cs" />
     <Compile Include="Game\Play_Result.cs" />

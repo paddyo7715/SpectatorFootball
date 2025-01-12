@@ -10,9 +10,11 @@ namespace SpectatorFootball.Enum
         public enum Formations_Enum
         {
             KICKOFF_REGULAR_KICK,
+            KICKOFF_DYNAMIC_KICK,
             KICKOFF_ONSIDE_KICK,
             KICKOFF_REGULAR_RECEIVE,
             KICKOFF_ONSIDE_RECEIVE,
+            KICKOFF_DYNAMIC_RECEIVE,
             FIELD_GOAL,
             FIELD_GOAL_DEFENSE,
             EXTRA_POINT,

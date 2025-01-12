@@ -15,7 +15,7 @@ namespace SpectatorFootball.GameNS
             Formation f = new Formation();
             f.Player_list = new List<Formation_Rec>();
 
-            f.Name = "Kickoff Receive";
+            f.Name = "Kickoff Classic Receive";
             f.f_enum = fe;
             f.bSpecialTeams = true;
             f.ReturnerIndex = 5;

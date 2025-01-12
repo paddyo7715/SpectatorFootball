@@ -87,7 +87,7 @@ namespace SpectatorFootball.Integration_Tests.Kickoff
                     Starting_YardLine = g_yardline
                 };
 
-                Play_Kickoff_Classic kickoff = new Play_Kickoff_Classic(KickForm, RecForm,possess_team, at, ht, gb, Kickoff_Players, Receiving_Players, bLefttoRight, false, false);
+                Play_Kickoff_Classic kickoff = new Play_Kickoff_Classic(KickForm, RecForm,possess_team, at, ht, gb, Kickoff_Players, Receiving_Players, bLefttoRight, false);
                 Play_Result pResult = kickoff.Execute(false);
 
                 string Play_Result_Validation = Play_Validator.Validate_Play_Result(Play_Enum.KICKOFF_NORMAL, Kickoff_Players, Receiving_Players, pResult, gb, bLefttoRight);
@@ -104,7 +104,7 @@ namespace SpectatorFootball.Integration_Tests.Kickoff
 
                     if (pResult.bKick_Out_of_Endzone) L_num_out_of_EZ++;
                     if (pResult.bTouchback && !pResult.bKick_Out_of_Endzone) L_num_kneel_down++;
-                    if (!pResult.bTouchback) L_num_returned++;
+                    if (pResult.bKick_Returned) L_num_returned++;
                     if (!pResult.bTouchback) L_avg_return += pResult.Yards_Returned;
                     if (pResult.bTouchDown) L_num_TDs++;
                     if (pResult.bFumble) L_num_fumble++;
@@ -115,7 +115,7 @@ namespace SpectatorFootball.Integration_Tests.Kickoff
                 {
                     if (pResult.bKick_Out_of_Endzone) R_num_out_of_EZ++;
                     if (pResult.bTouchback && !pResult.bKick_Out_of_Endzone) R_num_kneel_down++;
-                    if (!pResult.bTouchback) R_num_returned++;
+                    if (pResult.bKick_Returned) R_num_returned++;
                     if (!pResult.bTouchback) R_avg_return += pResult.Yards_Returned;
                     if (pResult.bTouchDown) R_num_TDs++;
                     if (pResult.bFumble) R_num_fumble++;
@@ -128,17 +128,26 @@ namespace SpectatorFootball.Integration_Tests.Kickoff
 
             double dd = L_avg_return / L_num_returned;
 
-            if (L_num_returned < 4200 || L_num_returned > 6200)
+            //Note because the players used for this test case are average players and not the same as players that make the team and start
+            //in a regualr game, these ranges will be pretty wide.
+            //Actual ranges for when actaul players play:
+            // 22% of kickoffs should be returned
+            // 22.4 yards average return.
+            // 6 TDs for every 1000 returns
+            // 14 fumbles for every 1000 returns
+
+
+            if (L_num_returned < 2200 || L_num_returned > 4200)
                 throw new Exception("L_num_returns out of range " + L_num_returned);
-            if (L_num_kneel_down < 1400 || L_num_kneel_down > 2800)
+            if (L_num_kneel_down < 4500 || L_num_kneel_down > 6500)
                 throw new Exception("L_num_kneel_down out of range " + L_num_kneel_down);
-            if (L_num_out_of_EZ < 1500 || L_num_out_of_EZ > 5500)
+            if (L_num_out_of_EZ < 400 || L_num_out_of_EZ > 1600)
                 throw new Exception("L_num_out_of_EZ out of range " + L_num_out_of_EZ);
-            if (L_num_TDs < 10 || L_num_TDs > 50)
+            if (L_num_TDs < 3 || L_num_TDs > 23)
                 throw new Exception("L_num_TDs out of range " + L_num_TDs);
-            if (L_num_fumble < 50 || L_num_fumble > 250)
+            if (L_num_fumble < 20 || L_num_fumble > 80)
                 throw new Exception("L_num_fumble out of range " + L_num_fumble);
-            if (L_num_fumble_lost > 100)
+            if (L_num_fumble_lost > 50)
                 throw new Exception("L_num_fumble_lost out of range " + L_num_fumble_lost);
             if (L_total_starting_yardline / (L_num_returned - L_num_TDs) < 20.0 || L_total_starting_yardline / (L_num_returned - L_num_TDs) > 35.0)
                 throw new Exception("L_AVG starting YL: out of range " + L_total_starting_yardline / (L_num_returned - L_num_TDs));
@@ -146,32 +155,22 @@ namespace SpectatorFootball.Integration_Tests.Kickoff
                 throw new Exception("L_AVG Return:: out of range " + (L_avg_return / L_num_returned));
 
 
-            if (R_num_returned < 4200 || R_num_returned > 6200)
+            if (R_num_returned < 2200 || R_num_returned > 4200)
                 throw new Exception("R_num_returns out of range " + R_num_returned);
-            if (R_num_kneel_down < 1500 || R_num_kneel_down > 2800)
+            if (R_num_kneel_down < 4500 || R_num_kneel_down > 6500)
                 throw new Exception("R_num_kneel_down out of range " + R_num_kneel_down);
-            if (R_num_out_of_EZ < 1500 || R_num_out_of_EZ > 5500)
+            if (R_num_out_of_EZ < 400 || R_num_out_of_EZ > 1600)
                 throw new Exception("R_num_out_of_EZ out of range " + R_num_out_of_EZ);
-            if (R_num_TDs < 10 || R_num_TDs > 50)
+            if (R_num_TDs < 3 || R_num_TDs > 23)
                 throw new Exception("R_num_TDs out of range " + R_num_TDs);
-            if (R_num_fumble < 50 || R_num_fumble > 200)
+            if (R_num_fumble < 20 || R_num_fumble > 80)
                 throw new Exception("R_num_fumble out of range " + R_num_fumble);
-            if (R_num_fumble_lost > 100)
+            if (R_num_fumble_lost > 50)
                 throw new Exception("R_num_fumble_lost out of range " + R_num_fumble_lost);
             if (R_total_starting_yardline / (R_num_returned - R_num_TDs) < 20.0 || R_total_starting_yardline / (R_num_returned - R_num_TDs) > 35.0)
                 throw new Exception("R_AVG starting YL: out of range " + R_total_starting_yardline / (R_num_returned - R_num_TDs));
             if ((R_avg_return / R_num_returned) < 20.0 || (R_avg_return / R_num_returned) > 35.0)
                 throw new Exception("R_AVG Return:: out of range " + (R_avg_return / R_num_returned));
-
-
-            string left_string = "Left Returns: " + L_num_returned + " kneel downs: " + L_num_kneel_down + " thru endzone: " + L_num_out_of_EZ +
-                " TDs: " + L_num_TDs + " Fumbles: " + L_num_fumble + " Fumbles Lost: " + L_num_fumble_lost + " Run out of Bounds: " + L_num_run_out_of_bound + 
-                " 40+ yards returns: " + L_num_40plus_non_TD + " AVG starting YL: " + L_total_starting_yardline / (L_num_returned- L_num_TDs) +
-                " AVG Return: " + (L_avg_return / L_num_returned) +
-            " Right Returns: " + R_num_returned + " kneel downs: " + R_num_kneel_down + " thru endzone: " + R_num_out_of_EZ +
-                " TDs: " + R_num_TDs + " Fumbles: " + R_num_fumble + " Fumbles Lost: " + R_num_fumble_lost + " Run out of Bounds: " + R_num_run_out_of_bound +
-                " 40+ yards returns: " + R_num_40plus_non_TD + " AVG starting YL: " + R_total_starting_yardline / (R_num_returned - R_num_TDs) +
-                                " AVG Return: " + (R_avg_return / R_num_returned) ;
 
             Assert.IsTrue(true);
 
