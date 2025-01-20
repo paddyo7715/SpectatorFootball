@@ -102,14 +102,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SpectatorFootball.exe" size="17216512">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SpectatorFootball.exe" size="17217024">
       <assemblyIdentity name="SpectatorFootball" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>B6OEhfSurELFil9egITdlKT3ZouLA4r+P8UficHbxhc=</dsig:DigestValue>
+        <dsig:DigestValue>zhtFxOCkkN0+z1qUIsKi8FLPCjvvA99VxYTyzKyvUsA=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -437,13 +437,13 @@
       <dsig:DigestValue>ZGmNMRtn7/Yufl+GH+8biANiL0Xp93jpGQdCvyqb9RY=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="SpectatorFootball.exe.config" size="2270">
+  <file name="SpectatorFootball.exe.config" size="2254">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>r6yHnKC72A9XwC/fQUJc0VUiRQ/0sXzjFhdSoeGfN/U=</dsig:DigestValue>
+      <dsig:DigestValue>o+NsU0QlygmDssBl6YNSqUvWTL7r0WDra1ILK74WMVg=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>

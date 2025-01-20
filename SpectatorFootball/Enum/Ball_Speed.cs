@@ -12,6 +12,7 @@ namespace SpectatorFootball.Enum
         SLOW,
         NORMAL,
         CARRIED,
+        CARRIED_SLOW,
         FAST
     }
 }

@@ -98,6 +98,8 @@ namespace SpectatorFootball.GameNS
             f = Formations_Enum.KICKOFF_DYNAMIC_KICK;
             p = Play_Enum.KICKOFF_DYNAMIC;
 
+
+
             formation = formation_helper.getFormation(f, PossessionAdjuster);
 
 

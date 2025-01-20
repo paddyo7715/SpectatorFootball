@@ -16,6 +16,7 @@ namespace SpectatorFootball.Enum
         SPIRAL, 
         ON_THE_GROUND, 
         CARRIED,
+        CARRIED_SLOW,
         BOUNCING,
         ROLLING,
         POPUP

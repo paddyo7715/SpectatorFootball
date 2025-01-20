@@ -197,7 +197,7 @@ namespace SpectatorFootball.GameNS
             double Kickoff_Len = Kicking_Helper.getKICKOFF_DYNAMIC_len(kick_length_enum);
 
             Kickoff_Verticl Kick_Vert_enum = Kicking_Helper.getKickoff_Vert_enum(Leg_Accuracy);
-            double Kickoff_Vert = Kicking_Helper.getKickoff_Vert(Kick_Vert_enum);
+            double Kickoff_Vert = Kicking_Helper.getKickoff_Dynamic_Vert(Kick_Vert_enum);
 
             //Adjust the length of the kick based on the vertical
             Kickoff_Len = Kicking_Helper.AdjustKickLength(Kickoff_Len, Kickoff_Vert);
@@ -319,8 +319,6 @@ namespace SpectatorFootball.GameNS
             double prevBallY = gBall.Current_Vertical_Percent_Pos;
             pr.Kick_landing_YL = gBall.Current_YardLine;
 
-            bLefttoRight = Game_Engine_Helper.Switch_LefttoRight(bLefttoRight);
-
             int delay_factor = 1;
 
             int tgroup_ind = 0;
@@ -355,10 +353,12 @@ namespace SpectatorFootball.GameNS
                     p.Current_Vertical_Percent_Pos = getAttBlkVert(gBall.Current_Vertical_Percent_Pos, slot);
                     int delay = tgroup_ind * delay_factor + 1;
                     Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
-                    p.Delay_Then_Run_and_Stand(moving_ps, prev_yl, prev_v, delay);
+                    p.Run_Then_Stand(moving_ps, prev_yl, prev_v);
                 }
                 id_Players++;
             }
+
+            bLefttoRight = Game_Engine_Helper.Switch_LefttoRight(bLefttoRight);
 
             id_Players = 0;
             foreach (Game_Player p in Return_Players)
@@ -368,7 +368,7 @@ namespace SpectatorFootball.GameNS
 
                 if (p == r.Returner)
                 {
-                    double initial_run_yards = 15.0;
+                    double initial_run_yards = 24.0;
 
                     p.Current_YardLine += initial_run_yards * Game_Engine_Helper.HorizontalAdj(bLefttoRight);
 
@@ -376,12 +376,11 @@ namespace SpectatorFootball.GameNS
                     gBall.Current_YardLine = p.Current_YardLine;
                     gBall.Current_Vertical_Percent_Pos = p.Current_Vertical_Percent_Pos;
 
-                    int ret_delay = 70;
+                    int ret_delay = 10;
                     Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, 0.0);
-                    p.Delay_Run_With_Ball(moving_ps, prev_yl, prev_v, ret_delay);
+                    p.Delay_Run_Slower_With_Ball(moving_ps, prev_yl, prev_v, ret_delay);
                     //for the ball
                     gBall.Delay_Carried(prev_yl, prev_v, ret_delay);
-
                 }
                 else
                 {
@@ -390,7 +389,8 @@ namespace SpectatorFootball.GameNS
                     tgroup_ind = Game_Engine_Helper.getTackleGroup(id_Players, tGroups);
                     int delay = tgroup_ind * delay_factor + 1;
                     Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, false, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
-                    p.Delay_Then_Run_and_Stand(moving_ps, prev_yl, prev_v, delay);
+                    //                    p.Delay_Then_Run_and_Stand(moving_ps, prev_yl, prev_v, delay);
+                    p.Run_Then_Stand(moving_ps, prev_yl, prev_v);
                 }
                 id_Players++;
             }

@@ -205,10 +205,42 @@ namespace SpectatorFootball.GameNS
             Stages.Add(pStage);
             State = moving_ps;
         }
+
+        public Player_States Convert_Movement_to_Slow(Player_States moving_ps)
+        {
+            Player_States r = Player_States.RUNNING_SLOW_FORWARD;
+            switch(moving_ps)
+            {
+                case Player_States.RUNNING_FORWARD: 
+                    r = Player_States.RUNNING_SLOW_FORWARD;
+                    break;
+                case Player_States.RUNNING_UP:
+                    r = Player_States.RUNNING_SLOW_UP;
+                    break;
+                case Player_States.RUNNING_DOWN:
+                    r = Player_States.RUNNING_SLOW_DOWN;
+                    break;
+                case Player_States.RUNNING_BACKWORDS:
+                    r = Player_States.RUNNING_SLOW_BACKWORDS;
+                    break;
+            }
+            return r;
+        }
         public void Delay_Run_With_Ball(Player_States moving_ps, double prev_yl, double prev_v, int delay)
         {
             Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, prev_yl, prev_v, false, Player_States.STANDING, null, Movement.FAKE_MOVEMENT, null, false, delay);
             Action pas2 = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, true, moving_ps, null, Movement.LINE, null, false, 0);
+            Play_Stage pStage = new Play_Stage();
+            pStage.Main_Object = false;
+            pStage.Actions.Add(pas);
+            pStage.Actions.Add(pas2);
+            Stages.Add(pStage);
+            State = moving_ps;
+        }
+        public void Delay_Run_Slower_With_Ball(Player_States moving_ps, double prev_yl, double prev_v, int delay)
+        {
+            Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, prev_yl, prev_v, false, Player_States.STANDING, null, Movement.FAKE_MOVEMENT, null, false, delay);
+            Action pas2 = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, true, moving_ps, null, Movement.LINE, Ball_Speed.CARRIED_SLOW, false, 0);
             Play_Stage pStage = new Play_Stage();
             pStage.Main_Object = false;
             pStage.Actions.Add(pas);

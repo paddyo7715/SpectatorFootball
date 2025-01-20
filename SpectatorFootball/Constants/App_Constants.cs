@@ -537,6 +537,12 @@ namespace SpectatorFootball
         public const int KICKOFF_BOTTOM_MAX_VERTICAL = 79;
         public const int KICKOFF_TOP_AVG_VERTICAL = 35;
         public const int KICKOFF_BOTTOM_AVG_VERTICAL = 65;
+
+        public const int KICKOFF_DYNAMIC_TOP_MIN_VERTICAL = 44;
+        public const int KICKOFF_DYNAMIC_BOTTOM_MAX_VERTICAL = 56;
+        public const int KICKOFF_DYNAMIC_TOP_AVG_VERTICAL = 47;
+        public const int KICKOFF_DYNAMIC_BOTTOM_AVG_VERTICAL = 53;
+
         public const int KICKOFF_LENGTH_CALC_VARIABLE = 106;
         public const int KICKOFF_ACC_CALC_VARIABLE = 110;
 
@@ -576,12 +582,12 @@ namespace SpectatorFootball
 
         public const double KICKOFF_DYNAMIC_GROUP_VERT_DIST = 7.0;
         public const int KICKOFF_DYNAMIC_TACKLING_GROUPS = 3;
-        public const int KICKOFF_DYNAMIC_GROUP_1_MIN = 9;
-        public const int KICKOFF_DYNAMIC_GROUP_1_MAX = 13;
+        public const int KICKOFF_DYNAMIC_GROUP_1_MIN = 11;
+        public const int KICKOFF_DYNAMIC_GROUP_1_MAX = 15;
         public const int KICKOFF_DYNAMIC_GROUP_2_MIN = 18;
         public const int KICKOFF_DYNAMIC_GROUP_2_MAX = 22;
-        public const int KICKOFF_DYNAMIC_GROUP_3_MIN = 27;
-        public const int KICKOFF_DYNAMIC_GROUP_3_MAX = 31;
+        public const int KICKOFF_DYNAMIC_GROUP_3_MIN = 25;
+        public const int KICKOFF_DYNAMIC_GROUP_3_MAX = 29;
         public const int KICKOFF_DYNAMIC_KICKER_FROM_RETURNER = 57;
         public const double KICKOFF_DYNAMIC_DIST_BETWEEN_BLOCK_ATTACHERS = 1.00;
 

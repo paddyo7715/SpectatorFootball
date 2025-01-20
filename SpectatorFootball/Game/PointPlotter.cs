@@ -17,8 +17,9 @@ namespace SpectatorFootball.GameNS
         private static int PLAYER_SKIP = 8;
         private static int STARTING_KICK_SKIP = 18;
         private static int ENDING_KICK_SKIP = 6;
+        private static int PLAYER_SLOWER = 5;
 
-        public static List<PointXY> PlotLine (bool bBall,double sx, double sy, double ex, double ey, bool addEndpoint, Ball_Speed? Ball_Speed, Ball_States? b_state, bool bnoSkip)
+        public static List<PointXY> PlotLine (bool bBall,double sx, double sy, double ex, double ey, bool addEndpoint, Ball_Speed? Ball_Spd, Ball_States? b_state, bool bnoSkip)
         {
             List<PointXY> r = new List<PointXY>();
 
@@ -32,25 +33,32 @@ namespace SpectatorFootball.GameNS
             int skip_count;
             if (bBall)
             {
-                if (b_state == Ball_States.CARRIED)
+                if (Ball_Spd == Ball_Speed.CARRIED_SLOW)
+                    skip_count = PLAYER_SLOWER;
+                else if (b_state == Ball_States.CARRIED)
                     skip_count = PLAYER_SKIP;
                 else if ((b_state == Ball_States.END_OVER_END || b_state == Ball_States.SPIRAL))
                     skip_count = STARTING_KICK_SKIP;
                 else if (b_state == Ball_States.PUNT_THRU_THE_AIR)
                     skip_count = BALL_NORMAL_SKIP;
-                else if (Ball_Speed == Enum.Ball_Speed.SLOW)
+                else if (Ball_Spd == Enum.Ball_Speed.SLOW)
                     skip_count = BALL_SLOW_SKIP;
-                else if (Ball_Speed == Enum.Ball_Speed.NORMAL)
+                else if (Ball_Spd == Enum.Ball_Speed.NORMAL)
                     skip_count = BALL_NORMAL_SKIP;
-                else if (Ball_Speed == Enum.Ball_Speed.FAST)
+                else if (Ball_Spd == Enum.Ball_Speed.FAST)
                     skip_count = BALL_FAST_SKIP;
-                else if (Ball_Speed == Enum.Ball_Speed.SUPER_SLOW)
+                else if (Ball_Spd == Enum.Ball_Speed.SUPER_SLOW)
                     skip_count = BALL_SUPER_SLOW;
                 else
                     skip_count = BALL_NORMAL_SKIP;
             }
             else
-                skip_count = PLAYER_SKIP;
+            {
+                if (Ball_Spd == Ball_Speed.CARRIED_SLOW)
+                    skip_count = PLAYER_SLOWER;
+                else
+                    skip_count = PLAYER_SKIP;
+            }
 
             p1X = (int)(sx * 10.0);
             p1Y = (int)(sy * 10.0);

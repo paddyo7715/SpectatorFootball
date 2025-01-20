@@ -225,6 +225,26 @@ namespace SpectatorFootball.GameNS
             return r;
         }
 
+        public static double getKickoff_Dynamic_Vert(Kickoff_Verticl vert_enum)
+        {
+            double r = 0.0;
+
+            switch (vert_enum)
+            {
+                case Kickoff_Verticl.TOP:
+                    r = CommonUtils.getRandomNum(app_Constants.KICKOFF_DYNAMIC_TOP_MIN_VERTICAL, app_Constants.KICKOFF_DYNAMIC_TOP_AVG_VERTICAL);
+                    break;
+                case Kickoff_Verticl.MIDDLE:
+                    r = CommonUtils.getRandomNum(app_Constants.KICKOFF_DYNAMIC_TOP_AVG_VERTICAL, app_Constants.KICKOFF_DYNAMIC_BOTTOM_AVG_VERTICAL);
+                    break;
+                case Kickoff_Verticl.BOTTOM:
+                    r = CommonUtils.getRandomNum(app_Constants.KICKOFF_DYNAMIC_BOTTOM_AVG_VERTICAL, app_Constants.KICKOFF_DYNAMIC_BOTTOM_MAX_VERTICAL);
+                    break;
+            }
+
+            return r;
+        }
+
         public static Punt_Len getPunt_Len_enum(long leg_strength)
         {
             Punt_Len r = Punt_Len.LONG;
