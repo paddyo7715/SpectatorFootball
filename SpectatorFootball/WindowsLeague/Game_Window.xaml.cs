@@ -607,6 +607,7 @@ namespace SpectatorFootball.WindowsLeague
 
             }
 
+            logger.Debug("Ball Display yl " + gBall.YardLine);
 
             int H_Pixel = Yardline_to_Pixel(gBall.YardLine, true);
             double v_Pixel = VertPercent_to_Pixel(gBall.Vertical_Percent_Pos, gBall.Height);
@@ -672,6 +673,11 @@ namespace SpectatorFootball.WindowsLeague
                 Canvas.SetZIndex(players_rect[xxx], PLAYER_CATCHING_BALL_ZINDEX);
             else
                 Canvas.SetZIndex(players_rect[xxx], PERSON_ON_FIELD_ZINDEX);
+
+            if (ggp.pState == Player_States.RUNNING_FORWARD)
+            logger.Debug("Player Forward yl: " + ggp.YardLine);
+
+
 
         }
 

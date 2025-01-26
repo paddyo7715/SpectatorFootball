@@ -521,27 +521,10 @@ namespace SpectatorFootball
         public const double KICKOFF_MAX_YARDLINE_2 = -11;
         public const double FG_LONGEST_FG_YARDLINE = 45;
 
-        public const int KICKOFF_DYNAMIC_MIN_SUPER_SHORT_DIST = 56;
-        public const int KICKOFF_DYNAMIC_MAX_SUPER_SHORT_DIST = 58;
-        public const int KICKOFF_DYNAMIC_MIN_SHORT_DISTANCE = 59;
-        public const int KICKOFF_DYNAMIC_MAX_SHORT_DISTANCE = 61;
-        public const int KICKOFF_DYNAMIC_MIN_AVG_DISTANCE = 62;
-        public const int KICKOFF_DYNAMIC_MAX_AVG_DISTANCE = 64;
-        public const int KICKOFF_DYNAMIC_MIN_LONG_DISTANCE = 65;
-        public const int KICKOFF_DYNAMIC_MAX_LONG_DISTANCE = 67;
-        public const int KICKOFF_DYNAMIC_MIN_SUPER_LONG_DISTANCE = 68;
-        public const int KICKOFF_DYNAMIC_MAX_SUPER_LONG_DISTANCE = 80;
-
-
         public const int KICKOFF_TOP_MIN_VERTICAL = 21;
         public const int KICKOFF_BOTTOM_MAX_VERTICAL = 79;
         public const int KICKOFF_TOP_AVG_VERTICAL = 35;
         public const int KICKOFF_BOTTOM_AVG_VERTICAL = 65;
-
-        public const int KICKOFF_DYNAMIC_TOP_MIN_VERTICAL = 44;
-        public const int KICKOFF_DYNAMIC_BOTTOM_MAX_VERTICAL = 56;
-        public const int KICKOFF_DYNAMIC_TOP_AVG_VERTICAL = 47;
-        public const int KICKOFF_DYNAMIC_BOTTOM_AVG_VERTICAL = 53;
 
         public const int KICKOFF_LENGTH_CALC_VARIABLE = 106;
         public const int KICKOFF_ACC_CALC_VARIABLE = 110;
@@ -580,19 +563,41 @@ namespace SpectatorFootball
         public const double TOP_OUTOFBOUNDS_ADJUSTMENT = 3.0;
         public const int KICKOFF_TACKLE_TEST_ADJUSTER = 0;  //Set 0 normally or high to test
 
-        public const double KICKOFF_DYNAMIC_GROUP_VERT_DIST = 7.0;
-        public const int KICKOFF_DYNAMIC_TACKLING_GROUPS = 3;
+        public const double TACKLER_FOO_MOVE = 0.3;
+
         public const int KICKOFF_DYNAMIC_GROUP_1_MIN = 11;
         public const int KICKOFF_DYNAMIC_GROUP_1_MAX = 15;
         public const int KICKOFF_DYNAMIC_GROUP_2_MIN = 18;
         public const int KICKOFF_DYNAMIC_GROUP_2_MAX = 22;
         public const int KICKOFF_DYNAMIC_GROUP_3_MIN = 25;
         public const int KICKOFF_DYNAMIC_GROUP_3_MAX = 29;
+
+        public const int KICKOFF_DYNAMIC_MIN_SUPER_SHORT_DIST = 56;
+        public const int KICKOFF_DYNAMIC_MAX_SUPER_SHORT_DIST = 58;
+        public const int KICKOFF_DYNAMIC_MIN_SHORT_DISTANCE = 59;
+        public const int KICKOFF_DYNAMIC_MAX_SHORT_DISTANCE = 61;
+        public const int KICKOFF_DYNAMIC_MIN_AVG_DISTANCE = 62;
+        public const int KICKOFF_DYNAMIC_MAX_AVG_DISTANCE = 64;
+        public const int KICKOFF_DYNAMIC_MIN_LONG_DISTANCE = 65;
+        public const int KICKOFF_DYNAMIC_MAX_LONG_DISTANCE = 67;
+        public const int KICKOFF_DYNAMIC_MIN_SUPER_LONG_DISTANCE = 68;
+        public const int KICKOFF_DYNAMIC_MAX_SUPER_LONG_DISTANCE = 80;
+
+        public const int KICKOFF_DYNAMIC_TOP_MIN_VERTICAL = 44;
+        public const int KICKOFF_DYNAMIC_BOTTOM_MAX_VERTICAL = 56;
+        public const int KICKOFF_DYNAMIC_TOP_AVG_VERTICAL = 47;
+        public const int KICKOFF_DYNAMIC_BOTTOM_AVG_VERTICAL = 53;
+
+        public const double KICKOFF_DYNAMIC_GROUP_VERT_DIST = 7.0;
+        public const int KICKOFF_DYNAMIC_TACKLING_GROUPS = 3;
         public const int KICKOFF_DYNAMIC_KICKER_FROM_RETURNER = 57;
         public const double KICKOFF_DYNAMIC_DIST_BETWEEN_BLOCK_ATTACHERS = 1.00;
 
-        public const double TACKLER_FOO_MOVE = 0.3;
+        public const int KICKOFF_DYNAMIC_PLAYERS_IN_GROUP = 5;
 
+        public const double KICKOFF_DYNAMIC_YARDS_BEFORE_TACKLER = 1.5;
+        public const double KICKOFF_DYNAMIC_YARDS_BEFORE_TACKLER2 = 2.0;
+        public const double KICKOFF_DYNAMIC_YARDS_BEFORE_TACKLER3 = 3.0;
         //Blocking
         public const int BLOCKING_MAX_RAND = 1000;
         public const double TACKLER_DOMINATED = 2.0;
