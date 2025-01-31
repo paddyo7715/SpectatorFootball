@@ -721,7 +721,7 @@ namespace SpectatorFootball.GameNS
                     //adjust potential tackler's tackle rating based on the block
                     tackler_tackle_rating = Game_Engine_Helper.AdjustTackleRating_forBlock(br, tackler_tackle_rating);
 
-                    bool bTack = Game_Engine_Helper.Make_Tackle(
+                    bool bTack = Game_Engine_Helper.Make_Tackle(3.5,
                         r.Punt_Returner.p_and_r.pr.First().Speed_Rating,
                         r.Punt_Returner.p_and_r.pr.First().Agilty_Rating,
                         r.Punt_Returner.p_and_r.pr.First().Running_Power_Rating,

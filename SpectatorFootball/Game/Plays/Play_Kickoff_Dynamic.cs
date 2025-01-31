@@ -76,6 +76,16 @@ namespace SpectatorFootball.GameNS
                 r.Yards_Returned = Game_Engine_Helper.getKickoffReturnYards(!bLefttoRight, r.Kick_caught_yl, r.Returner.Current_YardLine);
             }
 
+            //Set if touchdown
+            r.bTouchDown = Game_Engine_Helper.isTouchdown(!bLefttoRight, r.Returner.Current_YardLine, r.bTouchback);
+
+            if (r.Returner != null)
+                r.end_of_play_yardline = r.Returner.Current_YardLine;
+
+            //Create Player Stats Records for the play
+            r.Play_Player_Stats = SetPlayerStats(Kickoff_Players, Return_Players, r.bTouchback, r.bKick_Out_of_Endzone, r.bTouchDown,
+                r.bFumble, r.bFumble_Lost, r.Yards_Returned, r.Kicker, r.Returner, r.Tackler, r.Fumble_Recoverer,
+                r.Missed_Tackles, r.Forced_Fumble_Tackler);
 
             return r;
         }
@@ -177,7 +187,7 @@ namespace SpectatorFootball.GameNS
                     if (i == 4)
                         hhh = 1;
 
-                    bool bTack = Game_Engine_Helper.Make_Tackle(
+                    bool bTack = Game_Engine_Helper.Make_Tackle(2.6,
                         r.Returner.p_and_r.pr.First().Speed_Rating,
                         r.Returner.p_and_r.pr.First().Agilty_Rating,
                         r.Returner.p_and_r.pr.First().Running_Power_Rating,
@@ -932,7 +942,6 @@ namespace SpectatorFootball.GameNS
 
             int tgroup_ind = 0;
 
-            logger.Debug("Initial yl: " + gBall.Current_YardLine);
 
             //First the blockers attackers get into position while the return starts to return the  ball
             int id_Players = 0;
@@ -966,7 +975,6 @@ namespace SpectatorFootball.GameNS
                     Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
                     p.Run_Then_Stand(moving_ps, prev_yl, prev_v);
 
-                    logger.Debug("Kickoff Player: " + id_Players + " yl " + p.Current_YardLine);
                 }
                 id_Players++;
             }
@@ -994,7 +1002,6 @@ namespace SpectatorFootball.GameNS
                     p.Delay_Run_Slower_With_Ball(moving_ps, prev_yl, prev_v, ret_delay);
                     //for the ball
                     gBall.Delay_Carried_Slowly(prev_yl, prev_v, ret_delay);
-                    logger.Debug("Return Player: yl " + p.Current_YardLine);
                 }
                 else
                 {
@@ -1008,9 +1015,6 @@ namespace SpectatorFootball.GameNS
                 }
                 id_Players++;
             }
-
-            logger.Debug("Ball: yl " + gBall.Current_YardLine);
-
 
             return pr;
         }

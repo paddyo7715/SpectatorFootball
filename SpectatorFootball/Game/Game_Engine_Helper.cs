@@ -238,13 +238,13 @@ namespace SpectatorFootball.GameNS
 
         }
 
-        public static bool Make_Tackle(long carrier_speed, long carrier_agility,
+        public static bool Make_Tackle(double tackler_mult, long carrier_speed, long carrier_agility,
                                 long carrier_power_running, long tackler_tackle_rating)
         {
             bool r = false;
 
             double crrier_val = (carrier_speed + carrier_agility + carrier_power_running) / 3;
-            double tackler_val = (int)(tackler_tackle_rating * app_Constants.TACKLER_ADVANTAGE_MULTIPLIER + 0.5);
+            double tackler_val = (int)(tackler_tackle_rating * tackler_mult + 0.5);
 
             int max_rnd_num = (int)(tackler_val + crrier_val);
             int rnd_value = CommonUtils.getRandomNum(1, max_rnd_num + app_Constants.KICKOFF_TACKLE_TEST_ADJUSTER);

@@ -51,9 +51,9 @@ namespace SpectatorFootball.GameNS
 
                 long ls_var = ls_temp;
                 if (i == 1 || i == 2)
-                    ls_var = (long)(ls_var / 2.5);
+                    ls_var = (long)(ls_var *  .1);
                 else if (i == 3)
-                    ls_var = (long)(ls_var * 3);
+                    ls_var = (long)(ls_var * .5);
                 else if (i == 4)
                     ls_var = (long)(ls_var * 3);
 

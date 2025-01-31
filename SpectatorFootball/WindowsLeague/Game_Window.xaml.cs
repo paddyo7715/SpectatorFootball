@@ -140,8 +140,6 @@ namespace SpectatorFootball.WindowsLeague
         {
             InitializeComponent();
 
-            logger.Debug("Game Window Constructor started");
-
             //Needed to prime the media player
             Play_Sound(Game_Sounds.SILENCE);
 
@@ -318,7 +316,6 @@ namespace SpectatorFootball.WindowsLeague
                 dispatcherTimer.Interval = new TimeSpan(0, 0, 2);
                 dispatcherTimer.Start();
 
-                logger.Debug("Game Window Constructor ended");
             }
             catch (Exception e)
             {
@@ -339,7 +336,6 @@ namespace SpectatorFootball.WindowsLeague
 
         private void CloseGameInfo(object sender, EventArgs e)
         {
-            logger.Debug("CloseGameInfo started");
 
             dispatcherTimer.Stop();
 
@@ -370,14 +366,10 @@ namespace SpectatorFootball.WindowsLeague
             GameTimer.Interval = TimeSpan.FromMilliseconds(1000);
             GameTimer.Start();
 
-            logger.Debug("CloseGameInfo ended");
-
         }
 
         private void Play_Game(object sender, EventArgs e)
         {
-            logger.Debug("Play_Game started");
-
             GameTimer.Stop();
 
             Game_intro_pnl.Visibility = Visibility.Collapsed;
@@ -401,9 +393,7 @@ namespace SpectatorFootball.WindowsLeague
                     gGame_Ball = null;
                     Offensive_Players = null;
                     Defensive_Players = null;
-                    logger.Debug("Play_Game before executePlay");
                     Play = ge.ExecutePlay();
-                    logger.Debug("Play_Game End executePlay");
 
                     //play.game_ball is null error
                     gGame_Ball = new Graphics_Game_Ball(Play.Game_Ball.Initial_State, Play.Game_Ball.Starting_YardLine, Play.Game_Ball.Starting_Vertical_Percent_Pos, Play.Game_Ball.Stages, ThreeDee_ball);
@@ -495,8 +485,6 @@ namespace SpectatorFootball.WindowsLeague
                 //Game done see if the state of the league has changed
                 //Set_TopMenu?.Invoke(this, new EventArgs());
                 //this.Close();
-
-                logger.Debug("Play_Game ended");
 
         }
 
@@ -598,7 +586,6 @@ namespace SpectatorFootball.WindowsLeague
                         Ball.Fill = myLinearGradientBrush2;
                     break;
                 case Ball_States.ROLLING:
-                    logger.Debug("Ball Height: " + gBall.Height + " Width: " + gBall.width);
                     if (gBall.graph_bState == Graphics_Ball_Stats.ROLLING_1)
                         Ball.Fill = myLinearGradientBrush1;
                     else
@@ -606,8 +593,6 @@ namespace SpectatorFootball.WindowsLeague
                     break;
 
             }
-
-            logger.Debug("Ball Display yl " + gBall.YardLine);
 
             int H_Pixel = Yardline_to_Pixel(gBall.YardLine, true);
             double v_Pixel = VertPercent_to_Pixel(gBall.Vertical_Percent_Pos, gBall.Height);
@@ -673,11 +658,6 @@ namespace SpectatorFootball.WindowsLeague
                 Canvas.SetZIndex(players_rect[xxx], PLAYER_CATCHING_BALL_ZINDEX);
             else
                 Canvas.SetZIndex(players_rect[xxx], PERSON_ON_FIELD_ZINDEX);
-
-            if (ggp.pState == Player_States.RUNNING_FORWARD)
-            logger.Debug("Player Forward yl: " + ggp.YardLine);
-
-
 
         }
 

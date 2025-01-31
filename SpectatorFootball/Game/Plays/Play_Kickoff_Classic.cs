@@ -657,7 +657,7 @@ namespace SpectatorFootball.GameNS
                     if (i == 4)
                         hhh = 1;
 
-                    bool bTack = Game_Engine_Helper.Make_Tackle(
+                    bool bTack = Game_Engine_Helper.Make_Tackle(3.5,
                         r.Returner.p_and_r.pr.First().Speed_Rating,
                         r.Returner.p_and_r.pr.First().Agilty_Rating,
                         r.Returner.p_and_r.pr.First().Running_Power_Rating,

@@ -572,15 +572,15 @@ namespace SpectatorFootball
         public const int KICKOFF_DYNAMIC_GROUP_3_MIN = 25;
         public const int KICKOFF_DYNAMIC_GROUP_3_MAX = 29;
 
-        public const int KICKOFF_DYNAMIC_MIN_SUPER_SHORT_DIST = 56;
-        public const int KICKOFF_DYNAMIC_MAX_SUPER_SHORT_DIST = 58;
-        public const int KICKOFF_DYNAMIC_MIN_SHORT_DISTANCE = 59;
-        public const int KICKOFF_DYNAMIC_MAX_SHORT_DISTANCE = 61;
-        public const int KICKOFF_DYNAMIC_MIN_AVG_DISTANCE = 62;
-        public const int KICKOFF_DYNAMIC_MAX_AVG_DISTANCE = 64;
-        public const int KICKOFF_DYNAMIC_MIN_LONG_DISTANCE = 65;
-        public const int KICKOFF_DYNAMIC_MAX_LONG_DISTANCE = 67;
-        public const int KICKOFF_DYNAMIC_MIN_SUPER_LONG_DISTANCE = 68;
+        public const int KICKOFF_DYNAMIC_MIN_SUPER_SHORT_DIST = 57;
+        public const int KICKOFF_DYNAMIC_MAX_SUPER_SHORT_DIST = 59;
+        public const int KICKOFF_DYNAMIC_MIN_SHORT_DISTANCE = 60;
+        public const int KICKOFF_DYNAMIC_MAX_SHORT_DISTANCE = 62;
+        public const int KICKOFF_DYNAMIC_MIN_AVG_DISTANCE = 63;
+        public const int KICKOFF_DYNAMIC_MAX_AVG_DISTANCE = 65;
+        public const int KICKOFF_DYNAMIC_MIN_LONG_DISTANCE = 66;
+        public const int KICKOFF_DYNAMIC_MAX_LONG_DISTANCE = 68;
+        public const int KICKOFF_DYNAMIC_MIN_SUPER_LONG_DISTANCE = 69;
         public const int KICKOFF_DYNAMIC_MAX_SUPER_LONG_DISTANCE = 80;
 
         public const int KICKOFF_DYNAMIC_TOP_MIN_VERTICAL = 44;
@@ -595,9 +595,9 @@ namespace SpectatorFootball
 
         public const int KICKOFF_DYNAMIC_PLAYERS_IN_GROUP = 5;
 
-        public const double KICKOFF_DYNAMIC_YARDS_BEFORE_TACKLER = 1.5;
-        public const double KICKOFF_DYNAMIC_YARDS_BEFORE_TACKLER2 = 2.0;
-        public const double KICKOFF_DYNAMIC_YARDS_BEFORE_TACKLER3 = 3.0;
+        public const double KICKOFF_DYNAMIC_YARDS_BEFORE_TACKLER = 3.0;
+        public const double KICKOFF_DYNAMIC_YARDS_BEFORE_TACKLER2 = 4.0;
+        public const double KICKOFF_DYNAMIC_YARDS_BEFORE_TACKLER3 = 6.0;
         //Blocking
         public const int BLOCKING_MAX_RAND = 1000;
         public const double TACKLER_DOMINATED = 2.0;
@@ -608,9 +608,6 @@ namespace SpectatorFootball
 
         //Returners
         public const int RETURNER_PERCENT_LIST_SELECTION = 80;
-
-        //Tackling
-        public const double TACKLER_ADVANTAGE_MULTIPLIER = 3.5;
 
         //Punts
         public const int PUNT_TACKLING_GROUPS = 3;
