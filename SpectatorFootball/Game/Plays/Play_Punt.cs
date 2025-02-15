@@ -503,6 +503,7 @@ namespace SpectatorFootball.GameNS
             r.Defender_Close_to_Kicker = getAttacker_BreakThru(Blockers, Attackers);
 
             double prev_ylb = gBall.Current_YardLine;
+
             double prev_vb = gBall.Current_Vertical_Percent_Pos;
             gBall.Current_YardLine += half_yards * Game_Engine_Helper.HorizontalAdj(bLefttoRight);
             gBall.Carried_notMain(prev_ylb, prev_vb);

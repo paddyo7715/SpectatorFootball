@@ -68,5 +68,6 @@ namespace SpectatorFootball.Enum
         BLOCK_KICK,
         CROUCH_BLOCK_1,
         CROUCH_BLOCK_2,
+        STANDING_WITH_BALL,
     }
 }

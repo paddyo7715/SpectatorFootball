@@ -67,7 +67,7 @@ namespace SpectatorFootball.GameNS
             switch (pState)
             {
                 case Player_States.STANDING:
-                    r = Graphics_Player_States.STANDING;
+                    r = bCarringBall ? Graphics_Player_States.STANDING_WITH_BALL : Graphics_Player_States.STANDING;
                     break;
                 case Player_States.RUNNING_FORWARD:
                     if (bCarringBall)

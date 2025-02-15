@@ -114,7 +114,7 @@ namespace SpectatorFootball.WindowsLeague
 
         private int VIEW_EDGE_PIXELS;
 
-        private const int PLAYER_IN_SPRITE_ROW = 60;
+        private const int PLAYER_IN_SPRITE_ROW = 61;
 
         private BitmapImage[] A_Player_Sprites = null;
         private BitmapImage[] H_Player_Sprites = null;
@@ -294,15 +294,19 @@ namespace SpectatorFootball.WindowsLeague
 
                 Mid_Field_Art_Rect.Fill = ib;
 
+                //bpo test ball
+
+
                 //setup the gradiants for the game ball
                 //Gradient 1
                 myLinearGradientBrush1 = new LinearGradientBrush();
                 myLinearGradientBrush1.StartPoint = new Point(0.9,0);
                 myLinearGradientBrush1.EndPoint = new Point(0.9, 1);
                 myLinearGradientBrush1.GradientStops.Add(
-                    new GradientStop(CommonUtils.getColorfromHex(ball_Color), 0.0));
+                   new GradientStop(CommonUtils.getColorfromHex(ball_Color), 0.0));
                 myLinearGradientBrush1.GradientStops.Add(
-                    new GradientStop(CommonUtils.getColorfromHex(ball_shade_color), 0.9));
+                   new GradientStop(CommonUtils.getColorfromHex(ball_shade_color), 0.9));
+
                 //gradient 2
                 myLinearGradientBrush2 = new LinearGradientBrush();
                 myLinearGradientBrush2.StartPoint = new Point(0.9, 0);

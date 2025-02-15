@@ -211,11 +211,15 @@
     <Compile Include="Game\Action.cs" />
     <Compile Include="Game\Coach.cs" />
     <Compile Include="Game\Formations\formation_helper.cs" />
+    <Compile Include="Game\Formations\Kickoff_Free_Kick_Formation.cs" />
     <Compile Include="Game\Formations\Interfaces\iFormation_Play.cs" />
     <Compile Include="Game\Formations\Kickoff_Classic_Formation.cs" />
     <Compile Include="Game\Formations\Kickoff_Classic_Return_Formation.cs" />
     <Compile Include="Game\Formations\Kickoff_Dynamic_Formation.cs" />
     <Compile Include="Game\Formations\Kickoff_Dynamic_Return_Formation.cs" />
+    <Compile Include="Game\Formations\Kickoff_Free_Kick_Return_Formation.cs" />
+    <Compile Include="Game\Formations\Kickoff_Modern_Formation.cs" />
+    <Compile Include="Game\Formations\Kickoff_Modern_Return_Formation.cs" />
     <Compile Include="Game\Formations\Onside_Kickoff.cs" />
     <Compile Include="Game\Formations\Onside_Kickoff_Receive.cs" />
     <Compile Include="Game\Formations\Punt_Formation.cs" />
@@ -240,6 +244,7 @@
     <Compile Include="Game\Plays\Playstub_Uncrouch.cs" />
     <Compile Include="Game\Plays\Play_Kickoff_Classic.cs" />
     <Compile Include="Game\Plays\Play_Kickoff_Dynamic.cs" />
+    <Compile Include="Game\Plays\Play_Kickoff_Free_Kick.cs" />
     <Compile Include="Game\Plays\Play_Kickoff_Onsides.cs" />
     <Compile Include="Game\Plays\Play_Punt.cs" />
     <Compile Include="Game\Play_Result.cs" />
@@ -714,6 +719,7 @@
     <None Include="Images\Source\Players\L_Run4_Up_With_Ball.xcf" />
     <None Include="Images\Source\Players\L_Run4_With_Ball.xcf" />
     <None Include="Images\Source\Players\L_Stand_Player.xcf" />
+    <None Include="Images\Source\Players\L_Stand_With_Ball_Player.xcf" />
     <None Include="Images\Source\Players\L_Tackle1.xcf" />
     <None Include="Images\Source\Players\L_Tackle2.xcf" />
     <None Include="Images\Source\Players\L_Tackle3.xcf" />
