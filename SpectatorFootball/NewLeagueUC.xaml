@@ -161,8 +161,11 @@
                             <StackPanel Width="350" Orientation="Vertical" >
                                 <StackPanel Orientation="Horizontal" >
                                     <Label  Width="240" VerticalContentAlignment="Top" Padding="5,0,0,0"  Style="{StaticResource Largelbltyle}">Kickoff:</Label>
-                                    <RadioButton Width="60" Name="newlKickoffYesYes" GroupName="Kickoff" IsChecked="True" Style="{StaticResource LargeGroupButton}">Yes</RadioButton>
-                                    <RadioButton Width="60" Name="newlKickoffYesNo" GroupName="Kickoff" Style="{StaticResource LargeGroupButton}">No</RadioButton>
+                                    <ComboBox Name="newl1KickoffType"  Style="{StaticResource ComboBoxstyle}" >
+                                        <ComboBoxItem IsSelected="True" Content = "Dynamic" Tag="D" />
+                                        <ComboBoxItem Content = "Classic" Tag="C" />
+                                        <ComboBoxItem Content = "Modern" Tag="M" />
+                                    </ComboBox>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" >
                                     <Label  Width="240" VerticalContentAlignment="Top" Padding="5,0,0,0"  Style="{StaticResource Largelbltyle}">Onside Kick:</Label>

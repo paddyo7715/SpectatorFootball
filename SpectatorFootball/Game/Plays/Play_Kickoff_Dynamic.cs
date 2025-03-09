@@ -12,11 +12,9 @@ namespace SpectatorFootball.GameNS
 {
 
 
-    public  class Play_Kickoff_Dynamic : iPlay, IKickoff
+    public  class Play_Kickoff_Dynamic : iPlay
     {
         public Play_Enum Play { get; set; } = Play_Enum.KICKOFF_NORMAL;
-        public double kickoff_yl { get; set; } = 35;
-        public double touchback_yl { get; set; } = 30;
 
         private static ILog logger = LogManager.GetLogger("RollingFile");
 

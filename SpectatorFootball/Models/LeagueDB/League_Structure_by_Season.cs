@@ -52,7 +52,7 @@ namespace SpectatorFootball.Models
 
         public long Penalties { get; set; }
 
-        public long Kickoff_Type { get; set; }
+        public string Kickoff_Type { get; set; }
 
         public long Extra_Point { get; set; }
 

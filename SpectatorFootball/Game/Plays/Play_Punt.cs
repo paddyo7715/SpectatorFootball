@@ -17,8 +17,8 @@ using System.Windows.Documents;
 
 namespace SpectatorFootball.GameNS
 {
-    public class Play_Punt : iPlay
-    {
+    public class Play_Punt : iPlay 
+        {
         private static ILog logger = LogManager.GetLogger("RollingFile");
 
         private long Possessing_Team_Id;
@@ -35,6 +35,8 @@ namespace SpectatorFootball.GameNS
         List<Game_Player> Blockers = null;
         List<Game_Player> Attackers = null;
         public Play_Result r = new Play_Result();
+
+        public double touchback_yl { get; set; } = 20;
 
         public Play_Enum Play { get; set; } = Play_Enum.PUNT;
 

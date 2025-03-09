@@ -52,6 +52,7 @@
     <Reference Include="System.Data.DataSetExtensions" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Integration_Tests\Kickoffs\FreeKickTEST.cs" />
     <Compile Include="Integration_Tests\Kickoffs\KickoffDynamicTEST.cs" />
     <Compile Include="Integration_Tests\Kickoffs\KickoffModernTEST.cs" />
     <Compile Include="Integration_Tests\Kickoffs\KickoffNormalTEST.cs" />

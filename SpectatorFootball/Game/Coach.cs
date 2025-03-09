@@ -38,10 +38,10 @@ namespace SpectatorFootball.GameNS
 
         }
  
-        public Play_Package Call_Off_PlayFormation(double los, bool bKickoff, bool bExtraPoint, bool bKickoffAfterSafety, double PossessionAdjuster, bool bLefttoRight)
+        public Play_Package Call_Off_PlayFormation(Kickoff_Type ko_type, double los, bool bKickoff, bool bExtraPoint, bool bKickoffAfterSafety, double PossessionAdjuster, bool bLefttoRight)
         {
-            Formations_Enum f;
-            Play_Enum p;
+            Formations_Enum f = Formations_Enum.PUNT; 
+            Play_Enum p = Play_Enum.PUNT;
             string Formation_Name = "";
             List<Formation_Rec> fList = null;
             Formation formation = null;
@@ -57,24 +57,29 @@ namespace SpectatorFootball.GameNS
 
             if (bKickoff)
             {
-                f = Formations_Enum.KICKOFF_REGULAR_KICK;
-                p = Play_Enum.KICKOFF_NORMAL;
+                switch (ko_type)
+                {
+                    case Kickoff_Type.CLASSIC:
+                        f = Formations_Enum.KICKOFF_REGULAR_KICK;
+                        p = Play_Enum.KICKOFF_NORMAL;
+                        break;
+                    case Kickoff_Type.DYNAMIC:
+                        f = Formations_Enum.KICKOFF_DYNAMIC_KICK;
+                        p = Play_Enum.KICKOFF_DYNAMIC;
+                        break;
+                    case Kickoff_Type.MODERN:
+                        f = Formations_Enum.KICKOFF_MODERN_KICK;
+                        p = Play_Enum.KICKOFF_MODERN;
+                        break;
+                }
   
                 if (QTR == 4)
                 {
-                    if (scoreDiff < -(Max_TD_Points * 2) && time <= -300)
+                    if ((scoreDiff < -(Max_TD_Points * 2) && time <= -300) ||
+                        (scoreDiff < -(Max_TD_Points) && time <= -240) ||
+                        (scoreDiff < 0 && time <= -150))
                     {
                        f = Formations_Enum.KICKOFF_ONSIDE_KICK;
-                        p = Play_Enum.KICKOFF_ONSIDES;
-                    }
-                    else if (scoreDiff < -(Max_TD_Points) && time <= -240)
-                    {
-                        f = Formations_Enum.KICKOFF_ONSIDE_KICK;
-                        p = Play_Enum.KICKOFF_ONSIDES;
-                    }
-                    else if (scoreDiff < 0 && time <= -150)
-                    {
-                        f = Formations_Enum.KICKOFF_ONSIDE_KICK;
                         p = Play_Enum.KICKOFF_ONSIDES;
                     }
                 }
@@ -98,8 +103,8 @@ namespace SpectatorFootball.GameNS
             //            f = Formations_Enum.KICKOFF_DYNAMIC_KICK;
             //            p = Play_Enum.KICKOFF_DYNAMIC;
 
-                         f = Formations_Enum.KICKOFF_FREE_KICK;
-                         p = Play_Enum.KICKOFF_AFTER_SAFETY;
+//                         f = Formations_Enum.KICKOFF_FREE_KICK;
+//                         p = Play_Enum.KICKOFF_AFTER_SAFETY;
 
             //f = Formations_Enum.PUNT;
             //p = Play_Enum.PUNT;
@@ -156,6 +161,8 @@ namespace SpectatorFootball.GameNS
                 r = Formations_Enum.PUNT_RETURN;
             else if (pp.Formation.f_enum == Formations_Enum.EXTRA_POINT)
                 r = Formations_Enum.KICKOFF_REGULAR_RECEIVE;
+            else if (pp.Formation.f_enum == Formations_Enum.KICKOFF_FREE_KICK)
+                r = Formations_Enum.KICKOFF_FREE_RECEIVE;
             else
             {
                 //Just to get this to compile put this formation.

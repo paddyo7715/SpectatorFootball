@@ -8,9 +8,8 @@ namespace SpectatorFootball.Enum
 {
     public enum Kickoff_Type
     {
-        ONSIDE,
         CLASSIC,
-        DYNAMIC,
-        MODERN //USFL
+        DYNAMIC, 
+        MODERN,
     }
 }

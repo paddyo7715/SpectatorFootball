@@ -12,11 +12,11 @@ using SpectatorFootball.unitTests.Helper_ClassesNS;
 namespace SpectatorFootball.Integration_Tests.Kickoff
 {
     [TestClass]
-    public class KickoffModernTEST
+    public class FreeKickTEST
     {
         [TestCategory("Integration")]
         [TestMethod]
-        public void Normal_Kickoff_Avgs()
+        public void FreeKick_Avgs()
         {
             List<Game_Player> Kickoff_Players = null;
             List<Game_Player> Receiving_Players = null;
@@ -60,19 +60,19 @@ namespace SpectatorFootball.Integration_Tests.Kickoff
                 if (i % 2 == 0)
                 {
                     bLefttoRight = true;
-                    g_yardline = 25.0;
+                    g_yardline = 20.0;
                     possess_team = at;
                 }
                 else
                 {
                     bLefttoRight = false;
-                    g_yardline = 75.0;
+                    g_yardline = 80.0;
                     possess_team = ht;
                 }
 
                 double PossessionAdjuster = Game_Engine_Helper.HorizontalAdj(bLefttoRight);
-                Formation KickForm = formation_helper.getFormation(Formations_Enum.KICKOFF_MODERN_KICK, PossessionAdjuster);
-                Formation RecForm = formation_helper.getFormation(Formations_Enum.KICKOFF_MODERN_RECEIVE, PossessionAdjuster);
+                Formation KickForm = formation_helper.getFormation(Formations_Enum.KICKOFF_FREE_KICK, PossessionAdjuster);
+                Formation RecForm = formation_helper.getFormation(Formations_Enum.KICKOFF_FREE_RECEIVE, PossessionAdjuster);
 
                 Kickoff_Players = Help_Class.setGamePlayerLIsts(11, g_yardline, KickForm);
                 Receiving_Players = Help_Class.setGamePlayerLIsts(22, g_yardline, RecForm);
@@ -87,7 +87,7 @@ namespace SpectatorFootball.Integration_Tests.Kickoff
                     Starting_YardLine = g_yardline
                 };
 
-                Play_Kickoff_Classic kickoff = new Play_Kickoff_Classic(KickForm, RecForm, possess_team, at, ht, gb, Kickoff_Players, Receiving_Players, bLefttoRight, false);
+                Play_Kickoff_Free_Kick kickoff = new Play_Kickoff_Free_Kick(KickForm, RecForm, possess_team, at, ht, gb, Kickoff_Players, Receiving_Players, bLefttoRight, false);
                 Play_Result pResult = kickoff.Execute(false);
 
                 string Play_Result_Validation = Play_Validator.Validate_Play_Result(Play_Enum.KICKOFF_NORMAL, Kickoff_Players, Receiving_Players, pResult, gb, bLefttoRight);
@@ -131,45 +131,41 @@ namespace SpectatorFootball.Integration_Tests.Kickoff
             //Note because the players used for this test case are average players and not the same as players that make the team and start
             //in a regualr game, these ranges will be pretty wide.
             //Actual ranges for when actaul players play:
-            // 88% of kickoffs should be returned
-            // 27 yards average return.
-            // 24 TDs for every 1000 returns
-            // 140 fumbles for every 1000 returns
+            // 22% of kickoffs should be returned
+            // 22.4 yards average return.
+            // 6 TDs for every 1000 returns
+            // 14 fumbles for every 1000 returns
 
 
-            if (L_num_returned < 8400 || L_num_returned > 9200)
+            if (L_num_returned != 10000)
                 throw new Exception("L_num_returns out of range " + L_num_returned);
-            if (L_num_kneel_down < 800 || L_num_kneel_down > 1600)
+            if (L_num_kneel_down != 0)
                 throw new Exception("L_num_kneel_down out of range " + L_num_kneel_down);
             if (L_num_out_of_EZ != 0)
                 throw new Exception("L_num_out_of_EZ out of range " + L_num_out_of_EZ);
-            if (L_num_TDs < 14 || L_num_TDs > 40)
+            if (L_num_TDs < 30 || L_num_TDs > 80)
                 throw new Exception("L_num_TDs out of range " + L_num_TDs);
-            if (L_num_fumble < 80 || L_num_fumble > 200)
+            if (L_num_fumble < 120 || L_num_fumble > 600)
                 throw new Exception("L_num_fumble out of range " + L_num_fumble);
-            if (L_num_fumble_lost > 200)
+            if (L_num_fumble_lost > L_num_fumble)
                 throw new Exception("L_num_fumble_lost out of range " + L_num_fumble_lost);
-            if (L_total_starting_yardline / (L_num_returned - L_num_TDs) < 20.0 || L_total_starting_yardline / (L_num_returned - L_num_TDs) > 35.0)
-                throw new Exception("L_AVG starting YL: out of range " + L_total_starting_yardline / (L_num_returned - L_num_TDs));
-            if ((L_avg_return / L_num_returned) < 20.0 || (L_avg_return / L_num_returned) > 35.0)
+            if ((L_avg_return / L_num_returned) < 9.0 || (L_avg_return / L_num_returned) > 15.0)
                 throw new Exception("L_AVG Return:: out of range " + (L_avg_return / L_num_returned));
 
 
-            if (R_num_returned < 8400 || R_num_returned > 9200)
+            if (R_num_returned != 10000)
                 throw new Exception("R_num_returns out of range " + R_num_returned);
-            if (R_num_kneel_down < 800 || R_num_kneel_down > 1600)
+            if (R_num_kneel_down != 0)
                 throw new Exception("R_num_kneel_down out of range " + R_num_kneel_down);
             if (R_num_out_of_EZ != 0)
                 throw new Exception("R_num_out_of_EZ out of range " + R_num_out_of_EZ);
-            if (R_num_TDs < 14 || R_num_TDs > 40)
+            if (R_num_TDs < 30 || R_num_TDs > 80)
                 throw new Exception("R_num_TDs out of range " + R_num_TDs);
-            if (R_num_fumble < 80 || R_num_fumble > 200)
+            if (R_num_fumble < 120 || R_num_fumble > 600)
                 throw new Exception("R_num_fumble out of range " + R_num_fumble);
-            if (R_num_fumble_lost > 200)
+            if (R_num_fumble_lost > R_num_fumble)
                 throw new Exception("R_num_fumble_lost out of range " + R_num_fumble_lost);
-            if (R_total_starting_yardline / (R_num_returned - R_num_TDs) < 20.0 || R_total_starting_yardline / (R_num_returned - R_num_TDs) > 35.0)
-                throw new Exception("R_AVG starting YL: out of range " + R_total_starting_yardline / (R_num_returned - R_num_TDs));
-            if ((R_avg_return / R_num_returned) < 20.0 || (R_avg_return / R_num_returned) > 35.0)
+            if ((R_avg_return / R_num_returned) < 9.0 || (R_avg_return / R_num_returned) > 15.0)
                 throw new Exception("R_AVG Return:: out of range " + (R_avg_return / R_num_returned));
 
             Assert.IsTrue(true);

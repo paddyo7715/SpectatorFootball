@@ -11,11 +11,9 @@ using static System.Windows.Forms.AxHost;
 
 namespace SpectatorFootball.GameNS
 {
-    public class Play_Kickoff_Onsides : iPlay, IKickoff
+    public class Play_Kickoff_Onsides : iPlay
     {
         public Play_Enum Play { get; set; } = Play_Enum.KICKOFF_ONSIDES;
-        public double kickoff_yl { get; set; } = 35;
-        public double touchback_yl { get; set; } = 0;
 
         private static ILog logger = LogManager.GetLogger("RollingFile");
 

@@ -170,7 +170,7 @@ namespace SpectatorFootball.unitTests.Integration_Tests.Punts
                 throw new Exception("L_num_TDs out of range " + L_num_TDs);
             if (L_num_fumble < 120 || L_num_fumble > 600)
                 throw new Exception("L_num_fumble out of range " + L_num_fumble); 
-            if (L_num_fumble_lost > L_num_fumble) if (L_num_fumble_lost > L_num_fumble)
+            if (L_num_fumble_lost > L_num_fumble) 
                 throw new Exception("L_num_fumble_lost out of range " + L_num_fumble_lost);
             if (L_avg <= 7.0 || L_avg  > 15.0)
                 throw new Exception("L_AVG Return:: out of range " + (L_avg_return / L_num_returned));

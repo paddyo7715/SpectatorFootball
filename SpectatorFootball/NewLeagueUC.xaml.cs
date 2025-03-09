@@ -604,7 +604,7 @@ namespace SpectatorFootball
             int ipenalties;
             int iinjuries;
             int Home_Field_Advantage;
-            int Kickoff;
+            string KickoffType = null;
             int OnsideKick;
             int One_Point_Conversion;
             int Two_Point_Conversion;
@@ -645,10 +645,7 @@ namespace SpectatorFootball
                 else
                     Home_Field_Advantage = 0;
 
-                if (newlKickoffYesYes.IsChecked == true)
-                    Kickoff = 1;
-                else
-                    Kickoff = 0;
+                KickoffType = ((ComboBoxItem)newl1KickoffType.SelectedItem).Tag.ToString();
 
                 if (newl1OnsideKick.IsChecked == true)
                     OnsideKick = 1;
@@ -700,7 +697,7 @@ namespace SpectatorFootball
                 ls.Injuries = iinjuries;
                 ls.Draft_Type_Code = DraftType;
                 ls.Home_Advantage = Home_Field_Advantage;
-                ls.Kickoff_Type = Kickoff;
+                ls.Kickoff_Type = KickoffType;
                 ls.Onside_Kick = OnsideKick;
                 ls.Extra_Point = One_Point_Conversion;
                 ls.Two_Point_Conversion = Two_Point_Conversion;

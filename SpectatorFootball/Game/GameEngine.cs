@@ -37,8 +37,8 @@ namespace SpectatorFootball.GameNS
         private long g_fid_posession;
         private int g_Down;
         private double g_Yards_to_go;
-        private Double g_Line_of_Scrimmage;
-        public double g_Vertical_Ball_Placement;
+        private double g_Line_of_Scrimmage;
+        public double g_Vertical_Ball_Placement = 50.0;
         private int g_Away_timeouts = 3;
         private int g_Home_timeouts = 3;
         private bool g_bGameOver = false;
@@ -47,6 +47,8 @@ namespace SpectatorFootball.GameNS
         private bool bKickoff;
         private bool bExtraPoint;
         private bool bKickoffAfterSafety;
+        private bool bKickoff_Touchback;
+        private bool bPunt_Touchback;
 
         //Just for testing
         private int Execut_Play_Num = 0;
@@ -68,22 +70,23 @@ namespace SpectatorFootball.GameNS
 
         //other settings
         private double YardsInField = 100.0;
-        private double KickoffYardline = 35.0;
-        private double KickoffAfterSafetyYardline = 20.0;
 
-        private double Kickoff_TouchbackYardline = 25;
-        private double Other_TouchbackYardline = 20;
+        private double KickoffYardline = 0.0;
+        private double KickoffAfterSafetyYardline = 20.0;
+        private double Kickoff_TouchbackYardline = 0.0;
+        private double Punt_TouchbackYardline = 20;
 
         private double g_TouchbackYardline = 0.0;
-        private double nonKickoff_StartingYardline = 20.0;
+
         private long non_forfeit_win_score = 2;
         private long forfeit_lose_score = 0;
 
+        private Kickoff_Type Kickoff_Type = Kickoff_Type.DYNAMIC;
 
         public GameEngine(Game g, Teams_by_Season at, List<Player_and_Ratings> Away_Players,
             Teams_by_Season ht, List<Player_and_Ratings> Home_Players, 
             List<Penalty> PenaltiesData, long two_point_con, long three_point_conv,
-            long Kickoff_Type, long Injuries, long Penalties)
+            string KO_Type, long Injuries, long Penalties)
         {
             this.at = at;
             this.Away_Players = Away_Players;
@@ -182,10 +185,11 @@ namespace SpectatorFootball.GameNS
                 Max_TD_Points = 9;
             }
 
-            if (Kickoff_Type == 1)
-                bAllowKickoffs = true;
-            else
-                bAllowKickoffs = false;
+            Kickoff_Type = getKickoffType(KO_Type);
+
+            Tuple<double, double> t = getKOYardlines(Kickoff_Type);
+            KickoffYardline = t.Item1;
+            Kickoff_TouchbackYardline = t.Item2;
 
             if (Injuries == 1)
                 bAllowInjuries = true;
@@ -221,28 +225,7 @@ namespace SpectatorFootball.GameNS
 
             bool isBallCarryingTeam = false;
 
-            //if the play should be a kickoff but kickoffs not used in this league then set the team
-            //on the 25 with a first and ten and switch possession
-            Tuple<bool, int, double, double, double, bool> t = setSpecialPlayYardline(nonKickoff_StartingYardline, bLefttoRight,
-                bAllowKickoffs, bKickoff, bKickoffAfterSafety);
-            bool bsetFields = t.Item1;
-            if (bsetFields)
-            {
-                g_Down = t.Item2;
-                g_Yards_to_go = t.Item3;
-                g_Line_of_Scrimmage = t.Item4;
-                g_Vertical_Ball_Placement = t.Item5;
-                if (t.Item6) g_fid_posession = Switch_Posession(g_fid_posession, at.Franchise_ID, ht.Franchise_ID);
-            }
-
-            //bpo test
-            g_fid_posession = at.Franchise_ID;
-            g_Line_of_Scrimmage = 25.0;
-            bKickoff = true;
-            bKickoffAfterSafety = false;
-            //********************
-
-            //Set the coach
+                //Set the coach
             Coach Offensive_Coach = null;
             Coach Defensive_Coach = null;
 
@@ -259,12 +242,26 @@ namespace SpectatorFootball.GameNS
                 bLefttoRight = false;
             }
 
+            if (bKickoff)
+                g_Line_of_Scrimmage = Game_Engine_Helper.getScrimmageLine(KickoffYardline, bLefttoRight);
+            else if (bKickoff_Touchback)
+                g_Line_of_Scrimmage = Game_Engine_Helper.getScrimmageLine(Kickoff_TouchbackYardline, bLefttoRight);
+            else if (bKickoffAfterSafety)
+                g_Line_of_Scrimmage = Game_Engine_Helper.getScrimmageLine(KickoffAfterSafetyYardline, bLefttoRight);
+
+            //bpo test
+            //            g_fid_posession = at.Franchise_ID;
+            //            g_Line_of_Scrimmage = 20.0;
+            //            bKickoff = true;
+            //            bKickoffAfterSafety = false;
+            //********************
+
             //Call the play, set the formations and populate the formations.
             double PossessionAdjuster = Game_Engine_Helper.HorizontalAdj(bLefttoRight);
             Play_Package Offensive_Package = null;
             Formation DEF_Formation = null;
 
-            Offensive_Package = Offensive_Coach.Call_Off_PlayFormation(g_Line_of_Scrimmage, bKickoff, bExtraPoint, bKickoffAfterSafety, PossessionAdjuster, bLefttoRight);
+            Offensive_Package = Offensive_Coach.Call_Off_PlayFormation(Kickoff_Type, g_Line_of_Scrimmage, bKickoff, bExtraPoint, bKickoffAfterSafety, PossessionAdjuster, bLefttoRight);
             DEF_Formation = Defensive_Coach.Call_Def_Formation(Offensive_Package, PossessionAdjuster);
             logger.Debug("ExecutePlay Offensive and Defensive plays called.");
 
@@ -352,7 +349,7 @@ namespace SpectatorFootball.GameNS
                 Play_Result p_result = null;
                 double yards_gained = 0.0;
 
-                g_TouchbackYardline = getTouchBackYL(Offensive_Package.Play, Kickoff_TouchbackYardline, Other_TouchbackYardline);
+                g_TouchbackYardline = getTouchBackYL(Offensive_Package.Play, Kickoff_TouchbackYardline, Punt_TouchbackYardline);
 
                 //Create the selected play object
                 iPlay Play = null;
@@ -932,6 +929,8 @@ namespace SpectatorFootball.GameNS
             switch (PE)
             {
                 case Play_Enum.KICKOFF_NORMAL:
+                case Play_Enum.KICKOFF_DYNAMIC:
+                case Play_Enum.KICKOFF_MODERN:
                 case Play_Enum.KICKOFF_AFTER_SAFETY:
                 case Play_Enum.KICKOFF_ONSIDES:
 
@@ -2060,5 +2059,51 @@ namespace SpectatorFootball.GameNS
             return r;
         }
 
+        private Tuple<double, double> getKOYardlines(Kickoff_Type Kickoff_Type)
+        {
+            double yl = 0.0;
+            double touchback_yl = 0.0;
+
+            switch (Kickoff_Type)
+            {
+                case Kickoff_Type.CLASSIC:
+                    yl = 35.0;
+                    touchback_yl = 25.0;
+                    break;
+                case Kickoff_Type.DYNAMIC:
+                    yl = 35.0;
+                    touchback_yl = 30.0;
+                    break;
+                case Kickoff_Type.MODERN:
+                    yl = 25.0;
+                    touchback_yl = 25.0;
+                    break;
+                default:
+                    throw new Exception("Unknow kickoff type when starting game engine");
+            }
+
+            return Tuple.Create(yl, touchback_yl);
+        }
+        private Kickoff_Type getKickoffType(string s)
+        {
+            Kickoff_Type r = Kickoff_Type.DYNAMIC;
+
+            switch (s)
+            {
+                case "D":
+                    r = Kickoff_Type.DYNAMIC;
+                    break;
+                case "C":
+                    r = Kickoff_Type.CLASSIC;
+                    break;
+                case "M":
+                    r = Kickoff_Type.MODERN;
+                    break;
+                default:
+                    throw new Exception("Invalid Kickoff Type Loaded from Database");
+            }
+
+            return r;
+        }
     }
 }

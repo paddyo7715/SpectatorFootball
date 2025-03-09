@@ -10,11 +10,11 @@ using SpectatorFootball.Models;
 
 namespace SpectatorFootball.GameNS
 {
-    public class Play_Kickoff_Free_Kick : iPlay, IKickoff
+    public class Play_Kickoff_Free_Kick : iPlay
     {
         public Play_Enum Play { get; set; } = Play_Enum.KICKOFF_NORMAL;
-        public double kickoff_yl { get; set; } = 35;
-        public double touchback_yl { get; set; } = 25;
+        public double kickoff_yl { get; set; } = 20;
+        public double touchback_yl { get; set; } = 20;
 
         private static ILog logger = LogManager.GetLogger("RollingFile");
 
@@ -519,7 +519,8 @@ namespace SpectatorFootball.GameNS
                     throw new Exception("Error in method getAttBlkyl, unknow group index on normal kickoff " + group);
             }
 
-            int yard_off_returner = CommonUtils.getRandomNum(min_yl, max_yl) + app_Constants.KICKOFF_GROUP_1_MIN;
+            int yard_off_returner = CommonUtils.getRandomNum(min_yl, max_yl);
+
             r = Math.Abs(ballx - playerx) - yard_off_returner;
 
             return r;

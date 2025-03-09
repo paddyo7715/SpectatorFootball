@@ -9,11 +9,9 @@ using System.Threading.Tasks;
 
 namespace SpectatorFootball.GameNS
 {
-    public class Play_Kickoff_Classic : iPlay, IKickoff
+    public class Play_Kickoff_Classic : iPlay
     {
         public Play_Enum Play { get; set; } = Play_Enum.KICKOFF_NORMAL;
-        public double kickoff_yl { get; set; } = 35;
-        public double touchback_yl { get; set; } = 25;
 
         private static ILog logger = LogManager.GetLogger("RollingFile");
 
