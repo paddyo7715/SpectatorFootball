@@ -106,8 +106,8 @@ namespace SpectatorFootball.GameNS
 //                         f = Formations_Enum.KICKOFF_FREE_KICK;
 //                         p = Play_Enum.KICKOFF_AFTER_SAFETY;
 
-            //f = Formations_Enum.PUNT;
-            //p = Play_Enum.PUNT;
+            f = Formations_Enum.FIELD_GOAL;
+            p = Play_Enum.FIELD_GOAL;
 
 
 
@@ -155,14 +155,12 @@ namespace SpectatorFootball.GameNS
                 r = Formations_Enum.KICKOFF_DYNAMIC_RECEIVE;
             else if (pp.Formation.f_enum == Formations_Enum.KICKOFF_MODERN_KICK)
                 r = Formations_Enum.KICKOFF_MODERN_RECEIVE;
-            else if (pp.Formation.f_enum == Formations_Enum.FIELD_GOAL)
-                r = Formations_Enum.KICKOFF_REGULAR_RECEIVE;
             else if (pp.Formation.f_enum == Formations_Enum.PUNT || pp.Formation.f_enum == Formations_Enum.PUNT_GL)
                 r = Formations_Enum.PUNT_RETURN;
-            else if (pp.Formation.f_enum == Formations_Enum.EXTRA_POINT)
-                r = Formations_Enum.KICKOFF_REGULAR_RECEIVE;
             else if (pp.Formation.f_enum == Formations_Enum.KICKOFF_FREE_KICK)
                 r = Formations_Enum.KICKOFF_FREE_RECEIVE;
+            else if (pp.Formation.f_enum == Formations_Enum.FIELD_GOAL || pp.Formation.f_enum == Formations_Enum.EXTRA_POINT)
+                r = Formations_Enum.FIELD_GOAL_DEFENSE;
             else
             {
                 //Just to get this to compile put this formation.

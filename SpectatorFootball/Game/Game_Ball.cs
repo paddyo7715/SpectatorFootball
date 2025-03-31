@@ -45,6 +45,20 @@ namespace SpectatorFootball.GameNS
             bStage.Actions.Add(bas);
             Stages.Add(bStage);
         }
+        public void FG_Blocked(double prev_yl, double prev_v, double end_yl, double end_v)
+        {
+            State = Ball_States.ROLLING; 
+            Action bas = new Action(Game_Object_Types.B, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, false, null, Ball_States.END_OVER_END, Movement.LINE, Ball_Speed.NORMAL, false, 0);
+
+            State = Ball_States.END_OVER_END;
+            Action bas2 = new Action(Game_Object_Types.B, Current_YardLine, Current_Vertical_Percent_Pos, end_yl, end_v, false, null, Ball_States.END_OVER_END, Movement.LINE, Ball_Speed.NORMAL, false, 0);
+
+            Play_Stage bStage = new Play_Stage();
+            bStage.Main_Object = true;
+            bStage.Actions.Add(bas);
+            bStage.Actions.Add(bas2);
+            Stages.Add(bStage);
+        }
         public void Punt_End_Over_End_Thru_Air(double prev_yl, double prev_v, bool bLefttoRight)
         {
             double vert_adjust_off_Foot = -1.5;

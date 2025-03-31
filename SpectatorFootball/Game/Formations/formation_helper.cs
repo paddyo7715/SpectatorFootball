@@ -56,6 +56,14 @@ namespace SpectatorFootball.GameNS
                 case Formations_Enum.PUNT_RETURN:
                     formplay = new Punt_Return_Formation();
                     break;
+                case Formations_Enum.FIELD_GOAL:
+                case Formations_Enum.EXTRA_POINT:
+                    formplay = new FG_Formation();
+                    break;
+                case Formations_Enum.FIELD_GOAL_DEFENSE:
+                case Formations_Enum.EXTRA_POINT_DEFENSE:
+                    formplay = new FG_Def_Formation();
+                    break;
             }
 
             f = formplay.getFormation(fe, PossessionAdjuster);

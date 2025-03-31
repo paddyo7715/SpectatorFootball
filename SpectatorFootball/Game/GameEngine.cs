@@ -250,10 +250,10 @@ namespace SpectatorFootball.GameNS
                 g_Line_of_Scrimmage = Game_Engine_Helper.getScrimmageLine(KickoffAfterSafetyYardline, bLefttoRight);
 
             //bpo test
-            //            g_fid_posession = at.Franchise_ID;
-            //            g_Line_of_Scrimmage = 20.0;
-            //            bKickoff = true;
-            //            bKickoffAfterSafety = false;
+                        g_fid_posession = at.Franchise_ID;
+                        g_Line_of_Scrimmage = 80.0;
+                        bKickoff = false;
+                        bKickoffAfterSafety = false;
             //********************
 
             //Call the play, set the formations and populate the formations.
@@ -365,7 +365,10 @@ namespace SpectatorFootball.GameNS
                     Play = new Play_Kickoff_Onsides(Offensive_Package.Formation, DEF_Formation, g_fid_posession, at.Franchise_ID, ht.Franchise_ID, Game_Ball, Offensive_Players, Defensive_Players, bLefttoRight, true, false);
                 else if (Offensive_Package.Play == Play_Enum.PUNT)
                     Play = new Play_Punt(Offensive_Package.Formation, DEF_Formation, g_fid_posession, at.Franchise_ID, ht.Franchise_ID, Game_Ball, Offensive_Players, Defensive_Players, bLefttoRight, false);
-
+                else if (Offensive_Package.Play == Play_Enum.FIELD_GOAL)
+                    Play = new Play_FG_XP(Offensive_Package.Formation, DEF_Formation, g_fid_posession, at.Franchise_ID, ht.Franchise_ID, Game_Ball, Offensive_Players, Defensive_Players, bLefttoRight, false, true);
+                else if (Offensive_Package.Play == Play_Enum.EXTRA_POINT)
+                    Play = new Play_FG_XP(Offensive_Package.Formation, DEF_Formation, g_fid_posession, at.Franchise_ID, ht.Franchise_ID, Game_Ball, Offensive_Players, Defensive_Players, bLefttoRight, false, false);
                 //Is there a pre-snap penalty?
                 bool bpreSnapPenalty = false;
                 if (bAllowPenalties && Play.isPreSnapPenalty_Eligible())
@@ -816,7 +819,6 @@ namespace SpectatorFootball.GameNS
                     ps.FG_Att += s.FG_Att;
                     ps.FG_Made += s.FG_Made;
                     if (ps.FG_Long < s.FG_Long) ps.FG_Long = s.FG_Long;
-                    ps.FG_Blocked += s.FG_Blocked;
                     ps.Kickoffs += s.Kickoffs;
                     ps.Kickoffs_Out_of_Bounds += s.Kickoffs_Out_of_Bounds;
                     ps.Kickoff_Touchbacks += s.Kickoff_Touchbacks;

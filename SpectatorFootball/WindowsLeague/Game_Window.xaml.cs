@@ -114,7 +114,7 @@ namespace SpectatorFootball.WindowsLeague
 
         private int VIEW_EDGE_PIXELS;
 
-        private const int PLAYER_IN_SPRITE_ROW = 61;
+        private const int PLAYER_IN_SPRITE_ROW = 65;
 
         private BitmapImage[] A_Player_Sprites = null;
         private BitmapImage[] H_Player_Sprites = null;

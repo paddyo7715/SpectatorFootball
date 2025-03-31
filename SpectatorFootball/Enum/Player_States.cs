@@ -35,6 +35,7 @@ namespace SpectatorFootball.Enum
         BLOCK_KICK,
         CROUCH_BLOCK_DOWN,
         CROUCH_BLOCK_UP,
-
+        FG_HOLDER_READY,
+        FG_HOLDER_PLACE_BALL
     }
 }

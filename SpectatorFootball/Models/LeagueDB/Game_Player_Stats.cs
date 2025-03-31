@@ -140,17 +140,31 @@ namespace SpectatorFootball.Models
 
         public long kicker_plays { get; set; }
 
+        public long XP_Plays { get; set; }
+
+        public long XP_Def_Plays { get; set; }
+
         public long XP_Att { get; set; }
 
         public long XP_Made { get; set; }
+        public long XP_Block { get; set; }
+
+        public long FG_Plays { get; set; }
 
         public long FG_Att { get; set; }
 
         public long FG_Made { get; set; }
 
         public long FG_Long { get; set; }
+        public long fg_def_plays { get; set; }
 
-        public long FG_Blocked { get; set; }
+        public long fg_def_block { get; set; }
+
+        public long fg_def_block_recovered { get; set; }
+
+        public long fg_def_block_recovered_yards { get; set; }
+
+        public long fg_def_block_recovered_TDs { get; set; }
 
         public long Kickoffs { get; set; }
 
@@ -189,18 +203,6 @@ namespace SpectatorFootball.Models
         public long ko_def_tackles_missed { get; set; }
 
         public long ko_rec_plays { get; set; }
-
-        public long fg_def_plays { get; set; }
-
-        public long fg_def_block { get; set; }
-
-        public long fg_def_block_recovered { get; set; }
-
-        public long fg_def_block_recovered_yards { get; set; }
-
-        public long fg_def_block_recovered_TDs { get; set; }
-
-        public long XP_Block { get; set; }
 
         public long punter_plays { get; set; }
 
@@ -267,8 +269,9 @@ namespace SpectatorFootball.Models
         public long punt_rec_muffed_lost { get; set; }
  
         public long punt_muffed_recovered { get; set; }
-        public long ko_onside_play { get; set; }
         public long scrimmage_onside_play { get; set; }
+        public long ko_onside_play { get; set; }
+
         public long ko_onside_kick_att { get; set; }
         public long ko_onside_kick_made { get; set; }
         public long ko_onside_recovered { get; set; }

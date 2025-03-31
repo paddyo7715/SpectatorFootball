@@ -244,6 +244,19 @@ namespace SpectatorFootball.GameNS
                     else 
                         r = Graphics_Player_States.STANDING;
                     break;
+                case Player_States.FG_HOLDER_READY:
+                    r = Graphics_Player_States.FG_HOLDER_READY;
+                    break;
+                case Player_States.FG_HOLDER_PLACE_BALL:
+                    if (graph_pState == Graphics_Player_States.FG_HOLDER_READY)
+                        r = Graphics_Player_States.FG_HOLDER_1;
+                    else if (graph_pState == Graphics_Player_States.FG_HOLDER_1)
+                        r = Graphics_Player_States.FG_HOLDER_2;
+                    else if (graph_pState == Graphics_Player_States.FG_HOLDER_2)
+                        r = Graphics_Player_States.FG_HOLDER_3;
+                    else if (graph_pState == Graphics_Player_States.FG_HOLDER_3)
+                        r = Graphics_Player_States.FG_HOLDER_1;
+                    break;
             }
             return r;
         }

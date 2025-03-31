@@ -842,7 +842,40 @@ namespace SpectatorFootball.GameNS
                     r = true;
             }
 
+            return r;
+        }
+        //Used for punts and FG/XP, not pass or run plays
+        public static Game_Player getAttacker_BreakThru(List<Game_Player> Blockers, List<Game_Player> Attackers)
+        {
+            Game_Player r = null;
+            int max_attack = 0;
+            int attacker_wins = 0;
+            Game_Player Best_Attacker = null;
 
+            for (int i = 0; i < Blockers.Count; i++)
+            {
+                int attacker_score = 0;
+                int blocker_score = 0;
+                int attacker_ability = (int)Attackers[i].p_and_r.pr.First().Pass_Attack_Rating * 10;
+                int blocker_ability = (int)Blockers[i].p_and_r.pr.First().Pass_Block_Rating * 11;
+
+                attacker_score = CommonUtils.getRandomNum(1, attacker_ability);
+                blocker_score = CommonUtils.getRandomNum(1, blocker_ability);
+
+                if (attacker_score > blocker_score)
+                {
+                    attacker_wins++;
+                    if ((attacker_score - blocker_score) > max_attack)
+                    {
+                        max_attack = attacker_score - blocker_score;
+                        Best_Attacker = Attackers[i];
+                    }
+                }
+            }
+
+            //if the attackers win 6 of 8 battles the attacker with the highest score breaks thru
+            if (attacker_wins >= Attackers.Count - 1)
+                r = Best_Attacker;
 
             return r;
         }

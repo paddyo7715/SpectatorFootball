@@ -210,6 +210,8 @@
     <Compile Include="Free_Agency\FreeAgency_Helper.cs" />
     <Compile Include="Game\Action.cs" />
     <Compile Include="Game\Coach.cs" />
+    <Compile Include="Game\Formations\FG_Def_Formation.cs" />
+    <Compile Include="Game\Formations\FG_Formation.cs" />
     <Compile Include="Game\Formations\formation_helper.cs" />
     <Compile Include="Game\Formations\Kickoff_Free_Kick_Formation.cs" />
     <Compile Include="Game\Formations\Interfaces\iFormation_Play.cs" />
@@ -241,6 +243,7 @@
     <Compile Include="Game\Plays\Interfaces\iPlay.cs" />
     <Compile Include="Game\Plays\Playstub_Punt_Block.cs" />
     <Compile Include="Game\Plays\Playstub_Uncrouch.cs" />
+    <Compile Include="Game\Plays\Play_FG_XP.cs" />
     <Compile Include="Game\Plays\Play_Kickoff_Classic.cs" />
     <Compile Include="Game\Plays\Play_Kickoff_Dynamic.cs" />
     <Compile Include="Game\Plays\Play_Kickoff_Free_Kick.cs" />
@@ -676,6 +679,10 @@
     <None Include="Images\Source\Players\L_FallOnBall1.xcf" />
     <None Include="Images\Source\Players\L_FallOnBall2.xcf" />
     <None Include="Images\Source\Players\L_FallOnBall3.xcf" />
+    <None Include="Images\Source\Players\L_FG_Holder_1.xcf" />
+    <None Include="Images\Source\Players\L_FG_Holder_2.xcf" />
+    <None Include="Images\Source\Players\L_FG_Holder_3.xcf" />
+    <None Include="Images\Source\Players\L_FG_Holder_Ready.xcf" />
     <None Include="Images\Source\Players\L_FG_KICK.xcf" />
     <None Include="Images\Source\Players\L_Kick_About_to_Catch.xcf" />
     <None Include="Images\Source\Players\L_Kick_Block_Att.xcf" />
@@ -730,6 +737,10 @@
     <None Include="Images\Source\Players\L_Upright_Block2.xcf" />
     <None Include="Images\Source\Players\L_Upright_Block3.xcf" />
     <None Include="Images\Source\Players\new_L_Run2_No_Ball.xcf" />
+    <None Include="Images\Source\Players\R_FG_Holder_1.xcf" />
+    <None Include="Images\Source\Players\R_FG_Holder_2.xcf" />
+    <None Include="Images\Source\Players\R_FG_Holder_3.xcf" />
+    <None Include="Images\Source\Players\R_FG_Holder_Ready.xcf" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

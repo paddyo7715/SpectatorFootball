@@ -55,6 +55,7 @@ namespace SpectatorFootball.GameNS
         public bool bCoffinCornerMade = false;
         public bool bOnsideAtt = false;
         public bool bOnsideMade = false;
+        public bool FGXP_Blocked = false;
 
 
         //Penalties

@@ -36,6 +36,16 @@ namespace SpectatorFootball.GameNS
             State = Player_States.STANDING;
         }
 
+        public void Ready_Hold_FG()
+        {
+            Action pas = new Action(Game_Object_Types.P, Starting_YardLine, Starting_Vertical_Percent_Pos, 0.0, 0.0, false, Player_States.FG_HOLDER_READY, null, Movement.NONE, null, false, 0);
+            Play_Stage pStage = new Play_Stage();
+            pStage.Main_Object = false;
+            pStage.Actions.Add(pas);
+            Stages.Add(pStage);
+            State = Player_States.FG_HOLDER_READY;
+        }
+
         public void Same_As_Last_Action()
         {
             //This method will take the last stage and create a new stage with the
@@ -88,7 +98,7 @@ namespace SpectatorFootball.GameNS
 
         public void KickBall(Player_States moving_ps, double prev_yl_1, double prev_v_1, double RunUp_YardLine_1, double RunUp_Vertical_Percent_Pos_1)
         {
-            Action pas1 = new Action(Game_Object_Types.P, prev_yl_1, prev_v_1, RunUp_YardLine_1, RunUp_Vertical_Percent_Pos_1, false, moving_ps, null, Movement.LINE, null, false, 0);
+            Action pas1 = new Action(Game_Object_Types.P, prev_yl_1, prev_v_1, Current_YardLine, Current_Vertical_Percent_Pos, false, moving_ps, null, Movement.LINE, Ball_Speed.CARRIED_SLOW, false, 0);
             Action pas2 = new Action(Game_Object_Types.P, RunUp_YardLine_1, RunUp_Vertical_Percent_Pos_1, Current_YardLine, Current_Vertical_Percent_Pos, false, Player_States.FG_KICK, null,Movement.LINE, null, false, 0);
             Play_Stage pStage = new Play_Stage();
             pStage.Main_Object = true;
@@ -334,6 +344,16 @@ namespace SpectatorFootball.GameNS
             pStage.Actions.Add(pas);
             Stages.Add(pStage);
             State = Player_States.KNEELING;
+        }
+
+        public void Holder_Place_Ball(double prev_yl, double prev_v)
+        {
+            Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, true, Player_States.FG_HOLDER_PLACE_BALL, null, Movement.FAKE_MOVEMENT, null, true, 3);
+            Play_Stage pStage = new Play_Stage();
+            pStage.Main_Object = false;
+            pStage.Actions.Add(pas);
+            Stages.Add(pStage);
+            State = Player_States.FG_HOLDER_PLACE_BALL;
         }
 
         public void Fall_On_Ball(double prev_yl, double prev_v)
