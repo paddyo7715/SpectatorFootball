@@ -19,6 +19,7 @@ namespace SpectatorFootball.Enum
         CARRIED_SLOW,
         BOUNCING,
         ROLLING,
+        ROLLING_VERTICAL,
         POPUP
     }
 }

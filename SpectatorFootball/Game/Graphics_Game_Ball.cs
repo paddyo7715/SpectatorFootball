@@ -15,8 +15,6 @@ namespace SpectatorFootball.GameNS
         private double ball_size = 12;
         private const double BASE_BALL_SIZE = 12;
 
-
-
         public Ball_States bState;
         public Graphics_Ball_Stats graph_bState;
         public double YardLine;
@@ -110,6 +108,14 @@ namespace SpectatorFootball.GameNS
                     else
                         r = Graphics_Ball_Stats.ROLLING_2;
                     break;
+                case Ball_States.ROLLING_VERTICAL:
+                    Height = BASE_BALL_SIZE * 0.90;
+                    width = BASE_BALL_SIZE * 1.2;
+                    if (graph_bState != Graphics_Ball_Stats.ROLLING_VERT_1)
+                        r = Graphics_Ball_Stats.ROLLING_VERT_1;
+                    else
+                        r = Graphics_Ball_Stats.ROLLING_VERT_2;
+                    break;
             }
 
 
@@ -118,6 +124,8 @@ namespace SpectatorFootball.GameNS
 
         public void ChangeStage(int current_Stage)
         {
+            ball_size = BASE_BALL_SIZE;
+
             if (this.current_Stage != current_Stage)
             {
                 this.current_action = 0;

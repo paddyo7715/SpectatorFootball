@@ -5,6 +5,7 @@ using SpectatorFootball.Common;
 using SpectatorFootball.Enum;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -878,6 +879,56 @@ namespace SpectatorFootball.GameNS
                 r = Best_Attacker;
 
             return r;
+        }
+
+        public static double getWall_yl(bool bLefttoRight)
+        {
+            return bLefttoRight ? app_Constants.RIGHT_WALL_YL : app_Constants.LEFT_WALL_YL;
+        }
+
+        public static Tuple<bool, FG_Path, double, double> FGResult(double start_yl, double start_v, double end_yl, double end_v, bool bLefttoRight)
+        {
+            bool bGood = false;
+            FG_Path fG_Path = FG_Path.SHORT_OF_GOALPOSTS;
+
+            double new_yl = end_yl;
+            double new_v = end_v;
+
+            PointXY GaolPost_top = null;
+            PointXY GaolPost_bottom = null;
+
+            double vert_adjust = 3.25;
+            double gp_v_top = app_Constants.GOALPOST_VERT_TOP - vert_adjust;
+            double gp_v_bottom = app_Constants.GOALPOST_VERT_BOTTOM + vert_adjust;
+
+            double wall_yl = Game_Engine_Helper.getWall_yl(bLefttoRight);
+            double goalpost_yl = bLefttoRight ? app_Constants.RIGHT_GOALPOST_YL : app_Constants.LEFT_GAOLPOST_YL;
+            double short_yl = bLefttoRight ? 113.0 : -13.0;
+
+            if ((bLefttoRight && end_yl < short_yl) || (!bLefttoRight && end_yl > short_yl))
+                fG_Path = FG_Path.SHORT_OF_GOALPOSTS;
+            else
+            {
+                //first determine if the fg is good and if it hits a goalpost
+                //if the ball hits either goalpst then update new_yl and new_v with
+                //the goalpost position
+                PointXY Ball_start = new PointXY() { x = start_yl, y = start_v };
+                PointXY Ball_end = new PointXY() { x = end_yl, y = end_v };
+
+                GaolPost_top = new PointXY() { x = goalpost_yl, y = gp_v_top };
+                GaolPost_bottom = new PointXY() { x = goalpost_yl, y = gp_v_bottom };
+
+                bGood = Line_Class.doIntersect(Ball_start, Ball_end, GaolPost_top, GaolPost_bottom);
+
+                if ((bLefttoRight && end_yl >= wall_yl) || (!bLefttoRight && end_yl <= wall_yl))
+                    fG_Path = FG_Path.INTO_CROWD;
+                else if ((bLefttoRight && end_yl >= goalpost_yl) || (!bLefttoRight && end_yl <= goalpost_yl))
+                    fG_Path = FG_Path.BEYOND_GOALPOSTS;
+            }
+
+
+
+            return Tuple.Create(bGood, fG_Path, new_yl, new_v);
         }
     }
 }

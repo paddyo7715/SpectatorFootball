@@ -251,7 +251,8 @@ namespace SpectatorFootball.GameNS
 
             //bpo test
                         g_fid_posession = at.Franchise_ID;
-                        g_Line_of_Scrimmage = 80.0;
+                        bLefttoRight = true;
+                        g_Line_of_Scrimmage = 65.0;
                         bKickoff = false;
                         bKickoffAfterSafety = false;
             //********************

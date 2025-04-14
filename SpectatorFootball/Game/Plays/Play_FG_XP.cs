@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -51,12 +52,12 @@ namespace SpectatorFootball.GameNS
 
             if (!bFG) this.Play = Play_Enum.EXTRA_POINT;
 
-            r.BallPossessing_Team_Id = Possessing_Team_Id == at? ht : at;
-            r.NonbBallPossessing_Team_Id = Possessing_Team_Id == at? at : ht;
+            r.BallPossessing_Team_Id = Possessing_Team_Id == at ? ht : at;
+            r.NonbBallPossessing_Team_Id = Possessing_Team_Id == at ? at : ht;
             r.at = at;
             r.ht = ht;
             r = setPlayerActions(FG_Formation, FG_Def_Formation, FG_Players, FG_Def_Players, r);
-    }
+        }
 
         public Play_Result Execute(bool bPreSnapPenalty)
         {
@@ -64,6 +65,11 @@ namespace SpectatorFootball.GameNS
             double starting_yl = gBall.Current_YardLine;
             double starting_yardline = gBall.Current_YardLine;
             r.Play_Start_Yardline = starting_yardline;
+
+            //set field goal attempt length
+            r.Field_Goal_Attempt_Length = Game_Engine_Helper.yards_from_end_of_endzone(FG_Players[(int)FG_Formation.FGHolderIndex].Current_YardLine, bLefttoRight);
+
+            double max_kick_len = 0;
 
             Set_Ball_and_Players_Before_Snap(gBall, FG_Players, FG_Def_Players, FG_Formation, FG_Def_Formation, bLefttoRight);
 
@@ -74,26 +80,33 @@ namespace SpectatorFootball.GameNS
             else
             {
                 Game_Player Kick_Blocker = Game_Engine_Helper.getAttacker_BreakThru(FG_Players, FG_Def_Players);
-                Kick_Blocker = FG_Def_Players[0];
                 r.Defender_Close_to_Kicker = Kick_Blocker;
 
                 Snap_Ball_Lines_Clash(gBall, FG_Players, FG_Def_Players, FG_Formation, FG_Def_Formation, bLefttoRight);
                 Run_Up_And_Kick_Ball(r,gBall, FG_Players, FG_Def_Players, FG_Formation, FG_Def_Formation, Kick_Blocker, bLefttoRight);
 
                 if (Kick_Blocker != null)
-                {
                     r.FGXP_Blocked = isKickBlocked();
-                    r.FGXP_Blocked = true;
-                }
+
                 //if there is a block then there can't be a roughing/runnig into the kicker penalty
                 if (r.FGXP_Blocked)
                 {
+                    r.FGXP_Blocked = true;
+                    r.bFGMissed = true;
                     r.Defender_Close_to_Kicker = null;
                     Kick_blocked(gBall, FG_Players, FG_Def_Players, Kick_Blocker, bLefttoRight);
                 }
                 else
                 {
+                    double kick_len = r.Kicker.getMaxFGLen(r.Field_Goal_Attempt_Length);
+                    double end_v = r.Kicker.getFGVert(r.Field_Goal_Attempt_Length);
 
+                    //bpo test
+                    kick_len = 40.0;
+                    end_v = 57.5;
+                    //*************
+
+                    Ball_Kicked(gBall, FG_Players, FG_Def_Players, kick_len, end_v, bLefttoRight);
                 }
 
 
@@ -119,11 +132,11 @@ namespace SpectatorFootball.GameNS
         }
 
         public static Play_Result setPlayerActions(Formation FG_Formation, Formation FG_Def_Formation,
-            List<Game_Player> Punt_Players, List<Game_Player> Return_Players, Play_Result pResult)
+            List<Game_Player> FG_Players, List<Game_Player> FG_Def_Players, Play_Result pResult)
         {
             Play_Result r = pResult;
 
-            r.Kicker = Punt_Players[(int)FG_Formation.KickerIndex];
+            r.Kicker = FG_Players[(int)FG_Formation.KickerIndex];
             //Get the kicker - kicker and returner must be slot 5 in the formation
 
             return r;
@@ -377,36 +390,112 @@ namespace SpectatorFootball.GameNS
         private void Kick_blocked(Game_Ball gBall, List<Game_Player> FG_Players, List<Game_Player> FG_Def_Players, Game_Player blocker, bool bLefttoRight)
         {
             double yards_blocked = 12.0;
-            bool top = Game_Engine_Helper.isBallvertTop(blocker.Current_Vertical_Percent_Pos);
+            bool top = CommonUtils.getRandomTrueFalse();
 
             double prev_yl = gBall.Current_YardLine;
             double prev_v = gBall.Current_Vertical_Percent_Pos;
 
-            double ending_vert = top ? 140.0 :-40.0;
+            double ending_vert = top ? 101.0 : -1.0;
 
             gBall.Current_YardLine = blocker.Current_YardLine;
-
 
             double end_yl = gBall.Current_YardLine + yards_blocked * Game_Engine_Helper.HorizontalAdj(bLefttoRight);
             double end_v = ending_vert;
 
-
-            gBall.FG_Blocked(prev_yl, prev_v, end_yl, end_v);
+            gBall.FG_Blocked(prev_yl, prev_v, end_yl, end_v, bLefttoRight);
 
             int io_Players = 0;
             foreach (Game_Player p in FG_Players)
             {
-                p.Same_As_Last_Action_not_main();
+                prev_yl = p.Current_YardLine;
+                prev_v = p.Current_Vertical_Percent_Pos;
+
+                Tuple<double, double> t = getBlock_RunTo(end_v);
+                p.Current_YardLine += t.Item1;
+                p.Current_Vertical_Percent_Pos += t.Item2;
+                Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
+                p.Delay_Then_Run_and_Stand(moving_ps, prev_yl, prev_v, 3);
                 io_Players++;
             }
 
             io_Players = 0;
             foreach (Game_Player p in FG_Def_Players)
             {
-                    p.Same_As_Last_Action_not_main();
-                }
+                prev_yl = p.Current_YardLine;
+                prev_v = p.Current_Vertical_Percent_Pos;
+                Tuple<double, double> t = getBlock_RunTo(end_v);
+                p.Current_YardLine += t.Item1;
+                p.Current_Vertical_Percent_Pos += t.Item2;
+                Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
+                p.Delay_Then_Run_and_Stand(moving_ps, prev_yl, prev_v, 3);
                 io_Players++;
             }
+
         }
+
+        private void Ball_Kicked(Game_Ball gBall, List<Game_Player> FG_Players, List<Game_Player> FG_Def_Players, double kick_len, double ball_end_v, bool bLefttoRight)
+        {
+
+            double prev_yl = gBall.Current_YardLine;
+            double prev_v = gBall.Current_Vertical_Percent_Pos;
+
+            gBall.Current_YardLine += kick_len * Game_Engine_Helper.HorizontalAdj(bLefttoRight); ;
+            gBall.Current_Vertical_Percent_Pos = ball_end_v;
+
+
+            Tuple<bool, FG_Path, double, double> t = Game_Engine_Helper.FGResult(prev_yl, prev_v, gBall.Current_YardLine, gBall.Current_Vertical_Percent_Pos, bLefttoRight);
+
+            if (t.Item1)
+                logger.Debug("Field goal is Good");
+            else
+                logger.Debug("Field goal is not Good");
+
+            logger.Debug("Kick len " + kick_len);
+            logger.Debug("ball end yardline " + gBall.Current_YardLine);
+            logger.Debug("ball end vert " + gBall.Current_Vertical_Percent_Pos);
+
+
+            switch (t.Item2)
+            {
+                case FG_Path.INTO_CROWD:
+                    gBall.FG_Into_Stands(prev_yl, prev_v, bLefttoRight);
+                    break;
+                case FG_Path.SHORT_OF_GOALPOSTS:
+                    gBall.FG_Short(prev_yl, prev_v, bLefttoRight);
+                    break;
+            }
+
+
+
+            int io_Players = 0;
+            foreach (Game_Player p in FG_Players)
+            {
+                p.Stand();
+                io_Players++;
+            }
+
+            io_Players = 0;
+            foreach (Game_Player p in FG_Def_Players)
+            {
+                p.Stand();
+                io_Players++;
+            }
+
+        }
+
+        private Tuple<double, double> getBlock_RunTo(double end_v)
+        {
+            double y = CommonUtils.getRandomNum(1, 4);
+            double v = CommonUtils.getRandomNum(1, 10);
+
+            if (end_v < 0)
+            {
+                y *= -1;
+                v *= -1;
+            }
+
+            return Tuple.Create(y,v);
+        }
+    }
 }
 

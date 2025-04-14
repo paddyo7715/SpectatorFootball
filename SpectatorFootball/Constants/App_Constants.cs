@@ -11,6 +11,12 @@ namespace SpectatorFootball
         //Field
         public const double ENDZONE_YARDS = 10.0;
         public const double FIELD_YARDS = 100.0;
+        public const double LEFT_WALL_YL = -17.0;
+        public const double RIGHT_WALL_YL = 117.0;
+        public const double LEFT_GAOLPOST_YL = -10.0;
+        public const double RIGHT_GOALPOST_YL = 110.0;
+        public const double GOALPOST_VERT_TOP = 46.0;
+        public const double GOALPOST_VERT_BOTTOM = 54.0;
 
         // Max Settings
         public const int MAX_DIVISIONS = 20;

@@ -11,6 +11,7 @@ namespace SpectatorFootball.GameNS
         //When this player or ball is the main object, them ending ttheir action ends the current stage.
         public bool Main_Object;
         public bool Player_Catches_Ball = false;  //Player will catch ball so set his zindex 
+        public bool bBall_Over_Goalposts = false; //need to reset gaolpost zindex
         public List<Action> Actions = new List<Action>();
     }
 }

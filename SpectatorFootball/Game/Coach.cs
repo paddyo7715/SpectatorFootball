@@ -100,8 +100,8 @@ namespace SpectatorFootball.GameNS
             }
 
             //bpo test
-            //            f = Formations_Enum.KICKOFF_DYNAMIC_KICK;
-            //            p = Play_Enum.KICKOFF_DYNAMIC;
+//                        f = Formations_Enum.KICKOFF_DYNAMIC_KICK;
+ //                      p = Play_Enum.KICKOFF_DYNAMIC;
 
 //                         f = Formations_Enum.KICKOFF_FREE_KICK;
 //                         p = Play_Enum.KICKOFF_AFTER_SAFETY;

@@ -19,7 +19,9 @@ namespace SpectatorFootball.Enum
         BOUNCING_1,
         BOUNCING_2,
         ROLLING_1,
-        ROLLING_2
+        ROLLING_2,
+        ROLLING_VERT_1,
+        ROLLING_VERT_2
 
     }
 }

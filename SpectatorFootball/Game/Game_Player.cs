@@ -400,7 +400,7 @@ namespace SpectatorFootball.GameNS
 
             Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, true, moving_ps, null, Movement.LINE, null, false, 0);
 
-            //Get the end point for the layer running out of bounds
+            //Get the end point for the player running out of bounds
             new_end_point = PointPlotter.getExtendedEndpoint(prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, (app_Constants.OUT_OF_BOUNDS_LEN + app_Constants.TOP_OUTOFBOUNDS_ADJUSTMENT) * dlefttoRight);
 
             Action pas2 = null;
@@ -604,6 +604,90 @@ namespace SpectatorFootball.GameNS
                 Current_Vertical_Percent_Pos = bally + offsetY;
             }
 
+        }
+
+        public double getMaxFGLen(double FG_Att_yrds)
+        {
+            double r = 0;
+            double fg_len_cutoff = 40.0;
+            int normal_after_fg_yards = 10;
+            const double MAX_FG_ATT_YARDS = 65.0;
+            const int UPPER_LIMIT = 250;
+
+            long leg_stn = p_and_r.pr.First().Kicker_Leg_Power_Rating;
+
+            if (FG_Att_yrds <= fg_len_cutoff)
+                r = FG_Att_yrds + normal_after_fg_yards;
+            else
+            {
+                FG_Att_yrds = 50.0;
+                double y;
+                for (y = FG_Att_yrds; y <= MAX_FG_ATT_YARDS; y++)
+                {
+                    int rnd = CommonUtils.getRandomNum(1, UPPER_LIMIT);
+                    if (rnd > leg_stn) break;
+                }
+
+                int i;
+                for (i = 1; i < normal_after_fg_yards; i++)
+                {
+                    int rnd = CommonUtils.getRandomNum(1, UPPER_LIMIT);
+                    if (rnd <= leg_stn) break;
+                }
+                r = FG_Att_yrds + i;
+            }
+
+            return r;
+        }
+
+        public double getFGVert(double FG_Att_yrds)
+        {
+            double r = 0;
+            double fg_cutoff = 40.0;
+            const int UPPER_LIMIT = 250;
+            const int MID_POINT = 50;
+            const int FURTHEST_OUT = 5;
+            int x_var = 0;
+
+            long Leg_Accuracy = p_and_r.pr.First().Kicker_Leg_Accuracy_Rating;
+            long leg_strength = p_and_r.pr.First().Kicker_Leg_Power_Rating;
+
+            if (FG_Att_yrds > fg_cutoff)
+                Leg_Accuracy -= (long) (FG_Att_yrds - fg_cutoff + .5);
+
+            for (int i = MID_POINT; i >= FURTHEST_OUT; i--)
+            {
+                int rnd = CommonUtils.getRandomNum(1, UPPER_LIMIT);
+
+                if (i == MID_POINT)
+                    x_var = i;
+                else
+                {
+                    bool bt = CommonUtils.getRandomTrueFalse();
+                    if (bt)
+                        x_var = i;
+                    else
+                        x_var = 100 - i;
+                }
+
+                if (rnd <= leg_strength)
+                {
+                    r = x_var;
+                    break;
+                }
+            }    
+
+            if (r == 0 )
+            {
+                bool b1 = CommonUtils.getRandomTrueFalse();
+
+                if (b1)
+                    r = FURTHEST_OUT;
+                else
+                    r = 100 - FURTHEST_OUT;
+            }
+
+            return r;
         }
 
     }

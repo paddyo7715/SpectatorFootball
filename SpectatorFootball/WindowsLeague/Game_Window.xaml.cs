@@ -127,6 +127,7 @@ namespace SpectatorFootball.WindowsLeague
         private int sleepfor = 100;
 
         private const int GOALPOST_INDEX = 200;
+        private const int GOALPOST_INDEX_BALL_OVER = 20;
         private const int PLAYER_CATCHING_BALL_ZINDEX = 100;
         private const int BALL_ZINDEX = 90;
         private const int PERSON_ON_FIELD_ZINDEX = 50;
@@ -374,6 +375,8 @@ namespace SpectatorFootball.WindowsLeague
 
         private void Play_Game(object sender, EventArgs e)
         {
+            bool bBall_Over_Goalposts = false;
+
             GameTimer.Stop();
 
             Game_intro_pnl.Visibility = Visibility.Collapsed;
@@ -407,7 +410,7 @@ namespace SpectatorFootball.WindowsLeague
 
                     //set the left edge of the view
                     a_edge = setViewEdge(gGame_Ball.YardLine, Play.bLefttoRight, gGame_Ball.Vertical_Percent_Pos);
-                    ShowGraphicObjects(a_edge, gGame_Ball, Offensive_Players, Defensive_Players, Play.bLefttoRight);
+                    ShowGraphicObjects(a_edge, gGame_Ball, Offensive_Players, Defensive_Players, false, Play.bLefttoRight);
 
 
                     //Set all graphics objects including setting the view edges
@@ -421,7 +424,13 @@ namespace SpectatorFootball.WindowsLeague
                     {
                         bool bStageFinished = false;
                         gGame_Ball.ChangeStage(stg);
-                        do
+
+                    if (gGame_Ball.Stages[stg].bBall_Over_Goalposts)
+                        bBall_Over_Goalposts = true;
+                    else
+                        bBall_Over_Goalposts = false;
+
+                    do
                         {
                             //set the ball position and state
                             gGame_Ball.Update();
@@ -450,7 +459,7 @@ namespace SpectatorFootball.WindowsLeague
                             //                        logger.Debug("L to R: " + Play.bLefttoRight + " Yardline: " + gGame_Ball.YardLine + " Vertical: " + gGame_Ball.Vertical_Percent_Pos + " left: " + a_edge[0] + " top " + a_edge[1] + " visiblity: " + Gamepnl.Visibility.ToString());
                             //
 
-                            ShowGraphicObjects(a_edge, gGame_Ball, Offensive_Players, Defensive_Players, Play.bLefttoRight);
+                            ShowGraphicObjects(a_edge, gGame_Ball, Offensive_Players, Defensive_Players, bBall_Over_Goalposts, Play.bLefttoRight);
                             if (gGame_Ball.bStageFinished)
                                 bStageFinished = true;
                         } while (!bStageFinished);
@@ -665,7 +674,7 @@ namespace SpectatorFootball.WindowsLeague
 
         }
 
-        private void setGoalposts(double[] a_edge, int ind)
+        private void setGoalposts(double[] a_edge, int ind, bool bBall_Over_Goalposts)
         {
             double yardline;
 
@@ -693,7 +702,10 @@ namespace SpectatorFootball.WindowsLeague
             Canvas.SetTop(Goalpost_Rects[ind], v_Pixel);
             Canvas.SetLeft(Goalpost_Rects[ind], H_Pixel);
 
-            Canvas.SetZIndex(Goalpost_Rects[ind], GOALPOST_INDEX);
+            if (bBall_Over_Goalposts)
+                Canvas.SetZIndex(Goalpost_Rects[ind], GOALPOST_INDEX_BALL_OVER);
+            else
+                Canvas.SetZIndex(Goalpost_Rects[ind], GOALPOST_INDEX);
 
 
         }
@@ -752,7 +764,7 @@ namespace SpectatorFootball.WindowsLeague
             return r;
         }
 
-        private void ShowGraphicObjects(double[] a_edge, Graphics_Game_Ball Game_Ball, List<Graphics_Game_Player> Off_Players, List<Graphics_Game_Player> Def_Players, bool bLefttoRight)
+        private void ShowGraphicObjects(double[] a_edge, Graphics_Game_Ball Game_Ball, List<Graphics_Game_Player> Off_Players, List<Graphics_Game_Player> Def_Players, bool bBall_Over_Goalposts, bool bLefttoRight)
         {
             Canvas.SetLeft(background, a_edge[0]);
             Canvas.SetTop(background, a_edge[1]);
@@ -799,10 +811,6 @@ namespace SpectatorFootball.WindowsLeague
                     if (f.Sound != null)
                         Play_Sound((Game_Sounds)f.Sound);
 
-//                    if (xxx == 5)
-//                    logger.Debug("Returner x: " + f.YardLine + "y: " +f.Vertical_Percent_Pos);
-
-
                 setPlayer(Game_Ball, f, a_edge, def_Player_Sprites, bLefttoRight, false, xxx, def_Players_rect);
 
                     xxx++;
@@ -811,7 +819,7 @@ namespace SpectatorFootball.WindowsLeague
             setBAll(Game_Ball, a_edge, bLefttoRight);
 
             for (int igp = 0; igp < 2; igp++)
-                setGoalposts(a_edge, igp);
+                setGoalposts(a_edge, igp, bBall_Over_Goalposts);
 
             setMidFieldArt(a_edge);
 
