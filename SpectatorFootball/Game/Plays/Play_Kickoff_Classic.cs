@@ -467,9 +467,13 @@ namespace SpectatorFootball.GameNS
                         pr.bTouchback = true;
 
                     if (r.bKick_Out_of_Endzone)
-                        gBall.End_Over_End_Thru_Air_Not_Caught(bLefttoRight);
+                    {
+                        double prev_yardline = gBall.Starting_YardLine;
+                        double prev_vert = gBall.Starting_Vertical_Percent_Pos;
+                        gBall.End_Over_End_Thru_Air(prev_yardline, prev_vert, bLefttoRight);
+                    }
                     else
-                        gBall.End_Over_End_Thru_Air();
+                        gBall.End_Over_End_Thru_Air_Caught();
 
                     Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, false, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
                     if (pr.bKick_Out_of_Endzone)

@@ -192,7 +192,7 @@ namespace SpectatorFootball.GameNS
         {
             int r = 1;
 
-            if (current_point <= (totPoints / 2))
+            if (current_point + 1 <= (totPoints / 2))
                 ball_size += 1;
             else
                 ball_size -= 1;

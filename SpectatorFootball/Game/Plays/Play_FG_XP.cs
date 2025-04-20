@@ -102,8 +102,8 @@ namespace SpectatorFootball.GameNS
                     double end_v = r.Kicker.getFGVert(r.Field_Goal_Attempt_Length);
 
                     //bpo test
-                    kick_len = 40.0;
-                    end_v = 57.5;
+                    kick_len = 56.99;
+                    end_v = 50.0;
                     //*************
 
                     Ball_Kicked(gBall, FG_Players, FG_Def_Players, kick_len, end_v, bLefttoRight);
@@ -463,14 +463,18 @@ namespace SpectatorFootball.GameNS
                 case FG_Path.SHORT_OF_GOALPOSTS:
                     gBall.FG_Short(prev_yl, prev_v, bLefttoRight);
                     break;
+                case FG_Path.BEYOND_GOALPOSTS:
+                    gBall.FG_Long_Enough(prev_yl, prev_v, bLefttoRight);
+                    break;
             }
-
-
 
             int io_Players = 0;
             foreach (Game_Player p in FG_Players)
             {
-                p.Stand();
+                if (FG_Formation.FGHolderIndex == io_Players)
+                    p.Ready_Hold_FG();
+                else
+                    p.Stand();
                 io_Players++;
             }
 
@@ -480,7 +484,6 @@ namespace SpectatorFootball.GameNS
                 p.Stand();
                 io_Players++;
             }
-
         }
 
         private Tuple<double, double> getBlock_RunTo(double end_v)

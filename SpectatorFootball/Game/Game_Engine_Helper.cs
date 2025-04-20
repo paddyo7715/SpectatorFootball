@@ -886,6 +886,19 @@ namespace SpectatorFootball.GameNS
             return bLefttoRight ? app_Constants.RIGHT_WALL_YL : app_Constants.LEFT_WALL_YL;
         }
 
+        public static double getBeyondWall(double wall_yl, double end_yl, bool bLefttoRight)
+        {
+            double r = 0.0;
+
+            if (bLefttoRight && end_yl > wall_yl)
+                r = end_yl - wall_yl;
+            else if (!bLefttoRight && end_yl < wall_yl)
+                r = wall_yl - end_yl;
+
+            return r;
+        }
+
+
         public static Tuple<bool, FG_Path, double, double> FGResult(double start_yl, double start_v, double end_yl, double end_v, bool bLefttoRight)
         {
             bool bGood = false;
