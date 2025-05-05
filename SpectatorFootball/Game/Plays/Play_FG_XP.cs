@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -98,18 +99,17 @@ namespace SpectatorFootball.GameNS
                 }
                 else
                 {
-                    double kick_len = r.Kicker.getMaxFGLen(r.Field_Goal_Attempt_Length);
+                    long leg_stn = r.Kicker.p_and_r.pr.First().Kicker_Leg_Power_Rating;
+                    double kick_len = r.Kicker.getMaxFGLen(leg_stn);
                     double end_v = r.Kicker.getFGVert(r.Field_Goal_Attempt_Length);
 
                     //bpo test
-                    kick_len = 56.99;
-                    end_v = 50.0;
+//                    kick_len = 60.00;
+//                    end_v = 41.2;
                     //*************
 
-                    Ball_Kicked(gBall, FG_Players, FG_Def_Players, kick_len, end_v, bLefttoRight);
+                    Ball_Kicked(r, gBall, FG_Players, FG_Def_Players, kick_len, end_v, bLefttoRight);
                 }
-
-
 
                 r.Play_Player_Stats = SetPlayerStats(r, FG_Players, FG_Def_Players, Kick_Blocker);
             }
@@ -266,6 +266,9 @@ namespace SpectatorFootball.GameNS
             gBall.Current_Vertical_Percent_Pos = holder_v;
 
             gBall.Spiral(prev_yl, prev_v);
+
+            //Set ball back to vert 50 where the golder places it.
+            gBall.Current_Vertical_Percent_Pos = prev_v;
 
             int io_Players = 0;
             foreach (Game_Player p in FG_Players)
@@ -433,7 +436,7 @@ namespace SpectatorFootball.GameNS
 
         }
 
-        private void Ball_Kicked(Game_Ball gBall, List<Game_Player> FG_Players, List<Game_Player> FG_Def_Players, double kick_len, double ball_end_v, bool bLefttoRight)
+        private void Ball_Kicked(Play_Result pr, Game_Ball gBall, List<Game_Player> FG_Players, List<Game_Player> FG_Def_Players, double kick_len, double ball_end_v, bool bLefttoRight)
         {
 
             double prev_yl = gBall.Current_YardLine;
@@ -443,28 +446,66 @@ namespace SpectatorFootball.GameNS
             gBall.Current_Vertical_Percent_Pos = ball_end_v;
 
 
-            Tuple<bool, FG_Path, double, double> t = Game_Engine_Helper.FGResult(prev_yl, prev_v, gBall.Current_YardLine, gBall.Current_Vertical_Percent_Pos, bLefttoRight);
+            Tuple<bool,bool, FG_Path, double, double, double, double> t = Game_Engine_Helper.FGResult(prev_yl, prev_v, gBall.Current_YardLine, gBall.Current_Vertical_Percent_Pos, bLefttoRight);
 
-            if (t.Item1)
-                logger.Debug("Field goal is Good");
+            if (bFG)
+            {
+                pr.bFGMade = t.Item1;
+                pr.bFGMissed = !t.Item1;
+            }
             else
-                logger.Debug("Field goal is not Good");
+            {
+                pr.bXPMade = t.Item1;
+                pr.bXPMissed = !t.Item1;
+            }
+
+
+            //bpo test
+            /*            for (int ccc = 1; ccc <= 1000; ccc++)
+                        {
+                            double vert = (double)ccc / 10.0;
+                            Tuple<bool, bool, FG_Path, double, double, double, double> yyy = Game_Engine_Helper.FGResult(prev_yl, prev_v, gBall.Current_YardLine, vert, bLefttoRight);
+                            logger.Debug(vert + " " + yyy.Item1 + " " + yyy.Item2);
+                        } */
+
+
+
+            /*            if (t.Item1)
+                            logger.Debug("Field goal is Good");
+                        else
+                            logger.Debug("Field goal is not Good");
+            */
+
+            if (t.Item2)
+            {
+                gBall.Current_YardLine = t.Item4;
+                gBall.Current_Vertical_Percent_Pos = t.Item5;
+            }
 
             logger.Debug("Kick len " + kick_len);
             logger.Debug("ball end yardline " + gBall.Current_YardLine);
             logger.Debug("ball end vert " + gBall.Current_Vertical_Percent_Pos);
 
 
-            switch (t.Item2)
+            switch (t.Item3)
             {
                 case FG_Path.INTO_CROWD:
                     gBall.FG_Into_Stands(prev_yl, prev_v, bLefttoRight);
                     break;
                 case FG_Path.SHORT_OF_GOALPOSTS:
+                    pr.bFGXPShort = true;
                     gBall.FG_Short(prev_yl, prev_v, bLefttoRight);
                     break;
                 case FG_Path.BEYOND_GOALPOSTS:
                     gBall.FG_Long_Enough(prev_yl, prev_v, bLefttoRight);
+                    break;
+                case FG_Path.HIT_GOALPOST_INTO_CROWD:
+                    pr.bFGXPHitGP = true;
+                    gBall.FG_Hits_GP_Into_Stands(prev_yl, prev_v, t.Item6, t.Item7, bLefttoRight);
+                    break;
+                case FG_Path.HIT_GAOLPOST:
+                    pr.bFGXPHitGP = true;
+                    gBall.FG_Hits_GP(prev_yl, prev_v, t.Item6, t.Item7, bLefttoRight);
                     break;
             }
 
@@ -473,6 +514,8 @@ namespace SpectatorFootball.GameNS
             {
                 if (FG_Formation.FGHolderIndex == io_Players)
                     p.Ready_Hold_FG();
+                else if (p == r.Kicker)
+                    p.Kicker_Put_Leg_Down_and_Stand();
                 else
                     p.Stand();
                 io_Players++;

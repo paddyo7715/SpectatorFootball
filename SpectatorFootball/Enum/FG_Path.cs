@@ -10,8 +10,8 @@ namespace SpectatorFootball.Enum
     {
         INTO_CROWD,
         SHORT_OF_GOALPOSTS,
-        HIT_GOALPOST_GOOD,
-        HIT_GAOLPOST_NOT_GOOD,
+        HIT_GOALPOST_INTO_CROWD,
+        HIT_GAOLPOST,
         BEYOND_GOALPOSTS
 
 

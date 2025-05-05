@@ -610,7 +610,7 @@ namespace SpectatorFootball.WindowsLeague
             int H_Pixel = Yardline_to_Pixel(gBall.YardLine, true);
             double v_Pixel = VertPercent_to_Pixel(gBall.Vertical_Percent_Pos, gBall.Height);
 
-            H_Pixel -= (int)gBall.width / 2;
+            H_Pixel -= (int)gBall.Height / 2;
 
             //Adjust the position on the canvas for the view edge
             H_Pixel += (int)a_edge[0];

@@ -17,6 +17,10 @@ namespace SpectatorFootball
         public const double RIGHT_GOALPOST_YL = 110.0;
         public const double GOALPOST_VERT_TOP = 46.0;
         public const double GOALPOST_VERT_BOTTOM = 54.0;
+        public const double HIT_GOALPOST_VERT_TOP_TOP = 45.9;
+        public const double HIT_GOALPOST_VERT_TOP_BOT = 46.0;
+        public const double HIT_GOALPOST_VERT_BOT_TOP = 54.0;
+        public const double HIT_GOALPOST_VERT_BOT_BOT = 54.1;
 
         // Max Settings
         public const int MAX_DIVISIONS = 20;

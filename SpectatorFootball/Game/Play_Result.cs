@@ -45,6 +45,8 @@ namespace SpectatorFootball.GameNS
         public bool bFGMissed = false;
         public bool bXPMade = false;
         public bool bXPMissed = false;
+        public bool bFGXPShort = false;
+        public bool bFGXPHitGP = false;
         public bool bOnePntAfterTDMade = false;
         public bool bOnePntAfterTDMissed = false;
         public bool bTwoPntAfterTDMade = false;

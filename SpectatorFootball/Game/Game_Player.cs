@@ -492,6 +492,20 @@ namespace SpectatorFootball.GameNS
             State = Player_States.PUNTER_AFTER_KICK;
         }
 
+        public void Kicker_Put_Leg_Down_and_Stand()
+        {
+
+            Action pas1 = new Action(Game_Object_Types.P, Current_YardLine, Current_Vertical_Percent_Pos, Current_YardLine, Current_Vertical_Percent_Pos, true, Player_States.PUNTER_AFTER_KICK, null, Movement.FAKE_MOVEMENT, null, true, 3);
+            Action pas2 = new Action(Game_Object_Types.P, Starting_YardLine, Starting_Vertical_Percent_Pos, 0.0, 0.0, false, Player_States.STANDING, null, Movement.NONE, null, false, 0);
+
+            Play_Stage pStage = new Play_Stage();
+            pStage.Main_Object = false;
+            pStage.Actions.Add(pas1);
+            pStage.Actions.Add(pas2);
+            Stages.Add(pStage);
+            State = Player_States.STANDING;
+        }
+
         public void Punter_Put_Leg_Down_and_Run(Player_States moving_ps, double prev_yl, double prev_v)
         {
 
@@ -606,36 +620,39 @@ namespace SpectatorFootball.GameNS
 
         }
 
-        public double getMaxFGLen(double FG_Att_yrds)
+        public double getMaxFGLen(long leg_stn)
         {
             double r = 0;
-            double fg_len_cutoff = 40.0;
-            int normal_after_fg_yards = 10;
             const double MAX_FG_ATT_YARDS = 65.0;
-            const int UPPER_LIMIT = 250;
+            const int MIN_YARDS = 20;
+            int i = 0;
 
-            long leg_stn = p_and_r.pr.First().Kicker_Leg_Power_Rating;
-
-            if (FG_Att_yrds <= fg_len_cutoff)
-                r = FG_Att_yrds + normal_after_fg_yards;
-            else
+            for (i = MIN_YARDS; i <= MAX_FG_ATT_YARDS; i++)
             {
-                FG_Att_yrds = 50.0;
-                double y;
-                for (y = FG_Att_yrds; y <= MAX_FG_ATT_YARDS; y++)
-                {
-                    int rnd = CommonUtils.getRandomNum(1, UPPER_LIMIT);
-                    if (rnd > leg_stn) break;
-                }
+                int upper_limit = 0;
+                if (i < 30)
+                    upper_limit = 30;
+                else if (i < 35)
+                    upper_limit = 35;
+                else if (i < 40)
+                    upper_limit = 60;
+                else if (i < 45)
+                    upper_limit = 70;
+                else if (i < 50)
+                    upper_limit = 80;
+                else if (i < 55)
+                    upper_limit = 250;
+                else if (i < 60)
+                    upper_limit = 500;
+                else
+                    upper_limit = 1000;
 
-                int i;
-                for (i = 1; i < normal_after_fg_yards; i++)
-                {
-                    int rnd = CommonUtils.getRandomNum(1, UPPER_LIMIT);
-                    if (rnd <= leg_stn) break;
-                }
-                r = FG_Att_yrds + i;
+                int rnd = CommonUtils.getRandomNum(1, upper_limit);
+                if (leg_stn < rnd) break;
+
             }
+
+            r = (double)i;
 
             return r;
         }

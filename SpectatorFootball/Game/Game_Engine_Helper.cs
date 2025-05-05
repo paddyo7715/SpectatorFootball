@@ -899,49 +899,112 @@ namespace SpectatorFootball.GameNS
         }
 
 
-        public static Tuple<bool, FG_Path, double, double> FGResult(double start_yl, double start_v, double end_yl, double end_v, bool bLefttoRight)
+        public static Tuple<bool, bool, FG_Path, double, double, double, double> FGResult(double start_yl, double start_v, double end_yl, double end_v, bool bLefttoRight)
         {
             bool bGood = false;
+            bool bHit_Top = false;
+            bool bHit_Bottom = false;
+            double hit_goalpost_redirect = 5.0;
+            double short_after_gp_yards = 3.0;
+
             FG_Path fG_Path = FG_Path.SHORT_OF_GOALPOSTS;
 
-            double new_yl = end_yl;
-            double new_v = end_v;
+            double new_yl = 0.0;
+            double new_v = 0.0;
+            double ricoschis_yl = 0.0;
+            double ricoschis_v = 0.0;
 
             PointXY GaolPost_top = null;
             PointXY GaolPost_bottom = null;
 
+            PointXY hit_GaolPost_top_top = null;
+            PointXY hit_GaolPost_top_bot = null;
+
+            PointXY hit_GaolPost_bot_top = null;
+            PointXY hit_GaolPost_bot_bot = null;
+
             double vert_adjust = 3.25;
+
             double gp_v_top = app_Constants.GOALPOST_VERT_TOP - vert_adjust;
             double gp_v_bottom = app_Constants.GOALPOST_VERT_BOTTOM + vert_adjust;
 
+            double gp_v_top_top = app_Constants.HIT_GOALPOST_VERT_TOP_TOP - vert_adjust;
+            double gp_v_top_bot = app_Constants.HIT_GOALPOST_VERT_TOP_BOT - vert_adjust;
+
+            double gp_v_bot_top = app_Constants.HIT_GOALPOST_VERT_BOT_TOP + vert_adjust;
+            double gp_v_bot_bot = app_Constants.HIT_GOALPOST_VERT_BOT_BOT + vert_adjust;
+
             double wall_yl = Game_Engine_Helper.getWall_yl(bLefttoRight);
             double goalpost_yl = bLefttoRight ? app_Constants.RIGHT_GOALPOST_YL : app_Constants.LEFT_GAOLPOST_YL;
-            double short_yl = bLefttoRight ? 113.0 : -13.0;
+            double short_yl = bLefttoRight ? wall_yl + short_after_gp_yards : wall_yl - short_after_gp_yards;
 
             if ((bLefttoRight && end_yl < short_yl) || (!bLefttoRight && end_yl > short_yl))
                 fG_Path = FG_Path.SHORT_OF_GOALPOSTS;
             else
             {
-                //first determine if the fg is good and if it hits a goalpost
-                //if the ball hits either goalpst then update new_yl and new_v with
-                //the goalpost position
                 PointXY Ball_start = new PointXY() { x = start_yl, y = start_v };
                 PointXY Ball_end = new PointXY() { x = end_yl, y = end_v };
 
-                GaolPost_top = new PointXY() { x = goalpost_yl, y = gp_v_top };
-                GaolPost_bottom = new PointXY() { x = goalpost_yl, y = gp_v_bottom };
+                hit_GaolPost_top_top = new PointXY() { x = goalpost_yl, y = gp_v_top_top };
+                hit_GaolPost_top_bot = new PointXY() { x = goalpost_yl, y = gp_v_top_bot };
 
-                bGood = Line_Class.doIntersect(Ball_start, Ball_end, GaolPost_top, GaolPost_bottom);
+                bHit_Top = Line_Class.doIntersect(Ball_start, Ball_end, hit_GaolPost_top_top, hit_GaolPost_top_bot);
 
-                if ((bLefttoRight && end_yl >= wall_yl) || (!bLefttoRight && end_yl <= wall_yl))
-                    fG_Path = FG_Path.INTO_CROWD;
-                else if ((bLefttoRight && end_yl >= goalpost_yl) || (!bLefttoRight && end_yl <= goalpost_yl))
-                    fG_Path = FG_Path.BEYOND_GOALPOSTS;
+                hit_GaolPost_bot_top = new PointXY() { x = goalpost_yl, y = gp_v_bot_top };
+                hit_GaolPost_bot_bot = new PointXY() { x = goalpost_yl, y = gp_v_bot_bot };
+
+                bHit_Bottom = Line_Class.doIntersect(Ball_start, Ball_end, hit_GaolPost_bot_top, hit_GaolPost_bot_bot);
+
+                if (bHit_Top || bHit_Bottom)
+                {
+                    int rnd = CommonUtils.getRandomNum(1, 10);
+                    bool btop = Game_Engine_Helper.isBallvertTop(end_v);
+
+                    new_yl = goalpost_yl;
+                    double temp_v = 0.0;
+
+                    if (btop)
+                        temp_v = hit_GaolPost_top_top.y;
+                    else
+                        temp_v = hit_GaolPost_bot_top.y;
+
+                    new_v = temp_v;
+
+                    if (rnd == 1)
+                    {
+                        bGood = true;
+                        if (btop)
+                            end_v = end_v + hit_goalpost_redirect;
+                        else
+                            end_v = end_v - hit_goalpost_redirect; 
+                    }
+                    else
+                    {
+                        if (btop)
+                            end_v = end_v - hit_goalpost_redirect;
+                        else
+                            end_v = end_v + hit_goalpost_redirect; ;
+                    }
+
+                    if ((bLefttoRight && end_yl >= wall_yl) || (!bLefttoRight && end_yl <= wall_yl))
+                        fG_Path = FG_Path.HIT_GOALPOST_INTO_CROWD;
+                    else if ((bLefttoRight && end_yl >= goalpost_yl) || (!bLefttoRight && end_yl <= goalpost_yl))
+                        fG_Path = FG_Path.HIT_GAOLPOST;
+                }
+                else
+                {
+                    GaolPost_top = new PointXY() { x = goalpost_yl, y = gp_v_top };
+                    GaolPost_bottom = new PointXY() { x = goalpost_yl, y = gp_v_bottom };
+                    bGood = Line_Class.doIntersect(Ball_start, Ball_end, GaolPost_top, GaolPost_bottom);
+
+                    if ((bLefttoRight && end_yl >= wall_yl) || (!bLefttoRight && end_yl <= wall_yl))
+                        fG_Path = FG_Path.INTO_CROWD;
+                    else if ((bLefttoRight && end_yl >= goalpost_yl) || (!bLefttoRight && end_yl <= goalpost_yl))
+                        fG_Path = FG_Path.BEYOND_GOALPOSTS;
+                }
             }
 
-
-
-            return Tuple.Create(bGood, fG_Path, new_yl, new_v);
+            return Tuple.Create(bGood, bHit_Top || bHit_Bottom, fG_Path, new_yl, new_v, end_yl, end_v);
         }
     }
 }

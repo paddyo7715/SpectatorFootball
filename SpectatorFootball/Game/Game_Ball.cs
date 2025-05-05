@@ -58,6 +58,37 @@ namespace SpectatorFootball.GameNS
             bStage.Actions.Add(bas2);
             Stages.Add(bStage);
         }
+        public void FG_Hits_GP_Into_Stands(double prev_yl, double prev_v, double end_yl, double end_v, bool blefttoRight)
+        {
+            State = Ball_States.END_OVER_END;
+            Action bas = new Action(Game_Object_Types.B, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, false, null, Ball_States.END_OVER_END, Movement.LINE, Ball_Speed.SLOW, false, 0);
+            Action bas2 = new Action(Game_Object_Types.B, Current_YardLine, Current_Vertical_Percent_Pos, end_yl, end_v, false, null, Ball_States.END_OVER_END, Movement.LINE, Ball_Speed.SLOW, false, 0);
+            Action bas3 = new Action(Game_Object_Types.B, end_yl, end_v, end_yl, end_v, true, null, Ball_States.CARRIED, Movement.FAKE_MOVEMENT, Ball_Speed.CARRIED, false, 4);
+
+            bas.PointXY.AddRange(bas2.PointXY);
+
+            Play_Stage bStage = new Play_Stage();
+            bStage.Main_Object = true;
+            bStage.bBall_Over_Goalposts = true;
+            bStage.Actions.Add(bas);
+            bStage.Actions.Add(bas3);
+            Stages.Add(bStage);
+        }
+        public void FG_Hits_GP(double prev_yl, double prev_v, double end_yl, double end_v, bool blefttoRight)
+        {
+            State = Ball_States.END_OVER_END;
+            Action bas = new Action(Game_Object_Types.B, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, false, null, Ball_States.END_OVER_END, Movement.LINE, Ball_Speed.SLOW, false, 0);
+            Action bas2 = new Action(Game_Object_Types.B, Current_YardLine, Current_Vertical_Percent_Pos, end_yl, end_v, false, null, Ball_States.END_OVER_END, Movement.LINE, Ball_Speed.SLOW, false, 0);
+
+            Play_Stage bStage = new Play_Stage();
+            List<Action> BR_list = getBounceRollActions(Current_YardLine, Current_Vertical_Percent_Pos, end_yl, end_v, blefttoRight);
+            bStage.Actions.AddRange(BR_list);
+            bStage.Main_Object = true;
+            bStage.bBall_Over_Goalposts = true;
+            bStage.Actions.Add(bas);
+            bStage.Actions.Add(bas2);
+            Stages.Add(bStage);
+        }
 
         public List<Action> getBounceRollActions(double starting_yl, double ending_y, double landing_yl, double landing_v, bool blefttoRight)
         {
@@ -283,43 +314,17 @@ namespace SpectatorFootball.GameNS
 
         public void Punt_Out_of_Endzone(bool blefttoRight)
         {
-            bool bDontBounce = false;
-            const double BOUNCE_LENGTH = 4.7;
-            const double ROLL_LENGTH = 1.3;
-
             double prev_yardline = Starting_YardLine;
             double prev_vert = Starting_Vertical_Percent_Pos;
 
-            double dlefttoRight = blefttoRight ? 1 : -1;
-
-            PointXY new_end_point = null;
-
             State = Ball_States.PUNT_THRU_THE_AIR;
             Action bas = new Action(Game_Object_Types.B, prev_yardline, prev_vert, Current_YardLine, Current_Vertical_Percent_Pos, false, null, State, Movement.LINE, Ball_Speed.SLOW, false, 0);
-
-            Action bas2 = null;
-            Action bas3 = null;
-
-            if (Game_Engine_Helper.isBounceBall(Current_YardLine))
-            {
-
-                //Get the end point for bouncing ball
-                new_end_point = PointPlotter.getExtendedEndpoint(prev_yardline, prev_vert, Current_YardLine, Current_Vertical_Percent_Pos, BOUNCE_LENGTH * dlefttoRight);
-
-                State = Ball_States.BOUNCING;
-                bas2 = new Action(Game_Object_Types.B, Current_YardLine, Current_Vertical_Percent_Pos, new_end_point.x, new_end_point.y, false, null, Ball_States.BOUNCING, Movement.LINE, Ball_Speed.SLOW, false, 0);
-
-                //Get the end point for rolling ball
-                PointXY rolling_end_point = PointPlotter.getExtendedEndpoint(prev_yardline, prev_vert, new_end_point.x, new_end_point.y, ROLL_LENGTH * dlefttoRight);
-
-                State = Ball_States.ROLLING;
-                bas3 = new Action(Game_Object_Types.B, new_end_point.x, new_end_point.y, rolling_end_point.x, rolling_end_point.y, false, null, Ball_States.ROLLING, Movement.LINE, Ball_Speed.SLOW, false, 0);
-            }
             Play_Stage bStage = new Play_Stage();
+            List<Action> BR_list = getBounceRollActions(prev_yardline, prev_vert, Current_YardLine, Current_Vertical_Percent_Pos, blefttoRight);
+
             bStage.Main_Object = true;
             bStage.Actions.Add(bas);
-            if (bas2 != null) bStage.Actions.Add(bas2);
-            if (bas3 != null) bStage.Actions.Add(bas3);
+            bStage.Actions.AddRange(BR_list);
             Stages.Add(bStage);
         }
         public void FG_Long_Enough(double prev_yardline, double prev_vert, bool blefttoRight)
@@ -349,72 +354,32 @@ namespace SpectatorFootball.GameNS
         }
         public void Punt_End_Over_End_Thru_Air_Out_of_Endzone(bool blefttoRight)
         {
-            const double BOUNCE_LENGTH = 2.0;
-            const double ROLL_LENGTH = 1.0;
-
             double prev_yardline = Starting_YardLine;
             double prev_vert = Starting_Vertical_Percent_Pos;
 
-            double dlefttoRight = blefttoRight ? 1 : -1;
-
-            PointXY new_end_point = null;
-
             Action bas = new Action(Game_Object_Types.B, prev_yardline, prev_vert, Current_YardLine, Current_Vertical_Percent_Pos, false, null, Ball_States.PUNT_THRU_THE_AIR, Movement.LINE, Ball_Speed.SLOW, false, 0);
-
-            //Get the end point for bouncing ball
-            new_end_point = PointPlotter.getExtendedEndpoint(prev_yardline, prev_vert, Current_YardLine, Current_Vertical_Percent_Pos, BOUNCE_LENGTH * dlefttoRight);
-
-            State = Ball_States.BOUNCING;
-            Action bas2 = new Action(Game_Object_Types.B, Current_YardLine, Current_Vertical_Percent_Pos, new_end_point.x, new_end_point.y, false, null, Ball_States.BOUNCING, Movement.LINE, Ball_Speed.SLOW, false, 0);
-
-            //Get the end point for rolling ball
-            PointXY rolling_end_point = PointPlotter.getExtendedEndpoint(prev_yardline, prev_vert, new_end_point.x, new_end_point.y, ROLL_LENGTH * dlefttoRight);
-
-            State = Ball_States.ROLLING;
-            Action bas3 = new Action(Game_Object_Types.B, new_end_point.x, new_end_point.y, rolling_end_point.x, rolling_end_point.y, false, null, Ball_States.ROLLING, Movement.LINE, Ball_Speed.SLOW, false, 0);
-
             Play_Stage bStage = new Play_Stage();
             bStage.Main_Object = true;
             bStage.Actions.Add(bas);
-            bStage.Actions.Add(bas2);
-            bStage.Actions.Add(bas3);
+            List<Action> BR_list = getBounceRollActions(prev_yardline, prev_vert, Current_YardLine, Current_Vertical_Percent_Pos, blefttoRight);
+            bStage.Actions.AddRange(BR_list);
             Stages.Add(bStage);
         }
         public void Punt_End_Over_End_Thru_Air_Not_Caught(bool blefttoRight)
         {
-            double bounce_len = 6.0;
-            double roll_len = 3.3;
             double prev_yardline = Starting_YardLine;
-
             double prev_vert = Starting_Vertical_Percent_Pos;
 
-            double dlefttoRight = blefttoRight ? 1 : -1;
-
-            PointXY new_end_point = null;
-
             Action bas = new Action(Game_Object_Types.B, prev_yardline, prev_vert, Current_YardLine, Current_Vertical_Percent_Pos, false, null, Ball_States.PUNT_THRU_THE_AIR, Movement.LINE, Ball_Speed.SLOW, false, 0);
-
-            //Get the end point for bouncing ball
-            new_end_point = PointPlotter.getExtendedEndpoint(prev_yardline, prev_vert, Current_YardLine, Current_Vertical_Percent_Pos, bounce_len * dlefttoRight);
-
-            State = Ball_States.BOUNCING;
-            Action bas2 = new Action(Game_Object_Types.B, Current_YardLine, Current_Vertical_Percent_Pos, new_end_point.x, new_end_point.y, false, null, Ball_States.BOUNCING, Movement.LINE, Ball_Speed.SLOW, false, 0);
-
-            //Get the end point for rolling ball
-            PointXY rolling_end_point = PointPlotter.getExtendedEndpoint(prev_yardline, prev_vert, new_end_point.x, new_end_point.y, roll_len * dlefttoRight);
-
-            State = Ball_States.ROLLING;
-            Action bas3 = new Action(Game_Object_Types.B, new_end_point.x, new_end_point.y, rolling_end_point.x, rolling_end_point.y, false, null, Ball_States.ROLLING, Movement.LINE, Ball_Speed.SLOW, false, 0);
 
             Play_Stage bStage = new Play_Stage();
             bStage.Main_Object = true;
             bStage.Actions.Add(bas);
-            bStage.Actions.Add(bas2);
-            bStage.Actions.Add(bas3);
+            List<Action> BR_list = getBounceRollActions(prev_yardline, prev_vert, Current_YardLine, Current_Vertical_Percent_Pos, blefttoRight);
+            bStage.Actions.AddRange(BR_list);
             Stages.Add(bStage);
 
-            Current_YardLine = new_end_point.x;
-            Current_Vertical_Percent_Pos = rolling_end_point.y;
+
         }
         public void Carried(double prev_yl, double prev_v)
         {
