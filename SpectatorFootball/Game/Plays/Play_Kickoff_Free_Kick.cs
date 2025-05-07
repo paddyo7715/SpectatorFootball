@@ -451,7 +451,7 @@ namespace SpectatorFootball.GameNS
                         pr.bTouchback = true;
 
                     if (r.bKick_Out_of_Endzone)
-                        gBall.Punt_End_Over_End_Thru_Air_Out_of_Endzone(bLefttoRight);
+                        gBall.Punt_End_Over_End_Thru_Air_Out_of_Endzone(prevBallX, prevBallY, bLefttoRight);
                     else
                         gBall.Punt_End_Over_End_Thru_Air(prevBallX, prevBallY, bLefttoRight);
 

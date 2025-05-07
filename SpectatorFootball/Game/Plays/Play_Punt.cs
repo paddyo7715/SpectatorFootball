@@ -14,6 +14,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Documents;
+using static System.Windows.Forms.AxHost;
 
 namespace SpectatorFootball.GameNS
 {
@@ -109,6 +110,11 @@ namespace SpectatorFootball.GameNS
                     var t = getMaxPuntLengthandVert(r.Punter);
                     double MaxPuntLen = t.Item1;
                     double MaxPuntVert = t.Item2;
+
+                    //bpo test
+//                    MaxPuntLen = 39.0;
+//                    MaxPuntVert = 99.0;
+                    //
 
                     var t2 = Game_Engine_Helper.isCCEligible_and_Punt_long_Enough(MaxPuntLen, starting_yardline, bLefttoRight);
 
@@ -221,12 +227,16 @@ namespace SpectatorFootball.GameNS
                     if (pr.bPunt_Out_of_Endzone || pr.bPunt_KneelDown || pr.bPunt_Not_Fielded)
                         pr.bTouchback = true;
 
+                    Tuple<double, double> tFootOff = AdjustForOfftheFoot(prevBallX, prevBallY, bLefttoRight);
+                    prevBallX = tFootOff.Item1;
+                    prevBallY = tFootOff.Item2;
+
                     if (pr.bPunt_Out_of_Bounds)
-                        gBall.Punt_Out_of_Bounds(bLefttoRight);
+                        gBall.Punt_Out_of_Bounds(prevBallX, prevBallY, bLefttoRight);
                     else if (pr.bPunt_Out_of_Endzone)
-                        gBall.Punt_End_Over_End_Thru_Air_Out_of_Endzone(bLefttoRight);
+                        gBall.Punt_End_Over_End_Thru_Air_Out_of_Endzone(prevBallX, prevBallY, bLefttoRight);
                     else if (pr.bPunt_Not_Fielded)
-                        gBall.Punt_End_Over_End_Thru_Air_Not_Caught(bLefttoRight);
+                        gBall.Punt_End_Over_End_Thru_Air_Not_Caught(prevBallX, prevBallY, bLefttoRight);
                     else
                         gBall.Punt_End_Over_End_Thru_Air(prevBallX, prevBallY, bLefttoRight);
 
@@ -1233,6 +1243,19 @@ namespace SpectatorFootball.GameNS
             }
 
              return r;
+        }
+
+        private Tuple<double, double> AdjustForOfftheFoot(double prev_yl, double prev_v, bool blefttoRight)
+        {
+            double vert_adjust_off_Foot = -1.5;
+            double yl_adjust_off_foot = 0.0;
+            if (blefttoRight)
+                yl_adjust_off_foot = -1.0;
+            else
+                yl_adjust_off_foot = 1.5;
+
+            return Tuple.Create(prev_yl + yl_adjust_off_foot, prev_v + vert_adjust_off_Foot);
+
         }
     }
 }

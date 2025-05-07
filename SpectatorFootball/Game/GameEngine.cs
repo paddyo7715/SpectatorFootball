@@ -251,10 +251,10 @@ namespace SpectatorFootball.GameNS
 
             //bpo test
                         g_fid_posession = at.Franchise_ID;
-                        bLefttoRight = false;
-                        g_Line_of_Scrimmage = 35.0;
-                        bKickoff = false;
-                        bKickoffAfterSafety = false;
+                        bLefttoRight = true;
+                        g_Line_of_Scrimmage = 60.0;
+                        bKickoff = true;
+ //                       bKickoffAfterSafety = false;
             //********************
 
             //Call the play, set the formations and populate the formations.
