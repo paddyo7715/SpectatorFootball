@@ -607,13 +607,13 @@ namespace SpectatorFootball.Training_CampNS
                     }
                     else if (iYardLine >= 40 && iYardLine < 50)
                     {
-                        accuracy_factor = 1.5;
+                        accuracy_factor = 1.2;
                         strength_factor = 1.5;
                     }
                     else if (iYardLine >= 50 && iYardLine < 60)
                     {
                         accuracy_factor = 2.0;
-                        strength_factor = 2.5;
+                        strength_factor = 3.0;
                     }
                     else if (iYardLine >= 60)
                     {

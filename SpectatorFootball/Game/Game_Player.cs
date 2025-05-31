@@ -631,21 +631,21 @@ namespace SpectatorFootball.GameNS
             {
                 int upper_limit = 0;
                 if (i < 30)
-                    upper_limit = 30;
+                    upper_limit = 20;
                 else if (i < 35)
-                    upper_limit = 35;
+                    upper_limit = 25;
                 else if (i < 40)
-                    upper_limit = 60;
+                    upper_limit = 42;
                 else if (i < 45)
-                    upper_limit = 70;
+                    upper_limit = 47;
                 else if (i < 50)
-                    upper_limit = 80;
+                    upper_limit = 50;
                 else if (i < 55)
-                    upper_limit = 250;
+                    upper_limit = 70;
                 else if (i < 60)
-                    upper_limit = 500;
+                    upper_limit = 80;
                 else
-                    upper_limit = 1000;
+                    upper_limit = 90;
 
                 int rnd = CommonUtils.getRandomNum(1, upper_limit);
                 if (leg_stn < rnd) break;
@@ -661,7 +661,7 @@ namespace SpectatorFootball.GameNS
         {
             double r = 0;
             double fg_cutoff = 40.0;
-            const int UPPER_LIMIT = 250;
+            const int UPPER_LIMIT = 325;
             const int MID_POINT = 50;
             const int FURTHEST_OUT = 5;
             int x_var = 0;

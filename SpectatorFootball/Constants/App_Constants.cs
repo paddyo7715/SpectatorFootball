@@ -18,9 +18,15 @@ namespace SpectatorFootball
         public const double GOALPOST_VERT_TOP = 46.0;
         public const double GOALPOST_VERT_BOTTOM = 54.0;
         public const double HIT_GOALPOST_VERT_TOP_TOP = 45.9;
+        public const double HIT_GOALPOST_VERT_TOP_BOT = 46.1;
+        public const double HIT_GOALPOST_VERT_BOT_TOP = 53.9;
+        public const double HIT_GOALPOST_VERT_BOT_BOT = 54.1;
+
+/*        public const double HIT_GOALPOST_VERT_TOP_TOP = 45.9;
         public const double HIT_GOALPOST_VERT_TOP_BOT = 46.0;
         public const double HIT_GOALPOST_VERT_BOT_TOP = 54.0;
         public const double HIT_GOALPOST_VERT_BOT_BOT = 54.1;
+*/
 
         // Max Settings
         public const int MAX_DIVISIONS = 20;
@@ -249,8 +255,11 @@ namespace SpectatorFootball
         public const double LB_SPEED_PERCENT = 0.12;
         public const double LB_AGILITY_PERCENT = 0.12;
 
-        public const double K_KICK_ACC = 0.65;
-        public const double K_LEG_STRENGTH = 0.35;
+        public const double K_KICK_ACC = 0.5;
+        public const double K_LEG_STRENGTH = 0.5;
+
+        public const double P_KICK_ACC = 0.75;
+        public const double P_LEG_STRENGTH = 0.25;
 
         //Yearly rating adjustment constants
         public const long PEEK_PHYSICAL_AGE = 29;

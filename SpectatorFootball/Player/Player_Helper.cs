@@ -639,10 +639,13 @@ namespace SpectatorFootball.PlayerNS
                     }
 
                 case Player_Pos.K:
+                    {
+                        OverAll = Convert.ToSingle(pr.Kicker_Leg_Accuracy_Rating * app_Constants.K_KICK_ACC + pr.Kicker_Leg_Power_Rating * app_Constants.K_LEG_STRENGTH);
+                        break;
+                    }
                 case Player_Pos.P:
                     {
-
-                        OverAll = Convert.ToSingle(pr.Kicker_Leg_Accuracy_Rating * app_Constants.K_KICK_ACC + pr.Kicker_Leg_Power_Rating * app_Constants.K_LEG_STRENGTH);
+                        OverAll = Convert.ToSingle(pr.Kicker_Leg_Accuracy_Rating * app_Constants.P_KICK_ACC + pr.Kicker_Leg_Power_Rating * app_Constants.P_LEG_STRENGTH);
                         break;
                     }
             }

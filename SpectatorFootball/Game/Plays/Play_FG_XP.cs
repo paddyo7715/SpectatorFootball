@@ -80,7 +80,11 @@ namespace SpectatorFootball.GameNS
             }
             else
             {
-                Game_Player Kick_Blocker = Game_Engine_Helper.getAttacker_BreakThru(FG_Players, FG_Def_Players);
+                //First decide if an attacker breaks thru the line to attempt a block
+                Blockers = Game_Engine_Helper.getPlayerSublist(FG_Players, FG_Formation.Line_Players);
+                Attackers = Game_Engine_Helper.getPlayerSublist(FG_Def_Players, FG_Def_Formation.Line_Players);
+
+                Game_Player Kick_Blocker = Game_Engine_Helper.getAttacker_BreakThru(Blockers, Attackers, 2);
                 r.Defender_Close_to_Kicker = Kick_Blocker;
 
                 Snap_Ball_Lines_Clash(gBall, FG_Players, FG_Def_Players, FG_Formation, FG_Def_Formation, bLefttoRight);
@@ -93,7 +97,10 @@ namespace SpectatorFootball.GameNS
                 if (r.FGXP_Blocked)
                 {
                     r.FGXP_Blocked = true;
-                    r.bFGMissed = true;
+                    if (bFG)
+                        r.bFGMissed = true;
+                    else
+                        r.bXPMissed = true;
                     r.Defender_Close_to_Kicker = null;
                     Kick_blocked(gBall, FG_Players, FG_Def_Players, Kick_Blocker, bLefttoRight);
                 }
@@ -102,11 +109,6 @@ namespace SpectatorFootball.GameNS
                     long leg_stn = r.Kicker.p_and_r.pr.First().Kicker_Leg_Power_Rating;
                     double kick_len = r.Kicker.getMaxFGLen(leg_stn);
                     double end_v = r.Kicker.getFGVert(r.Field_Goal_Attempt_Length);
-
-                    //bpo test
-//                    kick_len = 60.00;
-//                    end_v = 41.2;
-                    //*************
 
                     Ball_Kicked(r, gBall, FG_Players, FG_Def_Players, kick_len, end_v, bLefttoRight);
                 }
@@ -196,6 +198,7 @@ namespace SpectatorFootball.GameNS
 
             long FGPlays = pr.bFGMade || pr.bFGMissed ? 1 : 0;
             long XPPlays = pr.bXPMade || pr.bXPMissed ? 1 : 0;
+            long FG_Long = pr.bFGMade ? (int) (pr.Field_Goal_Attempt_Length + .5) : 0;
 
             List<Game_Player_Stats> r = new List<Game_Player_Stats>();
 
@@ -209,7 +212,8 @@ namespace SpectatorFootball.GameNS
                         FG_Plays = FGPlays,
                         XP_Plays = XPPlays,
                         FG_Att = FGAtt,
-                        FG_Made = XPMade,
+                        FG_Made = FGMade,
+                        FG_Long = FG_Long,
                         XP_Att = XPAtt,
                         XP_Made = XPMade
                     });
@@ -382,7 +386,7 @@ namespace SpectatorFootball.GameNS
 
             int i = CommonUtils.getRandomNum(1, upper_limit);
 
-            if (i == 1)
+            if (i <= 6)
                 r = true;
 
             return r;
@@ -444,7 +448,6 @@ namespace SpectatorFootball.GameNS
 
             gBall.Current_YardLine += kick_len * Game_Engine_Helper.HorizontalAdj(bLefttoRight); ;
             gBall.Current_Vertical_Percent_Pos = ball_end_v;
-
 
             Tuple<bool,bool, FG_Path, double, double, double, double> t = Game_Engine_Helper.FGResult(prev_yl, prev_v, gBall.Current_YardLine, gBall.Current_Vertical_Percent_Pos, bLefttoRight);
 

@@ -478,7 +478,7 @@ namespace SpectatorFootball.GameNS
             Blockers = Game_Engine_Helper.getPlayerSublist(Punt_Players, blocker_index_list);
             Attackers = Game_Engine_Helper.getPlayerSublist(Return_Players, Return_Formation.Line_Players);
 
-            r.Defender_Close_to_Kicker = Game_Engine_Helper.getAttacker_BreakThru(Blockers, Attackers);
+            r.Defender_Close_to_Kicker = Game_Engine_Helper.getAttacker_BreakThru(Blockers, Attackers, 1);
 
             double prev_ylb = gBall.Current_YardLine;
 

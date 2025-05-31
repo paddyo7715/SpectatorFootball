@@ -846,7 +846,7 @@ namespace SpectatorFootball.GameNS
             return r;
         }
         //Used for punts and FG/XP, not pass or run plays
-        public static Game_Player getAttacker_BreakThru(List<Game_Player> Blockers, List<Game_Player> Attackers)
+        public static Game_Player getAttacker_BreakThru(List<Game_Player> Blockers, List<Game_Player> Attackers, int minus_attackers)
         {
             Game_Player r = null;
             int max_attack = 0;
@@ -874,8 +874,7 @@ namespace SpectatorFootball.GameNS
                 }
             }
 
-            //if the attackers win 6 of 8 battles the attacker with the highest score breaks thru
-            if (attacker_wins >= Attackers.Count - 1)
+            if (attacker_wins >= Attackers.Count - minus_attackers)
                 r = Best_Attacker;
 
             return r;
@@ -911,8 +910,6 @@ namespace SpectatorFootball.GameNS
 
             double new_yl = 0.0;
             double new_v = 0.0;
-            double ricoschis_yl = 0.0;
-            double ricoschis_v = 0.0;
 
             PointXY GaolPost_top = null;
             PointXY GaolPost_bottom = null;
@@ -936,7 +933,7 @@ namespace SpectatorFootball.GameNS
 
             double wall_yl = Game_Engine_Helper.getWall_yl(bLefttoRight);
             double goalpost_yl = bLefttoRight ? app_Constants.RIGHT_GOALPOST_YL : app_Constants.LEFT_GAOLPOST_YL;
-            double short_yl = bLefttoRight ? wall_yl + short_after_gp_yards : wall_yl - short_after_gp_yards;
+            double short_yl = bLefttoRight ? wall_yl - short_after_gp_yards : wall_yl + short_after_gp_yards;
 
             if ((bLefttoRight && end_yl < short_yl) || (!bLefttoRight && end_yl > short_yl))
                 fG_Path = FG_Path.SHORT_OF_GOALPOSTS;

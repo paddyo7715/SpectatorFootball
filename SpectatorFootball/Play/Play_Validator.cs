@@ -17,6 +17,26 @@ namespace SpectatorFootball.PlayNS
 
             switch (pe)
             {
+                case Play_Enum.EXTRA_POINT:
+                    if ((!pr.bXPMade && !pr.bXPMissed) || (pr.bXPMade && pr.bXPMissed))
+                        r += " XP either missed and made or neither missed or made";
+                    if (pr.FGXP_Blocked && pr.bXPMade)
+                        r += " XP blocked but marked as good";
+                    if (pr.FGXP_Blocked && pr.bFGXPHitGP)
+                        r += " XP blocked but makred as hit goalpost";
+                    if (pr.FGXP_Blocked && pr.Defender_Close_to_Kicker != null)
+                        r += " XP blocked but player marked as close to kicker";
+                    break;
+                case Play_Enum.FIELD_GOAL:
+                    if ((!pr.bFGMade && !pr.bFGMissed) || (pr.bFGMade && pr.bFGMissed))
+                        r += " FG either missed and made or neither missed or made";
+                    if (pr.FGXP_Blocked && pr.bFGMade)
+                        r += " FG blocked but marked as good";
+                    if (pr.FGXP_Blocked && pr.bFGXPHitGP)
+                        r += " FG blocked but makred as hit goalpost";
+                    if (pr.FGXP_Blocked && pr.Defender_Close_to_Kicker != null)
+                        r += " FG blocked but player marked as close to kicker";
+                    break;
                 case Play_Enum.PUNT:
                     //no apparent result
                     if (!pr.bPunt_Returned && !pr.bPunt_Out_of_Bounds && !pr.bPunt_Out_of_Endzone && !pr.bPunt_blocked && !pr.bPunt_KneelDown && !pr.bPunt_Not_Fielded)
@@ -113,6 +133,77 @@ namespace SpectatorFootball.PlayNS
 
             switch (pe)
             {
+                case Play_Enum.EXTRA_POINT:
+                    foreach (Game_Player p in team1)
+                    {
+                        long pPlayer_id = p.p_and_r.pr.First().Player_ID;
+                        Game_Player_Stats pStat = pr.Play_Player_Stats.Where(x => x.Player_ID == pPlayer_id).FirstOrDefault();
+
+                        long xp_made = pr.bXPMade ? 1 : 0;
+
+                        if (p == pr.Kicker)
+                        {
+                            if (pStat.XP_Plays != 1) r += " XP kicker fg play stat not set correctly";
+                            if (pStat.XP_Att != 1) r += " XP kicker att set correctly";
+                            if (pStat.XP_Made != xp_made) r += " XP kicker made not set correctly";
+                        }
+                        else
+                        {
+                            if (pStat.XP_Plays != 1) r += " XP Player fg play stat not set correctly";
+
+                        }
+                    }
+
+                    long xp_blocks = 0;
+                    foreach (Game_Player p in team2)
+                    {
+                        long pPlayer_id = p.p_and_r.pr.First().Player_ID;
+                        Game_Player_Stats pStat = pr.Play_Player_Stats.Where(x => x.Player_ID == pPlayer_id).FirstOrDefault();
+
+                        if (pStat.XP_Def_Plays != 1) r += " XP Def Player play stat not set correctly";
+                        xp_blocks += pStat.XP_Block;
+                    }
+
+                    if (pr.FGXP_Blocked && xp_blocks != 1)
+                        r += " XP blocked but no def player has a block stat";
+                    break;
+                case Play_Enum.FIELD_GOAL:
+                    foreach (Game_Player p in team1)
+                    {
+                        long pPlayer_id = p.p_and_r.pr.First().Player_ID;
+                        Game_Player_Stats pStat = pr.Play_Player_Stats.Where(x => x.Player_ID == pPlayer_id).FirstOrDefault();
+
+                        long fg_made = pr.bFGMade ? 1 : 0;
+                        long fg_long = pr.bFGMade ? (int) (pr.Field_Goal_Attempt_Length + 0.5) : 0;
+
+                        if (p == pr.Kicker)
+                        {
+                            if (pStat.FG_Plays != 1) r += " FG kicker fg play stat not set correctly";
+                            if (pStat.FG_Att != 1) r += " FG kicker att set correctly";
+                            if (pStat.FG_Made != fg_made) r += " FG kicker made not set correctly";
+                            if (pr.bFGMade && pStat.FG_Long != fg_long) r += " FG kicker long stat not set correctly";
+                        }
+                        else
+                        {
+                            if (pStat.FG_Plays != 1) r += " FG Player fg play stat not set correctly";
+
+                        }
+                    }
+
+                    long fg_blocks = 0;
+                    foreach (Game_Player p in team2)
+                    {
+                        long pPlayer_id = p.p_and_r.pr.First().Player_ID;
+                        Game_Player_Stats pStat = pr.Play_Player_Stats.Where(x => x.Player_ID == pPlayer_id).FirstOrDefault();
+
+                        if (pStat.fg_def_plays != 1) r += " FG Def Player play stat not set correctly";
+                        fg_blocks += pStat.fg_def_block;
+                    }
+
+                    if (pr.FGXP_Blocked && fg_blocks != 1)
+                        r += " FG blocked but no def player has a block stat";
+                    break;
+
                 case Play_Enum.PUNT:
                         foreach (Game_Player p in team1)
                 {
