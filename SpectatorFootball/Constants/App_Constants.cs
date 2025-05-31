@@ -53,7 +53,7 @@ namespace SpectatorFootball
         public const string SETTINGS_DB = "BlankDB.db";
 
         // Draft
-        public const float DRAFT_MULTIPLIER = 1.6f;  //Multiplied by number of rounds to determine num of players to create for draft.
+        public const float DRAFT_MULTIPLIER = 1.7f;  //Multiplied by number of rounds to determine num of players to create for draft.
         public const double DRAFT_DELTA_MULTIPLYER = 1.5;
         public const int NORMAL_DRAFT_ROUNDS = 7;
         public const int STARTER_MIN_OVERALL_GRADE = 82;
