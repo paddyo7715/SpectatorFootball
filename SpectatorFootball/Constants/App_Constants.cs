@@ -679,7 +679,16 @@ namespace SpectatorFootball
         public const double PENALTY_UPPER_LIMIT_ADJ_K = 2.0;  //For QBs or kickers
         public const double NET_YARDS_TO_DECLINE_PENALTY = 40.0;
 
- 
+
+        //Crowd noise
+        public const double OFF_MAX = 40.0;
+        public const double OFF_VERRY_GOOD = 25.0;
+        public const double OFF_GOOD = 10.0; 
+        public const double OFF_NEURTRAL = 0.0;
+        public const double OFF_BAD = -10.0;
+        public const double OFF_VERRY_BAD = -25.0;
+        public const double OFF_MIN = -40.0;
+
 
     }
 }

@@ -102,8 +102,8 @@ namespace SpectatorFootball.GameNS
             //bpo test
             //            f = Formations_Enum.PUNT;
             //            p = Play_Enum.PUNT;
-            //            f = Formations_Enum.KICKOFF_REGULAR_KICK;
-            //            p = Play_Enum.KICKOFF_NORMAL;
+                        f = Formations_Enum.KICKOFF_REGULAR_KICK;
+                        p = Play_Enum.KICKOFF_NORMAL;
             //                                   f = Formations_Enum.KICKOFF_DYNAMIC_KICK;
             //                                  p = Play_Enum.KICKOFF_DYNAMIC;
 
@@ -113,8 +113,8 @@ namespace SpectatorFootball.GameNS
             //                         f = Formations_Enum.KICKOFF_FREE_KICK;
             //                         p = Play_Enum.KICKOFF_AFTER_SAFETY;
 
-                        f = Formations_Enum.FIELD_GOAL;
-                        p = Play_Enum.FIELD_GOAL;
+//                        f = Formations_Enum.FIELD_GOAL;
+ //                       p = Play_Enum.FIELD_GOAL;
 
 
 

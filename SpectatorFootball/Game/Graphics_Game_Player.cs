@@ -1,4 +1,5 @@
 ﻿using SpectatorFootball.Enum;
+using SpectatorFootball.NarrationAndText;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,9 @@ namespace SpectatorFootball.GameNS
         public int current_Stage = 0;
         public int current_action = 0;
         public int current_point = 0;
-        public Game_Sounds? Sound;
+        public Game_Sounds Sound = Game_Sounds.NONE;
+        public double crowd_adj = 0.0;
+        public string Flash_msg = null;
         public bool bStageFinished = false;
 
         public Graphics_Game_Player(Player_States pState, bool bCarringBall, double YardLine,
@@ -90,7 +93,6 @@ namespace SpectatorFootball.GameNS
                             r = Graphics_Player_States.RUNNING_1;
                     break;
                 case Player_States.FG_KICK:
-                    Sound = Game_Sounds.KICK;
                     r = Graphics_Player_States.FG_KICK;
                     break;
                 case Player_States.ABOUT_TO_CATCH_KICK:
@@ -99,9 +101,6 @@ namespace SpectatorFootball.GameNS
                 case Player_States.BLOCKING:
                     if (graph_pState == Graphics_Player_States.BLOCKING_1)
                     {
-                        int yyy = CommonUtils.getRandomNum(1, 100);
-                        if (yyy <= 4) Sound = Game_Sounds.PLAYERS_COLLIDING;
-
                         bool bYesNo = CommonUtils.getRandomTrueFalse();
                         if (bYesNo)
                             r = Graphics_Player_States.BLOCKING_3;
@@ -154,7 +153,6 @@ namespace SpectatorFootball.GameNS
                 case Player_States.TACKLING:
                     if (!graph_pState.ToString().ToUpper().StartsWith("TACKLING_"))
                     {
-                        Sound = Game_Sounds.PLAYER_TACKLED;
                         r = Graphics_Player_States.TACKLING_1;
                     }
                     else if (graph_pState == Graphics_Player_States.TACKLING_1)
@@ -262,7 +260,10 @@ namespace SpectatorFootball.GameNS
         }
         public void Update()
         {
-            Sound = null;
+            bool bBefore_Action = false;
+            bool bAfter_Action = false;
+
+            Sound = Game_Sounds.NONE;
             bStageFinished = false;
             Play_Stage pStage = Stages[current_Stage];
 
@@ -285,6 +286,9 @@ namespace SpectatorFootball.GameNS
                 if (act.PointXY.Count() > 0 &&
                    (current_point < act.PointXY.Count()))
                 {
+                    if (current_point == 0) bBefore_Action = true;
+                    if ((current_point + 1) == act.PointXY.Count()) bAfter_Action = true;
+
                     YardLine = act.PointXY[current_point].x;
                     Vertical_Percent_Pos = act.PointXY[current_point].y;
 
@@ -295,7 +299,14 @@ namespace SpectatorFootball.GameNS
                         current_point = 0;
                     }
 
-
+                    Tuple<double, Game_Sounds, string> t = null;
+                    if (bBefore_Action || bAfter_Action)
+                    {
+                        t = NarratorandText_Helper.getGameEffects(bBefore_Action, act.Effects);
+                        crowd_adj = t.Item1;
+                        Sound = t.Item2;
+                        Flash_msg = t.Item3;
+                    }
                 } //if pointxy left
                 else
                 {

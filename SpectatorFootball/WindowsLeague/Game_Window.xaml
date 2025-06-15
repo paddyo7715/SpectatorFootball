@@ -129,6 +129,8 @@
                     </Canvas>
             </StackPanel>
             </StackPanel>
+            <MediaElement Name="Background_Crowd" LoadedBehavior = "Manual" Visibility="Hidden" MediaEnded="Background_Crowd_MediaEnded" >
+            </MediaElement>
         </StackPanel>
        </Border> 
 

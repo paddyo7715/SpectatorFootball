@@ -340,6 +340,7 @@
     <Compile Include="Models\WeeklyScheduleRec.cs" />
     <Compile Include="NarrationAndText\NarratorandText_Helper.cs" />
     <Compile Include="NarrationAndText\ScoringSummary.cs" />
+    <Compile Include="NarrationAndText\Action_Effects.cs" />
     <Compile Include="Penalties\Penalty.cs" />
     <Compile Include="Penalties\Penalty_Helper.cs" />
     <Compile Include="Player\Player_Card_Data.cs" />
@@ -758,6 +759,7 @@
   <ItemGroup>
     <Content Include="Sounds\Booing_Long.mp3" />
     <Content Include="Sounds\Booing_Short.mp3" />
+    <Content Include="Sounds\cheer.mp3" />
     <Content Include="Sounds\Cheers_long.mp3" />
     <Content Include="Sounds\Cheer_Short.mp3" />
     <Content Include="Sounds\Doink.mp3" />

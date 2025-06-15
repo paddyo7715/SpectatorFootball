@@ -56,7 +56,6 @@ namespace SpectatorFootball.GameNS
         {
             return true; 
         }
-
         public Play_Result getPlayResult()
         {
             return r;

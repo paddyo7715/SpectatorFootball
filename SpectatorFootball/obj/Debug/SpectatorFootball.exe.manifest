@@ -102,14 +102,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SpectatorFootball.exe" size="17268224">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SpectatorFootball.exe" size="17270272">
       <assemblyIdentity name="SpectatorFootball" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>GC1NCir8qfwDMdon5XXlYS/JWYU11PTjCq+KQ+cNpWA=</dsig:DigestValue>
+        <dsig:DigestValue>CIBOsAA/tTm35vUjn8AkjPa3+FqcwJxlcPo7BvumR9o=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -354,6 +354,15 @@
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
       <dsig:DigestValue>QVSiPqBUAvqsXPk1QTwxCPYeY4oKdzc2YTEjTfppe6w=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Sounds\cheer.mp3" size="360309">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>06BAgSzuhq/OzA8jBUFmJi+XWl7j1c9GljgJUCUvquE=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Sounds\Cheer_Short.mp3" size="19141">

@@ -252,8 +252,8 @@ namespace SpectatorFootball.GameNS
             //bpo test
                         g_fid_posession = at.Franchise_ID;
                         bLefttoRight = true;
-                        g_Line_of_Scrimmage = 75.0;
-//                        bKickoff = true;
+                        g_Line_of_Scrimmage = 35.0;
+                        bKickoff = true;
                         bKickoffAfterSafety = false;
             //********************
 
@@ -470,7 +470,6 @@ namespace SpectatorFootball.GameNS
                 if (p_result.bPlay_Stands)
                 {
                     bool bHomeTeamPosses = Game_Engine_Helper.isHomeTeamPosessing(Offensive_Package.Play, ht.Franchise_ID, at.Franchise_ID, g_fid_posession);
-                    r.Cheer = getEndofPlaySound(bChampionshipGame, p_result, bHomeTeamPosses);
 
                     bKickoff = p_result.bFinal_NextPlayKickoff;
                     bKickoffAfterSafety = p_result.bFinal_NextPlayKickoffAfterSafety;
@@ -1954,73 +1953,7 @@ namespace SpectatorFootball.GameNS
 
             return r;
         }
-        private Game_Sounds getEndofPlaySound(bool bChampionship, Play_Result pr, bool bHomePossesion)
-        {
-            Game_Sounds r = Game_Sounds.NONE;
-            double long_return = 35.0;
 
-            logger.Debug("moe possesion: " + bHomePossesion.ToString() + " " +
-                 pr.Yards_Returned);
-
-            if (pr.AwayTurnoers > 0)
-            {
-                r = Game_Sounds.LOW_CHEER;
-            }
-            else if (pr.HomeTurnoers > 0)
-            {
-                r = Game_Sounds.LOW_BOO;
-            }
-            else if (pr.bAwayTD || pr.bAwayFG || pr.bAwayXP || pr.bAwaySafetyFor ||
-                pr.bAwayXP1 || pr.bAwayXP2 || pr.bAwayXP3)
-            {
-                r = Game_Sounds.LOUD_BOO;
-            }
-            else if (pr.bHomeTD || pr.bHomeFG || pr.bHomeXP || pr.bHomeSafetyFor ||
-                pr.bHomeXP1 || pr.bHomeXP2 || pr.bHomeXP3)
-            {
-                r = Game_Sounds.LOUD_CHEER;
-            }
-            else if (pr.HomeFirstDowns > 0)
-            {
-                r = Game_Sounds.LOW_CHEER;
-            }
-            else if (pr.AwayFirstDowns > 0)
-            {
-                r = Game_Sounds.LOW_BOO;
-            }
-            else if (pr.HomeSacks > 0)
-            {
-                r = Game_Sounds.LOW_CHEER;
-            }
-            else if (pr.AwaySacks > 0)
-            {
-                r = Game_Sounds.LOW_BOO;
-            }
-            else if (bHomePossesion && pr.Yards_Returned >= long_return)
-            {
-                r = Game_Sounds.LOW_CHEER;
-            }
-            else if (!bHomePossesion && pr.Yards_Returned >= long_return)
-            {
-                r = Game_Sounds.LOW_BOO;
-            }
-
-            //In the championship game everything good is cheered
-            if (bChampionship)
-            {
-                switch (r)
-                {
-                    case Game_Sounds.LOW_BOO:
-                        r = Game_Sounds.LOW_CHEER;
-                        break;
-                    case Game_Sounds.LOUD_BOO:
-                        r = Game_Sounds.LOUD_CHEER;
-                        break;
-                }
-            }
-
-            return r;
-        }
 
         public Tuple<bool, int, double, double, double, bool> setSpecialPlayYardline(double nonKickoff_StartingYardline, bool bLefttoRight,
             bool bAllowKickoffs, bool bKickoff, bool bKickoffAfterSafety)

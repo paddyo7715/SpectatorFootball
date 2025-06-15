@@ -1,5 +1,6 @@
 ﻿using SpectatorFootball.Common;
 using SpectatorFootball.Enum;
+using SpectatorFootball.NarrationAndText;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,7 @@ namespace SpectatorFootball.GameNS
         public Ball_Speed? Ball_Speed;
         public bool bnoSkip;
         public int Fake_Movement_Points;
+        public Action_Effects Effects = new Action_Effects();
 
         public Action(Game_Object_Types type, double start_yardline, double start_vertical,
          double end_yardline, double end_vertical, bool bPossesses_Ball,

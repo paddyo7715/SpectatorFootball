@@ -7,14 +7,14 @@
     <framework targetVersion="4.8" profile="Full" supportedRuntime="4.0.30319" />
   </compatibleFrameworks>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="SpectatorFootball.exe.manifest" size="24455">
+    <dependentAssembly dependencyType="install" codebase="SpectatorFootball.exe.manifest" size="24851">
       <assemblyIdentity name="SpectatorFootball.exe" version="1.0.0.1" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>g5kJqJSAaJI8xvJ5zIPW7J4jy+7UXj6gQ+veQ1c+ios=</dsig:DigestValue>
+        <dsig:DigestValue>3FIAjjQ+b6SD4WT6d1579FaR70zMWNPw85PYZuCl3L0=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

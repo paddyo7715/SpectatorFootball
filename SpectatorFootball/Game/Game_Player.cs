@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using log4net;
 using SpectatorFootball.Common;
 using System.Windows.Markup;
+using SpectatorFootball.NarrationAndText;
 
 namespace SpectatorFootball.GameNS
 {
@@ -100,6 +101,7 @@ namespace SpectatorFootball.GameNS
         {
             Action pas1 = new Action(Game_Object_Types.P, prev_yl_1, prev_v_1, Current_YardLine, Current_Vertical_Percent_Pos, false, moving_ps, null, Movement.LINE, Ball_Speed.CARRIED_SLOW, false, 0);
             Action pas2 = new Action(Game_Object_Types.P, RunUp_YardLine_1, RunUp_Vertical_Percent_Pos_1, Current_YardLine, Current_Vertical_Percent_Pos, false, Player_States.FG_KICK, null,Movement.LINE, null, false, 0);
+            pas2.Effects = new Action_Effects() { Before_Sound = Game_Sounds.KICK, before_flash = "BOOM!" };
             Play_Stage pStage = new Play_Stage();
             pStage.Main_Object = true;
             pStage.Actions.Add(pas1);

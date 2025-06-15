@@ -18,7 +18,6 @@ namespace SpectatorFootball.GameNS
         public string Before_Away_Timeouts;
         public string Before_Home_Timeouts;
         public bool bStartQTR;
-        public Game_Sounds Cheer = Game_Sounds.NONE;
 
         //These are from after the play is executed
         public bool bGameOver;
