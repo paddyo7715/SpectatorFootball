@@ -2,8 +2,10 @@
 using SpectatorFootball.Enum;
 using SpectatorFootball.GameNS;
 using SpectatorFootball.Models;
+using SpectatorFootball.PlayNS;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -70,6 +72,8 @@ namespace SpectatorFootball.GameNS
                 bLost = kickMuffed(r, gBall, Kickoff_Players, Return_Players, Ball_Target_Recover, rnd); 
             else
                 FallOnBall(gBall, Kickoff_Players, Return_Players, Ball_Target_Recover, rnd);
+
+
 
             r.bOnsideAtt = true;
             if (bLost == true)
@@ -256,7 +260,7 @@ namespace SpectatorFootball.GameNS
 
              Game_Player Ball_Target_Recover = Return_Players[rnd];
 
-            gBall.Bounce_Along_Ground();
+            gBall.Bounce_Along_Ground_Slow();
             int id_Players = 0;
             double yardline_Offset = 0.0;
             double vert = 0.0;
@@ -306,7 +310,7 @@ namespace SpectatorFootball.GameNS
             Tuple<Game_Player, bool> t = Playstub_Fumble.Execute(!bLefttoRight, gBall,
                 Kickoff_Players, Return_Players,
                 pFumble_Rec_Kickoff_Players, pFumble_Rec_Return_Players,
-                Ball_Target_Recover, r.Tackler);
+                Ball_Target_Recover, r.Tackler, false);
             r.Onside_Kick_Recoverer = t.Item1;
             bLost = t.Item2;
 
@@ -325,7 +329,7 @@ namespace SpectatorFootball.GameNS
             }
 
             //for the ball
-            gBall.Carried_Fake_Movement(5);
+            gBall.Carried_Fake_Movement(1);
 
 
             //The team receiving the kick will just stand there before the kick
@@ -340,7 +344,10 @@ namespace SpectatorFootball.GameNS
                     else
                         p.Stand();
             }
+
         }
+
+
 
     }
 }

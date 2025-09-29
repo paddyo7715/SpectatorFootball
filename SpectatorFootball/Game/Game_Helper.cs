@@ -114,5 +114,15 @@ namespace SpectatorFootball.GameNS
 
             return r;
         }
+
+        public static int getTotXYPoints(Play_Stage pStage)
+        {
+            int r = 0;
+
+            foreach (Action a in pStage.Actions)
+                r += a.PointXY.Count();
+
+            return r;
+        }
     }
 }

@@ -1003,5 +1003,18 @@ namespace SpectatorFootball.GameNS
 
             return Tuple.Create(bGood, bHit_Top || bHit_Bottom, fG_Path, new_yl, new_v, end_yl, end_v);
         }
+        public static Tuple<double, double> AdjustForOfftheFoot(double yl, double v, bool blefttoRight)
+        {
+            double vert_adjust_off_Foot = 0;
+
+            double yl_adjust_off_foot = 0.0;
+            if (blefttoRight)
+                yl_adjust_off_foot = 1.8;
+            else
+                yl_adjust_off_foot = -2.8;
+
+            return Tuple.Create(yl + yl_adjust_off_foot, v + vert_adjust_off_Foot);
+
+        }
     }
 }

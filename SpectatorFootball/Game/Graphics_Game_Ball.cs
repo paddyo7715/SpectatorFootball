@@ -28,7 +28,6 @@ namespace SpectatorFootball.GameNS
         public double width;
         public Game_Sounds Sound;
         public double crowd_adj = 0.0;
-        public string Flash_msg = null;
         public bool bStageFinished = false;
         public bool ThreeDee_ball;
 
@@ -177,13 +176,17 @@ namespace SpectatorFootball.GameNS
                         current_point = 0;
                     }
 
-                    Tuple<double, Game_Sounds, string> t = null;
+                    Tuple<double, Game_Sounds> t = null;
                     if (bBefore_Action || bAfter_Action)
                     {
                         t = NarratorandText_Helper.getGameEffects(bBefore_Action, act.Effects);
                         crowd_adj = t.Item1;
                         Sound = t.Item2;
-                        Flash_msg = t.Item3;
+                    }
+                    else
+                    {
+                        crowd_adj = 0.0;
+                        Sound = Game_Sounds.NONE;
                     }
                 } //if pointxy left
                 else

@@ -79,6 +79,7 @@ namespace SpectatorFootball.GameNS
             BallKickedPlayersRun(gBall, Kickoff_Players, Return_Players, r.Kicker, r.Returner, tackle_groups, r, bLast_Play, bLefttoRight);
             if (r.bKick_Returned)
             {
+                logger.Debug("Kickoff Returned");
                 r.Kick_caught_yl = gBall.Current_YardLine;
                 r = return_kickoff(Kickoff_Players, Return_Players, gBall, tackle_groups, r, bLefttoRight);
                 r.Yards_Returned = Game_Engine_Helper.getKickoffReturnYards(!bLefttoRight, r.Kick_caught_yl, r.Returner.Current_YardLine);
@@ -351,7 +352,10 @@ namespace SpectatorFootball.GameNS
                     p.Current_YardLine += 6.5 * Game_Engine_Helper.HorizontalAdj(bLefttoRight);
                     p.Run_and_Punt_Free_Kick(prev_yl, prev_v);
 
-                    gBall.Current_YardLine = p.Current_YardLine;
+                    Tuple<double, double> tFootOff = Game_Engine_Helper.AdjustForOfftheFoot(p.Current_YardLine, p.Current_Vertical_Percent_Pos, bLefttoRight);
+                    gBall.Current_YardLine = tFootOff.Item1;
+                    gBall.Current_Vertical_Percent_Pos = tFootOff.Item2;
+
                     gBall.Carried_notMain(prev_yl, prev_v);
                 }
                 else
@@ -374,13 +378,8 @@ namespace SpectatorFootball.GameNS
         private void BallKickedPlayersRun(Game_Ball gBall, List<Game_Player> Kickoff_Players, List<Game_Player> Return_Players,
             Game_Player Kicker, Game_Player Returner, List<List<int?>> tGroups, Play_Result pr, bool bLast_Play, bool bLefttoRight)
         {
-
-            gBall.Current_YardLine = r.Kicker.Current_YardLine;
-            gBall.Current_Vertical_Percent_Pos = r.Kicker.Current_Vertical_Percent_Pos;
-
             double prevBallX = gBall.Current_YardLine;
             double prevBallY = gBall.Current_Vertical_Percent_Pos;
-
 
             var t = getMaxPuntLengthandVert(r.Kicker);
             double MaxPuntLen = t.Item1;
@@ -557,6 +556,8 @@ namespace SpectatorFootball.GameNS
             List<int?> group = new List<int?>();
             for (int i = 1; i <= app_Constants.KICKOFF_TACKLING_GROUPS + 1; i++)
             {
+                logger.Debug("Kickoff Returned i= " + i);
+
                 bool bFindOpenSlot = false;
                 double agility = r.Returner.p_and_r.pr.First().Agilty_Rating;
                 bFindOpenSlot = ReturnerLookforHole(agility);
@@ -690,56 +691,6 @@ namespace SpectatorFootball.GameNS
                 Breakthrough_vert = slot2_vert + getKickoffGroupOffset(slot_index);
 
                 id_Players = 0;
-                foreach (Game_Player p in Kickoff_Players)
-                {
-                    if (p == r.Kicker && i != 4)  //In fourth group, kicker is tackler
-                    {
-                        double prev_yl = p.Current_YardLine;
-                        double prev_v = p.Current_Vertical_Percent_Pos;
-
-                        if (TB_List.Count > 0)
-                            p.Current_Vertical_Percent_Pos = returner_before_tackler_vert;
-                        else
-                            p.Current_Vertical_Percent_Pos = Breakthrough_vert;
-
-                        Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, false, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
-                        p.Run(moving_ps, prev_yl, prev_v);
-
-                        if (TB_List.Count > 0)
-                            p.Stand();
-                    }
-                    else if (TB_List.Contains(id_Players))
-                    {
-                        //keep blocking till the returner runs up to you
-                        p.Block(false);
-
-                        double prev_yl = p.Current_YardLine;
-                        double prev_v = p.Current_Vertical_Percent_Pos;
-
-                        p.Current_YardLine = returner_hole_yl;
-                        p.Current_Vertical_Percent_Pos = returner_swerve_vert;
-
-                        Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, false, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
-                        p.Attempt_Tackle(moving_ps, prev_yl, prev_v);
-                    }
-                    // Players from previous groups should still do what they last did not go back to blocking
-                    else if (Past_Blocker_Tackler_List.Contains(id_Players))
-                    {
-                        p.Same_As_Last_Action();
-                        if (TB_List.Count > 0)
-                            p.Same_As_Last_Action();
-                    }
-                    else
-                    {
-                        p.Block(false);
-                        //If there is a tackler then  continue to block while he attempts the tackle
-                        if (TB_List.Count > 0)
-                            p.Block(false);
-                    }
-                    id_Players++;
-                }
-
-                id_Players = 0;
                 foreach (Game_Player p in Return_Players)
                 {
                     if (p == r.Returner)
@@ -757,7 +708,7 @@ namespace SpectatorFootball.GameNS
                             gBall.Current_Vertical_Percent_Pos = p.Current_Vertical_Percent_Pos;
 
                             Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
-                            p.Run_With_Ball(moving_ps, prev_yl, prev_v);
+                            p.Run_With_Ball(moving_ps, prev_yl, prev_v, 0.0);
 
                             //for the ball
                             gBall.Carried(prev_yl, prev_v);
@@ -787,7 +738,7 @@ namespace SpectatorFootball.GameNS
                                     gBall.Current_YardLine += Breakthrough_len;
                                 }
 
-                                p.Run_With_Ball(moving_ps2, prev_yl, prev_v);
+                                p.Run_With_Ball(moving_ps2, prev_yl, prev_v, -0.2);
                                 //for the ball
                                 gBall.Carried(prev_yl, prev_v);
                             }
@@ -804,7 +755,7 @@ namespace SpectatorFootball.GameNS
                             gBall.Current_Vertical_Percent_Pos = p.Current_Vertical_Percent_Pos;
 
                             Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
-                            p.Run_With_Ball(moving_ps, prev_yl, prev_v);
+                            p.Run_With_Ball(moving_ps, prev_yl, prev_v, -0.2);
 
                             //for the ball
                             gBall.Carried(prev_yl, prev_v);
@@ -828,6 +779,62 @@ namespace SpectatorFootball.GameNS
 
                         if (TB_List.Count > 0)
                             p.Block(true);
+                    }
+                    id_Players++;
+                }
+
+                id_Players = 0;
+                foreach (Game_Player p in Kickoff_Players)
+                {
+                    if (p == r.Kicker && i != 4)  //In fourth group, kicker is tackler
+                    {
+                        logger.Debug("kicker set");
+                        double prev_yl = p.Current_YardLine;
+                        double prev_v = p.Current_Vertical_Percent_Pos;
+
+                        if (TB_List.Count > 0)
+                            p.Current_Vertical_Percent_Pos = returner_before_tackler_vert;
+                        else
+                            p.Current_Vertical_Percent_Pos = Breakthrough_vert;
+
+
+                        Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, false, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
+                        int ball_carrier_xyCount = Game_Helper.getTotXYPoints(gBall.Stages[p.Stages.Count()]);
+
+                        p.Run_not_main(moving_ps, prev_yl, prev_v, ball_carrier_xyCount);
+
+                        if (TB_List.Count > 0)
+                            p.Stand();
+
+                    }
+                    else if (TB_List.Contains(id_Players))
+                    {
+                        //keep blocking till the returner runs up to you
+                        p.Block(false);
+
+                        double prev_yl = p.Current_YardLine;
+                        double prev_v = p.Current_Vertical_Percent_Pos;
+
+                        p.Current_YardLine = returner_hole_yl;
+                        p.Current_Vertical_Percent_Pos = returner_swerve_vert;
+
+                        Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, false, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
+                        int ball_carrier_xyCount = Game_Helper.getTotXYPoints(gBall.Stages[p.Stages.Count()]);
+                        p.Attempt_the_Tackle(moving_ps, prev_yl, prev_v, ball_carrier_xyCount, app_Constants.TACKLER_FRAMES);
+                    }
+                    // Players from previous groups should still do what they last did not go back to blocking
+                    else if (Past_Blocker_Tackler_List.Contains(id_Players))
+                    {
+                        p.Same_As_Last_Action();
+                        if (TB_List.Count > 0)
+                            p.Same_As_Last_Action();
+                    }
+                    else
+                    {
+                        p.Block(false);
+                        //If there is a tackler then  continue to block while he attempts the tackle
+                        if (TB_List.Count > 0)
+                            p.Block(false);
                     }
                     id_Players++;
                 }
@@ -859,7 +866,7 @@ namespace SpectatorFootball.GameNS
                         Tuple<Game_Player, bool> t = Playstub_Fumble.Execute(bLefttoRight, gBall,
                             Kickoff_Players, Return_Players,
                             pFumble_Rec_Kickoff_Players, pFumble_Rec_Return_Players,
-                            r.Returner, r.Tackler);
+                            r.Returner, r.Tackler, false);
 
                         r.Fumble_Recoverer = t.Item1;
                         r.bFumble_Lost = t.Item2;

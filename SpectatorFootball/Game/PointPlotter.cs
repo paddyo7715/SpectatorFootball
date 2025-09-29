@@ -13,11 +13,18 @@ namespace SpectatorFootball.GameNS
         private static int BALL_SUPER_SLOW = 1;
         private static int BALL_FAST_SKIP = 20;
         private static int BALL_NORMAL_SKIP = 10;
-        private static int BALL_SLOW_SKIP = 4;
+        private static int BALL_ROLLING_SPEED = 8;
+
+        private static int BALL_PUNT_SUPER_SLOW_SKIP = 1;
+        private static int BALL_PUNT_SLOW_SKIP = 4;
+        private static int BALL_PUNT_START_END_SKIP = 10;
+        private static int BALL_SLOW_SKIP = 2;
+
         private static int PLAYER_SKIP = 8;
-        private static int STARTING_KICK_SKIP = 18;
+        private static int STARTING_KICK_SKIP = 6;
         private static int ENDING_KICK_SKIP = 6;
         private static int PLAYER_SLOWER = 5;
+        private static int PLAYER_STARTING = 3;
 
         public static List<PointXY> PlotLine (bool bBall,double sx, double sy, double ex, double ey, bool addEndpoint, Ball_Speed? Ball_Spd, Ball_States? b_state, bool bnoSkip)
         {
@@ -33,14 +40,16 @@ namespace SpectatorFootball.GameNS
             int skip_count;
             if (bBall)
             {
-                if (Ball_Spd == Ball_Speed.CARRIED_SLOW)
+                if (Ball_Spd == Ball_Speed.NORMAL && b_state == Ball_States.BOUNCING)
+                    skip_count = BALL_ROLLING_SPEED;
+                else if (Ball_Spd == Ball_Speed.CARRIED_SLOW)
                     skip_count = PLAYER_SLOWER;
                 else if (b_state == Ball_States.CARRIED)
                     skip_count = PLAYER_SKIP;
                 else if ((b_state == Ball_States.END_OVER_END || b_state == Ball_States.SPIRAL))
                     skip_count = STARTING_KICK_SKIP;
                 else if (b_state == Ball_States.PUNT_THRU_THE_AIR)
-                    skip_count = BALL_NORMAL_SKIP;
+                    skip_count = BALL_PUNT_SLOW_SKIP;
                 else if (Ball_Spd == Enum.Ball_Speed.SLOW)
                     skip_count = BALL_SLOW_SKIP;
                 else if (Ball_Spd == Enum.Ball_Speed.NORMAL)
@@ -78,6 +87,7 @@ namespace SpectatorFootball.GameNS
             double x, y;
 
             int mid_point = quantity / 2;
+            int first_third = quantity / 3;
 
             for (double i = 0; i < quantity; i++)
             {
@@ -104,7 +114,21 @@ namespace SpectatorFootball.GameNS
                 }
                 else if (b_state == Ball_States.PUNT_THRU_THE_AIR)
                 {
-                    skip_count = BALL_SLOW_SKIP;
+                    double d = ((double)i / (double)quantity) * 100.0;
+
+                    if (d >= 85.0 || d <= 15.0)
+                        skip_count = BALL_PUNT_START_END_SKIP;
+                    else if (d >= 45.0 && d <= 65.0)
+                        skip_count = BALL_PUNT_SUPER_SLOW_SKIP;
+                    else
+                        skip_count = BALL_PUNT_SLOW_SKIP;
+                }
+                else if (Ball_Spd == Ball_Speed.CARRIED_SLOW)
+                {
+                    if (i < first_third)
+                        skip_count = PLAYER_STARTING;
+                    else
+                        skip_count = PLAYER_SLOWER;
                 }
 
                 r.Add(new PointXY() { x = new_x / 10.0, y = new_y / 10.0 });
@@ -114,7 +138,7 @@ namespace SpectatorFootball.GameNS
 
             return r;
         }
-        public static double calcLineLength(double x1, double y1, double x2, double y2)
+        public static double Dist_Between_2_Points(double x1, double y1, double x2, double y2)
         {
             double r;
 

@@ -1,4 +1,5 @@
 ﻿using log4net;
+using SpectatorFootball.Common;
 using SpectatorFootball.Enum;
 using SpectatorFootball.Models;
 using SpectatorFootball.NarrationAndText;
@@ -250,9 +251,9 @@ namespace SpectatorFootball.GameNS
                 g_Line_of_Scrimmage = Game_Engine_Helper.getScrimmageLine(KickoffAfterSafetyYardline, bLefttoRight);
 
             //bpo test
-                        g_fid_posession = at.Franchise_ID;
-                        bLefttoRight = true;
-                        g_Line_of_Scrimmage = 35.0;
+                        g_fid_posession = ht.Franchise_ID;
+                        bLefttoRight = false;
+                        g_Line_of_Scrimmage = 75.0;
                         bKickoff = true;
                         bKickoffAfterSafety = false;
             //********************
@@ -385,6 +386,14 @@ namespace SpectatorFootball.GameNS
                 //Execute the play
                 p_result = Play.Execute(bpreSnapPenalty);
 
+                //check that the number of stages are equal for all players and some other
+                //things, such as there is only 1 main object per stage and there are no players
+                //that are not main that have extra points to plot that won't when the stage
+                //ends
+                int zzz = 0;
+                if (!Play_Validator.check_play_stages(Game_Ball, Offensive_Players, Defensive_Players))
+                    zzz = 1;
+
                 //Validate play result if not presnap penalty
                 string Play_Result_Validation = null;
                 string Play_Stats_Validation = null;
@@ -396,16 +405,7 @@ namespace SpectatorFootball.GameNS
 
                     Play_Stats_Validation = Play_Validator.Validate_Punt_play_stats(Offensive_Package.Play, Offensive_Players, Defensive_Players, p_result);
                     if (Play_Stats_Validation != null)
-                        throw new Exception(Play_Stats_Validation);
-                }
-
-
-                int ball_stages = Game_Ball.Stages.Count();
-                for ( int pind = 0; pind < Offensive_Players.Count(); pind++)
-                {
-                    if (Offensive_Players[pind].Stages.Count() != ball_stages ||
-                        Defensive_Players[pind].Stages.Count() != ball_stages)
-                        throw new Exception("Number of stages do not match between ball, offensive and defensive players");
+                       throw new Exception(Play_Stats_Validation);
                 }
 
                 //Is there a penalty during the play?
@@ -2041,5 +2041,9 @@ namespace SpectatorFootball.GameNS
 
             return r;
         }
+
+
+
+
     }
 }

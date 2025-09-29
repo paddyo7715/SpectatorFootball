@@ -37,6 +37,7 @@ namespace SpectatorFootball.Integration_Tests.Kickoff
             int L_num_run_out_of_bound = 0;
             double L_total_starting_yardline = 0.0;
             double L_avg_return = 0.0;
+            int bad_plays = 0;
 
             int R_num_returned = 0;
             int R_num_TDs = 0;
@@ -52,6 +53,7 @@ namespace SpectatorFootball.Integration_Tests.Kickoff
             double g_yardline = 0.0;
             Play_Enum pe = Play_Enum.KICKOFF_NORMAL;
 
+            int bad_players = 0;
 
             int num_plays = 20000;
             for (int i = 0; i < num_plays; i++)
@@ -89,6 +91,12 @@ namespace SpectatorFootball.Integration_Tests.Kickoff
 
                 Play_Kickoff_Dynamic kickoff = new Play_Kickoff_Dynamic(KickForm, RecForm, possess_team, at, ht, gb, Kickoff_Players, Receiving_Players, bLefttoRight, false);
                 Play_Result pResult = kickoff.Execute(false);
+
+                bad_players = Play_Validator.testPlayerStage_Irregularities(gb, Kickoff_Players, Receiving_Players);
+                if (bad_players > 0) bad_players = 1;
+
+                if (bad_players == 1)
+                    bad_plays++;
 
                 string Play_Result_Validation = Play_Validator.Validate_Play_Result(Play_Enum.KICKOFF_NORMAL, Kickoff_Players, Receiving_Players, pResult, gb, bLefttoRight);
                 if (Play_Result_Validation != null)
@@ -137,6 +145,9 @@ namespace SpectatorFootball.Integration_Tests.Kickoff
             // 14 fumbles for every 1000 returns
 
             double L_avg_yards = L_avg_return / L_num_returned;
+
+            if (bad_plays > 0)
+                throw new Exception("Too many bad plays " + bad_plays);
 
             if (L_num_returned < 3500 || L_num_returned > 5000)
                 throw new Exception("L_num_returns out of range " + L_num_returned);

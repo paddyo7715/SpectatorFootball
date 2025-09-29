@@ -101,7 +101,7 @@
                         <Button Name="btnPauseResume" Height="40" Click="btnPauseResume_click" Style="{StaticResource CloseGame}">Pause</Button>
                     </StackPanel>
                     <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
-                        <StackPanel Orientation="Vertical">
+                        <StackPanel Name="ScoreBoard" Orientation="Vertical">
                             <StackPanel Orientation="Horizontal">
                                 <Label Name="lblAwayTeam" Height="40" Width="420" HorizontalContentAlignment="Right" Style="{StaticResource GameBarFonts}">Bullies</Label>
                                 <Label Name="lblAwayScore" Height="40" Width="40" HorizontalContentAlignment="Center" Style="{StaticResource GameBarFonts}" >14</Label>

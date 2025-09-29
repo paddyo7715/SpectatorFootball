@@ -62,6 +62,34 @@ namespace SpectatorFootball.GameNS
             }
 
         }
+        public Tuple<List<PointXY>, List<PointXY>> PullOffLastPoints(int points)
+        {
+            List<PointXY> run = new List<PointXY>();
+            List<PointXY> tackle = new List<PointXY>();
+
+            int cnt = PointXY.Count();
+
+            if (points <= cnt)
+            {
+                for (int j = 0; j < cnt; j++)
+                {
+                    PointXY pt = PointXY[j];
+                    if (j >= cnt - points)
+                        tackle.Add(pt);
+                    else
+                        run.Add(pt);
+                }
+            }
+            else
+                tackle = PointXY.Take(cnt).ToList();
+
+            return Tuple.Create(run, tackle);
+        }
+
+        public int getXYPointsCount()
+        {
+            return PointXY.Count;
+        }
 
     }
 }

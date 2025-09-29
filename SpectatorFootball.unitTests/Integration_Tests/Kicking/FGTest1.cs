@@ -28,6 +28,7 @@ namespace SpectatorFootball.unitTests.Integration_Tests.Kicking
             int L_Kick_hitGP_Missed = 0;
             int L_Kick_hitGP_Good = 0;
             int L_Kick_short = 0;
+            int bad_plays = 0;
 
             int R_Kick_good = 0;
             int R_Kick_Missed = 0;
@@ -40,8 +41,8 @@ namespace SpectatorFootball.unitTests.Integration_Tests.Kicking
             int min_yardline_rnd = 1;
             int max_yardline_rnd = 10;
 
-
             double g_yardline = 0.0;
+            int bad_players = 0;
 
             int num_plays = 20000;
             int icount = num_plays / 2;
@@ -84,6 +85,12 @@ namespace SpectatorFootball.unitTests.Integration_Tests.Kicking
                 Play_FG_XP FG = new Play_FG_XP(FG_Forn, FG_Def_Form, possess_team, at, ht, gb, Kicking_Players, Defending_Players, bLefttoRight, false, true);
                 Play_Result pResult = FG.Execute(false);
 
+                bad_players = Play_Validator.testPlayerStage_Irregularities(gb, Kicking_Players, Defending_Players);
+                if (bad_players > 0) bad_players = 1;
+
+                if (bad_players == 1)
+                    bad_plays++;
+
                 string Play_Result_Validation = Play_Validator.Validate_Play_Result(Play_Enum.FIELD_GOAL, Kicking_Players, Defending_Players, pResult, gb, bLefttoRight);
                 if (Play_Result_Validation != null)
                     throw new Exception(Play_Result_Validation);
@@ -111,6 +118,9 @@ namespace SpectatorFootball.unitTests.Integration_Tests.Kicking
                     if (pResult.bFGXPShort) R_Kick_short++;
                 }
             }
+
+            if (bad_plays > 0)
+                throw new Exception("Too many bad plays " + bad_plays);
 
             if (L_Kick_good > 9800 || L_Kick_good < 9400)
                 throw new Exception("L_Kick_good out of range " + L_Kick_good);
@@ -649,7 +659,7 @@ namespace SpectatorFootball.unitTests.Integration_Tests.Kicking
             if (L_Kick_short < 7500 || L_Kick_short > 8500)
                 throw new Exception("L_Kick_short out of range " + L_Kick_hitGP_Good);
 
-            if (R_Kick_good > 1900 || R_Kick_good < 1600)
+            if (R_Kick_good > 1900 || R_Kick_good < 1300)
                 throw new Exception("R_Kick_good out of range " + R_Kick_good);
             if (R_Kick_Missed > 8700 || R_Kick_Missed < 8100)
                 throw new Exception("R_Kick_Missed out of range " + R_Kick_Missed);

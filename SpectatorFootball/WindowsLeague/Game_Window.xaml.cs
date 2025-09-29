@@ -132,7 +132,15 @@ namespace SpectatorFootball.WindowsLeague
 
         private MediaPlayer crowd_player = null;
 
-        private double initial_crowd_volumn = .4;
+        private double crowd_volumn = .4;
+
+        private bool bExit_Pressed = false;
+
+        private bool bChampionshipGame = false;
+
+        //flash message
+        private int iflashmessages_count = 0;
+        private const int FLASH_MESSAGES = 10;
 
         public Game_Window(MainWindow pw, Game g)
         {
@@ -318,6 +326,7 @@ namespace SpectatorFootball.WindowsLeague
                 dispatcherTimer.Interval = new TimeSpan(0, 0, 2);
                 dispatcherTimer.Start();
 
+                bChampionshipGame = g.Championship_Game == 1 ? true : false;
             }
             catch (Exception e)
             {
@@ -333,6 +342,7 @@ namespace SpectatorFootball.WindowsLeague
 
         private void Game_close(object sender, RoutedEventArgs e)
         {
+            bExit_Pressed = true;
             this.Close();
         }
 
@@ -411,10 +421,11 @@ namespace SpectatorFootball.WindowsLeague
             List<Graphics_Game_Player> Offensive_Players;
             List<Graphics_Game_Player> Defensive_Players;
 
+            Background_Crowd.Volume = crowd_volumn;
+            Background_Crowd.Play();
+
             while (!bGameEneded)
             {
-                Background_Crowd.Volume = initial_crowd_volumn;
-                Background_Crowd.Play();
                 gGame_Ball = null;
                 Offensive_Players = null;
                 Defensive_Players = null;
@@ -452,11 +463,10 @@ namespace SpectatorFootball.WindowsLeague
                     {
                         //set the ball position and state
                         gGame_Ball.Update();
-
                         //                        if (gGame_Ball.bStageFinished)
                         //                            bStageFinished = true;
 
-                        //Go thru all offensive and def players and place them
+                            //Go thru all offensive and def players and place them
                         for (int pSlot = 0; pSlot < Offensive_Players.Count(); pSlot++)
                         {
                             Offensive_Players[pSlot].ChangeStage(stg);
@@ -481,6 +491,8 @@ namespace SpectatorFootball.WindowsLeague
                         ShowGraphicObjects(a_edge, gGame_Ball, Offensive_Players, Defensive_Players, bBall_Over_Goalposts, Play.bLefttoRight);
                         if (gGame_Ball.bStageFinished)
                             bStageFinished = true;
+
+                        logger.Debug("Crowd Volume: " + crowd_volumn);
                     } while (!bStageFinished);
                     /*
                                             if (!gGame_Ball.arePointsDone())
@@ -495,9 +507,13 @@ namespace SpectatorFootball.WindowsLeague
                                             }
                     */
                 }
-                Play_Sound(Game_Sounds.WHISTLE);
 
-                await Task.Delay(500);
+                if (!bExit_Pressed)
+                    Play_Sound(Game_Sounds.WHISTLE);
+                else
+                    break;
+
+                await Task.Delay(sleepfor);
                 //                Thread.Sleep(500);
 
                 //                bGameEneded = Play.bGameOver;
@@ -505,6 +521,8 @@ namespace SpectatorFootball.WindowsLeague
                 bGameEneded = true;
 //                backgroundMusicPlayer.Stop();
             }  //Game ended
+
+            logger.Debug("Crowd Volume: " + crowd_volumn);
         }
 
         private double[] setViewEdge(double YardLIne, bool bLefttoRight, double vert_percent)
@@ -779,8 +797,10 @@ namespace SpectatorFootball.WindowsLeague
                 Play_Sound((Game_Sounds)Game_Ball.Sound);
 
             //adjust crowd noise 
-            Background_Crowd.Volume += Game_Ball.crowd_adj * Game_Engine_Helper.HorizontalAdj(bLefttoRight);
-             
+            //            Background_Crowd.Volume += Game_Ball.crowd_adj * Game_Engine_Helper.HorizontalAdj(!bLefttoRight);
+            adjust_crowd_noise(Game_Ball.crowd_adj, bChampionshipGame, !bLefttoRight); 
+
+
             List<Rectangle> off_Players_rect = null;
             List<Rectangle> def_Players_rect = null;
 
@@ -809,7 +829,8 @@ namespace SpectatorFootball.WindowsLeague
                     if (f.Sound != Game_Sounds.NONE)
                         Play_Sound((Game_Sounds)f.Sound);
 
-                Background_Crowd.Volume += f.crowd_adj * Game_Engine_Helper.HorizontalAdj(bLefttoRight);
+                //                Background_Crowd.Volume += f.crowd_adj * Game_Engine_Helper.HorizontalAdj(!bLefttoRight);
+                adjust_crowd_noise(f.crowd_adj, bChampionshipGame, !bLefttoRight);
 
                 setPlayer(Game_Ball, f, a_edge, off_Player_Sprites, bLefttoRight, true, xxx, off_Players_rect);
 
@@ -822,7 +843,8 @@ namespace SpectatorFootball.WindowsLeague
                     if (f.Sound != Game_Sounds.NONE)
                         Play_Sound((Game_Sounds)f.Sound);
 
-                Background_Crowd.Volume += f.crowd_adj * Game_Engine_Helper.HorizontalAdj(bLefttoRight);
+                //                Background_Crowd.Volume += f.crowd_adj * Game_Engine_Helper.HorizontalAdj(!bLefttoRight);
+                adjust_crowd_noise(f.crowd_adj, bChampionshipGame, !bLefttoRight);
 
                 setPlayer(Game_Ball, f, a_edge, def_Player_Sprites, bLefttoRight, false, xxx, def_Players_rect);
 
@@ -939,5 +961,24 @@ namespace SpectatorFootball.WindowsLeague
         {
             Background_Crowd.Position = TimeSpan.FromMilliseconds(1);
         }
+
+        private void adjust_crowd_noise(double adj, bool bChampGame, bool bLefttoRight)
+        {
+            
+            
+             if (adj != 0) logger.Debug("adj: " + adj);
+
+            adj *= Game_Engine_Helper.HorizontalAdj(bLefttoRight);
+
+            //In the championship game, the crowd cheers for both teams.
+            adj = bChampGame ? Math.Abs(adj) : adj;
+
+            adj = adj < 0 ? adj / 4.0 : adj;
+
+            crowd_volumn += adj;
+
+            Background_Crowd.Volume = crowd_volumn;
+        }
+
     }
 }

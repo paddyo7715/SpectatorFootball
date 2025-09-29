@@ -60,8 +60,11 @@ namespace SpectatorFootball.unitTests.Integration_Tests.Punts
             int R_Safety_Block = 0;
             int R_Punts = 0;
             double R_Punt_Yards = 0.0;
+            int bad_plays = 0;
 
             double g_yardline = 0.0;
+
+            int bad_players = 0;
 
             int num_plays = 20000;
             int icount = num_plays / 2;
@@ -100,6 +103,12 @@ namespace SpectatorFootball.unitTests.Integration_Tests.Punts
 
                 Play_Punt Punt = new Play_Punt(Punt_Forn, Punt_Ret_Form, possess_team, at, ht, gb, Punt_Players, Receiving_Players, bLefttoRight, false);
                 Play_Result pResult = Punt.Execute(false);
+
+                bad_players = Play_Validator.testPlayerStage_Irregularities(gb, Punt_Players, Receiving_Players);
+                if (bad_players > 0) bad_players = 1;
+
+                if (bad_players == 1)
+                    bad_plays++;
 
                 string Play_Result_Validation = Play_Validator.Validate_Play_Result(Play_Enum.PUNT, Punt_Players, Receiving_Players, pResult, gb, bLefttoRight);
                 if (Play_Result_Validation != null)
@@ -156,6 +165,9 @@ namespace SpectatorFootball.unitTests.Integration_Tests.Punts
 
             double L_avg = (double)L_avg_return / (double)L_num_returned;
             double L_Punt_Avg = L_Punt_Yards / L_Punts;
+
+            if (bad_plays > 0)
+                throw new Exception("Too many bad plays " + bad_plays);
 
             if (L_num_returned != icount - L_Blocked_Punts)
                 throw new Exception("L_num_returns out of range " + L_num_returned);

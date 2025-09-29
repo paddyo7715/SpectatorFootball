@@ -453,6 +453,20 @@ namespace SpectatorFootball.GameNS
             Stages.Add(bStage);
             State = Ball_States.BOUNCING;
         }
+        public void Bounce_Along_Ground_Slow()
+        {
+            Play_Stage bStage = new Play_Stage();
+            bStage.Main_Object = true;
+//            Action bas = new Action(Game_Object_Types.B, Current_YardLine, Current_Vertical_Percent_Pos, Current_YardLine, Current_Vertical_Percent_Pos, true, null, Ball_States.CARRIED, Movement.FAKE_MOVEMENT, null, false, delay_start);
+            Action bas2 = new Action(Game_Object_Types.B, Starting_YardLine, Starting_Vertical_Percent_Pos, Current_YardLine, Current_Vertical_Percent_Pos, false, null, Ball_States.BOUNCING, Movement.LINE, Ball_Speed.NORMAL, false, 0);
+//            Action bas3 = new Action(Game_Object_Types.B, Current_YardLine, Current_Vertical_Percent_Pos, Current_YardLine, Current_Vertical_Percent_Pos, true, null, Ball_States.CARRIED, Movement.FAKE_MOVEMENT, null, false, delay_end);
+
+//            bStage.Actions.Add(bas);
+            bStage.Actions.Add(bas2);
+//            bStage.Actions.Add(bas3);
+            Stages.Add(bStage);
+            State = Ball_States.BOUNCING;
+        }
 
     }
 }

@@ -150,10 +150,19 @@ namespace SpectatorFootball.GameNS
 
             gBall.TeeUp();
 
+            bool bfirst = true;
             int io_Players = 0;
             foreach (Game_Player p in FG_Players)
             {
                 bool bMain = true;
+                if (bfirst)
+                {
+                    bMain = true;
+                    bfirst = false;
+                }
+                else
+                    bMain = false;
+
                 double prev_yl = p.Current_YardLine;
                 double prev_v = p.Current_Vertical_Percent_Pos;
 
@@ -333,7 +342,7 @@ namespace SpectatorFootball.GameNS
             double half_yards = 4.0;
 
 
-            gBall.Carried_Fake_Movement(100);
+            gBall.Carried_Fake_Movement(1);
 
             int io_Players = 0;
             foreach (Game_Player p in FG_Players)

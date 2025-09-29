@@ -20,6 +20,7 @@ namespace SpectatorFootball.Integration_Tests.Kickoff
         {
             List<Game_Player> Kickoff_Players = null;
             List<Game_Player> Receiving_Players = null;
+            int bad_plays = 0;
 
             int at = 11;
             int ht = 22;
@@ -35,6 +36,8 @@ namespace SpectatorFootball.Integration_Tests.Kickoff
 
             double g_yardline = 0.0;
             Play_Enum pe = Play_Enum.KICKOFF_ONSIDES;
+
+            int bad_players = 0;
 
             int num_plays = 20000;
             for (int i = 0; i < num_plays; i++)
@@ -73,6 +76,12 @@ namespace SpectatorFootball.Integration_Tests.Kickoff
                 Play_Kickoff_Onsides kickoff = new Play_Kickoff_Onsides(KickForm, RecForm, possess_team, at, ht, gb, Kickoff_Players, Receiving_Players, bLefttoRight, false, false);
                 Play_Result pResult = kickoff.Execute(false);
 
+                bad_players = Play_Validator.testPlayerStage_Irregularities(gb, Kickoff_Players, Receiving_Players);
+                if (bad_players > 0) bad_players = 1;
+
+                if (bad_players == 1)
+                    bad_plays++;
+
                 string Play_Result_Validation = Play_Validator.Validate_Play_Result(Play_Enum.KICKOFF_ONSIDES, Kickoff_Players, Receiving_Players, pResult, gb, bLefttoRight);
                 if (Play_Result_Validation != null)
                     throw new Exception(Play_Result_Validation);
@@ -97,6 +106,9 @@ namespace SpectatorFootball.Integration_Tests.Kickoff
             }
 
             //Actual onside stats should be 4 out of 10 muffed and 2 out of 10 sucessful.
+
+            if (bad_plays > 0)
+                throw new Exception("Too many bad plays " + bad_plays);
 
             if (L_bOnside_Muffed < 3000 || L_bOnside_Muffed > 5000)
                 throw new Exception("L_bOnside_Muffed out of range " + L_bOnside_Muffed);

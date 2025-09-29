@@ -1,4 +1,5 @@
-﻿using SpectatorFootball.Enum;
+﻿using SpectatorFootball.Common;
+using SpectatorFootball.Enum;
 using SpectatorFootball.GameNS;
 using SpectatorFootball.Models;
 using System;
@@ -6,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Action = SpectatorFootball.GameNS.Action;
 
 namespace SpectatorFootball.PlayNS
 {
@@ -364,6 +366,179 @@ namespace SpectatorFootball.PlayNS
             }
 
             return r;
+        }
+        public static int testPlayerStage_Irregularities(Game_Ball Game_Ball, List<Game_Player> Offensive_Players, List<Game_Player> Defensive_Players)
+        {
+            int r = 0;
+
+            for (int stg = 0; stg < Game_Ball.Stages.Count(); stg++)
+            {
+                List<Play_Stage> stage_list = new List<Play_Stage>();
+
+                foreach (Game_Player p in Offensive_Players)
+                    stage_list.Add(p.Stages[stg]);
+
+                foreach (Game_Player p in Defensive_Players)
+                    stage_list.Add(p.Stages[stg]);
+
+                stage_list.Add(Game_Ball.Stages[stg]);
+
+                int mainCount = stage_list.Where(x => x.Main_Object).Count();
+                if (mainCount != 1)
+                    r = 1;
+
+                int mainXYPoints = 0;
+
+            int not_mainMaxXYPoints = 0;
+            int index = 0;
+            foreach (Play_Stage p in stage_list)
+            {
+                if (p.Main_Object)
+                    mainXYPoints = Game_Helper.getTotXYPoints(p);
+                else
+                {
+                    int pointxyCount = Game_Helper.getTotXYPoints(p);
+                    not_mainMaxXYPoints = pointxyCount > not_mainMaxXYPoints ? pointxyCount : not_mainMaxXYPoints;
+                }
+            }
+
+            if (not_mainMaxXYPoints > mainXYPoints)
+                r = not_mainMaxXYPoints - mainXYPoints;
+            }
+
+            return r;
+        }
+
+        public static bool check_play_stages(Game_Ball Game_Ball, List<Game_Player> Offensive_Players, List<Game_Player> Defensive_Players)
+        {
+            //check that the number of stages are equal for all players and some other
+            //things, such as there is only 1 main object per stage and there are no players
+            //that are not main that have extra points to plot that won't when the stage
+            //ends
+            bool r = true;
+
+            int ball_stages = Game_Ball.Stages.Count();
+            for (int pind = 0; pind < Offensive_Players.Count(); pind++)
+            {
+                if (Offensive_Players[pind].Stages.Count() != ball_stages ||
+                    Defensive_Players[pind].Stages.Count() != ball_stages)
+                    r = false;
+            }
+
+            return r;
+        }
+
+        public static string Test_Last_Stage_for_NotMain_points(int sInd, Game_Ball Game_Ball, List<Game_Player> Offensive_Players, List<Game_Player> Defensive_Players)
+        {
+            string r = null;
+
+            int mainXYPoints = 0;
+            string maint_team = "";
+            string maint_team_id = "";
+
+            int not_mainMaxXYPoints = 0;
+            string not_maint_team = "";
+            string not_maint_team_id = "";
+
+
+
+            //check the ball
+            if (Game_Ball.Stages[sInd].Main_Object)
+            {
+                mainXYPoints = Game_Helper.getTotXYPoints(Game_Ball.Stages[sInd]);
+                maint_team = "Ball";
+            }
+            else
+            {
+                not_mainMaxXYPoints = Game_Helper.getTotXYPoints(Game_Ball.Stages[sInd]);
+                maint_team = "Ball";
+            }
+
+            int index = 0;
+            foreach (Game_Player p in Offensive_Players)
+            {
+                int xppoints = Game_Helper.getTotXYPoints(p.Stages[sInd]);
+                if (p.Stages[sInd].Main_Object)
+                {
+                    if (xppoints > mainXYPoints)
+                    {
+                        mainXYPoints = Game_Helper.getTotXYPoints(p.Stages[sInd]);
+                        maint_team = "Off";
+                        maint_team_id = index.ToString();
+                    }
+                }
+                else
+                {
+                    if (xppoints > not_mainMaxXYPoints)
+                    {
+                        not_mainMaxXYPoints = Game_Helper.getTotXYPoints(p.Stages[sInd]);
+                        not_maint_team = "Off";
+                        not_maint_team_id = index.ToString();
+                    }
+                }
+                index++;
+            }
+
+            index = 0;
+            foreach (Game_Player p in Defensive_Players)
+            {
+                int xppoints = Game_Helper.getTotXYPoints(p.Stages[sInd]);
+                if (p.Stages[sInd].Main_Object)
+                {
+                    if (xppoints > mainXYPoints)
+                    {
+                        mainXYPoints = Game_Helper.getTotXYPoints(p.Stages[sInd]);
+                        maint_team = "Def";
+                        maint_team_id = index.ToString();
+                    }
+                }
+                else
+                {
+                    if (xppoints > not_mainMaxXYPoints)
+                    {
+                        not_mainMaxXYPoints = Game_Helper.getTotXYPoints(p.Stages[sInd]);
+                        not_maint_team = "Def";
+                        not_maint_team_id = index.ToString(); 
+                    }
+                }
+                index++;
+            }
+
+            if (not_mainMaxXYPoints > mainXYPoints)
+                r = "Stage Index: " + sInd + "[Maint:" + maint_team + " index: " + maint_team_id + " XY: " + mainXYPoints +
+                    " NonMt: " + not_maint_team + " index: " + not_maint_team_id + " XY: " + not_mainMaxXYPoints + "]";
+
+            return r;
+        }
+
+        public static void testXYPoint_NotTooFarApart(List<Play_Stage> Stages)
+        {
+            bool bFirst = true;
+            PointXY current_Point = null;
+            PointXY prev_point = null;
+            double max_diff = 20.0;
+
+            foreach (Play_Stage ps in Stages)
+            {
+                foreach (Action act in ps.Actions)
+                {
+                    foreach (PointXY xy in act.PointXY)
+                    {
+                        current_Point = xy;
+                        if (bFirst)
+                            bFirst = false;
+                        else
+                        {
+                            double diff = PointPlotter.Dist_Between_2_Points(current_Point.x, current_Point.y, prev_point.x, prev_point.y);
+                            if (diff > max_diff)
+                                throw new Exception("GameEngine testXYPoint_NotTooFarApart - XY points too far for player or ball");
+
+                        }
+
+                        prev_point = current_Point;
+                    }
+                }
+            }
         }
     }
 }
