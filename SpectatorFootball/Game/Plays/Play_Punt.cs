@@ -84,6 +84,7 @@ namespace SpectatorFootball.GameNS
             double starting_yardline = gBall.Current_YardLine;
             r.Play_Start_Yardline = starting_yardline;
 
+
             Set_Ball_and_Players_Before_Snap(gBall, Punt_Players, Return_Players, Punt_Formation, Return_Formation);
 
             if (bPreSnapPenalty)
@@ -97,7 +98,7 @@ namespace SpectatorFootball.GameNS
                 if (r.Defender_Close_to_Kicker != null && puntBlocked((double)Punt_Formation.Punter_Behind_Line_ayrds))
                 {
                     r.bPunt_blocked = true;
-                    Tuple<Game_Player, bool> t = Playstub_Punt_Block.Execute(bLefttoRight, gBall, Punt_Players, Return_Players, Blockers, Attackers, r.Punter, false);
+                    Tuple<Game_Player, bool> t = Playstub_Punt_Block.Execute(bLefttoRight, gBall, Punt_Players, Return_Players, Blockers, Attackers, r.Punter, true);
                     r.Blocked_Punt_Recoverer = t.Item1;
 
                     bool bPunt_Team_Recovers = Punt_Players.Any(x => x == r.Blocked_Punt_Recoverer);
@@ -110,11 +111,6 @@ namespace SpectatorFootball.GameNS
                     var t = getMaxPuntLengthandVert(r.Punter);
                     double MaxPuntLen = t.Item1;
                     double MaxPuntVert = t.Item2;
-
-                    //bpo test
-//                    MaxPuntLen = 39.0;
-//                    MaxPuntVert = 99.0;
-                    //
 
                     var t2 = Game_Engine_Helper.isCCEligible_and_Punt_long_Enough(MaxPuntLen, starting_yardline, bLefttoRight);
 
@@ -788,7 +784,11 @@ namespace SpectatorFootball.GameNS
                             Player_States moving_ps2 = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
                             if (r.Tackler != null)
                             {
-                                p.Run_and_Tackled(moving_ps, prev_yl, prev_v);
+                                double crowd_adj = 0.0;
+                                if (i == 1)
+                                    crowd_adj = 0.15;
+
+                                p.Run_and_Tackled(moving_ps, prev_yl, prev_v, crowd_adj);
                                 gBall.Carried_Tackled(prev_yl, prev_v);
                             }
                             else

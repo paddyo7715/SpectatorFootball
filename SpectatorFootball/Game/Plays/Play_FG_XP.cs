@@ -93,6 +93,9 @@ namespace SpectatorFootball.GameNS
                 if (Kick_Blocker != null)
                     r.FGXP_Blocked = isKickBlocked();
 
+                //bpo
+                //r.FGXP_Blocked = true;
+
                 //if there is a block then there can't be a roughing/runnig into the kicker penalty
                 if (r.FGXP_Blocked)
                 {
@@ -418,7 +421,7 @@ namespace SpectatorFootball.GameNS
             double end_yl = gBall.Current_YardLine + yards_blocked * Game_Engine_Helper.HorizontalAdj(bLefttoRight);
             double end_v = ending_vert;
 
-            gBall.FG_Blocked(prev_yl, prev_v, end_yl, end_v, bLefttoRight);
+            gBall.FG_Blocked(prev_yl, prev_v, end_yl, end_v, bLefttoRight, -0.4);
 
             int io_Players = 0;
             foreach (Game_Player p in FG_Players)

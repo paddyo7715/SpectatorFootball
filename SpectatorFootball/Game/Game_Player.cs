@@ -350,27 +350,27 @@ namespace SpectatorFootball.GameNS
             State = moving_ps;
         }
 
-        public void Run_and_Tackled(Player_States moving_ps, double prev_yl, double prev_v)
+        public void Run_and_Tackled(Player_States moving_ps, double prev_yl, double prev_v, double crowd_adj)
         {
             Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, true, moving_ps, null, Movement.LINE, null, false, 0);
             Action pas2 = null;
             pas2 = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, true, Player_States.TACKLED, null, Movement.FAKE_MOVEMENT, null, false, 5);
+            pas.Effects = new Action_Effects() { Before_Sound = Game_Sounds.PLAYER_TACKLED, After_noise_adj = crowd_adj };
             Play_Stage pStage = new Play_Stage();
             pStage.Main_Object = true;
             pStage.Actions.Add(pas);
             pStage.Actions.Add(pas2);
             Stages.Add(pStage);
-            pas2.Effects = new Action_Effects() { Before_Sound = Game_Sounds.PLAYER_TACKLED };
             State = Player_States.TACKLED;
         }
+
         public void Cover_Ball(Player_States moving_ps, double prev_yl, double prev_v, bool bOrigg_Ball_poss)
         {
             double crowd_adj = 0.30;
             crowd_adj = bOrigg_Ball_poss ? crowd_adj * -1 : crowd_adj;
-
             Action pas2 = null;
-            pas2 = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, true, Player_States.TACKLED, null, Movement.FAKE_MOVEMENT, null, false, 14);
-            pas2.Effects = new Action_Effects() { Before_noise_adj = crowd_adj };
+            pas2 = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, true, Player_States.TACKLED, null, Movement.FAKE_MOVEMENT, null, false, 24);
+            pas2.Effects = new Action_Effects() { Before_noise_adj = crowd_adj};
             Play_Stage pStage = new Play_Stage();
             pStage.Main_Object = true;
             pStage.Actions.Add(pas2);
@@ -443,11 +443,12 @@ namespace SpectatorFootball.GameNS
             State = Player_States.FG_HOLDER_PLACE_BALL;
         }
 
-        public void Fall_On_Ball(double prev_yl, double prev_v)
+        public void Fall_On_Ball(double prev_yl, double prev_v, double crowd_adj)
         {
             int fakemovements = 10;
 
             Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, true, Player_States.FALL_ON_BALL, null, Movement.FAKE_MOVEMENT, null, true, fakemovements);
+            pas.Effects = new Action_Effects() { After_noise_adj = crowd_adj };
             Play_Stage pStage = new Play_Stage();
             pStage.Main_Object = true;
             pStage.Actions.Add(pas);
@@ -571,9 +572,10 @@ namespace SpectatorFootball.GameNS
             Stages.Add(pStage);
             State = Player_States.BLOCK_KICK;
         }
-        public void Punter_Put_Leg_Down()
+        public void Punter_Put_Leg_Down(double crowd_adj)
         {
             Action pas = new Action(Game_Object_Types.P, Current_YardLine, Current_Vertical_Percent_Pos, Current_YardLine, Current_Vertical_Percent_Pos, true, Player_States.PUNTER_AFTER_KICK, null, Movement.FAKE_MOVEMENT, null, true, 3);
+            pas.Effects = new Action_Effects() { Before_noise_adj = crowd_adj };
             Play_Stage pStage = new Play_Stage();
             pStage.Main_Object = false;
             pStage.Actions.Add(pas);

@@ -25,6 +25,9 @@ using System.Media;
 using System.Runtime.InteropServices.WindowsRuntime;
 using OxyPlot.Wpf;
 using System.Windows.Media.Animation;
+using System.Collections.ObjectModel;
+using SpectatorFootball.League;
+using System.Diagnostics.Eventing.Reader;
 
 namespace SpectatorFootball.WindowsLeague
 {
@@ -34,6 +37,7 @@ namespace SpectatorFootball.WindowsLeague
     public partial class Game_Window : Window
     {
         private static ILog logger = LogManager.GetLogger("RollingFile");
+        public ObservableCollection<Football_Color_rec> ball_color_list { get; set; }
 
         public event EventHandler Set_TopMenu;
 
@@ -78,8 +82,6 @@ namespace SpectatorFootball.WindowsLeague
 
         private List<Rectangle> Goalpost_Rects = new List<Rectangle>();
         private Rectangle Mid_Field_Art_Rect = null;
-
-        private bool ThreeDee_ball;
 
         private const int PLAYER_SIZE = 50;
         private const int PLAYER_BALL_SIZE_DIFF = 30;
@@ -133,18 +135,34 @@ namespace SpectatorFootball.WindowsLeague
         private MediaPlayer crowd_player = null;
 
         private double crowd_volumn = .4;
+        private bool bCrowd_Noise = false;
 
         private bool bExit_Pressed = false;
 
         private bool bChampionshipGame = false;
 
+        private string Global_Game_Spped = null;
+
         //flash message
         private int iflashmessages_count = 0;
         private const int FLASH_MESSAGES = 10;
 
-        public Game_Window(MainWindow pw, Game g)
+        public Game_Window(MainWindow pw, Game g, bool bCrowdNoise, bool bFootballSounds, string GameSpeed)
         {
             InitializeComponent();
+
+            chbCrowdNoise.IsChecked = bCrowdNoise;
+            chbFootballSounds.IsChecked = bFootballSounds;
+
+            GameSpeed = GameSpeed.Trim();
+            setSpeedButtons(GameSpeed);
+
+            lblGameSpeed.Content = getGameSpeedDisplay(GameSpeed);
+            Global_Game_Spped = GameSpeed;
+
+            ball_color_list = new ObservableCollection<Football_Color_rec>(League_Helper.getBallColors());
+
+            this.DataContext = this;
 
             //Needed to prime the media player
             Play_Sound(Game_Sounds.SILENCE);
@@ -171,14 +189,11 @@ namespace SpectatorFootball.WindowsLeague
                 MyCanvas.Height = this.Height - 70;
                 MyCanvas.Width = this.Width - 10;
 
-
                 Gamepnl.Width = this.Width - 10;
                 Gamepnl.Height = this.Height - 10;
 
-
                 Game_intro_pnl.Width = this.Width - 10;
                 Game_intro_pnl.Height = this.Height - 10;
-
 
                 Canvas.SetLeft(background, 0);
                 Canvas.SetTop(background, 0);
@@ -272,11 +287,10 @@ namespace SpectatorFootball.WindowsLeague
                 Uniform_Img.Flip_All_Colors(false, CommonUtils.SystemDrawColorfromHex(at.Helmet_Color), CommonUtils.SystemDrawColorfromHex(at.Helmet_Facemask_Color), CommonUtils.SystemDrawColorfromHex(at.Helmet_Logo_Color), CommonUtils.SystemDrawColorfromHex(at.Away_jersey_Color), CommonUtils.SystemDrawColorfromHex(at.Away_Jersey_Number_Color), CommonUtils.SystemDrawColorfromHex(at.Away_Jersey_Number_Outline_Color), CommonUtils.SystemDrawColorfromHex(at.Away_Sleeve_Color), CommonUtils.SystemDrawColorfromHex(at.Away_Jersey_Shoulder_Stripe), CommonUtils.SystemDrawColorfromHex(at.Away_Jersey_Sleeve_Stripe_Color_1), CommonUtils.SystemDrawColorfromHex(at.Away_Jersey_Sleeve_Stripe_Color_2), CommonUtils.SystemDrawColorfromHex(at.Away_Jersey_Sleeve_Stripe_Color_3), CommonUtils.SystemDrawColorfromHex(at.Away_Jersey_Sleeve_Stripe_Color_4), CommonUtils.SystemDrawColorfromHex(at.Away_Jersey_Sleeve_Stripe_Color_5), CommonUtils.SystemDrawColorfromHex(at.Away_Jersey_Sleeve_Stripe_Color_6), CommonUtils.SystemDrawColorfromHex(at.Away_Pants_Color), CommonUtils.SystemDrawColorfromHex(at.Away_Pants_Stripe_Color_1), CommonUtils.SystemDrawColorfromHex(at.Away_Pants_Stripe_Color_2), CommonUtils.SystemDrawColorfromHex(at.Away_Pants_Stripe_Color_3), CommonUtils.SystemDrawColorfromHex(at.Socks_Color), CommonUtils.SystemDrawColorfromHex(at.Cleats_Color));
 
                 League_Services ls = new League_Services();
-                string[] m = ls.getGameOptions();
-                string[] m2 = m[0].Split('|');
+                Tuple<string, bool, bool, string> t = ls.getGameOptions();
+                string[] m2 = t.Item1.Split('|');
                 ball_Color = m2[0];
                 ball_shade_color = m2[1];
-                ThreeDee_ball = Convert.ToBoolean(m[1]);
 
                 Uniform_Img.Flip_One_Color(true, app_Constants.STOCK_BALL_COLOR, CommonUtils.SystemDrawColorfromHex(ball_Color));
                 Uniform_Img.Flip_One_Color(false, app_Constants.STOCK_BALL_COLOR, CommonUtils.SystemDrawColorfromHex(ball_Color));
@@ -432,7 +446,7 @@ namespace SpectatorFootball.WindowsLeague
                 Play = ge.ExecutePlay();
 
                 //play.game_ball is null error
-                gGame_Ball = new Graphics_Game_Ball(Play.Game_Ball.Initial_State, Play.Game_Ball.Starting_YardLine, Play.Game_Ball.Starting_Vertical_Percent_Pos, Play.Game_Ball.Stages, ThreeDee_ball);
+                gGame_Ball = new Graphics_Game_Ball(Play.Game_Ball.Initial_State, Play.Game_Ball.Starting_YardLine, Play.Game_Ball.Starting_Vertical_Percent_Pos, Play.Game_Ball.Stages);
 
                 Offensive_Players = CreateGamePlayersLIst(Play.Offensive_Players);
                 Defensive_Players = CreateGamePlayersLIst(Play.Defensive_Players);
@@ -751,11 +765,15 @@ namespace SpectatorFootball.WindowsLeague
 
         private void btnSpeedSlower_click(object sender, EventArgs e)
         {
-
+            Global_Game_Spped = getNextSpeedCode(Global_Game_Spped, false);
+            setSpeedButtons(Global_Game_Spped);
+            lblGameSpeed.Content = getGameSpeedDisplay(Global_Game_Spped);
         }
         private void btnSpeedFaster_click(object sender, EventArgs e)
         {
-
+            Global_Game_Spped = getNextSpeedCode(Global_Game_Spped, true);
+            setSpeedButtons(Global_Game_Spped);
+            lblGameSpeed.Content = getGameSpeedDisplay(Global_Game_Spped);
         }
         private void btnPauseResume_click(object sender, EventArgs e)
         {
@@ -797,7 +815,6 @@ namespace SpectatorFootball.WindowsLeague
                 Play_Sound((Game_Sounds)Game_Ball.Sound);
 
             //adjust crowd noise 
-            //            Background_Crowd.Volume += Game_Ball.crowd_adj * Game_Engine_Helper.HorizontalAdj(!bLefttoRight);
             adjust_crowd_noise(Game_Ball.crowd_adj, bChampionshipGame, !bLefttoRight); 
 
 
@@ -977,8 +994,80 @@ namespace SpectatorFootball.WindowsLeague
 
             crowd_volumn += adj;
 
-            Background_Crowd.Volume = crowd_volumn;
+            if (bCrowd_Noise) 
+                Background_Crowd.Volume = crowd_volumn;
         }
 
+        private void chbCrowdNoise_Click(object sender, RoutedEventArgs e)
+        {
+            if (chbCrowdNoise.IsChecked == null || chbCrowdNoise.IsChecked == false)
+            {
+                Background_Crowd.Volume = 0;
+                bCrowd_Noise = false;
+            }
+            else
+            {
+                Background_Crowd.Volume = crowd_volumn;
+                bCrowd_Noise = true;
+            }
+
+
+        }
+
+        private string getGameSpeedDisplay(string GameSpeed)
+        {
+            string r = null;
+
+            if (GameSpeed == "FF")
+                r = "Fastest";
+            else if (GameSpeed == "F")
+                r = "Fast";
+            else if (GameSpeed == "N")
+                r = "Normal";
+            else if (GameSpeed == "S")
+                r = "Slow";
+            else if (GameSpeed == "SS")
+                r = "Slowest";
+
+            return r;
+        }
+        private void setSpeedButtons(string Spedcode)
+        {
+            bool bSlower = true;
+            bool bFaster = true;
+
+            if (Spedcode == "SS")
+                bSlower = false;
+            else if (Spedcode == "FF")
+                bFaster = false;
+
+            btnSpeedSlower.IsEnabled = bSlower;
+            btnSpeedFaster.IsEnabled = bFaster;
+        }
+
+        private string getNextSpeedCode(string oldSppedCode, bool bUp)
+        {
+            string r = null;
+            List<string> scodes = new List<string>()
+            { "SS", "S", "N", "F", "FF"};
+
+            int current_index = scodes.IndexOf(oldSppedCode);
+
+            if (current_index == -1)
+                MessageBox.Show("Error", "Current Speed Code Not found");
+            else
+            {
+                int new_index = current_index;
+
+                if (bUp && current_index < scodes.Count - 1)
+                    new_index++;
+                else if (!bUp && current_index > 0)
+                    new_index--;
+
+                r = scodes[new_index];
+            }
+
+            return r;
+        }
     }
 }

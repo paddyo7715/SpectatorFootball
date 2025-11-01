@@ -629,6 +629,21 @@ namespace SpectatorFootball.League
 
             return r;
         }
+
+        public static List<Football_Color_rec> getBallColors()
+        {
+            List<Football_Color_rec> r = new List<Football_Color_rec>();
+
+            r.Add(new Football_Color_rec() { name = "White", Color1 = "#FFFFFF", Color2 = "#808080" });
+            r.Add(new Football_Color_rec() { name = "Brown", Color1 = "#806517", Color2 = "#000000" });
+            r.Add(new Football_Color_rec() { name = "Black", Color1 = "#2C3539", Color2 = "#000000" });
+            r.Add(new Football_Color_rec() { name = "Red", Color1 = "#FF0000", Color2 = "#63221c" });
+            r.Add(new Football_Color_rec() { name = "Blue", Color1 = "#0000FF", Color2 = "#1e2042" });
+            r.Add(new Football_Color_rec() { name = "Yellow", Color1 = "#FFFF00", Color2 = "#967e17" });
+            r.Add(new Football_Color_rec() { name = "Magenta", Color1 = "#FF00FF", Color2 = "#591548" });
+
+            return r;
+        }
     }
 }
 

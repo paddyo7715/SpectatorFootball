@@ -692,10 +692,6 @@ namespace SpectatorFootball.GameNS
                     //bpo test
                     //tackler_tackle_rating = 1;
 
-                    int hhh = 0;
-                    if (i == 4)
-                        hhh = 1;
-
                     bool bTack = Game_Engine_Helper.Make_Tackle(3.5,
                         r.Returner.p_and_r.pr.First().Speed_Rating,
                         r.Returner.p_and_r.pr.First().Agilty_Rating,
@@ -792,7 +788,11 @@ namespace SpectatorFootball.GameNS
                             Player_States moving_ps2 = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
                             if (r.Tackler != null)
                             {
-                                p.Run_and_Tackled(moving_ps, prev_yl, prev_v);
+                                double crowd_adj = 0.0;
+                                if (i == 1)
+                                    crowd_adj = 0.15;
+
+                                p.Run_and_Tackled(moving_ps, prev_yl, prev_v, crowd_adj);
                                 gBall.Carried_Tackled(prev_yl, prev_v);
                             }
                             else
@@ -935,6 +935,9 @@ namespace SpectatorFootball.GameNS
                     r.bFumble = Game_Engine_Helper.DoesBallCarrierFumble(
                                Ball_Carry_Actions.KICK_RETURN,
                                ball_safety_rating, tackle_rating, run_attack_rating);
+
+                    //bpo test
+                   // r.bFumble = true;
 
                     r.test_counter++;
 

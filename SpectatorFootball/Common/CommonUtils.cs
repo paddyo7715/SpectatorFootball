@@ -413,15 +413,15 @@ namespace SpectatorFootball
             }
 
         }
-        public static double VaryDoulblernd(double p, int varience)
+        public static double VaryDoulblernd(double p, double varience)
         {
             double r = 0.0;
 
-            varience *= 10;
-            int toprnd = varience * 2;
+            varience *= 10.0;
+            int toprnd = (int) (varience * 2.0);
 
             int rnd = CommonUtils.getRandomNum(1, toprnd);
-            int temp = rnd - varience;
+            double temp = (double)(rnd) - varience;
 
             r = temp / 10.0;
 

@@ -103,8 +103,6 @@ using log4net;
 //                    p.Run(moving_ps, prev_yl, prev_v);
                 }
 
-
-
                 ind++;
             }
 

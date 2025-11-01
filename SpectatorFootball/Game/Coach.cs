@@ -110,14 +110,14 @@ namespace SpectatorFootball.GameNS
             //                                   f = Formations_Enum.KICKOFF_MODERN_KICK;
             //                                  p = Play_Enum.KICKOFF_MODERN;
 
-//                                     f = Formations_Enum.KICKOFF_FREE_KICK;
-  //                                   p = Play_Enum.KICKOFF_AFTER_SAFETY;
+            //                         f = Formations_Enum.KICKOFF_FREE_KICK;
+            //                         p = Play_Enum.KICKOFF_AFTER_SAFETY;
 
             //                        f = Formations_Enum.FIELD_GOAL;
             //                       p = Play_Enum.FIELD_GOAL;
 
-            //            f = Formations_Enum.KICKOFF_ONSIDE_KICK;
-            //            p = Play_Enum.KICKOFF_ONSIDES;
+           //             f = Formations_Enum.KICKOFF_ONSIDE_KICK;
+           //             p = Play_Enum.KICKOFF_ONSIDES;
 
             //f = Formations_Enum.PUNT;
             //p = Play_Enum.PUNT;

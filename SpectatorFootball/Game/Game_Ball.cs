@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SpectatorFootball.Common;
+using SpectatorFootball.NarrationAndText;
 
 namespace SpectatorFootball.GameNS
 {
@@ -195,7 +196,7 @@ namespace SpectatorFootball.GameNS
         }
 
 
-        public void FG_Blocked(double prev_yl, double prev_v, double end_yl, double end_v, bool blefttoRight)
+        public void FG_Blocked(double prev_yl, double prev_v, double end_yl, double end_v, bool blefttoRight, double crowd_adj)
         {
             const double BOUNCE_LENGTH = 4.7;
             const double ROLL_LENGTH = 4.0;
@@ -209,6 +210,8 @@ namespace SpectatorFootball.GameNS
 
             State = Ball_States.ROLLING; 
             Action bas = new Action(Game_Object_Types.B, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, false, null, Ball_States.END_OVER_END, Movement.LINE, Ball_Speed.NORMAL, false, 0);
+            bas.Effects = new Action_Effects() { After_noise_adj = crowd_adj };
+
 
             State = Ball_States.END_OVER_END;
             Action bas2 = new Action(Game_Object_Types.B, Current_YardLine, Current_Vertical_Percent_Pos, end_yl, end_v, false, null, Ball_States.END_OVER_END, Movement.LINE, Ball_Speed.NORMAL, false, 0);

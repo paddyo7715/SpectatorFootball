@@ -55,7 +55,7 @@ namespace SpectatorFootball
                 //Create game options file if it does not exist
                 string options_filename = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + app_Constants.GAME_OPTIONS_FILE;
                 if (!File.Exists(options_filename))
-                    Create_Options_File(app_Constants.DEFAULT_GAME_BALL_COLOR + "|" + app_Constants.DEFAULT_GAME_BALL_2_COLOR, true);
+                    Create_Options_File(app_Constants.DEFAULT_GAME_BALL_COLOR + "|" + app_Constants.DEFAULT_GAME_BALL_2_COLOR, true, true, "N");
 
                 // Create Backup Folder
                 logger.Info("Creating league backup folder");
@@ -251,7 +251,7 @@ namespace SpectatorFootball
             return s;
         }
 
-        public void Create_Options_File(string ball_color, bool ThreeDee)
+        public void Create_Options_File(string ball_color, bool bCrowdNoise, bool bFootballSounds, string GameSpped)
         {
             string options_filename = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + app_Constants.GAME_OPTIONS_FILE;
             FileStream stream = new FileStream(options_filename, FileMode.Create);
@@ -259,7 +259,9 @@ namespace SpectatorFootball
             using (StreamWriter sw = new StreamWriter(stream))
             {
                 sw.WriteLine("Game_Ball_Color: " + ball_color);
-                sw.WriteLine("Ball_Style_3d: " + ThreeDee.ToString());
+                sw.WriteLine("Crowd Noise: " + bCrowdNoise.ToString());
+                sw.WriteLine("Football Sounds: " + bFootballSounds.ToString());
+                sw.WriteLine("Game Speed: " + GameSpped);
             }
         }
 
@@ -1567,11 +1569,13 @@ namespace SpectatorFootball
             logger.Info("EndSeason Ended Successfully");
         }
 
-        public string[] getGameOptions()
+        public Tuple<string, bool, bool, string> getGameOptions()
         {
             string sBallColor = "";
-            string s3d = "";
-            bool tbool;
+            bool bCrowdNoise = true;
+            bool bFootballSounds = true;
+            string GameSpeed = "N";
+
 
             string options_filename = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + app_Constants.GAME_DOC_FOLDER + Path.DirectorySeparatorChar + app_Constants.GAME_OPTIONS_FILE;
             if (File.Exists(options_filename))
@@ -1580,27 +1584,36 @@ namespace SpectatorFootball
                 {
                     if (line.StartsWith("Game_Ball_Color:"))
                         sBallColor = line.Split(':')[1];
-                    if (line.StartsWith("Ball_Style_3d:"))
-                        s3d = line.Split(':')[1];
+                    else if (line.StartsWith("Crowd Noise:"))
+                    {
+                        string temp = line.Split(':')[1];
+                        if (!bool.TryParse(temp, out bCrowdNoise))
+                            bCrowdNoise = true;
+                    }
+                    else if (line.StartsWith("Football Sounds:"))
+                    {
+                        string temp = line.Split(':')[1];
+                        if (!bool.TryParse(temp, out bFootballSounds))
+                            bFootballSounds = true;
+                    }
+                    else if (line.StartsWith("Game Speed:"))
+                    {
+                        GameSpeed = line.Split(':')[1];
+                        List<string> gsList = new List<string>()
+                        {
+                            "FF", "F", "N", "S", "SS"
+                        };
+                        if (!gsList.Contains(GameSpeed.Trim()))
+                            GameSpeed = "N";
+                    }
                 }
-
-                try
-                {
-                    tbool = Convert.ToBoolean(s3d);
-                }
-                catch (Exception e)
-                {
-                    tbool = true;
-                }
-
             }
             else
             {
                 sBallColor = app_Constants.DEFAULT_GAME_BALL_COLOR + "|" + app_Constants.DEFAULT_GAME_BALL_2_COLOR;
-                s3d = "true";
             }
 
-            return new string[] { sBallColor.Trim(), s3d };
+            return Tuple.Create(sBallColor.Trim(), bCrowdNoise, bFootballSounds, GameSpeed);
 
         }
 

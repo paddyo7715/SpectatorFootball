@@ -32,7 +32,7 @@ namespace SpectatorFootball.GameNS
             {
                 if (p == Punter)
                 {
-                    p.Punter_Put_Leg_Down();
+                    p.Punter_Put_Leg_Down(-0.4);
                 }
                 else
                 {
@@ -86,8 +86,11 @@ namespace SpectatorFootball.GameNS
                 p.Current_YardLine = gBall.Current_YardLine;
                 p.Current_Vertical_Percent_Pos = gBall.Current_Vertical_Percent_Pos;
 
+                p.Current_YardLine += CommonUtils.VaryDoulblernd(p.Current_YardLine, 1.5);
+                p.Current_Vertical_Percent_Pos += CommonUtils.VaryDoulblernd(p.Current_Vertical_Percent_Pos, 1.5);
+
                 Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, 0.0);
-                if (p == r)
+                if (p == Punter)
                     p.Cover_Ball(moving_ps, prev_yl, prev_v, bOrignal_BallPossessorTeam);
                 else if (close_Punt_Players.Contains(p))
                     p.Attempt_Tackle(moving_ps, prev_yl, prev_v);
@@ -99,8 +102,8 @@ namespace SpectatorFootball.GameNS
                     moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, 0.0);
                     p.Run(moving_ps, prev_yl, prev_v);
 */
-                }
-                ind++;
+            }
+            ind++;
             }
 
             ind = 0;
@@ -112,10 +115,13 @@ namespace SpectatorFootball.GameNS
                 p.Current_YardLine = gBall.Current_YardLine;
                 p.Current_Vertical_Percent_Pos = gBall.Current_Vertical_Percent_Pos;
 
+                p.Current_YardLine += CommonUtils.VaryDoulblernd(p.Current_YardLine, 1.5);
+                p.Current_Vertical_Percent_Pos += CommonUtils.VaryDoulblernd(p.Current_Vertical_Percent_Pos, 1.5);
+
                 Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, false, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, 0.0);
 
-                if (p == r)
-                    p.Cover_Ball(moving_ps, prev_yl, prev_v, bOrignal_BallPossessorTeam);
+                if (close_Return_Players.Contains(p))
+                    p.Attempt_Tackle(moving_ps, prev_yl, prev_v);
                 else
                 {
                     p.Same_As_Last_Action();

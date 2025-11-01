@@ -6,118 +6,84 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SpectatorFootball.WindowsLeague"
         mc:Ignorable="d"
-        Height="190" Width="300" 
+        Height="390" Width="300" 
         WindowStyle="none" ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True">
     <Border Style="{StaticResource popupBD}" BorderThickness="1">
         <Viewbox Stretch="Uniform">
-            <StackPanel Style="{StaticResource popupSP}" Height="180" Width="290" Orientation="Vertical" >
-                <Label Style="{StaticResource popupTT}" HorizontalAlignment="Center">Game Options</Label>
+            <StackPanel Style="{StaticResource popupSP}" Height="380" Width="290" Orientation="Vertical" >
+                <Label Style="{StaticResource popupTT}" HorizontalAlignment="Center">Default Game Options</Label>
 
-                <StackPanel Orientation="Vertical" Style="{StaticResource HelpSP}" Width="270" Height="100">
+                <StackPanel Orientation="Vertical" Style="{StaticResource HelpSP}" Width="270" Height="300">
                     <StackPanel Orientation="Horizontal">
-                        <Label Height="30" VerticalContentAlignment="Center" Style="{StaticResource appProgressSmallLBL}" Width="100">Ball Color:</Label>
-                        <ComboBox Name="cboBallColor" Width="150" Height="30" FontSize="14" Style="{StaticResource ComboBoxstyleBlue}"  IsEditable="False">
-                            <ComboBoxItem Style="{StaticResource HelpCI}">
-                                <StackPanel Orientation="Horizontal">
-                                    <Ellipse Width="26" Height="13">
-                                        <Ellipse.Fill>
-                                            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                                                <GradientStop Color="#FFFFFF" Offset="0.0" />
-                                                <GradientStop Color="#808080" Offset="0.7" />
-                                            </LinearGradientBrush>
-                                        </Ellipse.Fill>
-                                    </Ellipse>
-                                    <Label FontSize="14" Foreground="Black">White</Label>
-                                </StackPanel>
-                            </ComboBoxItem>
-                            <ComboBoxItem Style="{StaticResource HelpCI}">
-                                <StackPanel Orientation="Horizontal" >
-                                    <Ellipse Width="26" Height="13" >
-                                        <Ellipse.Fill>
-                                            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                                                <GradientStop Color="#806517" Offset="0.0" />
-                                                <GradientStop Color="#000000" Offset="0.7" />
-                                            </LinearGradientBrush>
-                                        </Ellipse.Fill>
-                                    </Ellipse>
-                                    <Label FontSize="14" Foreground="Black">Brown</Label>
-                                </StackPanel>
-                            </ComboBoxItem>
-                            <ComboBoxItem Style="{StaticResource HelpCI}">
-                                <StackPanel Orientation="Horizontal">
-                                    <Ellipse Width="26" Height="13" >
-                                        <Ellipse.Fill>
-                                            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                                                <GradientStop Color="#2C3539" Offset="0.0" />
-                                                <GradientStop Color="#000000" Offset="0.7" />
-                                            </LinearGradientBrush>
-                                        </Ellipse.Fill>
-                                    </Ellipse>
-                                    <Label FontSize="14" Foreground="Black">Black</Label>
-                                </StackPanel>
-                            </ComboBoxItem>
-                            <ComboBoxItem Style="{StaticResource HelpCI}">
-                                <StackPanel Orientation="Horizontal">
-                                    <Ellipse Width="26" Height="13">
-                                        <Ellipse.Fill>
-                                            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                                                <GradientStop Color="#FF0000" Offset="0.0" />
-                                                <GradientStop Color="#63221c" Offset="0.7" />
-                                            </LinearGradientBrush>
-                                        </Ellipse.Fill>
-                                    </Ellipse>
-                                    <Label FontSize="14" Foreground="Black">Red</Label>
-                                </StackPanel>
-                            </ComboBoxItem>
-                            <ComboBoxItem Style="{StaticResource HelpCI}">
-                                <StackPanel Orientation="Horizontal">
-                                    <Ellipse Width="26" Height="13">
-                                        <Ellipse.Fill>
-                                            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                                                <GradientStop Color="#0000FF" Offset="0.0" />
-                                                <GradientStop Color="#1e2042" Offset="0.7" />
-                                            </LinearGradientBrush>
-                                        </Ellipse.Fill>
-                                    </Ellipse>
-                                    <Label FontSize="14" Foreground="Black">Blue</Label>
-                                </StackPanel>
-                            </ComboBoxItem>
-                            <ComboBoxItem Style="{StaticResource HelpCI}">
-                                <StackPanel Orientation="Horizontal">
-                                    <Ellipse Width="26" Height="13">
-                                        <Ellipse.Fill>
-                                            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                                                <GradientStop Color="#FFFF00" Offset="0.0" />
-                                                <GradientStop Color="#967e17" Offset="0.7" />
-                                            </LinearGradientBrush>
-                                        </Ellipse.Fill>
-                                    </Ellipse>
-                                    <Label FontSize="14" Foreground="Black">Yellow</Label>
-                                </StackPanel>
-                            </ComboBoxItem>
-                            <ComboBoxItem Style="{StaticResource HelpCI}">
-                                <StackPanel Orientation="Horizontal">
-                                    <Ellipse Width="26" Height="13">
-                                        <Ellipse.Fill>
-                                            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                                                <GradientStop Color="#FF00FF" Offset="0.0" />
-                                                <GradientStop Color="#591548" Offset="0.7" />
-                                            </LinearGradientBrush>
-                                        </Ellipse.Fill>
-                                    </Ellipse>
-                                    <Label FontSize="14" Foreground="Black">Magenta</Label>
-                                </StackPanel>
-                            </ComboBoxItem>
+                        <Label Height="30" VerticalContentAlignment="Center" Style="{StaticResource gameoptLabel}" Width="100">Ball Color:</Label>
+                        <ComboBox Name="cboBallColor" Width="150" Height="30" FontSize="14" Style="{StaticResource ComboBoxstyleBlue}"  IsEditable="False"
+                                  ItemsSource="{Binding Path=ball_color_list}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Ellipse Width="26" Height="13">
+                                            <Ellipse.Fill>
+                                                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                                    <GradientStop Color="{Binding Color1}" Offset="0.0" />
+                                                    <GradientStop Color="{Binding Color2}" Offset="0.7" />
+                                                </LinearGradientBrush>
+                                            </Ellipse.Fill>
+                                        </Ellipse>
+                                        <Label FontSize="14" Foreground="Black" Content="{Binding name}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
                         </ComboBox>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <Label  Width="100" Height="10" VerticalContentAlignment="Top" Padding="5,0,0,0"  Style="{StaticResource appProgressSmallLBL}"></Label>
+                    <StackPanel>
+                        <GroupBox FontSize="16" FontWeight="Bold" Style="{StaticResource GameOptGroupBoxstyle}" >
+                            <GroupBox.Header>
+                                Game Sounds:
+                            </GroupBox.Header>
+                            <StackPanel Orientation="Vertical">
+                                <CheckBox Name="chbCrowdNoise" Style="{StaticResource GameOptCheckBox}" >Crowd Noise</CheckBox>
+                                <CheckBox Name="chbFootballSounds" Style="{StaticResource GameOptCheckBox}">Football Sounds</CheckBox>
+                            </StackPanel>
+                        </GroupBox>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <Label  Width="100" VerticalContentAlignment="Top" Padding="5,0,0,0"  Style="{StaticResource appProgressSmallLBL}">Ball Type:</Label>
-                        <RadioButton Width="60" Name="opt3d" GroupName="optBallType" IsChecked="True" Style="{StaticResource appProgressSmallGroupButton}">3D</RadioButton>
-                        <RadioButton Width="60" Name="opt2d" GroupName="optBallType" Style="{StaticResource appProgressSmallGroupButton}">2D</RadioButton>
+                    <StackPanel Name="spGameSpeed">
+                        <GroupBox FontSize="16" FontWeight="Bold" Style="{StaticResource GameOptGroupBoxstyle}" >
+                            <GroupBox.Header>
+                                Game Speed:
+                            </GroupBox.Header>
+                            <StackPanel Width="270" Orientation="Vertical" >
+                                <StackPanel Orientation="Horizontal">
+                                    <StackPanel Orientation="Vertical">
+                                        <RadioButton Name="optGSFastest" GroupName="GameSpeed" Tag="FF"  IsChecked="False" Style="{StaticResource GameoptGroupButton}" BorderBrush="#FF8E8F8F">Fastest</RadioButton>
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <StackPanel Orientation="Vertical">
+                                        <RadioButton Name="optGSFast" GroupName="GameSpeed" Tag="F" IsChecked="False" Style="{StaticResource GameoptGroupButton}">Fast</RadioButton>
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <StackPanel Orientation="Vertical">
+                                        <RadioButton Name="optGSNormal" GroupName="GameSpeed" Tag="N" IsChecked="True" Style="{StaticResource GameoptGroupButton}">Normal</RadioButton>
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <StackPanel Orientation="Vertical">
+                                        <RadioButton Name="optGSSlow" GroupName="GameSpeed" Tag="S" IsChecked="false" Style="{StaticResource GameoptGroupButton}">Slow</RadioButton>
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <StackPanel Orientation="Vertical">
+                                        <RadioButton Name="optGSSlowest" GroupName="GameSpeed" Tag="SS" IsChecked="false" Style="{StaticResource GameoptGroupButton}">Slowest</RadioButton>
+                                    </StackPanel>
+                                </StackPanel>
+
+
+                            </StackPanel>
+                        </GroupBox>
+
                     </StackPanel>
+
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Button Name="options_close" Style="{StaticResource appSubmitStyle}" Click="Close_Click" >Close</Button>

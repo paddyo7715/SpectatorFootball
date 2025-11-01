@@ -288,6 +288,7 @@
     <Compile Include="Models\Blocking_Accum_Stats_by_year.cs" />
     <Compile Include="Models\BoxScore.cs" />
     <Compile Include="Models\Defense_Accum_Stats_by_year.cs" />
+    <Compile Include="Models\Football_Color_rec.cs" />
     <Compile Include="Models\FreeAgencyTrans.cs" />
     <Compile Include="Models\Kicking_Accum_Stats_by_year.cs" />
     <Compile Include="Models\KickReturn_Accum_Stats_by_year.cs" />

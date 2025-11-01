@@ -192,11 +192,7 @@ namespace SpectatorFootball.GameNS
                     tackler_tackle_rating = Game_Engine_Helper.AdjustTackleRating_forBlock(br, tackler_tackle_rating);
 
                     //bpo test
-                    //                    tackler_tackle_rating = 1;
-
-                    int hhh = 0;
-                    if (i == 4)
-                        hhh = 1;
+                    //                   tackler_tackle_rating = 1;
 
                     bool bTack = Game_Engine_Helper.Make_Tackle(2.6,
                         r.Returner.p_and_r.pr.First().Speed_Rating,
@@ -301,7 +297,11 @@ namespace SpectatorFootball.GameNS
                             Player_States moving_ps2 = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
                             if (r.Tackler != null)
                             {
-                                p.Run_and_Tackled(moving_ps, prev_yl, prev_v);
+                                double crowd_adj = 0.0;
+                                if (i == 1)
+                                    crowd_adj = 0.15;
+
+                                p.Run_and_Tackled(moving_ps, prev_yl, prev_v, crowd_adj);
                                 gBall.Carried_Tackled(prev_yl, prev_v);
                             }
                             else
@@ -312,7 +312,7 @@ namespace SpectatorFootball.GameNS
                                     gBall.Current_YardLine += Breakthrough_len;
                                 }
 
-                                p.Run_With_Ball(moving_ps2, prev_yl, prev_v, 0.2);
+                                p.Run_With_Ball(moving_ps2, prev_yl, prev_v, -0.2);
                                 //for the ball
                                 gBall.Carried(prev_yl, prev_v);
                             }
@@ -405,12 +405,6 @@ namespace SpectatorFootball.GameNS
 
                             if (bKicker) Play_Details += "ball xy count " + ball_carrier_xyCount + " kicker xy count: " + player_xycount + Environment.NewLine;
 
-
-                            //bpo test
-                            int yyy = 0;
-                            if (2 == ball_carrier_xyCount)
-                                yyy = 5;
-
                             //========================
 
              //               Play_Details += "Stage Index: " + (p.Stages.Count() - 1) + Environment.NewLine;
@@ -480,6 +474,9 @@ namespace SpectatorFootball.GameNS
                     r.bFumble = Game_Engine_Helper.DoesBallCarrierFumble(
                                Ball_Carry_Actions.KICK_RETURN,
                                ball_safety_rating, tackle_rating, run_attack_rating);
+
+                    //bpo test
+                    //r.bFumble = true;
 
                     r.test_counter++;
 

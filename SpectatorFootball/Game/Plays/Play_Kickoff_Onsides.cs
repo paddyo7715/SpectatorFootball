@@ -339,7 +339,7 @@ namespace SpectatorFootball.GameNS
                     {
                         double prev_yl = p.Current_YardLine;
                         double prev_v = p.Current_Vertical_Percent_Pos;
-                        p.Fall_On_Ball(prev_yl, prev_v);
+                        p.Fall_On_Ball(prev_yl, prev_v, -0.2);
                     }
                     else
                         p.Stand();
