@@ -39,6 +39,8 @@ namespace SpectatorFootball.WindowsLeague
         private static ILog logger = LogManager.GetLogger("RollingFile");
         public ObservableCollection<Football_Color_rec> ball_color_list { get; set; }
 
+        private bool bCloseWindow = false;
+
         public event EventHandler Set_TopMenu;
 
         private MainWindow pw;
@@ -50,6 +52,7 @@ namespace SpectatorFootball.WindowsLeague
 
         private DispatcherTimer dispatcherTimer = new DispatcherTimer();
         private DispatcherTimer GameTimer = new DispatcherTimer();
+        private DispatcherTimer GameSpeed_Time = new DispatcherTimer();
 
         private string Field_File = "";
 
@@ -135,7 +138,6 @@ namespace SpectatorFootball.WindowsLeague
         private MediaPlayer crowd_player = null;
 
         private double crowd_volumn = .4;
-        private bool bCrowd_Noise = false;
 
         private bool bExit_Pressed = false;
 
@@ -147,18 +149,28 @@ namespace SpectatorFootball.WindowsLeague
         private int iflashmessages_count = 0;
         private const int FLASH_MESSAGES = 10;
 
+        private List<string> scodes = new List<string>()
+            { "SS", "S", "N", "F", "FF"};
+        private List<int> newSpped = new List<int>()
+            {
+                180 ,140, 100, 60, 20
+            };
+
         public Game_Window(MainWindow pw, Game g, bool bCrowdNoise, bool bFootballSounds, string GameSpeed)
         {
             InitializeComponent();
 
             chbCrowdNoise.IsChecked = bCrowdNoise;
             chbFootballSounds.IsChecked = bFootballSounds;
+            setBackground_onoff();
 
             GameSpeed = GameSpeed.Trim();
             setSpeedButtons(GameSpeed);
 
             lblGameSpeed.Content = getGameSpeedDisplay(GameSpeed);
             Global_Game_Spped = GameSpeed;
+
+            sleepfor = getSpeedTime(Global_Game_Spped);
 
             ball_color_list = new ObservableCollection<Football_Color_rec>(League_Helper.getBallColors());
 
@@ -435,11 +447,17 @@ namespace SpectatorFootball.WindowsLeague
             List<Graphics_Game_Player> Offensive_Players;
             List<Graphics_Game_Player> Defensive_Players;
 
-            Background_Crowd.Volume = crowd_volumn;
             Background_Crowd.Play();
 
             while (!bGameEneded)
             {
+                if (bCloseWindow) break;
+                if (btnPauseResume.Content.ToString().StartsWith("R"))
+                {
+                    await Task.Delay(50);
+                    continue;
+                }
+
                 gGame_Ball = null;
                 Offensive_Players = null;
                 Defensive_Players = null;
@@ -465,6 +483,13 @@ namespace SpectatorFootball.WindowsLeague
                 //go thru the play stages.  The ball and all players have the same number of stages.
                 for (int stg = 0; stg < gGame_Ball.Stages.Count; stg++)
                 {
+                    if (bCloseWindow) break;
+                    if (btnPauseResume.Content.ToString().StartsWith("R"))
+                    {
+                        await Task.Delay(50);
+                        continue;
+                    }
+
                     bool bStageFinished = false;
                     gGame_Ball.ChangeStage(stg);
 
@@ -475,6 +500,13 @@ namespace SpectatorFootball.WindowsLeague
 
                     do
                     {
+                        if (bCloseWindow) break;
+                        if (btnPauseResume.Content.ToString().StartsWith("R"))
+                        {
+                            await Task.Delay(50);
+                            continue;
+                        }
+
                         //set the ball position and state
                         gGame_Ball.Update();
                         //                        if (gGame_Ball.bStageFinished)
@@ -483,6 +515,13 @@ namespace SpectatorFootball.WindowsLeague
                             //Go thru all offensive and def players and place them
                         for (int pSlot = 0; pSlot < Offensive_Players.Count(); pSlot++)
                         {
+                            if (bCloseWindow) break;
+                            if (btnPauseResume.Content.ToString().StartsWith("R"))
+                            {
+                                await Task.Delay(50);
+                                continue;
+                            }
+
                             Offensive_Players[pSlot].ChangeStage(stg);
                             Defensive_Players[pSlot].ChangeStage(stg);
 
@@ -493,14 +532,8 @@ namespace SpectatorFootball.WindowsLeague
                                 bStageFinished = true;
                         }
                         await Task.Delay(sleepfor);
-                        //                        Thread.Sleep(sleepfor);
                         //Show graphic objects
                         a_edge = setViewEdge(gGame_Ball.YardLine, Play.bLefttoRight, gGame_Ball.Vertical_Percent_Pos);
-
-                        //bpo test
-                        //                        logger.Debug("Ball x: " + gGame_Ball.YardLine + "y: " + gGame_Ball.Vertical_Percent_Pos);
-                        //                        logger.Debug("L to R: " + Play.bLefttoRight + " Yardline: " + gGame_Ball.YardLine + " Vertical: " + gGame_Ball.Vertical_Percent_Pos + " left: " + a_edge[0] + " top " + a_edge[1] + " visiblity: " + Gamepnl.Visibility.ToString());
-                        //
 
                         ShowGraphicObjects(a_edge, gGame_Ball, Offensive_Players, Defensive_Players, bBall_Over_Goalposts, Play.bLefttoRight);
                         if (gGame_Ball.bStageFinished)
@@ -533,8 +566,9 @@ namespace SpectatorFootball.WindowsLeague
                 //                bGameEneded = Play.bGameOver;
                 //just to test one play take this out.
                 bGameEneded = true;
-//                backgroundMusicPlayer.Stop();
-            }  //Game ended
+                //                backgroundMusicPlayer.Stop();
+
+             }  //Game ended
 
             logger.Debug("Crowd Volume: " + crowd_volumn);
         }
@@ -762,21 +796,51 @@ namespace SpectatorFootball.WindowsLeague
             MyCanvas.Children.Add(OPlayer1);
         }
 
-
+        private void GameSpeed_BackgroundWhite(object sender, EventArgs e)
+        {
+            GameSpeed_Time.Stop();
+            lblGameSpeed.Background = new SolidColorBrush(Color.FromRgb(255, 255, 255));
+        }
         private void btnSpeedSlower_click(object sender, EventArgs e)
         {
+            lblGameSpeed.Background = new SolidColorBrush(Color.FromRgb(255, 255, 0));
+
             Global_Game_Spped = getNextSpeedCode(Global_Game_Spped, false);
             setSpeedButtons(Global_Game_Spped);
             lblGameSpeed.Content = getGameSpeedDisplay(Global_Game_Spped);
+
+            GameSpeed_Time.Tick += GameSpeed_BackgroundWhite;
+            GameSpeed_Time.Interval = new TimeSpan(0, 0, 0, 0, 100);
+            GameSpeed_Time.Start();
         }
         private void btnSpeedFaster_click(object sender, EventArgs e)
         {
+            lblGameSpeed.Background = new SolidColorBrush(Color.FromRgb(0, 255, 0));
+
             Global_Game_Spped = getNextSpeedCode(Global_Game_Spped, true);
             setSpeedButtons(Global_Game_Spped);
             lblGameSpeed.Content = getGameSpeedDisplay(Global_Game_Spped);
+
+            GameSpeed_Time.Tick += GameSpeed_BackgroundWhite;
+            GameSpeed_Time.Interval = new TimeSpan(0, 0, 0, 0, 100);
+            GameSpeed_Time.Start();
         }
         private void btnPauseResume_click(object sender, EventArgs e)
         {
+            if (btnPauseResume.Content.ToString().StartsWith("P"))
+            {
+                btnPauseResume.Content = "Resume";
+                Background_Crowd.Volume = 0;
+                btnPauseResume.Background = new SolidColorBrush(Color.FromRgb(255, 0, 0));
+                btnPauseResume.Foreground = new SolidColorBrush(Color.FromRgb(255, 255, 255));
+            }
+            else
+            {
+                btnPauseResume.Content = "Pause";
+                btnPauseResume.Background = new SolidColorBrush(Color.FromRgb(255, 255, 255));
+                btnPauseResume.Foreground = new SolidColorBrush(Color.FromRgb(0, 0, 0));
+
+            }
 
         }
 
@@ -846,7 +910,6 @@ namespace SpectatorFootball.WindowsLeague
                     if (f.Sound != Game_Sounds.NONE)
                         Play_Sound((Game_Sounds)f.Sound);
 
-                //                Background_Crowd.Volume += f.crowd_adj * Game_Engine_Helper.HorizontalAdj(!bLefttoRight);
                 adjust_crowd_noise(f.crowd_adj, bChampionshipGame, !bLefttoRight);
 
                 setPlayer(Game_Ball, f, a_edge, off_Player_Sprites, bLefttoRight, true, xxx, off_Players_rect);
@@ -914,8 +977,11 @@ namespace SpectatorFootball.WindowsLeague
 
                 var u = new Uri(s);
 
-                Sound_player.Open(u);
-                Sound_player.Play();
+                if (chbFootballSounds.IsChecked == true)
+                {
+                    Sound_player.Open(u);
+                    Sound_player.Play();
+                }
 
             }
             catch { }
@@ -981,8 +1047,6 @@ namespace SpectatorFootball.WindowsLeague
 
         private void adjust_crowd_noise(double adj, bool bChampGame, bool bLefttoRight)
         {
-            
-            
              if (adj != 0) logger.Debug("adj: " + adj);
 
             adj *= Game_Engine_Helper.HorizontalAdj(bLefttoRight);
@@ -994,21 +1058,25 @@ namespace SpectatorFootball.WindowsLeague
 
             crowd_volumn += adj;
 
-            if (bCrowd_Noise) 
+            if (chbCrowdNoise.IsChecked == true && btnPauseResume.Content.ToString().StartsWith("P")) 
                 Background_Crowd.Volume = crowd_volumn;
         }
 
         private void chbCrowdNoise_Click(object sender, RoutedEventArgs e)
         {
-            if (chbCrowdNoise.IsChecked == null || chbCrowdNoise.IsChecked == false)
+            setBackground_onoff();
+        }
+
+        private void setBackground_onoff()
+        {
+            if (chbCrowdNoise.IsChecked == null || chbCrowdNoise.IsChecked == false ||
+                btnPauseResume.Content.ToString().StartsWith("R"))
             {
                 Background_Crowd.Volume = 0;
-                bCrowd_Noise = false;
             }
             else
             {
                 Background_Crowd.Volume = crowd_volumn;
-                bCrowd_Noise = true;
             }
 
 
@@ -1045,11 +1113,11 @@ namespace SpectatorFootball.WindowsLeague
             btnSpeedFaster.IsEnabled = bFaster;
         }
 
+
+
         private string getNextSpeedCode(string oldSppedCode, bool bUp)
         {
             string r = null;
-            List<string> scodes = new List<string>()
-            { "SS", "S", "N", "F", "FF"};
 
             int current_index = scodes.IndexOf(oldSppedCode);
 
@@ -1064,7 +1132,29 @@ namespace SpectatorFootball.WindowsLeague
                 else if (!bUp && current_index > 0)
                     new_index--;
 
+                sleepfor = newSpped[new_index];
+
                 r = scodes[new_index];
+            }
+
+            return r;
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            bCloseWindow = true;
+        }
+
+        private int getSpeedTime(string speedCode)
+        {
+            int r = 0;
+
+            int current_index = scodes.IndexOf(speedCode);
+            if (current_index == -1)
+                r = 2;
+            else
+            {
+                r = newSpped[current_index];
             }
 
             return r;
