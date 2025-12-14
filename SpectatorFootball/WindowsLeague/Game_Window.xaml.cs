@@ -561,6 +561,10 @@ namespace SpectatorFootball.WindowsLeague
                     break;
 
                 await Task.Delay(sleepfor);
+
+                Announcer.Visibility = Visibility.Collapsed; 
+                ScoreBoard.Visibility = Visibility.Visible;
+
                 //                Thread.Sleep(500);
 
                 //                bGameEneded = Play.bGameOver;
@@ -879,8 +883,9 @@ namespace SpectatorFootball.WindowsLeague
                 Play_Sound((Game_Sounds)Game_Ball.Sound);
 
             //adjust crowd noise 
-            adjust_crowd_noise(Game_Ball.crowd_adj, bChampionshipGame, !bLefttoRight); 
+            adjust_crowd_noise(Game_Ball.crowd_adj, bChampionshipGame, !bLefttoRight);
 
+            setAnnouncement(Game_Ball.Announcement);
 
             List<Rectangle> off_Players_rect = null;
             List<Rectangle> def_Players_rect = null;
@@ -907,28 +912,31 @@ namespace SpectatorFootball.WindowsLeague
             int xxx = 0;
             foreach (Graphics_Game_Player f in Off_Players)
             {
-                    if (f.Sound != Game_Sounds.NONE)
-                        Play_Sound((Game_Sounds)f.Sound);
+                if (f.Sound != Game_Sounds.NONE)
+                    Play_Sound((Game_Sounds)f.Sound);
 
                 adjust_crowd_noise(f.crowd_adj, bChampionshipGame, !bLefttoRight);
 
                 setPlayer(Game_Ball, f, a_edge, off_Player_Sprites, bLefttoRight, true, xxx, off_Players_rect);
 
-                    xxx++;
+                setAnnouncement(f.Announcement);
+
+                xxx++;
             }
 
             xxx = 0;
             foreach (Graphics_Game_Player f in Def_Players)
             {
-                    if (f.Sound != Game_Sounds.NONE)
-                        Play_Sound((Game_Sounds)f.Sound);
+                if (f.Sound != Game_Sounds.NONE)
+                    Play_Sound((Game_Sounds)f.Sound);
 
-                //                Background_Crowd.Volume += f.crowd_adj * Game_Engine_Helper.HorizontalAdj(!bLefttoRight);
                 adjust_crowd_noise(f.crowd_adj, bChampionshipGame, !bLefttoRight);
 
                 setPlayer(Game_Ball, f, a_edge, def_Player_Sprites, bLefttoRight, false, xxx, def_Players_rect);
 
-                    xxx++;
+                setAnnouncement(f.Announcement);
+
+                xxx++;
             }
 
             setBAll(Game_Ball, a_edge, bLefttoRight);
@@ -1143,6 +1151,25 @@ namespace SpectatorFootball.WindowsLeague
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             bCloseWindow = true;
+        }
+
+        private void setAnnouncement(string newAnnouncement)
+        {
+
+            //bpo test
+            int zzz = 0;
+            if (newAnnouncement != null && newAnnouncement.Length > 0)
+                zzz = 5;
+
+            if (ScoreBoard.Visibility == Visibility.Visible && newAnnouncement != null &&
+                newAnnouncement.Length > 0)
+            {
+                Announcer.Visibility = Visibility.Visible;
+                ScoreBoard.Visibility = Visibility.Collapsed;
+            }
+
+            if (newAnnouncement != null && newAnnouncement.Length > 0)
+                lblAnnouncer.Content = newAnnouncement;
         }
 
         private int getSpeedTime(string speedCode)

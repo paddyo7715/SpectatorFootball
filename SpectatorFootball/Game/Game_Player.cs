@@ -185,10 +185,13 @@ namespace SpectatorFootball.GameNS
             State = Player_States.STANDING;
         }
 
-        public void Run_Then_Stand(Player_States moving_ps, double prev_yl, double prev_v)
+        public void Run_Then_Stand(Player_States moving_ps, double prev_yl, double prev_v,
+            string beforemsg = null, string aftermsg = null)
         {
             Action pas = null;
             pas = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, false, moving_ps, null, Movement.LINE, null, false, 0);
+            pas.Effects.Start_Announcer_msg = beforemsg;
+            pas.Effects.End_Announcer_msg = aftermsg;
             Action pas2 = new Action(Game_Object_Types.P, Starting_YardLine, Starting_Vertical_Percent_Pos, 0.0, 0.0, false, Player_States.STANDING, null, Movement.NONE, null, false, 0);
             Play_Stage pStage = new Play_Stage();
             pStage.Main_Object = false;
@@ -197,7 +200,6 @@ namespace SpectatorFootball.GameNS
             Stages.Add(pStage);
             State = Player_States.STANDING;
         }
-
         public void Run_Then_CatchKick(Player_States moving_ps, double prev_yl, double prev_v)
         {
             Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, false, moving_ps, null, Movement.LINE, null, false, 0);
@@ -271,10 +273,13 @@ namespace SpectatorFootball.GameNS
             State = Player_States.TACKLING;
         }
 
-        public void Run_With_Ball(Player_States moving_ps, double prev_yl, double prev_v, double crowd_adj)
+        public void Run_With_Ball(Player_States moving_ps, double prev_yl, double prev_v, double crowd_adj,
+            string beforemsg = null, string aftermsg = null)
         {
             Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, true, moving_ps, null, Movement.LINE, null, false, 0);
             pas.Effects = new Action_Effects() { After_noise_adj = crowd_adj };
+            pas.Effects.Start_Announcer_msg = beforemsg;
+            pas.Effects.End_Announcer_msg = aftermsg;
             Play_Stage pStage = new Play_Stage();
             pStage.Main_Object = false;
             pStage.Actions.Add(pas);

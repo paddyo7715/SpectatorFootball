@@ -304,6 +304,25 @@ namespace SpectatorFootball.GameNS
 
             return r;
         }
+        public static string getYardlineDisplay(double y)
+        {
+            string r = null;
+            double yardLine = y + 0.5;  //round up
+
+            if (yardLine > 50.0)
+                yardLine = 100 - y;
+
+            if (yardLine == 0 || yardLine == 100)
+                r = "goal line";
+            else if (yardLine < 0 || yardLine > 100)
+                r = "inside the endzone";
+            else if (yardLine < 1 || yardLine > 99)
+                r = "goal line";
+            else
+                r = ((int)yardLine).ToString();
+
+            return r; ;
+        }
         public static double getScrimmageLine(double y, bool bLefttoRight)
         {
             double yardLine = y;

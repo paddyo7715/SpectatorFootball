@@ -187,6 +187,7 @@
     <Compile Include="DAO\TrainingCampDAO.cs" />
     <Compile Include="Draft\Draft_Helper.cs" />
     <Compile Include="Draft\Draft_Pos_Importance.cs" />
+    <Compile Include="Enum\announce_event.cs" />
     <Compile Include="Enum\Ball_Carry_Actions.cs" />
     <Compile Include="Enum\Ball_Speed.cs" />
     <Compile Include="Enum\Ball_States.cs" />
@@ -339,6 +340,7 @@
     <Compile Include="Models\TrainingCampResults.cs" />
     <Compile Include="Models\TrainingCampStatus.cs" />
     <Compile Include="Models\WeeklyScheduleRec.cs" />
+    <Compile Include="NarrationAndText\Announcer.cs" />
     <Compile Include="NarrationAndText\NarratorandText_Helper.cs" />
     <Compile Include="NarrationAndText\ScoringSummary.cs" />
     <Compile Include="NarrationAndText\Action_Effects.cs" />

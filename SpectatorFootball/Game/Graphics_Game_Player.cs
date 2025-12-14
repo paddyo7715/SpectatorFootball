@@ -22,6 +22,7 @@ namespace SpectatorFootball.GameNS
         public int current_action = 0;
         public int current_point = 0;
         public Game_Sounds Sound = Game_Sounds.NONE;
+        public string Announcement = null;
         public double crowd_adj = 0.0;
         public bool bStageFinished = false;
 
@@ -274,6 +275,11 @@ namespace SpectatorFootball.GameNS
             {
                 Action act = pStage.Actions[current_action];
 
+                //bpo test
+                int zzz = 0;
+                if (act.Effects.End_Announcer_msg != null)
+                    zzz = 5;
+
                 pState = (Player_States)act.p_state;
                 bPlayerCatchesBall = pStage.Player_Catches_Ball;
 
@@ -285,7 +291,8 @@ namespace SpectatorFootball.GameNS
                 if (act.PointXY.Count() > 0 &&
                    (current_point < act.PointXY.Count()))
                 {
-                    if (current_point == 0) bBefore_Action = true;
+                    if (current_point == 0)
+                        bBefore_Action = true;
                     if ((current_point + 1) == act.PointXY.Count()) bAfter_Action = true;
 
                     YardLine = act.PointXY[current_point].x;
@@ -298,13 +305,14 @@ namespace SpectatorFootball.GameNS
                         current_point = 0;
                     }
 
-                    Tuple<double, Game_Sounds> t = null;
+                    Tuple<double, Game_Sounds, string> t = null;
                     if (bBefore_Action || bAfter_Action)
                     {
                         t = NarratorandText_Helper.getGameEffects(bBefore_Action, act.Effects);
                         crowd_adj = t.Item1;
                         Sound = t.Item2;
-                     }
+                        Announcement = t.Item3;
+                    }
                     else
                     {
                         crowd_adj = 0.0;
@@ -326,6 +334,11 @@ namespace SpectatorFootball.GameNS
                     bStageFinished = true;
                 }
             }
+
+            //bpo test
+            int nnn = 0;
+            if (Announcement != null && Announcement.Trim() !="")
+                nnn = 5;
         }
     }
 

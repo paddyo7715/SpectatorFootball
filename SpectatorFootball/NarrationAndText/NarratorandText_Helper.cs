@@ -20,23 +20,33 @@ namespace SpectatorFootball.NarrationAndText
             return r;
         }
 
-        public static Tuple<double, Game_Sounds> getGameEffects(bool bBefore, Action_Effects effects)
+        public static Tuple<double, Game_Sounds, string> getGameEffects(bool bBefore, Action_Effects effects)
         {
             double crowd_adj = 0.0;
             Game_Sounds gsound = Game_Sounds.NONE;
+            string announcement = null;
 
             if (bBefore)
             {
                 crowd_adj = effects.Before_noise_adj;
                 gsound = effects.Before_Sound;
+                announcement = effects.Start_Announcer_msg == null ? "" : effects.Start_Announcer_msg;
             }
             else
             {
                 crowd_adj = effects.After_noise_adj;
                 gsound = effects.After_Sound;
+                announcement = effects.End_Announcer_msg == null ? "" : effects.End_Announcer_msg;
+
             }
 
-            return Tuple.Create(crowd_adj, gsound);
+            //bpo test
+            int zzz = 0;
+            if (announcement.Length > 0)
+                zzz = 5;
+
+
+            return Tuple.Create(crowd_adj, gsound, announcement);
         }
     }
 }

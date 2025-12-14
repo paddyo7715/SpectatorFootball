@@ -14,5 +14,8 @@ namespace SpectatorFootball.NarrationAndText
 
         public Game_Sounds Before_Sound = Game_Sounds.NONE;
         public Game_Sounds After_Sound = Game_Sounds.NONE;
+
+        public string Start_Announcer_msg = null;
+        public string End_Announcer_msg = null;
     }
 }

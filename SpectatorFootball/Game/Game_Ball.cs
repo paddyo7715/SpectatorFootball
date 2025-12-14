@@ -37,6 +37,7 @@ namespace SpectatorFootball.GameNS
             bStage.Actions.Add(bas);
             Stages.Add(bStage);
         }
+
         public void End_Over_End_Thru_Air_Caught()
         {
             State = Ball_States.END_OVER_END;

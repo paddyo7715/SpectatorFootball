@@ -124,6 +124,9 @@
                                 <Label Name="lblHomeTimeouts"  Height="40" Width="420" HorizontalContentAlignment="Left"  Style="{StaticResource GameBar2Fonts}">Timeouts: 3</Label>
                             </StackPanel>
                         </StackPanel>
+                        <StackPanel Visibility="Collapsed" Name="Announcer" Orientation="Vertical" HorizontalAlignment="Center" >
+                            <Label Name="lblAnnouncer" Height="100" Width="785" Style="{StaticResource GameAnnouncer}" />
+                        </StackPanel>                        
                     </StackPanel>
                     <StackPanel Width="270" Background="#424242" Grid.Column="2" Orientation="Horizontal"  HorizontalAlignment="Right" Margin="0,0,5,0">
                         <StackPanel Orientation="Vertical">
