@@ -1,5 +1,6 @@
 ﻿using log4net;
 using SpectatorFootball.Enum;
+using SpectatorFootball.NarrationAndText;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,8 @@ namespace SpectatorFootball.GameNS
             int rnd;
             bool bRecover;
 
+            Announcer announcer = new Announcer();
+
             gBall.Popup(50,3);
 
             int io_Players = 0;
@@ -32,7 +35,7 @@ namespace SpectatorFootball.GameNS
             {
                 if (p == Punter)
                 {
-                    p.Punter_Put_Leg_Down(-0.4);
+                    p.Punter_Put_Leg_Down(-0.4, null, announcer.Announce_InPlay(announce_event.PUNT_BLOCKED, p.p_and_r.p.Last_Name, Game_Engine_Helper.getYardlineDisplay(p.Current_YardLine)));
                 }
                 else
                 {
@@ -91,18 +94,21 @@ namespace SpectatorFootball.GameNS
 
                 Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, 0.0);
                 if (p == Punter)
+                {
+                    string announcement = announcer.Announce_InPlay(announce_event.PUNT_BLOCKED, p.p_and_r.p.Last_Name, Game_Engine_Helper.getYardlineDisplay(p.Current_YardLine));
                     p.Cover_Ball(moving_ps, prev_yl, prev_v, bOrignal_BallPossessorTeam);
+                }
                 else if (close_Punt_Players.Contains(p))
                     p.Attempt_Tackle(moving_ps, prev_yl, prev_v);
                 else
                 {
                     p.Same_As_Last_Action();
-/*                    p.Current_YardLine += CommonUtils.VaryDoulblernd(p.Current_YardLine, 5);
-                    p.Current_Vertical_Percent_Pos += CommonUtils.VaryDoulblernd(p.Current_Vertical_Percent_Pos, 5);
-                    moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, 0.0);
-                    p.Run(moving_ps, prev_yl, prev_v);
-*/
-            }
+                    /*                    p.Current_YardLine += CommonUtils.VaryDoulblernd(p.Current_YardLine, 5);
+                                        p.Current_Vertical_Percent_Pos += CommonUtils.VaryDoulblernd(p.Current_Vertical_Percent_Pos, 5);
+                                        moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, 0.0);
+                                        p.Run(moving_ps, prev_yl, prev_v);
+                    */
+                }
             ind++;
             }
 

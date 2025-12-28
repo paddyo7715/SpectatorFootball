@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using log4net;
+using SpectatorFootball.NarrationAndText;
 
  namespace SpectatorFootball.GameNS
 {
@@ -19,12 +20,26 @@ using log4net;
             List<Game_Player> close_BallCarrying_Players,
             Game_Player Returner,
             Game_Player Tackler,
-            bool bOrignal_BallPossessorTeam)
+            bool bOrignal_BallPossessorTeam,
+            Fumble_OSKick_BlockPunt fob)
         {
             Game_Player r = null;
             bool bLost = false;
             bool bRecover = false;
             int rnd = 0;
+            Announcer announcer = new Announcer();
+
+            string announcement = null;
+
+            switch(fob)
+            {
+                case Fumble_OSKick_BlockPunt.FUMBLE:
+                    announcement = announcer.Announce_InPlay(announce_event.FUMBLE, Returner.p_and_r.p.Last_Name, Game_Engine_Helper.getYardlineDisplay(Returner.Current_YardLine));
+                    break;
+                case Fumble_OSKick_BlockPunt.ONSIDE_KICK:
+                    announcement = announcer.Announce_InPlay(announce_event.ONSIDE_NUFFED, Returner.p_and_r.p.Last_Name, Game_Engine_Helper.getYardlineDisplay(Returner.Current_YardLine));
+                    break;
+            }
 
             if (close_Tackling_Players.Count() == 0 && close_BallCarrying_Players.Count() == 0)
                 throw new Exception("No close players on either team for fumble.  Should never happen");
@@ -65,7 +80,7 @@ using log4net;
 
                 Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, 0.0);
                 if (p == Returner)
-                    p.Cover_Ball(moving_ps, prev_yl, prev_v, bOrignal_BallPossessorTeam);
+                    p.Cover_Ball(moving_ps, prev_yl, prev_v, bOrignal_BallPossessorTeam, announcement, null);
                 else if (close_BallCarrying_Players.Contains(p))
                     p.Attempt_Tackle(moving_ps, prev_yl, prev_v);
                 else

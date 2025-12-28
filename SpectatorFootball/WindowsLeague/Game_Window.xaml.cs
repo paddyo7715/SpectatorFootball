@@ -102,6 +102,8 @@ namespace SpectatorFootball.WindowsLeague
         public const double FIFTY_YARDLINE_ART_ERT = 50.0;
         private const int FIFTY_YARDLINE_ART_WIDTH = 160;
         private const int FIFTY_YARDLINE_ART_HEIGHT = 160;
+        private const int POPUP_WIDTH = 500;
+        private const int POPUP_HEIGHT = 500;
 
         //I'm not sure why I have to do this, but it seems that
         //the 1210 might not be the full view it might be just 1204
@@ -126,6 +128,7 @@ namespace SpectatorFootball.WindowsLeague
 
         private int sleepfor = 100;
 
+        private const int POPUP_INDEX = 999;
         private const int GOALPOST_INDEX = 200;
         private const int GOALPOST_INDEX_BALL_OVER = 20;
         private const int PLAYER_CATCHING_BALL_ZINDEX = 100;
@@ -566,6 +569,23 @@ namespace SpectatorFootball.WindowsLeague
                 ScoreBoard.Visibility = Visibility.Visible;
 
                 //                Thread.Sleep(500);
+
+
+                //Show the play result
+                TextBlock txbPlayResult = new TextBlock();
+                txbPlayResult.Background = Brushes.Black;
+                txbPlayResult.Opacity = 0.6;
+                txbPlayResult.Width = CANVAS_WIDTH;
+                txbPlayResult.Height = CANVAS_HEIGHT;
+                Canvas.SetZIndex(txbPlayResult, POPUP_INDEX);
+
+                // Set position on the Canvas
+                Canvas.SetLeft(txbPlayResult, 0);
+                Canvas.SetTop(txbPlayResult, 0);
+
+                // Add the Label to the Canvas
+                MyCanvas.Children.Add(txbPlayResult);
+
 
                 //                bGameEneded = Play.bGameOver;
                 //just to test one play take this out.

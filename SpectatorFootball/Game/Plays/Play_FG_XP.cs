@@ -10,6 +10,7 @@ using log4net;
 using SpectatorFootball.Enum;
 using SpectatorFootball.GameNS;
 using SpectatorFootball.Models;
+using SpectatorFootball.NarrationAndText;
 
 namespace SpectatorFootball.GameNS
 {
@@ -32,6 +33,7 @@ namespace SpectatorFootball.GameNS
         List<Game_Player> Attackers = null;
         private bool bFG = true;
         public Play_Result r = new Play_Result();
+        private Announcer _announcer = new Announcer();
 
         public double touchback_yl { get; set; } = 20;
 
@@ -93,7 +95,7 @@ namespace SpectatorFootball.GameNS
                 if (Kick_Blocker != null)
                     r.FGXP_Blocked = isKickBlocked();
 
-                //bpo
+                //bpo test
                 //r.FGXP_Blocked = true;
 
                 //if there is a block then there can't be a roughing/runnig into the kicker penalty
@@ -433,7 +435,11 @@ namespace SpectatorFootball.GameNS
                 p.Current_YardLine += t.Item1;
                 p.Current_Vertical_Percent_Pos += t.Item2;
                 Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
-                p.Delay_Then_Run_and_Stand(moving_ps, prev_yl, prev_v, 3);
+                if (p == r.Kicker)
+                    p.Delay_Then_Run_and_Stand(moving_ps, prev_yl, prev_v, 3, _announcer.Announce_InPlay(announce_event.FG_BLOCKED, r.Kicker.p_and_r.p.Last_Name, Game_Engine_Helper.getYardlineDisplay(p.Current_YardLine)), null);
+                else
+                    p.Delay_Then_Run_and_Stand(moving_ps, prev_yl, prev_v, 3);
+
                 io_Players++;
             }
 
@@ -530,7 +536,7 @@ namespace SpectatorFootball.GameNS
                 if (FG_Formation.FGHolderIndex == io_Players)
                     p.Ready_Hold_FG();
                 else if (p == r.Kicker)
-                    p.Kicker_Put_Leg_Down_and_Stand();
+                    p.Kicker_Put_Leg_Down_and_Stand(_announcer.Announce_InPlay(announce_event.FG_AWAY, r.Kicker.p_and_r.p.Last_Name, Game_Engine_Helper.getYardlineDisplay(p.Current_YardLine)),null);
                 else
                     p.Stand();
                 io_Players++;

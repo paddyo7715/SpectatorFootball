@@ -194,6 +194,7 @@
     <Compile Include="Enum\block_result.cs" />
     <Compile Include="Enum\FG_Path.cs" />
     <Compile Include="Enum\Formations_Enum.cs" />
+    <Compile Include="Enum\Fumble_OSKick_BlockPunt.cs" />
     <Compile Include="Enum\Game_Object_Types.cs" />
     <Compile Include="Enum\Game_Sounds.cs" />
     <Compile Include="Enum\Graphics_Ball_Stats.cs" />

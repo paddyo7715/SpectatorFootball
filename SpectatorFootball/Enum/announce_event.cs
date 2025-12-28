@@ -9,6 +9,18 @@ namespace SpectatorFootball.Enum
     public enum announce_event
     {
         KICKOFF_KICKED,
-        KICKON_CAUGHT
+        KICKOFF_CAUGHT,
+        RETURN_BREAKTHRU,
+        BREAKTHRU_TACKLE,
+        RETURN_GOING_FOR_TD,
+        RETURN_KICKER_LEFT_TO_BEAT,
+        FUMBLE,
+        ONSIDE_KICK,
+        ONSIDE_COVER,
+        ONSIDE_NUFFED,
+        FG_AWAY,
+        FG_BLOCKED,
+        PUNT_AWAY,
+        PUNT_BLOCKED
     }
 }

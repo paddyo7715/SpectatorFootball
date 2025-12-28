@@ -84,6 +84,13 @@ namespace SpectatorFootball.GameNS
             retuner_catches_ball_yl = gBall.Current_YardLine;
             var tackle_groups = Game_Engine_Helper.setTackleGroups(Kickoff_Players, r.Kicker);
 
+            //bpo test
+//            tackle_groups[0] = new List<int?>() { 0, null, null, null, null };
+//            tackle_groups[1] = new List<int?>() { 1, 2, 3, 4, 5 };
+//            tackle_groups[2] = new List<int?>() { 6, 7, 8, 9, 10 };
+            //+++++++++
+
+
             BallKickedPlayersRun(gBall, Kickoff_Players, Return_Players, r.Kicker, r.Returner, tackle_groups, r, bLast_Play, bLefttoRight); 
             Play_Details += " Ball Kicked players running, " + Environment.NewLine;
 
@@ -703,7 +710,7 @@ namespace SpectatorFootball.GameNS
 //                                       if (i <= 3)
 //                                            bTack = false;
 //                                        else
-//                                            bTack = true; 
+ //                                           bTack = false; 
                     //********************
 
                     if (bTack)
@@ -751,9 +758,11 @@ namespace SpectatorFootball.GameNS
                 {
                     if (p == r.Returner)
                     {
-                        string kick_cuaght_announcement = null;
+                        string before_announcement = null;
                         if (i == 1)  //make the announcement that the returner has caught the ball
-                            kick_cuaght_announcement = _announcer.Announce_InPlay(announce_event.KICKON_CAUGHT, r.Returner.p_and_r.p.Last_Name, Game_Engine_Helper.getYardlineDisplay(gBall.Current_YardLine));
+                            before_announcement = _announcer.Announce_InPlay(announce_event.KICKOFF_CAUGHT, r.Returner.p_and_r.p.Last_Name, Game_Engine_Helper.getYardlineDisplay(gBall.Current_YardLine));
+                        else if (i == 4)
+                            before_announcement = _announcer.Announce_InPlay(announce_event.RETURN_KICKER_LEFT_TO_BEAT, r.Returner.p_and_r.p.Last_Name, Game_Engine_Helper.getYardlineDisplay(gBall.Current_YardLine));
 
                         if (TB_List.Count > 0)
                         {
@@ -772,7 +781,7 @@ namespace SpectatorFootball.GameNS
                             gBall.Current_Vertical_Percent_Pos = p.Current_Vertical_Percent_Pos;
 
                             Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
-                            p.Run_With_Ball(moving_ps, prev_yl, prev_v, 0.0, kick_cuaght_announcement, null);
+                            p.Run_With_Ball(moving_ps, prev_yl, prev_v, 0.0, before_announcement, null);
 
                             //for the ball
                             gBall.Carried(prev_yl, prev_v);
@@ -802,13 +811,17 @@ namespace SpectatorFootball.GameNS
                             }
                             else
                             {
+                                string after_announcment = null;
                                 if (i == 4)  //if kicker tacker doesn't tackle then TD
                                 {
                                     p.Current_YardLine += Breakthrough_len;
                                     gBall.Current_YardLine += Breakthrough_len;
+                                    before_announcement = _announcer.Announce_InPlay(announce_event.RETURN_GOING_FOR_TD, r.Returner.p_and_r.p.Last_Name, Game_Engine_Helper.getYardlineDisplay(p.Current_YardLine));
                                 }
+                                else
+                                    after_announcment = _announcer.Announce_InPlay(announce_event.BREAKTHRU_TACKLE, r.Returner.p_and_r.p.Last_Name, Game_Engine_Helper.getYardlineDisplay(p.Current_YardLine));
 
-                                p.Run_With_Ball(moving_ps2, prev_yl, prev_v, -0.2);
+                                p.Run_With_Ball(moving_ps2, prev_yl, prev_v, -0.2, before_announcement, after_announcment);
                                 //for the ball
                                 gBall.Carried(prev_yl, prev_v);
                             }
@@ -825,9 +838,7 @@ namespace SpectatorFootball.GameNS
                             gBall.Current_Vertical_Percent_Pos = p.Current_Vertical_Percent_Pos;
 
                             Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
-                            p.Run_With_Ball(moving_ps, prev_yl, prev_v, -0.2, kick_cuaght_announcement, null);
-
-                            logger.Debug("no tacker breakthru: ");
+                            p.Run_With_Ball(moving_ps, prev_yl, prev_v, -0.2, before_announcement, _announcer.Announce_InPlay(announce_event.RETURN_BREAKTHRU, r.Returner.p_and_r.p.Last_Name, Game_Engine_Helper.getYardlineDisplay(p.Current_YardLine)));
 
                             //for the ball
                             gBall.Carried(prev_yl, prev_v);
@@ -942,7 +953,7 @@ namespace SpectatorFootball.GameNS
                                ball_safety_rating, tackle_rating, run_attack_rating);
 
                     //bpo test
-                   // r.bFumble = true;
+                    //r.bFumble = true;
 
                     r.test_counter++;
 
@@ -962,7 +973,7 @@ namespace SpectatorFootball.GameNS
                         Tuple<Game_Player, bool> t = Playstub_Fumble.Execute(bLefttoRight, gBall,
                             Kickoff_Players, Return_Players,
                             pFumble_Rec_Kickoff_Players, pFumble_Rec_Return_Players,
-                            r.Returner, r.Tackler, false);
+                            r.Returner, r.Tackler, false, Fumble_OSKick_BlockPunt.FUMBLE);
 
                         r.Fumble_Recoverer = t.Item1;
                         r.bFumble_Lost = t.Item2;

@@ -254,7 +254,7 @@ namespace SpectatorFootball.GameNS
                         g_fid_posession = ht.Franchise_ID;
                         bLefttoRight = true;
                         g_Line_of_Scrimmage = 25.0;
-                        bKickoff = true;
+                        bKickoff = false;
                         bKickoffAfterSafety = false;
             //********************
 

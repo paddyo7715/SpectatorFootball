@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Windows.Forms.AxHost;
+using SpectatorFootball.NarrationAndText;
 
 namespace SpectatorFootball.GameNS
 {
@@ -32,6 +33,7 @@ namespace SpectatorFootball.GameNS
         private Formation Kickoff_Formation = null;
         private Formation Return_Formation = null;
         private Play_Result r = new Play_Result();
+        private Announcer _announcer = new Announcer();
 
         public Play_Kickoff_Onsides(Formation Kickoff_Formation, Formation Return_Formation, long Possessing_Team_Id, long at, long ht, Game_Ball gBall, List<Game_Player> Kickoff_Players, List<Game_Player> Return_Players, bool bLefttoRight, bool FreeKic, bool bLast_Play)
         {
@@ -282,7 +284,7 @@ namespace SpectatorFootball.GameNS
                 p.Current_Vertical_Percent_Pos = vert;
 
                 Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
-                p.Run_Then_Stand(moving_ps, prev_yl, prev_v);
+                p.Run_Then_Stand(moving_ps, prev_yl, prev_v, _announcer.Announce_InPlay(announce_event.ONSIDE_KICK, r.Kicker.p_and_r.p.Last_Name, Game_Engine_Helper.getYardlineDisplay(p.Current_YardLine)), null);
 
                 id_Players++;
             }
@@ -310,7 +312,7 @@ namespace SpectatorFootball.GameNS
             Tuple<Game_Player, bool> t = Playstub_Fumble.Execute(!bLefttoRight, gBall,
                 Kickoff_Players, Return_Players,
                 pFumble_Rec_Kickoff_Players, pFumble_Rec_Return_Players,
-                Ball_Target_Recover, r.Tackler, false);
+                Ball_Target_Recover, r.Tackler, false, Fumble_OSKick_BlockPunt.ONSIDE_KICK);
             r.Onside_Kick_Recoverer = t.Item1;
             bLost = t.Item2;
 
@@ -339,7 +341,7 @@ namespace SpectatorFootball.GameNS
                     {
                         double prev_yl = p.Current_YardLine;
                         double prev_v = p.Current_Vertical_Percent_Pos;
-                        p.Fall_On_Ball(prev_yl, prev_v, -0.2);
+                        p.Fall_On_Ball(prev_yl, prev_v, -0.2, _announcer.Announce_InPlay(announce_event.ONSIDE_COVER, r.Kicker.p_and_r.p.Last_Name, Game_Engine_Helper.getYardlineDisplay(p.Current_YardLine)), null);
                     }
                     else
                         p.Stand();
