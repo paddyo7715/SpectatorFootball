@@ -341,6 +341,7 @@
     <Compile Include="Models\TrainingCampResults.cs" />
     <Compile Include="Models\TrainingCampStatus.cs" />
     <Compile Include="Models\WeeklyScheduleRec.cs" />
+    <Compile Include="NarrationAndText\AE_rec.cs" />
     <Compile Include="NarrationAndText\Announcer.cs" />
     <Compile Include="NarrationAndText\NarratorandText_Helper.cs" />
     <Compile Include="NarrationAndText\ScoringSummary.cs" />

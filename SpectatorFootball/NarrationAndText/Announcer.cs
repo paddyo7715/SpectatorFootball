@@ -23,6 +23,7 @@ namespace SpectatorFootball.NarrationAndText
         private List<string> FG_Blocked_List = null;
         private List<string> Punt_Away_List = null;
         private List<string> Punt_Blocked_List = null;
+        private List<string> FG_Hits_The_Post_List = null;
 
         public Announcer()
         {
@@ -102,6 +103,10 @@ namespace SpectatorFootball.NarrationAndText
                 "The punt is blocked!",
                 "Blocked!"};
 
+            FG_Hits_The_Post_List = new List<string>()
+                {"It's off the post",
+                "It hit the post"};
+
 
 
 
@@ -156,6 +161,9 @@ namespace SpectatorFootball.NarrationAndText
                     break;
                 case announce_event.PUNT_BLOCKED:
                     r = CommonUtils.ShufleList(Punt_Blocked_List).First();
+                    break;
+                case announce_event.FG_HITS_GP:
+                    r = CommonUtils.ShufleList(FG_Hits_The_Post_List).First();
                     break;
             }
 

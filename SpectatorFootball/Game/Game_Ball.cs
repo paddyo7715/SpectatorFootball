@@ -60,8 +60,12 @@ namespace SpectatorFootball.GameNS
             bStage.Actions.Add(bas2);
             Stages.Add(bStage);
         }
-        public void FG_Hits_GP_Into_Stands(double prev_yl, double prev_v, double end_yl, double end_v, bool blefttoRight)
+        public void FG_Hits_GP_Into_Stands(double prev_yl, double prev_v, double end_yl, double end_v, bool blefttoRight,
+            string beforemsg = null, string aftermsg = null)
         {
+            //can't play the doing sound here because the ball flying thru the air and flying off into the crowd
+            //must be one action to maintain hieght.
+
             State = Ball_States.END_OVER_END;
             Action bas = new Action(Game_Object_Types.B, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, false, null, Ball_States.END_OVER_END, Movement.LINE, Ball_Speed.SLOW, false, 0);
             Action bas2 = new Action(Game_Object_Types.B, Current_YardLine, Current_Vertical_Percent_Pos, end_yl, end_v, false, null, Ball_States.END_OVER_END, Movement.LINE, Ball_Speed.SLOW, false, 0);
@@ -76,8 +80,12 @@ namespace SpectatorFootball.GameNS
             bStage.Actions.Add(bas3);
             Stages.Add(bStage);
         }
-        public void FG_Hits_GP(double prev_yl, double prev_v, double end_yl, double end_v, bool blefttoRight)
-        {
+        public void FG_Hits_GP(double prev_yl, double prev_v, double end_yl, double end_v, bool blefttoRight,
+                        string beforemsg = null, string aftermsg = null)
+        {            
+            //can't play the doing sound here because the ball flying thru the air and flying off into the crowd
+            //must be one action to maintain hieght.
+
             State = Ball_States.END_OVER_END;
             Action bas = new Action(Game_Object_Types.B, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, false, null, Ball_States.END_OVER_END, Movement.LINE, Ball_Speed.SLOW, false, 0);
             Action bas2 = new Action(Game_Object_Types.B, Current_YardLine, Current_Vertical_Percent_Pos, end_yl, end_v, false, null, Ball_States.END_OVER_END, Movement.LINE, Ball_Speed.SLOW, false, 0);

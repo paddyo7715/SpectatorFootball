@@ -625,9 +625,8 @@
         </Style>
         <Style TargetType="Label" x:Key="GameAnnouncer">
             <Setter Property="FontFamily" Value="Verdana"/>
-            <Setter Property="FontSize" Value="22"/>
+            <Setter Property="FontSize" Value="14"/>
             <Setter Property="FontWeight" Value="normal"/>
-            <Setter Property="Background" Value="Black"/>
             <Setter Property="Foreground" Value="White" />
             <Setter Property="VerticalContentAlignment" Value="Top" />
             <Setter Property="HorizontalContentAlignment" Value="Center" />

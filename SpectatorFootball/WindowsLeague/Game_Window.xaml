@@ -89,11 +89,11 @@
             <StackPanel Name="Gamepnl" Visibility="Collapsed" Orientation="Vertical" Height="770" Width="1210">
                 <Grid Height="60" Background="#424242" >
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="270" />
+                        <ColumnDefinition Width="240" />
                         <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="270" />
+                        <ColumnDefinition Width="240" />
                     </Grid.ColumnDefinitions>
-                    <StackPanel Width="270" Background="#424242" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,0,5,0">
+                    <StackPanel Width="240" Background="#424242" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,0,5,0">
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal">
                                 <Label Width="80" Height="30" Style="{StaticResource GameBarSpeed_title}" Content="Game Speed:" Margin="17,0,0,-10" Padding="0,0,0,0" />
@@ -104,17 +104,22 @@
                                 <Button Name="btnSpeedFaster" Height="30" Click="btnSpeedFaster_click" Style="{StaticResource GameBarChangeSpeed}">+</Button>
                             </StackPanel>
                         </StackPanel>
-                        <Button Name="btnPauseResume" Content="Pause" Height="40"  Width="110" Margin="0,0,5,0" Click="btnPauseResume_click" Style="{StaticResource GameBarButton}" />
+                        <Button Name="btnPauseResume" Content="Pause" Height="40"  Width="90" Margin="0,0,5,0" Click="btnPauseResume_click" Style="{StaticResource GameBarButton}" />
                     </StackPanel>
                     <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" >
-                        <StackPanel Name="ScoreBoard" Orientation="Vertical" HorizontalAlignment="Center" >
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" >
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                 <Label Name="lblAwayTeam" Height="40" Width="250" HorizontalContentAlignment="Right" Style="{StaticResource GameBarFonts}">Bullies</Label>
                                 <Label Name="lblAwayScore" Height="40" Width="40" HorizontalContentAlignment="Center" Style="{StaticResource GameBarFonts}" >14</Label>
-                                <Label Width="10" />
-                                <Label Name="lblClock" Height="40" Width="85" Style="{StaticResource GameBarFonts}" BorderBrush="Black" BorderThickness="1">11:23</Label>
-                                <Label Name="lblQTR" Height="40" Width="120" Style="{StaticResource GameBarFonts}" BorderBrush="Black" BorderThickness="1">2nd QTR</Label>
-                                <Label Width="10" />
+                                <StackPanel Name="ScoreBoard" Orientation="Horizontal">
+                                    <Label Width="40" />
+                                    <Label Name="lblClock" Height="40" Width="85" Style="{StaticResource GameBarFonts}" BorderBrush="Black" BorderThickness="1">11:23</Label>
+                                    <Label Name="lblQTR" Height="40" Width="120" Style="{StaticResource GameBarFonts}" BorderBrush="Black" BorderThickness="1">2nd QTR</Label>
+                                    <Label Width="40" />
+                                </StackPanel>
+                                <StackPanel Visibility="Collapsed" Name="Announcer" Orientation="Vertical" HorizontalAlignment="Center" >
+                                    <Label Name="lblAnnouncer" Height="40" Width="265" Style="{StaticResource GameAnnouncer}" />
+                                </StackPanel>
                                 <Label Name="lblHomeScore" Height="40" Width="40" HorizontalContentAlignment="Center" Style="{StaticResource GameBarFonts}" >17</Label>
                                 <Label Name="lblHomeTeam" Height="40" Width="250" HorizontalContentAlignment="Left" Style="{StaticResource GameBarFonts}">Legends</Label>
                             </StackPanel>
@@ -124,11 +129,8 @@
                                 <Label Name="lblHomeTimeouts"  Height="40" Width="420" HorizontalContentAlignment="Left"  Style="{StaticResource GameBar2Fonts}">Timeouts: 3</Label>
                             </StackPanel>
                         </StackPanel>
-                        <StackPanel Visibility="Collapsed" Name="Announcer" Orientation="Vertical" HorizontalAlignment="Center" >
-                            <Label Name="lblAnnouncer" Height="100" Width="785" Style="{StaticResource GameAnnouncer}" />
-                        </StackPanel>                        
                     </StackPanel>
-                    <StackPanel Width="270" Background="#424242" Grid.Column="2" Orientation="Horizontal"  HorizontalAlignment="Right" Margin="0,0,5,0">
+                    <StackPanel Width="240" Background="#424242" Grid.Column="2" Orientation="Horizontal"  HorizontalAlignment="Right" Margin="0,0,5,0">
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Vertical" Margin="5,0,5,0" HorizontalAlignment="right">
                                 <Label Width="80" Height="30" Style="{StaticResource GameBarSpeed_title}" Content="Sounds:" Margin="17,0,0,-10" Padding="0,0,0,0" />
@@ -136,7 +138,7 @@
                                 <CheckBox Name="chbFootballSounds" Style="{StaticResource GameBarCheckBox}">Football Sounds</CheckBox>
                             </StackPanel>
                         </StackPanel>
-                        <Button Name="Game_Close" Click="Game_close" Height="40" Width="110" Margin="0,0,5,0" HorizontalAlignment="Right" Style="{StaticResource GameBarButton}">Exit Game</Button>
+                        <Button Name="Game_Close" Click="Game_close" Height="40" Width="90" Margin="0,0,5,0" HorizontalAlignment="Right" Style="{StaticResource GameBarButton}">Exit</Button>
                     </StackPanel>
                 </Grid>
             <StackPanel HorizontalAlignment="right">

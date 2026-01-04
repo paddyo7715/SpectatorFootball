@@ -922,6 +922,7 @@ namespace SpectatorFootball.GameNS
             bool bGood = false;
             bool bHit_Top = false;
             bool bHit_Bottom = false;
+            double hit_goalpost_redirect_nogood = 10.0;
             double hit_goalpost_redirect = 5.0;
             double short_after_gp_yards = 3.0;
 
@@ -966,6 +967,9 @@ namespace SpectatorFootball.GameNS
 
                 bHit_Top = Line_Class.doIntersect(Ball_start, Ball_end, hit_GaolPost_top_top, hit_GaolPost_top_bot);
 
+                //bpo test
+                bHit_Top = true;
+
                 hit_GaolPost_bot_top = new PointXY() { x = goalpost_yl, y = gp_v_bot_top };
                 hit_GaolPost_bot_bot = new PointXY() { x = goalpost_yl, y = gp_v_bot_bot };
 
@@ -997,9 +1001,9 @@ namespace SpectatorFootball.GameNS
                     else
                     {
                         if (btop)
-                            end_v = end_v - hit_goalpost_redirect;
+                            end_v = end_v - hit_goalpost_redirect_nogood;
                         else
-                            end_v = end_v + hit_goalpost_redirect; ;
+                            end_v = end_v + hit_goalpost_redirect_nogood; 
                     }
 
                     if ((bLefttoRight && end_yl >= wall_yl) || (!bLefttoRight && end_yl <= wall_yl))

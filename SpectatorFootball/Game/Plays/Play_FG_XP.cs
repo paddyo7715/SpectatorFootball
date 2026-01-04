@@ -115,6 +115,9 @@ namespace SpectatorFootball.GameNS
                     double kick_len = r.Kicker.getMaxFGLen(leg_stn);
                     double end_v = r.Kicker.getFGVert(r.Field_Goal_Attempt_Length);
 
+                    //bpo
+                    end_v = 42.0;
+
                     Ball_Kicked(r, gBall, FG_Players, FG_Def_Players, kick_len, end_v, bLefttoRight);
                 }
 
@@ -522,11 +525,11 @@ namespace SpectatorFootball.GameNS
                     break;
                 case FG_Path.HIT_GOALPOST_INTO_CROWD:
                     pr.bFGXPHitGP = true;
-                    gBall.FG_Hits_GP_Into_Stands(prev_yl, prev_v, t.Item6, t.Item7, bLefttoRight);
+                    gBall.FG_Hits_GP_Into_Stands(prev_yl, prev_v, t.Item6, t.Item7, bLefttoRight, _announcer.Announce_InPlay(announce_event.FG_HITS_GP, r.Kicker.p_and_r.p.Last_Name, Game_Engine_Helper.getYardlineDisplay(gBall.Current_YardLine)), null);
                     break;
                 case FG_Path.HIT_GAOLPOST:
                     pr.bFGXPHitGP = true;
-                    gBall.FG_Hits_GP(prev_yl, prev_v, t.Item6, t.Item7, bLefttoRight);
+                    gBall.FG_Hits_GP(prev_yl, prev_v, t.Item6, t.Item7, bLefttoRight, _announcer.Announce_InPlay(announce_event.FG_HITS_GP, r.Kicker.p_and_r.p.Last_Name, Game_Engine_Helper.getYardlineDisplay(gBall.Current_YardLine)), null);
                     break;
             }
 
