@@ -414,7 +414,7 @@ namespace SpectatorFootball.GameNS
                     p.Current_Vertical_Percent_Pos = vert_offset;
 
                     Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
-                    p.Punter_Put_Leg_Down_and_Run(moving_ps, prev_yl, prev_v, _announcer.Announce_InPlay(announce_event.KICKOFF_KICKED, r.Kicker.p_and_r.p.Last_Name, Game_Engine_Helper.getYardlineDisplay(p.Current_YardLine)), null);
+                    p.Punter_Put_Leg_Down_and_Run(moving_ps, prev_yl, prev_v);
                 }
                 else
                 {
@@ -425,7 +425,7 @@ namespace SpectatorFootball.GameNS
                     p.Current_Vertical_Percent_Pos = getAttBlkVert(gBall.Current_Vertical_Percent_Pos, slot);
                     int delay = tgroup_ind * delay_factor + 1;
                     Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
-                    p.Delay_Then_Run_and_Stand(moving_ps, prev_yl, prev_v, delay);
+                    p.Delay_Then_Run_and_Stand(moving_ps, prev_yl, prev_v, delay, null, null);
                 }
                 id_Players++;
             }
@@ -471,7 +471,7 @@ namespace SpectatorFootball.GameNS
                     tgroup_ind = Game_Engine_Helper.getTackleGroup(id_Players, tGroups);
                     int delay = tgroup_ind * delay_factor + 1;
                     Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, false, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
-                    p.Delay_Then_Run_and_Stand(moving_ps, prev_yl, prev_v, delay);
+                    p.Delay_Then_Run_and_Stand(moving_ps, prev_yl, prev_v, delay, null, null);
                 }
                 id_Players++;
             }
@@ -712,7 +712,7 @@ namespace SpectatorFootball.GameNS
                             gBall.Current_Vertical_Percent_Pos = p.Current_Vertical_Percent_Pos;
 
                             Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
-                            p.Run_With_Ball(moving_ps, prev_yl, prev_v, 0.0);
+                            p.Run_With_Ball(moving_ps, prev_yl, prev_v, 0.0, null, null);
 
                             //for the ball
                             gBall.Carried(prev_yl, prev_v);
@@ -750,7 +750,7 @@ namespace SpectatorFootball.GameNS
                                 else
                                     after_announcment = _announcer.Announce_InPlay(announce_event.BREAKTHRU_TACKLE, r.Returner.p_and_r.p.Last_Name, Game_Engine_Helper.getYardlineDisplay(p.Current_YardLine));
 
-                                p.Run_With_Ball(moving_ps2, prev_yl, prev_v, -0.2);
+                                p.Run_With_Ball(moving_ps2, prev_yl, prev_v, -0.2, null, null);
                                 //for the ball
                                 gBall.Carried(prev_yl, prev_v);
                             }

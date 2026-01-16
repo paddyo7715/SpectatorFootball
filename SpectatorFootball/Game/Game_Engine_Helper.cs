@@ -1024,6 +1024,9 @@ namespace SpectatorFootball.GameNS
                 }
             }
 
+            //bpo test
+            fG_Path = FG_Path.HIT_GAOLPOST;
+
             return Tuple.Create(bGood, bHit_Top || bHit_Bottom, fG_Path, new_yl, new_v, end_yl, end_v);
         }
         public static Tuple<double, double> AdjustForOfftheFoot(double yl, double v, bool blefttoRight)

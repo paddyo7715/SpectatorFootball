@@ -97,11 +97,20 @@ namespace SpectatorFootball.GameNS
             Stages.Add(new_st);
         }
 
-        public void KickBall(Player_States moving_ps, double prev_yl_1, double prev_v_1, double RunUp_YardLine_1, double RunUp_Vertical_Percent_Pos_1)
+        public void KickBall(Player_States moving_ps, double prev_yl_1, double prev_v_1, double RunUp_YardLine_1, double RunUp_Vertical_Percent_Pos_1,
+            string beforemsg, string aftermsg)
         {
             Action pas1 = new Action(Game_Object_Types.P, prev_yl_1, prev_v_1, Current_YardLine, Current_Vertical_Percent_Pos, false, moving_ps, null, Movement.LINE, Ball_Speed.CARRIED_SLOW, false, 0);
             Action pas2 = new Action(Game_Object_Types.P, RunUp_YardLine_1, RunUp_Vertical_Percent_Pos_1, Current_YardLine, Current_Vertical_Percent_Pos, false, Player_States.FG_KICK, null,Movement.LINE, null, false, 0);
-            pas2.Effects = new Action_Effects() { Before_Sound = Game_Sounds.KICK};
+
+            if (beforemsg != null)
+                pas1.Effects.Add(new AE_rec() { XYIndex = 0, Announcer_msg = beforemsg });
+
+            if (aftermsg != null)
+                pas2.Effects.Add(new AE_rec() { XYIndex = pas2.PointXY.Count() - 1, Announcer_msg = aftermsg });
+
+            pas2.Effects.Add(new AE_rec() { XYIndex = 0, Sound = Game_Sounds.KICK });
+
             Play_Stage pStage = new Play_Stage();
             pStage.Main_Object = true;
             pStage.Actions.Add(pas1);
@@ -134,13 +143,17 @@ namespace SpectatorFootball.GameNS
             State = Player_States.BLOCKING;
         }
         public void Delay_Then_Run_and_Stand(Player_States moving_ps, double prev_yl, double prev_v, int delay,
-            string beforemsg = null, string aftermsg = null)
+            string beforemsg, string aftermsg)
         {
              Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, prev_yl, prev_v, false, Player_States.STANDING, null, Movement.FAKE_MOVEMENT, null, false, delay);
             Action pas2 = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, false, moving_ps, null, Movement.LINE, null, false, 0);
-            pas2.Effects = new Action_Effects();
-            pas2.Effects.Start_Announcer_msg = beforemsg;
-            pas2.Effects.End_Announcer_msg = aftermsg;
+
+            if (beforemsg != null)
+                pas.Effects.Add(new AE_rec() { XYIndex = 0, Announcer_msg = beforemsg });
+
+            if (aftermsg != null)
+                pas2.Effects.Add(new AE_rec() { XYIndex = pas2.PointXY.Count() - 1, Announcer_msg = aftermsg });
+
             Action pas3 = new Action(Game_Object_Types.P, Starting_YardLine, Starting_Vertical_Percent_Pos, 0.0, 0.0, false, Player_States.STANDING, null, Movement.NONE, null, false, 0);
             Play_Stage pStage = new Play_Stage();
             pStage.Main_Object = false;
@@ -189,13 +202,10 @@ namespace SpectatorFootball.GameNS
             State = Player_States.STANDING;
         }
 
-        public void Run_Then_Stand(Player_States moving_ps, double prev_yl, double prev_v,
-            string beforemsg = null, string aftermsg = null)
+        public void Run_Then_Stand(Player_States moving_ps, double prev_yl, double prev_v)
         {
             Action pas = null;
             pas = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, false, moving_ps, null, Movement.LINE, null, false, 0);
-            pas.Effects.Start_Announcer_msg = beforemsg;
-            pas.Effects.End_Announcer_msg = aftermsg;
             Action pas2 = new Action(Game_Object_Types.P, Starting_YardLine, Starting_Vertical_Percent_Pos, 0.0, 0.0, false, Player_States.STANDING, null, Movement.NONE, null, false, 0);
             Play_Stage pStage = new Play_Stage();
             pStage.Main_Object = false;
@@ -278,12 +288,15 @@ namespace SpectatorFootball.GameNS
         }
 
         public void Run_With_Ball(Player_States moving_ps, double prev_yl, double prev_v, double crowd_adj,
-            string beforemsg = null, string aftermsg = null)
+            string beforemsg, string aftermsg)
         {
             Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, true, moving_ps, null, Movement.LINE, null, false, 0);
-            pas.Effects = new Action_Effects() { After_noise_adj = crowd_adj };
-            pas.Effects.Start_Announcer_msg = beforemsg;
-            pas.Effects.End_Announcer_msg = aftermsg;
+
+            pas.Effects.Add(new AE_rec() { XYIndex = 0, Announcer_msg = beforemsg, noise_adj = crowd_adj });
+
+            if (aftermsg != null)
+                pas.Effects.Add(new AE_rec() { XYIndex = pas.PointXY.Count() - 1, Announcer_msg = aftermsg });
+
             Play_Stage pStage = new Play_Stage();
             pStage.Main_Object = false;
             pStage.Actions.Add(pas);
@@ -327,10 +340,13 @@ namespace SpectatorFootball.GameNS
         {
             Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, prev_yl, prev_v, false, Player_States.STANDING, null, Movement.FAKE_MOVEMENT, null, false, delay);
             Action pas2 = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, true, moving_ps, null, Movement.LINE, Ball_Speed.CARRIED_SLOW, false, 0);
-            pas.Effects = new Action_Effects() ;
-            pas.Effects.Start_Announcer_msg = beforemsg;
-            pas2.Effects = new Action_Effects();
-            pas2.Effects.End_Announcer_msg = aftermsg;
+
+            if (beforemsg != null)
+                pas.Effects.Add(new AE_rec() { XYIndex = 0, Announcer_msg = beforemsg });
+
+            if (aftermsg != null)
+                pas2.Effects.Add(new AE_rec() { XYIndex = pas2.PointXY.Count() - 1, Announcer_msg = aftermsg });
+
             Play_Stage pStage = new Play_Stage();
             pStage.Main_Object = false;
             pStage.Actions.Add(pas);
@@ -369,7 +385,9 @@ namespace SpectatorFootball.GameNS
             Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, true, moving_ps, null, Movement.LINE, null, false, 0);
             Action pas2 = null;
             pas2 = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, true, Player_States.TACKLED, null, Movement.FAKE_MOVEMENT, null, false, 5);
-            pas.Effects = new Action_Effects() { Before_Sound = Game_Sounds.PLAYER_TACKLED, After_noise_adj = crowd_adj };
+
+            pas2.Effects.Add(new AE_rec() { XYIndex = 0, noise_adj = crowd_adj });
+
             Play_Stage pStage = new Play_Stage();
             pStage.Main_Object = true;
             pStage.Actions.Add(pas);
@@ -385,9 +403,12 @@ namespace SpectatorFootball.GameNS
             crowd_adj = bOrigg_Ball_poss ? crowd_adj * -1 : crowd_adj;
             Action pas2 = null;
             pas2 = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, true, Player_States.TACKLED, null, Movement.FAKE_MOVEMENT, null, false, 24);
-            pas2.Effects = new Action_Effects() { Before_noise_adj = crowd_adj};
-            pas2.Effects.Start_Announcer_msg = beforemsg;
-            pas2.Effects.End_Announcer_msg = aftermsg;
+
+            pas2.Effects.Add(new AE_rec() { XYIndex = 0, Announcer_msg = beforemsg, noise_adj = crowd_adj });
+
+            if (aftermsg != null)
+                pas2.Effects.Add(new AE_rec() { XYIndex = pas2.PointXY.Count() - 1, Announcer_msg = aftermsg });
+
             Play_Stage pStage = new Play_Stage();
             pStage.Main_Object = true;
             pStage.Actions.Add(pas2);
@@ -466,9 +487,17 @@ namespace SpectatorFootball.GameNS
             int fakemovements = 10;
 
             Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, true, Player_States.FALL_ON_BALL, null, Movement.FAKE_MOVEMENT, null, true, fakemovements);
-            pas.Effects = new Action_Effects() { After_noise_adj = crowd_adj };
-            pas.Effects.Start_Announcer_msg = beforemsg;
-            pas.Effects.End_Announcer_msg = aftermsg;
+            pas.Effects.Add(new AE_rec() { XYIndex = 0, Announcer_msg = beforemsg, noise_adj = crowd_adj });
+
+            if (aftermsg != null)
+                pas.Effects.Add(new AE_rec() { XYIndex = pas.PointXY.Count() - 1, Announcer_msg = aftermsg });
+
+
+            pas.Effects.Add(new AE_rec() { XYIndex = 0, Announcer_msg = beforemsg, noise_adj = crowd_adj });
+
+            if (aftermsg != null)
+                pas.Effects.Add(new AE_rec() { XYIndex = pas.PointXY.Count() - 1, Announcer_msg = aftermsg });
+
             Play_Stage pStage = new Play_Stage();
             pStage.Main_Object = true;
             pStage.Actions.Add(pas);
@@ -596,9 +625,10 @@ namespace SpectatorFootball.GameNS
             string beforemsg = null, string aftermsg = null)
         {
             Action pas = new Action(Game_Object_Types.P, Current_YardLine, Current_Vertical_Percent_Pos, Current_YardLine, Current_Vertical_Percent_Pos, true, Player_States.PUNTER_AFTER_KICK, null, Movement.FAKE_MOVEMENT, null, true, 3);
-            pas.Effects = new Action_Effects() { Before_noise_adj = crowd_adj };
-            pas.Effects.Start_Announcer_msg = beforemsg;
-            pas.Effects.End_Announcer_msg = aftermsg;
+            pas.Effects.Add(new AE_rec() { XYIndex = 0, Announcer_msg = beforemsg, noise_adj = crowd_adj });
+
+            if (aftermsg != null)
+                pas.Effects.Add(new AE_rec() { XYIndex = pas.PointXY.Count() - 1, Announcer_msg = aftermsg });
             Play_Stage pStage = new Play_Stage();
             pStage.Main_Object = false;
             pStage.Actions.Add(pas);
@@ -610,10 +640,11 @@ namespace SpectatorFootball.GameNS
         {
             Action pas1 = new Action(Game_Object_Types.P, Current_YardLine, Current_Vertical_Percent_Pos, Current_YardLine, Current_Vertical_Percent_Pos, true, Player_States.PUNTER_AFTER_KICK, null, Movement.FAKE_MOVEMENT, null, true, 3);
             Action pas2 = new Action(Game_Object_Types.P, Starting_YardLine, Starting_Vertical_Percent_Pos, 0.0, 0.0, false, Player_States.STANDING, null, Movement.NONE, null, false, 0);
-            pas1.Effects = new Action_Effects();
-            pas1.Effects.Start_Announcer_msg = beforemsg;
-            pas2.Effects = new Action_Effects();
-            pas2.Effects.End_Announcer_msg = aftermsg;
+            pas1.Effects.Add(new AE_rec() { XYIndex = 0, Announcer_msg = beforemsg});
+
+            if (aftermsg != null)
+                pas2.Effects.Add(new AE_rec() { XYIndex = pas2.PointXY.Count() - 1, Announcer_msg = aftermsg });
+            
             Play_Stage pStage = new Play_Stage();
             pStage.Main_Object = false;
             pStage.Actions.Add(pas1);
@@ -627,10 +658,12 @@ namespace SpectatorFootball.GameNS
         {
             Action pas1 = new Action(Game_Object_Types.P, prev_yl, prev_v, prev_yl, prev_v, true, Player_States.PUNTER_AFTER_KICK, null, Movement.FAKE_MOVEMENT, null, true, 3);
             Action pas2 = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, false, moving_ps, null, Movement.LINE, null, false, 0);
-            pas1.Effects = new Action_Effects() ;
-            pas1.Effects.Start_Announcer_msg = beforemsg;
-            pas2.Effects = new Action_Effects();
-            pas2.Effects.Start_Announcer_msg = aftermsg;
+
+            pas1.Effects.Add(new AE_rec() { XYIndex = 0, Announcer_msg = beforemsg });
+
+            if (aftermsg != null)
+                pas2.Effects.Add(new AE_rec() { XYIndex = pas2.PointXY.Count() - 1, Announcer_msg = aftermsg });
+
             Play_Stage pStage = new Play_Stage();
             pStage.Main_Object = false;
             pStage.Actions.Add(pas1);

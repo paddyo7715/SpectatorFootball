@@ -24,8 +24,10 @@ namespace SpectatorFootball.GameNS
         {
             State = Ball_States.TEED_UP;
             Action bas = new Action(Game_Object_Types.B, Current_YardLine, Current_Vertical_Percent_Pos, 0.0, 0.0, false, null, Ball_States.TEED_UP, Movement.NONE, null, false,0);
-            Play_Stage bStage = new Play_Stage();
-            bStage.Main_Object = false;
+            Play_Stage bStage = new Play_Stage
+            {
+                Main_Object = false
+            };
             bStage.Actions.Add(bas);
             Stages.Add(bStage);
         }
@@ -60,16 +62,17 @@ namespace SpectatorFootball.GameNS
             bStage.Actions.Add(bas2);
             Stages.Add(bStage);
         }
-        public void FG_Hits_GP_Into_Stands(double prev_yl, double prev_v, double end_yl, double end_v, bool blefttoRight,
-            string beforemsg = null, string aftermsg = null)
+        public void FG_Hits_GP_Into_Stands(double prev_yl, double prev_v, double end_yl, double end_v, bool blefttoRight, double crowd_adj,
+            string beforemsg, string aftermsg)
         {
-            //can't play the doing sound here because the ball flying thru the air and flying off into the crowd
-            //must be one action to maintain hieght.
-
             State = Ball_States.END_OVER_END;
             Action bas = new Action(Game_Object_Types.B, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, false, null, Ball_States.END_OVER_END, Movement.LINE, Ball_Speed.SLOW, false, 0);
             Action bas2 = new Action(Game_Object_Types.B, Current_YardLine, Current_Vertical_Percent_Pos, end_yl, end_v, false, null, Ball_States.END_OVER_END, Movement.LINE, Ball_Speed.SLOW, false, 0);
             Action bas3 = new Action(Game_Object_Types.B, end_yl, end_v, end_yl, end_v, true, null, Ball_States.CARRIED, Movement.FAKE_MOVEMENT, Ball_Speed.CARRIED, false, 4);
+
+            int bas_index_hit_gp = bas.PointXY.Count() - 1;
+            bas.Effects.Add(new AE_rec() { XYIndex = bas_index_hit_gp, Sound = Game_Sounds.BALL_HITS_GOALPOST });
+            bas.Effects.Add(new AE_rec() { XYIndex = bas_index_hit_gp + 8, Announcer_msg = aftermsg });
 
             bas.PointXY.AddRange(bas2.PointXY);
 
@@ -80,7 +83,7 @@ namespace SpectatorFootball.GameNS
             bStage.Actions.Add(bas3);
             Stages.Add(bStage);
         }
-        public void FG_Hits_GP(double prev_yl, double prev_v, double end_yl, double end_v, bool blefttoRight,
+        public void FG_Hits_GP(double prev_yl, double prev_v, double end_yl, double end_v, bool blefttoRight, double crowd_adj,
                         string beforemsg = null, string aftermsg = null)
         {            
             //can't play the doing sound here because the ball flying thru the air and flying off into the crowd
@@ -89,6 +92,14 @@ namespace SpectatorFootball.GameNS
             State = Ball_States.END_OVER_END;
             Action bas = new Action(Game_Object_Types.B, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, false, null, Ball_States.END_OVER_END, Movement.LINE, Ball_Speed.SLOW, false, 0);
             Action bas2 = new Action(Game_Object_Types.B, Current_YardLine, Current_Vertical_Percent_Pos, end_yl, end_v, false, null, Ball_States.END_OVER_END, Movement.LINE, Ball_Speed.SLOW, false, 0);
+
+            bas.Effects.Add(new AE_rec() { XYIndex = 0, Announcer_msg = beforemsg });
+
+            bas.Effects.Add(new AE_rec() { XYIndex = bas.PointXY.Count - 1, Sound = Game_Sounds.BALL_HITS_GOALPOST });
+
+            if (aftermsg != null)
+                bas2.Effects.Add(new AE_rec() { XYIndex = 4, Announcer_msg = aftermsg });
+
 
             Play_Stage bStage = new Play_Stage();
             List<Action> BR_list = getBounceRollActions(Current_YardLine, Current_Vertical_Percent_Pos, end_yl, end_v, blefttoRight);
@@ -205,7 +216,8 @@ namespace SpectatorFootball.GameNS
         }
 
 
-        public void FG_Blocked(double prev_yl, double prev_v, double end_yl, double end_v, bool blefttoRight, double crowd_adj)
+        public void FG_Blocked(double prev_yl, double prev_v, double end_yl, double end_v, bool blefttoRight, double crowd_adj,
+            string beforemsg, string aftermsg)
         {
             const double BOUNCE_LENGTH = 4.7;
             const double ROLL_LENGTH = 4.0;
@@ -219,8 +231,11 @@ namespace SpectatorFootball.GameNS
 
             State = Ball_States.ROLLING; 
             Action bas = new Action(Game_Object_Types.B, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, false, null, Ball_States.END_OVER_END, Movement.LINE, Ball_Speed.NORMAL, false, 0);
-            bas.Effects = new Action_Effects() { After_noise_adj = crowd_adj };
 
+            bas.Effects.Add(new AE_rec() { XYIndex = 0, Announcer_msg = beforemsg, noise_adj = crowd_adj });
+
+            if (aftermsg != null)
+                bas.Effects.Add(new AE_rec() { XYIndex = bas.PointXY.Count() - 1, Announcer_msg = aftermsg });
 
             State = Ball_States.END_OVER_END;
             Action bas2 = new Action(Game_Object_Types.B, Current_YardLine, Current_Vertical_Percent_Pos, end_yl, end_v, false, null, Ball_States.END_OVER_END, Movement.LINE, Ball_Speed.NORMAL, false, 0);

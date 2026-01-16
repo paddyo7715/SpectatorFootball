@@ -345,7 +345,6 @@
     <Compile Include="NarrationAndText\Announcer.cs" />
     <Compile Include="NarrationAndText\NarratorandText_Helper.cs" />
     <Compile Include="NarrationAndText\ScoringSummary.cs" />
-    <Compile Include="NarrationAndText\Action_Effects.cs" />
     <Compile Include="Penalties\Penalty.cs" />
     <Compile Include="Penalties\Penalty_Helper.cs" />
     <Compile Include="Player\Player_Card_Data.cs" />

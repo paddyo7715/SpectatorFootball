@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using System.Windows.Media.Effects;
 using System.Windows.Shapes;
 
 namespace SpectatorFootball.GameNS
@@ -139,6 +140,7 @@ namespace SpectatorFootball.GameNS
             bool bBefore_Action = false;
             bool bAfter_Action = false;
 
+            Announcement = null;
             Sound = Game_Sounds.NONE;
             bStageFinished = false; 
             Play_Stage pStage = Stages[current_Stage];
@@ -158,8 +160,18 @@ namespace SpectatorFootball.GameNS
                 if (act.PointXY.Count() > 0 &&
                    (current_point < act.PointXY.Count()))
                 {
-                    if (current_point == 0) bBefore_Action = true;
-                    if ((current_point + 1) == act.PointXY.Count()) bAfter_Action = true;
+                    AE_rec aerec = act.Effects.Where(x => x.XYIndex == current_point).FirstOrDefault();
+                    if (aerec != null)
+                    {
+                        crowd_adj = aerec.noise_adj;
+                        Sound = aerec.Sound;
+                        Announcement = aerec.Announcer_msg == null ? "" : aerec.Announcer_msg;
+                    }
+                    else
+                    {
+                        crowd_adj = 0.0;
+                        Sound = Game_Sounds.NONE;
+                    }
 
                     YardLine = act.PointXY[current_point].x;
                     Vertical_Percent_Pos = act.PointXY[current_point].y;
@@ -173,19 +185,6 @@ namespace SpectatorFootball.GameNS
                         current_point = 0;
                     }
 
-                    Tuple<double, Game_Sounds, string> t = null;
-                    if (bBefore_Action || bAfter_Action)
-                    {
-                        t = NarratorandText_Helper.getGameEffects(bBefore_Action, act.Effects);
-                        crowd_adj = t.Item1;
-                        Sound = t.Item2;
-                        Announcement = t.Item3;
-                    }
-                    else
-                    {
-                        crowd_adj = 0.0;
-                        Sound = Game_Sounds.NONE;
-                    }
                 } //if pointxy left
                 else
                 {
