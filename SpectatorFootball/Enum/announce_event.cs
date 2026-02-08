@@ -22,6 +22,8 @@ namespace SpectatorFootball.Enum
         FG_BLOCKED,
         PUNT_AWAY,
         PUNT_BLOCKED,
+        PUNT_LONG_LENGTH,
+        PUNT_SHORT_LENGTH,
         FG_HITS_GP
     }
 }

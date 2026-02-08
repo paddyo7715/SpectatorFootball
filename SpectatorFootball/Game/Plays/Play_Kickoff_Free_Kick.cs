@@ -352,7 +352,7 @@ namespace SpectatorFootball.GameNS
                 if (p == r.Kicker)
                 {
                     p.Current_YardLine += 6.5 * Game_Engine_Helper.HorizontalAdj(bLefttoRight);
-                    p.Run_and_Punt_Free_Kick(prev_yl, prev_v);
+                    p.Run_and_Punt_Free_Kick(prev_yl, prev_v, null, _announcer.Announce_InPlay(announce_event.KICKOFF_KICKED, r.Kicker.p_and_r.p.Last_Name, Game_Engine_Helper.getYardlineDisplay(p.Current_YardLine)));
 
                     Tuple<double, double> tFootOff = Game_Engine_Helper.AdjustForOfftheFoot(p.Current_YardLine, p.Current_Vertical_Percent_Pos, bLefttoRight);
                     gBall.Current_YardLine = tFootOff.Item1;
@@ -454,7 +454,7 @@ namespace SpectatorFootball.GameNS
                     if (r.bKick_Out_of_Endzone)
                         gBall.Punt_End_Over_End_Thru_Air_Out_of_Endzone(prevBallX, prevBallY, bLefttoRight);
                     else
-                        gBall.Punt_End_Over_End_Thru_Air(prevBallX, prevBallY, bLefttoRight);
+                        gBall.Punt_End_Over_End_Thru_Air(prevBallX, prevBallY,0.0,true, bLefttoRight);
 
                     Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, false, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
                     if (pr.bKick_Out_of_Endzone)
@@ -637,7 +637,7 @@ namespace SpectatorFootball.GameNS
                     tackler_tackle_rating = Game_Engine_Helper.AdjustTackleRating_forBlock(br, tackler_tackle_rating);
 
                     //bpo test
-                    //                    tackler_tackle_rating = 1;
+                    //tackler_tackle_rating = 1;
 
                     bool bTack = Game_Engine_Helper.Make_Tackle(3.5,
                         r.Returner.p_and_r.pr.First().Speed_Rating,
@@ -712,7 +712,7 @@ namespace SpectatorFootball.GameNS
                             gBall.Current_Vertical_Percent_Pos = p.Current_Vertical_Percent_Pos;
 
                             Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
-                            p.Run_With_Ball(moving_ps, prev_yl, prev_v, 0.0, null, null);
+                            p.Run_With_Ball(moving_ps, prev_yl, prev_v, 0.0, before_announcement, null);
 
                             //for the ball
                             gBall.Carried(prev_yl, prev_v);
@@ -735,7 +735,7 @@ namespace SpectatorFootball.GameNS
                                 if (i == 1) 
                                     crowd_adj = 0.15;
 
-                                p.Run_and_Tackled(moving_ps, prev_yl, prev_v, crowd_adj);
+                                p.Run_and_Tackled(moving_ps2, prev_yl, prev_v, crowd_adj);
                                 gBall.Carried_Tackled(prev_yl, prev_v);
                             }
                             else
@@ -750,7 +750,7 @@ namespace SpectatorFootball.GameNS
                                 else
                                     after_announcment = _announcer.Announce_InPlay(announce_event.BREAKTHRU_TACKLE, r.Returner.p_and_r.p.Last_Name, Game_Engine_Helper.getYardlineDisplay(p.Current_YardLine));
 
-                                p.Run_With_Ball(moving_ps2, prev_yl, prev_v, -0.2, null, null);
+                                p.Run_With_Ball(moving_ps2, prev_yl, prev_v, -0.2, before_announcement, after_announcment);
                                 //for the ball
                                 gBall.Carried(prev_yl, prev_v);
                             }
@@ -863,7 +863,7 @@ namespace SpectatorFootball.GameNS
                                ball_safety_rating, tackle_rating, run_attack_rating);
 
                     //bpo test
-                    r.bFumble = true;
+                    //r.bFumble = true;
 
                     r.test_counter++;
 

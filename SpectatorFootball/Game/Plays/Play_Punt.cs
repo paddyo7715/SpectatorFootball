@@ -37,6 +37,7 @@ namespace SpectatorFootball.GameNS
         List<Game_Player> Blockers = null;
         List<Game_Player> Attackers = null;
         public Play_Result r = new Play_Result();
+        double _starting_yl = 0.0;
 
         public double touchback_yl { get; set; } = 20;
 
@@ -80,7 +81,7 @@ namespace SpectatorFootball.GameNS
         {
             List<string> Play_Stages = new List<string>();
             double first_block_dropback_yards = 3.0;
-            double starting_yl = gBall.Current_YardLine;
+            _starting_yl = gBall.Current_YardLine;
             bool bPuntLogEnoughfor_CC = false;
             double starting_yardline = gBall.Current_YardLine;
             r.Play_Start_Yardline = starting_yardline;
@@ -121,7 +122,7 @@ namespace SpectatorFootball.GameNS
                         r.bCoffinCornerMade = Game_Engine_Helper.CoffinCornerMade(r.Punter.p_and_r.pr.First().Kicker_Leg_Power_Rating);
 
                     var tackle_groups = Game_Engine_Helper.setTackleGroups(Punt_Players, r.Punter);
-                    var tBallAct = Game_Engine_Helper.getPuntLandingSpot_and_isCatchable(r.bCoffinCornerAttemt, bPuntLogEnoughfor_CC, r.bCoffinCornerMade, MaxPuntLen, MaxPuntVert, starting_yl, bLefttoRight);
+                    var tBallAct = Game_Engine_Helper.getPuntLandingSpot_and_isCatchable(r.bCoffinCornerAttemt, bPuntLogEnoughfor_CC, r.bCoffinCornerMade, MaxPuntLen, MaxPuntVert, _starting_yl, bLefttoRight);
 
                     r.Kick_caught_yl = tBallAct.Item1;
 
@@ -145,7 +146,7 @@ namespace SpectatorFootball.GameNS
                     }
                 }
 
-                r.Punt_Yards = Game_Engine_Helper.getPuntYards(starting_yl, r.Kick_landing_YL, bLefttoRight);
+                r.Punt_Yards = Game_Engine_Helper.getPuntYards(_starting_yl, r.Kick_landing_YL, bLefttoRight);
                 r.end_of_play_yardline = gBall.Current_YardLine;
 
                 r.Play_Player_Stats = SetPlayerStats(r, Punt_Players, Return_Players, r.Missed_Tackles);
@@ -223,9 +224,9 @@ namespace SpectatorFootball.GameNS
                     if (pr.bPunt_Out_of_Endzone || pr.bPunt_KneelDown || pr.bPunt_Not_Fielded)
                         pr.bTouchback = true;
 
-//                    Tuple<double, double> tFootOff = AdjustForOfftheFoot(prevBallX, prevBallY, bLefttoRight);
-//                    prevBallX = tFootOff.Item1;
-//                    prevBallY = tFootOff.Item2;
+                    //                    Tuple<double, double> tFootOff = AdjustForOfftheFoot(prevBallX, prevBallY, bLefttoRight);
+                    //                    prevBallX = tFootOff.Item1;
+                    //                    prevBallY = tFootOff.Item2;
 
                     if (pr.bPunt_Out_of_Bounds)
                         gBall.Punt_Out_of_Bounds(prevBallX, prevBallY, bLefttoRight);
@@ -234,8 +235,10 @@ namespace SpectatorFootball.GameNS
                     else if (pr.bPunt_Not_Fielded)
                         gBall.Punt_End_Over_End_Thru_Air_Not_Caught(prevBallX, prevBallY, bLefttoRight);
                     else
-                        gBall.Punt_End_Over_End_Thru_Air(prevBallX, prevBallY, bLefttoRight);
-
+                    {
+                        double punt_yards = Game_Engine_Helper.getPuntYards(_starting_yl, r.Kick_landing_YL, bLefttoRight);
+                        gBall.Punt_End_Over_End_Thru_Air(prevBallX, prevBallY, punt_yards, false, bLefttoRight);
+                    }
                     logger.Debug("Punt Result: " + pr.bPunt_blocked + " " + pr.bPunt_Out_of_Bounds + " " + pr.bPunt_Out_of_Endzone + " " + pr.bKick_KneelDown + " " + pr.bPunt_Not_Fielded + " " + pr.bPunt_Returned + " " + newBallX + " " + newBallY + " " + p.Current_YardLine + " " + p.Current_Vertical_Percent_Pos);
 
                     Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, false, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
@@ -794,7 +797,7 @@ namespace SpectatorFootball.GameNS
                                 if (i == 1)
                                     crowd_adj = 0.15;
 
-                                p.Run_and_Tackled(moving_ps, prev_yl, prev_v, crowd_adj);
+                                p.Run_and_Tackled(moving_ps2, prev_yl, prev_v, crowd_adj);
                                 gBall.Carried_Tackled(prev_yl, prev_v);
                             }
                             else

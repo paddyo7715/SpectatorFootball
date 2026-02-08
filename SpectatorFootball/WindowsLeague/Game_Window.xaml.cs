@@ -140,7 +140,7 @@ namespace SpectatorFootball.WindowsLeague
 
         private MediaPlayer crowd_player = null;
 
-        private double crowd_volumn = .4;
+        private double crowd_volumn = .3;
 
         private bool bExit_Pressed = false;
 

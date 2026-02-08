@@ -142,6 +142,17 @@ namespace SpectatorFootball.GameNS
             Stages.Add(pStage);
             State = Player_States.BLOCKING;
         }
+        public void DeBlock_then_Run(Player_States moving_ps, double prev_yl, double prev_v, int delay)
+        {
+            Action pas1 = new Action(Game_Object_Types.P, prev_yl, prev_v, prev_yl, prev_v, false, Player_States.BLOCK_KICK, null, Movement.FAKE_MOVEMENT, null, false, delay / 2);
+            Action pas2 = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, false, moving_ps, null, Movement.LINE, null, false, 0);
+            Play_Stage pStage = new Play_Stage();
+            pStage.Main_Object = false;
+            pStage.Actions.Add(pas1);
+            pStage.Actions.Add(pas2);
+            Stages.Add(pStage);
+            State = moving_ps;
+        }
         public void Delay_Then_Run_and_Stand(Player_States moving_ps, double prev_yl, double prev_v, int delay,
             string beforemsg, string aftermsg)
         {
@@ -292,10 +303,8 @@ namespace SpectatorFootball.GameNS
         {
             Action pas = new Action(Game_Object_Types.P, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, true, moving_ps, null, Movement.LINE, null, false, 0);
 
-            pas.Effects.Add(new AE_rec() { XYIndex = 0, Announcer_msg = beforemsg, noise_adj = crowd_adj });
-
-            if (aftermsg != null)
-                pas.Effects.Add(new AE_rec() { XYIndex = pas.PointXY.Count() - 1, Announcer_msg = aftermsg });
+            pas.Effects.Add(new AE_rec() { XYIndex = 0, Announcer_msg = beforemsg});
+            pas.Effects.Add(new AE_rec() { XYIndex = pas.PointXY.Count() - 1, Announcer_msg = aftermsg, noise_adj = crowd_adj });
 
             Play_Stage pStage = new Play_Stage();
             pStage.Main_Object = false;
@@ -596,16 +605,27 @@ namespace SpectatorFootball.GameNS
             Stages.Add(pStage);
             State = Player_States.PUNTER_RUN;
         }
-        public void Run_and_Punt_Free_Kick(double prev_yl_1, double prev_v_1)
+        public void Run_and_Punt_Free_Kick(double prev_yl_1, double prev_v_1,
+            string beforemsg, string aftermsg)
         {
             Action pasOne = new Action(Game_Object_Types.P, prev_yl_1, prev_v_1, prev_yl_1, prev_v_1, true, Player_States.STANDING, null, Movement.FAKE_MOVEMENT, null, true, 5);
             Action pas1 = new Action(Game_Object_Types.P, prev_yl_1, prev_v_1, Current_YardLine, Current_Vertical_Percent_Pos, true, Player_States.PUNTER_RUN, Ball_States.CARRIED_SLOW, Movement.LINE, null, false, 0);
-            Action pas = new Action(Game_Object_Types.P, Current_YardLine, Current_Vertical_Percent_Pos, Current_YardLine, Current_Vertical_Percent_Pos, true, Player_States.PUNTER_KICK, null, Movement.FAKE_MOVEMENT, null, true, 3);
+            Action pas2 = new Action(Game_Object_Types.P, Current_YardLine, Current_Vertical_Percent_Pos, Current_YardLine, Current_Vertical_Percent_Pos, true, Player_States.PUNTER_KICK, null, Movement.FAKE_MOVEMENT, null, true, 3);
+
+
+            if (beforemsg != null)
+                pas1.Effects.Add(new AE_rec() { XYIndex = 0, Announcer_msg = beforemsg });
+
+            if (aftermsg != null)
+                pas2.Effects.Add(new AE_rec() { XYIndex = pas2.PointXY.Count() - 1, Announcer_msg = aftermsg });
+
+            pas2.Effects.Add(new AE_rec() { XYIndex = 0, Sound = Game_Sounds.KICK });
+
             Play_Stage pStage = new Play_Stage();
             pStage.Main_Object = true;
             pStage.Actions.Add(pasOne);
             pStage.Actions.Add(pas1);
-            pStage.Actions.Add(pas);
+            pStage.Actions.Add(pas2);
             Stages.Add(pStage);
             State = Player_States.PUNTER_RUN;
         }
@@ -662,7 +682,7 @@ namespace SpectatorFootball.GameNS
             pas1.Effects.Add(new AE_rec() { XYIndex = 0, Announcer_msg = beforemsg });
 
             if (aftermsg != null)
-                pas2.Effects.Add(new AE_rec() { XYIndex = pas2.PointXY.Count() - 1, Announcer_msg = aftermsg });
+                pas2.Effects.Add(new AE_rec() { XYIndex = 0, Announcer_msg = aftermsg });
 
             Play_Stage pStage = new Play_Stage();
             pStage.Main_Object = false;

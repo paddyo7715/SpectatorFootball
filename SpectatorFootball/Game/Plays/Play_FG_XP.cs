@@ -1,14 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Diagnostics.Eventing.Reader;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Documents;
 using log4net;
 using SpectatorFootball.Enum;
-using SpectatorFootball.GameNS;
 using SpectatorFootball.Models;
 using SpectatorFootball.NarrationAndText;
 
@@ -90,7 +84,7 @@ namespace SpectatorFootball.GameNS
                 r.Defender_Close_to_Kicker = Kick_Blocker;
 
                 Snap_Ball_Lines_Clash(gBall, FG_Players, FG_Def_Players, FG_Formation, FG_Def_Formation, bLefttoRight);
-                Run_Up_And_Kick_Ball(r,gBall, FG_Players, FG_Def_Players, FG_Formation, FG_Def_Formation, Kick_Blocker, bLefttoRight);
+                Run_Up_And_Kick_Ball(r, gBall, FG_Players, FG_Def_Players, FG_Formation, FG_Def_Formation, Kick_Blocker, bLefttoRight);
 
                 if (Kick_Blocker != null)
                     r.FGXP_Blocked = isKickBlocked();
@@ -215,7 +209,7 @@ namespace SpectatorFootball.GameNS
 
             long FGPlays = pr.bFGMade || pr.bFGMissed ? 1 : 0;
             long XPPlays = pr.bXPMade || pr.bXPMissed ? 1 : 0;
-            long FG_Long = pr.bFGMade ? (int) (pr.Field_Goal_Attempt_Length + .5) : 0;
+            long FG_Long = pr.bFGMade ? (int)(pr.Field_Goal_Attempt_Length + .5) : 0;
 
             List<Game_Player_Stats> r = new List<Game_Player_Stats>();
 
@@ -252,8 +246,8 @@ namespace SpectatorFootball.GameNS
                 long XP_Blocks = 0;
                 if (kick_blocker == p)
                 {
-                   FG_Blocks = FGPlays == 1 ? 1 : 0;
-                   XP_Blocks = XPPlays == 1 ? 1 : 0;
+                    FG_Blocks = FGPlays == 1 ? 1 : 0;
+                    XP_Blocks = XPPlays == 1 ? 1 : 0;
                 }
 
                 r.Add(new Game_Player_Stats()
@@ -275,8 +269,8 @@ namespace SpectatorFootball.GameNS
             double yards_before_holder = -1.0;
             double def_line_advance_yards = 1.5;
             double def_backfield_advance_yards = 2.5;
-            double holder_yl = FG_Players[(int) FG_Formation.FGHolderIndex].Current_YardLine;
-            double holder_v = FG_Players[(int)FG_Formation.FGHolderIndex].Current_Vertical_Percent_Pos; 
+            double holder_yl = FG_Players[(int)FG_Formation.FGHolderIndex].Current_YardLine;
+            double holder_v = FG_Players[(int)FG_Formation.FGHolderIndex].Current_Vertical_Percent_Pos;
 
             double ball_yl = gBall.Current_YardLine;
             double line_yl = 0.0;
@@ -362,7 +356,7 @@ namespace SpectatorFootball.GameNS
                     p.Current_YardLine = holder_yl;
 
                     Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
-                    p.KickBall(moving_ps, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos,null, null);
+                    p.KickBall(moving_ps, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, null, null);
 
                 }
                 else if (FG_Formation.FGHolderIndex == io_Players)
@@ -409,7 +403,7 @@ namespace SpectatorFootball.GameNS
             return r;
         }
 
-        
+
 
         private void Kick_blocked(Game_Ball gBall, List<Game_Player> FG_Players, List<Game_Player> FG_Def_Players, Game_Player blocker, bool bLefttoRight)
         {
@@ -426,7 +420,7 @@ namespace SpectatorFootball.GameNS
             double end_yl = gBall.Current_YardLine + yards_blocked * Game_Engine_Helper.HorizontalAdj(bLefttoRight);
             double end_v = ending_vert;
 
-            gBall.FG_Blocked(prev_yl, prev_v, end_yl, end_v, bLefttoRight, -0.4, _announcer.Announce_InPlay(announce_event.FG_BLOCKED, r.Kicker.p_and_r.p.Last_Name, Game_Engine_Helper.getYardlineDisplay(gBall.Current_YardLine)), null);
+            gBall.FG_Blocked(prev_yl, prev_v, end_yl, end_v, bLefttoRight, -0.4,null, _announcer.Announce_InPlay(announce_event.FG_BLOCKED, r.Kicker.p_and_r.p.Last_Name, Game_Engine_Helper.getYardlineDisplay(gBall.Current_YardLine)));
 
             int io_Players = 0;
             foreach (Game_Player p in FG_Players)
@@ -455,7 +449,11 @@ namespace SpectatorFootball.GameNS
                 p.Current_YardLine += t.Item1;
                 p.Current_Vertical_Percent_Pos += t.Item2;
                 Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
-                p.Delay_Then_Run_and_Stand(moving_ps, prev_yl, prev_v, 3, null, null);
+
+                if (p == blocker)
+                    p.DeBlock_then_Run(moving_ps, prev_yl, prev_v, 15);
+                else
+                    p.Delay_Then_Run_and_Stand(moving_ps, prev_yl, prev_v, 15, null, null);
                 io_Players++;
             }
 
@@ -463,6 +461,7 @@ namespace SpectatorFootball.GameNS
 
         private void Ball_Kicked(Play_Result pr, Game_Ball gBall, List<Game_Player> FG_Players, List<Game_Player> FG_Def_Players, double kick_len, double ball_end_v, bool bLefttoRight)
         {
+            double hit_gp_crowd_adj = 0.25;
 
             double prev_yl = gBall.Current_YardLine;
             double prev_v = gBall.Current_Vertical_Percent_Pos;
@@ -470,7 +469,7 @@ namespace SpectatorFootball.GameNS
             gBall.Current_YardLine += kick_len * Game_Engine_Helper.HorizontalAdj(bLefttoRight); ;
             gBall.Current_Vertical_Percent_Pos = ball_end_v;
 
-            Tuple<bool,bool, FG_Path, double, double, double, double> t = Game_Engine_Helper.FGResult(prev_yl, prev_v, gBall.Current_YardLine, gBall.Current_Vertical_Percent_Pos, bLefttoRight);
+            Tuple<bool, bool, FG_Path, double, double, double, double> t = Game_Engine_Helper.FGResult(prev_yl, prev_v, gBall.Current_YardLine, gBall.Current_Vertical_Percent_Pos, bLefttoRight);
 
             if (bFG)
             {
@@ -494,11 +493,11 @@ namespace SpectatorFootball.GameNS
 
 
 
-            /*            if (t.Item1)
-                            logger.Debug("Field goal is Good");
-                        else
-                            logger.Debug("Field goal is not Good");
-            */
+            if (t.Item1)
+                logger.Debug("Field goal is Good");
+            else
+                logger.Debug("Field goal is not Good");
+
 
             if (t.Item2)
             {
@@ -525,11 +524,15 @@ namespace SpectatorFootball.GameNS
                     break;
                 case FG_Path.HIT_GOALPOST_INTO_CROWD:
                     pr.bFGXPHitGP = true;
-                    gBall.FG_Hits_GP_Into_Stands(prev_yl, prev_v, t.Item6, t.Item7, bLefttoRight, 0.25,null,_announcer.Announce_InPlay(announce_event.FG_HITS_GP, r.Kicker.p_and_r.p.Last_Name, Game_Engine_Helper.getYardlineDisplay(gBall.Current_YardLine)));
+                    if (!pr.bFGMade && !pr.bXPMade)
+                        hit_gp_crowd_adj *= -1;
+                    gBall.FG_Hits_GP(prev_yl, prev_v, t.Item6, t.Item7, true, bLefttoRight, hit_gp_crowd_adj, null, _announcer.Announce_InPlay(announce_event.FG_HITS_GP, r.Kicker.p_and_r.p.Last_Name, Game_Engine_Helper.getYardlineDisplay(gBall.Current_YardLine)));
                     break;
                 case FG_Path.HIT_GAOLPOST:
+                    if (!pr.bFGMade && !pr.bXPMade)
+                        hit_gp_crowd_adj *= -1;
                     pr.bFGXPHitGP = true;
-                    gBall.FG_Hits_GP(prev_yl, prev_v, t.Item6, t.Item7, bLefttoRight, 0.25, _announcer.Announce_InPlay(announce_event.FG_HITS_GP, r.Kicker.p_and_r.p.Last_Name, Game_Engine_Helper.getYardlineDisplay(gBall.Current_YardLine)), null);
+                    gBall.FG_Hits_GP(prev_yl, prev_v, t.Item6, t.Item7, false, bLefttoRight, hit_gp_crowd_adj, _announcer.Announce_InPlay(announce_event.FG_HITS_GP, r.Kicker.p_and_r.p.Last_Name, Game_Engine_Helper.getYardlineDisplay(gBall.Current_YardLine)), null);
                     break;
             }
 
@@ -539,7 +542,7 @@ namespace SpectatorFootball.GameNS
                 if (FG_Formation.FGHolderIndex == io_Players)
                     p.Ready_Hold_FG();
                 else if (p == r.Kicker)
-                    p.Kicker_Put_Leg_Down_and_Stand(_announcer.Announce_InPlay(announce_event.FG_AWAY, r.Kicker.p_and_r.p.Last_Name, Game_Engine_Helper.getYardlineDisplay(p.Current_YardLine)),null);
+                    p.Kicker_Put_Leg_Down_and_Stand(_announcer.Announce_InPlay(announce_event.FG_AWAY, r.Kicker.p_and_r.p.Last_Name, Game_Engine_Helper.getYardlineDisplay(p.Current_YardLine)), null);
                 else
                     p.Stand();
                 io_Players++;
@@ -564,7 +567,7 @@ namespace SpectatorFootball.GameNS
                 v *= -1;
             }
 
-            return Tuple.Create(y,v);
+            return Tuple.Create(y, v);
         }
     }
 }

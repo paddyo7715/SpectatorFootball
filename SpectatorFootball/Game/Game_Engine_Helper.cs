@@ -896,6 +896,9 @@ namespace SpectatorFootball.GameNS
             if (attacker_wins >= Attackers.Count - minus_attackers)
                 r = Best_Attacker;
 
+            //bpo test
+            //r = Best_Attacker;
+
             return r;
         }
 
@@ -922,8 +925,8 @@ namespace SpectatorFootball.GameNS
             bool bGood = false;
             bool bHit_Top = false;
             bool bHit_Bottom = false;
-            double hit_goalpost_redirect_nogood = 10.0;
-            double hit_goalpost_redirect = 5.0;
+            double hit_goalpost_redirect_nogood = 30.0;
+            double hit_goalpost_redirect = 20.0;
             double short_after_gp_yards = 3.0;
 
             FG_Path fG_Path = FG_Path.SHORT_OF_GOALPOSTS;
@@ -967,9 +970,6 @@ namespace SpectatorFootball.GameNS
 
                 bHit_Top = Line_Class.doIntersect(Ball_start, Ball_end, hit_GaolPost_top_top, hit_GaolPost_top_bot);
 
-                //bpo test
-                bHit_Top = true;
-
                 hit_GaolPost_bot_top = new PointXY() { x = goalpost_yl, y = gp_v_bot_top };
                 hit_GaolPost_bot_bot = new PointXY() { x = goalpost_yl, y = gp_v_bot_bot };
 
@@ -989,6 +989,9 @@ namespace SpectatorFootball.GameNS
                         temp_v = hit_GaolPost_bot_top.y;
 
                     new_v = temp_v;
+
+                    //bpo test
+                    //rnd = 1;
 
                     if (rnd == 1)
                     {
@@ -1023,9 +1026,6 @@ namespace SpectatorFootball.GameNS
                         fG_Path = FG_Path.BEYOND_GOALPOSTS;
                 }
             }
-
-            //bpo test
-            fG_Path = FG_Path.HIT_GAOLPOST;
 
             return Tuple.Create(bGood, bHit_Top || bHit_Bottom, fG_Path, new_yl, new_v, end_yl, end_v);
         }

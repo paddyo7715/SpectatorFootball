@@ -806,7 +806,7 @@ namespace SpectatorFootball.GameNS
                                 if (i == 1)
                                     crowd_adj = 0.15;
 
-                                p.Run_and_Tackled(moving_ps, prev_yl, prev_v, crowd_adj);
+                                p.Run_and_Tackled(moving_ps2, prev_yl, prev_v, crowd_adj);
                                 gBall.Carried_Tackled(prev_yl, prev_v);
                             }
                             else

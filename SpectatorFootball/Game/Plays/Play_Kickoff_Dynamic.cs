@@ -195,7 +195,7 @@ namespace SpectatorFootball.GameNS
                     tackler_tackle_rating = Game_Engine_Helper.AdjustTackleRating_forBlock(br, tackler_tackle_rating);
 
                     //bpo test
-                    //                   tackler_tackle_rating = 1;
+                    //tackler_tackle_rating = 1;
 
                     bool bTack = Game_Engine_Helper.Make_Tackle(2.6,
                         r.Returner.p_and_r.pr.First().Speed_Rating,
@@ -308,7 +308,7 @@ namespace SpectatorFootball.GameNS
                                 if (i == 1)
                                     crowd_adj = 0.15;
 
-                                p.Run_and_Tackled(moving_ps, prev_yl, prev_v, crowd_adj);
+                                p.Run_and_Tackled(moving_ps2, prev_yl, prev_v, crowd_adj);
                                 gBall.Carried_Tackled(prev_yl, prev_v);
                             }
                             else

@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using SpectatorFootball.Common;
 using SpectatorFootball.NarrationAndText;
+using System.Diagnostics.Eventing.Reader;
+using System.Data.SQLite;
 
 namespace SpectatorFootball.GameNS
 {
@@ -62,17 +64,18 @@ namespace SpectatorFootball.GameNS
             bStage.Actions.Add(bas2);
             Stages.Add(bStage);
         }
-        public void FG_Hits_GP_Into_Stands(double prev_yl, double prev_v, double end_yl, double end_v, bool blefttoRight, double crowd_adj,
+        public void FG_Hits_GP(double prev_yl, double prev_v, double end_yl, double end_v,bool bIntoStands, bool blefttoRight, double crowd_adj,
             string beforemsg, string aftermsg)
         {
             State = Ball_States.END_OVER_END;
             Action bas = new Action(Game_Object_Types.B, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, false, null, Ball_States.END_OVER_END, Movement.LINE, Ball_Speed.SLOW, false, 0);
-            Action bas2 = new Action(Game_Object_Types.B, Current_YardLine, Current_Vertical_Percent_Pos, end_yl, end_v, false, null, Ball_States.END_OVER_END, Movement.LINE, Ball_Speed.SLOW, false, 0);
-            Action bas3 = new Action(Game_Object_Types.B, end_yl, end_v, end_yl, end_v, true, null, Ball_States.CARRIED, Movement.FAKE_MOVEMENT, Ball_Speed.CARRIED, false, 4);
+            Action bas2 = new Action(Game_Object_Types.B, Current_YardLine, Current_Vertical_Percent_Pos, end_yl, end_v, false, null, Ball_States.END_OVER_END, Movement.LINE, Ball_Speed.FAST, false, 0);
+            List<Action> end_action_list = new List<Action>();
+
 
             int bas_index_hit_gp = bas.PointXY.Count() - 1;
             bas.Effects.Add(new AE_rec() { XYIndex = bas_index_hit_gp, Sound = Game_Sounds.BALL_HITS_GOALPOST });
-            bas.Effects.Add(new AE_rec() { XYIndex = bas_index_hit_gp + 8, Announcer_msg = aftermsg });
+            bas.Effects.Add(new AE_rec() { XYIndex = bas_index_hit_gp + 8, Announcer_msg = aftermsg, noise_adj = crowd_adj });
 
             bas.PointXY.AddRange(bas2.PointXY);
 
@@ -80,37 +83,17 @@ namespace SpectatorFootball.GameNS
             bStage.Main_Object = true;
             bStage.bBall_Over_Goalposts = true;
             bStage.Actions.Add(bas);
-            bStage.Actions.Add(bas3);
+
+            if (bIntoStands)
+                end_action_list.Add(new Action(Game_Object_Types.B, end_yl, end_v, end_yl, end_v, true, null, Ball_States.CARRIED, Movement.FAKE_MOVEMENT, Ball_Speed.CARRIED, false, 4));
+            else
+                end_action_list = getBounceRollActions(Current_YardLine, Current_Vertical_Percent_Pos, end_yl, end_v, blefttoRight);
+
+
+
+            bStage.Actions.AddRange(end_action_list);
             Stages.Add(bStage);
         }
-        public void FG_Hits_GP(double prev_yl, double prev_v, double end_yl, double end_v, bool blefttoRight, double crowd_adj,
-                        string beforemsg = null, string aftermsg = null)
-        {            
-            //can't play the doing sound here because the ball flying thru the air and flying off into the crowd
-            //must be one action to maintain hieght.
-
-            State = Ball_States.END_OVER_END;
-            Action bas = new Action(Game_Object_Types.B, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, false, null, Ball_States.END_OVER_END, Movement.LINE, Ball_Speed.SLOW, false, 0);
-            Action bas2 = new Action(Game_Object_Types.B, Current_YardLine, Current_Vertical_Percent_Pos, end_yl, end_v, false, null, Ball_States.END_OVER_END, Movement.LINE, Ball_Speed.SLOW, false, 0);
-
-            bas.Effects.Add(new AE_rec() { XYIndex = 0, Announcer_msg = beforemsg });
-
-            bas.Effects.Add(new AE_rec() { XYIndex = bas.PointXY.Count - 1, Sound = Game_Sounds.BALL_HITS_GOALPOST });
-
-            if (aftermsg != null)
-                bas2.Effects.Add(new AE_rec() { XYIndex = 4, Announcer_msg = aftermsg });
-
-
-            Play_Stage bStage = new Play_Stage();
-            List<Action> BR_list = getBounceRollActions(Current_YardLine, Current_Vertical_Percent_Pos, end_yl, end_v, blefttoRight);
-            bStage.Actions.AddRange(BR_list);
-            bStage.Main_Object = true;
-            bStage.bBall_Over_Goalposts = true;
-            bStage.Actions.Add(bas);
-            bStage.Actions.Add(bas2);
-            Stages.Add(bStage);
-        }
-
         public List<Action> getBounceRollActions(double starting_yl, double ending_y, double landing_yl, double landing_v, bool blefttoRight)
         {
             List<Action> r = new List<Action>();
@@ -232,10 +215,10 @@ namespace SpectatorFootball.GameNS
             State = Ball_States.ROLLING; 
             Action bas = new Action(Game_Object_Types.B, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, false, null, Ball_States.END_OVER_END, Movement.LINE, Ball_Speed.NORMAL, false, 0);
 
-            bas.Effects.Add(new AE_rec() { XYIndex = 0, Announcer_msg = beforemsg, noise_adj = crowd_adj });
+            if (beforemsg != null)
+                bas.Effects.Add(new AE_rec() { XYIndex = 0, Announcer_msg = beforemsg });
 
-            if (aftermsg != null)
-                bas.Effects.Add(new AE_rec() { XYIndex = bas.PointXY.Count() - 1, Announcer_msg = aftermsg });
+           bas.Effects.Add(new AE_rec() { XYIndex = bas.PointXY.Count() - 1, Announcer_msg = aftermsg, noise_adj = crowd_adj });
 
             State = Ball_States.END_OVER_END;
             Action bas2 = new Action(Game_Object_Types.B, Current_YardLine, Current_Vertical_Percent_Pos, end_yl, end_v, false, null, Ball_States.END_OVER_END, Movement.LINE, Ball_Speed.NORMAL, false, 0);
@@ -270,8 +253,10 @@ namespace SpectatorFootball.GameNS
             bStage.Actions.Add(bas4);
             Stages.Add(bStage);
         }
-        public void Punt_End_Over_End_Thru_Air(double prev_yl, double prev_v, bool bLefttoRight)
+        public void Punt_End_Over_End_Thru_Air(double prev_yl, double prev_v, double punt_len, bool bFreeKick, bool bLefttoRight)
         {
+            double ann_kick_percent = .6;
+
             double vert_adjust_off_Foot = -1.5;
             double yl_adjust_off_foot = 0.0;
             if (bLefttoRight)
@@ -279,11 +264,28 @@ namespace SpectatorFootball.GameNS
             else
                 yl_adjust_off_foot = 1.5;
 
+
+
             State = Ball_States.PUNT_THRU_THE_AIR;
             Action bas = new Action(Game_Object_Types.B, prev_yl + yl_adjust_off_foot, prev_v + vert_adjust_off_Foot, Current_YardLine, Current_Vertical_Percent_Pos, false, null, State, Movement.LINE, Ball_Speed.SLOW, false, 0);
             Play_Stage bStage = new Play_Stage();
             bStage.Main_Object = true;
             bStage.Actions.Add(bas);
+
+            Announcer announcer = new Announcer();
+            int ind = (int)(ann_kick_percent * bas.PointXY.Count());
+
+            if (punt_len >= app_Constants.GREAT_PUNT_LENGTH && !bFreeKick)
+            {
+                string announcement = announcer.Announce_InPlay(announce_event.PUNT_LONG_LENGTH, "", Game_Engine_Helper.getYardlineDisplay(Current_YardLine));
+                bas.Effects.Add(new AE_rec() { XYIndex = ind, Announcer_msg = announcement });
+            }
+            else if (punt_len <= app_Constants.BAD_PUNT_LENGTH && !bFreeKick)
+            {
+                string announcement = announcer.Announce_InPlay(announce_event.PUNT_SHORT_LENGTH, "", Game_Engine_Helper.getYardlineDisplay(Current_YardLine));
+                bas.Effects.Add(new AE_rec() { XYIndex = ind, Announcer_msg = announcement });
+            }
+
             Stages.Add(bStage);
         }
 

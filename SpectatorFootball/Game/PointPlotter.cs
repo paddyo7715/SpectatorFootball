@@ -46,6 +46,8 @@ namespace SpectatorFootball.GameNS
                     skip_count = PLAYER_SLOWER;
                 else if (b_state == Ball_States.CARRIED)
                     skip_count = PLAYER_SKIP;
+                else if (Ball_Spd == Enum.Ball_Speed.FAST)
+                    skip_count = BALL_FAST_SKIP;
                 else if ((b_state == Ball_States.END_OVER_END || b_state == Ball_States.SPIRAL))
                     skip_count = STARTING_KICK_SKIP;
                 else if (b_state == Ball_States.PUNT_THRU_THE_AIR)
@@ -54,8 +56,6 @@ namespace SpectatorFootball.GameNS
                     skip_count = BALL_SLOW_SKIP;
                 else if (Ball_Spd == Enum.Ball_Speed.NORMAL)
                     skip_count = BALL_NORMAL_SKIP;
-                else if (Ball_Spd == Enum.Ball_Speed.FAST)
-                    skip_count = BALL_FAST_SKIP;
                 else if (Ball_Spd == Enum.Ball_Speed.SUPER_SLOW)
                     skip_count = BALL_SUPER_SLOW;
                 else

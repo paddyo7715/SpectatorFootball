@@ -698,6 +698,10 @@ namespace SpectatorFootball
         public const double OFF_VERRY_BAD = -25.0;
         public const double OFF_MIN = -40.0;
 
+        //Announcer
+        public const double GREAT_PUNT_LENGTH = 48.0;
+        public const double BAD_PUNT_LENGTH = 33.0;
+
 
     }
 }
