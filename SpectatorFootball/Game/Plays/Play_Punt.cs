@@ -622,7 +622,6 @@ namespace SpectatorFootball.GameNS
             List<int?> group = new List<int?>();
             for (int i = 1; i <= app_Constants.PUNT_TACKLING_GROUPS + 1; i++)
             {
-
                 bool bFindOpenSlot = false;
                 double agility = r.Punt_Returner.p_and_r.pr.First().Agilty_Rating;
                 bFindOpenSlot = ReturnerLookforHole(agility);
@@ -706,10 +705,10 @@ namespace SpectatorFootball.GameNS
                         tackler_tackle_rating);
 
                     //bpo test
-/*                   if (i <= 3)
+ /*                  if (i <= 3)
                         bTack = false;
                     else
-                        bTack = false; */
+                        bTack = false;  */
                     //********************
 
                     if (bTack)
@@ -862,7 +861,7 @@ namespace SpectatorFootball.GameNS
                 id_Players = 0;
                 foreach (Game_Player p in Punt_Players)
                 {
-                    if (p == r.Kicker && i != 4)  //In fourth group, kicker is tackler
+                    if (p == r.Punter && i != 4)  //In fourth group, kicker is tackler
                     {
                         double prev_yl = p.Current_YardLine;
                         double prev_v = p.Current_Vertical_Percent_Pos;
@@ -879,12 +878,8 @@ namespace SpectatorFootball.GameNS
                         else
                         {
                             Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, false, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
-                            //                   p.Run(moving_ps, prev_yl, prev_v);
-                            //                            int ball_carrier_xyCount = Game_Helper.getTotXYPoints(gBall.Stages.Last());
                             int ball_carrier_xyCount = Game_Helper.getTotXYPoints(gBall.Stages[p.Stages.Count()]);
-
                             p.Run_not_main(moving_ps, prev_yl, prev_v, ball_carrier_xyCount);
-
                         }
 
                         if (TB_List.Count > 0)

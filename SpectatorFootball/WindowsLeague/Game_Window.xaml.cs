@@ -28,6 +28,7 @@ using System.Windows.Media.Animation;
 using System.Collections.ObjectModel;
 using SpectatorFootball.League;
 using System.Diagnostics.Eventing.Reader;
+using System.Windows.Forms;
 
 namespace SpectatorFootball.WindowsLeague
 {
@@ -158,6 +159,8 @@ namespace SpectatorFootball.WindowsLeague
             {
                 180 ,140, 100, 60, 20
             };
+
+        private ImageBrush Announcers_img = null;
 
         public Game_Window(MainWindow pw, Game g, bool bCrowdNoise, bool bFootballSounds, string GameSpeed)
         {
@@ -329,9 +332,6 @@ namespace SpectatorFootball.WindowsLeague
 
                 Mid_Field_Art_Rect.Fill = ib;
 
-                //bpo test ball
-
-
                 //setup the gradiants for the game ball
                 //Gradient 1
                 myLinearGradientBrush1 = new LinearGradientBrush();
@@ -363,7 +363,7 @@ namespace SpectatorFootball.WindowsLeague
                 string err = "Error Loading Data to Start Game !";
                 logger.Error(err);
                 logger.Error(e);
-                MessageBox.Show(CommonUtils.substr(err, 0, 100), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                System.Windows.MessageBox.Show(CommonUtils.substr(err, 0, 100), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 
             }
 
@@ -422,6 +422,10 @@ namespace SpectatorFootball.WindowsLeague
 
             ImageBrush backgroundField = new ImageBrush();
             backgroundField.ImageSource = new BitmapImage(new Uri(CommonUtils.getAppPath() + "/images/Stadiums/Grass_BrightGreen.png"));
+
+            Announcers_img = new ImageBrush();
+            Announcers_img.ImageSource = new BitmapImage(new Uri(CommonUtils.getAppPath() + "/images/Announcers.png"));
+
 
             background.Fill = backgroundField;
 
@@ -565,27 +569,52 @@ namespace SpectatorFootball.WindowsLeague
 
                 await Task.Delay(sleepfor);
 
-                Announcer.Visibility = Visibility.Collapsed; 
-                ScoreBoard.Visibility = Visibility.Visible;
-
-                //                Thread.Sleep(500);
-
+                int result_ann_height = 150;
+                int result_ann_width = 350;
 
                 //Show the play result
+                StackPanel spAnnouncer = new StackPanel();
+                spAnnouncer.Height = MyCanvas.Height;
+                spAnnouncer.Width = MyCanvas.Width;
+                spAnnouncer.Background = Announcers_img;
+
+                // Create a Border
+                Border border = new Border()
+                {
+                    BorderBrush = Brushes.Yellow,
+                    BorderThickness = new Thickness(4),
+                    Margin = new Thickness(10),
+                    Height = result_ann_height,
+                    Width = result_ann_width
+                };
+
                 TextBlock txbPlayResult = new TextBlock();
                 txbPlayResult.Background = Brushes.Black;
-                txbPlayResult.Opacity = 0.6;
-                txbPlayResult.Width = CANVAS_WIDTH;
-                txbPlayResult.Height = CANVAS_HEIGHT;
-                Canvas.SetZIndex(txbPlayResult, POPUP_INDEX);
+                txbPlayResult.Foreground = Brushes.White;
+                txbPlayResult.Opacity = 0.9;
+                txbPlayResult.Width = result_ann_width;
+                txbPlayResult.Height = result_ann_height;
+                txbPlayResult.FontSize = 20;
+                txbPlayResult.FontFamily = new FontFamily("Verdana");
+                txbPlayResult.TextWrapping = TextWrapping.Wrap;
+                txbPlayResult.VerticalAlignment = VerticalAlignment.Top;
+                txbPlayResult.Padding = new Thickness(10);
+
+
+                border.Child = txbPlayResult;
+                spAnnouncer.Children.Add(border);
+
+
+                Canvas.SetZIndex(spAnnouncer, POPUP_INDEX);
 
                 // Set position on the Canvas
-                Canvas.SetLeft(txbPlayResult, 0);
-                Canvas.SetTop(txbPlayResult, 0);
+                Canvas.SetLeft(spAnnouncer, 0);
+                Canvas.SetTop(spAnnouncer, 0);
 
                 // Add the Label to the Canvas
-                MyCanvas.Children.Add(txbPlayResult);
+                MyCanvas.Children.Add(spAnnouncer);
 
+                await showPlay_Announcements(Play, txbPlayResult);
 
                 //                bGameEneded = Play.bGameOver;
                 //just to test one play take this out.
@@ -595,6 +624,48 @@ namespace SpectatorFootball.WindowsLeague
              }  //Game ended
 
             logger.Debug("Crowd Volume: " + crowd_volumn);
+        }
+
+        private async Task showPlay_Announcements(Play_Struct ps, TextBlock txbPlayResult)
+        {
+            int announce_delay_mult = 30;
+            for (int i = 0; i < 3; i++)
+            {
+                switch (i)
+                {
+                    case 0:
+                        if (ps.Penalty_Announcement.Count > 0)
+                        {
+                            display_announcment(ps.Penalty_Announcement, txbPlayResult);
+                            await Task.Delay(sleepfor * announce_delay_mult);
+                        }
+                        break;
+                    case 1:
+                        if (ps.Play_Announcement.Count > 0)
+                        {
+                            display_announcment(ps.Play_Announcement, txbPlayResult);
+                            await Task.Delay(sleepfor * announce_delay_mult);
+                        }
+                        break;
+                    case 2:
+                        if (ps.Injury_Announcement.Count > 0)
+                        {
+                            display_announcment(ps.Injury_Announcement, txbPlayResult);
+                            await Task.Delay(sleepfor * announce_delay_mult);
+                        }
+                        break;
+                }
+            }
+        }
+        private void display_announcment(List<string> ann_list, TextBlock txbPlayResult)
+        {
+            string strText = null;
+
+            foreach (string s in ann_list)
+                if (s != null & s.Length > 0) strText += s + Environment.NewLine;
+
+            txbPlayResult.Text = strText;
+
         }
 
         private double[] setViewEdge(double YardLIne, bool bLefttoRight, double vert_percent)
@@ -905,8 +976,6 @@ namespace SpectatorFootball.WindowsLeague
             //adjust crowd noise 
             adjust_crowd_noise(Game_Ball.crowd_adj, bChampionshipGame, !bLefttoRight);
 
-            setAnnouncement(Game_Ball.Announcement);
-
             List<Rectangle> off_Players_rect = null;
             List<Rectangle> def_Players_rect = null;
 
@@ -939,8 +1008,6 @@ namespace SpectatorFootball.WindowsLeague
 
                 setPlayer(Game_Ball, f, a_edge, off_Player_Sprites, bLefttoRight, true, xxx, off_Players_rect);
 
-                setAnnouncement(f.Announcement);
-
                 xxx++;
             }
 
@@ -953,8 +1020,6 @@ namespace SpectatorFootball.WindowsLeague
                 adjust_crowd_noise(f.crowd_adj, bChampionshipGame, !bLefttoRight);
 
                 setPlayer(Game_Ball, f, a_edge, def_Player_Sprites, bLefttoRight, false, xxx, def_Players_rect);
-
-                setAnnouncement(f.Announcement);
 
                 xxx++;
             }
@@ -1041,7 +1106,7 @@ namespace SpectatorFootball.WindowsLeague
         }
         public static void DoEvents()
         {
-            Application.Current.Dispatcher.Invoke(DispatcherPriority.Render,
+         System.Windows.Application.Current.Dispatcher.Invoke(DispatcherPriority.Render,
                                                   new System.Action(delegate { }));
         }
         private void setMidFieldArt(double[] a_edge)
@@ -1150,7 +1215,7 @@ namespace SpectatorFootball.WindowsLeague
             int current_index = scodes.IndexOf(oldSppedCode);
 
             if (current_index == -1)
-                MessageBox.Show("Error", "Current Speed Code Not found");
+                System.Windows.MessageBox.Show("Error", "Current Speed Code Not found");
             else
             {
                 int new_index = current_index;
@@ -1171,25 +1236,6 @@ namespace SpectatorFootball.WindowsLeague
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             bCloseWindow = true;
-        }
-
-        private void setAnnouncement(string newAnnouncement)
-        {
-
-            //bpo test
-            int zzz = 0;
-            if (newAnnouncement != null && newAnnouncement.Length > 0)
-                zzz = 5;
-
-            if (ScoreBoard.Visibility == Visibility.Visible && newAnnouncement != null &&
-                newAnnouncement.Length > 0)
-            {
-                Announcer.Visibility = Visibility.Visible;
-                ScoreBoard.Visibility = Visibility.Collapsed;
-            }
-
-            if (newAnnouncement != null && newAnnouncement.Length > 0)
-                lblAnnouncer.Content = newAnnouncement;
         }
 
         private int getSpeedTime(string speedCode)

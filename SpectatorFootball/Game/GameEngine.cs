@@ -218,6 +218,9 @@ namespace SpectatorFootball.GameNS
             List<Game_Player> Offensive_Players = null;
             List<Game_Player> Defensive_Players = null;
             Game_Ball Game_Ball = null;
+            Play_Result p_result = null;
+            bool bpreSnapPenalty = false;
+            Injury new_injury = null;
 
             int Delay_Seconds = 0;
             string Down_and_Yards = "";
@@ -348,7 +351,6 @@ namespace SpectatorFootball.GameNS
             //Only execute the play and accume the play stats if the game has not been forfeited
             if (!r.bForfeitedGame)
             {
-                Play_Result p_result = null;
                 double yards_gained = 0.0;
 
                 g_TouchbackYardline = getTouchBackYL(Offensive_Package.Play, Kickoff_TouchbackYardline, Punt_TouchbackYardline);
@@ -371,8 +373,8 @@ namespace SpectatorFootball.GameNS
                     Play = new Play_FG_XP(Offensive_Package.Formation, DEF_Formation, g_fid_posession, at.Franchise_ID, ht.Franchise_ID, Game_Ball, Offensive_Players, Defensive_Players, bLefttoRight, false, true);
                 else if (Offensive_Package.Play == Play_Enum.EXTRA_POINT)
                     Play = new Play_FG_XP(Offensive_Package.Formation, DEF_Formation, g_fid_posession, at.Franchise_ID, ht.Franchise_ID, Game_Ball, Offensive_Players, Defensive_Players, bLefttoRight, false, false);
+
                 //Is there a pre-snap penalty?
-                bool bpreSnapPenalty = false;
                 if (bAllowPenalties && Play.isPreSnapPenalty_Eligible())
                 {
                     Tuple<Game_Player, Penalty> ttt = Penalty_Helper.Presnap_Penalty(Offensive_Package.Play, Penalty_List,
@@ -381,6 +383,7 @@ namespace SpectatorFootball.GameNS
                     p_result = Play.getPlayResult();
                     p_result.Penalized_Player = ttt.Item1;
                     p_result.Penalty = ttt.Item2;
+                    bpreSnapPenalty = true;
                 }
 
                 //Execute the play
@@ -510,7 +513,7 @@ namespace SpectatorFootball.GameNS
 
                     string injur_message = null;
                     logger.Debug("Before checkforinjuries");
-                    Injury new_injury = CheckforInjuries(Offensive_Package, DEF_Formation, injur_message);
+                    new_injury = CheckforInjuries(Offensive_Package, DEF_Formation, injur_message);
                     logger.Debug("After checkforinjuries");
 
                     if (new_injury != null)
@@ -552,6 +555,14 @@ namespace SpectatorFootball.GameNS
                 g_bGameOver = true;
 
             r.bGameOver = g_bGameOver;
+
+            Announcer ann = new Announcer();
+            Tuple<List<string>, List<string>, List<string>> t = ann.getPlayResult_Announcement(Home_Players, Away_Players, ht.Nickname, at.Nickname, Offensive_Package.Play, p_result, bpreSnapPenalty,
+                new_injury, Down_and_Yards, r.bForfeitedGame);
+
+            r.Penalty_Announcement = t.Item1;
+            r.Play_Announcement = t.Item2;
+            r.Injury_Announcement = t.Item3;
 
             return r;
         }

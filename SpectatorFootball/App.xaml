@@ -628,7 +628,7 @@
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="FontWeight" Value="normal"/>
             <Setter Property="Foreground" Value="White" />
-            <Setter Property="VerticalContentAlignment" Value="Top" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
             <Setter Property="HorizontalContentAlignment" Value="Center" />
         </Style>
         <!-- Large Radio Button -->

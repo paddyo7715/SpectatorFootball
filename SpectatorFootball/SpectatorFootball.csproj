@@ -678,6 +678,7 @@
     <None Include="Database\BlankDB.db" />
     <None Include="Database\Settings.db" />
     <None Include="ImageSource\blankUniform.xcf" />
+    <None Include="Images\Source\misc\Announcers.xcf" />
     <None Include="Images\Source\Field_Templates\Field_Template.xcf" />
     <None Include="Images\Source\Field_Templates\Template.xcf" />
     <None Include="Images\Source\misc\Goalposts.xcf" />
@@ -761,6 +762,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\Announcers.png" />
     <Content Include="Sounds\Booing_Long.mp3" />
     <Content Include="Sounds\Booing_Short.mp3" />
     <Content Include="Sounds\cheer.mp3" />

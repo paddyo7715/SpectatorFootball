@@ -193,26 +193,30 @@ namespace SpectatorFootball.NarrationAndText
 
             return r;
         }
-        public Tuple<List<string>, List<string>, List<string>> getPlayResult_Announcement(List<Game_Player> Home_Team, List<Game_Player> Away_Team, string home_team_name, string away_team_name, Play_Enum off_play, Play_Result pr, bool bpreSnapBenalty,
-            Injury new_injury, string next_play_yardline)
+        public Tuple<List<string>, List<string>, List<string>> getPlayResult_Announcement(List<Player_and_Ratings> Home_Team, List<Player_and_Ratings> Away_Team, string home_team_name, string away_team_name, Play_Enum off_play, Play_Result pr, bool bpreSnapBenalty,
+            Injury new_injury, string next_play_yardline, bool bGameForfeited)
         {
             List<string> Penlty_list = new List<string>();
             List<string> Play_list = new List<string>();
             List<string> Injury_list = new List<string>();
-            string Next_Down_and_Yardage = null;
 
-            if (pr.Penalty != null && !pr.bIgnorePenalty)
-                Penlty_list = getPenalty_Announcement(Home_Team, Away_Team, home_team_name, away_team_name, pr, bpreSnapBenalty);
+            if (bGameForfeited)
+                Play_list.Add("No Play!  This game has been forfeited!");
+            else
+            {
+                if (pr.Penalty != null && !pr.bIgnorePenalty)
+                    Penlty_list = getPenalty_Announcement(Home_Team, Away_Team, home_team_name, away_team_name, pr, bpreSnapBenalty);
 
-            Play_list = getPlayAnnouncement(Home_Team, Away_Team, home_team_name, away_team_name, pr, off_play, next_play_yardline);
+                Play_list = getPlayAnnouncement(Home_Team, Away_Team, home_team_name, away_team_name, pr, off_play, next_play_yardline);
 
-            if (new_injury != null)
-                Injury_list = InjuryAnnouncement(Home_Team, Away_Team, home_team_name, away_team_name, new_injury);
+                if (new_injury != null)
+                    Injury_list = InjuryAnnouncement(Home_Team, Away_Team, home_team_name, away_team_name, new_injury);
+            }
 
             return Tuple.Create(Penlty_list, Play_list, Injury_list);
         }
 
-        private List<string> getPenalty_Announcement(List<Game_Player> Home_Team, List<Game_Player> Away_Team, string home_team, string away_team,
+        private List<string> getPenalty_Announcement(List<Player_and_Ratings> Home_Team, List<Player_and_Ratings> Away_Team, string home_team, string away_team,
             Play_Result pr, bool bpreSnapBenalty)
         {
             List<string> r = new List<string>();
@@ -236,10 +240,9 @@ namespace SpectatorFootball.NarrationAndText
             return r;
         }
 
-        private List<string> getPlayAnnouncement(List<Game_Player> Home_Team, List<Game_Player> Away_Team, string home_team_name, string away_team_name, Play_Result pr, Play_Enum off_play, string next_play_yardline)
+        private List<string> getPlayAnnouncement(List<Player_and_Ratings> Home_Team, List<Player_and_Ratings> Away_Team, string home_team_name, string away_team_name, Play_Result pr, Play_Enum off_play, string next_play_yardline)
         {
             List<string> r = new List<string>();
-
 
             r.Add(getMajorAnnouncement(pr));
 
@@ -319,7 +322,7 @@ namespace SpectatorFootball.NarrationAndText
 
                     string punt_team = null;
                     string return_team = null;
-                    if (Home_Team.Any(x => x == pr.Punter))
+                    if (Home_Team.Any(x => x == pr.Punter.p_and_r))
                     {
                         punt_team = home_team_name;
                         return_team = away_team_name;
@@ -366,11 +369,11 @@ namespace SpectatorFootball.NarrationAndText
                         FumbleAnnouncement(Home_Team, Away_Team, home_team_name, away_team_name, returner, pr);
                     }
                     if (pr.bTouchDown)
-                        r.Add(punter_name + " returns the punt " + pr.Yards_Returned + " for the score");
+                        r.Add(returner + " returns the punt " + pr.Yards_Returned + " for the score");
                     else
                     {
                         r.Add("A " + pr.Punt_Yards + " punt by " + punter_name);
-                        r.Add("And a " + pr.Yards_Returned + " by " + returner);
+                        r.Add("And a " + pr.Yards_Returned + " return by " + returner);
                     }
                     break;
                 case Play_Enum.RUN:
@@ -384,13 +387,13 @@ namespace SpectatorFootball.NarrationAndText
             return r;
         }
 
-        private List<string> InjuryAnnouncement(List<Game_Player> Home_Team, List<Game_Player> Away_Team, string home_team_name, string away_team_name, Injury new_injury)
+        private List<string> InjuryAnnouncement(List<Player_and_Ratings> Home_Team, List<Player_and_Ratings> Away_Team, string home_team_name, string away_team_name, Injury new_injury)
         {
             List<string> r = new List<string>();
             string injured_Player = new_injury.Player.Last_Name;
             string injured_team = null;
 
-            if (Home_Team.Any(x => x.p_and_r.p == new_injury.Player))
+            if (Home_Team.Any(x => x.p == new_injury.Player))
                 injured_team = home_team_name;
             else
                 injured_team = away_team_name;
@@ -421,12 +424,12 @@ namespace SpectatorFootball.NarrationAndText
             return r;
         }
 
-        private List<string> FumbleAnnouncement(List<Game_Player> Home_Team, List<Game_Player> Away_Team, string home_team_name, string away_team_name, string ball_carrier_name, Play_Result pr)
+        private List<string> FumbleAnnouncement(List<Player_and_Ratings> Home_Team, List<Player_and_Ratings> Away_Team, string home_team_name, string away_team_name, string ball_carrier_name, Play_Result pr)
         {
             List<string> r = new List<string>();
 
             string fumble_recover_team = null;
-            if (Home_Team.Any(x => x == pr.Fumble_Recoverer))
+            if (Home_Team.Any(x => x == pr.Fumble_Recoverer.p_and_r))
                 fumble_recover_team = home_team_name;
             else
                 fumble_recover_team = away_team_name;

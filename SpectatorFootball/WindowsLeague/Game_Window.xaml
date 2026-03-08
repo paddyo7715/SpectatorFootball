@@ -117,9 +117,6 @@
                                     <Label Name="lblQTR" Height="40" Width="120" Style="{StaticResource GameBarFonts}" BorderBrush="Black" BorderThickness="1">2nd QTR</Label>
                                     <Label Width="40" />
                                 </StackPanel>
-                                <StackPanel Visibility="Collapsed" Name="Announcer" Orientation="Vertical" HorizontalAlignment="Center" >
-                                    <Label Name="lblAnnouncer" Height="40" Width="265" Style="{StaticResource GameAnnouncer}" />
-                                </StackPanel>
                                 <Label Name="lblHomeScore" Height="40" Width="40" HorizontalContentAlignment="Center" Style="{StaticResource GameBarFonts}" >17</Label>
                                 <Label Name="lblHomeTeam" Height="40" Width="250" HorizontalContentAlignment="Left" Style="{StaticResource GameBarFonts}">Legends</Label>
                             </StackPanel>
