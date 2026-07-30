@@ -280,7 +280,7 @@ namespace SpectatorFootball.GameNS
 //                            Play_Details += "ball     cut one: " + " stage " + gBall.Stages.Count() + " " + gBall.Current_YardLine + " " + gBall.Current_Vertical_Percent_Pos + Environment.NewLine;
 
                             Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
-                            p.Run_With_Ball(moving_ps, prev_yl, prev_v, 0.0, before_announcement, null);
+                            p.Run_With_Ball(moving_ps, prev_yl, prev_v, 0.0);
 
                             //for the ball
                             gBall.Carried(prev_yl, prev_v);
@@ -323,7 +323,7 @@ namespace SpectatorFootball.GameNS
                                 else
                                     after_announcment = _announcer.Announce_InPlay(announce_event.BREAKTHRU_TACKLE, r.Returner.p_and_r.p.Last_Name, Game_Engine_Helper.getYardlineDisplay(p.Current_YardLine));
 
-                                p.Run_With_Ball(moving_ps2, prev_yl, prev_v, -0.2, before_announcement, after_announcment);
+                                p.Run_With_Ball(moving_ps2, prev_yl, prev_v, -0.2);
                                 //for the ball
                                 gBall.Carried(prev_yl, prev_v);
                             }
@@ -340,7 +340,7 @@ namespace SpectatorFootball.GameNS
                             gBall.Current_Vertical_Percent_Pos = p.Current_Vertical_Percent_Pos;
 
                             Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
-                            p.Run_With_Ball(moving_ps, prev_yl, prev_v, -0.2, before_announcement, _announcer.Announce_InPlay(announce_event.RETURN_BREAKTHRU, r.Returner.p_and_r.p.Last_Name, Game_Engine_Helper.getYardlineDisplay(p.Current_YardLine)));
+                            p.Run_With_Ball(moving_ps, prev_yl, prev_v, -0.2);
 
                             //for the ball
                             gBall.Carried(prev_yl, prev_v);
@@ -890,7 +890,7 @@ namespace SpectatorFootball.GameNS
                     p.Current_Vertical_Percent_Pos += 0.0;
 
                     Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
-                    p.KickBall(moving_ps, prev_yl, prev_v, Runup_end_yardline, Runup_end_vert_pos, _announcer.Announce_InPlay(announce_event.KICKOFF_KICKED, r.Kicker.p_and_r.p.Last_Name, Game_Engine_Helper.getYardlineDisplay(p.Current_YardLine)), null);
+                    p.KickBall(moving_ps, prev_yl, prev_v, Runup_end_yardline, Runup_end_vert_pos);
 
                 }
                 else
@@ -1110,7 +1110,7 @@ namespace SpectatorFootball.GameNS
 
                     int ret_delay = 8;
                     Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, 0.0);
-                    p.Delay_Run_Slower_With_Ball(moving_ps, prev_yl, prev_v, ret_delay, before_announcement, null);
+                    p.Delay_Run_Slower_With_Ball(moving_ps, prev_yl, prev_v, ret_delay);
                     //for the ball
                     gBall.Delay_Carried_Slowly(prev_yl, prev_v, ret_delay);
                 }

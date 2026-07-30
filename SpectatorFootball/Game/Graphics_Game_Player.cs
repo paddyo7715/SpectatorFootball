@@ -22,7 +22,6 @@ namespace SpectatorFootball.GameNS
         public int current_action = 0;
         public int current_point = 0;
         public Game_Sounds Sound = Game_Sounds.NONE;
-        public string Announcement = null;
         public double crowd_adj = 0.0;
         public bool bStageFinished = false;
 
@@ -263,7 +262,6 @@ namespace SpectatorFootball.GameNS
             bool bBefore_Action = false;
             bool bAfter_Action = false;
 
-            Announcement = null;
             Sound = Game_Sounds.NONE;
             bStageFinished = false;
             Play_Stage pStage = Stages[current_Stage];
@@ -292,7 +290,6 @@ namespace SpectatorFootball.GameNS
                     {
                         crowd_adj = aerec.noise_adj;
                         Sound = aerec.Sound;
-                        Announcement = aerec.Announcer_msg == null ? "" : aerec.Announcer_msg;
                     }
                     else
                     {
@@ -326,10 +323,6 @@ namespace SpectatorFootball.GameNS
                 }
             }
 
-            //bpo test
-            int nnn = 0;
-            if (Announcement != null && Announcement.Trim() !="")
-                nnn = 5;
         }
     }
 

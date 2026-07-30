@@ -44,6 +44,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 Yards_Returned = 0.0,
                 bTouchback = false,
                 bTouchDown = false,
+                bKick_Returned = true,
                 end_of_play_yardline = 50.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
@@ -125,6 +126,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 Yards_Returned = 0.0,
                 bTouchback = false,
                 bTouchDown = false,
+                bKick_Returned = true,
                 end_of_play_yardline = 50.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
@@ -206,6 +208,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 Yards_Returned = 0.0,
                 bTouchback = false,
                 bTouchDown = false,
+                bKick_Returned = true,
                 end_of_play_yardline = 50.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
@@ -293,6 +296,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 Yards_Returned = 0.0,
                 bTouchback = false,
                 bTouchDown = false,
+                bKick_Returned = true,
                 end_of_play_yardline = 50.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
@@ -315,7 +319,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 70.0)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 35.0)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -378,6 +382,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 Yards_Returned = 0.0,
                 bTouchback = false,
                 bTouchDown = false,
+                bKick_Returned = true,
                 end_of_play_yardline = 50.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
@@ -400,7 +405,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 65.0)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 30.0)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -462,6 +467,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 Yards_Returned = 0.0,
                 bTouchback = false,
                 bTouchDown = false,
+                bKick_Returned = true,
                 end_of_play_yardline = 50.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
@@ -485,7 +491,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 70.0)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 35.0)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -548,6 +554,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 Yards_Returned = 0.0,
                 bTouchback = false,
                 bTouchDown = false,
+                bKick_Returned = true,
                 end_of_play_yardline = 50.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
@@ -571,7 +578,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 65.0)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 30.0)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -633,6 +640,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 Yards_Returned = 0.0,
                 bTouchback = false,
                 bTouchDown = false,
+                bKick_Returned = true,
                 end_of_play_yardline = 50.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
@@ -657,7 +665,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 70.0)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 35.0)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -720,6 +728,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 Yards_Returned = 0.0,
                 bTouchback = false,
                 bTouchDown = false,
+                bKick_Returned = true,
                 end_of_play_yardline = 50.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
@@ -744,7 +753,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 65.0)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 30.0)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -807,6 +816,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 Yards_Returned = 0.0,
                 bTouchback = false,
                 bTouchDown = false,
+                bKick_Returned = true,
                 end_of_play_yardline = 50.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
@@ -829,7 +839,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 35.0)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 70.0)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -892,6 +902,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 Yards_Returned = 0.0,
                 bTouchback = false,
                 bTouchDown = false,
+                bKick_Returned = true,
                 end_of_play_yardline = 50.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
@@ -914,7 +925,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 30.0)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 65.0)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -976,6 +987,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 Yards_Returned = 0.0,
                 bTouchback = false,
                 bTouchDown = false,
+                bKick_Returned = true,
                 end_of_play_yardline = 50.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
@@ -999,7 +1011,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 35.0)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 70.0)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -1062,6 +1074,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 Yards_Returned = 0.0,
                 bTouchback = false,
                 bTouchDown = false,
+                bKick_Returned = true,
                 end_of_play_yardline = 50.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
@@ -1085,7 +1098,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 30.0)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 65.0)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -1147,6 +1160,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 Yards_Returned = 0.0,
                 bTouchback = false,
                 bTouchDown = false,
+                bKick_Returned = true,
                 end_of_play_yardline = 50.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
@@ -1171,7 +1185,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 35.0)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 70.0)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -1234,6 +1248,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 Yards_Returned = 0.0,
                 bTouchback = false,
                 bTouchDown = false,
+                bKick_Returned = true,
                 end_of_play_yardline = 50.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
@@ -1258,7 +1273,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 30.0)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 65.0)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -1318,6 +1333,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 Yards_Returned = 0.0,
                 bTouchback = false,
                 bTouchDown = false,
+                bKick_Returned = true,
                 end_of_play_yardline = 50.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
@@ -1399,6 +1415,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 Yards_Returned = 0.0,
                 bTouchback = false,
                 bTouchDown = false,
+                bKick_Returned = true,
                 end_of_play_yardline = 50.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
@@ -1480,6 +1497,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 Yards_Returned = 0.0,
                 bTouchback = false,
                 bTouchDown = false,
+                bKick_Returned = true,
                 end_of_play_yardline = 50.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
@@ -1567,6 +1585,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 Yards_Returned = 0.0,
                 bTouchback = false,
                 bTouchDown = false,
+                bKick_Returned = true,
                 end_of_play_yardline = 50.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
@@ -1589,7 +1608,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 30.0)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 65.0)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -1652,6 +1671,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 Yards_Returned = 0.0,
                 bTouchback = false,
                 bTouchDown = false,
+                bKick_Returned = true,
                 end_of_play_yardline = 50.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
@@ -1674,7 +1694,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 35.0)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 70.0)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -1736,6 +1756,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 Yards_Returned = 0.0,
                 bTouchback = false,
                 bTouchDown = false,
+                bKick_Returned = true,
                 end_of_play_yardline = 50.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
@@ -1759,7 +1780,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 30.0)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 65.0)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -1822,6 +1843,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 Yards_Returned = 0.0,
                 bTouchback = false,
                 bTouchDown = false,
+                bKick_Returned = true,
                 end_of_play_yardline = 50.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
@@ -1845,7 +1867,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 35.0)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 70.0)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -1907,6 +1929,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 Yards_Returned = 0.0,
                 bTouchback = false,
                 bTouchDown = false,
+                bKick_Returned = true,
                 end_of_play_yardline = 50.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
@@ -1931,7 +1954,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 30.0)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 65.0)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -1994,6 +2017,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 Yards_Returned = 0.0,
                 bTouchback = false,
                 bTouchDown = false,
+                bKick_Returned = true,
                 end_of_play_yardline = 50.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
@@ -2018,7 +2042,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 35.0)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 70.0)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -2081,6 +2105,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 Yards_Returned = 0.0,
                 bTouchback = false,
                 bTouchDown = false,
+                bKick_Returned = true,
                 end_of_play_yardline = 50.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
@@ -2103,7 +2128,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 65.0)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 30.0)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -2166,6 +2191,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 Yards_Returned = 0.0,
                 bTouchback = false,
                 bTouchDown = false,
+                bKick_Returned = true,
                 end_of_play_yardline = 50.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
@@ -2188,7 +2214,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 70.0)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 35.0)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -2250,6 +2276,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 Yards_Returned = 0.0,
                 bTouchback = false,
                 bTouchDown = false,
+                bKick_Returned = true,
                 end_of_play_yardline = 50.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
@@ -2273,7 +2300,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 65.0)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 30.0)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -2336,6 +2363,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 Yards_Returned = 0.0,
                 bTouchback = false,
                 bTouchDown = false,
+                bKick_Returned = true,
                 end_of_play_yardline = 50.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
@@ -2359,7 +2387,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 70.0)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 35.0)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -2421,6 +2449,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 Yards_Returned = 0.0,
                 bTouchback = false,
                 bTouchDown = false,
+                bKick_Returned = true,
                 end_of_play_yardline = 50.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
@@ -2445,7 +2474,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 65.0)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 30.0)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -2508,6 +2537,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 Yards_Returned = 0.0,
                 bTouchback = false,
                 bTouchDown = false,
+                bKick_Returned = true,
                 end_of_play_yardline = 50.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
@@ -2532,7 +2562,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 70.0)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 35.0)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play

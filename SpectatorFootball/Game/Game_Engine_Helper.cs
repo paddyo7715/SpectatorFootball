@@ -332,6 +332,19 @@ namespace SpectatorFootball.GameNS
 
             return yardLine;
         }
+
+        public static string getYardline(double y)
+        {
+            int r = 0;
+            double d = y;
+
+            if (y > 50.0)
+                d = 100 - y;
+
+            r = (int)(d + .5);
+
+            return r.ToString();
+        }
         public static double yards_from_end_of_endzone(double x, bool bLefttoRight)
         {
             double yards;

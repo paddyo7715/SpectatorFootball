@@ -12,6 +12,5 @@ namespace SpectatorFootball.NarrationAndText
         public int XYIndex = 0;
         public double noise_adj = 0.0;
         public Game_Sounds Sound = Game_Sounds.NONE;
-        public string Announcer_msg = null;
     }
 }

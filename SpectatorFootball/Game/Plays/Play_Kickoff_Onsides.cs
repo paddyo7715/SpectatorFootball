@@ -86,6 +86,8 @@ namespace SpectatorFootball.GameNS
             //Create Player Stats Records for the play
             r.Play_Player_Stats = SetPlayerStats(Kickoff_Players, Return_Players, r.bOnsideMade, r.Kicker, r.Onside_Kick_Recoverer);
 
+            r.bKick_Returned = true;
+
             return r;
         }
         public bool isPreSnapPenalty_Eligible()
@@ -234,7 +236,7 @@ namespace SpectatorFootball.GameNS
                     p.Current_Vertical_Percent_Pos += 0.0;
 
                     Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
-                    p.KickBall(moving_ps, prev_yl, prev_v, Runup_end_yardline, Runup_end_vert_pos, _announcer.Announce_InPlay(announce_event.ONSIDE_KICK, r.Kicker.p_and_r.p.Last_Name, Game_Engine_Helper.getYardlineDisplay(p.Current_YardLine)), null);
+                    p.KickBall(moving_ps, prev_yl, prev_v, Runup_end_yardline, Runup_end_vert_pos);
                 }
                 else
                 {
@@ -340,7 +342,7 @@ namespace SpectatorFootball.GameNS
                     {
                         double prev_yl = p.Current_YardLine;
                         double prev_v = p.Current_Vertical_Percent_Pos;
-                        p.Fall_On_Ball(prev_yl, prev_v, -0.2, _announcer.Announce_InPlay(announce_event.ONSIDE_COVER, r.Kicker.p_and_r.p.Last_Name, Game_Engine_Helper.getYardlineDisplay(p.Current_YardLine)), null);
+                        p.Fall_On_Ball(prev_yl, prev_v, -0.2);
                     }
                     else
                         p.Stand();

@@ -426,13 +426,14 @@ namespace SpectatorFootball.WindowsLeague
             Announcers_img = new ImageBrush();
             Announcers_img.ImageSource = new BitmapImage(new Uri(CommonUtils.getAppPath() + "/images/Announcers.png"));
 
-
             background.Fill = backgroundField;
 
             //Needed to prime the media player
             Play_Sound(Game_Sounds.SILENCE);
 
             Task task = Play_Game();
+
+
 
                 //Set this in case a team scores on the last play of the game
 
@@ -454,42 +455,15 @@ namespace SpectatorFootball.WindowsLeague
             List<Graphics_Game_Player> Offensive_Players;
             List<Graphics_Game_Player> Defensive_Players;
 
+            try
+            { 
+
             Background_Crowd.Play();
 
             while (!bGameEneded)
             {
-                if (bCloseWindow) break;
-                if (btnPauseResume.Content.ToString().StartsWith("R"))
-                {
-                    await Task.Delay(50);
-                    continue;
-                }
-
-                gGame_Ball = null;
-                Offensive_Players = null;
-                Defensive_Players = null;
-                Play = ge.ExecutePlay();
-
-                //play.game_ball is null error
-                gGame_Ball = new Graphics_Game_Ball(Play.Game_Ball.Initial_State, Play.Game_Ball.Starting_YardLine, Play.Game_Ball.Starting_Vertical_Percent_Pos, Play.Game_Ball.Stages);
-
-                Offensive_Players = CreateGamePlayersLIst(Play.Offensive_Players);
-                Defensive_Players = CreateGamePlayersLIst(Play.Defensive_Players);
-
-                //set the left edge of the view
-                a_edge = setViewEdge(gGame_Ball.YardLine, Play.bLefttoRight, gGame_Ball.Vertical_Percent_Pos);
-                ShowGraphicObjects(a_edge, gGame_Ball, Offensive_Players, Defensive_Players, false, Play.bLefttoRight);
 
 
-                //Set all graphics objects including setting the view edges
-                //                ShowGraphicObjects(a_edge, gGame_Ball, Offensive_Players, Defensive_Players, Play.bLefttoRight);
-
-                //Set the scoreboard before the play
-                setScoreboard(Play.Before_Away_Score, Play.Before_Home_Score, Play.Before_Display_Time, Play.Before_Display_QTR, Play.Before_Away_Timeouts, Play.Before_Home_Timeouts, Play.Before_Down_and_Yards);
-
-                //go thru the play stages.  The ball and all players have the same number of stages.
-                for (int stg = 0; stg < gGame_Ball.Stages.Count; stg++)
-                {
                     if (bCloseWindow) break;
                     if (btnPauseResume.Content.ToString().StartsWith("R"))
                     {
@@ -497,15 +471,30 @@ namespace SpectatorFootball.WindowsLeague
                         continue;
                     }
 
-                    bool bStageFinished = false;
-                    gGame_Ball.ChangeStage(stg);
+                    gGame_Ball = null;
+                    Offensive_Players = null;
+                    Defensive_Players = null;
+                    Play = ge.ExecutePlay();
 
-                    if (gGame_Ball.Stages[stg].bBall_Over_Goalposts)
-                        bBall_Over_Goalposts = true;
-                    else
-                        bBall_Over_Goalposts = false;
+                    //play.game_ball is null error
+                    gGame_Ball = new Graphics_Game_Ball(Play.Game_Ball.Initial_State, Play.Game_Ball.Starting_YardLine, Play.Game_Ball.Starting_Vertical_Percent_Pos, Play.Game_Ball.Stages);
 
-                    do
+                    Offensive_Players = CreateGamePlayersLIst(Play.Offensive_Players);
+                    Defensive_Players = CreateGamePlayersLIst(Play.Defensive_Players);
+
+                    //set the left edge of the view
+                    a_edge = setViewEdge(gGame_Ball.YardLine, Play.bLefttoRight, gGame_Ball.Vertical_Percent_Pos);
+                    ShowGraphicObjects(a_edge, gGame_Ball, Offensive_Players, Defensive_Players, false, Play.bLefttoRight);
+
+
+                    //Set all graphics objects including setting the view edges
+                    //                ShowGraphicObjects(a_edge, gGame_Ball, Offensive_Players, Defensive_Players, Play.bLefttoRight);
+
+                    //Set the scoreboard before the play
+                    setScoreboard(Play.Before_Away_Score, Play.Before_Home_Score, Play.Before_Display_Time, Play.Before_Display_QTR, Play.Before_Away_Timeouts, Play.Before_Home_Timeouts, Play.Before_Down_and_Yards);
+
+                    //go thru the play stages.  The ball and all players have the same number of stages.
+                    for (int stg = 0; stg < gGame_Ball.Stages.Count; stg++)
                     {
                         if (bCloseWindow) break;
                         if (btnPauseResume.Content.ToString().StartsWith("R"))
@@ -514,13 +503,15 @@ namespace SpectatorFootball.WindowsLeague
                             continue;
                         }
 
-                        //set the ball position and state
-                        gGame_Ball.Update();
-                        //                        if (gGame_Ball.bStageFinished)
-                        //                            bStageFinished = true;
+                        bool bStageFinished = false;
+                        gGame_Ball.ChangeStage(stg);
 
-                            //Go thru all offensive and def players and place them
-                        for (int pSlot = 0; pSlot < Offensive_Players.Count(); pSlot++)
+                        if (gGame_Ball.Stages[stg].bBall_Over_Goalposts)
+                            bBall_Over_Goalposts = true;
+                        else
+                            bBall_Over_Goalposts = false;
+
+                        do
                         {
                             if (bCloseWindow) break;
                             if (btnPauseResume.Content.ToString().StartsWith("R"))
@@ -529,106 +520,132 @@ namespace SpectatorFootball.WindowsLeague
                                 continue;
                             }
 
-                            Offensive_Players[pSlot].ChangeStage(stg);
-                            Defensive_Players[pSlot].ChangeStage(stg);
+                            //set the ball position and state
+                            gGame_Ball.Update();
+                            //                        if (gGame_Ball.bStageFinished)
+                            //                            bStageFinished = true;
 
-                            Offensive_Players[pSlot].Update();
-                            Defensive_Players[pSlot].Update();
+                            //Go thru all offensive and def players and place them
+                            for (int pSlot = 0; pSlot < Offensive_Players.Count(); pSlot++)
+                            {
+                                if (bCloseWindow) break;
+                                if (btnPauseResume.Content.ToString().StartsWith("R"))
+                                {
+                                    await Task.Delay(50);
+                                    continue;
+                                }
 
-                            if (Offensive_Players[pSlot].bStageFinished || Defensive_Players[pSlot].bStageFinished)
+                                Offensive_Players[pSlot].ChangeStage(stg);
+                                Defensive_Players[pSlot].ChangeStage(stg);
+
+                                Offensive_Players[pSlot].Update();
+                                Defensive_Players[pSlot].Update();
+
+                                if (Offensive_Players[pSlot].bStageFinished || Defensive_Players[pSlot].bStageFinished)
+                                    bStageFinished = true;
+                            }
+                            await Task.Delay(sleepfor);
+                            //Show graphic objects
+                            a_edge = setViewEdge(gGame_Ball.YardLine, Play.bLefttoRight, gGame_Ball.Vertical_Percent_Pos);
+
+                            ShowGraphicObjects(a_edge, gGame_Ball, Offensive_Players, Defensive_Players, bBall_Over_Goalposts, Play.bLefttoRight);
+                            if (gGame_Ball.bStageFinished)
                                 bStageFinished = true;
-                        }
-                        await Task.Delay(sleepfor);
-                        //Show graphic objects
-                        a_edge = setViewEdge(gGame_Ball.YardLine, Play.bLefttoRight, gGame_Ball.Vertical_Percent_Pos);
 
-                        ShowGraphicObjects(a_edge, gGame_Ball, Offensive_Players, Defensive_Players, bBall_Over_Goalposts, Play.bLefttoRight);
-                        if (gGame_Ball.bStageFinished)
-                            bStageFinished = true;
+                        } while (!bStageFinished);
+                        /*
+                                                if (!gGame_Ball.arePointsDone())
+                                                    logger.Debug("Points Not Done Ball");
 
-                        logger.Debug("Crowd Volume: " + crowd_volumn);
-                    } while (!bStageFinished);
-                    /*
-                                            if (!gGame_Ball.arePointsDone())
-                                                logger.Debug("Points Not Done Ball");
+                                                for (int pSlot = 0; pSlot < Offensive_Players.Count(); pSlot++)
+                                                {
+                                                    if (!Offensive_Players[pSlot].arePointsDone())
+                                                        logger.Debug("Points Not Offensive Players");
+                                                    if (!Defensive_Players[pSlot].arePointsDone())
+                                                        logger.Debug("Points Not Defensive Players");
+                                                }
+                        */
+                    }
 
-                                            for (int pSlot = 0; pSlot < Offensive_Players.Count(); pSlot++)
-                                            {
-                                                if (!Offensive_Players[pSlot].arePointsDone())
-                                                    logger.Debug("Points Not Offensive Players");
-                                                if (!Defensive_Players[pSlot].arePointsDone())
-                                                    logger.Debug("Points Not Defensive Players");
-                                            }
-                    */
-                }
+                    if (!bExit_Pressed)
+                        Play_Sound(Game_Sounds.WHISTLE);
+                    else
+                        break;
 
-                if (!bExit_Pressed)
-                    Play_Sound(Game_Sounds.WHISTLE);
-                else
-                    break;
+                    await Task.Delay(sleepfor);
 
-                await Task.Delay(sleepfor);
+                    int result_ann_height = 300;
+                    int result_ann_width = 360;
 
-                int result_ann_height = 150;
-                int result_ann_width = 350;
+                    //Show the play result
+                    StackPanel spAnnouncer = new StackPanel();
+                    spAnnouncer.Height = MyCanvas.Height;
+                    spAnnouncer.Width = MyCanvas.Width;
+                    spAnnouncer.Background = Announcers_img;
 
-                //Show the play result
-                StackPanel spAnnouncer = new StackPanel();
-                spAnnouncer.Height = MyCanvas.Height;
-                spAnnouncer.Width = MyCanvas.Width;
-                spAnnouncer.Background = Announcers_img;
+                    // Create a Border
+                    Border border = new Border()
+                    {
+                        BorderBrush = Brushes.Yellow,
+                        BorderThickness = new Thickness(4),
+                        Margin = new Thickness(10),
+                        Height = result_ann_height,
+                        Width = result_ann_width
+                    };
 
-                // Create a Border
-                Border border = new Border()
-                {
-                    BorderBrush = Brushes.Yellow,
-                    BorderThickness = new Thickness(4),
-                    Margin = new Thickness(10),
-                    Height = result_ann_height,
-                    Width = result_ann_width
-                };
-
-                TextBlock txbPlayResult = new TextBlock();
-                txbPlayResult.Background = Brushes.Black;
-                txbPlayResult.Foreground = Brushes.White;
-                txbPlayResult.Opacity = 0.9;
-                txbPlayResult.Width = result_ann_width;
-                txbPlayResult.Height = result_ann_height;
-                txbPlayResult.FontSize = 20;
-                txbPlayResult.FontFamily = new FontFamily("Verdana");
-                txbPlayResult.TextWrapping = TextWrapping.Wrap;
-                txbPlayResult.VerticalAlignment = VerticalAlignment.Top;
-                txbPlayResult.Padding = new Thickness(10);
+                    TextBlock txbPlayResult = new TextBlock();
+                    txbPlayResult.Background = Brushes.Black;
+                    txbPlayResult.Foreground = Brushes.White;
+                    txbPlayResult.Opacity = 0.9;
+                    txbPlayResult.Width = result_ann_width;
+                    txbPlayResult.Height = result_ann_height;
+                    txbPlayResult.FontSize = 20;
+                    txbPlayResult.FontFamily = new FontFamily("Verdana");
+                    txbPlayResult.TextWrapping = TextWrapping.Wrap;
+                    txbPlayResult.VerticalAlignment = VerticalAlignment.Top;
+                    txbPlayResult.Padding = new Thickness(10);
 
 
-                border.Child = txbPlayResult;
-                spAnnouncer.Children.Add(border);
+                    border.Child = txbPlayResult;
+                    spAnnouncer.Children.Add(border);
 
 
-                Canvas.SetZIndex(spAnnouncer, POPUP_INDEX);
+                    Canvas.SetZIndex(spAnnouncer, POPUP_INDEX);
 
-                // Set position on the Canvas
-                Canvas.SetLeft(spAnnouncer, 0);
-                Canvas.SetTop(spAnnouncer, 0);
+                    // Set position on the Canvas
+                    Canvas.SetLeft(spAnnouncer, 0);
+                    Canvas.SetTop(spAnnouncer, 0);
 
-                // Add the Label to the Canvas
-                MyCanvas.Children.Add(spAnnouncer);
+                    // Add the Label to the Canvas
+                    MyCanvas.Children.Add(spAnnouncer);
 
-                await showPlay_Announcements(Play, txbPlayResult);
+                    await showPlay_Announcements(Play, txbPlayResult);
 
-                //                bGameEneded = Play.bGameOver;
-                //just to test one play take this out.
-                bGameEneded = true;
-                //                backgroundMusicPlayer.Stop();
+                    //                bGameEneded = Play.bGameOver;
+                    //just to test one play take this out.
+                    bGameEneded = true;
+                    //                backgroundMusicPlayer.Stop();
 
-             }  //Game ended
+                }  //Game ended
+            }
+            catch(Exception e)
+            {
+                logger.Error("Error:"); 
+                logger.Error(e.Message);
+                logger.Error("InnerException:");
+                logger.Error(e.InnerException);
+                logger.Error("Stack track:");
+                logger.Error(e.StackTrace);
+                Mouse.OverrideCursor = null;
+                System.Windows.MessageBox.Show("Error in Game", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
 
-            logger.Debug("Crowd Volume: " + crowd_volumn);
+
         }
 
         private async Task showPlay_Announcements(Play_Struct ps, TextBlock txbPlayResult)
         {
-            int announce_delay_mult = 30;
+            int announce_delay_mult = 100;
             for (int i = 0; i < 3; i++)
             {
                 switch (i)
@@ -660,9 +677,14 @@ namespace SpectatorFootball.WindowsLeague
         private void display_announcment(List<string> ann_list, TextBlock txbPlayResult)
         {
             string strText = null;
+            bool bFirst = true;
 
             foreach (string s in ann_list)
-                if (s != null & s.Length > 0) strText += s + Environment.NewLine;
+            {
+                if (bFirst == false || (s != null & s.Length > 0))
+                    strText += s + Environment.NewLine;
+                if (bFirst) bFirst = false;
+            }
 
             txbPlayResult.Text = strText;
 

@@ -821,7 +821,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 Penalized_Player = Penalized_Player,
                 Kicker = kicker,
                 bPenalty_Rejected = false,
-                bFGMade = false
+                bFGMade = true
             };
 
             //set player stats
@@ -1789,7 +1789,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 Penalized_Player = Penalized_Player,
                 Kicker = kicker,
                 bPenalty_Rejected = false,
-                bFGMade = false
+                bFGMade = true
             };
 
             //set player stats

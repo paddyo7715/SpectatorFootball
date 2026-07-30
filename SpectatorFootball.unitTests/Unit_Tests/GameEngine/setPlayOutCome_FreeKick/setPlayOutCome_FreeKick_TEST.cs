@@ -17,7 +17,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
     {
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Left_ReturntoOwn20_no_Penalty_to_20()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Left_ReturntoOwn20_no_Penalty_to_80()
         {
             bool penOnBallCarryingTeam = false;
             Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
@@ -27,7 +27,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player Returner = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 20
+                Current_YardLine = 80
             };
 
             //get penalty settings
@@ -42,9 +42,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 BallPossessing_Team_Id = 11,
                 NonbBallPossessing_Team_Id = 22,
                 Yards_Returned = 20.0,
+                bKick_Returned = true,
                 bTouchback = false,
                 bTouchDown = false,
-                end_of_play_yardline = 20.0,
+                end_of_play_yardline = 80.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
                 Returner = Returner,
@@ -79,7 +80,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 20.0)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 80.0)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -117,7 +118,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Left_Touchback_to_25()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Left_Touchback_to_75()
         {
             bool penOnBallCarryingTeam = false;
             Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
@@ -127,7 +128,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player Returner = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = -5.0
+                Current_YardLine = 105.0
             };
 
             //get penalty settings
@@ -144,7 +145,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 Yards_Returned = 0.0,
                 bTouchback = true,
                 bTouchDown = false,
-                end_of_play_yardline = 0.0,
+                end_of_play_yardline = 100.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
                 Returner = Returner,
@@ -227,7 +228,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player Returner = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 105
+                Current_YardLine = -5
             };
 
             //get penalty settings
@@ -242,9 +243,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 BallPossessing_Team_Id = 11,
                 NonbBallPossessing_Team_Id = 22,
                 Yards_Returned = 100.0,
+                bKick_Returned = true,
                 bTouchback = false,
                 bTouchDown = true,
-                end_of_play_yardline = 105.0,
+                end_of_play_yardline = -5.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
                 Returner = Returner,
@@ -328,7 +330,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player Returner = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 105
+                Current_YardLine = -5
             };
 
             //get penalty settings
@@ -336,7 +338,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Penalty Penalty = p.Where(x => x.code == Penalty_Codes.UR).First();
             Game_Player Penalized_Player = new Game_Player()
             {
-                Current_YardLine = 25.0
+                Current_YardLine = 75.0
             };
 
             Play_Result pResult = new Play_Result()
@@ -346,9 +348,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 BallPossessing_Team_Id = 11,
                 NonbBallPossessing_Team_Id = 22,
                 Yards_Returned = 100.0,
+                bKick_Returned = true,
                 bTouchback = false,
                 bTouchDown = true,
-                end_of_play_yardline = 105.0,
+                end_of_play_yardline = -5.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
                 Returner = Returner,
@@ -422,7 +425,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Left_ReturntoOwn20_Spot_Penalty_on_Defenders_at_25_to_40()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Left_ReturntoOwn20_Spot_Penalty_on_Defenders_at_75_to_60()
         {
             bool penOnBallCarryingTeam = false;
             Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
@@ -432,7 +435,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player Returner = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 20
+                Current_YardLine = 80
             };
 
             //get penalty settings
@@ -440,7 +443,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Penalty Penalty = p.Where(x => x.code == Penalty_Codes.FM).First();
             Game_Player Penalized_Player = new Game_Player()
             {
-                Current_YardLine = 25.0
+                Current_YardLine = 75.0
             };
 
             Play_Result pResult = new Play_Result()
@@ -450,9 +453,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 BallPossessing_Team_Id = 11,
                 NonbBallPossessing_Team_Id = 22,
                 Yards_Returned = 20.0,
+                bKick_Returned = true,
                 bTouchback = false,
                 bTouchDown = false,
-                end_of_play_yardline = 20.0,
+                end_of_play_yardline = 80.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
                 Returner = Returner,
@@ -487,7 +491,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 40.0)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 60.0)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -525,7 +529,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Left_ReturntoOwn40_Spot_Penalty_on_Defenders_to_30()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Left_ReturntoOwn40_Spot_Penalty_on_Defenders_to_70()
         {
             bool penOnBallCarryingTeam = false;
             Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
@@ -535,7 +539,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player Returner = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 40
+                Current_YardLine = 60
             };
 
             //get penalty settings
@@ -543,7 +547,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Penalty Penalty = p.Where(x => x.code == Penalty_Codes.FM).First();
             Game_Player Penalized_Player = new Game_Player()
             {
-                Current_YardLine = 30.0
+                Current_YardLine = 70.0
             };
 
             Play_Result pResult = new Play_Result()
@@ -553,9 +557,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 BallPossessing_Team_Id = 11,
                 NonbBallPossessing_Team_Id = 22,
                 Yards_Returned = 40.0,
+                bKick_Returned = true,
                 bTouchback = false,
                 bTouchDown = false,
-                end_of_play_yardline = 40.0,
+                end_of_play_yardline = 60.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
                 Returner = Returner,
@@ -590,7 +595,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 55.0)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 45.0)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -629,7 +634,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Left_ReturntoOwn07_Spot_Penalty_on_Defenders_to_08()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Left_ReturntoOwn07_Spot_Penalty_on_Defenders_to_92()
         {
             bool penOnBallCarryingTeam = false;
             Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
@@ -639,7 +644,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player Returner = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 7
+                Current_YardLine = 93
             };
 
             //get penalty settings
@@ -647,7 +652,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Penalty Penalty = p.Where(x => x.code == Penalty_Codes.FM).First();
             Game_Player Penalized_Player = new Game_Player()
             {
-                Current_YardLine = 8.0
+                Current_YardLine = 92.0
             };
 
             Play_Result pResult = new Play_Result()
@@ -657,9 +662,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 BallPossessing_Team_Id = 11,
                 NonbBallPossessing_Team_Id = 22,
                 Yards_Returned = 7.0,
+                bKick_Returned = true,
                 bTouchback = false,
                 bTouchDown = false,
-                end_of_play_yardline = 7.0,
+                end_of_play_yardline = 93.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
                 Returner = Returner,
@@ -694,7 +700,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 23.0)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 77.0)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -732,7 +738,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Left_ReturntoOwn91_Spot_Penalty_on_Defenders_to_92()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Left_ReturntoOwn91_Spot_Penalty_on_Defenders_to_8()
         {
             bool penOnBallCarryingTeam = false;
             Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
@@ -742,7 +748,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player Returner = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 91
+                Current_YardLine = 9
             };
 
             //get penalty settings
@@ -750,7 +756,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Penalty Penalty = p.Where(x => x.code == Penalty_Codes.FM).First();
             Game_Player Penalized_Player = new Game_Player()
             {
-                Current_YardLine = 92.0
+                Current_YardLine = 8.0
             };
 
             Play_Result pResult = new Play_Result()
@@ -760,9 +766,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 BallPossessing_Team_Id = 11,
                 NonbBallPossessing_Team_Id = 22,
                 Yards_Returned = 91.0,
+                bKick_Returned = true,
                 bTouchback = false,
                 bTouchDown = false,
-                end_of_play_yardline = 91.0,
+                end_of_play_yardline = 9.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
                 Returner = Returner,
@@ -797,7 +804,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 96.0)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 4.0)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -835,7 +842,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Left_ReturntoOwn92_Spot_Penalty_on_Defenders_to_91()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Left_ReturntoOwn92_Spot_Penalty_on_Defenders_to_9()
         {
             bool penOnBallCarryingTeam = false;
             Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
@@ -845,7 +852,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player Returner = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 92
+                Current_YardLine = 8
             };
 
             //get penalty settings
@@ -853,7 +860,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Penalty Penalty = p.Where(x => x.code == Penalty_Codes.FM).First();
             Game_Player Penalized_Player = new Game_Player()
             {
-                Current_YardLine = 92.0
+                Current_YardLine = 8.0
             };
 
             Play_Result pResult = new Play_Result()
@@ -863,9 +870,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 BallPossessing_Team_Id = 11,
                 NonbBallPossessing_Team_Id = 22,
                 Yards_Returned = 92.0,
+                bKick_Returned = true,
                 bTouchback = false,
                 bTouchDown = false,
-                end_of_play_yardline = 92.0,
+                end_of_play_yardline = 8.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
                 Returner = Returner,
@@ -900,7 +908,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 96.0)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 4.0)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -939,7 +947,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Left_ReturntoOwn30_Spot_Penalty_on_Returners_at_25()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Left_ReturntoOwn30_Spot_Penalty_on_Returners_at_75()
         {
             bool penOnBallCarryingTeam = true;
             Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
@@ -949,7 +957,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player Returner = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 30
+                Current_YardLine = 70
             };
 
             //get penalty settings
@@ -957,7 +965,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Penalty Penalty = p.Where(x => x.code == Penalty_Codes.FM).First();
             Game_Player Penalized_Player = new Game_Player()
             {
-                Current_YardLine = 25.0
+                Current_YardLine = 75.0
             };
 
             Play_Result pResult = new Play_Result()
@@ -967,9 +975,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 BallPossessing_Team_Id = 11,
                 NonbBallPossessing_Team_Id = 22,
                 Yards_Returned = 30.0,
+                bKick_Returned = true,
                 bTouchback = false,
                 bTouchDown = false,
-                end_of_play_yardline = 30.0,
+                end_of_play_yardline = 70.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
                 Returner = Returner,
@@ -1004,7 +1013,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 12.5)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 87.5)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -1042,7 +1051,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Left_ReturntoOwn30_Spot_Penalty_on_Returners_at_35()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Left_ReturntoOwn30_Spot_Penalty_on_Returners_at_65()
         {
             bool penOnBallCarryingTeam = true;
             Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
@@ -1052,7 +1061,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player Returner = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 30
+                Current_YardLine = 70
             };
 
             //get penalty settings
@@ -1060,7 +1069,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Penalty Penalty = p.Where(x => x.code == Penalty_Codes.FM).First();
             Game_Player Penalized_Player = new Game_Player()
             {
-                Current_YardLine = 35.0
+                Current_YardLine = 65.0
             };
 
             Play_Result pResult = new Play_Result()
@@ -1070,9 +1079,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 BallPossessing_Team_Id = 11,
                 NonbBallPossessing_Team_Id = 22,
                 Yards_Returned = 30.0,
+                bKick_Returned = true,
                 bTouchback = false,
                 bTouchDown = false,
-                end_of_play_yardline = 30.0,
+                end_of_play_yardline = 70.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
                 Returner = Returner,
@@ -1107,7 +1117,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 15.0)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 85.0)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -1145,7 +1155,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Left_ReturntoOwn92_Spot_Penalty_on_Returners_at_92()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Left_ReturntoOwn92_Spot_Penalty_on_Returners_at_8()
         {
             bool penOnBallCarryingTeam = true;
             Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
@@ -1155,7 +1165,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player Returner = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 92
+                Current_YardLine = 8
             };
 
             //get penalty settings
@@ -1163,7 +1173,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Penalty Penalty = p.Where(x => x.code == Penalty_Codes.FM).First();
             Game_Player Penalized_Player = new Game_Player()
             {
-                Current_YardLine = 92.0
+                Current_YardLine = 8.0
             };
 
             Play_Result pResult = new Play_Result()
@@ -1173,9 +1183,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 BallPossessing_Team_Id = 11,
                 NonbBallPossessing_Team_Id = 22,
                 Yards_Returned = 92.0,
+                bKick_Returned = true,
                 bTouchback = false,
                 bTouchDown = false,
-                end_of_play_yardline = 92.0,
+                end_of_play_yardline = 8.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
                 Returner = Returner,
@@ -1210,7 +1221,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must not stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 77.0)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 23.0)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -1258,7 +1269,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player Returner = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 105
+                Current_YardLine = -5
             };
 
             //get penalty settings
@@ -1276,9 +1287,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 BallPossessing_Team_Id = 11,
                 NonbBallPossessing_Team_Id = 22,
                 Yards_Returned = 100.0,
+                bKick_Returned = true,
                 bTouchback = false,
                 bTouchDown = true,
-                end_of_play_yardline = 105.0,
+                end_of_play_yardline = -5.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
                 Returner = Returner,
@@ -1313,7 +1325,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must not stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 35.0)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 65.0)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -1351,7 +1363,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Left_Return04_Spot_Penalty_on_Returners_at_5()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Left_Return04_Spot_Penalty_on_Returners_at_95()
         {
             bool penOnBallCarryingTeam = true;
             Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
@@ -1361,7 +1373,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player Returner = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 4.0
+                Current_YardLine = 96.0
             };
 
             //get penalty settings
@@ -1369,7 +1381,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Penalty Penalty = p.Where(x => x.code == Penalty_Codes.FM).First();
             Game_Player Penalized_Player = new Game_Player()
             {
-                Current_YardLine = 5.0
+                Current_YardLine = 95.0
             };
 
             Play_Result pResult = new Play_Result()
@@ -1379,9 +1391,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 BallPossessing_Team_Id = 11,
                 NonbBallPossessing_Team_Id = 22,
                 Yards_Returned = 4.0,
+                bKick_Returned = true,
                 bTouchback = false,
                 bTouchDown = false,
-                end_of_play_yardline = 4.0,
+                end_of_play_yardline = 96.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
                 Returner = Returner,
@@ -1416,7 +1429,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must not stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 2.0)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 98.0)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -1454,7 +1467,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Left_Return05_Spot_Penalty_on_Returners_at_4()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Left_Return05_Spot_Penalty_on_Returners_at_96()
         {
             bool penOnBallCarryingTeam = true;
             Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
@@ -1464,7 +1477,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player Returner = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 5.0
+                Current_YardLine = 95.0
             };
 
             //get penalty settings
@@ -1472,7 +1485,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Penalty Penalty = p.Where(x => x.code == Penalty_Codes.FM).First();
             Game_Player Penalized_Player = new Game_Player()
             {
-                Current_YardLine = 4.0
+                Current_YardLine = 96.0
             };
 
             Play_Result pResult = new Play_Result()
@@ -1482,9 +1495,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 BallPossessing_Team_Id = 11,
                 NonbBallPossessing_Team_Id = 22,
                 Yards_Returned = 5.0,
+                bKick_Returned = true,
                 bTouchback = false,
                 bTouchDown = false,
-                end_of_play_yardline = 5.0,
+                end_of_play_yardline = 95.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
                 Returner = Returner,
@@ -1519,7 +1533,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must not stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 2.0)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 98.0)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -1557,7 +1571,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Left_Return_Fumbles_on_20_and_Recovers()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Left_Return_Fumbles_on_80_and_Recovers()
         {
             bool penOnBallCarryingTeam = true;
             Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
@@ -1567,7 +1581,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player Returner = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 20
+                Current_YardLine = 80
             };
 
             //get penalty settings
@@ -1582,9 +1596,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 BallPossessing_Team_Id = 11,
                 NonbBallPossessing_Team_Id = 22,
                 Yards_Returned = 20.0,
+                bKick_Returned = true,
                 bTouchback = false,
                 bTouchDown = false,
-                end_of_play_yardline = 20.0,
+                end_of_play_yardline = 80.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
                 bPenalty_Rejected = false,
@@ -1620,7 +1635,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must not stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 20.0)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 80.0)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -1658,7 +1673,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Left_Return_lost_Fumbles_on_20_penalty_on_retuners()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Left_Return_lost_Fumbles_on_80_penalty_on_retuners()
         {
             bool penOnBallCarryingTeam = true;
             Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
@@ -1668,7 +1683,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player Returner = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 20
+                Current_YardLine = 80
             };
 
             //get penalty settings
@@ -1676,7 +1691,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Penalty Penalty = p.Where(x => x.code == Penalty_Codes.FM).First();
             Game_Player Penalized_Player = new Game_Player()
             {
-                Current_YardLine = 15.0
+                Current_YardLine = 85.0
             };
 
             Play_Result pResult = new Play_Result()
@@ -1686,9 +1701,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 BallPossessing_Team_Id = 11,
                 NonbBallPossessing_Team_Id = 22,
                 Yards_Returned = 20.0,
+                bKick_Returned = true,
                 bTouchback = false,
                 bTouchDown = false,
-                end_of_play_yardline = 20.0,
+                end_of_play_yardline = 80.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
                 Returner = Returner,
@@ -1725,7 +1741,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must not stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 7.5)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 92.5)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -1763,7 +1779,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Left_Return_lost_Fumbles_on_20_penalty_on_defenders()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Left_Return_lost_Fumbles_on_80_penalty_on_defenders()
         {
             bool penOnBallCarryingTeam = false;
             Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
@@ -1773,7 +1789,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player Returner = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 20
+                Current_YardLine = 80
             };
 
             //get penalty settings
@@ -1781,7 +1797,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Penalty Penalty = p.Where(x => x.code == Penalty_Codes.FM).First();
             Game_Player Penalized_Player = new Game_Player()
             {
-                Current_YardLine = 15.0
+                Current_YardLine = 85.0
             };
 
             Play_Result pResult = new Play_Result()
@@ -1791,9 +1807,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 BallPossessing_Team_Id = 11,
                 NonbBallPossessing_Team_Id = 22,
                 Yards_Returned = 20.0,
+                bKick_Returned = true,
                 bTouchback = false,
                 bTouchDown = false,
-                end_of_play_yardline = 20.0,
+                end_of_play_yardline = 80.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
                 Returner = Returner,
@@ -1829,7 +1846,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must not stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 35)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 65)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -1867,7 +1884,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Right_ReturntoOwn20_no_Penalty_to_80()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Right_ReturntoOwn20_no_Penalty_to_20()
         {
             bool penOnBallCarryingTeam = false;
             Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
@@ -1877,7 +1894,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player Returner = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 80
+                Current_YardLine = 20
             };
 
             //get penalty settings
@@ -1892,9 +1909,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 BallPossessing_Team_Id = 11,
                 NonbBallPossessing_Team_Id = 22,
                 Yards_Returned = 20.0,
+                bKick_Returned = true,
                 bTouchback = false,
                 bTouchDown = false,
-                end_of_play_yardline = 80.0,
+                end_of_play_yardline = 20.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
                 Returner = Returner,
@@ -1929,7 +1947,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 80.0)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 20.0)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -1967,7 +1985,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Right_Touchback_to_75()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Right_Touchback_to_25()
         {
             bool penOnBallCarryingTeam = false;
             Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
@@ -1977,7 +1995,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player Returner = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 105.0
+                Current_YardLine = -5.0
             };
 
             //get penalty settings
@@ -1994,7 +2012,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 Yards_Returned = 0.0,
                 bTouchback = true,
                 bTouchDown = false,
-                end_of_play_yardline = 100.0,
+                end_of_play_yardline = 0.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
                 Returner = Returner,
@@ -2077,7 +2095,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player Returner = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = -5
+                Current_YardLine = 105
             };
 
             //get penalty settings
@@ -2092,9 +2110,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 BallPossessing_Team_Id = 11,
                 NonbBallPossessing_Team_Id = 22,
                 Yards_Returned = 100.0,
+                bKick_Returned = true,
                 bTouchback = false,
                 bTouchDown = true,
-                end_of_play_yardline = -5.0,
+                end_of_play_yardline = 105.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
                 Returner = Returner,
@@ -2178,7 +2197,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player Returner = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = -5
+                Current_YardLine = 105
             };
 
             //get penalty settings
@@ -2186,7 +2205,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Penalty Penalty = p.Where(x => x.code == Penalty_Codes.UR).First();
             Game_Player Penalized_Player = new Game_Player()
             {
-                Current_YardLine = 75.0
+                Current_YardLine = 25.0
             };
 
             Play_Result pResult = new Play_Result()
@@ -2196,9 +2215,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 BallPossessing_Team_Id = 11,
                 NonbBallPossessing_Team_Id = 22,
                 Yards_Returned = 100.0,
+                bKick_Returned = true,
                 bTouchback = false,
                 bTouchDown = true,
-                end_of_play_yardline = -5.0,
+                end_of_play_yardline = 105.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
                 Returner = Returner,
@@ -2272,7 +2292,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Right_ReturntoOwn20_Spot_Penalty_on_Defenders_at_75_to_60()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Right_ReturntoOwn20_Spot_Penalty_on_Defenders_at_25_to_40()
         {
             bool penOnBallCarryingTeam = false;
             Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
@@ -2282,7 +2302,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player Returner = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 80
+                Current_YardLine = 20
             };
 
             //get penalty settings
@@ -2290,7 +2310,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Penalty Penalty = p.Where(x => x.code == Penalty_Codes.FM).First();
             Game_Player Penalized_Player = new Game_Player()
             {
-                Current_YardLine = 75.0
+                Current_YardLine = 25.0
             };
 
             Play_Result pResult = new Play_Result()
@@ -2300,9 +2320,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 BallPossessing_Team_Id = 11,
                 NonbBallPossessing_Team_Id = 22,
                 Yards_Returned = 20.0,
+                bKick_Returned = true,
                 bTouchback = false,
                 bTouchDown = false,
-                end_of_play_yardline = 80.0,
+                end_of_play_yardline = 20.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
                 Returner = Returner,
@@ -2337,7 +2358,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 60.0)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 40.0)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -2375,7 +2396,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Right_ReturntoOwn40_Spot_Penalty_on_Defenders_to_70()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Right_ReturntoOwn40_Spot_Penalty_on_Defenders_to_30()
         {
             bool penOnBallCarryingTeam = false;
             Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
@@ -2385,7 +2406,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player Returner = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 60
+                Current_YardLine = 40
             };
 
             //get penalty settings
@@ -2393,7 +2414,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Penalty Penalty = p.Where(x => x.code == Penalty_Codes.FM).First();
             Game_Player Penalized_Player = new Game_Player()
             {
-                Current_YardLine = 70.0
+                Current_YardLine = 30.0
             };
 
             Play_Result pResult = new Play_Result()
@@ -2403,9 +2424,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 BallPossessing_Team_Id = 11,
                 NonbBallPossessing_Team_Id = 22,
                 Yards_Returned = 40.0,
+                bKick_Returned = true,
                 bTouchback = false,
                 bTouchDown = false,
-                end_of_play_yardline = 60.0,
+                end_of_play_yardline = 40.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
                 Returner = Returner,
@@ -2440,7 +2462,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 45.0)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 55.0)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -2479,7 +2501,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Right_ReturntoOwn07_Spot_Penalty_on_Defenders_to_92()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Right_ReturntoOwn07_Spot_Penalty_on_Defenders_to_08()
         {
             bool penOnBallCarryingTeam = false;
             Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
@@ -2489,7 +2511,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player Returner = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 93
+                Current_YardLine = 7
             };
 
             //get penalty settings
@@ -2497,7 +2519,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Penalty Penalty = p.Where(x => x.code == Penalty_Codes.FM).First();
             Game_Player Penalized_Player = new Game_Player()
             {
-                Current_YardLine = 92.0
+                Current_YardLine = 8.0
             };
 
             Play_Result pResult = new Play_Result()
@@ -2507,9 +2529,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 BallPossessing_Team_Id = 11,
                 NonbBallPossessing_Team_Id = 22,
                 Yards_Returned = 7.0,
+                bKick_Returned = true,
                 bTouchback = false,
                 bTouchDown = false,
-                end_of_play_yardline = 93.0,
+                end_of_play_yardline = 7.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
                 Returner = Returner,
@@ -2544,7 +2567,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 77.0)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 23.0)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -2582,7 +2605,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Right_ReturntoOwn91_Spot_Penalty_on_Defenders_to_8()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Right_ReturntoOwn91_Spot_Penalty_on_Defenders_to_92()
         {
             bool penOnBallCarryingTeam = false;
             Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
@@ -2592,7 +2615,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player Returner = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 9
+                Current_YardLine = 91
             };
 
             //get penalty settings
@@ -2600,7 +2623,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Penalty Penalty = p.Where(x => x.code == Penalty_Codes.FM).First();
             Game_Player Penalized_Player = new Game_Player()
             {
-                Current_YardLine = 8.0
+                Current_YardLine = 92.0
             };
 
             Play_Result pResult = new Play_Result()
@@ -2610,9 +2633,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 BallPossessing_Team_Id = 11,
                 NonbBallPossessing_Team_Id = 22,
                 Yards_Returned = 91.0,
+                bKick_Returned = true,
                 bTouchback = false,
                 bTouchDown = false,
-                end_of_play_yardline = 9.0,
+                end_of_play_yardline = 91.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
                 Returner = Returner,
@@ -2647,7 +2671,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 4.0)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 96.0)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -2685,7 +2709,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Right_ReturntoOwn92_Spot_Penalty_on_Defenders_to_9()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Right_ReturntoOwn92_Spot_Penalty_on_Defenders_to_91()
         {
             bool penOnBallCarryingTeam = false;
             Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
@@ -2695,7 +2719,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player Returner = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 8
+                Current_YardLine = 92
             };
 
             //get penalty settings
@@ -2703,7 +2727,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Penalty Penalty = p.Where(x => x.code == Penalty_Codes.FM).First();
             Game_Player Penalized_Player = new Game_Player()
             {
-                Current_YardLine = 8.0
+                Current_YardLine = 92.0
             };
 
             Play_Result pResult = new Play_Result()
@@ -2713,9 +2737,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 BallPossessing_Team_Id = 11,
                 NonbBallPossessing_Team_Id = 22,
                 Yards_Returned = 92.0,
+                bKick_Returned = true,
                 bTouchback = false,
                 bTouchDown = false,
-                end_of_play_yardline = 8.0,
+                end_of_play_yardline = 92.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
                 Returner = Returner,
@@ -2750,7 +2775,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 4.0)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 96.0)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -2789,7 +2814,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Right_ReturntoOwn30_Spot_Penalty_on_Returners_at_75()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Right_ReturntoOwn30_Spot_Penalty_on_Returners_at_25()
         {
             bool penOnBallCarryingTeam = true;
             Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
@@ -2799,7 +2824,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player Returner = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 70
+                Current_YardLine = 30
             };
 
             //get penalty settings
@@ -2807,7 +2832,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Penalty Penalty = p.Where(x => x.code == Penalty_Codes.FM).First();
             Game_Player Penalized_Player = new Game_Player()
             {
-                Current_YardLine = 75.0
+                Current_YardLine = 25.0
             };
 
             Play_Result pResult = new Play_Result()
@@ -2817,9 +2842,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 BallPossessing_Team_Id = 11,
                 NonbBallPossessing_Team_Id = 22,
                 Yards_Returned = 30.0,
+                bKick_Returned = true,
                 bTouchback = false,
                 bTouchDown = false,
-                end_of_play_yardline = 70.0,
+                end_of_play_yardline = 30.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
                 Returner = Returner,
@@ -2854,7 +2880,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 87.5)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 12.5)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -2892,7 +2918,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Right_ReturntoOwn30_Spot_Penalty_on_Returners_at_65()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Right_ReturntoOwn30_Spot_Penalty_on_Returners_at_35()
         {
             bool penOnBallCarryingTeam = true;
             Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
@@ -2902,7 +2928,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player Returner = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 70
+                Current_YardLine = 30
             };
 
             //get penalty settings
@@ -2910,7 +2936,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Penalty Penalty = p.Where(x => x.code == Penalty_Codes.FM).First();
             Game_Player Penalized_Player = new Game_Player()
             {
-                Current_YardLine = 65.0
+                Current_YardLine = 35.0
             };
 
             Play_Result pResult = new Play_Result()
@@ -2920,9 +2946,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 BallPossessing_Team_Id = 11,
                 NonbBallPossessing_Team_Id = 22,
                 Yards_Returned = 30.0,
+                bKick_Returned = true,
                 bTouchback = false,
                 bTouchDown = false,
-                end_of_play_yardline = 70.0,
+                end_of_play_yardline = 30.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
                 Returner = Returner,
@@ -2957,7 +2984,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 85.0)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 15.0)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -2995,7 +3022,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Right_ReturntoOwn92_Spot_Penalty_on_Returners_at_8()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Right_ReturntoOwn92_Spot_Penalty_on_Returners_at_92()
         {
             bool penOnBallCarryingTeam = true;
             Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
@@ -3005,7 +3032,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player Returner = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 8
+                Current_YardLine = 92
             };
 
             //get penalty settings
@@ -3013,7 +3040,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Penalty Penalty = p.Where(x => x.code == Penalty_Codes.FM).First();
             Game_Player Penalized_Player = new Game_Player()
             {
-                Current_YardLine = 8.0
+                Current_YardLine = 92.0
             };
 
             Play_Result pResult = new Play_Result()
@@ -3023,9 +3050,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 BallPossessing_Team_Id = 11,
                 NonbBallPossessing_Team_Id = 22,
                 Yards_Returned = 92.0,
+                bKick_Returned = true,
                 bTouchback = false,
                 bTouchDown = false,
-                end_of_play_yardline = 8.0,
+                end_of_play_yardline = 92.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
                 Returner = Returner,
@@ -3060,7 +3088,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must not stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 23.0)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 77.0)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -3108,7 +3136,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player Returner = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = -5
+                Current_YardLine = 105
             };
 
             //get penalty settings
@@ -3126,9 +3154,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 BallPossessing_Team_Id = 11,
                 NonbBallPossessing_Team_Id = 22,
                 Yards_Returned = 100.0,
+                bKick_Returned = true,
                 bTouchback = false,
                 bTouchDown = true,
-                end_of_play_yardline = -5.0,
+                end_of_play_yardline = 105.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
                 Returner = Returner,
@@ -3163,7 +3192,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must not stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 65.0)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 35.0)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -3201,7 +3230,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Right_Return04_Spot_Penalty_on_Returners_at_95()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Right_Return04_Spot_Penalty_on_Returners_at_5()
         {
             bool penOnBallCarryingTeam = true;
             Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
@@ -3211,7 +3240,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player Returner = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 96.0
+                Current_YardLine = 4.0
             };
 
             //get penalty settings
@@ -3219,7 +3248,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Penalty Penalty = p.Where(x => x.code == Penalty_Codes.FM).First();
             Game_Player Penalized_Player = new Game_Player()
             {
-                Current_YardLine = 95.0
+                Current_YardLine = 5.0
             };
 
             Play_Result pResult = new Play_Result()
@@ -3229,9 +3258,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 BallPossessing_Team_Id = 11,
                 NonbBallPossessing_Team_Id = 22,
                 Yards_Returned = 4.0,
+                bKick_Returned = true,
                 bTouchback = false,
                 bTouchDown = false,
-                end_of_play_yardline = 96.0,
+                end_of_play_yardline = 4.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
                 Returner = Returner,
@@ -3266,7 +3296,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must not stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 98.0)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 2.0)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -3304,7 +3334,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Right_Return05_Spot_Penalty_on_Returners_at_96()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Right_Return05_Spot_Penalty_on_Returners_at_4()
         {
             bool penOnBallCarryingTeam = true;
             Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
@@ -3314,7 +3344,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player Returner = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 95.0
+                Current_YardLine = 5.0
             };
 
             //get penalty settings
@@ -3322,7 +3352,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Penalty Penalty = p.Where(x => x.code == Penalty_Codes.FM).First();
             Game_Player Penalized_Player = new Game_Player()
             {
-                Current_YardLine = 96.0
+                Current_YardLine = 4.0
             };
 
             Play_Result pResult = new Play_Result()
@@ -3332,9 +3362,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 BallPossessing_Team_Id = 11,
                 NonbBallPossessing_Team_Id = 22,
                 Yards_Returned = 5.0,
+                bKick_Returned = true,
                 bTouchback = false,
                 bTouchDown = false,
-                end_of_play_yardline = 95.0,
+                end_of_play_yardline = 5.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
                 Returner = Returner,
@@ -3369,7 +3400,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must not stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 98.0)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 2.0)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -3407,7 +3438,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Right_Return_Fumbles_on_80_and_Recovers()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Right_Return_Fumbles_on_20_and_Recovers()
         {
             bool penOnBallCarryingTeam = true;
             Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
@@ -3417,7 +3448,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player Returner = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 80
+                Current_YardLine = 20
             };
 
             //get penalty settings
@@ -3432,9 +3463,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 BallPossessing_Team_Id = 11,
                 NonbBallPossessing_Team_Id = 22,
                 Yards_Returned = 20.0,
+                bKick_Returned = true,
                 bTouchback = false,
                 bTouchDown = false,
-                end_of_play_yardline = 80.0,
+                end_of_play_yardline = 20.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
                 bPenalty_Rejected = false,
@@ -3470,7 +3502,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must not stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 80.0)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 20.0)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -3508,7 +3540,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Right_Return_lost_Fumbles_on_80_penalty_on_retuners()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Right_Return_lost_Fumbles_on_20_penalty_on_retuners()
         {
             bool penOnBallCarryingTeam = true;
             Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
@@ -3518,7 +3550,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player Returner = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 80
+                Current_YardLine = 20
             };
 
             //get penalty settings
@@ -3526,7 +3558,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Penalty Penalty = p.Where(x => x.code == Penalty_Codes.FM).First();
             Game_Player Penalized_Player = new Game_Player()
             {
-                Current_YardLine = 85.0
+                Current_YardLine = 15.0
             };
 
             Play_Result pResult = new Play_Result()
@@ -3536,9 +3568,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 BallPossessing_Team_Id = 11,
                 NonbBallPossessing_Team_Id = 22,
                 Yards_Returned = 20.0,
+                bKick_Returned = true,
                 bTouchback = false,
                 bTouchDown = false,
-                end_of_play_yardline = 80.0,
+                end_of_play_yardline = 20.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
                 Returner = Returner,
@@ -3575,7 +3608,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must not stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 92.5)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 7.5)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play
@@ -3613,7 +3646,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
         }
         [TestCategory("Unit")]
         [TestMethod]
-        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Right_Return_lost_Fumbles_on_80_penalty_on_defenders()
+        public void setPlayOutCome_KICKOFF_AFTER_SAFETY_Right_Return_lost_Fumbles_on_20_penalty_on_defenders()
         {
             bool penOnBallCarryingTeam = false;
             Play_Enum PE = Play_Enum.KICKOFF_AFTER_SAFETY;
@@ -3623,7 +3656,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Game_Player Returner = new Game_Player()
             {
                 p_and_r = new Player_and_Ratings() { p = new Player() { ID = 1 } },
-                Current_YardLine = 80
+                Current_YardLine = 20
             };
 
             //get penalty settings
@@ -3631,7 +3664,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             Penalty Penalty = p.Where(x => x.code == Penalty_Codes.FM).First();
             Game_Player Penalized_Player = new Game_Player()
             {
-                Current_YardLine = 85.0
+                Current_YardLine = 15.0
             };
 
             Play_Result pResult = new Play_Result()
@@ -3641,9 +3674,10 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 BallPossessing_Team_Id = 11,
                 NonbBallPossessing_Team_Id = 22,
                 Yards_Returned = 20.0,
+                bKick_Returned = true,
                 bTouchback = false,
                 bTouchDown = false,
-                end_of_play_yardline = 80.0,
+                end_of_play_yardline = 20.0,
                 Penalty = Penalty,
                 Penalized_Player = Penalized_Player,
                 Returner = Returner,
@@ -3679,7 +3713,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
                 throw new Exception("This Play must not stand");
 
             //Check dow, yardage and yardline
-            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 65)
+            if (r.Final_Down != 1 || r.Final_yard_to_go != 10 || r.Final_end_of_Play_Yardline != 35)
                 throw new Exception("The next Play must be first and ten on specified yard line");
 
             //Check for next play

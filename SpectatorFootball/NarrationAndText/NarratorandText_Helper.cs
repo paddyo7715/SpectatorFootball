@@ -20,18 +20,15 @@ namespace SpectatorFootball.NarrationAndText
             return r;
         }
 
-        public static Tuple<double, Game_Sounds, string> getGameEffects(AE_rec effects)
+        public static Tuple<double, Game_Sounds> getGameEffects(AE_rec effects)
         {
             double crowd_adj = 0.0;
             Game_Sounds gsound = Game_Sounds.NONE;
-            string announcement = null;
 
             crowd_adj = effects.noise_adj;
             gsound = effects.Sound;
-            announcement = effects.Announcer_msg == null ? "" : effects.Announcer_msg;
 
-
-            return Tuple.Create(crowd_adj, gsound, announcement);
+            return Tuple.Create(crowd_adj, gsound);
         }
     }
 }

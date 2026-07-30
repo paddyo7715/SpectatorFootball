@@ -186,7 +186,7 @@ namespace SpectatorFootball.GameNS
                     p.Current_Vertical_Percent_Pos = vert_offset;
 
                     Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
-                    p.Punter_Put_Leg_Down_and_Run(moving_ps, prev_yl, prev_v, null, _announcer.Announce_InPlay(announce_event.PUNT_AWAY, r.Punter.p_and_r.p.Last_Name, Game_Engine_Helper.getYardlineDisplay(p.Current_YardLine)));
+                    p.Punter_Put_Leg_Down_and_Run(moving_ps, prev_yl, prev_v);
                 }
                 else
                 {
@@ -197,7 +197,7 @@ namespace SpectatorFootball.GameNS
                     p.Current_Vertical_Percent_Pos = getAttBlkVert(newBallY, slot);
                     int delay = tgroup_ind * delay_factor + 1;
                     Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
-                    p.Delay_Then_Run_and_Stand(moving_ps, prev_yl, prev_v, delay, null, null);
+                    p.Delay_Then_Run_and_Stand(moving_ps, prev_yl, prev_v, delay);
                 }
                 id_Players++;
             }
@@ -258,7 +258,7 @@ namespace SpectatorFootball.GameNS
                     tgroup_ind = Game_Engine_Helper.getTackleGroup(id_Players, tGroups);
                     int delay = tgroup_ind * delay_factor + 1;
                     Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, false, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
-                    p.Delay_Then_Run_and_Stand(moving_ps, prev_yl, prev_v, delay, null, null);
+                    p.Delay_Then_Run_and_Stand(moving_ps, prev_yl, prev_v, delay);
                 }
                 id_Players++;
             }
@@ -773,7 +773,7 @@ namespace SpectatorFootball.GameNS
                             gBall.Current_Vertical_Percent_Pos = p.Current_Vertical_Percent_Pos;
 
                             Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
-                            p.Run_With_Ball(moving_ps, prev_yl, prev_v, 0.0, before_announcement, null);
+                            p.Run_With_Ball(moving_ps, prev_yl, prev_v, 0.0);
 
                             //for the ball
                             gBall.Carried(prev_yl, prev_v);
@@ -810,7 +810,7 @@ namespace SpectatorFootball.GameNS
                                 else
                                     after_announcment = _announcer.Announce_InPlay(announce_event.BREAKTHRU_TACKLE, r.Punt_Returner.p_and_r.p.Last_Name, Game_Engine_Helper.getYardlineDisplay(p.Current_YardLine));
 
-                                p.Run_With_Ball(moving_ps2, prev_yl, prev_v, -0.2, before_announcement, after_announcment);
+                                p.Run_With_Ball(moving_ps2, prev_yl, prev_v, -0.2);
                                 //for the ball
                                 gBall.Carried(prev_yl, prev_v);
                             }
@@ -827,7 +827,7 @@ namespace SpectatorFootball.GameNS
                             gBall.Current_Vertical_Percent_Pos = p.Current_Vertical_Percent_Pos;
 
                             Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
-                            p.Run_With_Ball(moving_ps, prev_yl, prev_v, -0.2, before_announcement, _announcer.Announce_InPlay(announce_event.RETURN_BREAKTHRU, r.Punt_Returner.p_and_r.p.Last_Name, Game_Engine_Helper.getYardlineDisplay(p.Current_YardLine)));
+                            p.Run_With_Ball(moving_ps, prev_yl, prev_v, -0.2);
 
                             logger.Debug("no tacker breakthru: ");
 

@@ -681,6 +681,9 @@ namespace SpectatorFootball.unitTests.Penalties
                         break;
                 }
 
+                if (i % 10 != 0)
+                    pResult.bKick_Returned = true;
+
                 Tuple<Game_Player, Penalty> t = Penalty_Helper.PostSnap_Penalty(pe, this.penaltyList,
                     Offensive_Players, Defensive_Players, pResult);
                 Penalty_Player = t.Item1;
@@ -824,6 +827,8 @@ namespace SpectatorFootball.unitTests.Penalties
 
                 if (i % 10 == 0)
                     pResult.Defender_Close_to_Kicker = Offensive_Players[8];
+                else
+                    pResult.bPunt_Returned = true;
 
                 Tuple<Game_Player, Penalty> t = Penalty_Helper.PostSnap_Penalty(pe, this.penaltyList,
                     Offensive_Players, Defensive_Players, pResult);
@@ -929,7 +934,7 @@ namespace SpectatorFootball.unitTests.Penalties
                 }
 
                 if (i % 10 == 0)
-                    pResult.Defender_Knocks_Down_QB = Defensive_Players[2];
+                    pResult.Defender_Close_to_QB = Defensive_Players[2];
                 else if (i % 8 == 0)
                     pResult.Defender_Close_to_Receiver = Defensive_Players[8];
 
@@ -1077,86 +1082,6 @@ namespace SpectatorFootball.unitTests.Penalties
             Assert.IsTrue(true);
         }
 
-        [TestCategory("Unit")]
-        [TestMethod]
-        public void isNoPenaltyPlay_True()
-        {
-            Play_Result pResult = new Play_Result() { bTouchback = true };
-            Play_Enum pe = Play_Enum.KICKOFF_NORMAL;
-            bool bWrong = false;
-
-            int numtries = 100;
-            for (int i = 0; i < numtries; i++)
-            {
-                int n = CommonUtils.getRandomNum(1, 3);
-                switch (n)
-                {
-                    case 1:
-                        pe = Play_Enum.KICKOFF_NORMAL;
-                        break;
-                    case 2:
-                        pe = Play_Enum.KICKOFF_AFTER_SAFETY;
-                        break;
-                    case 3:
-                        pe = Play_Enum.PUNT;
-                        break;
-                }
-                bool bNotPenaltyPlay = Penalty_Helper.isNoPenaltyPlay(pResult, pe);
-                if (!bNotPenaltyPlay)
-                {
-                    bWrong = true;
-                    break;
-                }
-
-            }
-
-            Assert.IsTrue(!bWrong);
-        }
-        [TestCategory("Unit")]
-        [TestMethod]
-        public void isNoPenaltyPlay_False()
-        {
-            Play_Result pResult = new Play_Result() { bTouchback = false };
-            Play_Enum pe = Play_Enum.KICKOFF_NORMAL;
-            bool bWrong = false;
-
-            int numtries = 100;
-            for (int i = 0; i < numtries; i++)
-            {
-                int n = CommonUtils.getRandomNum(1, 6);
-                switch (n)
-                {
-                    case 1:
-                        pe = Play_Enum.KICKOFF_NORMAL;
-                        break;
-                    case 2:
-                        pe = Play_Enum.KICKOFF_AFTER_SAFETY;
-                        break;
-                    case 3:
-                        pe = Play_Enum.PUNT;
-                        break;
-                    case 4:
-                        pe = Play_Enum.RUN;
-                        break;
-                    case 5:
-                        pe = Play_Enum.PASS;
-                        break;
-                    case 6:
-                        pe = Play_Enum.FIELD_GOAL;
-                        break;
-
-                }
-                bool bNotPenaltyPlay = Penalty_Helper.isNoPenaltyPlay(pResult, pe);
-                if (bNotPenaltyPlay)
-                {
-                    bWrong = true;
-                    break;
-                }
-
-            }
-
-            Assert.IsTrue(!bWrong);
-        }
         [TestCategory("Unit")]
         [TestMethod]
         public void isHalfTheDistance_true()

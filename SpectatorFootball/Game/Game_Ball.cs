@@ -64,8 +64,7 @@ namespace SpectatorFootball.GameNS
             bStage.Actions.Add(bas2);
             Stages.Add(bStage);
         }
-        public void FG_Hits_GP(double prev_yl, double prev_v, double end_yl, double end_v,bool bIntoStands, bool blefttoRight, double crowd_adj,
-            string beforemsg, string aftermsg)
+        public void FG_Hits_GP(double prev_yl, double prev_v, double end_yl, double end_v,bool bIntoStands, bool blefttoRight, double crowd_adj)
         {
             State = Ball_States.END_OVER_END;
             Action bas = new Action(Game_Object_Types.B, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, false, null, Ball_States.END_OVER_END, Movement.LINE, Ball_Speed.SLOW, false, 0);
@@ -75,7 +74,7 @@ namespace SpectatorFootball.GameNS
 
             int bas_index_hit_gp = bas.PointXY.Count() - 1;
             bas.Effects.Add(new AE_rec() { XYIndex = bas_index_hit_gp, Sound = Game_Sounds.BALL_HITS_GOALPOST });
-            bas.Effects.Add(new AE_rec() { XYIndex = bas_index_hit_gp + 8, Announcer_msg = aftermsg, noise_adj = crowd_adj });
+            bas.Effects.Add(new AE_rec() { XYIndex = bas_index_hit_gp + 8, noise_adj = crowd_adj });
 
             bas.PointXY.AddRange(bas2.PointXY);
 
@@ -199,8 +198,7 @@ namespace SpectatorFootball.GameNS
         }
 
 
-        public void FG_Blocked(double prev_yl, double prev_v, double end_yl, double end_v, bool blefttoRight, double crowd_adj,
-            string beforemsg, string aftermsg)
+        public void FG_Blocked(double prev_yl, double prev_v, double end_yl, double end_v, bool blefttoRight, double crowd_adj)
         {
             const double BOUNCE_LENGTH = 4.7;
             const double ROLL_LENGTH = 4.0;
@@ -215,10 +213,7 @@ namespace SpectatorFootball.GameNS
             State = Ball_States.ROLLING; 
             Action bas = new Action(Game_Object_Types.B, prev_yl, prev_v, Current_YardLine, Current_Vertical_Percent_Pos, false, null, Ball_States.END_OVER_END, Movement.LINE, Ball_Speed.NORMAL, false, 0);
 
-            if (beforemsg != null)
-                bas.Effects.Add(new AE_rec() { XYIndex = 0, Announcer_msg = beforemsg });
-
-           bas.Effects.Add(new AE_rec() { XYIndex = bas.PointXY.Count() - 1, Announcer_msg = aftermsg, noise_adj = crowd_adj });
+           bas.Effects.Add(new AE_rec() { XYIndex = bas.PointXY.Count() - 1, noise_adj = crowd_adj });
 
             State = Ball_States.END_OVER_END;
             Action bas2 = new Action(Game_Object_Types.B, Current_YardLine, Current_Vertical_Percent_Pos, end_yl, end_v, false, null, Ball_States.END_OVER_END, Movement.LINE, Ball_Speed.NORMAL, false, 0);
@@ -274,17 +269,6 @@ namespace SpectatorFootball.GameNS
 
             Announcer announcer = new Announcer();
             int ind = (int)(ann_kick_percent * bas.PointXY.Count());
-
-            if (punt_len >= app_Constants.GREAT_PUNT_LENGTH && !bFreeKick)
-            {
-                string announcement = announcer.Announce_InPlay(announce_event.PUNT_LONG_LENGTH, "", Game_Engine_Helper.getYardlineDisplay(Current_YardLine));
-                bas.Effects.Add(new AE_rec() { XYIndex = ind, Announcer_msg = announcement });
-            }
-            else if (punt_len <= app_Constants.BAD_PUNT_LENGTH && !bFreeKick)
-            {
-                string announcement = announcer.Announce_InPlay(announce_event.PUNT_SHORT_LENGTH, "", Game_Engine_Helper.getYardlineDisplay(Current_YardLine));
-                bas.Effects.Add(new AE_rec() { XYIndex = ind, Announcer_msg = announcement });
-            }
 
             Stages.Add(bStage);
         }

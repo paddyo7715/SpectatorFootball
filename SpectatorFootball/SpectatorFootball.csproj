@@ -231,6 +231,7 @@
     <Compile Include="Game\Formations\Punt_Formation.cs" />
     <Compile Include="Game\Formations\Punt_Goalline_Formation.cs" />
     <Compile Include="Game\Formations\Punt_Return_Formation.cs" />
+    <Compile Include="Game\Injury.cs" />
     <Compile Include="Game\Next_Play_Situation.cs" />
     <Compile Include="Game\Formations\Formation.cs" />
     <Compile Include="Game\Formation_Rec.cs" />

@@ -337,12 +337,7 @@ namespace SpectatorFootball.GameNS
                     long leg_stn = p.p_and_r.pr.First().Kicker_Leg_Power_Rating;
                     long leg_acc = p.p_and_r.pr.First().Kicker_Leg_Accuracy_Rating;
                     long rn_att = p.p_and_r.pr.First().Run_Attack_Rating;
-                    logger.Debug("Ind:" + d_index +
-                        " POS:" + sPos +
-                        " Leg Strength:" + leg_stn +
-                        " Leg Accuracy:" + leg_acc +
-                        " Run Attack:" + rn_att
-                        );
+                    logger.Debug("name:" + p.p_and_r.p.First_Name + " " + p.p_and_r.p.Last_Name);
                     d_index++;
                 }
                 logger.Debug("Receiving Players");
@@ -357,13 +352,8 @@ namespace SpectatorFootball.GameNS
                     long agile = p.p_and_r.pr.First().Agilty_Rating;
                     long rn_block = p.p_and_r.pr.First().Run_Block_Rating;
                     long tkl = p.p_and_r.pr.First().Tackle_Rating;
-                    logger.Debug("Ind:" + d_index +
-                        " POS:" + sPos +
-                        " Spped:" + spd +
-                        " Agility:" + agile +
-                        " Run Blocking:" + rn_block +
-                        " Tackling:" + tkl
-                        );
+                    logger.Debug("name:" + p.p_and_r.p.First_Name + " " + p.p_and_r.p.Last_Name);
+                        
                     d_index++;
                 }
                 logger.Debug(" ");
@@ -393,7 +383,7 @@ namespace SpectatorFootball.GameNS
                     p.Current_Vertical_Percent_Pos += 0.0;
 
                     Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
-                    p.KickBall(moving_ps, prev_yl, prev_v, Runup_end_yardline, Runup_end_vert_pos, _announcer.Announce_InPlay(announce_event.KICKOFF_KICKED, r.Kicker.p_and_r.p.Last_Name, Game_Engine_Helper.getYardlineDisplay(p.Current_YardLine)), null);
+                    p.KickBall(moving_ps, prev_yl, prev_v, Runup_end_yardline, Runup_end_vert_pos);
 
                 }
                 else
@@ -476,7 +466,7 @@ namespace SpectatorFootball.GameNS
                     p.Current_Vertical_Percent_Pos = getAttBlkVert(gBall.Current_Vertical_Percent_Pos, slot);
                     int delay = tgroup_ind * delay_factor + 1;
                     Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
-                    p.Delay_Then_Run_and_Stand(moving_ps, prev_yl, prev_v, delay, null, null);
+                    p.Delay_Then_Run_and_Stand(moving_ps, prev_yl, prev_v, delay);
                 }
                 id_Players++;
             }
@@ -526,7 +516,7 @@ namespace SpectatorFootball.GameNS
                     tgroup_ind = Game_Engine_Helper.getTackleGroup(id_Players, tGroups);
                     int delay = tgroup_ind * delay_factor + 1;
                     Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, false, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
-                    p.Delay_Then_Run_and_Stand(moving_ps, prev_yl, prev_v, delay, null, null);
+                    p.Delay_Then_Run_and_Stand(moving_ps, prev_yl, prev_v, delay);
                 }
                 id_Players++;
             }
@@ -781,7 +771,7 @@ namespace SpectatorFootball.GameNS
                             gBall.Current_Vertical_Percent_Pos = p.Current_Vertical_Percent_Pos;
 
                             Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
-                            p.Run_With_Ball(moving_ps, prev_yl, prev_v, 0.0, before_announcement, null);
+                            p.Run_With_Ball(moving_ps, prev_yl, prev_v, 0.0);
 
                             //for the ball
                             gBall.Carried(prev_yl, prev_v);
@@ -821,7 +811,7 @@ namespace SpectatorFootball.GameNS
                                 else
                                     after_announcment = _announcer.Announce_InPlay(announce_event.BREAKTHRU_TACKLE, r.Returner.p_and_r.p.Last_Name, Game_Engine_Helper.getYardlineDisplay(p.Current_YardLine));
 
-                                p.Run_With_Ball(moving_ps2, prev_yl, prev_v, -0.2, before_announcement, after_announcment);
+                                p.Run_With_Ball(moving_ps2, prev_yl, prev_v, -0.2);
                                 //for the ball
                                 gBall.Carried(prev_yl, prev_v);
                             }
@@ -838,7 +828,7 @@ namespace SpectatorFootball.GameNS
                             gBall.Current_Vertical_Percent_Pos = p.Current_Vertical_Percent_Pos;
 
                             Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, app_Constants.MOVEMENT_DIST_BEFORE_TURNING_BACK);
-                            p.Run_With_Ball(moving_ps, prev_yl, prev_v, -0.2, before_announcement, _announcer.Announce_InPlay(announce_event.RETURN_BREAKTHRU, r.Returner.p_and_r.p.Last_Name, Game_Engine_Helper.getYardlineDisplay(p.Current_YardLine)));
+                            p.Run_With_Ball(moving_ps, prev_yl, prev_v, -0.2);
 
                             //for the ball
                             gBall.Carried(prev_yl, prev_v);
@@ -967,8 +957,10 @@ namespace SpectatorFootball.GameNS
                         List<Game_Player> pFumble_Rec_Kickoff_Players = new List<Game_Player>();
                         List<Game_Player> pFumble_Rec_Return_Players = new List<Game_Player>();
                         List<int> closest_players = getKickoffGroupClosestPlayers(slot_index, group);
+
                         getBothGroupSlotPlayers(Kickoff_Players, Return_Players,
                             pFumble_Rec_Kickoff_Players, pFumble_Rec_Return_Players, closest_players);
+
                         pFumble_Rec_Return_Players.Add(r.Returner);
                         Tuple<Game_Player, bool> t = Playstub_Fumble.Execute(bLefttoRight, gBall,
                             Kickoff_Players, Return_Players,
@@ -977,6 +969,10 @@ namespace SpectatorFootball.GameNS
 
                         r.Fumble_Recoverer = t.Item1;
                         r.bFumble_Lost = t.Item2;
+
+                        logger.Debug("Returner         " + r.Returner.p_and_r.p.Last_Name);
+                        logger.Debug("Fumble Lost " + r.bFumble_Lost.ToString());
+                        logger.Debug("Fumble Recoverer " + r.Fumble_Recoverer.p_and_r.p.Last_Name);
 
                         //If there is a fumble then no tackle is awarded
                         r.Tackler = null;

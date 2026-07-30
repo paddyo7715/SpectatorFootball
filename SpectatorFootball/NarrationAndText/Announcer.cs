@@ -194,7 +194,7 @@ namespace SpectatorFootball.NarrationAndText
             return r;
         }
         public Tuple<List<string>, List<string>, List<string>> getPlayResult_Announcement(List<Player_and_Ratings> Home_Team, List<Player_and_Ratings> Away_Team, string home_team_name, string away_team_name, Play_Enum off_play, Play_Result pr, bool bpreSnapBenalty,
-            Injury new_injury, string next_play_yardline, bool bGameForfeited)
+            Injury new_injury, string next_play_down, string Yardline, bool bGameForfeited, string pos_team_name_after_play)
         {
             List<string> Penlty_list = new List<string>();
             List<string> Play_list = new List<string>();
@@ -204,10 +204,29 @@ namespace SpectatorFootball.NarrationAndText
                 Play_list.Add("No Play!  This game has been forfeited!");
             else
             {
+
                 if (pr.Penalty != null && !pr.bIgnorePenalty)
                     Penlty_list = getPenalty_Announcement(Home_Team, Away_Team, home_team_name, away_team_name, pr, bpreSnapBenalty);
 
-                Play_list = getPlayAnnouncement(Home_Team, Away_Team, home_team_name, away_team_name, pr, off_play, next_play_yardline);
+                if (pr.Penalty == null || pr.bPlay_Stands || (pr.Penalty != null && pr.Penalty.Play_Timing != Play_Snap_Timing.BEFORE_SNAP))
+                    Play_list = getPlayAnnouncement(Home_Team, Away_Team, home_team_name, away_team_name, pr, off_play);
+
+                if (next_play_down != null && next_play_down.Trim().Count() > 0)
+                {
+                    string at_yardline = "@ the " + Yardline + " yardline";
+                    if (Play_list.Count > 0)
+                    {
+                        Play_list.Add("");
+                        Play_list.Add(next_play_down + " " + pos_team_name_after_play);
+                        Play_list.Add(at_yardline);
+                    }
+                    else
+                    {
+                        Penlty_list.Add("");
+                        Penlty_list.Add(next_play_down + " " + pos_team_name_after_play);
+                        Penlty_list.Add(at_yardline);
+                    }
+                }
 
                 if (new_injury != null)
                     Injury_list = InjuryAnnouncement(Home_Team, Away_Team, home_team_name, away_team_name, new_injury);
@@ -220,27 +239,41 @@ namespace SpectatorFootball.NarrationAndText
             Play_Result pr, bool bpreSnapBenalty)
         {
             List<string> r = new List<string>();
-            string penalty_on_team = pr.bPenatly_on_Away_Team ? away_team : home_team;
-            string penalty_not_on_team = !pr.bPenatly_on_Away_Team ? away_team : home_team;
+            string penalty_on_team = null;
+            string penalty_not_on_team = null;
+
+            bool bAway_Team_Penalty = false;
+            bAway_Team_Penalty = Away_Team.Any(x => x.p == pr.Penalized_Player.p_and_r.p);
+            if (bAway_Team_Penalty)
+            {
+                penalty_on_team = away_team;
+                penalty_not_on_team = home_team;
+            }
+            else
+            {
+                penalty_on_team = home_team;
+                penalty_not_on_team = away_team;
+            }
 
             string penalty_rejected = null;
 
-            string penalty_player = pr.Penalized_Player.p_and_r.p.Last_Name;
+            string penalty_player_name = pr.Penalized_Player.p_and_r.p.Last_Name;
 
             r.Add("PENALTY ON THE PLAY!!!");
-            r.Add(pr.Penalty.Description + " penalty on " + penalty_player + " of the " + penalty_on_team);
+            r.Add(pr.Penalty.Description + " penalty on " + penalty_player_name + " of the " + penalty_on_team);
             r.Add(pr.Final_Added_Penalty_Yards + " yard penalty");
 
             if (!bpreSnapBenalty)
             { 
-                penalty_rejected = pr.bPenalty_Rejected ? "rejected" : "accepted";
-                r.Add(penalty_rejected + " by the " + penalty_not_on_team);
+                penalty_rejected = pr.bPenalty_Rejected ? "rejected" : "accepted" + " by the " + penalty_not_on_team;
+                if (pr.Penalty.bDeclinable)
+                    r.Add(penalty_rejected); 
             }
 
             return r;
         }
 
-        private List<string> getPlayAnnouncement(List<Player_and_Ratings> Home_Team, List<Player_and_Ratings> Away_Team, string home_team_name, string away_team_name, Play_Result pr, Play_Enum off_play, string next_play_yardline)
+        private List<string> getPlayAnnouncement(List<Player_and_Ratings> Home_Team, List<Player_and_Ratings> Away_Team, string home_team_name, string away_team_name, Play_Result pr, Play_Enum off_play)
         {
             List<string> r = new List<string>();
 
@@ -254,22 +287,23 @@ namespace SpectatorFootball.NarrationAndText
                 case Play_Enum.KICKOFF_AFTER_SAFETY:
                     string returner_lastname = pr.Returner != null ? pr.Returner.p_and_r.p.Last_Name : null;
                     string kickoff_type = off_play == Play_Enum.KICKOFF_AFTER_SAFETY ? "free kick" : "kickoff";
+                    string tackler_lastname = pr.Tackler != null ? pr.Tackler.p_and_r.p.Last_Name : null;
+                    long yards_returned = (long)(pr.Yards_Returned + 0.5);
 
                     if (pr.bTouchDown)
-                        r.Add(returner_lastname + " returns the " + kickoff_type + " " + pr.Yards_Returned + " for the score");
+                        r.Add(returner_lastname + " returns the " + kickoff_type + " " + yards_returned + " yards for the score");
                     else if (pr.bFumble)
                     {
-                        FumbleAnnouncement(Home_Team, Away_Team, home_team_name, away_team_name, returner_lastname, pr);
+                        r.AddRange(FumbleAnnouncement(Home_Team, Away_Team, home_team_name, away_team_name, returner_lastname, pr));
                     }
                     else if (pr.bKick_KneelDown)
                         r.Add(returner_lastname + " kneels with the ball in the endzone, touchback");
-                    if (pr.bKick_Out_of_Endzone)
+                    else if (pr.bKick_Out_of_Endzone)
                         r.Add("The kickoff sails throught endzone, touchback");
                     else if (pr.bTouchback)
                         r.Add("The " + kickoff_type + " results in a touchback");
                     else
-                        r.Add("Kickoff returned " + pr.Yards_Returned);
-
+                        r.Add("Kickoff returned " + yards_returned + " yards by " + returner_lastname + ", tackle made by " + tackler_lastname);
                     break;
                 case Play_Enum.KICKOFF_ONSIDES:
                     string ok_recoverer = pr.Onside_Kick_Recoverer.p_and_r.p.Last_Name;
@@ -366,14 +400,14 @@ namespace SpectatorFootball.NarrationAndText
                         r.Add(punter_name + " pins them down inside the 20");
                     else if (pr.bFumble)
                     {
-                        FumbleAnnouncement(Home_Team, Away_Team, home_team_name, away_team_name, returner, pr);
+                        r.AddRange(FumbleAnnouncement(Home_Team, Away_Team, home_team_name, away_team_name, returner, pr));
                     }
                     if (pr.bTouchDown)
                         r.Add(returner + " returns the punt " + pr.Yards_Returned + " for the score");
                     else
                     {
                         r.Add("A " + pr.Punt_Yards + " punt by " + punter_name);
-                        r.Add("And a " + pr.Yards_Returned + " return by " + returner);
+                        r.Add("and a " + pr.Yards_Returned + " return by " + returner);
                     }
                     break;
                 case Play_Enum.RUN:
@@ -382,21 +416,25 @@ namespace SpectatorFootball.NarrationAndText
                     break;
             }
 
-            r.Add(next_play_yardline);
-
             return r;
         }
 
         private List<string> InjuryAnnouncement(List<Player_and_Ratings> Home_Team, List<Player_and_Ratings> Away_Team, string home_team_name, string away_team_name, Injury new_injury)
         {
             List<string> r = new List<string>();
-            string injured_Player = new_injury.Player.Last_Name;
+            string injured_Player = null;
             string injured_team = null;
 
             if (Home_Team.Any(x => x.p == new_injury.Player))
+            {
+                injured_Player = Home_Team.Where(x => x.p.ID == new_injury.Player_ID).First().p.Last_Name;
                 injured_team = home_team_name;
+            }
             else
+            {
+                injured_Player = Away_Team.Where(x => x.p.ID == new_injury.Player_ID).First().p.Last_Name;
                 injured_team = away_team_name;
+            }
 
             r.Add("Injury on the Play!");
             r.Add(injured_Player + " of the " + injured_team);
@@ -434,8 +472,7 @@ namespace SpectatorFootball.NarrationAndText
             else
                 fumble_recover_team = away_team_name;
 
-            r.Add(ball_carrier_name + " fumbled the ball");
-            r.Add("Recovered by " + pr.Fumble_Recoverer.p_and_r.p.Last_Name + " of the " + fumble_recover_team);
+            r.Add(ball_carrier_name + " fumbled the ball " + "Recovered by " + pr.Fumble_Recoverer.p_and_r.p.Last_Name + " of the " + fumble_recover_team);
 
             string fumble_result = pr.bFumble_Lost ? "That's a turnover" : "They keep possession";
             r.Add(fumble_result);

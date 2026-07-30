@@ -29,18 +29,6 @@ using SpectatorFootball.NarrationAndText;
             int rnd = 0;
             Announcer announcer = new Announcer();
 
-            string announcement = null;
-
-            switch(fob)
-            {
-                case Fumble_OSKick_BlockPunt.FUMBLE:
-                    announcement = announcer.Announce_InPlay(announce_event.FUMBLE, Returner.p_and_r.p.Last_Name, Game_Engine_Helper.getYardlineDisplay(Returner.Current_YardLine));
-                    break;
-                case Fumble_OSKick_BlockPunt.ONSIDE_KICK:
-                    announcement = announcer.Announce_InPlay(announce_event.ONSIDE_NUFFED, Returner.p_and_r.p.Last_Name, Game_Engine_Helper.getYardlineDisplay(Returner.Current_YardLine));
-                    break;
-            }
-
             if (close_Tackling_Players.Count() == 0 && close_BallCarrying_Players.Count() == 0)
                 throw new Exception("No close players on either team for fumble.  Should never happen");
 
@@ -52,13 +40,11 @@ using SpectatorFootball.NarrationAndText;
                 {
                     rnd = CommonUtils.getRandomIndex(close_Tackling_Players.Count);
                     p = close_Tackling_Players[rnd];
-                    bLost = false;
                 }
                 else
                 {
                     rnd = CommonUtils.getRandomIndex(close_BallCarrying_Players.Count);
                     p = close_BallCarrying_Players[rnd];
-                    bLost = true;
                 }
 
                 bRecover = RecoverFumble(p.p_and_r.pr.First().Hands_Rating);
@@ -80,7 +66,7 @@ using SpectatorFootball.NarrationAndText;
 
                 Player_States moving_ps = Game_Engine_Helper.setRunningState(bLefttoRight, true, prev_yl, prev_v, p.Current_YardLine, p.Current_Vertical_Percent_Pos, 0.0);
                 if (p == Returner)
-                    p.Cover_Ball(moving_ps, prev_yl, prev_v, bOrignal_BallPossessorTeam, announcement, null);
+                    p.Cover_Ball(moving_ps, prev_yl, prev_v, bOrignal_BallPossessorTeam);
                 else if (close_BallCarrying_Players.Contains(p))
                     p.Attempt_Tackle(moving_ps, prev_yl, prev_v);
                 else
@@ -120,6 +106,11 @@ using SpectatorFootball.NarrationAndText;
 
                 ind++;
             }
+
+            if (BallCarrying_Players.Contains(r))
+                bLost = false;
+            else
+                bLost = true;
 
             return new Tuple<Game_Player, bool>(r, bLost);
         }

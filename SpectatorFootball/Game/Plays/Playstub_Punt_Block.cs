@@ -35,7 +35,7 @@ namespace SpectatorFootball.GameNS
             {
                 if (p == Punter)
                 {
-                    p.Punter_Put_Leg_Down(-0.4, null, announcer.Announce_InPlay(announce_event.PUNT_BLOCKED, p.p_and_r.p.Last_Name, Game_Engine_Helper.getYardlineDisplay(p.Current_YardLine)));
+                    p.Punter_Put_Leg_Down(-0.4);
                 }
                 else
                 {

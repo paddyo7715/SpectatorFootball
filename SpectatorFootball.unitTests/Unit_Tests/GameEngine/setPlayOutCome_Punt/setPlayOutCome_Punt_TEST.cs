@@ -71,7 +71,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             //There should be a change in possession
             if (!r.bFinal_SwitchPossession)
-                throw new Exception("Possession should have been swtich because of kickoff");
+                throw new Exception("Possession should have been swtich because of punt");
 
             if (!r.bPlay_Stands)
                 throw new Exception("This Play must not stand");
@@ -3166,6 +3166,9 @@ namespace SpectatorFootball.unitTests.GameEngineNS
 
             Assert.IsTrue(true);
         }
+
+
+
         //************************************
 
         [TestCategory("Unit")]

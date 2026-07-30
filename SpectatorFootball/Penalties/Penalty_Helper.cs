@@ -421,13 +421,16 @@ namespace SpectatorFootball.PenaltiesNS
                 Player_Action_State.PAR, Player_Action_State.PD
             };
             //Roughing the Passer
+            //This is NOT a spot penalty, where 15 yards are added to the end of a play.  It IS a decidable penalty where if it
+            //is accepted it is as if the play didn't take place.  At first I though it was a spot penalty, but it is not.
+            //I confirmed this on the internet.
             r.Add(new Penalty()
             {
                 code = Penalty_Codes.RD,
                 Yards = 15,
-                bDeclinable = false,
+                bDeclinable = true,
                 bAuto_FirstDown = true,
-                bSpot_Foul = true,
+                bSpot_Foul = false,
                 Play_Timing = Play_Snap_Timing.DURING_PLAY,
                 Frequency_Rating = 300,
                 Description = "Roughing the Passer"
@@ -476,12 +479,15 @@ namespace SpectatorFootball.PenaltiesNS
                 bSpot_Foul = true,
                 Play_Timing = Play_Snap_Timing.DURING_PLAY,
                 Frequency_Rating = 800,
-                Description = "Illegal Block"
+                Description = "Illegal Block",
+                bExclude_no_Return = true
             });
             r.Last().Penalty_Play_Types = new List<Play_Enum>()
             {
                 Play_Enum.KICKOFF_NORMAL,
-                Play_Enum.KICKOFF_AFTER_SAFETY
+                Play_Enum.KICKOFF_AFTER_SAFETY,
+                Play_Enum.KICKOFF_DYNAMIC,
+                Play_Enum.KICKOFF_MODERN
             };
             r.Last().Player_Action_States = new List<Player_Action_State>()
             {
@@ -497,7 +503,8 @@ namespace SpectatorFootball.PenaltiesNS
                 bSpot_Foul = true,
                 Play_Timing = Play_Snap_Timing.DURING_PLAY,
                 Frequency_Rating = 800,
-                Description = "Illegal Block"
+                Description = "Illegal Block",
+                bExclude_no_Return = true
             });
             r.Last().Penalty_Play_Types = new List<Play_Enum>()
             {
@@ -616,6 +623,8 @@ namespace SpectatorFootball.PenaltiesNS
             r.Last().Penalty_Play_Types = new List<Play_Enum>()
             {
                 Play_Enum.KICKOFF_NORMAL,
+                Play_Enum.KICKOFF_MODERN,
+                Play_Enum.KICKOFF_DYNAMIC,
                 Play_Enum.KICKOFF_AFTER_SAFETY,
                 Play_Enum.KICKOFF_ONSIDES,
                 Play_Enum.RUN,
@@ -666,6 +675,8 @@ namespace SpectatorFootball.PenaltiesNS
             r.Last().Penalty_Play_Types = new List<Play_Enum>()
             {
                 Play_Enum.KICKOFF_NORMAL,
+                Play_Enum.KICKOFF_MODERN,
+                Play_Enum.KICKOFF_DYNAMIC,
                 Play_Enum.KICKOFF_AFTER_SAFETY,
                 Play_Enum.KICKOFF_ONSIDES,
                 Play_Enum.RUN,
@@ -771,13 +782,13 @@ namespace SpectatorFootball.PenaltiesNS
                 Penalty Running_Into_the_Kicker = Penalty_List.Where(x => x.code == Penalty_Codes.RIK).First();
 
                 //Next let's check for possible Roughing the Passer
-                if (pResult.Defender_Knocks_Down_QB != null && pe == Play_Enum.PASS)
+                if (pResult.Defender_Close_to_QB != null && pe == Play_Enum.PASS)
                 {
-                    int t = (int) (101 - pResult.Defender_Knocks_Down_QB.p_and_r.pr.First().Sportsmanship_Ratings);
+                    int t = (int) (101 - pResult.Defender_Close_to_QB.p_and_r.pr.First().Sportsmanship_Ratings);
                     int rnd = CommonUtils.getRandomNum(1, Upper_Limit_Roughing_Passer);
                     if (rnd <= t)
                     {
-                        Penalty_Player = pResult.Defender_Knocks_Down_QB;
+                        Penalty_Player = pResult.Defender_Close_to_QB;
                         Penalty = Roughing_The_Passer;
                     }
                 }
@@ -826,7 +837,7 @@ namespace SpectatorFootball.PenaltiesNS
                     }
                 }
 
-                //No special penalty, so look for another presnap penalty
+                //No special penalty, so look for another penalty
                 if (Penalty == null)
                 {
                     Player_list.AddRange(Offensive_Players);
@@ -850,6 +861,11 @@ namespace SpectatorFootball.PenaltiesNS
                             sp_num = app_Constants.SPORTSMANSHIP_ADJUSTER - p.p_and_r.pr.First().Sportsmanship_Ratings;
 
                         long rmd = CommonUtils.getRandomNum(1, (int)app_Constants.PENALTY_UPPER_LIMIT);
+
+                        //bpo test
+                        // rmd = 1;
+                        //===========
+
                         if (rmd <= sp_num)
                             Possible_Players.Add(p);
                     }
@@ -861,7 +877,8 @@ namespace SpectatorFootball.PenaltiesNS
 
                         Player_Action_State pa = getPlayerAction(Penalty_Player, pResult);
 
-                        Possible_Penalties = Penalty_List.Where(x => x.Play_Timing == Play_Snap_Timing.DURING_PLAY && x.Penalty_Play_Types.Contains(pe) && x.Player_Action_States.Contains(pa)).ToList();
+                        Possible_Penalties = Penalty_List.Where(x => x.Play_Timing == Play_Snap_Timing.DURING_PLAY && x.Penalty_Play_Types.Contains(pe) && x.Player_Action_States.Contains(pa) &&
+                        !(x.bExclude_no_Return && !pResult.bKick_Returned && !pResult.bPunt_Returned)).ToList();
 
                         if (Possible_Penalties.Count == 0)
                             throw new Exception("Error in PostSnap_Penalty after play.  No possible penalties found for play " + pe.ToString() + " and player action type " + pa.ToString());
@@ -874,18 +891,6 @@ namespace SpectatorFootball.PenaltiesNS
             }
 
             return new Tuple<Game_Player, Penalty>(Penalty_Player, Penalty);
-        }
-        public static bool isNoPenaltyPlay(Play_Result pResult, Play_Enum pe)
-        {
-            bool r = false;
-
-            if ((pe == Play_Enum.KICKOFF_NORMAL || pe == Play_Enum.KICKOFF_AFTER_SAFETY || pe == Play_Enum.PUNT) &&
-                pResult.bTouchback)
-                r = true;
-            else if (pe == Play_Enum.PUNT && (pResult.bKick_Out_of_Bounds || pResult.bKick_Out_of_Endzone))
-                r = true;
-
-            return r;
         }
         public static Tuple<bool, double> isHalfTheDistance(double penalty_yards, double dist_gl)
         {
