@@ -43,8 +43,8 @@ namespace SpectatorFootball.GameNS
         public List<Game_Player> Offensive_Players;
         public List<Game_Player> Defensive_Players;
 
-        public List<string> Penalty_Announcement = null;
-        public List<string> Play_Announcement = null;
-        public List<string> Injury_Announcement = null;
+        public List<string> announcement_one = null;
+        public List<string> announcement_two = null;
+        public List<string> announcement_three = null;
     }
 }

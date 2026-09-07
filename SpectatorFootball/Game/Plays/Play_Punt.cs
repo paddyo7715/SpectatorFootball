@@ -146,7 +146,8 @@ namespace SpectatorFootball.GameNS
                     }
                 }
 
-                r.Punt_Yards = Game_Engine_Helper.getPuntYards(_starting_yl, r.Kick_landing_YL, bLefttoRight);
+                if (!r.bPunt_blocked)
+                    r.Punt_Yards = Game_Engine_Helper.getPuntYards(_starting_yl, r.Kick_landing_YL, bLefttoRight);
                 r.end_of_play_yardline = gBall.Current_YardLine;
 
                 r.Play_Player_Stats = SetPlayerStats(r, Punt_Players, Return_Players, r.Missed_Tackles);
@@ -342,6 +343,9 @@ namespace SpectatorFootball.GameNS
 
             if (i == 1)
                 r = true;
+
+            //bpo test
+            r = true;
 
             return r;
         }
@@ -705,10 +709,10 @@ namespace SpectatorFootball.GameNS
                         tackler_tackle_rating);
 
                     //bpo test
- /*                  if (i <= 3)
-                        bTack = false;
-                    else
-                        bTack = false;  */
+//                  if (i <= 3)
+//                        bTack = false;
+//                    else
+//                        bTack = false;  
                     //********************
 
                     if (bTack)

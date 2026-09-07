@@ -325,39 +325,39 @@ namespace SpectatorFootball.GameNS
             //Get the kicker - kicker and returner must be slot 5 in the formation
             r.Returner = Return_Players[(int)Return_Formation.ReturnerIndex];
 
-                //for testing print out all the players and their relevant ratings
-                logger.Debug("Kickoff Players");
-                int d_index = 0;
-                foreach (Game_Player p in Kickoff_Players)
-                {
-                    if (p != r.Kicker)
-                        r.Kick_Defenders.Add(p);
+            //for testing print out all the players and their relevant ratings
+            logger.Debug("Kickoff Players");
+            int d_index = 0;
+            foreach (Game_Player p in Kickoff_Players)
+            {
+                if (p != r.Kicker)
+                    r.Kick_Defenders.Add(p);
 
-                    string sPos = p.Pos.ToString();
-                    long leg_stn = p.p_and_r.pr.First().Kicker_Leg_Power_Rating;
-                    long leg_acc = p.p_and_r.pr.First().Kicker_Leg_Accuracy_Rating;
-                    long rn_att = p.p_and_r.pr.First().Run_Attack_Rating;
-                    logger.Debug("name:" + p.p_and_r.p.First_Name + " " + p.p_and_r.p.Last_Name);
-                    d_index++;
-                }
-                logger.Debug("Receiving Players");
-                d_index = 0;
-                foreach (Game_Player p in Return_Players)
-                {
-                    if (p != r.Returner)
-                        r.Kick_Returners.Add(p);
+                string sPos = p.Pos.ToString();
+                long leg_stn = p.p_and_r.pr.First().Kicker_Leg_Power_Rating;
+                long leg_acc = p.p_and_r.pr.First().Kicker_Leg_Accuracy_Rating;
+                long rn_att = p.p_and_r.pr.First().Run_Attack_Rating;
+                logger.Debug("name:" + p.p_and_r.p.First_Name + " " + p.p_and_r.p.Last_Name);
+                d_index++;
+            }
+            logger.Debug("Receiving Players");
+            d_index = 0;
+            foreach (Game_Player p in Return_Players)
+            {
+                if (p != r.Returner)
+                    r.Kick_Returners.Add(p);
 
-                    string sPos = p.Pos.ToString();
-                    long spd = p.p_and_r.pr.First().Speed_Rating;
-                    long agile = p.p_and_r.pr.First().Agilty_Rating;
-                    long rn_block = p.p_and_r.pr.First().Run_Block_Rating;
-                    long tkl = p.p_and_r.pr.First().Tackle_Rating;
-                    logger.Debug("name:" + p.p_and_r.p.First_Name + " " + p.p_and_r.p.Last_Name);
+                string sPos = p.Pos.ToString();
+                long spd = p.p_and_r.pr.First().Speed_Rating;
+                long agile = p.p_and_r.pr.First().Agilty_Rating;
+                long rn_block = p.p_and_r.pr.First().Run_Block_Rating;
+                long tkl = p.p_and_r.pr.First().Tackle_Rating;
+                logger.Debug("name:" + p.p_and_r.p.First_Name + " " + p.p_and_r.p.Last_Name);
                         
-                    d_index++;
-                }
-                logger.Debug(" ");
-            //=============================================
+                d_index++;
+            }
+            logger.Debug(" ");
+        //=============================================
 
             return r;
         }

@@ -52,9 +52,12 @@ namespace SpectatorFootball.PlayNS
                         r += " Punt result should be touchdown on fumble in EZ but isn't";
 
                     //Are punt yards correct
-                    double punt_yards = Game_Engine_Helper.getPuntYards(pr.Play_Start_Yardline, pr.Kick_landing_YL, bLefttoRight);
-                    if (punt_yards != pr.Punt_Yards)
-                        r += " Punt yards not set correctly";
+                    if (!pr.bPunt_blocked)
+                    {
+                        double punt_yards = Game_Engine_Helper.getPuntYards(pr.Play_Start_Yardline, pr.Kick_landing_YL, bLefttoRight);
+                        if (punt_yards != pr.Punt_Yards)
+                            r += " Punt yards not set correctly";
+                    }
 
                     if (pr.bPunt_Returned)
                     {

@@ -935,8 +935,16 @@ namespace SpectatorFootball.unitTests.Penalties
 
                 if (i % 10 == 0)
                     pResult.Defender_Close_to_QB = Defensive_Players[2];
-                else if (i % 8 == 0)
+                else
+                    pResult.Defender_Close_to_QB = null;
+
+                if (i % 8 == 0)
+                {
                     pResult.Defender_Close_to_Receiver = Defensive_Players[8];
+                    pResult.Targeted_Receiver = Offensive_Players[2];
+                }
+                else
+                    pResult.Defender_Close_to_Receiver = null;
 
                 Tuple<Game_Player, Penalty> t = Penalty_Helper.PostSnap_Penalty(pe, this.penaltyList,
                     Offensive_Players, Defensive_Players, pResult);

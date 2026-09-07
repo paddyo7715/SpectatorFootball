@@ -17,6 +17,7 @@ namespace SpectatorFootball.PenaltiesNS
         public Play_Snap_Timing Play_Timing { get; set; }
         public bool bAuto_FirstDown { get; set; }
         public bool bSpot_Foul { get; set; }
+        public bool bSpecial { get; set; }
         public string Description { get; set; }
         public int Frequency_Rating { get; set; }
         public bool bExclude_no_Return { get; set; }

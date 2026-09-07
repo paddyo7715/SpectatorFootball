@@ -910,7 +910,7 @@ namespace SpectatorFootball.GameNS
                 r = Best_Attacker;
 
             //bpo test
-            //r = Best_Attacker;
+            r = Best_Attacker = Attackers[3];
 
             return r;
         }

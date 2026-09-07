@@ -219,9 +219,6 @@ namespace SpectatorFootball.GameNS
             foreach (Player_and_Ratings p in Home_Players)
                 logger.Debug("name:" + p.p.First_Name + " " + p.p.Last_Name);
 
-
-
-
         }
 
         public Play_Struct ExecutePlay()
@@ -248,9 +245,11 @@ namespace SpectatorFootball.GameNS
             //bpo test
             g_fid_posession = at.Franchise_ID;
             bLefttoRight = true;
-            g_Line_of_Scrimmage = 50.0;
-            bKickoff = true;
+            g_Line_of_Scrimmage = 1.0;
+            bKickoff = false;
             bKickoffAfterSafety = false;
+            g_Down = 4;
+            g_Yards_to_go = 2;
             //********************
 
             if (g_fid_posession == at.Franchise_ID)
@@ -427,6 +426,7 @@ namespace SpectatorFootball.GameNS
                 }
 
                 //Is there a penalty during the play?
+                Coach Penalty_Coach = null;
                 if (bAllowPenalties && p_result.Penalty == null)
                 {
                     Tuple<Game_Player, Penalty> t4 = Penalty_Helper.PostSnap_Penalty(Offensive_Package.Play, Penalty_List,
@@ -437,22 +437,30 @@ namespace SpectatorFootball.GameNS
                     if (p_result.Penalized_Player != null)
                     {
                         bool bAway_Pen_Player = Away_Players.Any(x => x.p == p_result.Penalized_Player.p_and_r.p);
-                        Coach Penalty_Coach = null;
                         if (bAway_Pen_Player)
                             Penalty_Coach = Home_Coach;
                         else
                             Penalty_Coach = Away_Coach;
-
-                        isBallCarryingTeam = isBallTeamPenalty(p_result);
-                        if (p_result.Penalty.bDeclinable)
-                        {
-                            if (isBallCarryingTeam)
-                                p_result.bPenalty_Rejected = !Penalty_Coach.AcceptOff_Penalty(Offensive_Package.Play, p_result, g_Yards_to_go, bLefttoRight, false, false, g_TouchbackYardline);
-                            else
-                                p_result.bPenalty_Rejected = !Penalty_Coach.AcceptDef_Penalty(Offensive_Package.Play, p_result, g_Yards_to_go, bLefttoRight, false, false, g_TouchbackYardline);
-                        }
                     }
                 }
+
+                //if pre or post snap penalty then determine on which team
+                if (p_result.Penalty != null)
+                {
+                    isBallCarryingTeam = isBallTeamPenalty(p_result);
+
+                    if (p_result.Penalty.bDeclinable)
+                    {
+                        //note that punts are kind of tricky in that the punt team is the offensive team and the receiving team is the
+                        //defense, but the return team is considered the ballcarrying team.
+                        if ((!isBallCarryingTeam && Offensive_Package.Play == Play_Enum.PUNT) ||
+                            (isBallCarryingTeam && Offensive_Package.Play != Play_Enum.PUNT))
+                            p_result.bPenalty_Rejected = !Penalty_Coach.AcceptOff_Penalty(Offensive_Package.Play, p_result, g_Yards_to_go, bLefttoRight, false, false, g_TouchbackYardline);
+                        else
+                            p_result.bPenalty_Rejected = !Penalty_Coach.AcceptDef_Penalty(Offensive_Package.Play, p_result, g_Yards_to_go, bLefttoRight, false, false, g_TouchbackYardline);
+                    }
+                }
+
 
                 //set results and accume team stats
                 bool bswitchPossession = false;
@@ -512,7 +520,7 @@ namespace SpectatorFootball.GameNS
                 penalty_yards = p_result.Final_Added_Penalty_Yards;
 
                 //work the injuries
-                if (bAllowInjuries)
+                if (bAllowInjuries && !bpreSnapPenalty)
                 {
                     Reduce_Play_Injuries();
 
@@ -524,7 +532,7 @@ namespace SpectatorFootball.GameNS
                     if (new_injury != null)
                     {
                         lInj.Add(new_injury);
-                        r.Long_Message += injur_message;
+                        logger.Debug("Player injured: " + new_injury.Player_ID);
                     }
                 }
 
@@ -584,9 +592,9 @@ namespace SpectatorFootball.GameNS
             logger.Debug(string.Join(" ", t.Item3));
             logger.Debug("");
 
-            r.Penalty_Announcement = t.Item1;
-            r.Play_Announcement = t.Item2;
-            r.Injury_Announcement = t.Item3;
+            r.announcement_one = t.Item1;
+            r.announcement_two = t.Item2;
+            r.announcement_three = t.Item3;
 
             return r;
         }
@@ -650,7 +658,7 @@ namespace SpectatorFootball.GameNS
             int iInjury = CommonUtils.getRandomNum(1, 100);
 
             //bpo test
-            iInjury = 1;
+            //iInjury = 1;
             //
 
             if (iInjury <= app_Constants.PERCENT_INJURY_ON_A_PLAY)
@@ -1250,16 +1258,7 @@ namespace SpectatorFootball.GameNS
 
                     r.bFinal_SwitchPossession = true;
 
-                    if (r.bTouchback)
-                    {
-                        r.bPlay_Stands = true;
-                        r.Final_Down = 1;
-                        r.Final_yard_to_go = 10;
-                        r.bFinal_SwitchPossession = true;
-                        r.Final_end_of_Play_Yardline = Game_Engine_Helper.getScrimmageLine(TouchBack_Yardline, !bLefttoRgiht);
-
-                    }
-                    else if (r.Penalty == null || r.bPenalty_Rejected)
+                    if (r.Penalty == null || r.bPenalty_Rejected)
                     {
                         r.bPlay_Stands = true;
 
@@ -1277,7 +1276,15 @@ namespace SpectatorFootball.GameNS
                             setTurnoverGameStat(r);
                         }
 
-                        if (bnextSpecial)
+                        if (r.bTouchback)
+                        {
+                            r.bPlay_Stands = true;
+                            r.Final_Down = 1;
+                            r.Final_yard_to_go = 10;
+                            r.bFinal_SwitchPossession = true;
+                            r.Final_end_of_Play_Yardline = Game_Engine_Helper.getScrimmageLine(TouchBack_Yardline, !bLefttoRgiht);
+                        }
+                        else if (bnextSpecial)
                         {
                             r.Final_Down = 0;
                             r.Final_yard_to_go = 0;
@@ -1896,7 +1903,9 @@ namespace SpectatorFootball.GameNS
             else if (pResult.Pass_Rushers.Contains(p) || pResult.Pass_Defenders.Contains(p) ||
                 pResult.Run_Defenders.Contains(p))
                 r = false;
-            else if (pResult.Kicker == p || pResult.Punter == p || pResult.Kick_Defenders.Contains(p) ||
+            else if (pResult.Kicker == p)
+                r = true;
+            else if (pResult.Punter == p || pResult.Kick_Defenders.Contains(p) ||
                 pResult.Punt_Defenders.Contains(p) || pResult.Field_Goal_Defenders.Contains(p))
                 r = false;
             else
@@ -1994,8 +2003,8 @@ namespace SpectatorFootball.GameNS
             if (!pResult.Penalty.bDeclinable && 
                 (pResult.bTouchDown || pResult.bFGMade || pResult.bXPMade ||
                 pResult.bOnePntAfterTDMade || pResult.bTwoPntAfterTDMade || pResult.bThreePntAfterTDMade  ||
-                pResult.bSafety) 
-                || pResult.bTouchback)
+                pResult.bSafety) )
+       //         || pResult.bTouchback)
                     r = true;
 
 

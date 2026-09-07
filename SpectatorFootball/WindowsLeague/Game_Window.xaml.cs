@@ -651,23 +651,23 @@ namespace SpectatorFootball.WindowsLeague
                 switch (i)
                 {
                     case 0:
-                        if (ps.Penalty_Announcement.Count > 0)
+                        if (ps.announcement_one.Count > 0)
                         {
-                            display_announcment(ps.Penalty_Announcement, txbPlayResult);
+                            display_announcment(ps.announcement_one, txbPlayResult);
                             await Task.Delay(sleepfor * announce_delay_mult);
                         }
                         break;
                     case 1:
-                        if (ps.Play_Announcement.Count > 0)
+                        if (ps.announcement_two.Count > 0)
                         {
-                            display_announcment(ps.Play_Announcement, txbPlayResult);
+                            display_announcment(ps.announcement_two, txbPlayResult);
                             await Task.Delay(sleepfor * announce_delay_mult);
                         }
                         break;
                     case 2:
-                        if (ps.Injury_Announcement.Count > 0)
+                        if (ps.announcement_three.Count > 0)
                         {
-                            display_announcment(ps.Injury_Announcement, txbPlayResult);
+                            display_announcment(ps.announcement_three, txbPlayResult);
                             await Task.Delay(sleepfor * announce_delay_mult);
                         }
                         break;

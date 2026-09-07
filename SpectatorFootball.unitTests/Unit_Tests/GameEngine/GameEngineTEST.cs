@@ -86,7 +86,7 @@ namespace SpectatorFootball.unitTests.GameEngineNS
             pResult.Kicker = p;
             pResult.Penalized_Player = p;
             bool b = GameEngine.isBallTeamPenalty(pResult);
-            Assert.IsTrue(!b);
+            Assert.IsTrue(b);
         }
         [TestCategory("Unit")]
         [TestMethod]

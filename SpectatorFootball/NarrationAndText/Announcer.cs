@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using log4net.Core;
+using log4net.Repository.Hierarchy;
 using SpectatorFootball.Enum;
 using SpectatorFootball.GameNS;
 using SpectatorFootball.Models;
@@ -200,31 +202,34 @@ namespace SpectatorFootball.NarrationAndText
             List<string> Play_list = new List<string>();
             List<string> Injury_list = new List<string>();
 
+            List<string> ann_1 = null;
+            List<string> ann_2 = null;
+            List<string> ann_3 = null;
+
             if (bGameForfeited)
                 Play_list.Add("No Play!  This game has been forfeited!");
             else
             {
+                if (pr.Penalty == null || pr.bPlay_Stands || (pr.Penalty != null && pr.Penalty.Play_Timing != Play_Snap_Timing.BEFORE_SNAP))
+                    Play_list = getPlayAnnouncement(Home_Team, Away_Team, home_team_name, away_team_name, pr, off_play);
 
                 if (pr.Penalty != null && !pr.bIgnorePenalty)
                     Penlty_list = getPenalty_Announcement(Home_Team, Away_Team, home_team_name, away_team_name, pr, bpreSnapBenalty);
 
-                if (pr.Penalty == null || pr.bPlay_Stands || (pr.Penalty != null && pr.Penalty.Play_Timing != Play_Snap_Timing.BEFORE_SNAP))
-                    Play_list = getPlayAnnouncement(Home_Team, Away_Team, home_team_name, away_team_name, pr, off_play);
-
                 if (next_play_down != null && next_play_down.Trim().Count() > 0)
                 {
                     string at_yardline = "@ the " + Yardline + " yardline";
-                    if (Play_list.Count > 0)
-                    {
-                        Play_list.Add("");
-                        Play_list.Add(next_play_down + " " + pos_team_name_after_play);
-                        Play_list.Add(at_yardline);
-                    }
-                    else
+                    if (Penlty_list.Count() > 0)
                     {
                         Penlty_list.Add("");
                         Penlty_list.Add(next_play_down + " " + pos_team_name_after_play);
                         Penlty_list.Add(at_yardline);
+                    }
+                    else
+                    {
+                        Play_list.Add("");
+                        Play_list.Add(next_play_down + " " + pos_team_name_after_play);
+                        Play_list.Add(at_yardline);
                     }
                 }
 
@@ -232,7 +237,11 @@ namespace SpectatorFootball.NarrationAndText
                     Injury_list = InjuryAnnouncement(Home_Team, Away_Team, home_team_name, away_team_name, new_injury);
             }
 
-            return Tuple.Create(Penlty_list, Play_list, Injury_list);
+            ann_1 = Play_list;
+            ann_2 = Penlty_list;
+            ann_3 = Injury_list;
+
+            return Tuple.Create(ann_1, ann_2, ann_3);
         }
 
         private List<string> getPenalty_Announcement(List<Player_and_Ratings> Home_Team, List<Player_and_Ratings> Away_Team, string home_team, string away_team,
@@ -261,11 +270,11 @@ namespace SpectatorFootball.NarrationAndText
 
             r.Add("PENALTY ON THE PLAY!!!");
             r.Add(pr.Penalty.Description + " penalty on " + penalty_player_name + " of the " + penalty_on_team);
-            r.Add(pr.Final_Added_Penalty_Yards + " yard penalty");
+            r.Add(pr.Penalty.Yards + " yard penalty");
 
             if (!bpreSnapBenalty)
             { 
-                penalty_rejected = pr.bPenalty_Rejected ? "rejected" : "accepted" + " by the " + penalty_not_on_team;
+                penalty_rejected = pr.bPenalty_Rejected ? "declined" : "accepted" + " by the " + penalty_not_on_team;
                 if (pr.Penalty.bDeclinable)
                     r.Add(penalty_rejected); 
             }
@@ -397,13 +406,22 @@ namespace SpectatorFootball.NarrationAndText
                     else if (pr.bTouchback)
                         r.Add("The punt results in a touchback");
                     else if (pr.bCoffinCornerMade)
+                    {
                         r.Add(punter_name + " pins them down inside the 20");
+                        r.Add("A " + pr.Punt_Yards + " punt by " + punter_name);
+                    }
                     else if (pr.bFumble)
                     {
                         r.AddRange(FumbleAnnouncement(Home_Team, Away_Team, home_team_name, away_team_name, returner, pr));
+                        r.Add("A " + pr.Punt_Yards + " punt by " + punter_name);
+                        r.Add("and a " + pr.Yards_Returned + " return by " + returner);
                     }
-                    if (pr.bTouchDown)
+                    else if (pr.bTouchDown)
+                    {
                         r.Add(returner + " returns the punt " + pr.Yards_Returned + " for the score");
+                        r.Add("A " + pr.Punt_Yards + " punt by " + punter_name);
+                        r.Add("and a " + pr.Yards_Returned + " return by " + returner);
+                    }
                     else
                     {
                         r.Add("A " + pr.Punt_Yards + " punt by " + punter_name);
@@ -425,7 +443,7 @@ namespace SpectatorFootball.NarrationAndText
             string injured_Player = null;
             string injured_team = null;
 
-            if (Home_Team.Any(x => x.p == new_injury.Player))
+            if (Home_Team.Any(x => x.p.ID == new_injury.Player_ID))
             {
                 injured_Player = Home_Team.Where(x => x.p.ID == new_injury.Player_ID).First().p.Last_Name;
                 injured_team = home_team_name;
@@ -474,7 +492,7 @@ namespace SpectatorFootball.NarrationAndText
 
             r.Add(ball_carrier_name + " fumbled the ball " + "Recovered by " + pr.Fumble_Recoverer.p_and_r.p.Last_Name + " of the " + fumble_recover_team);
 
-            string fumble_result = pr.bFumble_Lost ? "That's a turnover" : "They keep possession";
+            string fumble_result = pr.bFumble_Lost ? "That's a turnover." : "They keep possession.";
             r.Add(fumble_result);
 
             return r;
