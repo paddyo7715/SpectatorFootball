@@ -345,7 +345,7 @@ namespace SpectatorFootball.GameNS
                 r = true;
 
             //bpo test
-            r = true;
+            //r = true;
 
             return r;
         }

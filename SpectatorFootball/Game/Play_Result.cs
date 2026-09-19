@@ -113,6 +113,7 @@ namespace SpectatorFootball.GameNS
         public double end_of_play_yardline = 0;
         public double Punt_Yards = 0;
         public double Field_Goal_Attempt_Length;
+        public double Field_Goal_Ball_Spot;
         public double Kick_landing_YL;
         public double Kick_caught_yl;
         //=============================================

@@ -545,7 +545,7 @@ namespace SpectatorFootball.GameNS
             bool bEligible = false;
             bool bLongEnough = false;
 
-            double cc_yardline = 45.0;
+            double cc_yardline = 50.0;
             double yardLine = y;
 
             if (!bLefttoRight)
@@ -910,7 +910,7 @@ namespace SpectatorFootball.GameNS
                 r = Best_Attacker;
 
             //bpo test
-            r = Best_Attacker = Attackers[3];
+            //r = Best_Attacker = Attackers[3];
 
             return r;
         }

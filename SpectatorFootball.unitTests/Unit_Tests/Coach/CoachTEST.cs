@@ -360,7 +360,7 @@ namespace SpectatorFootball.unitTests.CoachTest
         {
             int Yards_to_go = 10;
             Penalty p = new Penalty() { code = Penalty_Codes.DO, bDeclinable = true, Yards = 5 };
-            Play_Result pResult = new Play_Result() { Play_Start_Yardline = 20, end_of_play_yardline = 61, Penalty = p };
+            Play_Result pResult = new Play_Result() { Play_Start_Yardline = 20, end_of_play_yardline = 71, Penalty = p };
             Game g = new Game() { Home_Score = 0, Away_Score = 0, Quarter = 4, Time = 200 };
             Coach c = new Coach(11, g, 7, new List<Player_and_Ratings>(), new List<Player_and_Ratings>(), new List<Injury>());
             bool bAccept = c.AcceptDef_Penalty(Enum.Play_Enum.PUNT, pResult, Yards_to_go, true, false, false, 25);

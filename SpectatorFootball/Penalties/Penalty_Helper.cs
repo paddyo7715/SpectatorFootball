@@ -90,7 +90,7 @@ namespace SpectatorFootball.PenaltiesNS
                 bSpot_Foul = false,
                 bSpecial = false,
                 Play_Timing = Play_Snap_Timing.BEFORE_SNAP,
-                Frequency_Rating = 100,
+                Frequency_Rating = 200,
                 Description = "Illegal Formation"
             }); ;
             r.Last().Penalty_Play_Types = new List<Play_Enum>()
@@ -118,7 +118,7 @@ namespace SpectatorFootball.PenaltiesNS
                 bSpot_Foul = false,
                 bSpecial = false,
                 Play_Timing = Play_Snap_Timing.BEFORE_SNAP,
-                Frequency_Rating = 20,
+                Frequency_Rating = 200,
                 Description = "Illegal Motion"
             }); ;
             r.Last().Penalty_Play_Types = new List<Play_Enum>()
@@ -922,8 +922,8 @@ namespace SpectatorFootball.PenaltiesNS
             }
 
             //bpo test
-            Penalty_Player = Offensive_Players[2];
-            Penalty = Penalty_List.Where(x => x.code == Penalty_Codes.OH).First();
+            //Penalty_Player = Defensive_Players[2];
+            //Penalty = Penalty_List.Where(x => x.code == Penalty_Codes.DO).First();
             //
 
 

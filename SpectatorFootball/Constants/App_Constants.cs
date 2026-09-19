@@ -11,6 +11,7 @@ namespace SpectatorFootball
         //Field
         public const double ENDZONE_YARDS = 10.0;
         public const double FIELD_YARDS = 100.0;
+        public const double MISSED_FG_MIN_YL_POSS_SWITCH = 20.0;
         public const double LEFT_WALL_YL = -17.0;
         public const double RIGHT_WALL_YL = 117.0;
         public const double LEFT_GAOLPOST_YL = -10.0;
@@ -679,14 +680,14 @@ namespace SpectatorFootball
 
         public const double YARDS_FROM_GL_DECIDE_TO_RETURN = 5;
 
-        public const int DIST_FROM_GL_FOR_CC = 20;
+        public const int DIST_FROM_GL_FOR_CC = 10;
 
         //Penalties
         public const long SPORTSMANSHIP_ADJUSTER = 130;
         public const long PENALTY_UPPER_LIMIT = 30000;
         public const double PENALTY_UPPER_LIMIT_ADJ_QB = 1.75;  //For QBs or kickers
         public const double PENALTY_UPPER_LIMIT_ADJ_K = 2.0;  //For QBs or kickers
-        public const double NET_YARDS_TO_DECLINE_PENALTY = 30.0;
+        public const double NET_YARDS_TO_DECLINE_PENALTY = 50.0;
 
 
         //Crowd noise

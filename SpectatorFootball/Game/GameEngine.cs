@@ -249,7 +249,7 @@ namespace SpectatorFootball.GameNS
             bKickoff = false;
             bKickoffAfterSafety = false;
             g_Down = 4;
-            g_Yards_to_go = 2;
+            g_Yards_to_go = 12;
             //********************
 
             if (g_fid_posession == at.Franchise_ID)
@@ -1107,7 +1107,11 @@ namespace SpectatorFootball.GameNS
                             r.bFinal_SwitchPossession = true;
                             r.Final_Down = 1;
                             r.Final_yard_to_go = 10;
-                            r.Final_end_of_Play_Yardline = r.Play_Start_Yardline;
+
+                            double dist = Game_Engine_Helper.calcDistanceFromOpponentGL(r.Field_Goal_Ball_Spot, bLefttoRgiht);
+                            double new_yard_line = dist < app_Constants.MISSED_FG_MIN_YL_POSS_SWITCH ? Game_Engine_Helper.getScrimmageLine(app_Constants.MISSED_FG_MIN_YL_POSS_SWITCH, !bLefttoRgiht) :  r.Field_Goal_Ball_Spot;
+
+                            r.Final_end_of_Play_Yardline = new_yard_line;
                         }
                     }
                     else if (!penOnBallCarryingTeam)

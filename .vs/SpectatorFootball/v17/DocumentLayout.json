@@ -3,12 +3,8 @@
   "WorkspaceRootPath": "C:\\Users\\Brenden\\source\\repos\\SpectatorFootball\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{AE5A5F7D-D3CF-4C0C-9CAB-627D9FF45FE4}|SpectatorFootball\\SpectatorFootball.csproj|c:\\users\\brenden\\source\\repos\\spectatorfootball\\spectatorfootball\\penalties\\penalty_helper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{AE5A5F7D-D3CF-4C0C-9CAB-627D9FF45FE4}|SpectatorFootball\\SpectatorFootball.csproj|solutionrelative:spectatorfootball\\penalties\\penalty_helper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{AE5A5F7D-D3CF-4C0C-9CAB-627D9FF45FE4}|SpectatorFootball\\SpectatorFootball.csproj|c:\\users\\brenden\\source\\repos\\spectatorfootball\\spectatorfootball\\game\\plays\\play_punt.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{AE5A5F7D-D3CF-4C0C-9CAB-627D9FF45FE4}|SpectatorFootball\\SpectatorFootball.csproj|solutionrelative:spectatorfootball\\game\\plays\\play_punt.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B7AA76D4-99A5-4E3C-8980-6862A3A88275}|SpectatorFootball.unitTests\\SpectatorFootball.unitTests.csproj|c:\\users\\brenden\\source\\repos\\spectatorfootball\\spectatorfootball.unittests\\unit_tests\\penalties\\penalty_helpertest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B7AA76D4-99A5-4E3C-8980-6862A3A88275}|SpectatorFootball.unitTests\\SpectatorFootball.unitTests.csproj|solutionrelative:spectatorfootball.unittests\\unit_tests\\penalties\\penalty_helpertest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{AE5A5F7D-D3CF-4C0C-9CAB-627D9FF45FE4}|SpectatorFootball\\SpectatorFootball.csproj|c:\\users\\brenden\\source\\repos\\spectatorfootball\\spectatorfootball\\game\\game_engine_helper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -17,14 +13,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{AE5A5F7D-D3CF-4C0C-9CAB-627D9FF45FE4}|SpectatorFootball\\SpectatorFootball.csproj|c:\\users\\brenden\\source\\repos\\spectatorfootball\\spectatorfootball\\game\\gameengine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{AE5A5F7D-D3CF-4C0C-9CAB-627D9FF45FE4}|SpectatorFootball\\SpectatorFootball.csproj|solutionrelative:spectatorfootball\\game\\gameengine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{AE5A5F7D-D3CF-4C0C-9CAB-627D9FF45FE4}|SpectatorFootball\\SpectatorFootball.csproj|c:\\users\\brenden\\source\\repos\\spectatorfootball\\spectatorfootball\\constants\\app_constants.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{AE5A5F7D-D3CF-4C0C-9CAB-627D9FF45FE4}|SpectatorFootball\\SpectatorFootball.csproj|solutionrelative:spectatorfootball\\constants\\app_constants.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{AE5A5F7D-D3CF-4C0C-9CAB-627D9FF45FE4}|SpectatorFootball\\SpectatorFootball.csproj|c:\\users\\brenden\\source\\repos\\spectatorfootball\\spectatorfootball\\narrationandtext\\announcer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{AE5A5F7D-D3CF-4C0C-9CAB-627D9FF45FE4}|SpectatorFootball\\SpectatorFootball.csproj|solutionrelative:spectatorfootball\\narrationandtext\\announcer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,84 +22,45 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Game_Engine_Helper.cs",
-              "DocumentMoniker": "C:\\Users\\Brenden\\source\\repos\\SpectatorFootball\\SpectatorFootball\\Game\\Game_Engine_Helper.cs",
-              "RelativeDocumentMoniker": "SpectatorFootball\\Game\\Game_Engine_Helper.cs",
-              "ToolTip": "C:\\Users\\Brenden\\source\\repos\\SpectatorFootball\\SpectatorFootball\\Game\\Game_Engine_Helper.cs",
-              "RelativeToolTip": "SpectatorFootball\\Game\\Game_Engine_Helper.cs",
-              "ViewState": "AgIAAGsDAAAAAAAAAAAqwJADAAAMAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "Penalty_HelperTEST.cs",
+              "DocumentMoniker": "C:\\Users\\Brenden\\source\\repos\\SpectatorFootball\\SpectatorFootball.unitTests\\Unit_Tests\\Penalties\\Penalty_HelperTEST.cs",
+              "RelativeDocumentMoniker": "SpectatorFootball.unitTests\\Unit_Tests\\Penalties\\Penalty_HelperTEST.cs",
+              "ToolTip": "C:\\Users\\Brenden\\source\\repos\\SpectatorFootball\\SpectatorFootball.unitTests\\Unit_Tests\\Penalties\\Penalty_HelperTEST.cs",
+              "RelativeToolTip": "SpectatorFootball.unitTests\\Unit_Tests\\Penalties\\Penalty_HelperTEST.cs",
+              "ViewState": "AgIAAK8BAAAAAAAAAAA+wLkBAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-07T14:54:29.95Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "App_Constants.cs",
-              "DocumentMoniker": "C:\\Users\\Brenden\\source\\repos\\SpectatorFootball\\SpectatorFootball\\Constants\\App_Constants.cs",
-              "RelativeDocumentMoniker": "SpectatorFootball\\Constants\\App_Constants.cs",
-              "ToolTip": "C:\\Users\\Brenden\\source\\repos\\SpectatorFootball\\SpectatorFootball\\Constants\\App_Constants.cs",
-              "RelativeToolTip": "SpectatorFootball\\Constants\\App_Constants.cs",
-              "ViewState": "AgIAAJ4CAAAAAAAAAAAqwKkCAAAwAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-07T14:09:19.936Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Announcer.cs",
-              "DocumentMoniker": "C:\\Users\\Brenden\\source\\repos\\SpectatorFootball\\SpectatorFootball\\NarrationAndText\\Announcer.cs",
-              "RelativeDocumentMoniker": "SpectatorFootball\\NarrationAndText\\Announcer.cs",
-              "ToolTip": "C:\\Users\\Brenden\\source\\repos\\SpectatorFootball\\SpectatorFootball\\NarrationAndText\\Announcer.cs",
-              "RelativeToolTip": "SpectatorFootball\\NarrationAndText\\Announcer.cs",
-              "ViewState": "AgIAAOMBAAAAAAAAAAAqwO4BAABiAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-07T12:51:08.177Z",
+              "WhenOpened": "2026-09-19T14:27:11.204Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "Play_Punt.cs",
-              "DocumentMoniker": "C:\\Users\\Brenden\\source\\repos\\SpectatorFootball\\SpectatorFootball\\Game\\Plays\\Play_Punt.cs",
-              "RelativeDocumentMoniker": "SpectatorFootball\\Game\\Plays\\Play_Punt.cs",
-              "ToolTip": "C:\\Users\\Brenden\\source\\repos\\SpectatorFootball\\SpectatorFootball\\Game\\Plays\\Play_Punt.cs",
-              "RelativeToolTip": "SpectatorFootball\\Game\\Plays\\Play_Punt.cs",
-              "ViewState": "AgIAAEwBAAAAAAAAAAAmwFsBAAAMAAAAAAAAAA==",
+              "Title": "Game_Engine_Helper.cs",
+              "DocumentMoniker": "C:\\Users\\Brenden\\source\\repos\\SpectatorFootball\\SpectatorFootball\\Game\\Game_Engine_Helper.cs",
+              "RelativeDocumentMoniker": "SpectatorFootball\\Game\\Game_Engine_Helper.cs",
+              "ToolTip": "C:\\Users\\Brenden\\source\\repos\\SpectatorFootball\\SpectatorFootball\\Game\\Game_Engine_Helper.cs",
+              "RelativeToolTip": "SpectatorFootball\\Game\\Game_Engine_Helper.cs",
+              "ViewState": "AgIAAD4BAAAAAAAAAAAIwEUBAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-07T00:09:33.542Z",
+              "WhenOpened": "2026-09-18T00:41:09.948Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Penalty_Helper.cs",
-              "DocumentMoniker": "C:\\Users\\Brenden\\source\\repos\\SpectatorFootball\\SpectatorFootball\\Penalties\\Penalty_Helper.cs",
-              "RelativeDocumentMoniker": "SpectatorFootball\\Penalties\\Penalty_Helper.cs",
-              "ToolTip": "C:\\Users\\Brenden\\source\\repos\\SpectatorFootball\\SpectatorFootball\\Penalties\\Penalty_Helper.cs",
-              "RelativeToolTip": "SpectatorFootball\\Penalties\\Penalty_Helper.cs",
-              "ViewState": "AgIAAI8DAAAAAAAAAAAqwJ0DAABIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-30T18:31:04.491Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "GameEngine.cs",
               "DocumentMoniker": "C:\\Users\\Brenden\\source\\repos\\SpectatorFootball\\SpectatorFootball\\Game\\GameEngine.cs",
               "RelativeDocumentMoniker": "SpectatorFootball\\Game\\GameEngine.cs",
               "ToolTip": "C:\\Users\\Brenden\\source\\repos\\SpectatorFootball\\SpectatorFootball\\Game\\GameEngine.cs",
               "RelativeToolTip": "SpectatorFootball\\Game\\GameEngine.cs",
-              "ViewState": "AgIAAPAAAAAAAAAAAAAYwPcAAAAjAAAAAAAAAA==",
+              "ViewState": "AgIAAJIDAAAAAAAAAAAwwFcEAADFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-29T00:44:41.406Z",
+              "WhenOpened": "2026-09-18T00:30:33.899Z",
               "EditorCaption": ""
             }
           ]

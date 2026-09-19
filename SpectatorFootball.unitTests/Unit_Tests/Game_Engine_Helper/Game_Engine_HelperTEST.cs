@@ -184,14 +184,14 @@ namespace SpectatorFootball.unitTests.GameEngine_HelperTEST
         [TestMethod]
         public void isCCEligible_and_Punt_long_Enough_eligible_long_not_enough_left()
         {
-            Tuple<bool, bool> t = Game_Engine_Helper.isCCEligible_and_Punt_long_Enough(42.0, 45.0, true);
+            Tuple<bool, bool> t = Game_Engine_Helper.isCCEligible_and_Punt_long_Enough(35.0, 50.0, true);
             Assert.IsTrue(t.Item1 && !t.Item2);
         }
         [TestCategory("Unit")]
         [TestMethod]
         public void isCCEligible_and_Punt_long_Enough_eligible_long_not_enough_right()
         {
-            Tuple<bool, bool> t = Game_Engine_Helper.isCCEligible_and_Punt_long_Enough(42.0, 55.0, false);
+            Tuple<bool, bool> t = Game_Engine_Helper.isCCEligible_and_Punt_long_Enough(35.0, 50.0, false);
             Assert.IsTrue(t.Item1 && !t.Item2);
         }
 

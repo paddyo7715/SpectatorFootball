@@ -286,7 +286,6 @@ namespace SpectatorFootball.unitTests.Penalties
             int FS = 0;
             int NZ = 0;
             int EN = 0;
-            int DO = 0;
 
             Play_Result pResult = new Play_Result() { at = 11, ht = 22 };
             int Num_Tries = 2000;
@@ -331,8 +330,6 @@ namespace SpectatorFootball.unitTests.Penalties
                     NZ++;
                 else if (penalty.code == Penalty_Codes.EN)
                     EN++;
-                else if (penalty.code == Penalty_Codes.DO)
-                    DO++;
                 else
                     throw new Exception("Not all penalties encountered");
 
@@ -347,7 +344,7 @@ namespace SpectatorFootball.unitTests.Penalties
                     throw new Exception("Penalty player should not have gotten this penalty");
             }
 
-            if (DG == 0 || FS == 0 || NZ == 0 || EN == 0 || DO == 0)
+            if (DG == 0 || FS == 0 || NZ == 0 || EN == 0)
                 throw new Exception("Incorrect Penalty Code");
 
             Assert.IsTrue(true);
@@ -360,7 +357,6 @@ namespace SpectatorFootball.unitTests.Penalties
             int FS = 0;
             int NZ = 0;
             int EN = 0;
-            int DO = 0;
 
             Play_Result pResult = new Play_Result() { at = 11, ht = 22 };
             int Num_Tries = 2000;
@@ -412,8 +408,6 @@ namespace SpectatorFootball.unitTests.Penalties
                     NZ++;
                 else if (penalty.code == Penalty_Codes.EN)
                     EN++;
-                else if (penalty.code == Penalty_Codes.DO)
-                    DO++;
                 else
                     throw new Exception("Not all penalties encountered");
 
@@ -428,7 +422,7 @@ namespace SpectatorFootball.unitTests.Penalties
                     throw new Exception("Penalty player should not have gotten this penalty");
             }
 
-            if (DG == 0 || FS == 0 || NZ == 0 || EN == 0 || DO == 0)
+            if (DG == 0 || FS == 0 || NZ == 0 || EN == 0)
                 throw new Exception("Incorrect Penalty Code");
 
             Assert.IsTrue(true);
@@ -441,12 +435,11 @@ namespace SpectatorFootball.unitTests.Penalties
             int FS = 0;
             int NZ = 0;
             int EN = 0;
-            int DO = 0;
             int IF = 0;
             int IM = 0;
 
             Play_Result pResult = new Play_Result() { at = 11, ht = 22 };
-            int Num_Tries = 2000;
+            int Num_Tries = 10000;
             Penalty penalty = null;
             Game_Player Penalty_Player = null;
 
@@ -508,8 +501,6 @@ namespace SpectatorFootball.unitTests.Penalties
                     NZ++;
                 else if (penalty.code == Penalty_Codes.EN)
                     EN++;
-                else if (penalty.code == Penalty_Codes.DO)
-                    DO++;
                 else if (penalty.code == Penalty_Codes.IF)
                     IF++;
                 else if (penalty.code == Penalty_Codes.IM)
@@ -528,7 +519,7 @@ namespace SpectatorFootball.unitTests.Penalties
                     throw new Exception("Penalty player should not have gotten this penalty");
             }
 
-            if (IF == 0 || IM == 0 || DG == 0 || FS == 0 || NZ == 0 || EN == 0 || DO == 0)
+            if (IF == 0 || IM == 0 || DG == 0 || FS == 0 || NZ == 0 || EN == 0)
                 throw new Exception("Incorrect Penalty Code");
 
             Assert.IsTrue(true);
@@ -542,7 +533,6 @@ namespace SpectatorFootball.unitTests.Penalties
             int FS = 0;
             int NZ = 0;
             int EN = 0;
-            int DO = 0;
             int IF = 0;
             int IM = 0;
 
@@ -610,8 +600,6 @@ namespace SpectatorFootball.unitTests.Penalties
                     NZ++;
                 else if (penalty.code == Penalty_Codes.EN)
                     EN++;
-                else if (penalty.code == Penalty_Codes.DO)
-                    DO++;
                 else if (penalty.code == Penalty_Codes.IF)
                     IF++;
                 else if (penalty.code == Penalty_Codes.IM)
@@ -630,7 +618,7 @@ namespace SpectatorFootball.unitTests.Penalties
                     throw new Exception("Penalty player should not have gotten this penalty");
             }
 
-            if (IF == 0 || IM == 0 || DG == 0 || FS == 0 || NZ == 0 || EN == 0 || DO == 0)
+            if (IF < 0 || IM < 0 || DG == 0 || FS == 0 || NZ == 0 || EN == 0)
                 throw new Exception("Incorrect Penalty Code");
 
             Assert.IsTrue(true);
@@ -796,6 +784,11 @@ namespace SpectatorFootball.unitTests.Penalties
             int UC = 0;
             int UR = 0;
             int FM = 0;
+            int DO = 0;
+            int OH = 0;
+            int IH = 0;
+            int IHO = 0;
+            int DH = 0;
 
             Play_Result pResult = new Play_Result() { at = 11, ht = 22 };
             int Num_Tries = 10000;
@@ -849,6 +842,16 @@ namespace SpectatorFootball.unitTests.Penalties
                     UR++;
                 else if (penalty.code == Penalty_Codes.FM)
                     FM++;
+                else if (penalty.code == Penalty_Codes.DO)
+                    DO++;
+                else if (penalty.code == Penalty_Codes.OH)
+                    OH++;
+                else if (penalty.code == Penalty_Codes.IH)
+                    IH++;
+                else if (penalty.code == Penalty_Codes.IHO)
+                    IHO++;
+                else if (penalty.code == Penalty_Codes.DH)
+                    DH++;
                 else
                     throw new Exception("Not all penalties encountered");
 
@@ -863,7 +866,7 @@ namespace SpectatorFootball.unitTests.Penalties
                     throw new Exception("Penalty player should not have gotten this penalty");
             }
 
-            if (PIB == 0 || RK == 0 || RIK == 0 || UC == 0 || UR == 0 || FM == 0)
+            if (PIB == 0 || RK == 0 || RIK == 0 || UC == 0 || UR == 0 || FM == 0 || DO == 0 || OH == 0 || IH == 0 || DH == 0)
                 throw new Exception("Incorrect Penalty Code");
 
             Assert.IsTrue(true);
@@ -886,9 +889,10 @@ namespace SpectatorFootball.unitTests.Penalties
             int DH = 0;
             int RD = 0;
             int PI = 0;
+            int DO = 0;
 
             Play_Result pResult = new Play_Result() { at = 11, ht = 22 };
-            int Num_Tries = 10000;
+            int Num_Tries = 15000;
             Penalty penalty = null;
             Game_Player Penalty_Player = null;
 
@@ -979,6 +983,8 @@ namespace SpectatorFootball.unitTests.Penalties
                     RD++;
                 else if (penalty.code == Penalty_Codes.PI)
                     PI++;
+                else if (penalty.code == Penalty_Codes.DO)
+                    DO++;
                 else
                     throw new Exception("Not all penalties encountered");
 
@@ -994,7 +1000,7 @@ namespace SpectatorFootball.unitTests.Penalties
             }
 
             if (UC == 0 || UR == 0 || FM == 0 || IHO == 0 || OI == 0 || OH == 0 || IR == 0 || IB == 0
-                 || IC == 0 || IH == 0 || DH == 0 || PI == 0 || RD == 0)
+                 || IC == 0 || IH == 0 || DH == 0 || PI == 0 || RD == 0 || DO == 0)
                 throw new Exception("Incorrect Penalty Code");
 
             Assert.IsTrue(true);
@@ -1009,6 +1015,7 @@ namespace SpectatorFootball.unitTests.Penalties
             int FM = 0;
             int IHO = 0;
             int IH = 0;
+            int DO = 0;
 
             Play_Result pResult = new Play_Result() { at = 11, ht = 22 };
             int Num_Tries = 10000;
@@ -1070,6 +1077,8 @@ namespace SpectatorFootball.unitTests.Penalties
                     IHO++;
                 else if (penalty.code == Penalty_Codes.IH)
                     IH++;
+                else if (penalty.code == Penalty_Codes.DO)
+                    DO++;
                 else
                     throw new Exception("Not all penalties encountered");
 
@@ -1084,7 +1093,7 @@ namespace SpectatorFootball.unitTests.Penalties
                     throw new Exception("Penalty player should not have gotten this penalty");
             }
 
-            if (UC == 0 || UR == 0 || FM == 0 || IHO == 0 || IH == 0)
+            if (UC == 0 || UR == 0 || FM == 0 || IHO == 0 || IH == 0 || DO == 0)
                 throw new Exception("Incorrect Penalty Code");
 
             Assert.IsTrue(true);

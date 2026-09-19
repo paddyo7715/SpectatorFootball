@@ -377,6 +377,8 @@ namespace SpectatorFootball.GameNS
             gBall.Current_YardLine = holder_yl;
             double half_yards = 4.0;
 
+            //used to set the new line of scrimmage if the FG is missed and it was 4th down
+            pr.Field_Goal_Ball_Spot = holder_yl;
 
             gBall.Carried_Fake_Movement(1);
 
